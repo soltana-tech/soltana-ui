@@ -3,7 +3,7 @@
 function utilSection(title: string, id: string, description: string, content: string): string {
   return `
     <div class="util-section mt-10" id="${id}">
-      <h3 class="text-xl font-semibold mb-2">${title}</h3>
+      <h3 class="text-xl font-semibold mb-2 font-serif">${title}</h3>
       <p class="text-secondary text-sm mb-4">${description}</p>
       ${content}
     </div>`;
@@ -28,6 +28,7 @@ export function renderUtilities(): string {
     <h2 class="text-3xl font-bold">Utility Classes</h2>
     <p class="text-secondary mt-2">A comprehensive set of single-purpose CSS classes for rapid UI construction.</p>
   </div>
+  <div class="section-divider"></div>
 
   <!-- Quick nav -->
   <div class="flex flex-wrap gap-2 mt-6 mb-8">

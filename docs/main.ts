@@ -1,14 +1,19 @@
 import '../src/styles/index.scss';
 import './docs.scss';
 
+// Register Web Components for the docs site
+import '../src/components/index';
+
 import { PlaygroundControls } from './components/PlaygroundControls';
 import { TabRouter } from './components/TabRouter';
 import { ThemeManager } from './components/ThemeManager';
 import { renderComponents } from './pages/components';
 import { renderExamples } from './pages/examples';
 import { renderFoundation } from './pages/foundation';
+import { renderMaterials } from './pages/materials';
 import { renderPatterns } from './pages/patterns';
 import { renderUtilities } from './pages/utilities';
+import { renderWebComponents } from './pages/web-components';
 
 // Initialize theme manager
 new ThemeManager();
@@ -18,8 +23,10 @@ const router = new TabRouter('docs-content');
 const playground = new PlaygroundControls();
 
 router.register('foundation', renderFoundation);
+router.register('materials', renderMaterials);
 router.register('utilities', renderUtilities);
 router.register('components', renderComponents);
+router.register('web-components', renderWebComponents);
 router.register('patterns', renderPatterns);
 router.register('examples', renderExamples);
 

@@ -37,5 +37,9 @@ export default defineConfig(
             },
           },
         },
+        define: {
+          // Ensure custom element definitions are preserved
+          'process.env.NODE_ENV': JSON.stringify('production'),
+        },
       }
 );

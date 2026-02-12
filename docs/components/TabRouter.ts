@@ -1,4 +1,11 @@
-export type TabId = 'foundation' | 'utilities' | 'components' | 'patterns' | 'examples';
+export type TabId =
+  | 'foundation'
+  | 'materials'
+  | 'utilities'
+  | 'components'
+  | 'web-components'
+  | 'patterns'
+  | 'examples';
 
 type PageRenderer = () => string;
 

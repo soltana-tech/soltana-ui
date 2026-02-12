@@ -1,80 +1,100 @@
 // ---------------------------------------------------------------------------
-// Light Theme (Dracula-inspired pastels)
+// Estate Marble (Light Theme)
+// ---------------------------------------------------------------------------
+// Cool marble whites with blue-gray undertones, silver accents, and
+// restrained gold highlights. Distinct from the warm sepia palette.
 // ---------------------------------------------------------------------------
 
 [data-theme='light'] {
   color-scheme: light;
 
-  // Surface colors
-  --surface-bg: #f9f9fb;
+  // Surface colors — cool marble with subtle blue-gray undertones
+  --surface-bg: #f6f7fa;
   --surface-1: #fff;
-  --surface-2: #f4f4f7;
-  --surface-3: #ecedf2;
-  --surface-4: #e2e3ea;
-  --surface-overlay: rgb(249 249 251 / 90%);
+  --surface-2: #eef0f5;
+  --surface-3: #e2e5ed;
+  --surface-4: #d5d9e4;
+  --surface-overlay: rgb(246 247 250 / 93%);
 
-  // Text colors
-  --text-primary: #282a36;
-  --text-secondary: #44475a;
-  --text-tertiary: #6272a4;
-  --text-muted: #8890a8;
-  --text-inverse: #f8f8f2;
+  // Text colors — cool slate hierarchy
+  --text-primary: #1e2128;
+  --text-secondary: #3a3f4c;
+  --text-tertiary: #5c6375;
+  --text-muted: #7e8594;
+  --text-inverse: #eef0f5;
 
-  // Border colors
-  --border-default: #e2e3ea;
-  --border-subtle: #ecedf2;
-  --border-strong: #c0c4d8;
+  // Border colors — cool silver tints
+  --border-default: rgb(85 97 120 / 12%);
+  --border-subtle: rgb(85 97 120 / 7%);
+  --border-strong: rgb(85 97 120 / 20%);
 
-  // Accent colors (deeper for contrast on light)
-  --accent-primary: #7c5cbf;
-  --accent-primary-hover: #6a4dab;
-  --accent-primary-active: #593f96;
-  --accent-secondary: #2d8ea1;
-  --accent-secondary-hover: #267a8b;
-  --accent-secondary-active: #1f6775;
+  // Accent colors — silver primary, amethyst secondary, gold reserved for highlights
+  --accent-primary: #576378;
+  --accent-primary-hover: #454e60;
+  --accent-primary-active: #353c4a;
+  --accent-secondary: #6b21a8;
+  --accent-secondary-hover: #581c87;
+  --accent-secondary-active: #4c1d95;
 
-  // Semantic colors
-  --color-success: #1a8a42;
-  --color-success-subtle: rgb(26 138 66 / 10%);
-  --color-success-text: #16753a;
-  --color-warning: #c47a1a;
-  --color-warning-subtle: rgb(196 122 26 / 10%);
-  --color-warning-text: #a86914;
-  --color-error: #d93636;
-  --color-error-subtle: rgb(217 54 54 / 10%);
-  --color-error-text: #c02e2e;
-  --color-info: #2d8ea1;
-  --color-info-subtle: rgb(45 142 161 / 10%);
-  --color-info-text: #267a8b;
+  // Gold highlight (used sparingly for premium accents)
+  --accent-gold: #92700c;
+  --accent-gold-hover: #7a5e0a;
 
-  // Interactive states
-  --state-hover: rgb(40 42 54 / 4%);
-  --state-active: rgb(40 42 54 / 8%);
-  --state-focus-ring: rgb(124 92 191 / 40%);
-  --state-disabled-bg: #ecedf2;
-  --state-disabled-text: #8890a8;
+  // Semantic colors — high contrast for marble background
+  --color-success: #0d6b4e;
+  --color-success-subtle: rgb(13 107 78 / 8%);
+  --color-success-text: #065f46;
+  --color-warning: #855c0a;
+  --color-warning-subtle: rgb(133 92 10 / 8%);
+  --color-warning-text: #6b4a08;
+  --color-error: #991b1b;
+  --color-error-subtle: rgb(153 27 27 / 8%);
+  --color-error-text: #7f1d1d;
+  --color-info: #1e40af;
+  --color-info-subtle: rgb(30 64 175 / 8%);
+  --color-info-text: #1e3a8a;
 
-  // Neumorphic shadows
-  --neuro-bg: #ecedf2;
-  --neuro-shadow-light: rgb(255 255 255 / 80%);
-  --neuro-shadow-dark: rgb(163 166 183 / 50%);
+  // Interactive states — silver-tinted
+  --state-hover: rgb(85 97 120 / 6%);
+  --state-active: rgb(85 97 120 / 12%);
+  --state-focus-ring: rgb(87 99 120 / 35%);
+  --state-disabled-bg: #e2e5ed;
+  --state-disabled-text: #7e8594;
 
-  // Glassmorphic
-  --glass-bg: rgb(255 255 255 / 55%);
-  --glass-border: rgb(255 255 255 / 50%);
-  --glass-shadow: rgb(0 0 0 / 8%);
+  // Neumorphic shadows — cool marble
+  --neuro-bg: #e2e5ed;
+  --neuro-shadow-light: rgb(255 255 255 / 88%);
+  --neuro-shadow-dark: rgb(140 150 170 / 35%);
+  --neuro-shadow-mid: rgb(140 150 170 / 20%);
+  --neuro-highlight: rgb(255 255 255 / 65%);
+
+  // Glassmorphic — silver-tinted crystal
+  --glass-bg: rgb(255 255 255 / 50%);
+  --glass-border: rgb(146 156 176 / 18%);
+  --glass-shadow: rgb(85 97 120 / 10%);
+  --glass-gradient-start: rgb(255 255 255 / 65%);
+  --glass-gradient-end: rgb(238 240 245 / 40%);
+  --glass-inner-glow: rgb(255 255 255 / 55%);
+
+  // Stained glass tints (light: subtle cool tones)
+  --stained-primary: rgb(87 99 120 / 12%);
+  --stained-secondary: rgb(107 33 168 / 8%);
+  --stained-accent: rgb(146 112 12 / 10%);
 
   // Component-specific
   --input-bg: #fff;
-  --input-border: #e2e3ea;
-  --input-border-focus: #7c5cbf;
-  --input-placeholder: #8890a8;
-  --card-bg: #fff;
-  --card-border: #e2e3ea;
-  --badge-bg: #ecedf2;
-  --tooltip-bg: #282a36;
-  --tooltip-text: #f8f8f2;
-  --scrollbar-thumb: #c0c4d8;
-  --scrollbar-track: #f4f4f7;
-  --code-bg: #f4f4f7;
+  --input-border: rgb(85 97 120 / 14%);
+  --input-border-focus: #576378;
+  --input-placeholder: #7e8594;
+  --card-bg: rgb(255 255 255 / 78%);
+  --card-border: rgb(85 97 120 / 10%);
+  --badge-bg: rgb(85 97 120 / 8%);
+  --tooltip-bg: #1e2128;
+  --tooltip-text: #eef0f5;
+  --scrollbar-thumb: rgb(85 97 120 / 15%);
+  --scrollbar-track: rgb(85 97 120 / 3%);
+  --code-bg: #eef0f5;
+
+  // Intensity (muted for light)
+  --intensity: var(--intensity-muted);
 }

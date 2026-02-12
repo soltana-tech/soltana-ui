@@ -7,6 +7,7 @@ export function renderPatterns(): string {
     <h2 class="text-3xl font-bold">Patterns</h2>
     <p class="text-secondary mt-2">Organism-level compositions combining atoms and molecules into reusable layouts.</p>
   </div>
+  <div class="section-divider"></div>
 
   <div class="flex flex-wrap gap-2 mt-6 mb-4">
     ${[

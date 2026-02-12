@@ -1,0 +1,262 @@
+// ---------------------------------------------------------------------------
+// Metallic Surface Effects
+// ---------------------------------------------------------------------------
+// Silver, bronze, copper, and platinum treatments parallel to _gold.scss.
+// Includes text gradients, surfaces, borders, and shimmer animations.
+// ---------------------------------------------------------------------------
+
+// ====================== Silver ======================
+
+.silver-text {
+  background: linear-gradient(145deg, #929cb0, #d8dde6, #576378, #b8c0cf, #929cb0);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.silver-surface {
+  background: linear-gradient(
+    145deg,
+    var(--silver-200) 0%,
+    var(--silver-300) 25%,
+    var(--silver-400) 50%,
+    var(--silver-300) 75%,
+    var(--silver-200) 100%
+  );
+  color: var(--silver-900);
+}
+
+.silver-surface-subtle {
+  background: linear-gradient(145deg, var(--silver-100), var(--silver-200));
+  color: var(--silver-800);
+}
+
+.silver-border {
+  border: 1px solid var(--silver-400);
+  box-shadow:
+    inset 0 1px 0 rgb(216 221 230 / 40%),
+    0 1px 2px rgb(87 99 120 / 15%);
+}
+
+@keyframes silver-shine {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.silver-shine {
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgb(216 221 230 / 30%) 25%,
+      rgb(255 255 255 / 45%) 50%,
+      rgb(216 221 230 / 30%) 75%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: silver-shine 3.5s ease-in-out infinite;
+    pointer-events: none;
+  }
+}
+
+// ====================== Bronze ======================
+
+.bronze-text {
+  background: linear-gradient(145deg, #cd8d3a, #f0cd9e, #a06e2b, #daa660, #cd8d3a);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bronze-surface {
+  background: linear-gradient(
+    145deg,
+    var(--bronze-200) 0%,
+    var(--bronze-300) 25%,
+    var(--bronze-400) 50%,
+    var(--bronze-300) 75%,
+    var(--bronze-200) 100%
+  );
+  color: var(--bronze-900);
+}
+
+.bronze-surface-subtle {
+  background: linear-gradient(145deg, var(--bronze-100), var(--bronze-200));
+  color: var(--bronze-800);
+}
+
+.bronze-border {
+  border: 1px solid var(--bronze-400);
+  box-shadow:
+    inset 0 1px 0 rgb(240 205 158 / 40%),
+    0 1px 2px rgb(126 85 34 / 15%);
+}
+
+.bronze-patina {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background:
+      radial-gradient(ellipse at 30% 70%, rgb(42 120 84 / 12%) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgb(40 100 80 / 8%) 0%, transparent 50%);
+    pointer-events: none;
+  }
+}
+
+@keyframes bronze-shine {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.bronze-shine {
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgb(240 205 158 / 25%) 25%,
+      rgb(255 240 210 / 40%) 50%,
+      rgb(240 205 158 / 25%) 75%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: bronze-shine 4s ease-in-out infinite;
+    pointer-events: none;
+  }
+}
+
+// ====================== Copper ======================
+
+.copper-text {
+  background: linear-gradient(145deg, #d97e4a, #f5c4a1, #b86536, #e89f6e, #d97e4a);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.copper-surface {
+  background: linear-gradient(
+    145deg,
+    var(--copper-200) 0%,
+    var(--copper-300) 25%,
+    var(--copper-400) 50%,
+    var(--copper-300) 75%,
+    var(--copper-200) 100%
+  );
+  color: var(--copper-900);
+}
+
+.copper-surface-subtle {
+  background: linear-gradient(145deg, var(--copper-100), var(--copper-200));
+  color: var(--copper-800);
+}
+
+.copper-border {
+  border: 1px solid var(--copper-400);
+  box-shadow:
+    inset 0 1px 0 rgb(245 196 161 / 40%),
+    0 1px 2px rgb(147 79 43 / 15%);
+}
+
+// Verdigris patina (oxidized copper green)
+.copper-verdigris {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background:
+      radial-gradient(ellipse at 25% 60%, rgb(60 160 130 / 18%) 0%, transparent 55%),
+      radial-gradient(ellipse at 70% 30%, rgb(80 180 150 / 14%) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, rgb(50 140 110 / 10%) 0%, transparent 45%);
+    pointer-events: none;
+  }
+}
+
+// ====================== Platinum ======================
+
+.platinum-text {
+  background: linear-gradient(145deg, #a8b3c7, #dce1ea, #6d7b94, #c5cddb, #a8b3c7);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.platinum-surface {
+  background: linear-gradient(
+    145deg,
+    var(--platinum-200) 0%,
+    var(--platinum-300) 25%,
+    var(--platinum-400) 50%,
+    var(--platinum-300) 75%,
+    var(--platinum-200) 100%
+  );
+  color: var(--platinum-900);
+}
+
+.platinum-surface-subtle {
+  background: linear-gradient(145deg, var(--platinum-100), var(--platinum-200));
+  color: var(--platinum-800);
+}
+
+.platinum-border {
+  border: 1px solid var(--platinum-400);
+  box-shadow:
+    inset 0 1px 0 rgb(220 225 234 / 45%),
+    0 1px 2px rgb(109 123 148 / 15%);
+}
+
+@keyframes platinum-shine {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.platinum-shine {
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgb(220 225 234 / 28%) 25%,
+      rgb(255 255 255 / 50%) 50%,
+      rgb(220 225 234 / 28%) 75%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: platinum-shine 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+}

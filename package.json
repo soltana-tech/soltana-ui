@@ -1,6 +1,6 @@
 {
   "name": "soltana-tech",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "private": true,
   "files": [
@@ -15,7 +15,11 @@
       "import": "./dist/soltana-tech.js",
       "require": "./dist/soltana-tech.umd.cjs"
     },
-    "./style.css": "./dist/soltana-tech.css"
+    "./style.css": "./dist/soltana-tech.css",
+    "./components": {
+      "types": "./dist/components/index.d.ts",
+      "import": "./dist/soltana-tech.js"
+    }
   },
   "scripts": {
     "dev": "vite build --watch",

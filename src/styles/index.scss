@@ -1,8 +1,8 @@
 // ---------------------------------------------------------------------------
 // Soltana Design System — Main Entry
 // ---------------------------------------------------------------------------
-// Import order: variables → themes → base typography → components → utilities
-// → special effects. Utilities come last to ensure override capability.
+// Import order: variables → themes → base typography → components →
+// material systems → layout → utilities → accessibility.
 // ---------------------------------------------------------------------------
 
 // Foundation
@@ -19,9 +19,21 @@
 // Component styles
 @use 'components';
 
+// Material systems
+@use 'gold';
+@use 'metallic';
+@use 'marble';
+@use 'granite';
+@use 'ornamental';
+@use 'neumorphic';
+@use 'glassmorphic';
+@use 'neuro-glass';
+
+// Classical layout
+@use 'classical';
+
 // Utility classes (high specificity, loaded last)
 @use 'utilities';
 
-// Special effect systems
-@use 'neumorphic';
-@use 'glassmorphic';
+// Accessibility (loaded last for override capability)
+@use 'accessibility';

@@ -1,81 +1,101 @@
 // ---------------------------------------------------------------------------
-// Dark Theme (Dracula-based)
+// Estate Midnight (Dark Theme)
+// ---------------------------------------------------------------------------
+// Deep midnight navy surfaces with warm ivory text and gold accents.
+// Vivid intensity for jewel-toned elements against dark backgrounds.
 // ---------------------------------------------------------------------------
 
 [data-theme='dark'],
 :root {
   color-scheme: dark;
 
-  // Surface colors
-  --surface-bg: #282a36;
-  --surface-1: #2d2f3d;
-  --surface-2: #343746;
-  --surface-3: #3b3e50;
-  --surface-4: #44475a;
-  --surface-overlay: rgb(40 42 54 / 85%);
+  // Surface colors — deep midnight navy
+  --surface-bg: #08091a;
+  --surface-1: #0e1028;
+  --surface-2: #151838;
+  --surface-3: #1c2048;
+  --surface-4: #252a5a;
+  --surface-overlay: rgb(8 9 26 / 90%);
 
-  // Text colors
-  --text-primary: #f8f8f2;
-  --text-secondary: #c0c4d8;
-  --text-tertiary: #8890a8;
-  --text-muted: #6272a4;
-  --text-inverse: #282a36;
+  // Text colors — warm ivory hierarchy
+  --text-primary: #f5f0e6;
+  --text-secondary: #c5b99b;
+  --text-tertiary: #8a7e6a;
+  --text-muted: #5a5245;
+  --text-inverse: #08091a;
 
   // Border colors
-  --border-default: #44475a;
-  --border-subtle: #3b3e50;
-  --border-strong: #6272a4;
+  --border-default: rgb(212 168 67 / 12%);
+  --border-subtle: rgb(255 255 255 / 5%);
+  --border-strong: rgb(212 168 67 / 20%);
 
-  // Accent colors (Dracula vivids)
-  --accent-primary: #bd93f9;
-  --accent-primary-hover: #caa4fa;
-  --accent-primary-active: #a67df7;
-  --accent-secondary: #8be9fd;
-  --accent-secondary-hover: #a2effe;
-  --accent-secondary-active: #6ee0fc;
+  // Accent colors — gold primary, amethyst secondary
+  --accent-primary: #d4a843;
+  --accent-primary-hover: #e0b94e;
+  --accent-primary-active: #b8920a;
+  --accent-secondary: #a855f7;
+  --accent-secondary-hover: #b971f8;
+  --accent-secondary-active: #9333ea;
 
-  // Semantic colors
-  --color-success: #50fa7b;
-  --color-success-subtle: rgb(80 250 123 / 15%);
-  --color-success-text: #50fa7b;
-  --color-warning: #ffb86c;
-  --color-warning-subtle: rgb(255 184 108 / 15%);
-  --color-warning-text: #ffb86c;
-  --color-error: #f55;
-  --color-error-subtle: rgb(255 85 85 / 15%);
-  --color-error-text: #f55;
-  --color-info: #8be9fd;
-  --color-info-subtle: rgb(139 233 253 / 15%);
-  --color-info-text: #8be9fd;
+  // Gold highlight (same as primary in dark)
+  --accent-gold: #d4a843;
+  --accent-gold-hover: #e0b94e;
+
+  // Semantic colors — jewel-toned
+  --color-success: #10b981;
+  --color-success-subtle: rgb(16 185 129 / 12%);
+  --color-success-text: #34d399;
+  --color-warning: #fcd34d;
+  --color-warning-subtle: rgb(252 211 77 / 12%);
+  --color-warning-text: #fde68a;
+  --color-error: #ef4444;
+  --color-error-subtle: rgb(239 68 68 / 12%);
+  --color-error-text: #f87171;
+  --color-info: #3b82f6;
+  --color-info-subtle: rgb(59 130 246 / 12%);
+  --color-info-text: #60a5fa;
 
   // Interactive states
-  --state-hover: rgb(248 248 242 / 6%);
-  --state-active: rgb(248 248 242 / 10%);
-  --state-focus-ring: rgb(189 147 249 / 50%);
-  --state-disabled-bg: #3b3e50;
-  --state-disabled-text: #6272a4;
+  --state-hover: rgb(212 168 67 / 8%);
+  --state-active: rgb(212 168 67 / 14%);
+  --state-focus-ring: rgb(212 168 67 / 40%);
+  --state-disabled-bg: #151838;
+  --state-disabled-text: #5a5245;
 
-  // Neumorphic shadows
-  --neuro-bg: #282a36;
-  --neuro-shadow-light: rgb(58 61 78 / 70%);
-  --neuro-shadow-dark: rgb(15 16 22 / 70%);
+  // Neumorphic shadows — "polished stone"
+  --neuro-bg: #0e1028;
+  --neuro-shadow-light: rgb(255 255 255 / 4%);
+  --neuro-shadow-dark: rgb(0 0 0 / 65%);
+  --neuro-shadow-mid: rgb(0 0 0 / 40%);
+  --neuro-highlight: rgb(212 168 67 / 5%);
 
-  // Glassmorphic
-  --glass-bg: rgb(40 42 54 / 55%);
-  --glass-border: rgb(248 248 242 / 8%);
-  --glass-shadow: rgb(0 0 0 / 30%);
+  // Glassmorphic — "crystal glass"
+  --glass-bg: rgb(14 16 40 / 50%);
+  --glass-border: rgb(212 168 67 / 10%);
+  --glass-shadow: rgb(0 0 0 / 45%);
+  --glass-gradient-start: rgb(212 168 67 / 6%);
+  --glass-gradient-end: rgb(255 255 255 / 2%);
+  --glass-inner-glow: rgb(212 168 67 / 4%);
+
+  // Stained glass tints (dark: vivid jewel tones)
+  --stained-primary: rgb(212 168 67 / 15%);
+  --stained-secondary: rgb(168 85 247 / 12%);
+  --stained-accent: rgb(16 185 129 / 10%);
 
   // Component-specific
-  --input-bg: #343746;
-  --input-border: #44475a;
-  --input-border-focus: #bd93f9;
-  --input-placeholder: #6272a4;
-  --card-bg: #2d2f3d;
-  --card-border: #44475a;
-  --badge-bg: #44475a;
-  --tooltip-bg: #1e1f29;
-  --tooltip-text: #f8f8f2;
-  --scrollbar-thumb: #44475a;
-  --scrollbar-track: #282a36;
-  --code-bg: #1e1f29;
+  --input-bg: rgb(255 255 255 / 4%);
+  --input-border: rgb(212 168 67 / 12%);
+  --input-border-focus: #d4a843;
+  --input-placeholder: #5a5245;
+  --card-bg: rgb(14 16 40 / 60%);
+  --card-border: rgb(212 168 67 / 8%);
+  --badge-bg: rgb(212 168 67 / 10%);
+  --tooltip-bg: #08091a;
+  --tooltip-text: #f5f0e6;
+  --scrollbar-thumb: rgb(212 168 67 / 15%);
+  --scrollbar-track: rgb(255 255 255 / 3%);
+  --code-bg: rgb(0 0 0 / 35%);
+
+  // Intensity (vivid for dark)
+  --intensity: var(--intensity-vivid);
 }

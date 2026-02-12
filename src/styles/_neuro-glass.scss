@@ -1,0 +1,181 @@
+// ---------------------------------------------------------------------------
+// Neuro-Glass Hybrid Effect System
+// ---------------------------------------------------------------------------
+// Combines neumorphic 3D depth (shadows) with glassmorphic translucency
+// (blur, transparency, gradients) for a premium, contemporary aesthetic.
+// ---------------------------------------------------------------------------
+
+// ---- Base hybrid ----
+.neuro-glass {
+  background: linear-gradient(145deg, var(--glass-gradient-start), var(--glass-gradient-end));
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  box-shadow:
+    6px 6px 16px var(--neuro-shadow-dark),
+    -4px -4px 12px var(--neuro-shadow-light),
+    inset 0 1px 0 var(--glass-inner-glow);
+  color: var(--text-primary);
+}
+
+// ---- Card hybrid ----
+.neuro-glass-card {
+  background: linear-gradient(145deg, var(--glass-gradient-start), var(--glass-gradient-end));
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-2xl);
+  padding: 1.5rem;
+  box-shadow:
+    0 2px 4px var(--neuro-shadow-mid),
+    8px 8px 20px var(--neuro-shadow-dark),
+    -6px -6px 16px var(--neuro-shadow-light),
+    inset 0 1px 0 var(--glass-inner-glow);
+  color: var(--text-primary);
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 4px 8px var(--neuro-shadow-mid),
+      10px 10px 24px var(--neuro-shadow-dark),
+      -8px -8px 20px var(--neuro-shadow-light),
+      inset 0 1px 0 var(--glass-inner-glow);
+  }
+}
+
+// ---- Elevated hybrid — dramatic depth ----
+.neuro-glass-elevated {
+  background: linear-gradient(145deg, var(--glass-gradient-start), var(--glass-gradient-end));
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-top-color: var(--glass-inner-glow);
+  border-radius: var(--radius-2xl);
+  box-shadow:
+    0 4px 8px var(--neuro-shadow-mid),
+    12px 12px 32px var(--neuro-shadow-dark),
+    -8px -8px 24px var(--neuro-shadow-light),
+    inset 0 1px 0 var(--glass-inner-glow);
+  color: var(--text-primary);
+}
+
+// ---- Inset hybrid — pressed glass ----
+.neuro-glass-inset {
+  background: linear-gradient(145deg, var(--glass-gradient-end), var(--glass-gradient-start));
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  box-shadow:
+    inset 5px 5px 12px var(--neuro-shadow-dark),
+    inset -5px -5px 12px var(--neuro-shadow-light);
+  color: var(--text-primary);
+}
+
+// ---- Floating hybrid — extra dramatic with glow ----
+.neuro-glass-floating {
+  background: linear-gradient(145deg, var(--glass-gradient-start), var(--glass-gradient-end));
+  backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-3xl);
+  box-shadow:
+    0 8px 16px var(--neuro-shadow-mid),
+    16px 16px 40px var(--neuro-shadow-dark),
+    -10px -10px 30px var(--neuro-shadow-light),
+    inset 0 1px 0 var(--glass-inner-glow);
+  color: var(--text-primary);
+}
+
+// ---- Gold-tinted hybrid ----
+.neuro-glass-gold {
+  background: linear-gradient(145deg, rgb(212 168 67 / 8%), rgb(212 168 67 / 3%));
+  backdrop-filter: blur(16px);
+  border: 1px solid rgb(212 168 67 / 12%);
+  border-radius: var(--radius-xl);
+  box-shadow:
+    6px 6px 16px var(--neuro-shadow-dark),
+    -4px -4px 12px var(--neuro-shadow-light),
+    inset 0 1px 0 rgb(212 168 67 / 8%);
+  color: var(--text-primary);
+}
+
+// ---- Amethyst-tinted hybrid ----
+.neuro-glass-amethyst {
+  background: linear-gradient(145deg, rgb(168 85 247 / 6%), rgb(168 85 247 / 2%));
+  backdrop-filter: blur(16px);
+  border: 1px solid rgb(168 85 247 / 10%);
+  border-radius: var(--radius-xl);
+  box-shadow:
+    6px 6px 16px var(--neuro-shadow-dark),
+    -4px -4px 12px var(--neuro-shadow-light),
+    inset 0 1px 0 rgb(168 85 247 / 6%);
+  color: var(--text-primary);
+}
+
+// ---- Interactive button hybrid ----
+.neuro-glass-button {
+  background: linear-gradient(145deg, var(--glass-gradient-start), var(--glass-gradient-end));
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  box-shadow:
+    0 2px 4px var(--neuro-shadow-mid),
+    5px 5px 12px var(--neuro-shadow-dark),
+    -3px -3px 8px var(--neuro-shadow-light),
+    inset 0 1px 0 var(--glass-inner-glow);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.2s ease,
+    background 0.3s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    background: linear-gradient(145deg, var(--glass-inner-glow), var(--glass-gradient-end));
+    box-shadow:
+      0 4px 8px var(--neuro-shadow-mid),
+      7px 7px 16px var(--neuro-shadow-dark),
+      -5px -5px 12px var(--neuro-shadow-light),
+      inset 0 1px 0 var(--glass-inner-glow);
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow:
+      inset 4px 4px 10px var(--neuro-shadow-dark),
+      inset -4px -4px 10px var(--neuro-shadow-light);
+  }
+}
+
+// ---- Input hybrid ----
+.neuro-glass-input {
+  background: linear-gradient(145deg, var(--glass-gradient-end), var(--glass-gradient-start));
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 0.625rem 1rem;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  letter-spacing: var(--tracking-refined);
+  box-shadow:
+    inset 3px 3px 8px var(--neuro-shadow-dark),
+    inset -3px -3px 8px var(--neuro-shadow-light);
+  transition:
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+
+  &::placeholder {
+    color: var(--text-muted);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow:
+      inset 3px 3px 8px var(--neuro-shadow-dark),
+      inset -3px -3px 8px var(--neuro-shadow-light),
+      0 0 0 3px var(--state-focus-ring);
+  }
+}

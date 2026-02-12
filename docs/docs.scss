@@ -1,8 +1,8 @@
 // ---------------------------------------------------------------------------
-// Documentation Site Styles
+// Documentation Site Styles — Estate Aesthetic
 // ---------------------------------------------------------------------------
-// Styles specific to the style guide documentation site layout and chrome.
-// These are NOT part of the exported library.
+// Marble backgrounds, gold accents, Cinzel headings, ornamental dividers.
+// NOT part of the exported library.
 // ---------------------------------------------------------------------------
 
 // ---- Layout ----
@@ -11,13 +11,16 @@
   top: 0;
   z-index: 40;
   padding: 0 1.5rem;
+  background: var(--surface-1);
+  border-bottom: 2px solid rgb(212 168 67 / 15%);
+  box-shadow: 0 2px 16px rgb(0 0 0 / 12%);
 }
 
 .docs-header__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 3.5rem;
+  height: 4rem;
   max-width: 80rem;
   margin: 0 auto;
 }
@@ -28,9 +31,25 @@
   gap: 0.75rem;
 }
 
+.docs-logo {
+  filter: drop-shadow(0 2px 8px rgb(212 168 67 / 30%));
+}
+
 .docs-header__title {
-  font-size: var(--text-lg);
+  font-size: var(--text-xl);
   font-weight: var(--font-bold);
+  line-height: 1.2;
+}
+
+.docs-header__subtitle {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  letter-spacing: var(--tracking-inscriptional);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: block;
+  margin-top: -2px;
 }
 
 .docs-header__actions {
@@ -42,9 +61,10 @@
 // ---- Theme switcher ----
 .theme-switcher {
   display: flex;
-  gap: 0.25rem;
-  padding: 0.25rem;
-  background: var(--surface-2);
+  gap: 2px;
+  padding: 3px;
+  background: var(--surface-3);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
 }
 
@@ -60,8 +80,9 @@
   border-radius: var(--radius-md);
   cursor: pointer;
   transition:
-    background-color var(--transition-normal) ease,
-    color var(--transition-normal) ease;
+    background-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
 
   &:hover {
     color: var(--text-primary);
@@ -71,16 +92,18 @@
   &.active {
     color: var(--accent-primary);
     background: var(--surface-bg);
-    box-shadow: var(--shadow-sm);
+    box-shadow:
+      0 1px 3px rgb(0 0 0 / 10%),
+      inset 0 1px 0 rgb(255 255 255 / 5%);
   }
 }
 
 // ---- Tabs bar ----
 .docs-tabs {
-  border-bottom: 1px solid var(--border-default);
-  background: var(--surface-bg);
+  border-bottom: 2px solid var(--border-default);
+  background: var(--surface-1);
   position: sticky;
-  top: 3.5rem;
+  top: 4rem;
   z-index: 30;
 }
 
@@ -97,16 +120,60 @@
   }
 }
 
+// Override tab active color to theme accent
+.docs-tabs .tab.active {
+  color: var(--accent-primary);
+
+  &::after {
+    background-color: var(--accent-primary);
+  }
+}
+
 // ---- Main content ----
 .docs-main {
   max-width: 80rem;
   margin: 0 auto;
-  padding: 2rem 1.5rem 4rem;
+  padding: 2.618rem 1.5rem 5rem;
 }
 
 // ---- Section headings ----
 .section-heading {
   padding-top: 0.5rem;
+
+  h2 {
+    font-family: var(--font-serif);
+    font-weight: var(--font-bold);
+    letter-spacing: var(--tracking-display);
+  }
+}
+
+// ---- Gold separator after section headings ----
+.section-divider {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent-gold, var(--accent-primary)) 20%,
+    var(--accent-gold, var(--accent-primary)) 80%,
+    transparent
+  );
+  opacity: 0.3;
+  margin: 1rem 0 2rem;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    width: 6px;
+    height: 6px;
+    background: var(--accent-gold, var(--accent-primary));
+    border-radius: 1px;
+    opacity: 0.8;
+  }
 }
 
 // ---- Color swatch grid ----
@@ -121,23 +188,26 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.5rem;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   border: 1px solid var(--border-subtle);
+  background: var(--card-bg);
   transition:
-    border-color var(--transition-normal) ease,
-    box-shadow var(--transition-normal) ease;
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
 
   &:hover {
-    border-color: var(--border-default);
-    box-shadow: var(--shadow-sm);
+    border-color: rgb(212 168 67 / 20%);
+    box-shadow: 0 4px 16px rgb(0 0 0 / 10%);
+    transform: translateY(-1px);
   }
 }
 
 .swatch__color {
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: var(--radius-md);
-  border: 1px solid rgb(128 128 128 / 15%);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgb(128 128 128 / 10%);
   flex-shrink: 0;
 }
 
@@ -150,6 +220,7 @@
 .swatch__name {
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
+  letter-spacing: var(--tracking-refined);
   white-space: nowrap;
 }
 
@@ -174,12 +245,13 @@
 
 // ---- Playground blocks ----
 .playground {
-  border: 1px dashed var(--border-default);
+  border: 1px solid var(--border-default);
+  background: var(--card-bg);
+  border-radius: var(--radius-xl);
 }
 
 // ---- Range input styling ----
 input[type='range'] {
-  appearance: none;
   appearance: none;
   height: 6px;
   border-radius: var(--radius-full);
@@ -189,13 +261,14 @@ input[type='range'] {
 
   &::-webkit-slider-thumb {
     appearance: none;
-    appearance: none;
     width: 18px;
     height: 18px;
     border-radius: var(--radius-full);
     background: var(--accent-primary);
     border: 2px solid var(--surface-bg);
-    box-shadow: var(--shadow-sm);
+    box-shadow:
+      0 1px 4px rgb(0 0 0 / 15%),
+      0 0 8px var(--state-focus-ring);
     cursor: pointer;
   }
 
@@ -205,15 +278,17 @@ input[type='range'] {
     border-radius: var(--radius-full);
     background: var(--accent-primary);
     border: 2px solid var(--surface-bg);
-    box-shadow: var(--shadow-sm);
+    box-shadow:
+      0 1px 4px rgb(0 0 0 / 15%),
+      0 0 8px var(--state-focus-ring);
     cursor: pointer;
   }
 }
 
 // ---- Custom scrollbar ----
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -222,7 +297,7 @@ input[type='range'] {
 
 ::-webkit-scrollbar-thumb {
   background: var(--scrollbar-thumb);
-  border-radius: 4px;
+  border-radius: 3px;
 
   &:hover {
     background: var(--border-strong);
@@ -251,5 +326,9 @@ input[type='range'] {
 @media (width <= 480px) {
   .docs-header__title {
     font-size: var(--text-base);
+  }
+
+  .docs-header__subtitle {
+    display: none;
   }
 }

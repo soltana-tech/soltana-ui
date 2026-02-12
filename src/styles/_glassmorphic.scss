@@ -1,115 +1,327 @@
 // ---------------------------------------------------------------------------
-// Glassmorphic Design Utilities
+// Glassmorphic Design Utilities — "Crystal & Stained Glass"
 // ---------------------------------------------------------------------------
-// Frosted glass effects with backdrop blur, border, and shadow.
-// The --glass-* custom properties are set per-theme in the theme files.
+// Multi-layer frosted glass, stained glass with theme tints and lead lines.
+// Theme-aware via --glass-* and --stained-* custom properties.
+// All glass elements set color: var(--text-primary) for consistent readability.
 // ---------------------------------------------------------------------------
 
-// ---- Base glass effect ----
+// ============================================================================
+// BASE GLASS EFFECTS
+// ============================================================================
+
 .glass {
   background: var(--glass-bg);
   backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
   box-shadow: 0 8px 32px var(--glass-shadow);
+  color: var(--text-primary);
 }
 
-// ---- Intensity variants ----
 .glass-subtle {
   background: var(--glass-bg);
   backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
   border: 1px solid var(--glass-border);
   box-shadow: 0 4px 16px var(--glass-shadow);
+  color: var(--text-primary);
 }
 
 .glass-strong {
   background: var(--glass-bg);
   backdrop-filter: blur(24px);
-  backdrop-filter: blur(24px);
   border: 1px solid var(--glass-border);
   box-shadow: 0 12px 48px var(--glass-shadow);
+  color: var(--text-primary);
 }
 
-// ---- Glass with tinted backgrounds ----
-.glass-accent {
-  background: rgb(189 147 249 / 15%);
-  backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgb(189 147 249 / 20%);
-  box-shadow: 0 8px 32px var(--glass-shadow);
+// ============================================================================
+// LUXURY & PREMIUM GLASS EFFECTS
+// ============================================================================
+
+.glass-luxury {
+  background: linear-gradient(145deg, var(--glass-gradient-start), var(--glass-gradient-end));
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    0 8px 32px var(--glass-shadow),
+    inset 0 1px 0 var(--glass-inner-glow);
+  color: var(--text-primary);
 }
 
-.glass-cyan {
-  background: rgb(139 233 253 / 12%);
-  backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgb(139 233 253 / 18%);
-  box-shadow: 0 8px 32px var(--glass-shadow);
+.glass-frosted-heavy {
+  background: linear-gradient(145deg, var(--glass-gradient-start), var(--glass-gradient-end));
+  backdrop-filter: blur(32px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    0 12px 48px var(--glass-shadow),
+    inset 0 1px 0 var(--glass-inner-glow);
+  color: var(--text-primary);
 }
 
-.glass-success {
-  background: rgb(80 250 123 / 10%);
-  backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgb(80 250 123 / 15%);
-  box-shadow: 0 8px 32px var(--glass-shadow);
+.glass-tinted-gradient {
+  background: linear-gradient(145deg, var(--glass-gradient-start), var(--glass-gradient-end));
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    0 8px 32px var(--glass-shadow),
+    inset 0 1px 0 var(--glass-inner-glow);
+  color: var(--text-primary);
 }
 
-.glass-danger {
-  background: rgb(255 85 85 / 10%);
-  backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgb(255 85 85 / 15%);
-  box-shadow: 0 8px 32px var(--glass-shadow);
-}
-
-.glass-warm {
-  background: rgb(255 184 108 / 10%);
-  backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgb(255 184 108 / 15%);
-  box-shadow: 0 8px 32px var(--glass-shadow);
-}
-
-// ---- Glass card ----
-.glass-card {
-  background: var(--glass-bg);
+.glass-layered {
+  background: linear-gradient(145deg, var(--glass-gradient-start), var(--glass-gradient-end));
   backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    0 4px 16px var(--glass-shadow),
+    0 16px 48px rgb(0 0 0 / 15%),
+    inset 0 1px 0 var(--glass-inner-glow);
+  color: var(--text-primary);
+}
+
+.glass-chrome {
+  background: linear-gradient(
+    145deg,
+    var(--glass-gradient-start),
+    var(--glass-gradient-end),
+    var(--glass-inner-glow)
+  );
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    0 8px 32px var(--glass-shadow),
+    inset 0 1px 0 var(--glass-inner-glow),
+    inset 0 -1px 0 rgb(0 0 0 / 10%);
+  color: var(--text-primary);
+}
+
+// ============================================================================
+// TINTED GLASS (jewel-toned)
+// ============================================================================
+
+.glass-gold {
+  background: rgb(212 168 67 / 8%);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgb(212 168 67 / 12%);
+  box-shadow:
+    0 8px 32px var(--glass-shadow),
+    inset 0 1px 0 rgb(212 168 67 / 6%);
+  color: var(--text-primary);
+}
+
+.glass-emerald {
+  background: rgb(16 185 129 / 8%);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgb(16 185 129 / 10%);
+  box-shadow: 0 8px 32px var(--glass-shadow);
+  color: var(--text-primary);
+}
+
+.glass-sapphire {
+  background: rgb(59 130 246 / 8%);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgb(59 130 246 / 10%);
+  box-shadow: 0 8px 32px var(--glass-shadow);
+  color: var(--text-primary);
+}
+
+.glass-ruby {
+  background: rgb(239 68 68 / 8%);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgb(239 68 68 / 10%);
+  box-shadow: 0 8px 32px var(--glass-shadow);
+  color: var(--text-primary);
+}
+
+.glass-amethyst {
+  background: rgb(168 85 247 / 8%);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgb(168 85 247 / 10%);
+  box-shadow: 0 8px 32px var(--glass-shadow);
+  color: var(--text-primary);
+}
+
+// ============================================================================
+// STAINED GLASS — theme-colored translucent panels
+// ============================================================================
+
+// Base stained glass: heavy blur + theme primary color tint + lead-line border
+.glass-stained {
+  background: linear-gradient(
+    135deg,
+    var(--stained-primary),
+    var(--stained-secondary),
+    var(--stained-accent)
+  );
+  backdrop-filter: blur(28px) saturate(160%);
+  border: 2px solid rgb(40 35 30 / 40%);
+  box-shadow:
+    0 8px 32px var(--glass-shadow),
+    inset 0 0 20px rgb(255 255 255 / 5%),
+    inset 0 1px 0 var(--glass-inner-glow);
+  color: var(--text-primary);
+  position: relative;
+
+  // Internal lead-line frame
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    border: 1px solid rgb(40 35 30 / 20%);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+}
+
+// Gold cathedral glass
+.glass-stained-gold {
+  background: linear-gradient(
+    135deg,
+    rgb(212 168 67 / 15%) 0%,
+    rgb(254 243 199 / 10%) 30%,
+    rgb(184 134 11 / 12%) 60%,
+    rgb(252 211 77 / 8%) 100%
+  );
+  backdrop-filter: blur(28px) saturate(170%);
+  border: 2px solid rgb(100 80 30 / 35%);
+  box-shadow:
+    0 8px 32px var(--glass-shadow),
+    inset 0 0 24px rgb(212 168 67 / 8%),
+    inset 0 1px 0 rgb(254 243 199 / 20%);
+  color: var(--text-primary);
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    border: 1px solid rgb(100 80 30 / 18%);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+}
+
+// Multi-color jewel stained glass (cathedral window)
+.glass-stained-jewel {
+  background: linear-gradient(
+    135deg,
+    rgb(232 200 64 / 12%) 0%,
+    rgb(16 185 129 / 10%) 25%,
+    rgb(59 130 246 / 10%) 50%,
+    rgb(239 68 68 / 8%) 75%,
+    rgb(168 85 247 / 10%) 100%
+  );
+  backdrop-filter: blur(24px) saturate(180%);
+  border: 2px solid rgb(40 35 30 / 45%);
+  box-shadow:
+    0 8px 32px var(--glass-shadow),
+    inset 0 0 28px rgb(255 255 255 / 4%);
+  color: var(--text-primary);
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgb(40 35 30 / 15%);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+}
+
+// Rose window: radial gradient stained glass
+.glass-stained-rose {
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgb(239 68 68 / 12%) 0%,
+    rgb(168 85 247 / 10%) 25%,
+    rgb(59 130 246 / 8%) 50%,
+    rgb(16 185 129 / 10%) 75%,
+    var(--stained-primary) 100%
+  );
+  backdrop-filter: blur(24px) saturate(170%);
+  border: 2px solid rgb(40 35 30 / 40%);
+  box-shadow:
+    0 8px 32px var(--glass-shadow),
+    inset 0 0 30px rgb(255 255 255 / 3%);
+  color: var(--text-primary);
+  position: relative;
+
+  // Concentric ring suggesting rose window structure
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 20%;
+    border: 1px solid rgb(40 35 30 / 15%);
+    border-radius: var(--radius-full);
+    pointer-events: none;
+  }
+}
+
+// Lead-line grid overlay (can be combined with any stained glass)
+.glass-stained-lead {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(0deg, rgb(40 35 30 / 12%) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(40 35 30 / 12%) 1px, transparent 1px);
+    background-size: 40px 40px;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+// ============================================================================
+// GLASS COMPONENTS
+// ============================================================================
+
+.glass-card {
+  background: linear-gradient(145deg, var(--glass-gradient-start), var(--glass-gradient-end));
   backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-2xl);
-  box-shadow: 0 8px 32px var(--glass-shadow);
+  box-shadow:
+    0 8px 32px var(--glass-shadow),
+    inset 0 1px 0 var(--glass-inner-glow);
   padding: 1.5rem;
+  color: var(--text-primary);
 }
 
-// ---- Glass navbar ----
 .glass-nav {
-  background: var(--glass-bg);
-  backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
+  background: linear-gradient(145deg, var(--glass-gradient-start), var(--glass-gradient-end));
+  backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--glass-border);
-  box-shadow: 0 2px 16px var(--glass-shadow);
+  box-shadow:
+    0 2px 16px var(--glass-shadow),
+    inset 0 -1px 0 rgb(0 0 0 / 5%);
+  color: var(--text-primary);
 }
 
-// ---- Glass button ----
 .glass-button {
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
+  background: linear-gradient(145deg, var(--glass-gradient-start), var(--glass-gradient-end));
   backdrop-filter: blur(10px);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
-  box-shadow: 0 4px 16px var(--glass-shadow);
+  box-shadow:
+    0 4px 16px var(--glass-shadow),
+    inset 0 1px 0 var(--glass-inner-glow);
   color: var(--text-primary);
   cursor: pointer;
   transition:
-    background var(--transition-normal) ease,
-    box-shadow var(--transition-normal) ease,
-    transform var(--transition-normal) ease;
+    background 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.2s ease;
 
   &:hover {
-    background: rgb(255 255 255 / 12%);
-    box-shadow: 0 6px 24px var(--glass-shadow);
+    background: linear-gradient(145deg, var(--glass-inner-glow), var(--glass-gradient-end));
+    box-shadow:
+      0 6px 24px var(--glass-shadow),
+      inset 0 1px 0 var(--glass-inner-glow);
     transform: translateY(-1px);
   }
 
@@ -119,10 +331,8 @@
   }
 }
 
-// ---- Glass input ----
 .glass-input {
   background: var(--glass-bg);
-  backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
@@ -130,7 +340,10 @@
   color: var(--text-primary);
   font-family: var(--font-sans);
   font-size: var(--text-base);
-  transition: border-color var(--transition-normal) ease;
+  letter-spacing: var(--tracking-refined);
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 
   &::placeholder {
     color: var(--text-muted);
@@ -139,58 +352,60 @@
   &:focus {
     outline: none;
     border-color: var(--accent-primary);
-    box-shadow: 0 0 0 3px var(--state-focus-ring);
+    box-shadow:
+      0 0 0 3px var(--state-focus-ring),
+      inset 0 1px 0 var(--glass-inner-glow);
   }
 }
 
-// ---- Glass modal / overlay ----
+// ============================================================================
+// GLASS OVERLAYS & MODALS
+// ============================================================================
+
 .glass-overlay {
-  background: rgb(0 0 0 / 40%);
-  backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
+  background: rgb(0 0 0 / 50%);
+  backdrop-filter: blur(6px);
 }
 
 .glass-modal {
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
+  background: linear-gradient(145deg, var(--glass-gradient-start), var(--glass-gradient-end));
+  backdrop-filter: blur(24px);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-2xl);
-  box-shadow: 0 24px 64px var(--glass-shadow);
+  box-shadow:
+    0 24px 64px var(--glass-shadow),
+    inset 0 1px 0 var(--glass-inner-glow);
+  color: var(--text-primary);
 }
 
-// ---- Backdrop blur standalone utilities ----
+// ============================================================================
+// BACKDROP BLUR UTILITIES
+// ============================================================================
+
 .blur-sm {
-  backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
 }
 
 .blur {
   backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
 }
 
 .blur-md {
-  backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 
 .blur-lg {
   backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
 }
 
 .blur-xl {
-  backdrop-filter: blur(24px);
   backdrop-filter: blur(24px);
 }
 
 .blur-2xl {
   backdrop-filter: blur(40px);
-  backdrop-filter: blur(40px);
 }
 
 .blur-none {
-  backdrop-filter: none;
   backdrop-filter: none;
 }

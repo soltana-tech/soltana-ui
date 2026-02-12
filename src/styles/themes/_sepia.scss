@@ -1,80 +1,100 @@
 // ---------------------------------------------------------------------------
-// Sepia Theme (warm, paper-like variant)
+// Estate Champagne (Sepia / Warm Theme)
+// ---------------------------------------------------------------------------
+// Deep champagne parchment with bronze accents and amber warmth.
+// Evokes aged leather, candlelit interiors, and antique finishes.
 // ---------------------------------------------------------------------------
 
 [data-theme='sepia'] {
   color-scheme: light;
 
-  // Surface colors
-  --surface-bg: #f4ede1;
-  --surface-1: #faf5ec;
-  --surface-2: #ede3d1;
-  --surface-3: #e3d6c1;
-  --surface-4: #dcc9b3;
-  --surface-overlay: rgb(244 237 225 / 90%);
+  // Surface colors — deeper champagne with amber undertones
+  --surface-bg: #e8dcc0;
+  --surface-1: #f2e8d2;
+  --surface-2: #ddd0b0;
+  --surface-3: #d0c098;
+  --surface-4: #c4b088;
+  --surface-overlay: rgb(232 220 192 / 93%);
 
-  // Text colors
-  --text-primary: #3b2d22;
-  --text-secondary: #5c4033;
-  --text-tertiary: #8b7355;
-  --text-muted: #a89378;
-  --text-inverse: #f4ede1;
+  // Text colors — rich espresso hierarchy (higher contrast than light)
+  --text-primary: #1c1408;
+  --text-secondary: #3a2c12;
+  --text-tertiary: #5a4b30;
+  --text-muted: #7a6b50;
+  --text-inverse: #f2e8d2;
 
-  // Border colors
-  --border-default: #dcc9b3;
-  --border-subtle: #e3d6c1;
-  --border-strong: #c4a97d;
+  // Border colors — warm bronze tints
+  --border-default: rgb(94 63 27 / 18%);
+  --border-subtle: rgb(94 63 27 / 10%);
+  --border-strong: rgb(94 63 27 / 28%);
 
-  // Accent colors (warm purple/teal variants)
-  --accent-primary: #7c5cbf;
-  --accent-primary-hover: #6a4dab;
-  --accent-primary-active: #593f96;
-  --accent-secondary: #4a8c73;
-  --accent-secondary-hover: #3d7662;
-  --accent-secondary-active: #316151;
+  // Accent colors — bronze primary, emerald secondary
+  --accent-primary: #a06e2b;
+  --accent-primary-hover: #7e5522;
+  --accent-primary-active: #5e3f1b;
+  --accent-secondary: #1a7854;
+  --accent-secondary-hover: #156543;
+  --accent-secondary-active: #105235;
 
-  // Semantic colors
-  --color-success: #4a8c3f;
-  --color-success-subtle: rgb(74 140 63 / 12%);
-  --color-success-text: #3d7533;
-  --color-warning: #b87a2a;
-  --color-warning-subtle: rgb(184 122 42 / 12%);
-  --color-warning-text: #9e6922;
-  --color-error: #c0392b;
-  --color-error-subtle: rgb(192 57 43 / 10%);
-  --color-error-text: #a93226;
-  --color-info: #2980b9;
-  --color-info-subtle: rgb(41 128 185 / 10%);
-  --color-info-text: #226fa3;
+  // Gold highlight (warmer antique gold for sepia)
+  --accent-gold: #b8860b;
+  --accent-gold-hover: #a0740a;
 
-  // Interactive states
-  --state-hover: rgb(59 45 34 / 5%);
-  --state-active: rgb(59 45 34 / 10%);
-  --state-focus-ring: rgb(124 92 191 / 35%);
-  --state-disabled-bg: #e3d6c1;
-  --state-disabled-text: #a89378;
+  // Semantic colors — warm-shifted, distinct from light
+  --color-success: #1a7854;
+  --color-success-subtle: rgb(26 120 84 / 12%);
+  --color-success-text: #156543;
+  --color-warning: #a06e2b;
+  --color-warning-subtle: rgb(160 110 43 / 12%);
+  --color-warning-text: #7e5522;
+  --color-error: #a02020;
+  --color-error-subtle: rgb(160 32 32 / 10%);
+  --color-error-text: #882020;
+  --color-info: #2a5098;
+  --color-info-subtle: rgb(42 80 152 / 10%);
+  --color-info-text: #1e3a8a;
 
-  // Neumorphic shadows
-  --neuro-bg: #ede3d1;
-  --neuro-shadow-light: rgb(250 245 236 / 80%);
-  --neuro-shadow-dark: rgb(170 148 120 / 45%);
+  // Interactive states — bronze-tinted
+  --state-hover: rgb(94 63 27 / 8%);
+  --state-active: rgb(94 63 27 / 14%);
+  --state-focus-ring: rgb(160 110 43 / 38%);
+  --state-disabled-bg: #d0c098;
+  --state-disabled-text: #7a6b50;
 
-  // Glassmorphic
-  --glass-bg: rgb(244 237 225 / 50%);
-  --glass-border: rgb(250 245 236 / 50%);
-  --glass-shadow: rgb(90 70 50 / 10%);
+  // Neumorphic shadows — warm parchment with bronze tint
+  --neuro-bg: #ddd0b0;
+  --neuro-shadow-light: rgb(242 232 210 / 82%);
+  --neuro-shadow-dark: rgb(140 120 85 / 45%);
+  --neuro-shadow-mid: rgb(140 120 85 / 28%);
+  --neuro-highlight: rgb(242 232 210 / 58%);
+
+  // Glassmorphic — amber-tinted crystal
+  --glass-bg: rgb(232 220 192 / 45%);
+  --glass-border: rgb(160 110 43 / 18%);
+  --glass-shadow: rgb(94 63 27 / 14%);
+  --glass-gradient-start: rgb(242 232 210 / 55%);
+  --glass-gradient-end: rgb(232 220 192 / 28%);
+  --glass-inner-glow: rgb(242 232 210 / 48%);
+
+  // Stained glass tints (sepia: amber and bronze tones)
+  --stained-primary: rgb(160 110 43 / 15%);
+  --stained-secondary: rgb(26 120 84 / 10%);
+  --stained-accent: rgb(184 134 11 / 12%);
 
   // Component-specific
-  --input-bg: #faf5ec;
-  --input-border: #dcc9b3;
-  --input-border-focus: #7c5cbf;
-  --input-placeholder: #a89378;
-  --card-bg: #faf5ec;
-  --card-border: #dcc9b3;
-  --badge-bg: #e3d6c1;
-  --tooltip-bg: #3b2d22;
-  --tooltip-text: #f4ede1;
-  --scrollbar-thumb: #c4a97d;
-  --scrollbar-track: #ede3d1;
-  --code-bg: #ede3d1;
+  --input-bg: #f2e8d2;
+  --input-border: rgb(94 63 27 / 16%);
+  --input-border-focus: #a06e2b;
+  --input-placeholder: #7a6b50;
+  --card-bg: rgb(242 232 210 / 68%);
+  --card-border: rgb(94 63 27 / 12%);
+  --badge-bg: rgb(160 110 43 / 10%);
+  --tooltip-bg: #1c1408;
+  --tooltip-text: #f2e8d2;
+  --scrollbar-thumb: rgb(94 63 27 / 22%);
+  --scrollbar-track: rgb(94 63 27 / 5%);
+  --code-bg: #ddd0b0;
+
+  // Intensity (normal for sepia)
+  --intensity: var(--intensity-normal);
 }

@@ -1,14 +1,14 @@
 // ---------------------------------------------------------------------------
 // Design Tokens & CSS Custom Properties
 // ---------------------------------------------------------------------------
-// Extended Dracula color palette with light, dark, and sepia theme support.
-// All design tokens are expressed as CSS custom properties for runtime theming.
+// Estate-inspired palette: gold, jewel tones, marble, midnight.
+// Cinzel (serif) + Raleway (sans) + JetBrains Mono (mono).
 // ---------------------------------------------------------------------------
 
 @use 'sass:list';
 
 // ---- Spacing scale (4px base) ----
-$spacing-base: 0.25rem; // 4px
+$spacing-base: 0.25rem;
 $spacing-steps: (
   0: 0,
   px: 1px,
@@ -59,7 +59,7 @@ $font-sizes: (
   ),
   base: (
     1rem,
-    1.5rem,
+    1.65,
   ),
   lg: (
     1.125rem,
@@ -83,15 +83,15 @@ $font-sizes: (
   ),
   5xl: (
     3rem,
-    1,
+    1.15,
   ),
   6xl: (
     3.75rem,
-    1,
+    1.1,
   ),
   7xl: (
     4.5rem,
-    1,
+    1.05,
   ),
   8xl: (
     6rem,
@@ -111,17 +111,18 @@ $font-weights: (
   semibold: 600,
   bold: 700,
   extrabold: 800,
+  'black': 900,
 );
 
 // ---- Border radius scale ----
 $radii: (
   none: 0,
-  sm: 0.125rem,
-  md: 0.25rem,
-  default: 0.375rem,
-  lg: 0.5rem,
-  xl: 0.75rem,
-  2xl: 1rem,
+  sm: 0.25rem,
+  md: 0.5rem,
+  default: 0.625rem,
+  lg: 0.875rem,
+  xl: 1.125rem,
+  2xl: 1.25rem,
   3xl: 1.5rem,
   full: 9999px,
 );
@@ -139,13 +140,13 @@ $z-indices: (
 
 // ---- Shadow scale ----
 $shadows: (
-  sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
-  default: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
-  md: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
-  lg: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
-  xl: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
-  2xl: '0 25px 50px -12px rgb(0 0 0 / 0.25)',
-  inner: 'inset 0 2px 4px 0 rgb(0 0 0 / 0.05)',
+  sm: '0 1px 2px 0 rgb(0 0 0 / 8%)',
+  default: '0 1px 3px 0 rgb(0 0 0 / 12%), 0 1px 2px -1px rgb(0 0 0 / 8%)',
+  md: '0 4px 6px -1px rgb(0 0 0 / 12%), 0 2px 4px -2px rgb(0 0 0 / 8%)',
+  lg: '0 10px 15px -3px rgb(0 0 0 / 12%), 0 4px 6px -4px rgb(0 0 0 / 8%)',
+  xl: '0 20px 25px -5px rgb(0 0 0 / 14%), 0 8px 10px -6px rgb(0 0 0 / 10%)',
+  2xl: '0 25px 50px -12px rgb(0 0 0 / 30%)',
+  inner: 'inset 0 2px 4px 0 rgb(0 0 0 / 6%)',
   none: 'none',
 );
 
@@ -166,55 +167,99 @@ $breakpoints: (
   2xl: 1536px,
 );
 
-// ---- Dracula base palette (raw values for SCSS usage) ----
-$dracula-bg: #282a36;
-$dracula-current: #44475a;
-$dracula-fg: #f8f8f2;
-$dracula-comment: #6272a4;
-$dracula-cyan: #8be9fd;
-$dracula-green: #50fa7b;
-$dracula-orange: #ffb86c;
-$dracula-pink: #ff79c6;
-$dracula-purple: #bd93f9;
-$dracula-red: #f55;
-$dracula-yellow: #f1fa8c;
+// ---- Gold scale ----
+$gold-50: #fefce8;
+$gold-100: #fef3c7;
+$gold-200: #fde68a;
+$gold-300: #fcd34d;
+$gold-400: #d4a843;
+$gold-500: #b8860b;
+$gold-600: #92700c;
+$gold-700: #6b4f0a;
+$gold-800: #4a3608;
+$gold-900: #2c2005;
 
-// ---- Neutral gray scale ----
-$gray-50: #fafafa;
-$gray-100: #f4f4f5;
-$gray-200: #e4e4e7;
-$gray-300: #d4d4d8;
-$gray-400: #a1a1aa;
-$gray-500: #71717a;
-$gray-600: #52525b;
-$gray-700: #3f3f46;
-$gray-800: #27272a;
-$gray-900: #18181b;
-$gray-950: #09090b;
+// ---- Silver scale (cool blue-grays) ----
+$silver-50: #f8f9fb;
+$silver-100: #eef1f5;
+$silver-200: #d8dde6;
+$silver-300: #b8c0cf;
+$silver-400: #929cb0;
+$silver-500: #6e7a92;
+$silver-600: #576378;
+$silver-700: #454e60;
+$silver-800: #353c4a;
+$silver-900: #252a34;
 
-// ---- Pastel palette ----
-$pastel-lilac: #e1d5f3;
-$pastel-peach: #f8e8d5;
-$pastel-mint: #d5f3e8;
-$pastel-blush: #ffd5e5;
-$pastel-sky: #d5e8f8;
-$pastel-lemon: #f3f1d5;
-$pastel-lavender: #d8d5f3;
-$pastel-rose: #f3d5d8;
-$pastel-sage: #d5e8d5;
-$pastel-coral: #f3dbd5;
+// ---- Bronze scale (warm copper-browns) ----
+$bronze-50: #fdf6ee;
+$bronze-100: #f8e8d0;
+$bronze-200: #f0cd9e;
+$bronze-300: #daa660;
+$bronze-400: #cd8d3a;
+$bronze-500: #a06e2b;
+$bronze-600: #7e5522;
+$bronze-700: #5e3f1b;
+$bronze-800: #422c14;
+$bronze-900: #2a1b0d;
 
-// ---- Sepia palette ----
-$sepia-cream: #f4ede1;
-$sepia-parchment: #ede3d1;
-$sepia-tan: #dcc9b3;
-$sepia-sand: #c4a97d;
-$sepia-coffee: #8b7355;
-$sepia-chocolate: #5c4033;
-$sepia-walnut: #4a3728;
-$sepia-espresso: #3b2d22;
+// ---- Copper scale (reddish-orange metallics) ----
+$copper-50: #fef5f0;
+$copper-100: #fce5d5;
+$copper-200: #f5c4a1;
+$copper-300: #e89f6e;
+$copper-400: #d97e4a;
+$copper-500: #b86536;
+$copper-600: #934f2b;
+$copper-700: #6e3b22;
+$copper-800: #4d2a1a;
+$copper-900: #301c12;
 
-// ---- CSS custom properties (applied to :root) ----
+// ---- Platinum scale (cool blue-whites) ----
+$platinum-50: #f9fafb;
+$platinum-100: #eef0f4;
+$platinum-200: #dce1ea;
+$platinum-300: #c5cddb;
+$platinum-400: #a8b3c7;
+$platinum-500: #8a97ae;
+$platinum-600: #6d7b94;
+$platinum-700: #556178;
+$platinum-800: #3d475a;
+$platinum-900: #2a3040;
+
+// ---- Jewel tones ----
+$jewel-emerald: #10b981;
+$jewel-emerald-deep: #0d6b4e;
+$jewel-sapphire: #3b82f6;
+$jewel-sapphire-deep: #1e40af;
+$jewel-ruby: #ef4444;
+$jewel-ruby-deep: #991b1b;
+$jewel-amethyst: #a855f7;
+$jewel-amethyst-deep: #6b21a8;
+$jewel-citrine: #e8c840;
+$jewel-citrine-deep: #b89c20;
+$jewel-topaz: #e8922e;
+$jewel-topaz-deep: #b86e1a;
+$jewel-jade: #2ea87a;
+$jewel-jade-deep: #1a7854;
+$jewel-turquoise: #3cc0b8;
+$jewel-turquoise-deep: #228a84;
+$jewel-onyx: #1a1c2e;
+$jewel-pearl: #f0ecf8;
+
+// ---- Ivory / warm neutrals ----
+$ivory-50: #fefdf5;
+$ivory-100: #faf8f4;
+$ivory-200: #f5f0e6;
+$ivory-300: #ede5d5;
+$ivory-400: #e0d5c0;
+$ivory-500: #c5b99b;
+$ivory-600: #a89a78;
+$ivory-700: #8a7e6a;
+$ivory-800: #5a5245;
+$ivory-900: #3a332a;
+
+// ---- CSS custom properties ----
 :root {
   // Spacing tokens
   @each $key, $val in $spacing-steps {
@@ -236,8 +281,10 @@ $sepia-espresso: #3b2d22;
     --transition-#{$key}: #{$val};
   }
 
-  // Font family
-  --font-sans: 'Space Grotesk', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  // Font families
+  --font-sans: 'Raleway', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: 'Cinzel', 'Georgia', 'Times New Roman', serif;
+  --font-display: 'Cinzel Decorative', 'Cinzel', serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
 
   // Font sizes
@@ -251,55 +298,160 @@ $sepia-espresso: #3b2d22;
     --font-#{$key}: #{$val};
   }
 
-  // Static palette (always available regardless of theme)
+  // Letter spacing tokens
+  --tracking-refined: 0.02em;
+  --tracking-elegant: 0.04em;
+  --tracking-display: 0.08em;
+  --tracking-inscriptional: 0.12em;
+
+  // Static palette
   --color-white: #fff;
   --color-black: #000;
 
-  // Gray scale
-  --gray-50: #{$gray-50};
-  --gray-100: #{$gray-100};
-  --gray-200: #{$gray-200};
-  --gray-300: #{$gray-300};
-  --gray-400: #{$gray-400};
-  --gray-500: #{$gray-500};
-  --gray-600: #{$gray-600};
-  --gray-700: #{$gray-700};
-  --gray-800: #{$gray-800};
-  --gray-900: #{$gray-900};
-  --gray-950: #{$gray-950};
+  // Gold scale
+  --gold-50: #{$gold-50};
+  --gold-100: #{$gold-100};
+  --gold-200: #{$gold-200};
+  --gold-300: #{$gold-300};
+  --gold-400: #{$gold-400};
+  --gold-500: #{$gold-500};
+  --gold-600: #{$gold-600};
+  --gold-700: #{$gold-700};
+  --gold-800: #{$gold-800};
+  --gold-900: #{$gold-900};
 
-  // Dracula palette (raw)
-  --dracula-bg: #{$dracula-bg};
-  --dracula-current: #{$dracula-current};
-  --dracula-fg: #{$dracula-fg};
-  --dracula-comment: #{$dracula-comment};
-  --dracula-cyan: #{$dracula-cyan};
-  --dracula-green: #{$dracula-green};
-  --dracula-orange: #{$dracula-orange};
-  --dracula-pink: #{$dracula-pink};
-  --dracula-purple: #{$dracula-purple};
-  --dracula-red: #{$dracula-red};
-  --dracula-yellow: #{$dracula-yellow};
+  // Gold gradient tokens
+  --gold-gradient: linear-gradient(
+    145deg,
+    #{$gold-200},
+    #{$gold-400},
+    #{$gold-500},
+    #{$gold-400},
+    #{$gold-200}
+  );
+  --gold-gradient-subtle: linear-gradient(145deg, #{$gold-300}, #{$gold-400}, #{$gold-300});
 
-  // Pastel palette
-  --pastel-lilac: #{$pastel-lilac};
-  --pastel-peach: #{$pastel-peach};
-  --pastel-mint: #{$pastel-mint};
-  --pastel-blush: #{$pastel-blush};
-  --pastel-sky: #{$pastel-sky};
-  --pastel-lemon: #{$pastel-lemon};
-  --pastel-lavender: #{$pastel-lavender};
-  --pastel-rose: #{$pastel-rose};
-  --pastel-sage: #{$pastel-sage};
-  --pastel-coral: #{$pastel-coral};
+  // Silver scale
+  --silver-50: #{$silver-50};
+  --silver-100: #{$silver-100};
+  --silver-200: #{$silver-200};
+  --silver-300: #{$silver-300};
+  --silver-400: #{$silver-400};
+  --silver-500: #{$silver-500};
+  --silver-600: #{$silver-600};
+  --silver-700: #{$silver-700};
+  --silver-800: #{$silver-800};
+  --silver-900: #{$silver-900};
+  --silver-gradient: linear-gradient(
+    145deg,
+    #{$silver-200},
+    #{$silver-400},
+    #{$silver-500},
+    #{$silver-400},
+    #{$silver-200}
+  );
 
-  // Sepia palette
-  --sepia-cream: #{$sepia-cream};
-  --sepia-parchment: #{$sepia-parchment};
-  --sepia-tan: #{$sepia-tan};
-  --sepia-sand: #{$sepia-sand};
-  --sepia-coffee: #{$sepia-coffee};
-  --sepia-chocolate: #{$sepia-chocolate};
-  --sepia-walnut: #{$sepia-walnut};
-  --sepia-espresso: #{$sepia-espresso};
+  // Bronze scale
+  --bronze-50: #{$bronze-50};
+  --bronze-100: #{$bronze-100};
+  --bronze-200: #{$bronze-200};
+  --bronze-300: #{$bronze-300};
+  --bronze-400: #{$bronze-400};
+  --bronze-500: #{$bronze-500};
+  --bronze-600: #{$bronze-600};
+  --bronze-700: #{$bronze-700};
+  --bronze-800: #{$bronze-800};
+  --bronze-900: #{$bronze-900};
+  --bronze-gradient: linear-gradient(
+    145deg,
+    #{$bronze-200},
+    #{$bronze-400},
+    #{$bronze-500},
+    #{$bronze-400},
+    #{$bronze-200}
+  );
+
+  // Copper scale
+  --copper-50: #{$copper-50};
+  --copper-100: #{$copper-100};
+  --copper-200: #{$copper-200};
+  --copper-300: #{$copper-300};
+  --copper-400: #{$copper-400};
+  --copper-500: #{$copper-500};
+  --copper-600: #{$copper-600};
+  --copper-700: #{$copper-700};
+  --copper-800: #{$copper-800};
+  --copper-900: #{$copper-900};
+  --copper-gradient: linear-gradient(
+    145deg,
+    #{$copper-200},
+    #{$copper-400},
+    #{$copper-500},
+    #{$copper-400},
+    #{$copper-200}
+  );
+
+  // Platinum scale
+  --platinum-50: #{$platinum-50};
+  --platinum-100: #{$platinum-100};
+  --platinum-200: #{$platinum-200};
+  --platinum-300: #{$platinum-300};
+  --platinum-400: #{$platinum-400};
+  --platinum-500: #{$platinum-500};
+  --platinum-600: #{$platinum-600};
+  --platinum-700: #{$platinum-700};
+  --platinum-800: #{$platinum-800};
+  --platinum-900: #{$platinum-900};
+  --platinum-gradient: linear-gradient(
+    145deg,
+    #{$platinum-200},
+    #{$platinum-400},
+    #{$platinum-500},
+    #{$platinum-400},
+    #{$platinum-200}
+  );
+
+  // Jewel tones
+  --jewel-emerald: #{$jewel-emerald};
+  --jewel-emerald-deep: #{$jewel-emerald-deep};
+  --jewel-sapphire: #{$jewel-sapphire};
+  --jewel-sapphire-deep: #{$jewel-sapphire-deep};
+  --jewel-ruby: #{$jewel-ruby};
+  --jewel-ruby-deep: #{$jewel-ruby-deep};
+  --jewel-amethyst: #{$jewel-amethyst};
+  --jewel-amethyst-deep: #{$jewel-amethyst-deep};
+  --jewel-citrine: #{$jewel-citrine};
+  --jewel-citrine-deep: #{$jewel-citrine-deep};
+  --jewel-topaz: #{$jewel-topaz};
+  --jewel-topaz-deep: #{$jewel-topaz-deep};
+  --jewel-jade: #{$jewel-jade};
+  --jewel-jade-deep: #{$jewel-jade-deep};
+  --jewel-turquoise: #{$jewel-turquoise};
+  --jewel-turquoise-deep: #{$jewel-turquoise-deep};
+  --jewel-onyx: #{$jewel-onyx};
+  --jewel-pearl: #{$jewel-pearl};
+
+  // Intensity modifiers (muted for light themes, vivid for dark)
+  --intensity-muted: 0.6;
+  --intensity-normal: 0.85;
+  --intensity-vivid: 1;
+
+  // Ivory / warm neutral scale
+  --ivory-50: #{$ivory-50};
+  --ivory-100: #{$ivory-100};
+  --ivory-200: #{$ivory-200};
+  --ivory-300: #{$ivory-300};
+  --ivory-400: #{$ivory-400};
+  --ivory-500: #{$ivory-500};
+  --ivory-600: #{$ivory-600};
+  --ivory-700: #{$ivory-700};
+  --ivory-800: #{$ivory-800};
+  --ivory-900: #{$ivory-900};
+
+  // Transparency tokens
+  --stroke: rgb(255 255 255 / 8%);
+  --glass-tint-light: rgb(255 255 255 / 5%);
+  --glass-tint-dark: rgb(255 255 255 / 2%);
+  --shadow-hi: rgb(255 255 255 / 6%);
+  --shadow-lo: rgb(0 0 0 / 60%);
 }

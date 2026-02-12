@@ -7,30 +7,41 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Cinzel+Decorative:wght@400;700;900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
   </head>
-  <body>
+  <body class="bg-gradient-estate">
+    <!-- Skip navigation for keyboard users -->
+    <a href="#docs-main" class="skip-link">Skip to main content</a>
+
     <!-- Header -->
-    <header class="docs-header glass-nav" id="docs-header">
+    <header class="docs-header" id="docs-header">
       <div class="docs-header__inner">
         <div class="docs-header__brand">
-          <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
-            <rect width="32" height="32" rx="8" fill="var(--accent-primary)" />
-            <path d="M8 22V10l8 6-8 6z" fill="var(--text-inverse)" />
-            <path d="M16 22V10l8 6-8 6z" fill="var(--text-inverse)" opacity="0.6" />
+          <svg class="docs-logo" width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <rect width="36" height="36" rx="8" fill="url(#logo-grad)" />
+            <path d="M9 24V12l9 6-9 6z" fill="white" />
+            <path d="M18 24V12l9 6-9 6z" fill="white" opacity="0.5" />
+            <defs>
+              <linearGradient id="logo-grad" x1="0" y1="0" x2="36" y2="36">
+                <stop offset="0%" stop-color="#d4a843" />
+                <stop offset="50%" stop-color="#b8860b" />
+                <stop offset="100%" stop-color="#92700c" />
+              </linearGradient>
+            </defs>
           </svg>
-          <span class="docs-header__title"
-            >Soltana <span class="text-muted font-light">Design System</span></span
-          >
+          <span class="docs-header__title">
+            <span class="font-serif tracking-display">Soltana</span>
+            <span class="docs-header__subtitle">Design System</span>
+          </span>
         </div>
         <div class="docs-header__actions">
           <div class="theme-switcher" id="theme-switcher">
-            <button class="theme-btn" data-theme-set="light" title="Light mode">
+            <button class="theme-btn" data-theme-set="light" title="Estate Marble (Light)">
               <svg
-                width="18"
-                height="18"
+                width="16"
+                height="16"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -49,10 +60,10 @@
                 <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
               </svg>
             </button>
-            <button class="theme-btn active" data-theme-set="dark" title="Dark mode">
+            <button class="theme-btn active" data-theme-set="dark" title="Estate Midnight (Dark)">
               <svg
-                width="18"
-                height="18"
+                width="16"
+                height="16"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -63,10 +74,10 @@
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
               </svg>
             </button>
-            <button class="theme-btn" data-theme-set="sepia" title="Sepia mode">
+            <button class="theme-btn" data-theme-set="sepia" title="Estate Champagne (Warm)">
               <svg
-                width="18"
-                height="18"
+                width="16"
+                height="16"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -84,18 +95,26 @@
     </header>
 
     <!-- Tab navigation -->
-    <nav class="docs-tabs" id="docs-tabs">
+    <nav class="docs-tabs" id="docs-tabs" role="tablist" aria-label="Documentation sections">
       <div class="docs-tabs__inner">
-        <button class="tab active" data-tab="foundation">Foundation</button>
-        <button class="tab" data-tab="utilities">Utilities</button>
-        <button class="tab" data-tab="components">Components</button>
-        <button class="tab" data-tab="patterns">Patterns</button>
-        <button class="tab" data-tab="examples">Examples</button>
+        <button class="tab active" data-tab="foundation" role="tab" aria-selected="true">
+          Foundation
+        </button>
+        <button class="tab" data-tab="materials" role="tab" aria-selected="false">Materials</button>
+        <button class="tab" data-tab="utilities" role="tab" aria-selected="false">Utilities</button>
+        <button class="tab" data-tab="components" role="tab" aria-selected="false">
+          Components
+        </button>
+        <button class="tab" data-tab="web-components" role="tab" aria-selected="false">
+          Web Components
+        </button>
+        <button class="tab" data-tab="patterns" role="tab" aria-selected="false">Patterns</button>
+        <button class="tab" data-tab="examples" role="tab" aria-selected="false">Examples</button>
       </div>
     </nav>
 
     <!-- Main content area -->
-    <main class="docs-main" id="docs-main">
+    <main class="docs-main" id="docs-main" role="main">
       <div class="docs-content" id="docs-content">
         <!-- Pages are rendered here by JS -->
       </div>

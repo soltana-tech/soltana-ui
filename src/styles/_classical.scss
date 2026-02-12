@@ -1,0 +1,202 @@
+// ---------------------------------------------------------------------------
+// Classical Layout Utilities
+// ---------------------------------------------------------------------------
+// Golden ratio spacing, column-inspired layouts, and architectural
+// section elements (pediment, entablature, plinth).
+// ---------------------------------------------------------------------------
+
+// ---- Golden Ratio Spacing ----
+// 1.618 : 1 ratio scale based on 1rem unit
+$golden-ratio: 1.618;
+
+.space-golden-1 {
+  --golden-space: 0.618rem; // ~10px
+}
+
+.space-golden-2 {
+  --golden-space: 1rem; // base
+}
+
+.space-golden-3 {
+  --golden-space: 1.618rem; // ~26px
+}
+
+.space-golden-4 {
+  --golden-space: 2.618rem; // ~42px
+}
+
+.space-golden-5 {
+  --golden-space: 4.236rem; // ~68px
+}
+
+.space-golden-6 {
+  --golden-space: 6.854rem; // ~110px
+}
+
+// Golden ratio padding/margin utilities
+.p-golden {
+  padding: var(--golden-space, 1.618rem);
+}
+
+.px-golden {
+  padding-left: var(--golden-space, 1.618rem);
+  padding-right: var(--golden-space, 1.618rem);
+}
+
+.py-golden {
+  padding-top: var(--golden-space, 1.618rem);
+  padding-bottom: var(--golden-space, 1.618rem);
+}
+
+.m-golden {
+  margin: var(--golden-space, 1.618rem);
+}
+
+.mx-golden {
+  margin-left: var(--golden-space, 1.618rem);
+  margin-right: var(--golden-space, 1.618rem);
+}
+
+.my-golden {
+  margin-top: var(--golden-space, 1.618rem);
+  margin-bottom: var(--golden-space, 1.618rem);
+}
+
+.gap-golden {
+  gap: var(--golden-space, 1.618rem);
+}
+
+// ---- Golden Ratio Container ----
+.ratio-golden {
+  max-width: 100%;
+  aspect-ratio: 1.618 / 1;
+}
+
+.ratio-golden-portrait {
+  max-width: 100%;
+  aspect-ratio: 1 / 1.618;
+}
+
+// ---- Classical Column Layout ----
+// Multi-column layout with elegant proportions
+.columns-classical {
+  column-count: 2;
+  column-gap: 2.618rem;
+  column-rule: 1px solid rgb(212 168 67 / 15%);
+}
+
+.columns-classical-3 {
+  column-count: 3;
+  column-gap: 2.618rem;
+  column-rule: 1px solid rgb(212 168 67 / 15%);
+}
+
+// ---- Pediment — triangular/arched top section ----
+.pediment {
+  position: relative;
+  padding: 2.618rem 1.618rem 1.618rem;
+  text-align: center;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 3px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--gold-400) 20%,
+      var(--gold-300) 50%,
+      var(--gold-400) 80%,
+      transparent
+    );
+    border-radius: 2px;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 12px;
+    height: 12px;
+    background: var(--gold-400);
+    border-radius: 2px;
+  }
+}
+
+// ---- Entablature — horizontal band (for headers/footers) ----
+.entablature {
+  position: relative;
+  padding: 1rem 1.618rem;
+  border-top: 2px solid rgb(212 168 67 / 25%);
+  border-bottom: 1px solid rgb(212 168 67 / 12%);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgb(212 168 67 / 12%);
+  }
+}
+
+// ---- Plinth — base section ----
+.plinth {
+  padding: 1.618rem;
+  background: var(--surface-2);
+  border-top: 1px solid var(--border-default);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 5%;
+    right: 5%;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--gold-400) 30%,
+      var(--gold-400) 70%,
+      transparent
+    );
+    opacity: 0.3;
+  }
+}
+
+// ---- Architectural Section ----
+// Combines pediment (top) + content + plinth (base) pattern
+.section-classical {
+  position: relative;
+  padding: 4.236rem 1.618rem;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-400), transparent);
+    opacity: 0.3;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-400), transparent);
+    opacity: 0.2;
+  }
+}

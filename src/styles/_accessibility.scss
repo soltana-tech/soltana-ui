@@ -1,0 +1,132 @@
+// ---------------------------------------------------------------------------
+// Accessibility System
+// ---------------------------------------------------------------------------
+// Reduced motion, high contrast, focus styles, skip-link, and
+// screen reader utilities. WCAG 2.1 AA compliance foundation.
+// ---------------------------------------------------------------------------
+
+// ---- Reduced Motion ----
+// Disables animations and transitions for users who prefer reduced motion.
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+// ---- High Contrast Mode ----
+// Increases visual clarity for users who need stronger contrast.
+@media (prefers-contrast: more) {
+  :root {
+    --border-default: rgb(212 168 67 / 30%);
+    --border-subtle: rgb(212 168 67 / 20%);
+    --border-strong: rgb(212 168 67 / 50%);
+  }
+
+  .glass,
+  .glass-luxury,
+  .glass-frosted-heavy,
+  .neuro-glass {
+    backdrop-filter: none;
+    background: var(--surface-2);
+    border: 2px solid var(--border-strong);
+  }
+
+  .gold-text,
+  .gold-text-subtle {
+    -webkit-text-fill-color: var(--gold-400);
+    background: none;
+  }
+}
+
+// ---- Focus Styles ----
+// Gold accent focus ring, visible on all interactive elements.
+:focus-visible {
+  outline: 2px solid var(--gold-400);
+  outline-offset: 3px;
+}
+
+// Alternative focus ring utility
+.focus-ring-gold {
+  &:focus-visible {
+    outline: 2px solid var(--gold-400);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 4px rgb(212 168 67 / 20%);
+  }
+}
+
+.focus-ring-inset {
+  &:focus-visible {
+    outline: 2px solid var(--gold-400);
+    outline-offset: -3px;
+  }
+}
+
+// ---- Screen Reader Only ----
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+// Focusable screen reader only — becomes visible on focus
+.sr-only-focusable {
+  &:not(:focus, :focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
+
+// ---- Skip Navigation Link ----
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--gold-900);
+  background: var(--gold-300);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  text-decoration: none;
+  transition: top 0.15s ease;
+
+  &:focus {
+    top: 0;
+    outline: 2px solid var(--gold-400);
+    outline-offset: 2px;
+  }
+}
+
+// ---- Live Region ----
+.aria-live-region {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border-width: 0;
+}

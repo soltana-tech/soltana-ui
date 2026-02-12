@@ -5,11 +5,20 @@ export function renderExamples(): string {
 <div class="page-examples">
   <div class="section-heading">
     <h2 class="text-3xl font-bold">Examples</h2>
-    <p class="text-secondary mt-2">Full-page composition examples demonstrating how atoms, molecules, and organisms work together.</p>
+    <p class="text-secondary mt-2">Luxury composition examples demonstrating the estate aesthetic in context.</p>
   </div>
+  <div class="section-divider"></div>
 
   <div class="flex flex-wrap gap-2 mt-6 mb-4">
-    ${['Dashboard', 'Landing Hero', 'Glass Dashboard', 'Neuro Settings', 'Email Client']
+    ${[
+      'Dashboard',
+      'Landing Hero',
+      'Glass Dashboard',
+      'Neuro Settings',
+      'Email Client',
+      'Estate Landing',
+      'Classical Dashboard',
+    ]
       .map(
         (s) => `
       <a href="#example-${s.toLowerCase().replace(/\s+/g, '-')}" class="badge badge-pill">${s}</a>
@@ -87,7 +96,7 @@ export function renderExamples(): string {
                       ${[40, 65, 45, 80, 55, 90, 70, 85, 60, 95, 75, 88]
                         .map(
                           (h) => `
-                        <div style="width: 24px; height: ${String(h)}%; background: var(--accent-primary); border-radius: var(--radius-sm); opacity: ${String((h / 100) * 0.6 + 0.4)}"></div>
+                        <div style="width: 24px; height: ${String(h)}%; background: linear-gradient(to top, var(--accent-primary), var(--accent-secondary)); border-radius: var(--radius-sm); opacity: ${String((h / 100) * 0.6 + 0.4)}"></div>
                       `
                         )
                         .join('')}
@@ -130,19 +139,20 @@ export function renderExamples(): string {
     <h3 class="text-xl font-semibold mb-4">Landing Page Hero</h3>
     <div class="card overflow-hidden">
       <div class="specimen__preview p-0">
-        <div class="relative overflow-hidden" style="background: linear-gradient(135deg, var(--dracula-bg) 0%, #1a1b26 100%); min-height: 480px">
-          <!-- Decorative circles -->
-          <div class="absolute" style="width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(189,147,249,0.15), transparent); top: -100px; right: -100px;"></div>
-          <div class="absolute" style="width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(139,233,253,0.1), transparent); bottom: -80px; left: -80px;"></div>
+        <div class="relative overflow-hidden" style="background: linear-gradient(180deg, #0b0d17 0%, #11132a 100%); min-height: 520px">
+          <!-- Atmospheric gradient blobs -->
+          <div class="absolute" style="width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(189,147,249,0.12), transparent); top: -150px; right: -100px;"></div>
+          <div class="absolute" style="width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(139,233,253,0.08), transparent); bottom: -120px; left: -80px;"></div>
+          <div class="absolute" style="width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(255,121,198,0.06), transparent); top: 40%; left: 50%;"></div>
 
-          <!-- Navbar -->
-          <nav class="flex items-center justify-between px-8 py-4 relative z-10">
-            <span class="font-bold text-lg" style="color: #f8f8f2">Soltana</span>
+          <!-- Glass navbar -->
+          <nav class="flex items-center justify-between px-8 py-4 relative z-10" style="backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.06)">
+            <span class="font-serif text-xl font-semibold" style="color: #f8f8f2">Soltana</span>
             <div class="flex items-center gap-6">
               ${['Features', 'Pricing', 'Docs']
                 .map(
                   (item) => `
-                <a href="#" onclick="return false" class="text-sm font-medium" style="color: #c0c4d8">${item}</a>
+                <a href="#" onclick="return false" class="text-sm font-medium tracking-refined" style="color: rgba(255,255,255,0.6)">${item}</a>
               `
                 )
                 .join('')}
@@ -151,13 +161,13 @@ export function renderExamples(): string {
           </nav>
 
           <!-- Hero content -->
-          <div class="text-center px-8 pt-16 pb-20 relative z-10">
-            <span class="badge badge-pill mb-4" style="background: rgba(189,147,249,0.2); color: #bd93f9; border: 1px solid rgba(189,147,249,0.3)">New Release v2.0</span>
-            <h1 class="font-bold mb-4" style="font-size: 3.5rem; color: #f8f8f2; line-height: 1.1">Build beautiful<br/>interfaces <span style="color: #bd93f9">faster</span></h1>
-            <p class="text-lg mb-8 mx-auto" style="max-width: 520px; color: #8890a8">A complete design system with components, utilities, and patterns for modern web applications.</p>
+          <div class="text-center px-8 pt-20 pb-24 relative z-10">
+            <span class="overline mb-4 inline-block" style="color: var(--dracula-purple)">New Release v2.0</span>
+            <h1 class="font-serif mb-6" style="font-size: 4rem; color: #f8f8f2; line-height: 1.05; font-weight: 600;">Build beautiful<br/>interfaces <span style="background: linear-gradient(135deg, #bd93f9, #ff79c6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">effortlessly</span></h1>
+            <p class="text-lg mb-10 mx-auto" style="max-width: 520px; color: rgba(255,255,255,0.5); letter-spacing: 0.02em;">A complete design system with neumorphic, glassmorphic, and hybrid components for prestigious web applications.</p>
             <div class="flex justify-center gap-4">
               <button class="btn btn-primary btn-lg">Start Building</button>
-              <button class="btn btn-outline btn-lg" style="border-color: rgba(248,248,242,0.2); color: #f8f8f2">View Docs</button>
+              <button class="btn btn-outline btn-lg" style="border-color: rgba(255,255,255,0.12); color: #f8f8f2; backdrop-filter: blur(8px);">View Docs</button>
             </div>
           </div>
         </div>
@@ -170,19 +180,19 @@ export function renderExamples(): string {
     <h3 class="text-xl font-semibold mb-4">Glassmorphic Dashboard</h3>
     <div class="card overflow-hidden">
       <div class="specimen__preview p-0">
-        <div class="relative overflow-hidden p-6" style="background: linear-gradient(135deg, #1a1b3a, #2d1b4e, #1a2a3a); min-height: 420px;">
+        <div class="relative overflow-hidden p-6" style="background: linear-gradient(135deg, #0e1020, #1a1d42, #141628); min-height: 420px;">
           <!-- Decorative blobs -->
-          <div class="absolute" style="width: 250px; height: 250px; border-radius: 50%; background: rgba(189,147,249,0.3); filter: blur(60px); top: -50px; left: 20%;"></div>
-          <div class="absolute" style="width: 200px; height: 200px; border-radius: 50%; background: rgba(255,121,198,0.2); filter: blur(50px); bottom: -30px; right: 15%;"></div>
-          <div class="absolute" style="width: 150px; height: 150px; border-radius: 50%; background: rgba(139,233,253,0.15); filter: blur(40px); top: 40%; left: 60%;"></div>
+          <div class="absolute" style="width: 250px; height: 250px; border-radius: 50%; background: rgba(189,147,249,0.2); filter: blur(60px); top: -50px; left: 20%;"></div>
+          <div class="absolute" style="width: 200px; height: 200px; border-radius: 50%; background: rgba(255,121,198,0.15); filter: blur(50px); bottom: -30px; right: 15%;"></div>
+          <div class="absolute" style="width: 150px; height: 150px; border-radius: 50%; background: rgba(139,233,253,0.1); filter: blur(40px); top: 40%; left: 60%;"></div>
 
           <div class="relative z-10">
             <!-- Glass navbar -->
-            <div class="glass-card flex items-center justify-between mb-6 py-3 px-5" style="border-radius: var(--radius-xl)">
-              <span class="font-bold" style="color: #fff">Analytics</span>
+            <div class="glass-luxury flex items-center justify-between mb-6 py-3 px-5" style="border-radius: var(--radius-xl)">
+              <span class="font-serif font-semibold" style="color: #fff">Analytics</span>
               <div class="flex gap-2">
                 <button class="glass-button px-3 py-1 text-xs" style="color: #fff">Today</button>
-                <button class="glass-button px-3 py-1 text-xs" style="color: #fff; background: rgba(189,147,249,0.3)">Week</button>
+                <button class="glass-button px-3 py-1 text-xs" style="color: #fff; background: rgba(189,147,249,0.2)">Week</button>
                 <button class="glass-button px-3 py-1 text-xs" style="color: #fff">Month</button>
               </div>
             </div>
@@ -208,10 +218,10 @@ export function renderExamples(): string {
               ]
                 .map(
                   (s) => `
-                <div class="glass-card">
+                <div class="glass-luxury p-5" style="border-radius: var(--radius-xl)">
                   <div class="flex items-center gap-3 mb-2">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(189,147,249,0.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${s.icon}</svg>
-                    <span class="text-xs" style="color: rgba(255,255,255,0.6)">${s.label}</span>
+                    <span class="text-xs" style="color: rgba(255,255,255,0.5)">${s.label}</span>
                   </div>
                   <p class="text-xl font-bold" style="color: #fff">${s.value}</p>
                 </div>
@@ -221,12 +231,12 @@ export function renderExamples(): string {
             </div>
 
             <!-- Glass chart area -->
-            <div class="glass-card" style="min-height: 120px">
+            <div class="glass-luxury" style="min-height: 120px; border-radius: var(--radius-xl); padding: 1.25rem">
               <div class="flex items-end gap-3 justify-center" style="height: 100px">
                 ${[30, 55, 40, 70, 50, 85, 65, 75, 45, 90, 60, 80]
                   .map(
                     (h) => `
-                  <div style="width: 28px; height: ${String(h)}%; background: linear-gradient(to top, rgba(189,147,249,0.4), rgba(189,147,249,0.8)); border-radius: var(--radius-sm);"></div>
+                  <div style="width: 28px; height: ${String(h)}%; background: linear-gradient(to top, rgba(189,147,249,0.3), rgba(189,147,249,0.8)); border-radius: var(--radius-sm);"></div>
                 `
                   )
                   .join('')}
@@ -244,9 +254,9 @@ export function renderExamples(): string {
     <div class="card overflow-hidden">
       <div class="specimen__preview p-0">
         <div class="p-8" style="background: var(--neuro-bg); min-height: 400px">
-          <h4 class="text-xl font-semibold mb-6">Settings</h4>
+          <h4 class="font-serif text-2xl font-semibold mb-6">Settings</h4>
           <div class="grid gap-6" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))">
-            <div class="neuro-card">
+            <div class="neuro-elevated" style="padding: 1.5rem">
               <h5 class="font-semibold mb-4">Appearance</h5>
               <div class="flex flex-col gap-4">
                 <div class="flex items-center justify-between">
@@ -263,7 +273,7 @@ export function renderExamples(): string {
                 </div>
               </div>
             </div>
-            <div class="neuro-card">
+            <div class="neuro-elevated" style="padding: 1.5rem">
               <h5 class="font-semibold mb-4">Notifications</h5>
               <div class="flex flex-col gap-4">
                 <div class="flex items-center justify-between">
@@ -280,7 +290,7 @@ export function renderExamples(): string {
                 </div>
               </div>
             </div>
-            <div class="neuro-card">
+            <div class="neuro-elevated" style="padding: 1.5rem">
               <h5 class="font-semibold mb-4">Profile</h5>
               <div class="flex flex-col gap-3">
                 <input class="neuro-input w-full" value="John Doe" />
@@ -379,10 +389,10 @@ export function renderExamples(): string {
               <p class="mb-4 text-secondary">Hi team,</p>
               <p class="mb-4 text-secondary">The new brand guidelines are ready for review. Key changes include:</p>
               <ul class="mb-4 text-secondary" style="list-style: disc; padding-left: 1.5rem">
-                <li class="mb-1">Updated color palette based on the Dracula theme</li>
-                <li class="mb-1">New typography using Space Grotesk</li>
-                <li class="mb-1">Neumorphic and glassmorphic component variants</li>
-                <li class="mb-1">Expanded spacing and layout system</li>
+                <li class="mb-1">Deeper atmospheric dark palette</li>
+                <li class="mb-1">Serif/sans dual typography with Cormorant Garamond</li>
+                <li class="mb-1">Neumorphic, glassmorphic, and hybrid component variants</li>
+                <li class="mb-1">Gradient background utilities and refined spacing</li>
               </ul>
               <p class="mb-4 text-secondary">Review the attached design system documentation and share feedback by Friday.</p>
               <p class="text-secondary">Best regards,<br/>Design Team</p>
@@ -394,6 +404,135 @@ export function renderExamples(): string {
                   <p class="text-xs text-muted">2.4 MB</p>
                 </div>
                 <button class="btn btn-ghost btn-xs ml-auto">Download</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== ESTATE LANDING ====== -->
+  <div class="specimen mt-10" id="example-estate-landing">
+    <h3 class="text-xl font-semibold mb-4 font-serif">Estate Landing</h3>
+    <p class="text-sm text-muted mb-4">A grand estate-inspired landing page with gold typography, marble textures, and classical ornaments.</p>
+    <div class="card overflow-hidden">
+      <div class="specimen__preview p-0">
+        <div class="relative overflow-hidden" style="background: linear-gradient(180deg, #08091a 0%, #0e1028 50%, #151838 100%); min-height: 600px">
+          <!-- Gold atmospheric glow -->
+          <div class="absolute" style="width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(212,168,67,0.06), transparent 60%); top: -200px; right: -100px;"></div>
+          <div class="absolute" style="width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(168,85,247,0.04), transparent 60%); bottom: -150px; left: -100px;"></div>
+
+          <div class="relative z-10 px-8 py-12">
+            <div class="text-center mb-16">
+              <p class="overline mb-6" style="color: rgba(212,168,67,0.7)">Soltana Design System</p>
+              <h1 class="font-serif mb-6 gold-text" style="font-size: 4.5rem; line-height: 1.05; font-weight: 700; letter-spacing: 0.08em;">
+                Prestige in<br/>Every Pixel
+              </h1>
+              <p class="text-lg mx-auto mb-10" style="max-width: 480px; color: rgba(245,240,230,0.45); letter-spacing: 0.02em;">
+                A refined design system merging classical elegance with modern depth.
+              </p>
+              <div class="flex gap-4 justify-center">
+                <sol-button variant="gold" size="lg">Explore</sol-button>
+                <sol-button variant="outline" size="lg">Documentation</sol-button>
+              </div>
+            </div>
+
+            <div class="ornament-divider-scrollwork mb-12"></div>
+
+            <div class="grid gap-6" style="grid-template-columns: repeat(3, 1fr); max-width: 900px; margin: 0 auto;">
+              ${[
+                {
+                  title: 'Polished Stone',
+                  desc: 'Multi-layer shadows create tactile, three-dimensional marble surfaces.',
+                  icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/>',
+                },
+                {
+                  title: 'Crystal Glass',
+                  desc: 'Frosted translucency with gold-tinted borders and warm inner glow.',
+                  icon: '<circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>',
+                },
+                {
+                  title: 'Classical Ornament',
+                  desc: 'Greek key, scrollwork, and dentil patterns inspired by estate architecture.',
+                  icon: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+                },
+              ]
+                .map(
+                  (f) => `
+                <div class="neuro-glass-gold" style="padding: 1.5rem; border-radius: var(--radius-xl); color: var(--ivory-200)">
+                  <svg class="mb-4" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(212,168,67,0.8)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${f.icon}</svg>
+                  <h4 class="font-semibold text-base mb-2 font-serif">${f.title}</h4>
+                  <p class="text-sm" style="color: rgba(245,240,230,0.45)">${f.desc}</p>
+                </div>
+              `
+                )
+                .join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== CLASSICAL DASHBOARD ====== -->
+  <div class="specimen mt-10" id="example-classical-dashboard">
+    <h3 class="text-xl font-semibold mb-4 font-serif">Classical Dashboard</h3>
+    <p class="text-sm text-muted mb-4">A dashboard using the estate aesthetic with gold accents and jewel-toned metrics.</p>
+    <div class="card overflow-hidden">
+      <div class="specimen__preview p-0">
+        <div class="relative overflow-hidden" style="background: linear-gradient(180deg, #08091a 0%, #0e1028 100%); min-height: 500px">
+          <div class="absolute" style="width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(212,168,67,0.05), transparent); top: -100px; left: 10%;"></div>
+
+          <div class="relative z-10 p-6">
+            <div class="neuro-glass-gold mb-6" style="padding: 1rem 1.5rem; border-radius: var(--radius-xl)">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="overline" style="color: rgba(212,168,67,0.5)">Overview</p>
+                  <h3 class="font-serif text-2xl font-bold" style="color: var(--ivory-200)">Estate Analytics</h3>
+                </div>
+                <div class="flex gap-2">
+                  <sol-button variant="ghost" size="xs">7D</sol-button>
+                  <sol-button variant="outline" size="xs">30D</sol-button>
+                  <sol-button variant="ghost" size="xs">90D</sol-button>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid gap-4 mb-6" style="grid-template-columns: repeat(4, 1fr)">
+              ${[
+                { label: 'Revenue', value: '$148.2k', change: '+18.3%', up: true },
+                { label: 'Users', value: '24,847', change: '+12.7%', up: true },
+                { label: 'Conversion', value: '4.28%', change: '+0.6%', up: true },
+                { label: 'Churn', value: '1.2%', change: '-0.3%', up: false },
+              ]
+                .map(
+                  (s) => `
+                <div class="neuro-glass-gold" style="padding: 1rem 1.25rem; border-radius: var(--radius-xl); color: var(--ivory-200)">
+                  <p class="text-xs mb-1" style="color: rgba(212,168,67,0.5)">${s.label}</p>
+                  <p class="text-xl font-bold mb-1">${s.value}</p>
+                  <span class="text-xs" style="color: ${s.up ? '#10b981' : '#ef4444'}">${s.change}</span>
+                </div>
+              `
+                )
+                .join('')}
+            </div>
+
+            <div class="neuro-glass-gold" style="padding: 1.5rem; border-radius: var(--radius-xl); color: var(--ivory-200);">
+              <div class="flex items-center justify-between mb-4">
+                <h4 class="font-semibold font-serif">Revenue Trend</h4>
+              </div>
+              <div class="flex items-end gap-2 justify-center" style="height: 140px">
+                ${[35, 55, 42, 68, 52, 78, 62, 82, 58, 90, 72, 85]
+                  .map(
+                    (h, i) => `
+                  <div style="display: flex; flex-direction: column; gap: 2px; align-items: center; flex: 1;">
+                    <div style="width: 100%; height: ${String(h)}%; max-width: 32px; background: linear-gradient(to top, rgba(212,168,67,0.3), rgba(212,168,67,0.8)); border-radius: var(--radius-sm);"></div>
+                    <span class="text-xs" style="color: rgba(245,240,230,0.3); font-size: 0.6rem">${['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'][i]}</span>
+                  </div>
+                `
+                  )
+                  .join('')}
               </div>
             </div>
           </div>

@@ -596,107 +596,148 @@ $size-fractions: (
   background-color: var(--color-info-subtle);
 }
 
-// Dracula raw colors as backgrounds
-.bg-dracula-bg {
-  background-color: var(--dracula-bg);
+// Gold scale backgrounds
+.bg-gold-50 {
+  background-color: var(--gold-50);
 }
 
-.bg-dracula-current {
-  background-color: var(--dracula-current);
+.bg-gold-100 {
+  background-color: var(--gold-100);
 }
 
-.bg-dracula-cyan {
-  background-color: var(--dracula-cyan);
+.bg-gold-200 {
+  background-color: var(--gold-200);
 }
 
-.bg-dracula-green {
-  background-color: var(--dracula-green);
+.bg-gold-300 {
+  background-color: var(--gold-300);
 }
 
-.bg-dracula-orange {
-  background-color: var(--dracula-orange);
+.bg-gold-400 {
+  background-color: var(--gold-400);
 }
 
-.bg-dracula-pink {
-  background-color: var(--dracula-pink);
+.bg-gold-500 {
+  background-color: var(--gold-500);
 }
 
-.bg-dracula-purple {
-  background-color: var(--dracula-purple);
+.bg-gold-600 {
+  background-color: var(--gold-600);
 }
 
-.bg-dracula-red {
-  background-color: var(--dracula-red);
+// Jewel backgrounds
+.bg-emerald {
+  background-color: var(--jewel-emerald);
 }
 
-.bg-dracula-yellow {
-  background-color: var(--dracula-yellow);
+.bg-sapphire {
+  background-color: var(--jewel-sapphire);
 }
 
-// Pastel backgrounds
-.bg-pastel-lilac {
-  background-color: var(--pastel-lilac);
+.bg-ruby {
+  background-color: var(--jewel-ruby);
 }
 
-.bg-pastel-peach {
-  background-color: var(--pastel-peach);
+.bg-amethyst {
+  background-color: var(--jewel-amethyst);
 }
 
-.bg-pastel-mint {
-  background-color: var(--pastel-mint);
+// Extended jewel backgrounds
+.bg-citrine {
+  background-color: var(--jewel-citrine);
 }
 
-.bg-pastel-blush {
-  background-color: var(--pastel-blush);
+.bg-topaz {
+  background-color: var(--jewel-topaz);
 }
 
-.bg-pastel-sky {
-  background-color: var(--pastel-sky);
+.bg-jade {
+  background-color: var(--jewel-jade);
 }
 
-.bg-pastel-lemon {
-  background-color: var(--pastel-lemon);
+.bg-turquoise {
+  background-color: var(--jewel-turquoise);
 }
 
-.bg-pastel-lavender {
-  background-color: var(--pastel-lavender);
+.bg-onyx {
+  background-color: var(--jewel-onyx);
 }
 
-.bg-pastel-rose {
-  background-color: var(--pastel-rose);
+.bg-pearl {
+  background-color: var(--jewel-pearl);
 }
 
-.bg-pastel-sage {
-  background-color: var(--pastel-sage);
+// Silver scale backgrounds
+.bg-silver-200 {
+  background-color: var(--silver-200);
 }
 
-.bg-pastel-coral {
-  background-color: var(--pastel-coral);
+.bg-silver-400 {
+  background-color: var(--silver-400);
 }
 
-// Sepia backgrounds
-.bg-sepia-cream {
-  background-color: var(--sepia-cream);
+.bg-silver-600 {
+  background-color: var(--silver-600);
 }
 
-.bg-sepia-parchment {
-  background-color: var(--sepia-parchment);
+// Bronze scale backgrounds
+.bg-bronze-200 {
+  background-color: var(--bronze-200);
 }
 
-.bg-sepia-tan {
-  background-color: var(--sepia-tan);
+.bg-bronze-400 {
+  background-color: var(--bronze-400);
 }
 
-.bg-sepia-sand {
-  background-color: var(--sepia-sand);
+.bg-bronze-600 {
+  background-color: var(--bronze-600);
 }
 
-.bg-sepia-coffee {
-  background-color: var(--sepia-coffee);
+// Copper scale backgrounds
+.bg-copper-200 {
+  background-color: var(--copper-200);
 }
 
-.bg-sepia-chocolate {
-  background-color: var(--sepia-chocolate);
+.bg-copper-400 {
+  background-color: var(--copper-400);
+}
+
+.bg-copper-600 {
+  background-color: var(--copper-600);
+}
+
+// Platinum scale backgrounds
+.bg-platinum-200 {
+  background-color: var(--platinum-200);
+}
+
+.bg-platinum-400 {
+  background-color: var(--platinum-400);
+}
+
+.bg-platinum-600 {
+  background-color: var(--platinum-600);
+}
+
+// Ivory backgrounds
+.bg-ivory-50 {
+  background-color: var(--ivory-50);
+}
+
+.bg-ivory-100 {
+  background-color: var(--ivory-100);
+}
+
+.bg-ivory-200 {
+  background-color: var(--ivory-200);
+}
+
+.bg-ivory-300 {
+  background-color: var(--ivory-300);
+}
+
+.bg-ivory-400 {
+  background-color: var(--ivory-400);
 }
 
 // ============================================================================
@@ -904,28 +945,89 @@ $opacities: (0, 5, 10, 20, 25, 30, 40, 50, 60, 70, 75, 80, 90, 95, 100);
 .focus-ring {
   &:focus-visible {
     outline: 2px solid var(--accent-primary);
-    outline-offset: 2px;
+    outline-offset: 3px;
   }
 }
 
 .focus-ring-inset {
   &:focus-visible {
     outline: 2px solid var(--accent-primary);
-    outline-offset: -2px;
+    outline-offset: -3px;
   }
 }
 
 // ============================================================================
-// SCREEN READER ONLY
+// ATMOSPHERIC GRADIENT BACKGROUNDS
 // ============================================================================
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-  border-width: 0;
+
+// Estate — warm gold atmospheric radial gradients
+.bg-gradient-estate {
+  background:
+    radial-gradient(circle at 15% 10%, rgb(212 168 67 / 8%), transparent 30%),
+    radial-gradient(circle at 80% 15%, rgb(168 85 247 / 5%), transparent 30%),
+    radial-gradient(circle at 30% 90%, rgb(16 185 129 / 4%), transparent 30%),
+    linear-gradient(180deg, var(--surface-bg), var(--surface-2));
+  background-attachment: fixed;
 }
+
+// Midnight — deep with subtle gold warmth
+.bg-gradient-midnight {
+  background:
+    radial-gradient(circle at 50% 0%, rgb(212 168 67 / 6%), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgb(168 85 247 / 4%), transparent 35%),
+    linear-gradient(180deg, var(--surface-bg), var(--surface-1));
+  background-attachment: fixed;
+}
+
+// Champagne — warm gold atmospheric
+.bg-gradient-champagne {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgb(212 168 67 / 8%), transparent 40%),
+    radial-gradient(ellipse at 75% 25%, rgb(184 134 11 / 6%), transparent 35%),
+    radial-gradient(ellipse at 40% 80%, rgb(252 211 77 / 5%), transparent 35%),
+    linear-gradient(180deg, var(--surface-bg) 0%, var(--surface-2) 100%);
+  background-attachment: fixed;
+}
+
+// Gradient accent — gold to amethyst
+.bg-gradient-accent {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+}
+
+// Gradient warm — gold to bronze
+.bg-gradient-warm {
+  background: linear-gradient(135deg, var(--gold-300), var(--gold-600));
+}
+
+// Gradient cool — sapphire to amethyst
+.bg-gradient-cool {
+  background: linear-gradient(135deg, var(--jewel-sapphire), var(--jewel-amethyst));
+}
+
+// Metallic gradients
+.bg-gradient-gold {
+  background: var(--gold-gradient);
+}
+
+.bg-gradient-silver {
+  background: var(--silver-gradient);
+}
+
+.bg-gradient-bronze {
+  background: var(--bronze-gradient);
+}
+
+.bg-gradient-copper {
+  background: var(--copper-gradient);
+}
+
+.bg-gradient-platinum {
+  background: var(--platinum-gradient);
+}
+
+// Fixed attachment utility
+.bg-fixed {
+  background-attachment: fixed;
+}
+
+// Screen reader utility moved to _accessibility.scss

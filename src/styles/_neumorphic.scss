@@ -1,8 +1,8 @@
 // ---------------------------------------------------------------------------
-// Neumorphic Design Utilities
+// Neumorphic Design Utilities — "Polished Stone"
 // ---------------------------------------------------------------------------
-// Soft UI / neumorphism using theme-aware shadow pairs.
-// The --neuro-* custom properties are set per-theme in the theme files.
+// Multi-layer soft UI recontextualized as polished stone surfaces.
+// Gold accent highlights. Theme-aware via --neuro-* custom properties.
 // ---------------------------------------------------------------------------
 
 // ---- Base mixin ----
@@ -11,54 +11,92 @@
   background: var(--neuro-bg);
 }
 
-// ---- Raised (convex) ----
+// ============================================================================
+// RAISED VARIANTS
+// ============================================================================
+
+// Standard raised — 2-layer convex
 .neuro-raised {
   @include neuro-base;
   border-radius: var(--radius-xl);
   box-shadow:
-    6px 6px 12px var(--neuro-shadow-dark),
-    -6px -6px 12px var(--neuro-shadow-light);
+    6px 6px 14px var(--neuro-shadow-dark),
+    -6px -6px 14px var(--neuro-shadow-light);
 }
 
 .neuro-raised-sm {
   @include neuro-base;
   border-radius: var(--radius-lg);
   box-shadow:
-    3px 3px 6px var(--neuro-shadow-dark),
-    -3px -3px 6px var(--neuro-shadow-light);
+    3px 3px 7px var(--neuro-shadow-dark),
+    -3px -3px 7px var(--neuro-shadow-light);
 }
 
 .neuro-raised-lg {
   @include neuro-base;
   border-radius: var(--radius-2xl);
   box-shadow:
-    10px 10px 20px var(--neuro-shadow-dark),
-    -10px -10px 20px var(--neuro-shadow-light);
+    10px 10px 24px var(--neuro-shadow-dark),
+    -10px -10px 24px var(--neuro-shadow-light);
 }
 
-// ---- Inset (concave / pressed) ----
+// Elevated — 3-layer with mid shadow and highlight top-edge
+.neuro-elevated {
+  @include neuro-base;
+  border-radius: var(--radius-xl);
+  border-top: 1px solid var(--neuro-highlight);
+  box-shadow:
+    0 2px 4px var(--neuro-shadow-mid),
+    6px 6px 16px var(--neuro-shadow-dark),
+    -4px -4px 12px var(--neuro-shadow-light);
+}
+
+// Floating — dramatic elevation with diffuse shadows
+.neuro-floating {
+  @include neuro-base;
+  border-radius: var(--radius-2xl);
+  border-top: 1px solid var(--neuro-highlight);
+  box-shadow:
+    0 4px 8px var(--neuro-shadow-mid),
+    12px 12px 32px var(--neuro-shadow-dark),
+    -8px -8px 24px var(--neuro-shadow-light);
+}
+
+// Soft — barely perceptible, elegant background treatment
+.neuro-soft {
+  @include neuro-base;
+  border-radius: var(--radius-xl);
+  box-shadow:
+    2px 2px 6px var(--neuro-shadow-dark),
+    -2px -2px 6px var(--neuro-shadow-light);
+}
+
+// ============================================================================
+// INSET VARIANTS
+// ============================================================================
+
 .neuro-inset {
   @include neuro-base;
   border-radius: var(--radius-xl);
   box-shadow:
-    inset 6px 6px 12px var(--neuro-shadow-dark),
-    inset -6px -6px 12px var(--neuro-shadow-light);
+    inset 6px 6px 14px var(--neuro-shadow-dark),
+    inset -6px -6px 14px var(--neuro-shadow-light);
 }
 
 .neuro-inset-sm {
   @include neuro-base;
   border-radius: var(--radius-lg);
   box-shadow:
-    inset 3px 3px 6px var(--neuro-shadow-dark),
-    inset -3px -3px 6px var(--neuro-shadow-light);
+    inset 3px 3px 7px var(--neuro-shadow-dark),
+    inset -3px -3px 7px var(--neuro-shadow-light);
 }
 
 .neuro-inset-lg {
   @include neuro-base;
   border-radius: var(--radius-2xl);
   box-shadow:
-    inset 10px 10px 20px var(--neuro-shadow-dark),
-    inset -10px -10px 20px var(--neuro-shadow-light);
+    inset 10px 10px 24px var(--neuro-shadow-dark),
+    inset -10px -10px 24px var(--neuro-shadow-light);
 }
 
 // ---- Flat (subtle) ----
@@ -70,43 +108,62 @@
     -2px -2px 5px var(--neuro-shadow-light);
 }
 
-// ---- Interactive: raised that presses on click ----
+// ============================================================================
+// INTERACTIVE ELEMENTS
+// ============================================================================
+
+// Button — raised that presses on click with accent glow on focus
 .neuro-button {
   @include neuro-base;
   border-radius: var(--radius-xl);
+  border-top: 1px solid var(--neuro-highlight);
   box-shadow:
-    6px 6px 12px var(--neuro-shadow-dark),
-    -6px -6px 12px var(--neuro-shadow-light);
+    0 2px 4px var(--neuro-shadow-mid),
+    5px 5px 12px var(--neuro-shadow-dark),
+    -4px -4px 10px var(--neuro-shadow-light);
   transition:
-    box-shadow var(--transition-normal) ease,
-    transform var(--transition-normal) ease;
+    box-shadow 0.3s ease,
+    transform 0.2s ease,
+    border-color 0.3s ease;
   cursor: pointer;
 
   &:hover {
+    transform: translateY(-1px);
     box-shadow:
-      4px 4px 8px var(--neuro-shadow-dark),
-      -4px -4px 8px var(--neuro-shadow-light);
+      0 4px 8px var(--neuro-shadow-mid),
+      6px 6px 16px var(--neuro-shadow-dark),
+      -5px -5px 12px var(--neuro-shadow-light);
   }
 
   &:active {
+    transform: translateY(0) scale(0.98);
+    border-top-color: transparent;
     box-shadow:
-      inset 4px 4px 8px var(--neuro-shadow-dark),
-      inset -4px -4px 8px var(--neuro-shadow-light);
-    transform: scale(0.98);
+      inset 4px 4px 10px var(--neuro-shadow-dark),
+      inset -4px -4px 10px var(--neuro-shadow-light);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 3px var(--state-focus-ring),
+      5px 5px 12px var(--neuro-shadow-dark),
+      -4px -4px 10px var(--neuro-shadow-light);
   }
 }
 
-// ---- Neumorphic input field ----
+// Input field — inset with accent glow on focus
 .neuro-input {
   @include neuro-base;
   border-radius: var(--radius-lg);
   box-shadow:
-    inset 3px 3px 6px var(--neuro-shadow-dark),
-    inset -3px -3px 6px var(--neuro-shadow-light);
+    inset 3px 3px 8px var(--neuro-shadow-dark),
+    inset -3px -3px 8px var(--neuro-shadow-light);
   padding: 0.625rem 1rem;
   color: var(--text-primary);
   font-family: var(--font-sans);
   font-size: var(--text-base);
+  letter-spacing: var(--tracking-refined);
 
   &::placeholder {
     color: var(--text-muted);
@@ -115,13 +172,13 @@
   &:focus {
     outline: none;
     box-shadow:
-      inset 3px 3px 6px var(--neuro-shadow-dark),
-      inset -3px -3px 6px var(--neuro-shadow-light),
-      0 0 0 2px var(--accent-primary);
+      inset 3px 3px 8px var(--neuro-shadow-dark),
+      inset -3px -3px 8px var(--neuro-shadow-light),
+      0 0 0 3px var(--state-focus-ring);
   }
 }
 
-// ---- Neumorphic toggle / pill ----
+// Toggle — with accent state
 .neuro-toggle {
   @include neuro-base;
   position: relative;
@@ -129,10 +186,10 @@
   height: 2rem;
   border-radius: var(--radius-full);
   box-shadow:
-    inset 4px 4px 8px var(--neuro-shadow-dark),
-    inset -4px -4px 8px var(--neuro-shadow-light);
+    inset 4px 4px 10px var(--neuro-shadow-dark),
+    inset -4px -4px 10px var(--neuro-shadow-light);
   cursor: pointer;
-  transition: background var(--transition-normal) ease;
+  transition: background 0.3s ease;
 
   &::after {
     content: '';
@@ -143,47 +200,100 @@
     height: 1.625rem;
     border-radius: var(--radius-full);
     background: var(--neuro-bg);
+    border-top: 1px solid var(--neuro-highlight);
     box-shadow:
-      3px 3px 6px var(--neuro-shadow-dark),
-      -3px -3px 6px var(--neuro-shadow-light);
+      3px 3px 7px var(--neuro-shadow-dark),
+      -3px -3px 7px var(--neuro-shadow-light);
     transition:
-      transform var(--transition-slow) ease,
-      background var(--transition-normal) ease;
+      transform 0.3s ease,
+      background 0.3s ease,
+      box-shadow 0.3s ease;
   }
 
   &.active::after {
     transform: translateX(1.5rem);
     background: var(--accent-primary);
+    box-shadow:
+      2px 2px 6px var(--neuro-shadow-dark),
+      0 0 12px rgb(212 168 67 / 25%);
   }
 }
 
-// ---- Neumorphic card ----
+// ============================================================================
+// CARDS
+// ============================================================================
+
 .neuro-card {
   @include neuro-base;
   border-radius: var(--radius-2xl);
+  border-top: 1px solid var(--neuro-highlight);
   padding: 1.5rem;
   box-shadow:
-    8px 8px 16px var(--neuro-shadow-dark),
-    -8px -8px 16px var(--neuro-shadow-light);
+    0 2px 4px var(--neuro-shadow-mid),
+    8px 8px 20px var(--neuro-shadow-dark),
+    -6px -6px 16px var(--neuro-shadow-light);
 }
 
-// ---- Neumorphic progress bar ----
+// Layered card with gold gradient overlay
+.neuro-card-layered {
+  @include neuro-base;
+  position: relative;
+  border-radius: var(--radius-2xl);
+  padding: 1.5rem;
+  box-shadow:
+    0 2px 4px var(--neuro-shadow-mid),
+    8px 8px 20px var(--neuro-shadow-dark),
+    -6px -6px 16px var(--neuro-shadow-light);
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgb(212 168 67 / 5%),
+      rgb(168 133 42 / 3%),
+      rgb(252 211 77 / 4%)
+    );
+    border-radius: inherit;
+    pointer-events: none;
+  }
+}
+
+// ============================================================================
+// PROGRESS BAR
+// ============================================================================
+
 .neuro-progress {
   @include neuro-base;
   border-radius: var(--radius-full);
   height: 0.75rem;
   box-shadow:
-    inset 3px 3px 6px var(--neuro-shadow-dark),
-    inset -3px -3px 6px var(--neuro-shadow-light);
+    inset 3px 3px 7px var(--neuro-shadow-dark),
+    inset -3px -3px 7px var(--neuro-shadow-light);
   overflow: hidden;
 
   &-fill {
     height: 100%;
     border-radius: var(--radius-full);
-    background: var(--accent-primary);
+    background: linear-gradient(90deg, var(--gold-500), var(--gold-400), var(--gold-300));
     box-shadow:
       2px 2px 4px var(--neuro-shadow-dark),
-      -2px -2px 4px var(--neuro-shadow-light);
-    transition: width var(--transition-slower) ease;
+      0 0 8px rgb(212 168 67 / 20%);
+    transition: width 0.5s ease;
   }
+}
+
+// ============================================================================
+// PRESSED-ACTIVE STATE — used for interactive selection patterns
+// ============================================================================
+
+.neuro-pressed-active {
+  @include neuro-base;
+  border-radius: var(--radius-xl);
+  box-shadow:
+    inset 4px 4px 10px var(--neuro-shadow-dark),
+    inset -4px -4px 10px var(--neuro-shadow-light),
+    inset 0 0 0 1px rgb(212 168 67 / 12%);
 }

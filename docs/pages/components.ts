@@ -3,7 +3,7 @@
 function specimen(title: string, id: string, content: string, code?: string): string {
   return `
     <div class="specimen mt-10" id="${id}">
-      <h3 class="text-xl font-semibold mb-4">${title}</h3>
+      <h3 class="text-xl font-semibold mb-4 font-serif">${title}</h3>
       <div class="card">
         <div class="card-body specimen__preview">
           ${content}
@@ -26,8 +26,9 @@ export function renderComponents(): string {
 <div class="page-components">
   <div class="section-heading">
     <h2 class="text-3xl font-bold">Components</h2>
-    <p class="text-secondary mt-2">Atomic design specimens — atoms and molecules for composing interfaces.</p>
+    <p class="text-secondary mt-2">Estate-styled atoms and molecules for composing interfaces.</p>
   </div>
+  <div class="section-divider"></div>
 
   <!-- Quick nav -->
   <div class="flex flex-wrap gap-2 mt-6 mb-4">
@@ -45,6 +46,7 @@ export function renderComponents(): string {
       'Modals',
       'Neumorphic',
       'Glassmorphic',
+      'Neuro-Glass',
     ]
       .map(
         (s) => `
@@ -472,17 +474,12 @@ export function renderComponents(): string {
     'Neumorphic Components',
     'comp-neumorphic',
     `
-    <p class="text-sm text-muted mb-4">Soft UI / neumorphism using theme-aware shadow pairs. Best visible on matching surface backgrounds.</p>
+    <p class="text-sm text-muted mb-4">Multi-layer neumorphism with elevated, floating, and soft variants. Theme-aware shadow pairs.</p>
     <div class="p-8 rounded-2xl" style="background: var(--neuro-bg)">
+      <p class="overline mb-4">Basic Variants</p>
       <div class="grid gap-8" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))">
         <div class="neuro-raised p-6 text-center">
           <p class="text-sm font-medium">.neuro-raised</p>
-        </div>
-        <div class="neuro-raised-sm p-6 text-center">
-          <p class="text-sm font-medium">.neuro-raised-sm</p>
-        </div>
-        <div class="neuro-raised-lg p-6 text-center">
-          <p class="text-sm font-medium">.neuro-raised-lg</p>
         </div>
         <div class="neuro-inset p-6 text-center">
           <p class="text-sm font-medium">.neuro-inset</p>
@@ -490,16 +487,38 @@ export function renderComponents(): string {
         <div class="neuro-flat p-6 text-center">
           <p class="text-sm font-medium">.neuro-flat</p>
         </div>
-        <div class="neuro-card">
-          <p class="text-sm font-medium mb-2">.neuro-card</p>
-          <p class="text-xs text-muted">Card with neumorphic styling</p>
+        <div class="neuro-soft p-6 text-center">
+          <p class="text-sm font-medium">.neuro-soft</p>
         </div>
       </div>
-      <div class="flex flex-wrap gap-6 items-center mt-8">
+
+      <p class="overline mt-8 mb-4">Enhanced Variants</p>
+      <div class="grid gap-8" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr))">
+        <div class="neuro-elevated p-6 text-center">
+          <p class="text-sm font-medium">.neuro-elevated</p>
+          <p class="text-xs text-muted mt-1">3-layer shadow with highlight</p>
+        </div>
+        <div class="neuro-floating p-6 text-center">
+          <p class="text-sm font-medium">.neuro-floating</p>
+          <p class="text-xs text-muted mt-1">Dramatic elevation</p>
+        </div>
+        <div class="neuro-pressed-active p-6 text-center">
+          <p class="text-sm font-medium">.neuro-pressed-active</p>
+          <p class="text-xs text-muted mt-1">Accent-tinted inset</p>
+        </div>
+        <div class="neuro-card-layered">
+          <p class="text-sm font-medium mb-2">.neuro-card-layered</p>
+          <p class="text-xs text-muted">Gradient overlay card</p>
+        </div>
+      </div>
+
+      <p class="overline mt-8 mb-4">Interactive Elements</p>
+      <div class="flex flex-wrap gap-6 items-center">
         <button class="neuro-button px-6 py-3 text-sm font-medium">.neuro-button</button>
         <input class="neuro-input" placeholder=".neuro-input" />
         <div class="neuro-toggle" id="neuro-toggle-demo"></div>
       </div>
+
       <div class="mt-8">
         <p class="text-sm font-medium mb-2">.neuro-progress</p>
         <div class="neuro-progress">
@@ -532,29 +551,54 @@ export function renderComponents(): string {
     'Glassmorphic Components',
     'comp-glassmorphic',
     `
-    <p class="text-sm text-muted mb-4">Frosted glass effects with backdrop blur. Requires a colored or image background to be visible.</p>
-    <div class="p-8 rounded-2xl relative overflow-hidden" style="background: linear-gradient(135deg, var(--dracula-purple), var(--dracula-pink), var(--dracula-cyan)); min-height: 400px">
-      <div class="grid gap-6" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr))">
-        <div class="glass-card">
-          <p class="text-sm font-semibold mb-1" style="color: #fff">.glass-card</p>
-          <p class="text-xs" style="color: rgba(255,255,255,0.7)">Default frosted glass card with blur and border.</p>
+    <p class="text-sm text-muted mb-4">Advanced frosted glass effects including luxury, chrome, frosted-heavy, and tinted-gradient variants.</p>
+    <div class="p-8 rounded-2xl relative overflow-hidden" style="background: linear-gradient(135deg, #1a1b3a, #2d1b4e, #1a2a3a); min-height: 500px">
+      <!-- Decorative blobs -->
+      <div class="absolute" style="width: 200px; height: 200px; border-radius: 50%; background: rgba(189,147,249,0.3); filter: blur(50px); top: -30px; left: 20%;"></div>
+      <div class="absolute" style="width: 160px; height: 160px; border-radius: 50%; background: rgba(255,121,198,0.2); filter: blur(40px); bottom: -20px; right: 15%;"></div>
+      <div class="absolute" style="width: 120px; height: 120px; border-radius: 50%; background: rgba(139,233,253,0.15); filter: blur(30px); top: 50%; left: 60%;"></div>
+
+      <div class="relative z-10">
+        <p class="overline mb-4" style="color: rgba(255,255,255,0.5)">Standard</p>
+        <div class="grid gap-6 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr))">
+          <div class="glass-card">
+            <p class="text-sm font-semibold mb-1" style="color: #fff">.glass-card</p>
+            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Default frosted glass card.</p>
+          </div>
+          <div class="glass-accent p-5 rounded-2xl">
+            <p class="text-sm font-semibold mb-1" style="color: #fff">.glass-accent</p>
+            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Purple-tinted variant.</p>
+          </div>
+          <div class="glass-cyan p-5 rounded-2xl">
+            <p class="text-sm font-semibold mb-1" style="color: #fff">.glass-cyan</p>
+            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Cyan-tinted variant.</p>
+          </div>
         </div>
-        <div class="glass-card glass-accent">
-          <p class="text-sm font-semibold mb-1" style="color: #fff">.glass-accent</p>
-          <p class="text-xs" style="color: rgba(255,255,255,0.7)">Purple-tinted glass variant.</p>
+
+        <p class="overline mb-4" style="color: rgba(255,255,255,0.5)">Premium</p>
+        <div class="grid gap-6 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr))">
+          <div class="glass-luxury p-5 rounded-2xl">
+            <p class="text-sm font-semibold mb-1" style="color: #fff">.glass-luxury</p>
+            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Multi-layer with inner glow.</p>
+          </div>
+          <div class="glass-frosted-heavy p-5 rounded-2xl">
+            <p class="text-sm font-semibold mb-1" style="color: #fff">.glass-frosted-heavy</p>
+            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Strong blur + saturate.</p>
+          </div>
+          <div class="glass-chrome p-5 rounded-2xl">
+            <p class="text-sm font-semibold mb-1" style="color: #fff">.glass-chrome</p>
+            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Metallic/reflective variant.</p>
+          </div>
+          <div class="glass-tinted-gradient p-5 rounded-2xl">
+            <p class="text-sm font-semibold mb-1" style="color: #fff">.glass-tinted-gradient</p>
+            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Directional gradient glass.</p>
+          </div>
         </div>
-        <div class="glass-card glass-cyan">
-          <p class="text-sm font-semibold mb-1" style="color: #fff">.glass-cyan</p>
-          <p class="text-xs" style="color: rgba(255,255,255,0.7)">Cyan-tinted glass variant.</p>
+
+        <div class="flex flex-wrap gap-4 items-center">
+          <button class="glass-button px-5 py-2 text-sm font-medium" style="color: #fff">.glass-button</button>
+          <input class="glass-input" placeholder=".glass-input" style="color: #fff; max-width: 200px" />
         </div>
-        <div class="glass-card glass-warm">
-          <p class="text-sm font-semibold mb-1" style="color: #fff">.glass-warm</p>
-          <p class="text-xs" style="color: rgba(255,255,255,0.7)">Warm orange-tinted variant.</p>
-        </div>
-      </div>
-      <div class="flex flex-wrap gap-4 items-center mt-6">
-        <button class="glass-button px-5 py-2 text-sm font-medium" style="color: #fff">.glass-button</button>
-        <input class="glass-input" placeholder=".glass-input" style="color: #fff; max-width: 200px" />
       </div>
     </div>
 
@@ -575,6 +619,56 @@ export function renderComponents(): string {
         <div id="glass-playground-box" class="p-6 rounded-xl text-center text-sm font-medium"
           style="color: #fff; --playground-blur: 12px; --playground-opacity: 55; backdrop-filter: blur(var(--playground-blur)); -webkit-backdrop-filter: blur(var(--playground-blur)); background: rgba(255,255,255, calc(var(--playground-opacity) / 100 * 0.3)); border: 1px solid rgba(255,255,255, calc(var(--playground-opacity) / 100 * 0.4)); border-radius: var(--radius-xl); box-shadow: 0 8px 32px rgba(0,0,0,0.2);">
           Interactive Glass Box
+        </div>
+      </div>
+    </div>
+  `
+  )}
+
+  <!-- ====== NEURO-GLASS HYBRIDS ====== -->
+  ${specimen(
+    'Neuro-Glass Hybrids',
+    'comp-neuro-glass',
+    `
+    <p class="text-sm text-muted mb-4">Combined neumorphic depth with glassmorphic translucency. Soft 3D shadows meet modern frosted glass.</p>
+    <div class="p-8 rounded-2xl relative overflow-hidden" style="background: linear-gradient(135deg, #0e1020, #1a1d42, #141628); min-height: 480px">
+      <!-- Decorative blobs -->
+      <div class="absolute" style="width: 200px; height: 200px; border-radius: 50%; background: rgba(189,147,249,0.15); filter: blur(50px); top: 10%; left: 10%;"></div>
+      <div class="absolute" style="width: 180px; height: 180px; border-radius: 50%; background: rgba(139,233,253,0.1); filter: blur(40px); bottom: 10%; right: 20%;"></div>
+
+      <div class="relative z-10">
+        <p class="overline mb-4" style="color: rgba(255,255,255,0.5)">Hybrid Variants</p>
+        <div class="grid gap-6 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr))">
+          <div class="neuro-glass p-5">
+            <p class="text-sm font-semibold mb-1" style="color: #fff">.neuro-glass</p>
+            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Base hybrid: shadows + blur + gradient.</p>
+          </div>
+          <div class="neuro-glass-card">
+            <p class="text-sm font-semibold mb-1" style="color: #fff">.neuro-glass-card</p>
+            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Card with hover lift effect.</p>
+          </div>
+          <div class="neuro-glass-elevated p-5">
+            <p class="text-sm font-semibold mb-1" style="color: #fff">.neuro-glass-elevated</p>
+            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Dramatic depth hybrid.</p>
+          </div>
+          <div class="neuro-glass-inset p-5">
+            <p class="text-sm font-semibold mb-1" style="color: #fff">.neuro-glass-inset</p>
+            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Pressed glass interior.</p>
+          </div>
+          <div class="neuro-glass-floating p-5">
+            <p class="text-sm font-semibold mb-1" style="color: #fff">.neuro-glass-floating</p>
+            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Extra dramatic with glow.</p>
+          </div>
+          <div class="neuro-glass-accent p-5">
+            <p class="text-sm font-semibold mb-1" style="color: #fff">.neuro-glass-accent</p>
+            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Purple-tinted hybrid.</p>
+          </div>
+        </div>
+
+        <p class="overline mb-4" style="color: rgba(255,255,255,0.5)">Interactive</p>
+        <div class="flex flex-wrap gap-4 items-center">
+          <button class="neuro-glass-button px-6 py-3 text-sm font-medium" style="color: #fff">.neuro-glass-button</button>
+          <input class="neuro-glass-input" placeholder=".neuro-glass-input" style="color: #fff; max-width: 220px" />
         </div>
       </div>
     </div>
