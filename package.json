@@ -1,26 +1,67 @@
 {
-  "name": "soltana-tech",
+  "name": "soltana-ui",
   "version": "1.0.0",
+  "description": "A design system inspired by classical architecture, precious materials, and timeless elegance. Features neumorphic, glassmorphic, and hybrid material systems.",
   "type": "module",
-  "private": true,
-  "files": [
-    "dist"
+  "private": false,
+  "license": "MIT",
+  "author": "Soltana",
+  "homepage": "https://github.com/soltana/soltana-ui",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/soltana/soltana-ui.git"
+  },
+  "keywords": [
+    "design-system",
+    "css",
+    "scss",
+    "neumorphic",
+    "glassmorphic",
+    "web-components",
+    "ui-library",
+    "components"
   ],
-  "main": "./dist/soltana-tech.umd.cjs",
-  "module": "./dist/soltana-tech.js",
+  "files": [
+    "dist",
+    "src/styles",
+    "src/config",
+    "soltana.config.template.js"
+  ],
+  "main": "./dist/soltana-ui.umd.cjs",
+  "module": "./dist/soltana-ui.js",
   "types": "./dist/index.d.ts",
+  "unpkg": "./dist/soltana-ui.umd.cjs",
+  "jsdelivr": "./dist/soltana-ui.umd.cjs",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/soltana-tech.js",
-      "require": "./dist/soltana-tech.umd.cjs"
+      "import": "./dist/soltana-ui.js",
+      "require": "./dist/soltana-ui.umd.cjs"
     },
-    "./style.css": "./dist/soltana-tech.css",
+    "./css": "./dist/soltana-ui.css",
+    "./style.css": "./dist/soltana-ui.css",
     "./components": {
       "types": "./dist/components/index.d.ts",
-      "import": "./dist/soltana-tech.js"
-    }
+      "import": "./dist/soltana-ui.js"
+    },
+    "./runtime": {
+      "types": "./dist/runtime/index.d.ts",
+      "import": "./dist/runtime.js",
+      "require": "./dist/runtime.umd.cjs"
+    },
+    "./config": {
+      "types": "./dist/config/index.d.ts",
+      "import": "./dist/soltana-ui.js"
+    },
+    "./scss": "./src/styles/index.scss",
+    "./scss/*": "./src/styles/*"
   },
+  "sideEffects": [
+    "*.css",
+    "*.scss",
+    "./dist/soltana-ui.js",
+    "./src/components/index.ts"
+  ],
   "scripts": {
     "dev": "npm run docs:dev",
     "build": "tsc --noEmit && vite build",
@@ -32,6 +73,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "type-check": "tsc --noEmit",
+    "prepublishOnly": "npm run build",
     "prepare": "command -v pre-commit >/dev/null 2>&1 && pre-commit install || echo 'pre-commit not installed, skipping hook installation'"
   },
   "devDependencies": {
@@ -51,5 +93,13 @@
     "typescript-eslint": "^8.55.0",
     "vite": "^7.3.1",
     "vite-plugin-dts": "^4.5.4"
+  },
+  "peerDependencies": {
+    "sass": "^1.50.0"
+  },
+  "peerDependenciesMeta": {
+    "sass": {
+      "optional": true
+    }
   }
 }

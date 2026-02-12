@@ -1,16 +1,14 @@
 /** Patterns page — Organism-level compositions. */
 
+import { sectionHeading, quickNavFromLabels } from '../utils/helpers';
+
 export function renderPatterns(): string {
   return `
 <div class="page-patterns">
-  <div class="section-heading">
-    <h2 class="text-3xl font-bold">Patterns</h2>
-    <p class="text-secondary mt-2">Organism-level compositions combining atoms and molecules into reusable layouts.</p>
-  </div>
-  <div class="section-divider"></div>
+  ${sectionHeading('Patterns', 'patterns', 'Organism-level compositions combining atoms and molecules into reusable layouts.')}
 
-  <div class="flex flex-wrap gap-2 mt-6 mb-4">
-    ${[
+  ${quickNavFromLabels(
+    [
       'Navbar',
       'Sidebar',
       'Login Form',
@@ -20,14 +18,9 @@ export function renderPatterns(): string {
       'Feature Section',
       'Pricing Cards',
       'Stats Grid',
-    ]
-      .map(
-        (s) => `
-      <a href="#pattern-${s.toLowerCase().replace(/\s+/g, '-')}" class="badge badge-pill">${s}</a>
-    `
-      )
-      .join('')}
-  </div>
+    ],
+    'pattern-'
+  )}
 
   <!-- ====== NAVBAR ====== -->
   <div class="specimen mt-10" id="pattern-navbar">

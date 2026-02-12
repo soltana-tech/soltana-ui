@@ -1,0 +1,119 @@
+// ---------------------------------------------------------------------------
+// Overlay Components
+// ---------------------------------------------------------------------------
+// Modals and backdrop styles.
+// Uses --material-* variables for automatic material switching.
+// ---------------------------------------------------------------------------
+
+@use '../variables' as *;
+
+// ============================================================================
+// MODAL BACKDROP
+// ============================================================================
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 60%);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+
+  &.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+// ============================================================================
+// MODAL
+// ============================================================================
+
+.modal {
+  position: relative;
+  background: var(--surface-1);
+  border: 1px solid var(--material-border);
+  outline: 1px solid var(--border-subtle);
+  outline-offset: 4px;
+  border-radius: var(--radius-2xl);
+  box-shadow:
+    var(--material-shadow),
+    0 24px 64px rgb(0 0 0 / 30%);
+  backdrop-filter: blur(var(--material-blur)) saturate(var(--material-saturation));
+  width: 100%;
+  max-width: 32rem;
+  max-height: 85vh;
+  overflow-y: auto;
+  transform: scale(0.95) translateY(10px);
+  transition: transform 0.3s ease;
+
+  .active & {
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-default);
+  font-family: var(--font-serif);
+  font-weight: var(--font-bold);
+  font-size: var(--text-lg);
+  letter-spacing: var(--tracking-elegant);
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border-default);
+}
+
+// ============================================================================
+// BAROQUE MODAL
+// ============================================================================
+
+.modal-baroque {
+  position: relative;
+  background: var(--surface-1);
+  border: 3px solid;
+  border-image: linear-gradient(145deg, var(--gold-400), var(--bronze-400), var(--gold-500)) 1;
+  box-shadow:
+    0 24px 64px var(--glass-shadow),
+    inset 2px 2px 8px var(--neuro-shadow-mid);
+  backdrop-filter: none;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1px solid rgb(212 168 67 / 25%);
+    pointer-events: none;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--gold-400);
+    background: var(--surface-1);
+    box-shadow: 0 0 12px rgb(212 168 67 / 25%);
+  }
+}

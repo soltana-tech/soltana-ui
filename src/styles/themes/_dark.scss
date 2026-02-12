@@ -2,10 +2,9 @@
 // Estate Midnight (Dark Theme)
 // ---------------------------------------------------------------------------
 // Deep midnight navy surfaces with warm ivory text and gold accents.
-// Vivid intensity for jewel-toned elements against dark backgrounds.
+// Variables are applied to :root by initSoltana() when theme: 'dark'.
 // ---------------------------------------------------------------------------
 
-[data-theme='dark'],
 :root {
   color-scheme: dark;
 

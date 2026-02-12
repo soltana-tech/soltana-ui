@@ -71,21 +71,24 @@ export class PlaygroundControls {
 
   /**
    * Select dropdowns that swap a class on a target element.
-   * Usage: <select data-class-swap data-target="#el" data-prefix="btn-">
+   * Removes all option values from the target, then adds the selected one.
+   * Usage: <select data-class-swap data-target="#el">
    */
   private bindSelectControls(): void {
     document.querySelectorAll<HTMLSelectElement>('select[data-class-swap]').forEach((select) => {
+      // Collect all possible class values from the options
+      const optionClasses = [...select.options].map((o) => o.value).filter(Boolean);
+
       select.addEventListener('change', () => {
         const targetSel = select.dataset.target;
-        const prefix = select.dataset.prefix ?? '';
         if (!targetSel) return;
         const target = document.querySelector(targetSel);
         if (!target) return;
 
-        // Remove all classes with the given prefix
-        [...target.classList].forEach((c) => {
-          if (c.startsWith(prefix)) target.classList.remove(c);
-        });
+        // Remove all option classes from the target
+        for (const cls of optionClasses) {
+          target.classList.remove(cls);
+        }
 
         if (select.value) {
           target.classList.add(select.value);

@@ -1,0 +1,97 @@
+// ---------------------------------------------------------------------------
+// Spacing Utilities
+// ---------------------------------------------------------------------------
+// Margin, padding, and gap utilities.
+// ---------------------------------------------------------------------------
+
+// ============================================================================
+// GAP
+// ============================================================================
+
+$gap-steps: (0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24);
+
+@each $step in $gap-steps {
+  .gap-#{$step} {
+    gap: calc(#{$step} * 0.25rem);
+  }
+  .gap-x-#{$step} {
+    column-gap: calc(#{$step} * 0.25rem);
+  }
+  .gap-y-#{$step} {
+    row-gap: calc(#{$step} * 0.25rem);
+  }
+}
+
+// ============================================================================
+// SPACING (Margin & Padding)
+// ============================================================================
+
+$space-keys: (0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 64);
+
+@each $step in $space-keys {
+  $val: calc(#{$step} * 0.25rem);
+
+  // Padding
+  .p-#{$step} {
+    padding: $val;
+  }
+  .px-#{$step} {
+    padding-left: $val;
+    padding-right: $val;
+  }
+  .py-#{$step} {
+    padding-top: $val;
+    padding-bottom: $val;
+  }
+  .pt-#{$step} {
+    padding-top: $val;
+  }
+  .pr-#{$step} {
+    padding-right: $val;
+  }
+  .pb-#{$step} {
+    padding-bottom: $val;
+  }
+  .pl-#{$step} {
+    padding-left: $val;
+  }
+
+  // Margin
+  .m-#{$step} {
+    margin: $val;
+  }
+  .mx-#{$step} {
+    margin-left: $val;
+    margin-right: $val;
+  }
+  .my-#{$step} {
+    margin-top: $val;
+    margin-bottom: $val;
+  }
+  .mt-#{$step} {
+    margin-top: $val;
+  }
+  .mr-#{$step} {
+    margin-right: $val;
+  }
+  .mb-#{$step} {
+    margin-bottom: $val;
+  }
+  .ml-#{$step} {
+    margin-left: $val;
+  }
+}
+
+// Auto margins
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
+.mr-auto {
+  margin-right: auto;
+}

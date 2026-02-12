@@ -1,0 +1,194 @@
+// ---------------------------------------------------------------------------
+// Navigation Components
+// ---------------------------------------------------------------------------
+// Nav items, tabs, and table styles.
+// Uses --material-* variables for automatic material switching.
+// ---------------------------------------------------------------------------
+
+@use '../variables' as *;
+
+// ============================================================================
+// NAV
+// ============================================================================
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.nav-item {
+  padding: 0.5rem 1rem;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  letter-spacing: var(--tracking-elegant);
+  color: var(--text-secondary);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+  user-select: none;
+  border: none;
+  background: none;
+  font-family: var(--font-sans);
+
+  &:hover {
+    color: var(--text-primary);
+    background-color: var(--state-hover);
+  }
+
+  &.active {
+    color: var(--accent-primary);
+    background-color: var(--state-active);
+  }
+}
+
+// ============================================================================
+// TABS
+// ============================================================================
+
+.tabs {
+  display: flex;
+  border-bottom: 2px solid var(--border-default);
+  gap: 0;
+  overflow-x: auto;
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.tab {
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  letter-spacing: var(--tracking-elegant);
+  color: var(--text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  border: none;
+  background: none;
+  font-family: var(--font-sans);
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: transparent;
+    transition: background-color 0.2s ease;
+  }
+
+  &:hover {
+    color: var(--text-primary);
+    background-color: var(--state-hover);
+  }
+
+  &.active {
+    color: var(--accent-primary);
+
+    &::after {
+      background-color: var(--accent-primary);
+    }
+  }
+}
+
+// Tabs carved variant
+.tabs-carved {
+  position: relative;
+  border-bottom: 3px solid var(--border-strong);
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--gold-400) 0,
+      var(--gold-400) 8px,
+      transparent 8px,
+      transparent 16px
+    );
+    opacity: 0.3;
+  }
+}
+
+// ============================================================================
+// TABLE
+// ============================================================================
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-refined);
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+
+  th,
+  td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-default);
+  }
+
+  th {
+    font-family: var(--font-serif);
+    font-weight: var(--font-semibold);
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-display);
+    background-color: var(--surface-2);
+    border-bottom: 2px solid var(--border-strong);
+  }
+
+  tbody tr {
+    transition:
+      background-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:hover {
+      background-color: var(--state-hover);
+    }
+  }
+}
+
+.table-striped tbody tr:nth-child(even) {
+  background-color: var(--surface-2);
+}
+
+// Table inlay variant
+.table-inlay {
+  border-collapse: separate;
+  border-spacing: 0 4px;
+
+  th {
+    background: linear-gradient(145deg, var(--gold-400), var(--gold-500));
+    color: var(--gold-900);
+  }
+
+  tbody tr {
+    background: var(--material-bg);
+    box-shadow: var(--material-shadow);
+
+    td:first-child {
+      border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+    }
+
+    td:last-child {
+      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    }
+  }
+}

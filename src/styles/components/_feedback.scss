@@ -1,0 +1,188 @@
+// ---------------------------------------------------------------------------
+// Feedback Components
+// ---------------------------------------------------------------------------
+// Alerts, tooltips, progress bars, and skeleton loaders.
+// Uses --material-* variables for automatic material switching.
+// ---------------------------------------------------------------------------
+
+@use 'sass:list';
+@use '../variables' as *;
+
+// ============================================================================
+// ALERTS
+// ============================================================================
+
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-xl);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  border-left: 3px solid transparent;
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+@each $type in (success, warning, error, info) {
+  .alert-#{$type} {
+    background-color: var(--color-#{$type}-subtle);
+    color: var(--color-#{$type}-text);
+    border-left-color: var(--color-#{$type});
+  }
+}
+
+// ============================================================================
+// TOOLTIP
+// ============================================================================
+
+.tooltip {
+  position: relative;
+
+  &::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.375rem 0.75rem;
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    white-space: nowrap;
+    color: var(--tooltip-text);
+    background-color: var(--tooltip-bg);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgb(212 168 67 / 12%);
+    box-shadow: 0 4px 16px var(--glass-shadow);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 50;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
+}
+
+// ============================================================================
+// PROGRESS BAR
+// ============================================================================
+
+.progress {
+  width: 100%;
+  height: 0.5rem;
+  background-color: var(--surface-3);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  box-shadow: var(--material-shadow-inset);
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--accent-primary-active),
+    var(--accent-primary),
+    var(--accent-primary-hover)
+  );
+  border-radius: var(--radius-full);
+  transition: width 0.5s ease;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(180deg, rgb(255 255 255 / 15%), transparent);
+  }
+}
+
+$progress-variants: (
+  success: (
+    var(--jewel-emerald-deep),
+    var(--jewel-emerald),
+  ),
+  warning: (
+    var(--gold-500),
+    var(--gold-300),
+  ),
+  error: (
+    var(--jewel-ruby-deep),
+    var(--jewel-ruby),
+  ),
+);
+
+@each $name, $colors in $progress-variants {
+  .progress-#{$name} .progress-bar {
+    background: linear-gradient(90deg, list.nth($colors, 1), list.nth($colors, 2));
+  }
+}
+
+// Baroque progress
+.progress-baroque {
+  position: relative;
+  border: 2px solid var(--gold-400);
+  border-radius: var(--radius-lg);
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid var(--gold-400);
+    background: var(--surface-1);
+  }
+
+  &::before {
+    left: -12px;
+  }
+
+  &::after {
+    right: -12px;
+  }
+}
+
+// ============================================================================
+// SKELETON
+// ============================================================================
+
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.skeleton {
+  background-color: var(--surface-3);
+  border-radius: var(--radius-md);
+  animation: skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.skeleton-text {
+  @extend .skeleton;
+  height: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-circle {
+  @extend .skeleton;
+  border-radius: var(--radius-full);
+}

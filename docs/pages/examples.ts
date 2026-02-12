@@ -1,35 +1,29 @@
 /** Examples page — Full-page composition layouts demonstrating real-world usage. */
 
+import { sectionHeading, quickNavFromLabels } from '../utils/helpers';
+
 export function renderExamples(): string {
   return `
 <div class="page-examples">
-  <div class="section-heading">
-    <h2 class="text-3xl font-bold">Examples</h2>
-    <p class="text-secondary mt-2">Luxury composition examples demonstrating the estate aesthetic in context.</p>
-  </div>
-  <div class="section-divider"></div>
+  ${sectionHeading('Examples', 'examples', 'Composition examples demonstrating the design system in context. All examples respond to theme and settings changes.')}
 
-  <div class="flex flex-wrap gap-2 mt-6 mb-4">
-    ${[
+  ${quickNavFromLabels(
+    [
       'Dashboard',
       'Landing Hero',
-      'Glass Dashboard',
-      'Neuro Settings',
+      'Analytics',
+      'Settings Panel',
       'Email Client',
-      'Estate Landing',
-      'Classical Dashboard',
-    ]
-      .map(
-        (s) => `
-      <a href="#example-${s.toLowerCase().replace(/\s+/g, '-')}" class="badge badge-pill">${s}</a>
-    `
-      )
-      .join('')}
-  </div>
+      'Marketing Landing',
+      'Metrics Dashboard',
+    ],
+    'example-'
+  )}
 
   <!-- ====== DASHBOARD ====== -->
   <div class="specimen mt-10" id="example-dashboard">
     <h3 class="text-xl font-semibold mb-4">Dashboard Layout</h3>
+    <p class="text-sm text-muted mb-4">This example responds to the Material, Surface, and Ornament settings. Try changing them!</p>
     <div class="card overflow-hidden">
       <div class="specimen__preview p-0">
         <div class="flex" style="min-height: 520px">
@@ -139,20 +133,20 @@ export function renderExamples(): string {
     <h3 class="text-xl font-semibold mb-4">Landing Page Hero</h3>
     <div class="card overflow-hidden">
       <div class="specimen__preview p-0">
-        <div class="relative overflow-hidden" style="background: linear-gradient(180deg, #0b0d17 0%, #11132a 100%); min-height: 520px">
+        <div class="relative overflow-hidden" style="background: var(--surface-bg); min-height: 520px">
           <!-- Atmospheric gradient blobs -->
-          <div class="absolute" style="width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(189,147,249,0.12), transparent); top: -150px; right: -100px;"></div>
-          <div class="absolute" style="width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(139,233,253,0.08), transparent); bottom: -120px; left: -80px;"></div>
-          <div class="absolute" style="width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(255,121,198,0.06), transparent); top: 40%; left: 50%;"></div>
+          <div class="absolute" style="width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, var(--stained-secondary), transparent); top: -150px; right: -100px;"></div>
+          <div class="absolute" style="width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, var(--color-info-subtle), transparent); bottom: -120px; left: -80px;"></div>
+          <div class="absolute" style="width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, var(--stained-accent), transparent); top: 40%; left: 50%;"></div>
 
           <!-- Glass navbar -->
-          <nav class="flex items-center justify-between px-8 py-4 relative z-10" style="backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.06)">
-            <span class="font-serif text-xl font-semibold" style="color: #f8f8f2">Soltana</span>
+          <nav class="flex items-center justify-between px-8 py-4 relative z-10" style="backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-subtle)">
+            <span class="font-serif text-xl font-semibold">Soltana</span>
             <div class="flex items-center gap-6">
               ${['Features', 'Pricing', 'Docs']
                 .map(
                   (item) => `
-                <a href="#" onclick="return false" class="text-sm font-medium tracking-refined" style="color: rgba(255,255,255,0.6)">${item}</a>
+                <a href="#" onclick="return false" class="text-sm font-medium tracking-refined text-secondary">${item}</a>
               `
                 )
                 .join('')}
@@ -162,12 +156,12 @@ export function renderExamples(): string {
 
           <!-- Hero content -->
           <div class="text-center px-8 pt-20 pb-24 relative z-10">
-            <span class="overline mb-4 inline-block" style="color: var(--dracula-purple)">New Release v2.0</span>
-            <h1 class="font-serif mb-6" style="font-size: 4rem; color: #f8f8f2; line-height: 1.05; font-weight: 600;">Build beautiful<br/>interfaces <span style="background: linear-gradient(135deg, #bd93f9, #ff79c6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">effortlessly</span></h1>
-            <p class="text-lg mb-10 mx-auto" style="max-width: 520px; color: rgba(255,255,255,0.5); letter-spacing: 0.02em;">A complete design system with neumorphic, glassmorphic, and hybrid components for prestigious web applications.</p>
+            <span class="overline mb-4 inline-block" style="color: var(--accent-secondary)">New Release v2.0</span>
+            <h1 class="font-serif mb-6" style="font-size: 4rem; line-height: 1.05; font-weight: 600;">Build beautiful<br/>interfaces <span style="background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">effortlessly</span></h1>
+            <p class="text-lg mb-10 mx-auto text-secondary" style="max-width: 520px; letter-spacing: 0.02em;">A complete design system with neumorphic, glassmorphic, and hybrid components for prestigious web applications.</p>
             <div class="flex justify-center gap-4">
               <button class="btn btn-primary btn-lg">Start Building</button>
-              <button class="btn btn-outline btn-lg" style="border-color: rgba(255,255,255,0.12); color: #f8f8f2; backdrop-filter: blur(8px);">View Docs</button>
+              <button class="btn btn-outline btn-lg">View Docs</button>
             </div>
           </div>
         </div>
@@ -175,25 +169,25 @@ export function renderExamples(): string {
     </div>
   </div>
 
-  <!-- ====== GLASS DASHBOARD ====== -->
-  <div class="specimen mt-10" id="example-glass-dashboard">
-    <h3 class="text-xl font-semibold mb-4">Glassmorphic Dashboard</h3>
+  <!-- ====== ANALYTICS ====== -->
+  <div class="specimen mt-10" id="example-analytics">
+    <h3 class="text-xl font-semibold mb-4">Analytics Dashboard</h3>
     <div class="card overflow-hidden">
       <div class="specimen__preview p-0">
-        <div class="relative overflow-hidden p-6" style="background: linear-gradient(135deg, #0e1020, #1a1d42, #141628); min-height: 420px;">
+        <div class="relative overflow-hidden p-6" style="background: var(--surface-bg); min-height: 420px;">
           <!-- Decorative blobs -->
-          <div class="absolute" style="width: 250px; height: 250px; border-radius: 50%; background: rgba(189,147,249,0.2); filter: blur(60px); top: -50px; left: 20%;"></div>
-          <div class="absolute" style="width: 200px; height: 200px; border-radius: 50%; background: rgba(255,121,198,0.15); filter: blur(50px); bottom: -30px; right: 15%;"></div>
-          <div class="absolute" style="width: 150px; height: 150px; border-radius: 50%; background: rgba(139,233,253,0.1); filter: blur(40px); top: 40%; left: 60%;"></div>
+          <div class="absolute" style="width: 250px; height: 250px; border-radius: 50%; background: var(--stained-secondary); filter: blur(60px); top: -50px; left: 20%;"></div>
+          <div class="absolute" style="width: 200px; height: 200px; border-radius: 50%; background: var(--stained-accent); filter: blur(50px); bottom: -30px; right: 15%;"></div>
+          <div class="absolute" style="width: 150px; height: 150px; border-radius: 50%; background: var(--stained-primary); filter: blur(40px); top: 40%; left: 60%;"></div>
 
           <div class="relative z-10">
             <!-- Glass navbar -->
-            <div class="glass-luxury flex items-center justify-between mb-6 py-3 px-5" style="border-radius: var(--radius-xl)">
-              <span class="font-serif font-semibold" style="color: #fff">Analytics</span>
+            <div class="card flex items-center justify-between mb-6 py-3 px-5" style="border-radius: var(--radius-xl)">
+              <span class="font-serif font-semibold">Analytics</span>
               <div class="flex gap-2">
-                <button class="glass-button px-3 py-1 text-xs" style="color: #fff">Today</button>
-                <button class="glass-button px-3 py-1 text-xs" style="color: #fff; background: rgba(189,147,249,0.2)">Week</button>
-                <button class="glass-button px-3 py-1 text-xs" style="color: #fff">Month</button>
+                <button class="btn btn-ghost btn-xs">Today</button>
+                <button class="btn btn-primary btn-xs">Week</button>
+                <button class="btn btn-ghost btn-xs">Month</button>
               </div>
             </div>
 
@@ -218,12 +212,12 @@ export function renderExamples(): string {
               ]
                 .map(
                   (s) => `
-                <div class="glass-luxury p-5" style="border-radius: var(--radius-xl)">
+                <div class="card p-5" style="border-radius: var(--radius-xl)">
                   <div class="flex items-center gap-3 mb-2">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(189,147,249,0.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${s.icon}</svg>
-                    <span class="text-xs" style="color: rgba(255,255,255,0.5)">${s.label}</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${s.icon}</svg>
+                    <span class="text-xs text-muted">${s.label}</span>
                   </div>
-                  <p class="text-xl font-bold" style="color: #fff">${s.value}</p>
+                  <p class="text-xl font-bold">${s.value}</p>
                 </div>
               `
                 )
@@ -231,12 +225,12 @@ export function renderExamples(): string {
             </div>
 
             <!-- Glass chart area -->
-            <div class="glass-luxury" style="min-height: 120px; border-radius: var(--radius-xl); padding: 1.25rem">
+            <div class="card" style="min-height: 120px; border-radius: var(--radius-xl); padding: 1.25rem">
               <div class="flex items-end gap-3 justify-center" style="height: 100px">
                 ${[30, 55, 40, 70, 50, 85, 65, 75, 45, 90, 60, 80]
                   .map(
                     (h) => `
-                  <div style="width: 28px; height: ${String(h)}%; background: linear-gradient(to top, rgba(189,147,249,0.3), rgba(189,147,249,0.8)); border-radius: var(--radius-sm);"></div>
+                  <div style="width: 28px; height: ${String(h)}%; background: linear-gradient(to top, var(--accent-primary), var(--accent-secondary)); border-radius: var(--radius-sm);"></div>
                 `
                   )
                   .join('')}
@@ -248,9 +242,9 @@ export function renderExamples(): string {
     </div>
   </div>
 
-  <!-- ====== NEUMORPHIC SETTINGS ====== -->
-  <div class="specimen mt-10" id="example-neuro-settings">
-    <h3 class="text-xl font-semibold mb-4">Neumorphic Settings Panel</h3>
+  <!-- ====== SETTINGS PANEL ====== -->
+  <div class="specimen mt-10" id="example-settings-panel">
+    <h3 class="text-xl font-semibold mb-4">Settings Panel</h3>
     <div class="card overflow-hidden">
       <div class="specimen__preview p-0">
         <div class="p-8" style="background: var(--neuro-bg); min-height: 400px">
@@ -307,6 +301,7 @@ export function renderExamples(): string {
   <!-- ====== EMAIL CLIENT ====== -->
   <div class="specimen mt-10" id="example-email-client">
     <h3 class="text-xl font-semibold mb-4">Email Client Layout</h3>
+    <p class="text-sm text-muted mb-4">This example also responds to Material, Surface, and Ornament settings.</p>
     <div class="card overflow-hidden">
       <div class="specimen__preview p-0">
         <div class="flex" style="min-height: 440px">
@@ -412,24 +407,24 @@ export function renderExamples(): string {
     </div>
   </div>
 
-  <!-- ====== ESTATE LANDING ====== -->
-  <div class="specimen mt-10" id="example-estate-landing">
-    <h3 class="text-xl font-semibold mb-4 font-serif">Estate Landing</h3>
-    <p class="text-sm text-muted mb-4">A grand estate-inspired landing page with gold typography, marble textures, and classical ornaments.</p>
+  <!-- ====== MARKETING LANDING ====== -->
+  <div class="specimen mt-10" id="example-marketing-landing">
+    <h3 class="text-xl font-semibold mb-4 font-serif">Marketing Landing</h3>
+    <p class="text-sm text-muted mb-4">A landing page with feature highlights and call-to-action sections.</p>
     <div class="card overflow-hidden">
       <div class="specimen__preview p-0">
-        <div class="relative overflow-hidden" style="background: linear-gradient(180deg, #08091a 0%, #0e1028 50%, #151838 100%); min-height: 600px">
+        <div class="relative overflow-hidden" style="background: var(--surface-bg); min-height: 600px">
           <!-- Gold atmospheric glow -->
-          <div class="absolute" style="width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(212,168,67,0.06), transparent 60%); top: -200px; right: -100px;"></div>
-          <div class="absolute" style="width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(168,85,247,0.04), transparent 60%); bottom: -150px; left: -100px;"></div>
+          <div class="absolute" style="width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, var(--stained-accent), transparent 60%); top: -200px; right: -100px;"></div>
+          <div class="absolute" style="width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, var(--stained-secondary), transparent 60%); bottom: -150px; left: -100px;"></div>
 
           <div class="relative z-10 px-8 py-12">
             <div class="text-center mb-16">
-              <p class="overline mb-6" style="color: rgba(212,168,67,0.7)">Soltana Design System</p>
-              <h1 class="font-serif mb-6 gold-text" style="font-size: 4.5rem; line-height: 1.05; font-weight: 700; letter-spacing: 0.08em;">
+              <p class="overline mb-6" style="color: var(--accent-gold)">Soltana Design System</p>
+              <h1 class="font-serif mb-6" style="font-size: 4.5rem; line-height: 1.05; font-weight: 700; letter-spacing: 0.08em; background: linear-gradient(135deg, var(--gold-300), var(--gold-500)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                 Prestige in<br/>Every Pixel
               </h1>
-              <p class="text-lg mx-auto mb-10" style="max-width: 480px; color: rgba(245,240,230,0.45); letter-spacing: 0.02em;">
+              <p class="text-lg mx-auto mb-10 text-secondary" style="max-width: 480px; letter-spacing: 0.02em;">
                 A refined design system merging classical elegance with modern depth.
               </p>
               <div class="flex gap-4 justify-center">
@@ -444,26 +439,26 @@ export function renderExamples(): string {
               ${[
                 {
                   title: 'Polished Stone',
-                  desc: 'Multi-layer shadows create tactile, three-dimensional marble surfaces.',
+                  desc: 'Multi-layer shadows create tactile, three-dimensional surfaces.',
                   icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/>',
                 },
                 {
                   title: 'Crystal Glass',
-                  desc: 'Frosted translucency with gold-tinted borders and warm inner glow.',
+                  desc: 'Frosted translucency with tinted borders and warm inner glow.',
                   icon: '<circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>',
                 },
                 {
                   title: 'Classical Ornament',
-                  desc: 'Greek key, scrollwork, and dentil patterns inspired by estate architecture.',
+                  desc: 'Scrollwork and patterns inspired by estate architecture.',
                   icon: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
                 },
               ]
                 .map(
                   (f) => `
-                <div class="neuro-glass-gold" style="padding: 1.5rem; border-radius: var(--radius-xl); color: var(--ivory-200)">
-                  <svg class="mb-4" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(212,168,67,0.8)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${f.icon}</svg>
+                <div class="card" style="padding: 1.5rem; border-radius: var(--radius-xl);">
+                  <svg class="mb-4" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${f.icon}</svg>
                   <h4 class="font-semibold text-base mb-2 font-serif">${f.title}</h4>
-                  <p class="text-sm" style="color: rgba(245,240,230,0.45)">${f.desc}</p>
+                  <p class="text-sm text-secondary">${f.desc}</p>
                 </div>
               `
                 )
@@ -475,21 +470,21 @@ export function renderExamples(): string {
     </div>
   </div>
 
-  <!-- ====== CLASSICAL DASHBOARD ====== -->
-  <div class="specimen mt-10" id="example-classical-dashboard">
-    <h3 class="text-xl font-semibold mb-4 font-serif">Classical Dashboard</h3>
-    <p class="text-sm text-muted mb-4">A dashboard using the estate aesthetic with gold accents and jewel-toned metrics.</p>
+  <!-- ====== METRICS DASHBOARD ====== -->
+  <div class="specimen mt-10" id="example-metrics-dashboard">
+    <h3 class="text-xl font-semibold mb-4 font-serif">Metrics Dashboard</h3>
+    <p class="text-sm text-muted mb-4">A dashboard with KPI cards and trend visualization.</p>
     <div class="card overflow-hidden">
       <div class="specimen__preview p-0">
-        <div class="relative overflow-hidden" style="background: linear-gradient(180deg, #08091a 0%, #0e1028 100%); min-height: 500px">
-          <div class="absolute" style="width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(212,168,67,0.05), transparent); top: -100px; left: 10%;"></div>
+        <div class="relative overflow-hidden" style="background: var(--surface-bg); min-height: 500px">
+          <div class="absolute" style="width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, var(--stained-accent), transparent); top: -100px; left: 10%;"></div>
 
           <div class="relative z-10 p-6">
-            <div class="neuro-glass-gold mb-6" style="padding: 1rem 1.5rem; border-radius: var(--radius-xl)">
+            <div class="card mb-6" style="padding: 1rem 1.5rem; border-radius: var(--radius-xl)">
               <div class="flex items-center justify-between">
                 <div>
-                  <p class="overline" style="color: rgba(212,168,67,0.5)">Overview</p>
-                  <h3 class="font-serif text-2xl font-bold" style="color: var(--ivory-200)">Estate Analytics</h3>
+                  <p class="overline" style="color: var(--accent-gold)">Overview</p>
+                  <h3 class="font-serif text-2xl font-bold">Estate Analytics</h3>
                 </div>
                 <div class="flex gap-2">
                   <sol-button variant="ghost" size="xs">7D</sol-button>
@@ -508,17 +503,17 @@ export function renderExamples(): string {
               ]
                 .map(
                   (s) => `
-                <div class="neuro-glass-gold" style="padding: 1rem 1.25rem; border-radius: var(--radius-xl); color: var(--ivory-200)">
-                  <p class="text-xs mb-1" style="color: rgba(212,168,67,0.5)">${s.label}</p>
+                <div class="card" style="padding: 1rem 1.25rem; border-radius: var(--radius-xl);">
+                  <p class="text-xs mb-1" style="color: var(--accent-gold)">${s.label}</p>
                   <p class="text-xl font-bold mb-1">${s.value}</p>
-                  <span class="text-xs" style="color: ${s.up ? '#10b981' : '#ef4444'}">${s.change}</span>
+                  <span class="text-xs" style="color: ${s.up ? 'var(--color-success)' : 'var(--color-error)'}">${s.change}</span>
                 </div>
               `
                 )
                 .join('')}
             </div>
 
-            <div class="neuro-glass-gold" style="padding: 1.5rem; border-radius: var(--radius-xl); color: var(--ivory-200);">
+            <div class="card" style="padding: 1.5rem; border-radius: var(--radius-xl);">
               <div class="flex items-center justify-between mb-4">
                 <h4 class="font-semibold font-serif">Revenue Trend</h4>
               </div>
@@ -527,8 +522,8 @@ export function renderExamples(): string {
                   .map(
                     (h, i) => `
                   <div style="display: flex; flex-direction: column; gap: 2px; align-items: center; flex: 1;">
-                    <div style="width: 100%; height: ${String(h)}%; max-width: 32px; background: linear-gradient(to top, rgba(212,168,67,0.3), rgba(212,168,67,0.8)); border-radius: var(--radius-sm);"></div>
-                    <span class="text-xs" style="color: rgba(245,240,230,0.3); font-size: 0.6rem">${['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'][i]}</span>
+                    <div style="width: 100%; height: ${String(h)}%; max-width: 32px; background: linear-gradient(to top, var(--accent-primary), var(--accent-gold)); border-radius: var(--radius-sm);"></div>
+                    <span class="text-xs text-muted" style="font-size: 0.6rem">${['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'][i]}</span>
                   </div>
                 `
                   )

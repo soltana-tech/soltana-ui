@@ -22,20 +22,44 @@ export default defineConfig(
       }
     : {
         // Library build
-        plugins: [dts()],
+        plugins: [
+          dts({
+            include: ['src/**/*.ts'],
+            exclude: ['src/**/*.test.ts', 'docs/**/*'],
+          }),
+        ],
         build: {
           lib: {
-            entry: resolve(__dirname, 'src/index.ts'),
-            name: 'SoltanaTech',
-            fileName: 'soltana-tech',
-            cssFileName: 'soltana-tech',
+            entry: {
+              'soltana-ui': resolve(__dirname, 'src/index.ts'),
+              runtime: resolve(__dirname, 'src/runtime/index.ts'),
+            },
+            name: 'SoltanaUI',
+            formats: ['es', 'umd'],
+            fileName: (format, entryName) => {
+              if (format === 'umd') {
+                return `${entryName}.umd.cjs`;
+              }
+              return `${entryName}.js`;
+            },
           },
+          cssFileName: 'soltana-ui',
           rollupOptions: {
             external: [],
             output: {
               globals: {},
+              // Ensure CSS is extracted to a single file
+              assetFileNames: (assetInfo) => {
+                if (assetInfo.name?.endsWith('.css')) {
+                  return 'soltana-ui.css';
+                }
+                return assetInfo.name ?? 'assets/[name]-[hash][extname]';
+              },
             },
           },
+          // Generate minified version
+          minify: 'terser',
+          sourcemap: false,
         },
         define: {
           // Ensure custom element definitions are preserved

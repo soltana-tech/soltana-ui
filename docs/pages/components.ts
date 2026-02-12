@@ -1,38 +1,14 @@
 /** Components page — Atom and molecule specimens with interactive controls. */
 
-function specimen(title: string, id: string, content: string, code?: string): string {
-  return `
-    <div class="specimen mt-10" id="${id}">
-      <h3 class="text-xl font-semibold mb-4 font-serif">${title}</h3>
-      <div class="card">
-        <div class="card-body specimen__preview">
-          ${content}
-        </div>
-        ${code ? `<div class="card-footer"><pre><code>${escapeHtml(code)}</code></pre></div>` : ''}
-      </div>
-    </div>`;
-}
-
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
+import { sectionHeading, quickNavFromLabels, specimen } from '../utils/helpers';
 
 export function renderComponents(): string {
   return `
 <div class="page-components">
-  <div class="section-heading">
-    <h2 class="text-3xl font-bold">Components</h2>
-    <p class="text-secondary mt-2">Estate-styled atoms and molecules for composing interfaces.</p>
-  </div>
-  <div class="section-divider"></div>
+  ${sectionHeading('Components', 'components', 'Estate-styled atoms and molecules for composing interfaces.')}
 
-  <!-- Quick nav -->
-  <div class="flex flex-wrap gap-2 mt-6 mb-4">
-    ${[
+  ${quickNavFromLabels(
+    [
       'Buttons',
       'Inputs',
       'Cards',
@@ -44,17 +20,13 @@ export function renderComponents(): string {
       'Tooltips',
       'Tables',
       'Modals',
+      'Material Demo',
       'Neumorphic',
       'Glassmorphic',
       'Neuro-Glass',
-    ]
-      .map(
-        (s) => `
-      <a href="#comp-${s.toLowerCase()}" class="badge badge-pill">${s}</a>
-    `
-      )
-      .join('')}
-  </div>
+    ],
+    'comp-'
+  )}
 
   <!-- ====== BUTTONS ====== -->
   ${specimen(
@@ -99,7 +71,7 @@ export function renderComponents(): string {
       <div class="flex flex-wrap gap-4 items-end mb-4">
         <div class="input-group">
           <label class="input-label">Variant</label>
-          <select class="select input-sm" data-class-swap data-target="#playground-btn" data-prefix="btn-" id="btn-variant-select">
+          <select class="select input-sm" data-class-swap data-target="#playground-btn" id="btn-variant-select">
             <option value="btn-primary">Primary</option>
             <option value="btn-secondary">Secondary</option>
             <option value="btn-ghost">Ghost</option>
@@ -110,7 +82,7 @@ export function renderComponents(): string {
         </div>
         <div class="input-group">
           <label class="input-label">Size</label>
-          <select class="select input-sm" data-class-swap data-target="#playground-btn" data-prefix="btn-x" id="btn-size-select">
+          <select class="select input-sm" data-class-swap data-target="#playground-btn" id="btn-size-select">
             <option value="">Default</option>
             <option value="btn-xs">Extra Small</option>
             <option value="btn-sm">Small</option>
@@ -269,11 +241,20 @@ export function renderComponents(): string {
       <span class="badge badge-pill badge-info">Info</span>
     </div>
     <p class="text-sm font-medium mb-3">Tags</p>
-    <div class="flex flex-wrap gap-2">
+    <div class="flex flex-wrap gap-2 mb-6">
       <span class="tag">TypeScript</span>
       <span class="tag">Design System</span>
       <span class="tag">SCSS</span>
       <span class="tag">Vite</span>
+    </div>
+    <p class="text-sm font-medium mb-3">Jewel-Toned Tags</p>
+    <div class="flex flex-wrap gap-2">
+      <span class="tag tag-emerald">Emerald</span>
+      <span class="tag tag-sapphire">Sapphire</span>
+      <span class="tag tag-ruby">Ruby</span>
+      <span class="tag tag-amethyst">Amethyst</span>
+      <span class="tag tag-gold">Gold</span>
+      <span class="tag tag-citrine">Citrine</span>
     </div>
   `
   )}
@@ -464,6 +445,56 @@ export function renderComponents(): string {
           <button class="btn btn-ghost" data-modal-close="demo-modal">Cancel</button>
           <button class="btn btn-primary" data-modal-close="demo-modal">Confirm</button>
         </div>
+      </div>
+    </div>
+  `
+  )}
+
+  <!-- ====== MATERIAL DEMO ====== -->
+  ${specimen(
+    'Material Demo',
+    'comp-material-demo',
+    `
+    <p class="text-sm text-muted mb-6">The same components rendered in each material context. Change the global material in the settings panel to see all components update.</p>
+    <div class="grid gap-6" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))">
+      <div data-material="neuro" class="p-6 rounded-xl" style="background: var(--neuro-bg); box-shadow: 6px 6px 14px var(--neuro-shadow-dark), -6px -6px 14px var(--neuro-shadow-light);">
+        <span class="tag tag-gold mb-3">Neumorphic</span>
+        <div class="flex flex-wrap gap-2 mt-3 mb-3">
+          <button class="btn btn-primary btn-sm">Primary</button>
+          <button class="btn btn-secondary btn-sm">Secondary</button>
+        </div>
+        <input class="input input-sm mb-3" placeholder="Neuro input..." />
+        <div class="flex gap-2">
+          <span class="badge badge-success">Active</span>
+          <span class="tag tag-sapphire">Status</span>
+        </div>
+        <div class="progress mt-3"><div class="progress-bar" style="width: 65%"></div></div>
+      </div>
+      <div data-material="glass" class="p-6 rounded-xl" style="background: var(--glass-bg); backdrop-filter: blur(16px) saturate(140%); border: 1px solid var(--glass-border);">
+        <span class="tag tag-sapphire mb-3">Glassmorphic</span>
+        <div class="flex flex-wrap gap-2 mt-3 mb-3">
+          <button class="btn btn-primary btn-sm">Primary</button>
+          <button class="btn btn-secondary btn-sm">Secondary</button>
+        </div>
+        <input class="input input-sm mb-3" placeholder="Glass input..." />
+        <div class="flex gap-2">
+          <span class="badge badge-success">Active</span>
+          <span class="tag tag-sapphire">Status</span>
+        </div>
+        <div class="progress mt-3"><div class="progress-bar" style="width: 65%"></div></div>
+      </div>
+      <div data-material="hybrid" class="p-6 rounded-xl" style="background: linear-gradient(145deg, var(--glass-gradient-start), var(--glass-gradient-end)); backdrop-filter: blur(12px) saturate(120%); border: 1px solid var(--glass-border);">
+        <span class="tag tag-amethyst mb-3">Hybrid</span>
+        <div class="flex flex-wrap gap-2 mt-3 mb-3">
+          <button class="btn btn-primary btn-sm">Primary</button>
+          <button class="btn btn-secondary btn-sm">Secondary</button>
+        </div>
+        <input class="input input-sm mb-3" placeholder="Hybrid input..." />
+        <div class="flex gap-2">
+          <span class="badge badge-success">Active</span>
+          <span class="tag tag-sapphire">Status</span>
+        </div>
+        <div class="progress mt-3"><div class="progress-bar" style="width: 65%"></div></div>
       </div>
     </div>
   `
@@ -696,6 +727,79 @@ export function renderComponents(): string {
     </div>
   `
   )}
+
+  <div class="ornament-divider mt-12 mb-12"></div>
+
+  <!-- ====== WEB COMPONENTS ====== -->
+  <div class="section-heading" id="comp-web-components">
+    <h2 class="text-2xl font-bold">Web Components</h2>
+    <p class="text-secondary mt-2">Shadow DOM components with encapsulated styling. Use as custom HTML elements.</p>
+  </div>
+
+  <h3 class="text-xl font-semibold mt-8 mb-4 font-serif" id="wc-card">sol-card</h3>
+  <p class="text-secondary mb-4">Card with ornamental corners, gold borders, and multiple variants.</p>
+  <div class="grid gap-6" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))">
+    <sol-card variant="default" elevation="raised">
+      <span slot="header">Default Card</span>
+      <p>Neumorphic raised card with soft depth.</p>
+    </sol-card>
+    <sol-card variant="ornate" elevation="raised">
+      <span slot="header">Ornate Card</span>
+      <p>Four corner ornaments for a classical frame.</p>
+    </sol-card>
+    <sol-card variant="baroque" elevation="raised">
+      <span slot="header">Baroque Card</span>
+      <p>Full ornamental frame with medallion.</p>
+    </sol-card>
+    <sol-card variant="glass" elevation="raised">
+      <span slot="header">Glass Card</span>
+      <p>Crystal glass with backdrop blur effect.</p>
+    </sol-card>
+  </div>
+
+  <h3 class="text-xl font-semibold mt-10 mb-4 font-serif" id="wc-button">sol-button</h3>
+  <p class="text-secondary mb-4">Button with material-aware styling and metallic finishes.</p>
+
+  <h4 class="text-lg font-semibold mt-4 mb-3">Standard Variants</h4>
+  <div class="flex flex-wrap gap-4 items-center mb-6">
+    <sol-button variant="primary">Primary</sol-button>
+    <sol-button variant="secondary">Secondary</sol-button>
+    <sol-button variant="outline">Outline</sol-button>
+    <sol-button variant="ghost">Ghost</sol-button>
+    <sol-button variant="danger">Danger</sol-button>
+    <sol-button variant="success">Success</sol-button>
+  </div>
+
+  <h4 class="text-lg font-semibold mt-4 mb-3">Material Variants</h4>
+  <div class="flex flex-wrap gap-4 items-center mb-6">
+    <sol-button variant="primary" material="neuro">Neuro</sol-button>
+    <sol-button variant="primary" material="glass">Glass</sol-button>
+    <sol-button variant="primary" material="hybrid">Hybrid</sol-button>
+  </div>
+
+  <h4 class="text-lg font-semibold mt-4 mb-3">Metallic Variants</h4>
+  <div class="flex flex-wrap gap-4 items-center mb-6">
+    <sol-button variant="gold">Gold</sol-button>
+    <sol-button variant="silver">Silver</sol-button>
+    <sol-button variant="bronze">Bronze</sol-button>
+    <sol-button variant="platinum">Platinum</sol-button>
+  </div>
+
+  <h4 class="text-lg font-semibold mt-4 mb-3">Structural Variants</h4>
+  <div class="flex flex-wrap gap-4 items-center">
+    <sol-button variant="chiseled">Chiseled</sol-button>
+    <sol-button variant="baroque">Baroque</sol-button>
+    <sol-button variant="faceted">Faceted</sol-button>
+    <sol-button variant="medallion">M</sol-button>
+  </div>
+
+  <h3 class="text-xl font-semibold mt-10 mb-4 font-serif" id="wc-input">sol-input</h3>
+  <p class="text-secondary mb-4">Input field with label, validation states, and icons.</p>
+  <div class="grid gap-6" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))">
+    <sol-input label="Default Input" placeholder="Enter text..."></sol-input>
+    <sol-input label="With Value" value="Hello World"></sol-input>
+    <sol-input label="Disabled" placeholder="Cannot edit" disabled></sol-input>
+  </div>
 
 </div>
 `;

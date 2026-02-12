@@ -1,11 +1,4 @@
-export type TabId =
-  | 'foundation'
-  | 'materials'
-  | 'utilities'
-  | 'components'
-  | 'web-components'
-  | 'patterns'
-  | 'examples';
+export type TabId = 'getting-started' | 'design-system' | 'components' | 'patterns' | 'examples';
 
 type PageRenderer = () => string;
 
@@ -15,7 +8,7 @@ export class TabRouter {
   private tabs: NodeListOf<HTMLButtonElement>;
   private pages = new Map<TabId, PageRenderer>();
   private afterRenderHooks: ((tabId: TabId) => void)[] = [];
-  private currentTab: TabId = 'foundation';
+  private currentTab: TabId = 'getting-started';
 
   constructor(containerId: string) {
     const el = document.getElementById(containerId);
@@ -36,7 +29,7 @@ export class TabRouter {
   /** Navigate to the tab from the URL hash, or the default tab. */
   start(): void {
     const hash = location.hash.slice(1) as TabId;
-    const target = this.pages.has(hash) ? hash : 'foundation';
+    const target = this.pages.has(hash) ? hash : 'getting-started';
     this.navigate(target);
   }
 

@@ -1,0 +1,410 @@
+// ---------------------------------------------------------------------------
+// Visual Utilities
+// ---------------------------------------------------------------------------
+// Colors, backgrounds, borders, shadows, opacity, transitions, transforms,
+// cursor, pointer events, user select, and visibility.
+// ---------------------------------------------------------------------------
+
+@use '../variables' as *;
+
+// ============================================================================
+// BORDER RADIUS
+// ============================================================================
+
+@each $key, $val in $radii {
+  @if $key == 'default' {
+    .rounded {
+      border-radius: $val;
+    }
+  } @else {
+    .rounded-#{$key} {
+      border-radius: $val;
+    }
+  }
+}
+
+// ============================================================================
+// BORDER
+// ============================================================================
+
+.border {
+  border: 1px solid var(--border-default);
+}
+
+.border-0 {
+  border: 0;
+}
+
+.border-2 {
+  border: 2px solid var(--border-default);
+}
+
+.border-t {
+  border-top: 1px solid var(--border-default);
+}
+
+.border-b {
+  border-bottom: 1px solid var(--border-default);
+}
+
+.border-l {
+  border-left: 1px solid var(--border-default);
+}
+
+.border-r {
+  border-right: 1px solid var(--border-default);
+}
+
+.border-subtle {
+  border-color: var(--border-subtle);
+}
+
+.border-strong {
+  border-color: var(--border-strong);
+}
+
+.border-accent {
+  border-color: var(--accent-primary);
+}
+
+// ============================================================================
+// BACKGROUND COLOR
+// ============================================================================
+
+// Semantic surface and state backgrounds
+$bg-semantic: (
+  surface: --surface-bg,
+  surface-1: --surface-1,
+  surface-2: --surface-2,
+  surface-3: --surface-3,
+  surface-4: --surface-4,
+  accent: --accent-primary,
+  accent-secondary: --accent-secondary,
+  success: --color-success,
+  success-subtle: --color-success-subtle,
+  warning: --color-warning,
+  warning-subtle: --color-warning-subtle,
+  error: --color-error,
+  error-subtle: --color-error-subtle,
+  info: --color-info,
+  info-subtle: --color-info-subtle,
+);
+
+@each $name, $var in $bg-semantic {
+  .bg-#{$name} {
+    background-color: var(#{$var});
+  }
+}
+
+// Token-scale backgrounds
+$bg-scales: (
+  'gold': (
+    50,
+    100,
+    200,
+    300,
+    400,
+    500,
+    600,
+  ),
+  'silver': (
+    200,
+    400,
+    600,
+  ),
+  'bronze': (
+    200,
+    400,
+    600,
+  ),
+  'copper': (
+    200,
+    400,
+    600,
+  ),
+  'platinum': (
+    200,
+    400,
+    600,
+  ),
+  'ivory': (
+    50,
+    100,
+    200,
+    300,
+    400,
+  ),
+);
+
+@each $scale, $steps in $bg-scales {
+  @each $step in $steps {
+    .bg-#{$scale}-#{$step} {
+      background-color: var(--#{$scale}-#{$step});
+    }
+  }
+}
+
+// Jewel backgrounds
+$bg-jewels: (
+  'emerald',
+  'sapphire',
+  'ruby',
+  'amethyst',
+  'citrine',
+  'topaz',
+  'jade',
+  'turquoise',
+  'onyx',
+  'pearl'
+);
+
+@each $name in $bg-jewels {
+  .bg-#{$name} {
+    background-color: var(--jewel-#{$name});
+  }
+}
+
+// ============================================================================
+// GRADIENT BACKGROUNDS
+// ============================================================================
+
+.bg-gradient-estate {
+  background:
+    radial-gradient(circle at 15% 10%, rgb(212 168 67 / 8%), transparent 30%),
+    radial-gradient(circle at 80% 15%, rgb(168 85 247 / 5%), transparent 30%),
+    radial-gradient(circle at 30% 90%, rgb(16 185 129 / 4%), transparent 30%),
+    linear-gradient(180deg, var(--surface-bg), var(--surface-2));
+  background-attachment: fixed;
+}
+
+.bg-gradient-midnight {
+  background:
+    radial-gradient(circle at 50% 0%, rgb(212 168 67 / 6%), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgb(168 85 247 / 4%), transparent 35%),
+    linear-gradient(180deg, var(--surface-bg), var(--surface-1));
+  background-attachment: fixed;
+}
+
+.bg-gradient-champagne {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgb(212 168 67 / 8%), transparent 40%),
+    radial-gradient(ellipse at 75% 25%, rgb(184 134 11 / 6%), transparent 35%),
+    radial-gradient(ellipse at 40% 80%, rgb(252 211 77 / 5%), transparent 35%),
+    linear-gradient(180deg, var(--surface-bg) 0%, var(--surface-2) 100%);
+  background-attachment: fixed;
+}
+
+.bg-gradient-accent {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+}
+
+.bg-gradient-warm {
+  background: linear-gradient(135deg, var(--gold-300), var(--gold-600));
+}
+
+.bg-gradient-cool {
+  background: linear-gradient(135deg, var(--jewel-sapphire), var(--jewel-amethyst));
+}
+
+// Metallic gradients
+.bg-gradient-gold {
+  background: var(--gold-gradient);
+}
+
+.bg-gradient-silver {
+  background: var(--silver-gradient);
+}
+
+.bg-gradient-bronze {
+  background: var(--bronze-gradient);
+}
+
+.bg-gradient-copper {
+  background: var(--copper-gradient);
+}
+
+.bg-gradient-platinum {
+  background: var(--platinum-gradient);
+}
+
+.bg-fixed {
+  background-attachment: fixed;
+}
+
+// ============================================================================
+// OPACITY
+// ============================================================================
+
+$opacities: (0, 5, 10, 20, 25, 30, 40, 50, 60, 70, 75, 80, 90, 95, 100);
+
+@each $val in $opacities {
+  .opacity-#{$val} {
+    opacity: calc(#{$val} / 100);
+  }
+}
+
+// ============================================================================
+// SHADOWS
+// ============================================================================
+
+@each $key, $_ in $shadows {
+  @if $key == 'default' {
+    .shadow {
+      box-shadow: var(--shadow-#{$key});
+    }
+  } @else {
+    .shadow-#{$key} {
+      box-shadow: var(--shadow-#{$key});
+    }
+  }
+}
+
+// ============================================================================
+// TRANSITION
+// ============================================================================
+
+.transition {
+  transition-property:
+    color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow,
+    transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: var(--transition-normal);
+}
+
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: var(--transition-normal);
+}
+
+.transition-none {
+  transition-property: none;
+}
+
+.duration-fast {
+  transition-duration: var(--transition-fast);
+}
+
+.duration-normal {
+  transition-duration: var(--transition-normal);
+}
+
+.duration-slow {
+  transition-duration: var(--transition-slow);
+}
+
+.duration-slower {
+  transition-duration: var(--transition-slower);
+}
+
+.ease-in {
+  transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+}
+
+.ease-out {
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+}
+
+.ease-in-out {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// ============================================================================
+// TRANSFORMS
+// ============================================================================
+
+.scale-95 {
+  transform: scale(0.95);
+}
+
+.scale-100 {
+  transform: scale(1);
+}
+
+.scale-105 {
+  transform: scale(1.05);
+}
+
+.scale-110 {
+  transform: scale(1.1);
+}
+
+.rotate-45 {
+  transform: rotate(45deg);
+}
+
+.rotate-90 {
+  transform: rotate(90deg);
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+.-rotate-45 {
+  transform: rotate(-45deg);
+}
+
+.-rotate-90 {
+  transform: rotate(-90deg);
+}
+
+// ============================================================================
+// CURSOR
+// ============================================================================
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-default {
+  cursor: default;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
+.cursor-grab {
+  cursor: grab;
+}
+
+// ============================================================================
+// POINTER EVENTS
+// ============================================================================
+
+.pointer-events-none {
+  pointer-events: none;
+}
+
+.pointer-events-auto {
+  pointer-events: auto;
+}
+
+// ============================================================================
+// USER SELECT
+// ============================================================================
+
+.select-none {
+  user-select: none;
+}
+
+.select-text {
+  user-select: text;
+}
+
+.select-all {
+  user-select: all;
+}
+
+// ============================================================================
+// VISIBILITY
+// ============================================================================
+
+.visible {
+  visibility: visible;
+}
+
+.invisible {
+  visibility: hidden;
+}

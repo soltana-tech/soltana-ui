@@ -1,39 +1,29 @@
 // ---------------------------------------------------------------------------
 // Soltana Design System — Main Entry
 // ---------------------------------------------------------------------------
-// Import order: variables → themes → base typography → components →
-// material systems → layout → utilities → accessibility.
+// Layered architecture: variables → themes → base → components →
+// materials → decorative → utilities.
 // ---------------------------------------------------------------------------
 
-// Foundation
+// Foundation — Design tokens and CSS custom properties
 @use 'variables';
 
-// Themes
+// Themes — Color schemes (dark, light, sepia)
 @use 'themes/dark';
 @use 'themes/light';
 @use 'themes/sepia';
 
-// Base typography & resets
-@use 'typography';
+// Base — Typography and accessibility
+@use 'base';
 
-// Component styles
+// Components — UI elements (buttons, inputs, cards, etc.)
 @use 'components';
 
-// Material systems
-@use 'gold';
-@use 'metallic';
-@use 'marble';
-@use 'granite';
-@use 'ornamental';
-@use 'neumorphic';
-@use 'glassmorphic';
-@use 'neuro-glass';
+// Materials — Visual effect systems (neumorphic, glass, metallic, stone)
+@use 'materials';
 
-// Classical layout
-@use 'classical';
+// Decorative — Ornamental patterns and classical layouts
+@use 'decorative';
 
-// Utility classes (high specificity, loaded last)
+// Utilities — Helper classes (layout, spacing, sizing, visual)
 @use 'utilities';
-
-// Accessibility (loaded last for override capability)
-@use 'accessibility';

@@ -5,6 +5,8 @@
 // Gold accent highlights. Theme-aware via --neuro-* custom properties.
 // ---------------------------------------------------------------------------
 
+@use '../variables' as *;
+
 // ---- Base mixin ----
 @mixin neuro-base {
   border: none;

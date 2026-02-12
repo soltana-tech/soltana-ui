@@ -4,29 +4,67 @@ import './docs.scss';
 // Register Web Components for the docs site
 import '../src/components/index';
 
+import { initSoltana, type Theme } from '../src/config';
 import { PlaygroundControls } from './components/PlaygroundControls';
+import { SettingsPanel } from './components/SettingsPanel';
 import { TabRouter } from './components/TabRouter';
-import { ThemeManager } from './components/ThemeManager';
 import { renderComponents } from './pages/components';
+import { renderDesignSystem } from './pages/design-system';
 import { renderExamples } from './pages/examples';
-import { renderFoundation } from './pages/foundation';
-import { renderMaterials } from './pages/materials';
+import { renderGettingStarted } from './pages/getting-started';
 import { renderPatterns } from './pages/patterns';
-import { renderUtilities } from './pages/utilities';
-import { renderWebComponents } from './pages/web-components';
 
-// Initialize theme manager
-new ThemeManager();
+// Initialize design system with config
+const soltana = initSoltana({
+  theme: 'dark',
+  material: 'hybrid',
+  surface: 'polished',
+  ornament: 'none',
+});
+
+// Initialize settings panel with soltana instance
+new SettingsPanel(soltana);
+
+// Bind the standalone theme switcher in the header
+function bindThemeSwitcher(): void {
+  const switcher = document.getElementById('theme-switcher');
+  if (!switcher) return;
+
+  const buttons = switcher.querySelectorAll<HTMLButtonElement>('.theme-btn');
+
+  // Update active state based on current theme
+  const updateActiveState = (): void => {
+    const currentTheme = soltana.getState().theme;
+    buttons.forEach((btn) => {
+      const theme = btn.dataset.themeSet;
+      btn.classList.toggle('active', theme === currentTheme);
+    });
+  };
+
+  // Bind click handlers
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const theme = btn.dataset.themeSet as Theme | undefined;
+      if (theme) {
+        soltana.setTheme(theme);
+        updateActiveState();
+      }
+    });
+  });
+
+  // Set initial state
+  updateActiveState();
+}
+
+bindThemeSwitcher();
 
 // Initialize tab router
 const router = new TabRouter('docs-content');
 const playground = new PlaygroundControls();
 
-router.register('foundation', renderFoundation);
-router.register('materials', renderMaterials);
-router.register('utilities', renderUtilities);
+router.register('getting-started', renderGettingStarted);
+router.register('design-system', renderDesignSystem);
 router.register('components', renderComponents);
-router.register('web-components', renderWebComponents);
 router.register('patterns', renderPatterns);
 router.register('examples', renderExamples);
 

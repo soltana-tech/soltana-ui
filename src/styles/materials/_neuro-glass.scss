@@ -5,6 +5,8 @@
 // (blur, transparency, gradients) for a premium, contemporary aesthetic.
 // ---------------------------------------------------------------------------
 
+@use '../variables' as *;
+
 // ---- Base hybrid ----
 .neuro-glass {
   background: linear-gradient(145deg, var(--glass-gradient-start), var(--glass-gradient-end));

@@ -6,31 +6,46 @@
 // All glass elements set color: var(--text-primary) for consistent readability.
 // ---------------------------------------------------------------------------
 
+@use 'sass:list';
+@use 'sass:string';
+@use '../variables' as *;
+
+/// Outputs a CSS rgb() call without Sass intercepting it.
+@function css-rgb($channels, $alpha) {
+  @return string.unquote('rgb(#{$channels} / #{$alpha}%)');
+}
+
 // ============================================================================
 // BASE GLASS EFFECTS
 // ============================================================================
 
 .glass {
   background: var(--glass-bg);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(16px) saturate(140%);
   border: 1px solid var(--glass-border);
-  box-shadow: 0 8px 32px var(--glass-shadow);
+  box-shadow:
+    0 8px 32px var(--glass-shadow),
+    inset 0 1px 0 var(--glass-inner-glow);
   color: var(--text-primary);
 }
 
 .glass-subtle {
   background: var(--glass-bg);
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(8px) saturate(120%);
   border: 1px solid var(--glass-border);
-  box-shadow: 0 4px 16px var(--glass-shadow);
+  box-shadow:
+    0 4px 16px var(--glass-shadow),
+    inset 0 1px 0 var(--glass-inner-glow);
   color: var(--text-primary);
 }
 
 .glass-strong {
   background: var(--glass-bg);
-  backdrop-filter: blur(24px);
+  backdrop-filter: blur(28px) saturate(160%);
   border: 1px solid var(--glass-border);
-  box-shadow: 0 12px 48px var(--glass-shadow);
+  box-shadow:
+    0 12px 48px var(--glass-shadow),
+    inset 0 1px 0 var(--glass-inner-glow);
   color: var(--text-primary);
 }
 
@@ -57,8 +72,6 @@
     inset 0 1px 0 var(--glass-inner-glow);
   color: var(--text-primary);
 }
-
-// .glass-tinted-gradient removed — identical to .glass-luxury
 
 .glass-layered {
   background: linear-gradient(145deg, var(--glass-gradient-start), var(--glass-gradient-end));
@@ -91,153 +104,62 @@
 // TINTED GLASS (jewel-toned)
 // ============================================================================
 // Vibrant jewel-toned glass with gradient depth for gem-like quality.
-// Opacity increased to 18-25% for visibility while maintaining translucency.
 
-.glass-gold {
+// Jewel glass mixin: 3-stop gradient with consistent blur/shadow structure.
+// $light/$mid/$deep are RGB channel strings; opacity offsets allow warm vs cool tuning.
+@mixin glass-jewel($light, $mid, $deep, $op-boost: 0) {
   background: linear-gradient(
     145deg,
-    rgb(254 243 199 / 22%) 0%,
-    rgb(212 168 67 / 20%) 50%,
-    rgb(184 134 11 / 18%) 100%
+    css-rgb($light, 20 + $op-boost) 0%,
+    css-rgb($mid, 18 + $op-boost) 50%,
+    css-rgb($deep, 16 + $op-boost) 100%
   );
   backdrop-filter: blur(14px) saturate(120%);
-  border: 1px solid rgb(212 168 67 / 28%);
+  border: 1px solid css-rgb($mid, 25 + $op-boost);
   box-shadow:
     0 8px 32px var(--glass-shadow),
-    inset 0 1px 0 rgb(254 243 199 / 25%),
-    inset 0 -1px 0 rgb(184 134 11 / 10%);
+    inset 0 1px 0 css-rgb($light, 22 + $op-boost),
+    inset 0 -1px 0 css-rgb($deep, 10);
   color: var(--text-primary);
+}
+
+.glass-gold {
+  @include glass-jewel('254 243 199', '212 168 67', '184 134 11', 2);
 }
 
 .glass-emerald {
-  background: linear-gradient(
-    145deg,
-    rgb(52 211 153 / 20%) 0%,
-    rgb(16 185 129 / 18%) 50%,
-    rgb(13 107 78 / 16%) 100%
-  );
-  backdrop-filter: blur(14px) saturate(120%);
-  border: 1px solid rgb(16 185 129 / 25%);
-  box-shadow:
-    0 8px 32px var(--glass-shadow),
-    inset 0 1px 0 rgb(52 211 153 / 22%),
-    inset 0 -1px 0 rgb(13 107 78 / 10%);
-  color: var(--text-primary);
+  @include glass-jewel('52 211 153', '16 185 129', '13 107 78');
 }
 
 .glass-sapphire {
-  background: linear-gradient(
-    145deg,
-    rgb(96 165 250 / 20%) 0%,
-    rgb(59 130 246 / 18%) 50%,
-    rgb(30 64 175 / 16%) 100%
-  );
-  backdrop-filter: blur(14px) saturate(120%);
-  border: 1px solid rgb(59 130 246 / 25%);
-  box-shadow:
-    0 8px 32px var(--glass-shadow),
-    inset 0 1px 0 rgb(96 165 250 / 22%),
-    inset 0 -1px 0 rgb(30 64 175 / 10%);
-  color: var(--text-primary);
+  @include glass-jewel('96 165 250', '59 130 246', '30 64 175');
 }
 
 .glass-ruby {
-  background: linear-gradient(
-    145deg,
-    rgb(248 113 113 / 20%) 0%,
-    rgb(239 68 68 / 18%) 50%,
-    rgb(153 27 27 / 16%) 100%
-  );
-  backdrop-filter: blur(14px) saturate(120%);
-  border: 1px solid rgb(239 68 68 / 25%);
-  box-shadow:
-    0 8px 32px var(--glass-shadow),
-    inset 0 1px 0 rgb(248 113 113 / 22%),
-    inset 0 -1px 0 rgb(153 27 27 / 10%);
-  color: var(--text-primary);
+  @include glass-jewel('248 113 113', '239 68 68', '153 27 27');
 }
 
 .glass-amethyst {
-  background: linear-gradient(
-    145deg,
-    rgb(192 132 252 / 20%) 0%,
-    rgb(168 85 247 / 18%) 50%,
-    rgb(107 33 168 / 16%) 100%
-  );
-  backdrop-filter: blur(14px) saturate(120%);
-  border: 1px solid rgb(168 85 247 / 25%);
-  box-shadow:
-    0 8px 32px var(--glass-shadow),
-    inset 0 1px 0 rgb(192 132 252 / 22%),
-    inset 0 -1px 0 rgb(107 33 168 / 10%);
-  color: var(--text-primary);
+  @include glass-jewel('192 132 252', '168 85 247', '107 33 168');
 }
 
-// Additional jewel tones for expanded palette
 .glass-citrine {
-  background: linear-gradient(
-    145deg,
-    rgb(253 224 71 / 22%) 0%,
-    rgb(232 200 64 / 20%) 50%,
-    rgb(184 156 32 / 18%) 100%
-  );
-  backdrop-filter: blur(14px) saturate(120%);
-  border: 1px solid rgb(232 200 64 / 28%);
-  box-shadow:
-    0 8px 32px var(--glass-shadow),
-    inset 0 1px 0 rgb(253 224 71 / 25%),
-    inset 0 -1px 0 rgb(184 156 32 / 10%);
-  color: var(--text-primary);
+  @include glass-jewel('253 224 71', '232 200 64', '184 156 32', 2);
 }
 
 .glass-topaz {
-  background: linear-gradient(
-    145deg,
-    rgb(251 191 36 / 20%) 0%,
-    rgb(232 146 46 / 18%) 50%,
-    rgb(184 110 26 / 16%) 100%
-  );
-  backdrop-filter: blur(14px) saturate(120%);
-  border: 1px solid rgb(232 146 46 / 25%);
-  box-shadow:
-    0 8px 32px var(--glass-shadow),
-    inset 0 1px 0 rgb(251 191 36 / 22%),
-    inset 0 -1px 0 rgb(184 110 26 / 10%);
-  color: var(--text-primary);
+  @include glass-jewel('251 191 36', '232 146 46', '184 110 26');
 }
 
 .glass-jade {
-  background: linear-gradient(
-    145deg,
-    rgb(74 222 128 / 20%) 0%,
-    rgb(46 168 122 / 18%) 50%,
-    rgb(26 120 84 / 16%) 100%
-  );
-  backdrop-filter: blur(14px) saturate(120%);
-  border: 1px solid rgb(46 168 122 / 25%);
-  box-shadow:
-    0 8px 32px var(--glass-shadow),
-    inset 0 1px 0 rgb(74 222 128 / 22%),
-    inset 0 -1px 0 rgb(26 120 84 / 10%);
-  color: var(--text-primary);
+  @include glass-jewel('74 222 128', '46 168 122', '26 120 84');
 }
 
 .glass-turquoise {
-  background: linear-gradient(
-    145deg,
-    rgb(94 234 212 / 20%) 0%,
-    rgb(60 192 184 / 18%) 50%,
-    rgb(34 138 132 / 16%) 100%
-  );
-  backdrop-filter: blur(14px) saturate(120%);
-  border: 1px solid rgb(60 192 184 / 25%);
-  box-shadow:
-    0 8px 32px var(--glass-shadow),
-    inset 0 1px 0 rgb(94 234 212 / 22%),
-    inset 0 -1px 0 rgb(34 138 132 / 10%);
-  color: var(--text-primary);
+  @include glass-jewel('94 234 212', '60 192 184', '34 138 132');
 }
 
+// Onyx and pearl have unique opacity/saturation profiles
 .glass-onyx {
   background: linear-gradient(
     145deg,
@@ -653,68 +575,65 @@
 // Use CSS custom properties to define custom stained glass color schemes.
 // Apply these classes alongside .glass-stained or any stained glass variant.
 
-// Color preset: Ruby & Emerald
-[data-stained-colors='ruby-emerald'],
-.stained-ruby-emerald {
-  --stained-primary: rgb(239 68 68 / 15%);
-  --stained-secondary: rgb(16 185 129 / 12%);
-  --stained-accent: rgb(212 168 67 / 10%);
-}
+// Stained glass color presets (name, class-suffix, primary-rgb/op, secondary-rgb/op, accent-rgb/op)
+$stained-presets: (
+  'ruby-emerald': (
+    ruby-emerald,
+    '239 68 68 / 15%',
+    '16 185 129 / 12%',
+    '212 168 67 / 10%',
+  ),
+  'sapphire-gold': (
+    sapphire-gold,
+    '59 130 246 / 15%',
+    '212 168 67 / 12%',
+    '254 243 199 / 10%',
+  ),
+  'amethyst-rose': (
+    amethyst-rose,
+    '168 85 247 / 15%',
+    '244 114 182 / 12%',
+    '251 207 232 / 10%',
+  ),
+  'emerald-jade': (
+    emerald-jade,
+    '16 185 129 / 15%',
+    '46 168 122 / 12%',
+    '74 222 128 / 10%',
+  ),
+  'sunset': (
+    sunset,
+    '239 68 68 / 14%',
+    '251 146 60 / 12%',
+    '253 224 71 / 10%',
+  ),
+  'ocean': (
+    ocean,
+    '6 182 212 / 15%',
+    '59 130 246 / 12%',
+    '99 102 241 / 10%',
+  ),
+  'forest': (
+    forest,
+    '22 163 74 / 15%',
+    '34 197 94 / 12%',
+    '132 204 22 / 10%',
+  ),
+  'gold': (
+    gold-mono,
+    '212 168 67 / 18%',
+    '184 134 11 / 14%',
+    '254 243 199 / 12%',
+  ),
+);
 
-// Color preset: Sapphire & Gold
-[data-stained-colors='sapphire-gold'],
-.stained-sapphire-gold {
-  --stained-primary: rgb(59 130 246 / 15%);
-  --stained-secondary: rgb(212 168 67 / 12%);
-  --stained-accent: rgb(254 243 199 / 10%);
-}
-
-// Color preset: Amethyst & Rose
-[data-stained-colors='amethyst-rose'],
-.stained-amethyst-rose {
-  --stained-primary: rgb(168 85 247 / 15%);
-  --stained-secondary: rgb(244 114 182 / 12%);
-  --stained-accent: rgb(251 207 232 / 10%);
-}
-
-// Color preset: Emerald & Jade
-[data-stained-colors='emerald-jade'],
-.stained-emerald-jade {
-  --stained-primary: rgb(16 185 129 / 15%);
-  --stained-secondary: rgb(46 168 122 / 12%);
-  --stained-accent: rgb(74 222 128 / 10%);
-}
-
-// Color preset: Sunset (warm tones)
-[data-stained-colors='sunset'],
-.stained-sunset {
-  --stained-primary: rgb(239 68 68 / 14%);
-  --stained-secondary: rgb(251 146 60 / 12%);
-  --stained-accent: rgb(253 224 71 / 10%);
-}
-
-// Color preset: Ocean (cool tones)
-[data-stained-colors='ocean'],
-.stained-ocean {
-  --stained-primary: rgb(6 182 212 / 15%);
-  --stained-secondary: rgb(59 130 246 / 12%);
-  --stained-accent: rgb(99 102 241 / 10%);
-}
-
-// Color preset: Forest
-[data-stained-colors='forest'],
-.stained-forest {
-  --stained-primary: rgb(22 163 74 / 15%);
-  --stained-secondary: rgb(34 197 94 / 12%);
-  --stained-accent: rgb(132 204 22 / 10%);
-}
-
-// Color preset: Monochrome Gold
-[data-stained-colors='gold'],
-.stained-gold-mono {
-  --stained-primary: rgb(212 168 67 / 18%);
-  --stained-secondary: rgb(184 134 11 / 14%);
-  --stained-accent: rgb(254 243 199 / 12%);
+@each $data-name, $vals in $stained-presets {
+  [data-stained-colors='#{$data-name}'],
+  .stained-#{list.nth($vals, 1)} {
+    --stained-primary: #{string.unquote('rgb(#{list.nth($vals, 2)})')};
+    --stained-secondary: #{string.unquote('rgb(#{list.nth($vals, 3)})')};
+    --stained-accent: #{string.unquote('rgb(#{list.nth($vals, 4)})')};
+  }
 }
 
 // ============================================================================
@@ -771,7 +690,7 @@
 
 .glass-card {
   background: linear-gradient(145deg, var(--glass-gradient-start), var(--glass-gradient-end));
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px) saturate(140%);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-2xl);
   box-shadow:
@@ -779,6 +698,9 @@
     inset 0 1px 0 var(--glass-inner-glow);
   padding: 1.5rem;
   color: var(--text-primary);
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
 }
 
 .glass-nav {
@@ -793,7 +715,7 @@
 
 .glass-button {
   background: linear-gradient(145deg, var(--glass-gradient-start), var(--glass-gradient-end));
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px) saturate(140%);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
   box-shadow:
@@ -871,28 +793,25 @@
 // BACKDROP BLUR UTILITIES
 // ============================================================================
 
-.blur-sm {
-  backdrop-filter: blur(4px);
-}
+$blur-scale: (
+  sm: 4px,
+  default: 8px,
+  md: 12px,
+  lg: 16px,
+  xl: 24px,
+  2xl: 40px,
+);
 
-.blur {
-  backdrop-filter: blur(8px);
-}
-
-.blur-md {
-  backdrop-filter: blur(12px);
-}
-
-.blur-lg {
-  backdrop-filter: blur(16px);
-}
-
-.blur-xl {
-  backdrop-filter: blur(24px);
-}
-
-.blur-2xl {
-  backdrop-filter: blur(40px);
+@each $name, $val in $blur-scale {
+  @if $name == 'default' {
+    .blur {
+      backdrop-filter: blur($val);
+    }
+  } @else {
+    .blur-#{$name} {
+      backdrop-filter: blur($val);
+    }
+  }
 }
 
 .blur-none {

@@ -53,12 +53,44 @@ export class SolButton extends SoltanaElement {
   protected render(): void {
     const variant = this.getAttribute('variant') ?? 'primary';
     const size = this.getAttribute('size') ?? 'md';
+    const material = this.getAttribute('material');
     const disabled = this.hasAttribute('disabled');
+
+    // Apply material data attribute to host for CSS variable inheritance
+    if (material) {
+      this.setAttribute('data-material', material);
+    } else {
+      this.removeAttribute('data-material');
+    }
 
     this.setContent(
       `
       :host {
         display: inline-block;
+      }
+      :host([data-material="neuro"]) {
+        --material-bg: var(--neuro-bg);
+        --material-shadow-light: var(--neuro-shadow-light);
+        --material-shadow-dark: var(--neuro-shadow-dark);
+        --material-border: var(--border-subtle);
+        --material-blur: 0px;
+        --material-saturation: 100%;
+      }
+      :host([data-material="glass"]) {
+        --material-bg: var(--glass-bg);
+        --material-shadow-light: var(--glass-inner-glow);
+        --material-shadow-dark: var(--glass-shadow);
+        --material-border: var(--glass-border);
+        --material-blur: 12px;
+        --material-saturation: 140%;
+      }
+      :host([data-material="hybrid"]) {
+        --material-bg: linear-gradient(145deg, var(--glass-gradient-start), var(--glass-gradient-end));
+        --material-shadow-light: var(--neuro-shadow-light);
+        --material-shadow-dark: var(--neuro-shadow-dark);
+        --material-border: var(--glass-border);
+        --material-blur: 10px;
+        --material-saturation: 120%;
       }
       @keyframes metal-shine {
         0% { transform: translateX(-100%) skewX(-15deg); }
@@ -69,33 +101,34 @@ export class SolButton extends SoltanaElement {
         align-items: center;
         justify-content: center;
         gap: 0.5rem;
-        border: 1px solid var(--border-subtle);
+        border: 1px solid var(--material-border, var(--border-subtle));
         border-radius: var(--radius-default);
-        background: var(--neuro-bg);
+        background: var(--material-bg, var(--neuro-bg));
         color: var(--text-primary);
         cursor: pointer;
         font-family: var(--font-sans);
         font-weight: var(--font-semibold);
         letter-spacing: var(--tracking-elegant);
         text-transform: uppercase;
+        backdrop-filter: blur(var(--material-blur, 0px)) saturate(var(--material-saturation, 100%));
         box-shadow:
-          3px 3px 8px var(--neuro-shadow-dark),
-          -3px -3px 8px var(--neuro-shadow-light);
+          3px 3px 8px var(--material-shadow-dark, var(--neuro-shadow-dark)),
+          -3px -3px 8px var(--material-shadow-light, var(--neuro-shadow-light));
         transition: all var(--transition-normal) ease;
         position: relative;
         overflow: hidden;
       }
       .btn:hover:not(.btn--disabled) {
         box-shadow:
-          4px 4px 12px var(--neuro-shadow-dark),
-          -4px -4px 12px var(--neuro-shadow-light);
+          4px 4px 12px var(--material-shadow-dark, var(--neuro-shadow-dark)),
+          -4px -4px 12px var(--material-shadow-light, var(--neuro-shadow-light));
         transform: translateY(-1px);
       }
       .btn:active:not(.btn--disabled) {
         transform: scale(0.97);
         box-shadow:
-          inset 2px 2px 5px var(--neuro-shadow-dark),
-          inset -2px -2px 5px var(--neuro-shadow-light);
+          inset 2px 2px 5px var(--material-shadow-dark, var(--neuro-shadow-dark)),
+          inset -2px -2px 5px var(--material-shadow-light, var(--neuro-shadow-light));
       }
       .btn:focus-visible {
         outline: 2px solid var(--accent-primary);
@@ -115,21 +148,21 @@ export class SolButton extends SoltanaElement {
         color: var(--text-inverse);
         border-color: transparent;
         box-shadow:
-          3px 3px 10px var(--neuro-shadow-dark),
-          -2px -2px 8px var(--neuro-shadow-light),
+          3px 3px 10px var(--material-shadow-dark, var(--neuro-shadow-dark)),
+          -2px -2px 8px var(--material-shadow-light, var(--neuro-shadow-light)),
           inset 0 1px 0 rgb(255 255 255 / 15%);
       }
       .btn--primary:hover:not(.btn--disabled) {
         background: linear-gradient(145deg, var(--accent-primary-hover), var(--accent-primary));
         box-shadow:
-          5px 5px 16px var(--neuro-shadow-dark),
-          -3px -3px 12px var(--neuro-shadow-light);
+          5px 5px 16px var(--material-shadow-dark, var(--neuro-shadow-dark)),
+          -3px -3px 12px var(--material-shadow-light, var(--neuro-shadow-light));
       }
 
       .btn--secondary {
-        background: var(--surface-3);
+        background: var(--material-bg, var(--surface-3));
         color: var(--text-primary);
-        border: 1px solid var(--border-default);
+        border: 1px solid var(--material-border, var(--border-default));
       }
       .btn--secondary:hover:not(.btn--disabled) {
         background: var(--surface-4);
@@ -141,13 +174,15 @@ export class SolButton extends SoltanaElement {
         color: var(--text-secondary);
         border-color: transparent;
         box-shadow: none;
+        backdrop-filter: none;
       }
       .btn--ghost:hover:not(.btn--disabled) {
         background: var(--state-hover);
         color: var(--text-primary);
+        backdrop-filter: blur(var(--material-blur, 0px));
         box-shadow:
-          2px 2px 6px var(--neuro-shadow-dark),
-          -2px -2px 6px var(--neuro-shadow-light);
+          2px 2px 6px var(--material-shadow-dark, var(--neuro-shadow-dark)),
+          -2px -2px 6px var(--material-shadow-light, var(--neuro-shadow-light));
       }
 
       .btn--outline {
@@ -155,12 +190,14 @@ export class SolButton extends SoltanaElement {
         color: var(--accent-primary);
         border: 2px solid var(--accent-primary);
         box-shadow: none;
+        backdrop-filter: none;
       }
       .btn--outline:hover:not(.btn--disabled) {
         background: var(--state-hover);
+        backdrop-filter: blur(var(--material-blur, 0px));
         box-shadow:
-          3px 3px 8px var(--neuro-shadow-dark),
-          -3px -3px 8px var(--neuro-shadow-light);
+          3px 3px 8px var(--material-shadow-dark, var(--neuro-shadow-dark)),
+          -3px -3px 8px var(--material-shadow-light, var(--neuro-shadow-light));
       }
 
       .btn--danger {
@@ -170,9 +207,21 @@ export class SolButton extends SoltanaElement {
       }
       .btn--danger:hover:not(.btn--disabled) {
         box-shadow:
-          5px 5px 14px var(--neuro-shadow-dark),
-          -3px -3px 10px var(--neuro-shadow-light),
+          5px 5px 14px var(--material-shadow-dark, var(--neuro-shadow-dark)),
+          -3px -3px 10px var(--material-shadow-light, var(--neuro-shadow-light)),
           0 4px 16px rgb(239 68 68 / 30%);
+      }
+
+      .btn--success {
+        background: linear-gradient(145deg, var(--jewel-emerald, #10b981), var(--jewel-emerald-deep, #047857));
+        color: #fff;
+        border-color: transparent;
+      }
+      .btn--success:hover:not(.btn--disabled) {
+        box-shadow:
+          5px 5px 14px var(--material-shadow-dark, var(--neuro-shadow-dark)),
+          -3px -3px 10px var(--material-shadow-light, var(--neuro-shadow-light)),
+          0 4px 16px rgb(16 185 129 / 30%);
       }
 
       /* Metallic variants */
@@ -181,8 +230,8 @@ export class SolButton extends SoltanaElement {
         color: var(--gold-900, #2c2005);
         border-color: transparent;
         box-shadow:
-          3px 3px 10px var(--neuro-shadow-dark),
-          -2px -2px 8px var(--neuro-shadow-light),
+          3px 3px 10px var(--material-shadow-dark, var(--neuro-shadow-dark)),
+          -2px -2px 8px var(--material-shadow-light, var(--neuro-shadow-light)),
           0 2px 12px rgb(212 168 67 / 25%);
       }
       .btn--gold .shine {
@@ -201,8 +250,8 @@ export class SolButton extends SoltanaElement {
         color: var(--silver-900, #252a34);
         border-color: transparent;
         box-shadow:
-          3px 3px 10px var(--neuro-shadow-dark),
-          -2px -2px 8px var(--neuro-shadow-light),
+          3px 3px 10px var(--material-shadow-dark, var(--neuro-shadow-dark)),
+          -2px -2px 8px var(--material-shadow-light, var(--neuro-shadow-light)),
           0 2px 12px rgb(146 156 176 / 20%);
       }
       .btn--silver .shine {
@@ -221,8 +270,8 @@ export class SolButton extends SoltanaElement {
         color: var(--bronze-900, #2a1b0d);
         border-color: transparent;
         box-shadow:
-          3px 3px 10px var(--neuro-shadow-dark),
-          -2px -2px 8px var(--neuro-shadow-light),
+          3px 3px 10px var(--material-shadow-dark, var(--neuro-shadow-dark)),
+          -2px -2px 8px var(--material-shadow-light, var(--neuro-shadow-light)),
           0 2px 12px rgb(160 110 43 / 20%);
       }
       .btn--bronze .shine {
@@ -241,8 +290,8 @@ export class SolButton extends SoltanaElement {
         color: var(--platinum-900, #2a3040);
         border-color: transparent;
         box-shadow:
-          3px 3px 10px var(--neuro-shadow-dark),
-          -2px -2px 8px var(--neuro-shadow-light),
+          3px 3px 10px var(--material-shadow-dark, var(--neuro-shadow-dark)),
+          -2px -2px 8px var(--material-shadow-light, var(--neuro-shadow-light)),
           0 2px 12px rgb(109 123 148 / 18%);
       }
       .btn--platinum .shine {
@@ -257,14 +306,14 @@ export class SolButton extends SoltanaElement {
       }
 
       .btn--embossed {
-        background: var(--surface-3);
+        background: var(--material-bg, var(--surface-3));
         color: var(--accent-primary);
         box-shadow:
           inset 0 1px 0 rgb(255 255 255 / 10%),
           inset 0 -1px 0 rgb(0 0 0 / 15%),
-          3px 3px 8px var(--neuro-shadow-dark),
-          -3px -3px 8px var(--neuro-shadow-light);
-        border: 1px solid var(--border-default);
+          3px 3px 8px var(--material-shadow-dark, var(--neuro-shadow-dark)),
+          -3px -3px 8px var(--material-shadow-light, var(--neuro-shadow-light));
+        border: 1px solid var(--material-border, var(--border-default));
       }
 
       /* Structural variants */
@@ -273,10 +322,10 @@ export class SolButton extends SoltanaElement {
         border: 2px solid var(--border-strong);
         background: linear-gradient(175deg, var(--surface-2, #eef0f5) 0%, var(--surface-3, #e2e5ed) 100%);
         box-shadow:
-          inset 0 2px 0 var(--neuro-highlight),
-          inset 0 -2px 0 var(--neuro-shadow-dark),
-          3px 3px 8px var(--neuro-shadow-dark),
-          -2px -2px 6px var(--neuro-shadow-light);
+          inset 0 2px 0 var(--material-highlight, var(--neuro-highlight)),
+          inset 0 -2px 0 var(--material-shadow-dark, var(--neuro-shadow-dark)),
+          3px 3px 8px var(--material-shadow-dark, var(--neuro-shadow-dark)),
+          -2px -2px 6px var(--material-shadow-light, var(--neuro-shadow-light));
         clip-path: polygon(6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px), 0 6px);
       }
 
@@ -288,19 +337,19 @@ export class SolButton extends SoltanaElement {
         border: 3px solid var(--accent-primary);
         background: radial-gradient(circle at 35% 35%, var(--surface-1, #fff), var(--surface-3, #e2e5ed));
         box-shadow:
-          4px 4px 12px var(--neuro-shadow-dark),
-          -4px -4px 12px var(--neuro-shadow-light),
-          inset 0 0 8px var(--neuro-shadow-mid);
+          4px 4px 12px var(--material-shadow-dark, var(--neuro-shadow-dark)),
+          -4px -4px 12px var(--material-shadow-light, var(--neuro-shadow-light)),
+          inset 0 0 8px var(--material-shadow-mid, var(--neuro-shadow-mid));
       }
 
       .btn--baroque {
         padding: 0.625rem 2rem;
         border-radius: var(--radius-sm);
         border: 2px solid var(--accent-gold, var(--accent-primary));
-        background: linear-gradient(145deg, var(--surface-1, #fff), var(--neuro-bg, #e2e5ed));
+        background: linear-gradient(145deg, var(--surface-1, #fff), var(--material-bg, var(--neuro-bg)));
         box-shadow:
-          4px 4px 10px var(--neuro-shadow-dark),
-          -3px -3px 8px var(--neuro-shadow-light);
+          4px 4px 10px var(--material-shadow-dark, var(--neuro-shadow-dark)),
+          -3px -3px 8px var(--material-shadow-light, var(--neuro-shadow-light));
         overflow: visible;
       }
       .btn--baroque .corner-tl,
@@ -331,15 +380,15 @@ export class SolButton extends SoltanaElement {
           135deg,
           var(--surface-1, #fff) 0%,
           var(--surface-2, #eef0f5) 25%,
-          var(--neuro-highlight) 50%,
+          var(--material-highlight, var(--neuro-highlight)) 50%,
           var(--surface-2, #eef0f5) 75%,
           var(--surface-1, #fff) 100%
         );
         padding: 0.5rem 2rem;
         clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 12px 100%, 0 50%);
         box-shadow:
-          3px 3px 8px var(--neuro-shadow-dark),
-          -2px -2px 6px var(--neuro-shadow-light);
+          3px 3px 8px var(--material-shadow-dark, var(--neuro-shadow-dark)),
+          -2px -2px 6px var(--material-shadow-light, var(--neuro-shadow-light));
       }
 
       .btn--disabled {

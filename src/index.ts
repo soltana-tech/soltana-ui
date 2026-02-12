@@ -17,4 +17,8 @@ export { SolTooltip } from './components/sol-tooltip';
 export { patterns } from './ornaments/patterns';
 export type { PatternName } from './ornaments/patterns';
 
+// Re-export configuration API
+export { initSoltana } from './config';
+export type { SoltanaConfig, SoltanaInstance, Theme, Material, Surface, Ornament } from './config';
+
 export const version = '1.0.0';

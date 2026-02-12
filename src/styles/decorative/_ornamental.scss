@@ -763,20 +763,10 @@
 }
 
 // Metal color modifiers
-.ornament-silver {
-  --ornament-color: var(--silver-400);
-}
-
-.ornament-bronze {
-  --ornament-color: var(--bronze-400);
-}
-
-.ornament-copper {
-  --ornament-color: var(--copper-400);
-}
-
-.ornament-platinum {
-  --ornament-color: var(--platinum-400);
+@each $metal in ('silver', 'bronze', 'copper', 'platinum') {
+  .ornament-#{$metal} {
+    --ornament-color: var(--#{$metal}-400);
+  }
 }
 
 // Size modifiers

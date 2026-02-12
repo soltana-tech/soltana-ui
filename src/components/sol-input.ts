@@ -86,7 +86,6 @@ export class SolInput extends SoltanaElement {
         transform: translateX(-50%);
         border-radius: 1px;
       }
-      .field__input:focus ~ .field__underline,
       .field__input-wrap:focus-within::after {
         width: 100%;
       }
