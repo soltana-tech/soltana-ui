@@ -1,0 +1,255 @@
+// ---------------------------------------------------------------------------
+// Documentation Site Styles
+// ---------------------------------------------------------------------------
+// Styles specific to the style guide documentation site layout and chrome.
+// These are NOT part of the exported library.
+// ---------------------------------------------------------------------------
+
+// ---- Layout ----
+.docs-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  padding: 0 1.5rem;
+}
+
+.docs-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 3.5rem;
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+.docs-header__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.docs-header__title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+}
+
+.docs-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+// ---- Theme switcher ----
+.theme-switcher {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  background: var(--surface-2);
+  border-radius: var(--radius-lg);
+}
+
+.theme-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-normal) ease,
+    color var(--transition-normal) ease;
+
+  &:hover {
+    color: var(--text-primary);
+    background: var(--state-hover);
+  }
+
+  &.active {
+    color: var(--accent-primary);
+    background: var(--surface-bg);
+    box-shadow: var(--shadow-sm);
+  }
+}
+
+// ---- Tabs bar ----
+.docs-tabs {
+  border-bottom: 1px solid var(--border-default);
+  background: var(--surface-bg);
+  position: sticky;
+  top: 3.5rem;
+  z-index: 30;
+}
+
+.docs-tabs__inner {
+  display: flex;
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  overflow-x: auto;
+  gap: 0;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// ---- Main content ----
+.docs-main {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+// ---- Section headings ----
+.section-heading {
+  padding-top: 0.5rem;
+}
+
+// ---- Color swatch grid ----
+.swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.75rem;
+}
+
+.swatch {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  transition:
+    border-color var(--transition-normal) ease,
+    box-shadow var(--transition-normal) ease;
+
+  &:hover {
+    border-color: var(--border-default);
+    box-shadow: var(--shadow-sm);
+  }
+}
+
+.swatch__color {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgb(128 128 128 / 15%);
+  flex-shrink: 0;
+}
+
+.swatch__info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.swatch__name {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  white-space: nowrap;
+}
+
+.swatch__var {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  background: none;
+  padding: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.swatch__hex {
+  font-size: 0.625rem;
+}
+
+// ---- Specimen blocks ----
+.specimen__preview {
+  padding: 1.5rem;
+}
+
+// ---- Playground blocks ----
+.playground {
+  border: 1px dashed var(--border-default);
+}
+
+// ---- Range input styling ----
+input[type='range'] {
+  appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--surface-3);
+  outline: none;
+  cursor: pointer;
+
+  &::-webkit-slider-thumb {
+    appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: var(--radius-full);
+    background: var(--accent-primary);
+    border: 2px solid var(--surface-bg);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+  }
+
+  &::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: var(--radius-full);
+    background: var(--accent-primary);
+    border: 2px solid var(--surface-bg);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+  }
+}
+
+// ---- Custom scrollbar ----
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+
+  &:hover {
+    background: var(--border-strong);
+  }
+}
+
+// ---- Responsive adjustments ----
+@media (width <= 768px) {
+  .docs-header {
+    padding: 0 1rem;
+  }
+
+  .docs-tabs__inner {
+    padding: 0 1rem;
+  }
+
+  .docs-main {
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .swatch-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}
+
+@media (width <= 480px) {
+  .docs-header__title {
+    font-size: var(--text-base);
+  }
+}

@@ -1,0 +1,189 @@
+// ---------------------------------------------------------------------------
+// Neumorphic Design Utilities
+// ---------------------------------------------------------------------------
+// Soft UI / neumorphism using theme-aware shadow pairs.
+// The --neuro-* custom properties are set per-theme in the theme files.
+// ---------------------------------------------------------------------------
+
+// ---- Base mixin ----
+@mixin neuro-base {
+  border: none;
+  background: var(--neuro-bg);
+}
+
+// ---- Raised (convex) ----
+.neuro-raised {
+  @include neuro-base;
+  border-radius: var(--radius-xl);
+  box-shadow:
+    6px 6px 12px var(--neuro-shadow-dark),
+    -6px -6px 12px var(--neuro-shadow-light);
+}
+
+.neuro-raised-sm {
+  @include neuro-base;
+  border-radius: var(--radius-lg);
+  box-shadow:
+    3px 3px 6px var(--neuro-shadow-dark),
+    -3px -3px 6px var(--neuro-shadow-light);
+}
+
+.neuro-raised-lg {
+  @include neuro-base;
+  border-radius: var(--radius-2xl);
+  box-shadow:
+    10px 10px 20px var(--neuro-shadow-dark),
+    -10px -10px 20px var(--neuro-shadow-light);
+}
+
+// ---- Inset (concave / pressed) ----
+.neuro-inset {
+  @include neuro-base;
+  border-radius: var(--radius-xl);
+  box-shadow:
+    inset 6px 6px 12px var(--neuro-shadow-dark),
+    inset -6px -6px 12px var(--neuro-shadow-light);
+}
+
+.neuro-inset-sm {
+  @include neuro-base;
+  border-radius: var(--radius-lg);
+  box-shadow:
+    inset 3px 3px 6px var(--neuro-shadow-dark),
+    inset -3px -3px 6px var(--neuro-shadow-light);
+}
+
+.neuro-inset-lg {
+  @include neuro-base;
+  border-radius: var(--radius-2xl);
+  box-shadow:
+    inset 10px 10px 20px var(--neuro-shadow-dark),
+    inset -10px -10px 20px var(--neuro-shadow-light);
+}
+
+// ---- Flat (subtle) ----
+.neuro-flat {
+  @include neuro-base;
+  border-radius: var(--radius-xl);
+  box-shadow:
+    2px 2px 5px var(--neuro-shadow-dark),
+    -2px -2px 5px var(--neuro-shadow-light);
+}
+
+// ---- Interactive: raised that presses on click ----
+.neuro-button {
+  @include neuro-base;
+  border-radius: var(--radius-xl);
+  box-shadow:
+    6px 6px 12px var(--neuro-shadow-dark),
+    -6px -6px 12px var(--neuro-shadow-light);
+  transition:
+    box-shadow var(--transition-normal) ease,
+    transform var(--transition-normal) ease;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow:
+      4px 4px 8px var(--neuro-shadow-dark),
+      -4px -4px 8px var(--neuro-shadow-light);
+  }
+
+  &:active {
+    box-shadow:
+      inset 4px 4px 8px var(--neuro-shadow-dark),
+      inset -4px -4px 8px var(--neuro-shadow-light);
+    transform: scale(0.98);
+  }
+}
+
+// ---- Neumorphic input field ----
+.neuro-input {
+  @include neuro-base;
+  border-radius: var(--radius-lg);
+  box-shadow:
+    inset 3px 3px 6px var(--neuro-shadow-dark),
+    inset -3px -3px 6px var(--neuro-shadow-light);
+  padding: 0.625rem 1rem;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+
+  &::placeholder {
+    color: var(--text-muted);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow:
+      inset 3px 3px 6px var(--neuro-shadow-dark),
+      inset -3px -3px 6px var(--neuro-shadow-light),
+      0 0 0 2px var(--accent-primary);
+  }
+}
+
+// ---- Neumorphic toggle / pill ----
+.neuro-toggle {
+  @include neuro-base;
+  position: relative;
+  width: 3.5rem;
+  height: 2rem;
+  border-radius: var(--radius-full);
+  box-shadow:
+    inset 4px 4px 8px var(--neuro-shadow-dark),
+    inset -4px -4px 8px var(--neuro-shadow-light);
+  cursor: pointer;
+  transition: background var(--transition-normal) ease;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 1.625rem;
+    height: 1.625rem;
+    border-radius: var(--radius-full);
+    background: var(--neuro-bg);
+    box-shadow:
+      3px 3px 6px var(--neuro-shadow-dark),
+      -3px -3px 6px var(--neuro-shadow-light);
+    transition:
+      transform var(--transition-slow) ease,
+      background var(--transition-normal) ease;
+  }
+
+  &.active::after {
+    transform: translateX(1.5rem);
+    background: var(--accent-primary);
+  }
+}
+
+// ---- Neumorphic card ----
+.neuro-card {
+  @include neuro-base;
+  border-radius: var(--radius-2xl);
+  padding: 1.5rem;
+  box-shadow:
+    8px 8px 16px var(--neuro-shadow-dark),
+    -8px -8px 16px var(--neuro-shadow-light);
+}
+
+// ---- Neumorphic progress bar ----
+.neuro-progress {
+  @include neuro-base;
+  border-radius: var(--radius-full);
+  height: 0.75rem;
+  box-shadow:
+    inset 3px 3px 6px var(--neuro-shadow-dark),
+    inset -3px -3px 6px var(--neuro-shadow-light);
+  overflow: hidden;
+
+  &-fill {
+    height: 100%;
+    border-radius: var(--radius-full);
+    background: var(--accent-primary);
+    box-shadow:
+      2px 2px 4px var(--neuro-shadow-dark),
+      -2px -2px 4px var(--neuro-shadow-light);
+    transition: width var(--transition-slower) ease;
+  }
+}

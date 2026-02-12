@@ -1,0 +1,50 @@
+repos:
+  # 1. Core pre-commit utilities - basic checks and file formatting
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      # Security checks
+      - id: detect-private-key
+
+      # File format validation
+      - id: check-json
+      - id: check-yaml
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: check-added-large-files
+        args: ['--maxkb=102400'] # 100MB = 102400 KB
+
+      # File formatting
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+
+  # 2. Code formatting
+  - repo: local
+    hooks:
+      - id: prettier
+        name: Prettier
+        entry: npx prettier --write
+        language: system
+        types_or: [javascript, jsx, ts, tsx, scss, css, json, html]
+
+  # 3. Code linting and type checking
+  - repo: local
+    hooks:
+      - id: eslint
+        name: ESLint
+        entry: npx eslint
+        language: system
+        files: \.[jt]sx?$
+        types: [file]
+      - id: stylelint
+        name: Stylelint
+        entry: npx stylelint
+        language: system
+        files: \.(scss|css)$
+      - id: tsc
+        name: TypeScript Compiler
+        entry: npx tsc --noEmit
+        language: system
+        files: \.(ts|tsx)$
+        pass_filenames: false

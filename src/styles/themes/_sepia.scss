@@ -1,0 +1,80 @@
+// ---------------------------------------------------------------------------
+// Sepia Theme (warm, paper-like variant)
+// ---------------------------------------------------------------------------
+
+[data-theme='sepia'] {
+  color-scheme: light;
+
+  // Surface colors
+  --surface-bg: #f4ede1;
+  --surface-1: #faf5ec;
+  --surface-2: #ede3d1;
+  --surface-3: #e3d6c1;
+  --surface-4: #dcc9b3;
+  --surface-overlay: rgb(244 237 225 / 90%);
+
+  // Text colors
+  --text-primary: #3b2d22;
+  --text-secondary: #5c4033;
+  --text-tertiary: #8b7355;
+  --text-muted: #a89378;
+  --text-inverse: #f4ede1;
+
+  // Border colors
+  --border-default: #dcc9b3;
+  --border-subtle: #e3d6c1;
+  --border-strong: #c4a97d;
+
+  // Accent colors (warm purple/teal variants)
+  --accent-primary: #7c5cbf;
+  --accent-primary-hover: #6a4dab;
+  --accent-primary-active: #593f96;
+  --accent-secondary: #4a8c73;
+  --accent-secondary-hover: #3d7662;
+  --accent-secondary-active: #316151;
+
+  // Semantic colors
+  --color-success: #4a8c3f;
+  --color-success-subtle: rgb(74 140 63 / 12%);
+  --color-success-text: #3d7533;
+  --color-warning: #b87a2a;
+  --color-warning-subtle: rgb(184 122 42 / 12%);
+  --color-warning-text: #9e6922;
+  --color-error: #c0392b;
+  --color-error-subtle: rgb(192 57 43 / 10%);
+  --color-error-text: #a93226;
+  --color-info: #2980b9;
+  --color-info-subtle: rgb(41 128 185 / 10%);
+  --color-info-text: #226fa3;
+
+  // Interactive states
+  --state-hover: rgb(59 45 34 / 5%);
+  --state-active: rgb(59 45 34 / 10%);
+  --state-focus-ring: rgb(124 92 191 / 35%);
+  --state-disabled-bg: #e3d6c1;
+  --state-disabled-text: #a89378;
+
+  // Neumorphic shadows
+  --neuro-bg: #ede3d1;
+  --neuro-shadow-light: rgb(250 245 236 / 80%);
+  --neuro-shadow-dark: rgb(170 148 120 / 45%);
+
+  // Glassmorphic
+  --glass-bg: rgb(244 237 225 / 50%);
+  --glass-border: rgb(250 245 236 / 50%);
+  --glass-shadow: rgb(90 70 50 / 10%);
+
+  // Component-specific
+  --input-bg: #faf5ec;
+  --input-border: #dcc9b3;
+  --input-border-focus: #7c5cbf;
+  --input-placeholder: #a89378;
+  --card-bg: #faf5ec;
+  --card-border: #dcc9b3;
+  --badge-bg: #e3d6c1;
+  --tooltip-bg: #3b2d22;
+  --tooltip-text: #f4ede1;
+  --scrollbar-thumb: #c4a97d;
+  --scrollbar-track: #ede3d1;
+  --code-bg: #ede3d1;
+}

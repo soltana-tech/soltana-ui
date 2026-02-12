@@ -1,0 +1,24 @@
+{
+  "extends": ["stylelint-config-standard-scss", "stylelint-config-prettier-scss"],
+  "rules": {
+    "selector-class-pattern": null,
+    "selector-id-pattern": null,
+    "custom-property-pattern": null,
+    "keyframes-name-pattern": null,
+    "scss/at-rule-no-unknown": [
+      true,
+      { "ignoreAtRules": ["tailwind", "apply", "variants", "responsive", "screen"] }
+    ],
+    "declaration-block-no-redundant-longhand-properties": null,
+    "no-descending-specificity": null,
+    "declaration-empty-line-before": null,
+    "scss/dollar-variable-empty-line-before": null,
+    "custom-property-empty-line-before": null,
+    "property-no-vendor-prefix": [true, { "ignoreProperties": ["backdrop-filter", "appearance"] }],
+    "scss/at-extend-no-missing-placeholder": null,
+    "declaration-block-no-duplicate-properties": [
+      true,
+      { "ignoreProperties": ["backdrop-filter", "appearance"] }
+    ]
+  }
+}

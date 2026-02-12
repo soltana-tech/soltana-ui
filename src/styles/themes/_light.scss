@@ -1,0 +1,80 @@
+// ---------------------------------------------------------------------------
+// Light Theme (Dracula-inspired pastels)
+// ---------------------------------------------------------------------------
+
+[data-theme='light'] {
+  color-scheme: light;
+
+  // Surface colors
+  --surface-bg: #f9f9fb;
+  --surface-1: #fff;
+  --surface-2: #f4f4f7;
+  --surface-3: #ecedf2;
+  --surface-4: #e2e3ea;
+  --surface-overlay: rgb(249 249 251 / 90%);
+
+  // Text colors
+  --text-primary: #282a36;
+  --text-secondary: #44475a;
+  --text-tertiary: #6272a4;
+  --text-muted: #8890a8;
+  --text-inverse: #f8f8f2;
+
+  // Border colors
+  --border-default: #e2e3ea;
+  --border-subtle: #ecedf2;
+  --border-strong: #c0c4d8;
+
+  // Accent colors (deeper for contrast on light)
+  --accent-primary: #7c5cbf;
+  --accent-primary-hover: #6a4dab;
+  --accent-primary-active: #593f96;
+  --accent-secondary: #2d8ea1;
+  --accent-secondary-hover: #267a8b;
+  --accent-secondary-active: #1f6775;
+
+  // Semantic colors
+  --color-success: #1a8a42;
+  --color-success-subtle: rgb(26 138 66 / 10%);
+  --color-success-text: #16753a;
+  --color-warning: #c47a1a;
+  --color-warning-subtle: rgb(196 122 26 / 10%);
+  --color-warning-text: #a86914;
+  --color-error: #d93636;
+  --color-error-subtle: rgb(217 54 54 / 10%);
+  --color-error-text: #c02e2e;
+  --color-info: #2d8ea1;
+  --color-info-subtle: rgb(45 142 161 / 10%);
+  --color-info-text: #267a8b;
+
+  // Interactive states
+  --state-hover: rgb(40 42 54 / 4%);
+  --state-active: rgb(40 42 54 / 8%);
+  --state-focus-ring: rgb(124 92 191 / 40%);
+  --state-disabled-bg: #ecedf2;
+  --state-disabled-text: #8890a8;
+
+  // Neumorphic shadows
+  --neuro-bg: #ecedf2;
+  --neuro-shadow-light: rgb(255 255 255 / 80%);
+  --neuro-shadow-dark: rgb(163 166 183 / 50%);
+
+  // Glassmorphic
+  --glass-bg: rgb(255 255 255 / 55%);
+  --glass-border: rgb(255 255 255 / 50%);
+  --glass-shadow: rgb(0 0 0 / 8%);
+
+  // Component-specific
+  --input-bg: #fff;
+  --input-border: #e2e3ea;
+  --input-border-focus: #7c5cbf;
+  --input-placeholder: #8890a8;
+  --card-bg: #fff;
+  --card-border: #e2e3ea;
+  --badge-bg: #ecedf2;
+  --tooltip-bg: #282a36;
+  --tooltip-text: #f8f8f2;
+  --scrollbar-thumb: #c0c4d8;
+  --scrollbar-track: #f4f4f7;
+  --code-bg: #f4f4f7;
+}

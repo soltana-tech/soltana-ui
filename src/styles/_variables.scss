@@ -1,0 +1,305 @@
+// ---------------------------------------------------------------------------
+// Design Tokens & CSS Custom Properties
+// ---------------------------------------------------------------------------
+// Extended Dracula color palette with light, dark, and sepia theme support.
+// All design tokens are expressed as CSS custom properties for runtime theming.
+// ---------------------------------------------------------------------------
+
+@use 'sass:list';
+
+// ---- Spacing scale (4px base) ----
+$spacing-base: 0.25rem; // 4px
+$spacing-steps: (
+  0: 0,
+  px: 1px,
+  0\.5: 0.125rem,
+  1: 0.25rem,
+  1\.5: 0.375rem,
+  2: 0.5rem,
+  2\.5: 0.625rem,
+  3: 0.75rem,
+  3\.5: 0.875rem,
+  4: 1rem,
+  5: 1.25rem,
+  6: 1.5rem,
+  7: 1.75rem,
+  8: 2rem,
+  9: 2.25rem,
+  10: 2.5rem,
+  11: 2.75rem,
+  12: 3rem,
+  14: 3.5rem,
+  16: 4rem,
+  20: 5rem,
+  24: 6rem,
+  28: 7rem,
+  32: 8rem,
+  36: 9rem,
+  40: 10rem,
+  44: 11rem,
+  48: 12rem,
+  52: 13rem,
+  56: 14rem,
+  60: 15rem,
+  64: 16rem,
+  72: 18rem,
+  80: 20rem,
+  96: 24rem,
+);
+
+// ---- Font size scale ----
+$font-sizes: (
+  xs: (
+    0.75rem,
+    1rem,
+  ),
+  sm: (
+    0.875rem,
+    1.25rem,
+  ),
+  base: (
+    1rem,
+    1.5rem,
+  ),
+  lg: (
+    1.125rem,
+    1.75rem,
+  ),
+  xl: (
+    1.25rem,
+    1.75rem,
+  ),
+  2xl: (
+    1.5rem,
+    2rem,
+  ),
+  3xl: (
+    1.875rem,
+    2.25rem,
+  ),
+  4xl: (
+    2.25rem,
+    2.5rem,
+  ),
+  5xl: (
+    3rem,
+    1,
+  ),
+  6xl: (
+    3.75rem,
+    1,
+  ),
+  7xl: (
+    4.5rem,
+    1,
+  ),
+  8xl: (
+    6rem,
+    1,
+  ),
+  9xl: (
+    8rem,
+    1,
+  ),
+);
+
+// ---- Font weight scale ----
+$font-weights: (
+  light: 300,
+  regular: 400,
+  medium: 500,
+  semibold: 600,
+  bold: 700,
+  extrabold: 800,
+);
+
+// ---- Border radius scale ----
+$radii: (
+  none: 0,
+  sm: 0.125rem,
+  md: 0.25rem,
+  default: 0.375rem,
+  lg: 0.5rem,
+  xl: 0.75rem,
+  2xl: 1rem,
+  3xl: 1.5rem,
+  full: 9999px,
+);
+
+// ---- Z-index scale ----
+$z-indices: (
+  0: 0,
+  10: 10,
+  20: 20,
+  30: 30,
+  40: 40,
+  50: 50,
+  auto: auto,
+);
+
+// ---- Shadow scale ----
+$shadows: (
+  sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+  default: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
+  md: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+  lg: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
+  xl: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
+  2xl: '0 25px 50px -12px rgb(0 0 0 / 0.25)',
+  inner: 'inset 0 2px 4px 0 rgb(0 0 0 / 0.05)',
+  none: 'none',
+);
+
+// ---- Transition durations ----
+$transitions: (
+  fast: 75ms,
+  normal: 150ms,
+  slow: 300ms,
+  slower: 500ms,
+);
+
+// ---- Breakpoints ----
+$breakpoints: (
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  2xl: 1536px,
+);
+
+// ---- Dracula base palette (raw values for SCSS usage) ----
+$dracula-bg: #282a36;
+$dracula-current: #44475a;
+$dracula-fg: #f8f8f2;
+$dracula-comment: #6272a4;
+$dracula-cyan: #8be9fd;
+$dracula-green: #50fa7b;
+$dracula-orange: #ffb86c;
+$dracula-pink: #ff79c6;
+$dracula-purple: #bd93f9;
+$dracula-red: #f55;
+$dracula-yellow: #f1fa8c;
+
+// ---- Neutral gray scale ----
+$gray-50: #fafafa;
+$gray-100: #f4f4f5;
+$gray-200: #e4e4e7;
+$gray-300: #d4d4d8;
+$gray-400: #a1a1aa;
+$gray-500: #71717a;
+$gray-600: #52525b;
+$gray-700: #3f3f46;
+$gray-800: #27272a;
+$gray-900: #18181b;
+$gray-950: #09090b;
+
+// ---- Pastel palette ----
+$pastel-lilac: #e1d5f3;
+$pastel-peach: #f8e8d5;
+$pastel-mint: #d5f3e8;
+$pastel-blush: #ffd5e5;
+$pastel-sky: #d5e8f8;
+$pastel-lemon: #f3f1d5;
+$pastel-lavender: #d8d5f3;
+$pastel-rose: #f3d5d8;
+$pastel-sage: #d5e8d5;
+$pastel-coral: #f3dbd5;
+
+// ---- Sepia palette ----
+$sepia-cream: #f4ede1;
+$sepia-parchment: #ede3d1;
+$sepia-tan: #dcc9b3;
+$sepia-sand: #c4a97d;
+$sepia-coffee: #8b7355;
+$sepia-chocolate: #5c4033;
+$sepia-walnut: #4a3728;
+$sepia-espresso: #3b2d22;
+
+// ---- CSS custom properties (applied to :root) ----
+:root {
+  // Spacing tokens
+  @each $key, $val in $spacing-steps {
+    --space-#{$key}: #{$val};
+  }
+
+  // Radius tokens
+  @each $key, $val in $radii {
+    --radius-#{$key}: #{$val};
+  }
+
+  // Shadow tokens
+  @each $key, $val in $shadows {
+    --shadow-#{$key}: #{$val};
+  }
+
+  // Transition tokens
+  @each $key, $val in $transitions {
+    --transition-#{$key}: #{$val};
+  }
+
+  // Font family
+  --font-sans: 'Space Grotesk', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
+
+  // Font sizes
+  @each $key, $pair in $font-sizes {
+    --text-#{$key}: #{list.nth($pair, 1)};
+    --leading-#{$key}: #{list.nth($pair, 2)};
+  }
+
+  // Font weights
+  @each $key, $val in $font-weights {
+    --font-#{$key}: #{$val};
+  }
+
+  // Static palette (always available regardless of theme)
+  --color-white: #fff;
+  --color-black: #000;
+
+  // Gray scale
+  --gray-50: #{$gray-50};
+  --gray-100: #{$gray-100};
+  --gray-200: #{$gray-200};
+  --gray-300: #{$gray-300};
+  --gray-400: #{$gray-400};
+  --gray-500: #{$gray-500};
+  --gray-600: #{$gray-600};
+  --gray-700: #{$gray-700};
+  --gray-800: #{$gray-800};
+  --gray-900: #{$gray-900};
+  --gray-950: #{$gray-950};
+
+  // Dracula palette (raw)
+  --dracula-bg: #{$dracula-bg};
+  --dracula-current: #{$dracula-current};
+  --dracula-fg: #{$dracula-fg};
+  --dracula-comment: #{$dracula-comment};
+  --dracula-cyan: #{$dracula-cyan};
+  --dracula-green: #{$dracula-green};
+  --dracula-orange: #{$dracula-orange};
+  --dracula-pink: #{$dracula-pink};
+  --dracula-purple: #{$dracula-purple};
+  --dracula-red: #{$dracula-red};
+  --dracula-yellow: #{$dracula-yellow};
+
+  // Pastel palette
+  --pastel-lilac: #{$pastel-lilac};
+  --pastel-peach: #{$pastel-peach};
+  --pastel-mint: #{$pastel-mint};
+  --pastel-blush: #{$pastel-blush};
+  --pastel-sky: #{$pastel-sky};
+  --pastel-lemon: #{$pastel-lemon};
+  --pastel-lavender: #{$pastel-lavender};
+  --pastel-rose: #{$pastel-rose};
+  --pastel-sage: #{$pastel-sage};
+  --pastel-coral: #{$pastel-coral};
+
+  // Sepia palette
+  --sepia-cream: #{$sepia-cream};
+  --sepia-parchment: #{$sepia-parchment};
+  --sepia-tan: #{$sepia-tan};
+  --sepia-sand: #{$sepia-sand};
+  --sepia-coffee: #{$sepia-coffee};
+  --sepia-chocolate: #{$sepia-chocolate};
+  --sepia-walnut: #{$sepia-walnut};
+  --sepia-espresso: #{$sepia-espresso};
+}

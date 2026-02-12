@@ -1,0 +1,27 @@
+// ---------------------------------------------------------------------------
+// Soltana Design System — Main Entry
+// ---------------------------------------------------------------------------
+// Import order: variables → themes → base typography → components → utilities
+// → special effects. Utilities come last to ensure override capability.
+// ---------------------------------------------------------------------------
+
+// Foundation
+@use 'variables';
+
+// Themes
+@use 'themes/dark';
+@use 'themes/light';
+@use 'themes/sepia';
+
+// Base typography & resets
+@use 'typography';
+
+// Component styles
+@use 'components';
+
+// Utility classes (high specificity, loaded last)
+@use 'utilities';
+
+// Special effect systems
+@use 'neumorphic';
+@use 'glassmorphic';

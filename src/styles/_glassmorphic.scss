@@ -1,0 +1,196 @@
+// ---------------------------------------------------------------------------
+// Glassmorphic Design Utilities
+// ---------------------------------------------------------------------------
+// Frosted glass effects with backdrop blur, border, and shadow.
+// The --glass-* custom properties are set per-theme in the theme files.
+// ---------------------------------------------------------------------------
+
+// ---- Base glass effect ----
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px var(--glass-shadow);
+}
+
+// ---- Intensity variants ----
+.glass-subtle {
+  background: var(--glass-bg);
+  backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 16px var(--glass-shadow);
+}
+
+.glass-strong {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 12px 48px var(--glass-shadow);
+}
+
+// ---- Glass with tinted backgrounds ----
+.glass-accent {
+  background: rgb(189 147 249 / 15%);
+  backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgb(189 147 249 / 20%);
+  box-shadow: 0 8px 32px var(--glass-shadow);
+}
+
+.glass-cyan {
+  background: rgb(139 233 253 / 12%);
+  backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgb(139 233 253 / 18%);
+  box-shadow: 0 8px 32px var(--glass-shadow);
+}
+
+.glass-success {
+  background: rgb(80 250 123 / 10%);
+  backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgb(80 250 123 / 15%);
+  box-shadow: 0 8px 32px var(--glass-shadow);
+}
+
+.glass-danger {
+  background: rgb(255 85 85 / 10%);
+  backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgb(255 85 85 / 15%);
+  box-shadow: 0 8px 32px var(--glass-shadow);
+}
+
+.glass-warm {
+  background: rgb(255 184 108 / 10%);
+  backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgb(255 184 108 / 15%);
+  box-shadow: 0 8px 32px var(--glass-shadow);
+}
+
+// ---- Glass card ----
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-2xl);
+  box-shadow: 0 8px 32px var(--glass-shadow);
+  padding: 1.5rem;
+}
+
+// ---- Glass navbar ----
+.glass-nav {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: 0 2px 16px var(--glass-shadow);
+}
+
+// ---- Glass button ----
+.glass-button {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 16px var(--glass-shadow);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition:
+    background var(--transition-normal) ease,
+    box-shadow var(--transition-normal) ease,
+    transform var(--transition-normal) ease;
+
+  &:hover {
+    background: rgb(255 255 255 / 12%);
+    box-shadow: 0 6px 24px var(--glass-shadow);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px var(--glass-shadow);
+  }
+}
+
+// ---- Glass input ----
+.glass-input {
+  background: var(--glass-bg);
+  backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 0.625rem 1rem;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  transition: border-color var(--transition-normal) ease;
+
+  &::placeholder {
+    color: var(--text-muted);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px var(--state-focus-ring);
+  }
+}
+
+// ---- Glass modal / overlay ----
+.glass-overlay {
+  background: rgb(0 0 0 / 40%);
+  backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.glass-modal {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-2xl);
+  box-shadow: 0 24px 64px var(--glass-shadow);
+}
+
+// ---- Backdrop blur standalone utilities ----
+.blur-sm {
+  backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.blur {
+  backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.blur-md {
+  backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.blur-lg {
+  backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+
+.blur-xl {
+  backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+}
+
+.blur-2xl {
+  backdrop-filter: blur(40px);
+  backdrop-filter: blur(40px);
+}
+
+.blur-none {
+  backdrop-filter: none;
+  backdrop-filter: none;
+}
