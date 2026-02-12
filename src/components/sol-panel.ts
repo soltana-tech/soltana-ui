@@ -2,7 +2,7 @@ import { SoltanaElement } from './base/SoltanaElement.js';
 
 export class SolPanel extends SoltanaElement {
   static get observedAttributes(): string[] {
-    return ['columns', 'variant'];
+    return ['columns', 'variant', 'material', 'ornament'];
   }
 
   attributeChangedCallback(): void {
@@ -12,6 +12,7 @@ export class SolPanel extends SoltanaElement {
   protected render(): void {
     const hasColumns = this.hasAttribute('columns');
     const variant = this.getAttribute('variant') ?? 'default';
+    const material = this.getMaterial();
 
     this.setContent(
       `
@@ -40,6 +41,22 @@ export class SolPanel extends SoltanaElement {
         -webkit-backdrop-filter: blur(16px) saturate(1.4);
         border: 1px solid var(--glass-border);
       }
+      .panel--neuro {
+        background: var(--neuro-bg);
+        border: none;
+        box-shadow:
+          4px 4px 12px var(--neuro-shadow-dark),
+          -4px -4px 12px var(--neuro-shadow-light);
+      }
+      .panel--hybrid {
+        background: linear-gradient(145deg, var(--glass-gradient-start), var(--glass-gradient-end));
+        backdrop-filter: blur(14px) saturate(1.2);
+        -webkit-backdrop-filter: blur(14px) saturate(1.2);
+        border: 1px solid var(--glass-border);
+        box-shadow:
+          4px 4px 12px var(--neuro-shadow-dark),
+          -4px -4px 12px var(--neuro-shadow-light);
+      }
       .panel--columns {
         border-left: 3px solid rgb(212 168 67 / 20%);
         border-right: 3px solid rgb(212 168 67 / 20%);
@@ -61,7 +78,7 @@ export class SolPanel extends SoltanaElement {
         border-top: 1px solid var(--border-default);
       }
       `,
-      `<div class="panel panel--${variant} ${hasColumns ? 'panel--columns' : ''}">
+      `<div class="panel panel--${variant} panel--${material} ${hasColumns ? 'panel--columns' : ''}">
         <slot name="header"></slot>
         <div class="panel__body"><slot></slot></div>
         <slot name="footer"></slot>

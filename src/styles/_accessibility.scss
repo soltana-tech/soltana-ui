@@ -50,7 +50,15 @@
   outline-offset: 3px;
 }
 
-// Alternative focus ring utility
+// Generic focus ring utility (uses theme accent)
+.focus-ring {
+  &:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 3px;
+  }
+}
+
+// Gold-specific focus ring
 .focus-ring-gold {
   &:focus-visible {
     outline: 2px solid var(--gold-400);
@@ -61,7 +69,7 @@
 
 .focus-ring-inset {
   &:focus-visible {
-    outline: 2px solid var(--gold-400);
+    outline: 2px solid var(--accent-primary);
     outline-offset: -3px;
   }
 }

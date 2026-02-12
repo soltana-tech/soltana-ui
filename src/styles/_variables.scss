@@ -431,11 +431,6 @@ $ivory-900: #3a332a;
   --jewel-onyx: #{$jewel-onyx};
   --jewel-pearl: #{$jewel-pearl};
 
-  // Intensity modifiers (muted for light themes, vivid for dark)
-  --intensity-muted: 0.6;
-  --intensity-normal: 0.85;
-  --intensity-vivid: 1;
-
   // Ivory / warm neutral scale
   --ivory-50: #{$ivory-50};
   --ivory-100: #{$ivory-100};
@@ -447,11 +442,4 @@ $ivory-900: #3a332a;
   --ivory-700: #{$ivory-700};
   --ivory-800: #{$ivory-800};
   --ivory-900: #{$ivory-900};
-
-  // Transparency tokens
-  --stroke: rgb(255 255 255 / 8%);
-  --glass-tint-light: rgb(255 255 255 / 5%);
-  --glass-tint-dark: rgb(255 255 255 / 2%);
-  --shadow-hi: rgb(255 255 255 / 6%);
-  --shadow-lo: rgb(0 0 0 / 60%);
 }

@@ -5,6 +5,40 @@
 // Includes text gradients, surfaces, borders, and shimmer animations.
 // ---------------------------------------------------------------------------
 
+// Shared metallic shine animation (used by silver, bronze, platinum)
+@keyframes metallic-shine {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+// Metallic shine mixin
+@mixin metallic-shine-effect($highlight-color, $peak-color, $duration: 3.5s) {
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      $highlight-color 25%,
+      $peak-color 50%,
+      $highlight-color 75%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: metallic-shine $duration ease-in-out infinite;
+    pointer-events: none;
+  }
+}
+
 // ====================== Silver ======================
 
 .silver-text {
@@ -37,36 +71,8 @@
     0 1px 2px rgb(87 99 120 / 15%);
 }
 
-@keyframes silver-shine {
-  0% {
-    background-position: -200% center;
-  }
-
-  100% {
-    background-position: 200% center;
-  }
-}
-
 .silver-shine {
-  position: relative;
-  overflow: hidden;
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgb(216 221 230 / 30%) 25%,
-      rgb(255 255 255 / 45%) 50%,
-      rgb(216 221 230 / 30%) 75%,
-      transparent 100%
-    );
-    background-size: 200% 100%;
-    animation: silver-shine 3.5s ease-in-out infinite;
-    pointer-events: none;
-  }
+  @include metallic-shine-effect(rgb(216 221 230 / 30%), rgb(255 255 255 / 45%), 3.5s);
 }
 
 // ====================== Bronze ======================
@@ -116,36 +122,8 @@
   }
 }
 
-@keyframes bronze-shine {
-  0% {
-    background-position: -200% center;
-  }
-
-  100% {
-    background-position: 200% center;
-  }
-}
-
 .bronze-shine {
-  position: relative;
-  overflow: hidden;
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgb(240 205 158 / 25%) 25%,
-      rgb(255 240 210 / 40%) 50%,
-      rgb(240 205 158 / 25%) 75%,
-      transparent 100%
-    );
-    background-size: 200% 100%;
-    animation: bronze-shine 4s ease-in-out infinite;
-    pointer-events: none;
-  }
+  @include metallic-shine-effect(rgb(240 205 158 / 25%), rgb(255 240 210 / 40%), 4s);
 }
 
 // ====================== Copper ======================
@@ -229,34 +207,6 @@
     0 1px 2px rgb(109 123 148 / 15%);
 }
 
-@keyframes platinum-shine {
-  0% {
-    background-position: -200% center;
-  }
-
-  100% {
-    background-position: 200% center;
-  }
-}
-
 .platinum-shine {
-  position: relative;
-  overflow: hidden;
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgb(220 225 234 / 28%) 25%,
-      rgb(255 255 255 / 50%) 50%,
-      rgb(220 225 234 / 28%) 75%,
-      transparent 100%
-    );
-    background-size: 200% 100%;
-    animation: platinum-shine 3s ease-in-out infinite;
-    pointer-events: none;
-  }
+  @include metallic-shine-effect(rgb(220 225 234 / 28%), rgb(255 255 255 / 50%), 3s);
 }

@@ -24,10 +24,12 @@
   --text-muted: #5a5245;
   --text-inverse: #08091a;
 
-  // Border colors
-  --border-default: rgb(212 168 67 / 12%);
-  --border-subtle: rgb(255 255 255 / 5%);
-  --border-strong: rgb(212 168 67 / 20%);
+  // Border colors — neutral alpha for seamless neumorphic, gold reserved for accents
+  --border-default: rgb(255 255 255 / 6%);
+  --border-subtle: rgb(255 255 255 / 3%);
+  --border-strong: rgb(255 255 255 / 10%);
+  --border-accent-gold: rgb(212 168 67 / 20%);
+  --border-accent-gold-strong: rgb(212 168 67 / 35%);
 
   // Accent colors — gold primary, amethyst secondary
   --accent-primary: #d4a843;
@@ -62,40 +64,38 @@
   --state-disabled-bg: #151838;
   --state-disabled-text: #5a5245;
 
-  // Neumorphic shadows — "polished stone"
+  // Neumorphic shadows — "polished stone" (neutral for seamless blending)
   --neuro-bg: #0e1028;
-  --neuro-shadow-light: rgb(255 255 255 / 4%);
+  --neuro-shadow-light: rgb(255 255 255 / 5%);
   --neuro-shadow-dark: rgb(0 0 0 / 65%);
   --neuro-shadow-mid: rgb(0 0 0 / 40%);
-  --neuro-highlight: rgb(212 168 67 / 5%);
+  --neuro-highlight: rgb(255 255 255 / 8%);
+  --neuro-accent-glow: rgb(212 168 67 / 15%);
 
-  // Glassmorphic — "crystal glass"
-  --glass-bg: rgb(14 16 40 / 50%);
-  --glass-border: rgb(212 168 67 / 10%);
+  // Glassmorphic — "crystal glass" (35% opacity for better transparency)
+  --glass-bg: rgb(14 16 40 / 35%);
+  --glass-border: rgb(255 255 255 / 8%);
   --glass-shadow: rgb(0 0 0 / 45%);
-  --glass-gradient-start: rgb(212 168 67 / 6%);
-  --glass-gradient-end: rgb(255 255 255 / 2%);
-  --glass-inner-glow: rgb(212 168 67 / 4%);
+  --glass-gradient-start: rgb(255 255 255 / 8%);
+  --glass-gradient-end: rgb(255 255 255 / 3%);
+  --glass-inner-glow: rgb(255 255 255 / 10%);
 
   // Stained glass tints (dark: vivid jewel tones)
   --stained-primary: rgb(212 168 67 / 15%);
   --stained-secondary: rgb(168 85 247 / 12%);
   --stained-accent: rgb(16 185 129 / 10%);
 
-  // Component-specific
+  // Component-specific — neutral borders for seamless neumorphic
   --input-bg: rgb(255 255 255 / 4%);
-  --input-border: rgb(212 168 67 / 12%);
+  --input-border: rgb(255 255 255 / 8%);
   --input-border-focus: #d4a843;
   --input-placeholder: #5a5245;
   --card-bg: rgb(14 16 40 / 60%);
-  --card-border: rgb(212 168 67 / 8%);
+  --card-border: rgb(255 255 255 / 6%);
   --badge-bg: rgb(212 168 67 / 10%);
   --tooltip-bg: #08091a;
   --tooltip-text: #f5f0e6;
-  --scrollbar-thumb: rgb(212 168 67 / 15%);
+  --scrollbar-thumb: rgb(255 255 255 / 12%);
   --scrollbar-track: rgb(255 255 255 / 3%);
   --code-bg: rgb(0 0 0 / 35%);
-
-  // Intensity (vivid for dark)
-  --intensity: var(--intensity-vivid);
 }

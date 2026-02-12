@@ -2,7 +2,17 @@ import { SoltanaElement } from './base/SoltanaElement.js';
 
 export class SolInput extends SoltanaElement {
   static get observedAttributes(): string[] {
-    return ['type', 'placeholder', 'value', 'disabled', 'error', 'label', 'help'];
+    return [
+      'type',
+      'placeholder',
+      'value',
+      'disabled',
+      'error',
+      'label',
+      'help',
+      'material',
+      'ornament',
+    ];
   }
 
   attributeChangedCallback(): void {
@@ -17,7 +27,10 @@ export class SolInput extends SoltanaElement {
     const error = this.getAttribute('error') ?? '';
     const label = this.getAttribute('label') ?? '';
     const help = this.getAttribute('help') ?? '';
+    const material = this.getMaterial();
     const inputId = `sol-input-${Math.random().toString(36).slice(2, 9)}`;
+
+    const materialClass = material !== 'neuro' ? `field__input--${material}` : '';
 
     this.setContent(
       `
@@ -95,12 +108,42 @@ export class SolInput extends SoltanaElement {
         font-size: 0.8rem;
         color: var(--jewel-ruby, #ef4444);
       }
+
+      /* Material variants */
+      .field__input--glass {
+        background: var(--glass-bg);
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+        border: 1px solid var(--glass-border);
+        box-shadow: none;
+      }
+      .field__input--glass:focus {
+        box-shadow:
+          0 0 0 3px var(--state-focus-ring),
+          inset 0 1px 0 var(--glass-inner-glow);
+      }
+
+      .field__input--hybrid {
+        background: linear-gradient(145deg, var(--glass-gradient-end), var(--glass-gradient-start));
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+        border: 1px solid var(--glass-border);
+        box-shadow:
+          inset 2px 2px 6px var(--neuro-shadow-dark),
+          inset -2px -2px 6px var(--neuro-shadow-light);
+      }
+      .field__input--hybrid:focus {
+        box-shadow:
+          inset 2px 2px 6px var(--neuro-shadow-dark),
+          inset -2px -2px 6px var(--neuro-shadow-light),
+          0 0 0 3px var(--state-focus-ring);
+      }
       `,
       `<div class="field">
         ${label ? `<label class="field__label" for="${inputId}">${label}</label>` : ''}
         <div class="field__input-wrap">
           <input
-            class="field__input ${error ? 'field__input--error' : ''}"
+            class="field__input ${materialClass} ${error ? 'field__input--error' : ''}"
             id="${inputId}"
             type="${type}"
             placeholder="${placeholder}"

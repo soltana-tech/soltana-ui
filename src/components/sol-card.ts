@@ -2,7 +2,7 @@ import { SoltanaElement } from './base/SoltanaElement.js';
 
 export class SolCard extends SoltanaElement {
   static get observedAttributes(): string[] {
-    return ['variant', 'elevation', 'gold-border'];
+    return ['variant', 'elevation', 'gold-border', 'material', 'ornament'];
   }
 
   attributeChangedCallback(): void {
@@ -194,6 +194,87 @@ export class SolCard extends SoltanaElement {
         border: 1px solid var(--glass-border);
       }
 
+      /* Material system variants */
+      .card--material-neuro {
+        background: var(--neuro-bg);
+        border: none;
+        border-top: 1px solid var(--neuro-highlight);
+        box-shadow:
+          0 2px 4px var(--neuro-shadow-mid),
+          6px 6px 16px var(--neuro-shadow-dark),
+          -5px -5px 14px var(--neuro-shadow-light);
+      }
+
+      .card--material-glass {
+        background: linear-gradient(145deg, var(--glass-gradient-start), var(--glass-gradient-end));
+        -webkit-backdrop-filter: blur(16px) saturate(1.4);
+        backdrop-filter: blur(16px) saturate(1.4);
+        border: 1px solid var(--glass-border);
+        box-shadow:
+          0 8px 32px var(--glass-shadow),
+          inset 0 1px 0 var(--glass-inner-glow);
+      }
+
+      .card--material-hybrid {
+        background: linear-gradient(145deg, var(--glass-gradient-start), var(--glass-gradient-end));
+        -webkit-backdrop-filter: blur(14px) saturate(1.2);
+        backdrop-filter: blur(14px) saturate(1.2);
+        border: 1px solid var(--glass-border);
+        box-shadow:
+          0 2px 4px var(--neuro-shadow-mid),
+          6px 6px 16px var(--neuro-shadow-dark),
+          -5px -5px 14px var(--neuro-shadow-light),
+          inset 0 1px 0 var(--glass-inner-glow);
+      }
+
+      /* Ornament modifiers */
+      .card--ornament-baroque {
+        position: relative;
+      }
+      .card--ornament-baroque::before {
+        content: '';
+        position: absolute;
+        inset: 4px;
+        border: 1px solid rgb(212 168 67 / 25%);
+        border-radius: inherit;
+        pointer-events: none;
+      }
+
+      .card--ornament-gilt {
+        border: 1px solid var(--gold-400, #d4a843);
+        box-shadow:
+          0 0 0 1px var(--gold-600, #b8860b),
+          0 0 8px rgb(212 168 67 / 20%),
+          4px 4px 12px var(--neuro-shadow-dark),
+          -4px -4px 12px var(--neuro-shadow-light);
+      }
+
+      .card--ornament-faceted {
+        position: relative;
+        overflow: hidden;
+      }
+      .card--ornament-faceted::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgb(255 255 255 / 12%) 0%,
+          transparent 30%,
+          transparent 70%,
+          rgb(0 0 0 / 8%) 100%
+        );
+        pointer-events: none;
+      }
+
+      .card--ornament-carved {
+        box-shadow:
+          inset 2px 2px 6px var(--neuro-shadow-dark),
+          inset -2px -2px 6px var(--neuro-shadow-light),
+          4px 4px 12px var(--neuro-shadow-dark),
+          -4px -4px 12px var(--neuro-shadow-light);
+      }
+
       /* Gold border */
       .card--gold-border {
         border: 2px solid transparent;
@@ -228,7 +309,17 @@ export class SolCard extends SoltanaElement {
   }
 
   private _buildMarkup(variant: string, elevation: string, goldBorder: boolean): string {
-    const classes = `card card--${variant} card--${elevation} ${goldBorder ? 'card--gold-border' : ''}`;
+    const material = this.getMaterial();
+    const ornament = this.getOrnament();
+
+    let classes = `card card--${variant} card--${elevation}`;
+    if (goldBorder) classes += ' card--gold-border';
+    if (material && material !== 'neuro') classes += ` card--material-${material}`;
+    if (ornament) {
+      ornament.split(' ').forEach((o) => {
+        if (o.trim()) classes += ` card--ornament-${o.trim()}`;
+      });
+    }
 
     let innerMarkup = '';
 

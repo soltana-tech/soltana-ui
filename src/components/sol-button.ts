@@ -2,7 +2,7 @@ import { SoltanaElement } from './base/SoltanaElement.js';
 
 export class SolButton extends SoltanaElement {
   static get observedAttributes(): string[] {
-    return ['variant', 'size', 'disabled'];
+    return ['variant', 'size', 'disabled', 'material', 'ornament'];
   }
 
   constructor() {

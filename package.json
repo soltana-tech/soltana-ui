@@ -22,7 +22,7 @@
     }
   },
   "scripts": {
-    "dev": "vite build --watch",
+    "dev": "npm run docs:dev",
     "build": "tsc --noEmit && vite build",
     "docs:dev": "DOCS=true vite --config vite.config.ts",
     "docs:build": "DOCS=true vite build --config vite.config.ts",

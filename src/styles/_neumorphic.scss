@@ -62,8 +62,9 @@
     -8px -8px 24px var(--neuro-shadow-light);
 }
 
-// Soft — barely perceptible, elegant background treatment
-.neuro-soft {
+// Soft/Flat — barely perceptible, elegant background treatment
+.neuro-soft,
+.neuro-flat {
   @include neuro-base;
   border-radius: var(--radius-xl);
   box-shadow:
@@ -97,15 +98,6 @@
   box-shadow:
     inset 10px 10px 24px var(--neuro-shadow-dark),
     inset -10px -10px 24px var(--neuro-shadow-light);
-}
-
-// ---- Flat (subtle) ----
-.neuro-flat {
-  @include neuro-base;
-  border-radius: var(--radius-xl);
-  box-shadow:
-    2px 2px 5px var(--neuro-shadow-dark),
-    -2px -2px 5px var(--neuro-shadow-light);
 }
 
 // ============================================================================
@@ -294,6 +286,15 @@
   border-radius: var(--radius-xl);
   box-shadow:
     inset 4px 4px 10px var(--neuro-shadow-dark),
+    inset -4px -4px 10px var(--neuro-shadow-light);
+}
+
+// Gold-accented pressed state (use intentionally for premium feel)
+.neuro-pressed-gold {
+  @include neuro-base;
+  border-radius: var(--radius-xl);
+  box-shadow:
+    inset 4px 4px 10px var(--neuro-shadow-dark),
     inset -4px -4px 10px var(--neuro-shadow-light),
-    inset 0 0 0 1px rgb(212 168 67 / 12%);
+    inset 0 0 0 1px var(--border-accent-gold, rgb(212 168 67 / 12%));
 }
