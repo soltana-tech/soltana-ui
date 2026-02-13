@@ -1,8 +1,8 @@
 // ---------------------------------------------------------------------------
 // Soltana Design System - Config Runtime
 // ---------------------------------------------------------------------------
-// initSoltana() sets data attributes on <html> and body classes to activate
-// SCSS selector blocks for the chosen theme, material, surface, and ornament.
+// initSoltana() sets data attributes on <html> to activate SCSS selector
+// blocks for the chosen theme, material, surface, and ornament.
 // ---------------------------------------------------------------------------
 
 import type {
@@ -26,13 +26,6 @@ const DEFAULT_CONFIG: SoltanaConfig = {
   enhancers: true,
 };
 
-const ORNAMENT_CLASSES = [
-  'ornament-baroque',
-  'ornament-carved',
-  'ornament-faceted',
-  'ornament-gilt',
-];
-
 const VALID_THEMES: readonly Theme[] = ['dark', 'light', 'sepia', 'auto'];
 const VALID_MATERIALS: readonly Material[] = ['flat', 'soft', 'neu', 'glass', 'metallic', 'stone'];
 const VALID_SURFACES: readonly Surface[] = ['polished', 'frosted', 'stained', 'metallic'];
@@ -51,11 +44,8 @@ function resolveTheme(theme: Theme): 'dark' | 'light' | 'sepia' {
   return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
 }
 
-function applyOrnamentClass(ornament: Ornament): void {
-  document.body.classList.remove(...ORNAMENT_CLASSES);
-  if (ornament !== 'none') {
-    document.body.classList.add(`ornament-${ornament}`);
-  }
+function applyOrnament(ornament: Ornament): void {
+  document.documentElement.setAttribute('data-ornament', ornament);
 }
 
 function applyOverrides(overrides: Record<string, string>): void {
@@ -71,7 +61,7 @@ function applyConfig(state: SoltanaConfig): void {
   root.setAttribute('data-theme', resolveTheme(state.theme));
   root.setAttribute('data-material', state.material);
   root.setAttribute('data-surface', state.surface);
-  applyOrnamentClass(state.ornament);
+  applyOrnament(state.ornament);
 
   if (state.overrides) {
     applyOverrides(state.overrides);
@@ -114,8 +104,8 @@ function warnInvalid(name: string, value: string, valid: readonly string[]): voi
 
 /**
  * Initialize the Soltana design system.
- * Sets data attributes on <html> to activate SCSS theme/material/surface
- * selectors, and a body class for the ornament tier.
+ * Sets data attributes on <html> to activate SCSS theme/material/surface/
+ * ornament selectors.
  */
 export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaInstance {
   const state: SoltanaConfig = { ...DEFAULT_CONFIG, ...userConfig };
@@ -170,7 +160,7 @@ export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaIns
     setOrnament(ornament: Ornament): void {
       warnInvalid('ornament', ornament, VALID_ORNAMENTS);
       state.ornament = ornament;
-      applyOrnamentClass(ornament);
+      applyOrnament(ornament);
     },
 
     setOverrides(overrides: Record<string, string>): void {
@@ -213,7 +203,7 @@ export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaIns
       root.removeAttribute('data-material');
       root.removeAttribute('data-surface');
       root.removeAttribute('style');
-      document.body.classList.remove(...ORNAMENT_CLASSES);
+      root.removeAttribute('data-ornament');
     },
   };
 }

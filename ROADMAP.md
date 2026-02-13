@@ -18,7 +18,7 @@ A CSS-first design system built around a 4-tier configuration model:
 | Theme | dark, light, sepia, auto | `[data-theme]` on `<html>` |
 | Material | flat, soft, neu, glass, metallic, stone | `[data-material]` on `<html>` |
 | Surface | polished, frosted, stained, metallic | `[data-surface]` on `<html>` |
-| Ornament | none, baroque, carved, faceted, gilt | `body` class |
+| Ornament | none, baroque, carved, faceted, gilt | `[data-ornament]` on `<html>` |
 
 Classical "estate" aesthetic with gold accents, jewel tones, serif typography (Cinzel + Raleway). Ships ~139KB CSS + ~10KB JS with TypeScript enhancers for modals, tabs, and tooltips.
 
@@ -290,34 +290,27 @@ Palette locked to gold/jewel tones. No cool grays, warm neutrals, or monochrome 
 
 ### ORN-1: Pseudo-element collision (fatal)
 
-`TODO` · Size: **XL**
+`DONE` · Size: **XL**
 
 Ornaments apply globally via `body.ornament-baroque` using `::before`/`::after` on every component. Component variants use those same pseudo-elements. `.btn-baroque` corners destroyed by higher-specificity global ornament rule. CSS only provides two pseudo-elements per element.
 
+- Progress: Replaced all ornament implementations with `box-shadow` only. No `::before`/`::after` usage — functional pseudo-elements on toggles, tabs, tooltips, and component-specific decorative variants (`.btn-baroque`, `.card-baroque`, `.modal-baroque`) are preserved.
+
 ### ORN-2: All-or-nothing global application
 
-`TODO` · Size: **XL** · Depends on: ORN-1
+`DONE` · Size: **XL** · Depends on: ORN-1
 
 `body.ornament-baroque` applies to every component simultaneously. No way to have a baroque card next to a plain card. `.ornament-none` uses `display: none !important` killing all pseudo-element styling.
 
+- Progress: Ornaments are now opt-in per element. `.ornament` reads the config default from `[data-ornament]` on `<html>`. Explicit classes (`.ornament-baroque`, `.ornament-gilt`, etc.) override config. Elements without `.ornament` or `.ornament-*` receive no decoration.
+
 ### ORN-3: Redundant competing definitions
 
-`TODO` · Size: **L** · Depends on: ORN-1
+`DONE` · Size: **L** · Depends on: ORN-1
 
 Baroque defined in 3 places (`_material-system.scss`, `_buttons.scss`, `_ornamental.scss`) with no shared code. Each implements "baroque" differently. Combining them produces visual breakage.
 
-### Proposed fix for ORN-1, ORN-2, ORN-3 (combined)
-
-**One source of truth.** Single set of ornament definitions consumed everywhere.
-
-**Opt-in, not global.** Config still sets a default ornament, but application is per-element via `.ornamented` class, not blanket `body` class.
-
-- `.ornamented` — applies the config default
-- `.ornamented-baroque` — forces baroque regardless of config
-- `.ornamented-carved` — forces carved regardless of config
-- etc.
-
-**No pseudo-element conflicts.** Use `box-shadow` + `outline`/`outline-offset`/`border-image` instead of `::before`/`::after`. Refactor conflicting components.
+- Progress: Removed global `body.ornament-*` selectors from `_material-system.scss`. Single ornament definition set in `_material-system.scss` using `box-shadow`. Component-specific variants (`.btn-baroque`, `.card-baroque`) remain as separate decorative treatments that don't conflict. Switched from `body` classes to `data-ornament` attribute on `<html>` for consistency with other tiers.
 
 ---
 

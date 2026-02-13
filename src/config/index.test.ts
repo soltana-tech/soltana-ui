@@ -18,6 +18,7 @@ describe('initSoltana', () => {
     document.documentElement.removeAttribute('data-surface');
     document.documentElement.removeAttribute('style');
     document.body.className = '';
+    document.documentElement.removeAttribute('data-ornament');
     document.head.innerHTML = '';
     _resetFontLoader();
     mockInitAll.mockClear();
@@ -29,7 +30,7 @@ describe('initSoltana', () => {
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
     expect(document.documentElement.getAttribute('data-material')).toBe('neu');
     expect(document.documentElement.getAttribute('data-surface')).toBe('polished');
-    expect(document.body.classList.contains('ornament-baroque')).toBe(false);
+    expect(document.documentElement.getAttribute('data-ornament')).toBe('none');
   });
 
   it('applies custom config', () => {
@@ -42,7 +43,7 @@ describe('initSoltana', () => {
     expect(document.documentElement.getAttribute('data-theme')).toBe('light');
     expect(document.documentElement.getAttribute('data-material')).toBe('glass');
     expect(document.documentElement.getAttribute('data-surface')).toBe('frosted');
-    expect(document.body.classList.contains('ornament-gilt')).toBe(true);
+    expect(document.documentElement.getAttribute('data-ornament')).toBe('gilt');
   });
 
   it('setTheme updates data-theme', () => {
@@ -63,16 +64,15 @@ describe('initSoltana', () => {
     expect(document.documentElement.getAttribute('data-surface')).toBe('stained');
   });
 
-  it('setOrnament manages body classes', () => {
+  it('setOrnament updates data-ornament attribute', () => {
     const soltana = initSoltana({ ornament: 'baroque' });
-    expect(document.body.classList.contains('ornament-baroque')).toBe(true);
+    expect(document.documentElement.getAttribute('data-ornament')).toBe('baroque');
 
     soltana.setOrnament('carved');
-    expect(document.body.classList.contains('ornament-baroque')).toBe(false);
-    expect(document.body.classList.contains('ornament-carved')).toBe(true);
+    expect(document.documentElement.getAttribute('data-ornament')).toBe('carved');
 
     soltana.setOrnament('none');
-    expect(document.body.classList.contains('ornament-carved')).toBe(false);
+    expect(document.documentElement.getAttribute('data-ornament')).toBe('none');
   });
 
   it('setOverrides applies inline CSS variables', () => {
@@ -93,7 +93,7 @@ describe('initSoltana', () => {
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
     expect(document.documentElement.getAttribute('data-material')).toBe('neu');
     expect(document.documentElement.getAttribute('data-surface')).toBe('polished');
-    expect(document.body.classList.contains('ornament-gilt')).toBe(false);
+    expect(document.documentElement.getAttribute('data-ornament')).toBe('none');
     expect(document.documentElement.style.getPropertyValue('--custom')).toBe('');
   });
 
@@ -113,7 +113,7 @@ describe('initSoltana', () => {
     expect(soltana.getState().theme).toBe('auto');
   });
 
-  it('destroy removes data attributes, ornament classes, and inline styles', () => {
+  it('destroy removes all data attributes and inline styles', () => {
     const soltana = initSoltana({
       theme: 'sepia',
       material: 'glass',
@@ -127,7 +127,7 @@ describe('initSoltana', () => {
     expect(document.documentElement.getAttribute('data-theme')).toBeNull();
     expect(document.documentElement.getAttribute('data-material')).toBeNull();
     expect(document.documentElement.getAttribute('data-surface')).toBeNull();
-    expect(document.body.classList.contains('ornament-baroque')).toBe(false);
+    expect(document.documentElement.getAttribute('data-ornament')).toBeNull();
     expect(document.documentElement.getAttribute('style')).toBeNull();
   });
 

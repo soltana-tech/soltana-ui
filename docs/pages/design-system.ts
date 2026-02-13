@@ -416,7 +416,7 @@ export function renderDesignSystem(): string {
 
   ${sectionHeading('Ornamental Details', 'ornaments', 'Structural embellishments applied globally via config or per-element via utility classes.')}
 
-  <p class="text-sm text-secondary mb-6">Ornaments are set globally via <code>initSoltana()</code> and apply to all buttons, cards, inputs, modals, badges, and tags. Use the settings panel to preview different ornaments across the entire page.</p>
+  <p class="text-sm text-secondary mb-6">Ornaments are opt-in per element. Add <code>.ornament</code> to inherit the config default, or use an explicit class like <code>.ornament-baroque</code> to force a specific style. All ornaments use <code>box-shadow</code> only — no pseudo-element conflicts.</p>
 
   <div class="grid gap-6 mt-8" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr))">
     <div class="ornament-baroque card p-6 rounded-lg" style="min-height: 160px;">
@@ -442,11 +442,11 @@ export function renderDesignSystem(): string {
   </div>
 
   ${specimenBlock(
-    'Global Ornament Configuration',
+    'Ornament Configuration',
     `
-    <p class="text-sm text-secondary mb-4">Set ornament globally via config. All matching components receive the decoration:</p>
-    ${codeExample('// Set ornament globally\nconst soltana = initSoltana({\n  ornament: "baroque",  // All buttons, cards, etc. get baroque decoration\n});\n\n// Change at runtime\nsoltana.setOrnament("gilt");', 'javascript')}
-    ${codeExample('<!-- All these components receive the global ornament -->\n<button class="btn btn-primary">Decorated Button</button>\n<div class="card p-6">Decorated Card</div>\n<input class="input" placeholder="Decorated Input">\n\n<!-- Override specific elements -->\n<button class="btn ornament-none">No Ornament</button>\n<div class="card ornament-gilt p-6">Gilt Override</div>', 'html')}
+    <p class="text-sm text-secondary mb-4">Set the config default via <code>initSoltana()</code>, then opt in per element with <code>.ornament</code>:</p>
+    ${codeExample('// Set config default ornament\nconst soltana = initSoltana({\n  ornament: "baroque",  // .ornament elements get baroque\n});\n\n// Change at runtime\nsoltana.setOrnament("gilt");', 'javascript')}
+    ${codeExample('<!-- .ornament inherits the config default -->\n<button class="btn btn-primary ornament">Decorated Button</button>\n<div class="card ornament p-6">Decorated Card</div>\n\n<!-- Explicit class overrides config default -->\n<div class="card ornament-gilt p-6">Always Gilt</div>\n\n<!-- No .ornament = no decoration -->\n<button class="btn btn-primary">Plain Button</button>', 'html')}
   `
   )}
 
