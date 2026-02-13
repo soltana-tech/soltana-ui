@@ -38,11 +38,14 @@ export function renderGettingStarted(): string {
       <h4 class="font-semibold text-lg">Material</h4>
       <p class="text-sm text-secondary">Transforms how every component renders: shadows, blur, transparency.</p>
       <div class="flex flex-wrap gap-2 mt-2">
+        <span class="tag">flat</span>
+        <span class="tag">soft</span>
         <span class="tag tag-gold">neuro</span>
         <span class="tag">glass</span>
-        <span class="tag">hybrid</span>
+        <span class="tag">metallic</span>
+        <span class="tag">stone</span>
       </div>
-      ${codeExample("soltana.setMaterial('hybrid')", 'javascript')}
+      ${codeExample("soltana.setMaterial('neuro')", 'javascript')}
     </div>
     <div class="tier-demo" style="border-left: 4px solid var(--jewel-sapphire, #3b82f6);">
       <span class="tier-number" style="color: var(--jewel-sapphire, #3b82f6);">3</span>
@@ -75,7 +78,7 @@ export function renderGettingStarted(): string {
     'Config is the Single Source of Truth',
     `
     <p class="text-sm text-secondary mb-4">Define defaults once in your config. All components automatically inherit them. Use override classes only for per-element exceptions:</p>
-    ${codeExample("// Initialize with your defaults\nconst soltana = initSoltana({\n  theme: 'dark',\n  material: 'hybrid',\n  surface: 'polished',\n  ornament: 'none',\n});\n\n// All components now use these defaults\n// No data attributes needed!", 'javascript')}
+    ${codeExample("// Initialize with your defaults\nconst soltana = initSoltana({\n  theme: 'dark',\n  material: 'neuro',\n  surface: 'polished',\n  ornament: 'none',\n});\n\n// All components now use these defaults\n// No data attributes needed!", 'javascript')}
     ${codeExample('<!-- Components use global config -->\n<button class="btn btn-primary">Uses Global Material</button>\n<div class="card p-6">Uses Global Material</div>\n\n<!-- Override specific elements when needed -->\n<button class="btn material-glass">Glass Override</button>\n<div class="card surface-frosted p-6">Frosted Override</div>', 'html')}
   `
   )}
@@ -89,7 +92,7 @@ export function renderGettingStarted(): string {
     `
     ${codeExample('# npm\nnpm install soltana-ui\n\n# yarn\nyarn add soltana-ui\n\n# pnpm\npnpm add soltana-ui', 'bash')}
     <p class="text-sm text-secondary mt-4">Then import in your JavaScript/TypeScript:</p>
-    ${codeExample("// Import styles\nimport 'soltana-ui/css';\n\n// Import and initialize\nimport { initSoltana } from 'soltana-ui';\n\nconst soltana = initSoltana({\n  theme: 'dark',\n  material: 'hybrid',\n  surface: 'polished',\n  ornament: 'none',\n});", 'javascript')}
+    ${codeExample("// Import styles\nimport 'soltana-ui/css';\n\n// Import and initialize\nimport { initSoltana } from 'soltana-ui';\n\nconst soltana = initSoltana({\n  theme: 'dark',\n  material: 'neuro',\n  surface: 'polished',\n  ornament: 'none',\n});", 'javascript')}
   `
   )}
 
@@ -97,7 +100,7 @@ export function renderGettingStarted(): string {
     'CDN',
     `
     <p class="text-sm text-secondary mb-4">For quick prototyping or static sites:</p>
-    ${codeExample('<!-- CSS only -->\n<link rel="stylesheet" href="https://unpkg.com/soltana-ui/dist/soltana-ui.css">\n\n<!-- With JavaScript -->\n<script type="module">\n  import { initSoltana } from "https://unpkg.com/soltana-ui";\n  const soltana = initSoltana({ theme: "dark", material: "hybrid" });\n</script>', 'html')}
+    ${codeExample('<!-- CSS only -->\n<link rel="stylesheet" href="https://unpkg.com/soltana-ui/dist/soltana-ui.css">\n\n<!-- With JavaScript -->\n<script type="module">\n  import { initSoltana } from "https://unpkg.com/soltana-ui";\n  const soltana = initSoltana({ theme: "dark", material: "neuro" });\n</script>', 'html')}
   `
   )}
 
@@ -108,7 +111,7 @@ export function renderGettingStarted(): string {
   ${specimenBlock(
     'Basic HTML Template',
     `
-    ${codeExample('<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <title>My Soltana App</title>\n  <link rel="stylesheet" href="https://unpkg.com/soltana-ui/dist/soltana-ui.css">\n</head>\n<body>\n  <div class="container mx-auto p-8">\n    <h1 class="text-4xl font-serif mb-4">Welcome</h1>\n    <p class="text-secondary mb-6">Your elegant application starts here.</p>\n    <div class="flex gap-3">\n      <button class="btn btn-primary">Get Started</button>\n      <button class="btn btn-secondary">Learn More</button>\n    </div>\n  </div>\n\n  <script type="module">\n    import { initSoltana } from "https://unpkg.com/soltana-ui";\n    const soltana = initSoltana({\n      theme: "dark",\n      material: "hybrid",\n      surface: "polished",\n      ornament: "none",\n    });\n  </script>\n</body>\n</html>', 'html')}
+    ${codeExample('<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <title>My Soltana App</title>\n  <link rel="stylesheet" href="https://unpkg.com/soltana-ui/dist/soltana-ui.css">\n</head>\n<body>\n  <div class="container mx-auto p-8">\n    <h1 class="text-4xl font-serif mb-4">Welcome</h1>\n    <p class="text-secondary mb-6">Your elegant application starts here.</p>\n    <div class="flex gap-3">\n      <button class="btn btn-primary">Get Started</button>\n      <button class="btn btn-secondary">Learn More</button>\n    </div>\n  </div>\n\n  <script type="module">\n    import { initSoltana } from "https://unpkg.com/soltana-ui";\n    const soltana = initSoltana({\n      theme: "dark",\n      material: "neuro",\n      surface: "polished",\n      ornament: "none",\n    });\n  </script>\n</body>\n</html>', 'html')}
   `
   )}
 
@@ -120,7 +123,7 @@ export function renderGettingStarted(): string {
     'soltana.config.js',
     `
     <p class="text-sm text-secondary mb-4">Create a configuration file in your project:</p>
-    ${codeExample("// soltana.config.js\nexport default {\n  // Base presets (required)\n  theme: 'dark',        // 'light' | 'dark' | 'sepia'\n  material: 'hybrid',   // 'neuro' | 'glass' | 'hybrid'\n  surface: 'polished',  // 'polished' | 'frosted' | 'stained' | 'metallic'\n  ornament: 'none',     // 'none' | 'baroque' | 'carved' | 'faceted' | 'gilt'\n  \n  // Variable overrides (optional)\n  overrides: {\n    '--accent-primary': '#ff6b6b',\n    '--gold-400': '#e8c547',\n    '--surface-bg': '#0a0a12',\n  },\n};", 'javascript')}
+    ${codeExample("// soltana.config.js\nexport default {\n  // Base presets (required)\n  theme: 'dark',        // 'light' | 'dark' | 'sepia'\n  material: 'neuro',   // 'flat' | 'soft' | 'neuro' | 'glass' | 'metallic' | 'stone'\n  surface: 'polished',  // 'polished' | 'frosted' | 'stained' | 'metallic'\n  ornament: 'none',     // 'none' | 'baroque' | 'carved' | 'faceted' | 'gilt'\n  \n  // Variable overrides (optional)\n  overrides: {\n    '--accent-primary': '#ff6b6b',\n    '--gold-400': '#e8c547',\n    '--surface-bg': '#0a0a12',\n  },\n};", 'javascript')}
     <p class="text-sm text-secondary mt-4">Then initialize with your config:</p>
     ${codeExample("import config from './soltana.config.js';\nimport { initSoltana } from 'soltana-ui';\n\nconst soltana = initSoltana(config);", 'javascript')}
   `
@@ -130,7 +133,7 @@ export function renderGettingStarted(): string {
     'Runtime API',
     `
     <p class="text-sm text-secondary mb-4">Change tiers at runtime for user preferences or dynamic theming:</p>
-    ${codeExample("// Get current state\nconsole.log(soltana.getState());\n// { theme: 'dark', material: 'hybrid', surface: 'polished', ornament: 'none' }\n\n// Change individual tiers\nsoltana.setTheme('light');\nsoltana.setMaterial('glass');\nsoltana.setSurface('frosted');\nsoltana.setOrnament('baroque');\n\n// Apply custom variable overrides\nsoltana.setOverrides({\n  '--accent-primary': '#your-brand-color',\n});\n\n// Reset to defaults\nsoltana.reset();", 'javascript')}
+    ${codeExample("// Get current state\nconsole.log(soltana.getState());\n// { theme: 'dark', material: 'neuro', surface: 'polished', ornament: 'none' }\n\n// Change individual tiers\nsoltana.setTheme('light');\nsoltana.setMaterial('glass');\nsoltana.setSurface('frosted');\nsoltana.setOrnament('baroque');\n\n// Apply custom variable overrides\nsoltana.setOverrides({\n  '--accent-primary': '#your-brand-color',\n});\n\n// Reset to defaults\nsoltana.reset();", 'javascript')}
   `
   )}
 

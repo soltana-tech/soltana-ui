@@ -17,7 +17,7 @@ import { renderPatterns } from './pages/patterns';
 // Initialize design system with config
 const soltana = initSoltana({
   theme: 'dark',
-  material: 'hybrid',
+  material: 'neuro',
   surface: 'polished',
   ornament: 'none',
 });

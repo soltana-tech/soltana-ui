@@ -39,8 +39,8 @@ describe('initSoltana', () => {
 
   it('setMaterial updates data-material', () => {
     const soltana = initSoltana();
-    soltana.setMaterial('hybrid');
-    expect(document.documentElement.getAttribute('data-material')).toBe('hybrid');
+    soltana.setMaterial('metallic');
+    expect(document.documentElement.getAttribute('data-material')).toBe('metallic');
   });
 
   it('setSurface updates data-surface', () => {
@@ -82,10 +82,10 @@ describe('initSoltana', () => {
   });
 
   it('getState returns current config', () => {
-    const soltana = initSoltana({ theme: 'light', material: 'hybrid' });
+    const soltana = initSoltana({ theme: 'light', material: 'metallic' });
     const state = soltana.getState();
     expect(state.theme).toBe('light');
-    expect(state.material).toBe('hybrid');
+    expect(state.material).toBe('metallic');
     expect(state.surface).toBe('polished');
     expect(state.ornament).toBe('none');
   });
@@ -137,6 +137,15 @@ describe('initSoltana', () => {
     expect(spy).toHaveBeenCalledWith(expect.stringContaining('Invalid material'));
     spy.mockRestore();
   });
+
+  it.each(['flat', 'soft', 'metallic', 'stone'] as const)(
+    'setMaterial works for %s',
+    (material) => {
+      const soltana = initSoltana();
+      soltana.setMaterial(material);
+      expect(document.documentElement.getAttribute('data-material')).toBe(material);
+    }
+  );
 
   it('multiple initSoltana calls do not accumulate matchMedia listeners', () => {
     const removeSpy = vi.fn();

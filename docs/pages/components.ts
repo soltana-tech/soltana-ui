@@ -23,7 +23,6 @@ export function renderComponents(): string {
       'Material Demo',
       'Neumorphic',
       'Glassmorphic',
-      'Neuro-Glass',
     ],
     'comp-'
   )}
@@ -483,13 +482,13 @@ export function renderComponents(): string {
         </div>
         <div class="progress mt-3"><div class="progress-bar" style="width: 65%"></div></div>
       </div>
-      <div data-material="hybrid" class="p-6 rounded-xl" style="background: linear-gradient(145deg, var(--glass-gradient-start), var(--glass-gradient-end)); backdrop-filter: blur(12px) saturate(120%); border: 1px solid var(--glass-border);">
-        <span class="tag tag-amethyst mb-3">Hybrid</span>
+      <div data-material="metallic" class="p-6 rounded-xl" style="background: var(--surface-1); border: 1px solid var(--metallic-border);">
+        <span class="tag tag-citrine mb-3">Metallic</span>
         <div class="flex flex-wrap gap-2 mt-3 mb-3">
           <button class="btn btn-primary btn-sm">Primary</button>
           <button class="btn btn-secondary btn-sm">Secondary</button>
         </div>
-        <input class="input input-sm mb-3" placeholder="Hybrid input..." />
+        <input class="input input-sm mb-3" placeholder="Metallic input..." />
         <div class="flex gap-2">
           <span class="badge badge-success">Active</span>
           <span class="tag tag-sapphire">Status</span>
@@ -656,56 +655,6 @@ export function renderComponents(): string {
   `
   )}
 
-  <!-- ====== NEURO-GLASS HYBRIDS ====== -->
-  ${specimen(
-    'Neuro-Glass Hybrids',
-    'comp-neuro-glass',
-    `
-    <p class="text-sm text-muted mb-4">Combined neumorphic depth with glassmorphic translucency. Soft 3D shadows meet modern frosted glass.</p>
-    <div class="p-8 rounded-2xl relative overflow-hidden" style="background: linear-gradient(135deg, #0e1020, #1a1d42, #141628); min-height: 480px">
-      <!-- Decorative blobs -->
-      <div class="absolute" style="width: 200px; height: 200px; border-radius: 50%; background: rgba(189,147,249,0.15); filter: blur(50px); top: 10%; left: 10%;"></div>
-      <div class="absolute" style="width: 180px; height: 180px; border-radius: 50%; background: rgba(139,233,253,0.1); filter: blur(40px); bottom: 10%; right: 20%;"></div>
-
-      <div class="relative z-10">
-        <p class="overline mb-4" style="color: rgba(255,255,255,0.5)">Hybrid Variants</p>
-        <div class="grid gap-6 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr))">
-          <div class="neuro-glass p-5">
-            <p class="text-sm font-semibold mb-1" style="color: #fff">.neuro-glass</p>
-            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Base hybrid: shadows + blur + gradient.</p>
-          </div>
-          <div class="neuro-glass-card">
-            <p class="text-sm font-semibold mb-1" style="color: #fff">.neuro-glass-card</p>
-            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Card with hover lift effect.</p>
-          </div>
-          <div class="neuro-glass-elevated p-5">
-            <p class="text-sm font-semibold mb-1" style="color: #fff">.neuro-glass-elevated</p>
-            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Dramatic depth hybrid.</p>
-          </div>
-          <div class="neuro-glass-inset p-5">
-            <p class="text-sm font-semibold mb-1" style="color: #fff">.neuro-glass-inset</p>
-            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Pressed glass interior.</p>
-          </div>
-          <div class="neuro-glass-floating p-5">
-            <p class="text-sm font-semibold mb-1" style="color: #fff">.neuro-glass-floating</p>
-            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Extra dramatic with glow.</p>
-          </div>
-          <div class="neuro-glass-accent p-5">
-            <p class="text-sm font-semibold mb-1" style="color: #fff">.neuro-glass-accent</p>
-            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Purple-tinted hybrid.</p>
-          </div>
-        </div>
-
-        <p class="overline mb-4" style="color: rgba(255,255,255,0.5)">Interactive</p>
-        <div class="flex flex-wrap gap-4 items-center">
-          <button class="neuro-glass-button px-6 py-3 text-sm font-medium" style="color: #fff">.neuro-glass-button</button>
-          <input class="neuro-glass-input" placeholder=".neuro-glass-input" style="color: #fff; max-width: 220px" />
-        </div>
-      </div>
-    </div>
-  `
-  )}
-
   <!-- ====== SKELETON ====== -->
   ${specimen(
     'Skeletons',
@@ -782,7 +731,8 @@ export function renderComponents(): string {
   <div class="flex flex-wrap gap-4 items-center mb-6">
     <button class="btn btn-primary material-neuro">Neuro</button>
     <button class="btn btn-primary material-glass">Glass</button>
-    <button class="btn btn-primary material-hybrid">Hybrid</button>
+    <button class="btn btn-primary material-metallic">Metallic</button>
+    <button class="btn btn-primary material-stone">Stone</button>
   </div>
 
   <h4 class="text-lg font-semibold mt-4 mb-3">Metallic Variants</h4>

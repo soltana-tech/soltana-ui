@@ -24,7 +24,14 @@ const ORNAMENT_CLASSES = [
 ];
 
 const VALID_THEMES: readonly Theme[] = ['dark', 'light', 'sepia', 'auto'];
-const VALID_MATERIALS: readonly Material[] = ['neuro', 'glass', 'hybrid'];
+const VALID_MATERIALS: readonly Material[] = [
+  'flat',
+  'soft',
+  'neuro',
+  'glass',
+  'metallic',
+  'stone',
+];
 const VALID_SURFACES: readonly Surface[] = ['polished', 'frosted', 'stained', 'metallic'];
 const VALID_ORNAMENTS: readonly Ornament[] = ['none', 'baroque', 'carved', 'faceted', 'gilt'];
 

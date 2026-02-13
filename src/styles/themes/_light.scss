@@ -83,6 +83,16 @@
   --stained-secondary: rgb(107 33 168 / 8%);
   --stained-accent: rgb(146 112 12 / 10%);
 
+  // Metallic — crisp highlights on cool marble
+  --metallic-shadow: rgb(0 0 0 / 20%);
+  --metallic-highlight: rgb(255 255 255 / 70%);
+  --metallic-border: rgb(140 150 170 / 20%);
+
+  // Stone — carved depth on light surfaces
+  --stone-shadow: rgb(140 150 170 / 30%);
+  --stone-highlight: rgb(255 255 255 / 50%);
+  --stone-border: rgb(140 150 170 / 12%);
+
   // Component-specific
   --input-bg: #fff;
   --input-border: rgb(85 97 120 / 14%);

@@ -158,7 +158,7 @@ export function renderExamples(): string {
           <div class="text-center px-8 pt-20 pb-24 relative z-10">
             <span class="overline mb-4 inline-block" style="color: var(--accent-secondary)">New Release v2.0</span>
             <h1 class="font-serif mb-6" style="font-size: 4rem; line-height: 1.05; font-weight: 600;">Build beautiful<br/>interfaces <span style="background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">effortlessly</span></h1>
-            <p class="text-lg mb-10 mx-auto text-secondary" style="max-width: 520px; letter-spacing: 0.02em;">A complete design system with neumorphic, glassmorphic, and hybrid components for prestigious web applications.</p>
+            <p class="text-lg mb-10 mx-auto text-secondary" style="max-width: 520px; letter-spacing: 0.02em;">A complete design system with flat, soft, neumorphic, glass, metallic, and stone materials for prestigious web applications.</p>
             <div class="flex justify-center gap-4">
               <button class="btn btn-primary btn-lg">Start Building</button>
               <button class="btn btn-outline btn-lg">View Docs</button>
@@ -386,7 +386,7 @@ export function renderExamples(): string {
               <ul class="mb-4 text-secondary" style="list-style: disc; padding-left: 1.5rem">
                 <li class="mb-1">Deeper atmospheric dark palette</li>
                 <li class="mb-1">Serif/sans dual typography with Cormorant Garamond</li>
-                <li class="mb-1">Neumorphic, glassmorphic, and hybrid component variants</li>
+                <li class="mb-1">Six material variants: flat, soft, neumorphic, glass, metallic, and stone</li>
                 <li class="mb-1">Gradient background utilities and refined spacing</li>
               </ul>
               <p class="mb-4 text-secondary">Review the attached design system documentation and share feedback by Friday.</p>

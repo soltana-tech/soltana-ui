@@ -213,9 +213,35 @@ export function renderDesignSystem(): string {
   <!-- MATERIALS -->
   <!-- ================================================================== -->
 
-  ${sectionHeading('Materials', 'materials', 'Three base materials that fundamentally transform how every component renders. Use the settings panel to preview globally.')}
+  ${sectionHeading('Materials', 'materials', 'Six materials that fundamentally transform how every component renders. Use the settings panel to preview globally.')}
 
   <div class="grid gap-6 mt-8" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))">
+    <div class="material-flat p-6 rounded-xl" style="min-height: 200px;">
+      <span class="tag mb-3">.material-flat</span>
+      <p class="text-sm text-secondary mb-4 mt-3">Zero depth, clean, modern. No shadows — just borders. The minimalist baseline.</p>
+      <div class="flex flex-wrap gap-2">
+        <button class="btn btn-primary btn-sm">Primary</button>
+        <button class="btn btn-secondary btn-sm">Secondary</button>
+        <button class="btn btn-ghost btn-sm">Ghost</button>
+      </div>
+      <div class="flex gap-2 mt-3">
+        <span class="badge badge-primary">Badge</span>
+        <span class="tag">Tag</span>
+      </div>
+    </div>
+    <div class="material-soft p-6 rounded-xl" style="min-height: 200px;">
+      <span class="tag mb-3">.material-soft</span>
+      <p class="text-sm text-secondary mb-4 mt-3">Gentle one-directional elevation with subtle borders. Approachable and familiar.</p>
+      <div class="flex flex-wrap gap-2">
+        <button class="btn btn-primary btn-sm">Primary</button>
+        <button class="btn btn-secondary btn-sm">Secondary</button>
+        <button class="btn btn-ghost btn-sm">Ghost</button>
+      </div>
+      <div class="flex gap-2 mt-3">
+        <span class="badge badge-primary">Badge</span>
+        <span class="tag">Tag</span>
+      </div>
+    </div>
     <div class="material-neuro p-6 rounded-xl" style="min-height: 200px;">
       <span class="tag tag-gold mb-3">.material-neuro</span>
       <p class="text-sm text-secondary mb-4 mt-3">Solid surfaces with soft dual shadows extruding from the surface. No transparency or blur. The polished marble aesthetic.</p>
@@ -242,9 +268,22 @@ export function renderDesignSystem(): string {
         <span class="tag">Tag</span>
       </div>
     </div>
-    <div class="material-hybrid p-6 rounded-xl" style="min-height: 200px;">
-      <span class="tag tag-amethyst mb-3">.material-hybrid</span>
-      <p class="text-sm text-secondary mb-4 mt-3">Glass translucency combined with neumorphic shadow depth. Both clarity and dimension. Works on any theme.</p>
+    <div class="material-metallic p-6 rounded-xl" style="min-height: 200px;">
+      <span class="tag tag-citrine mb-3">.material-metallic</span>
+      <p class="text-sm text-secondary mb-4 mt-3">Sharp, polished surfaces with crisp edge shadows and reflective highlights. The brushed metal aesthetic.</p>
+      <div class="flex flex-wrap gap-2">
+        <button class="btn btn-primary btn-sm">Primary</button>
+        <button class="btn btn-secondary btn-sm">Secondary</button>
+        <button class="btn btn-ghost btn-sm">Ghost</button>
+      </div>
+      <div class="flex gap-2 mt-3">
+        <span class="badge badge-primary">Badge</span>
+        <span class="tag">Tag</span>
+      </div>
+    </div>
+    <div class="material-stone p-6 rounded-xl" style="min-height: 200px;">
+      <span class="tag tag-emerald mb-3">.material-stone</span>
+      <p class="text-sm text-secondary mb-4 mt-3">Heavy, carved surfaces with chiseled asymmetric inset shadows. The quarried stone aesthetic.</p>
       <div class="flex flex-wrap gap-2">
         <button class="btn btn-primary btn-sm">Primary</button>
         <button class="btn btn-secondary btn-sm">Secondary</button>
@@ -318,24 +357,45 @@ export function renderDesignSystem(): string {
     </div>
   </div>
 
-  <!-- Hybrid + Surfaces -->
-  <h4 class="text-lg font-semibold mt-8 mb-3 text-secondary">Hybrid Material</h4>
+  <!-- Metallic + Surfaces -->
+  <h4 class="text-lg font-semibold mt-8 mb-3 text-secondary">Metallic Material</h4>
   <div class="grid gap-4 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))">
-    <div class="material-hybrid surface-polished card p-5 rounded-xl text-center" style="min-height: 140px;">
+    <div class="material-metallic surface-polished card p-5 rounded-xl text-center" style="min-height: 140px;">
       <span class="tag tag-gold mb-2">polished</span>
-      <p class="text-sm text-secondary mt-2">Glass clarity with neumorphic depth.</p>
+      <p class="text-sm text-secondary mt-2">Clean reflective metal surface.</p>
     </div>
-    <div class="material-hybrid surface-frosted card p-5 rounded-xl text-center" style="min-height: 140px;">
+    <div class="material-metallic surface-frosted card p-5 rounded-xl text-center" style="min-height: 140px;">
       <span class="tag tag-sapphire mb-2">frosted</span>
-      <p class="text-sm text-secondary mt-2">Heavy blur with dual shadows.</p>
+      <p class="text-sm text-secondary mt-2">Brushed satin metal finish.</p>
     </div>
-    <div class="material-hybrid surface-stained card p-5 rounded-xl text-center" style="min-height: 140px;">
+    <div class="material-metallic surface-stained card p-5 rounded-xl text-center" style="min-height: 140px;">
       <span class="tag tag-ruby mb-2">stained</span>
-      <p class="text-sm text-secondary mt-2">Colored glass with shadow depth.</p>
+      <p class="text-sm text-secondary mt-2">Anodized tinted metal.</p>
     </div>
-    <div class="material-hybrid surface-metallic card p-5 rounded-xl text-center" style="min-height: 140px;">
+    <div class="material-metallic surface-metallic card p-5 rounded-xl text-center" style="min-height: 140px;">
       <span class="tag tag-citrine mb-2">metallic</span>
-      <p class="text-sm text-secondary mt-2">Metallic sheen with dimensional shadows.</p>
+      <p class="text-sm text-secondary mt-2">Full chrome with directional sheen.</p>
+    </div>
+  </div>
+
+  <!-- Stone + Surfaces -->
+  <h4 class="text-lg font-semibold mt-8 mb-3 text-secondary">Stone Material</h4>
+  <div class="grid gap-4 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))">
+    <div class="material-stone surface-polished card p-5 rounded-xl text-center" style="min-height: 140px;">
+      <span class="tag tag-gold mb-2">polished</span>
+      <p class="text-sm text-secondary mt-2">Smooth carved stone surface.</p>
+    </div>
+    <div class="material-stone surface-frosted card p-5 rounded-xl text-center" style="min-height: 140px;">
+      <span class="tag tag-sapphire mb-2">frosted</span>
+      <p class="text-sm text-secondary mt-2">Rough-hewn sandblasted stone.</p>
+    </div>
+    <div class="material-stone surface-stained card p-5 rounded-xl text-center" style="min-height: 140px;">
+      <span class="tag tag-ruby mb-2">stained</span>
+      <p class="text-sm text-secondary mt-2">Mineral-stained quarried stone.</p>
+    </div>
+    <div class="material-stone surface-metallic card p-5 rounded-xl text-center" style="min-height: 140px;">
+      <span class="tag tag-citrine mb-2">metallic</span>
+      <p class="text-sm text-secondary mt-2">Ore-veined polished stone.</p>
     </div>
   </div>
 

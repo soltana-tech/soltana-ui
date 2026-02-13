@@ -85,6 +85,16 @@
   --stained-secondary: rgb(168 85 247 / 12%);
   --stained-accent: rgb(16 185 129 / 10%);
 
+  // Metallic — sharp reflective highlights on dark surfaces
+  --metallic-shadow: rgb(0 0 0 / 50%);
+  --metallic-highlight: rgb(255 255 255 / 20%);
+  --metallic-border: rgb(255 255 255 / 15%);
+
+  // Stone — carved depth on dark surfaces
+  --stone-shadow: rgb(0 0 0 / 40%);
+  --stone-highlight: rgb(255 255 255 / 8%);
+  --stone-border: rgb(255 255 255 / 6%);
+
   // Component-specific — neutral borders for seamless neumorphic
   --input-bg: rgb(255 255 255 / 4%);
   --input-border: rgb(255 255 255 / 8%);

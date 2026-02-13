@@ -81,6 +81,16 @@
   --stained-secondary: rgb(26 120 84 / 10%);
   --stained-accent: rgb(184 134 11 / 12%);
 
+  // Metallic — warm bronze reflections
+  --metallic-shadow: rgb(60 50 35 / 35%);
+  --metallic-highlight: rgb(255 245 220 / 30%);
+  --metallic-border: rgb(160 110 43 / 22%);
+
+  // Stone — carved depth on warm parchment
+  --stone-shadow: rgb(140 120 85 / 35%);
+  --stone-highlight: rgb(242 232 210 / 40%);
+  --stone-border: rgb(140 120 85 / 14%);
+
   // Component-specific
   --input-bg: #f2e8d2;
   --input-border: rgb(94 63 27 / 16%);
