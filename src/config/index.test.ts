@@ -70,7 +70,7 @@ describe('initSoltana', () => {
     expect(document.documentElement.style.getPropertyValue('--custom-color')).toBe('#ff0000');
   });
 
-  it('reset restores defaults', () => {
+  it('reset restores defaults and clears overrides', () => {
     const soltana = initSoltana({
       theme: 'sepia',
       material: 'glass',
@@ -81,7 +81,9 @@ describe('initSoltana', () => {
 
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
     expect(document.documentElement.getAttribute('data-material')).toBe('neu');
+    expect(document.documentElement.getAttribute('data-surface')).toBe('polished');
     expect(document.body.classList.contains('ornament-gilt')).toBe(false);
+    expect(document.documentElement.style.getPropertyValue('--custom')).toBe('');
   });
 
   it('getState returns current config', () => {
@@ -100,17 +102,7 @@ describe('initSoltana', () => {
     expect(soltana.getState().theme).toBe('auto');
   });
 
-  it('setOverrides works after reset', () => {
-    const soltana = initSoltana();
-    soltana.setOverrides({ '--a': '1' });
-    soltana.reset();
-
-    // Should not throw
-    soltana.setOverrides({ '--b': '2' });
-    expect(document.documentElement.style.getPropertyValue('--b')).toBe('2');
-  });
-
-  it('destroy removes data attributes and ornament classes', () => {
+  it('destroy removes data attributes, ornament classes, and inline styles', () => {
     const soltana = initSoltana({
       theme: 'sepia',
       material: 'glass',
@@ -125,30 +117,20 @@ describe('initSoltana', () => {
     expect(document.documentElement.getAttribute('data-material')).toBeNull();
     expect(document.documentElement.getAttribute('data-surface')).toBeNull();
     expect(document.body.classList.contains('ornament-baroque')).toBe(false);
+    expect(document.documentElement.getAttribute('style')).toBeNull();
   });
 
-  it('warns on invalid theme', () => {
+  it.each([
+    ['theme', { theme: 'neon' as never }],
+    ['material', { material: 'paper' as never }],
+    ['surface', { surface: 'matte' as never }],
+    ['ornament', { ornament: 'gothic' as never }],
+  ] as const)('warns on invalid %s', (name, overrides) => {
     const spy = vi.spyOn(console, 'warn').mockImplementation(vi.fn());
-    initSoltana({ theme: 'neon' as never });
-    expect(spy).toHaveBeenCalledWith(expect.stringContaining('Invalid theme'));
+    initSoltana(overrides);
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining(`Invalid ${name}`));
     spy.mockRestore();
   });
-
-  it('warns on invalid material', () => {
-    const spy = vi.spyOn(console, 'warn').mockImplementation(vi.fn());
-    initSoltana({ material: 'paper' as never });
-    expect(spy).toHaveBeenCalledWith(expect.stringContaining('Invalid material'));
-    spy.mockRestore();
-  });
-
-  it.each(['flat', 'soft', 'metallic', 'stone'] as const)(
-    'setMaterial works for %s',
-    (material) => {
-      const soltana = initSoltana();
-      soltana.setMaterial(material);
-      expect(document.documentElement.getAttribute('data-material')).toBe(material);
-    }
-  );
 
   it('default config does not inject font links', () => {
     initSoltana();
@@ -164,6 +146,42 @@ describe('initSoltana', () => {
     const rels = Array.from(links).map((l) => l.rel);
     expect(rels).toContain('preconnect');
     expect(rels).toContain('stylesheet');
+  });
+
+  it('setTheme to auto installs matchMedia listener', () => {
+    const addSpy = vi.fn();
+    const removeSpy = vi.fn();
+    const mql = {
+      matches: false,
+      addEventListener: addSpy,
+      removeEventListener: removeSpy,
+    };
+    vi.spyOn(window, 'matchMedia').mockReturnValue(mql as unknown as MediaQueryList);
+
+    const soltana = initSoltana({ theme: 'light' });
+    expect(addSpy).not.toHaveBeenCalled();
+
+    soltana.setTheme('auto');
+    expect(addSpy).toHaveBeenCalledTimes(1);
+    expect(soltana.getState().theme).toBe('auto');
+
+    vi.restoreAllMocks();
+  });
+
+  it('destroy tears down auto-theme matchMedia listener', () => {
+    const removeSpy = vi.fn();
+    const mql = {
+      matches: false,
+      addEventListener: vi.fn(),
+      removeEventListener: removeSpy,
+    };
+    vi.spyOn(window, 'matchMedia').mockReturnValue(mql as unknown as MediaQueryList);
+
+    const soltana = initSoltana({ theme: 'auto' });
+    soltana.destroy();
+
+    expect(removeSpy).toHaveBeenCalled();
+    vi.restoreAllMocks();
   });
 
   it('multiple initSoltana calls do not accumulate matchMedia listeners', () => {

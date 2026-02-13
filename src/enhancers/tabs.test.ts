@@ -64,6 +64,23 @@ describe('initTabs', () => {
     expect(tabs[0].getAttribute('aria-selected')).toBe('true');
   });
 
+  it('ArrowLeft navigates backward and wraps', () => {
+    const container = createTabsFixture();
+    initTabs();
+    const tablist = container.querySelector('[role="tablist"]')!;
+    const tabs = container.querySelectorAll<HTMLElement>('[role="tab"]');
+
+    // From tab 0, ArrowLeft wraps to last tab
+    tablist.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
+    expect(tabs[2].getAttribute('aria-selected')).toBe('true');
+
+    tablist.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
+    expect(tabs[1].getAttribute('aria-selected')).toBe('true');
+
+    tablist.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
+    expect(tabs[0].getAttribute('aria-selected')).toBe('true');
+  });
+
   it('Home/End keys go to first/last tab', () => {
     const container = createTabsFixture();
     initTabs();

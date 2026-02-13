@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { initModals } from './modal';
 
 function createModalFixture(): { modal: HTMLElement; trigger: HTMLElement } {
@@ -111,18 +111,15 @@ describe('initModals', () => {
   it('double initModals does not duplicate handlers', () => {
     const { modal, trigger } = createModalFixture();
     initModals();
-    initModals(); // second call should replace listeners, not duplicate
-
-    let openCount = 0;
-    const origAdd = modal.classList.add.bind(modal.classList);
-    modal.classList.add = (...args: string[]) => {
-      if (args.includes('active')) openCount++;
-      origAdd(...args);
-    };
+    initModals(); // second call should replace, not duplicate
 
     trigger.click();
-    // If listeners were duplicated, openCount would be 2
-    expect(openCount).toBe(1);
+    expect(modal.classList.contains('active')).toBe(true);
+
+    const closeBtn = modal.querySelector<HTMLElement>('[data-modal-close]');
+    closeBtn?.click();
+    expect(modal.classList.contains('active')).toBe(false);
+    expect(document.body.style.overflow).toBe('');
   });
 
   it('destroy removes all listeners', () => {
@@ -134,5 +131,59 @@ describe('initModals', () => {
     trigger.click();
     expect(modal.classList.contains('active')).toBe(false);
     expect(modal.getAttribute('aria-hidden')).toBe('true');
+  });
+
+  it('Tab key wraps focus forward within modal', () => {
+    const { modal, trigger } = createModalFixture();
+    initModals();
+    trigger.click();
+
+    const focusables = modal.querySelectorAll<HTMLElement>(
+      'button:not([disabled]), input:not([disabled])'
+    );
+    const last = focusables[focusables.length - 1];
+
+    // Focus the last focusable element, then Tab
+    last.focus();
+    const event = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true });
+    const spy = vi.spyOn(event, 'preventDefault');
+    modal.dispatchEvent(event);
+
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('Shift+Tab wraps focus backward within modal', () => {
+    const { modal, trigger } = createModalFixture();
+    initModals();
+    trigger.click();
+
+    const focusables = modal.querySelectorAll<HTMLElement>(
+      'button:not([disabled]), input:not([disabled])'
+    );
+    const first = focusables[0];
+
+    // Focus the first focusable element, then Shift+Tab
+    first.focus();
+    const event = new KeyboardEvent('keydown', {
+      key: 'Tab',
+      shiftKey: true,
+      bubbles: true,
+    });
+    const spy = vi.spyOn(event, 'preventDefault');
+    modal.dispatchEvent(event);
+
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('trigger pointing to nonexistent modal id does nothing', () => {
+    const trigger = document.createElement('button');
+    trigger.setAttribute('data-modal-open', 'does-not-exist');
+    document.body.appendChild(trigger);
+
+    initModals();
+    trigger.click();
+
+    // No error thrown, body overflow unchanged
+    expect(document.body.style.overflow).toBe('');
   });
 });

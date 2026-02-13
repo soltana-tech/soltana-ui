@@ -89,11 +89,11 @@ All `init*()` calls added event listeners with no removal. Double-calling double
 
 ### TS-7: Font loading side effects
 
-`TODO` · Size: **S**
+`DONE` · Size: **S**
 
 `initSoltana()` calls `loadSoltanaFonts()` by default — undocumented side effect injecting a Google Fonts `<link>`. Conflicts with `next/font`, Nuxt font modules, and other framework-level font management. Font URL is hardcoded.
 
-**Proposed fix:** Make fonts opt-in (`fonts: false` by default) or at minimum document the behavior prominently. Add error handling for CDN failures.
+- Progress: Fonts now opt-in (`fonts: false` default). CDN `onerror` handler warns via console. Tests cover default no-inject, opt-in inject, and error path.
 
 ### TS-8: SVG patterns are incomplete
 

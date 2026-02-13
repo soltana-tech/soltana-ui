@@ -83,6 +83,52 @@ describe('initTooltips', () => {
     expect(tooltips.length).toBe(1);
   });
 
+  it('shows tooltip on focus', () => {
+    const trigger = document.createElement('button');
+    trigger.setAttribute('data-sol-tooltip', 'Focus tip');
+    document.body.appendChild(trigger);
+
+    initTooltips();
+    trigger.dispatchEvent(new FocusEvent('focus'));
+
+    const tooltip = document.querySelector('.tooltip');
+    expect(tooltip).toBeTruthy();
+    expect(tooltip?.textContent).toBe('Focus tip');
+    expect(trigger.getAttribute('aria-describedby')).toBeTruthy();
+  });
+
+  it('hides tooltip on blur', () => {
+    const trigger = document.createElement('button');
+    trigger.setAttribute('data-sol-tooltip', 'Blur tip');
+    document.body.appendChild(trigger);
+
+    initTooltips();
+    trigger.dispatchEvent(new FocusEvent('focus'));
+
+    const tooltip = document.querySelector<HTMLElement>('.tooltip');
+    expect(tooltip?.style.opacity).toBe('1');
+
+    trigger.dispatchEvent(new FocusEvent('blur'));
+    expect(tooltip?.style.opacity).toBe('0');
+    expect(trigger.getAttribute('aria-describedby')).toBeNull();
+  });
+
+  it('hides tooltip on Escape key', () => {
+    const trigger = document.createElement('button');
+    trigger.setAttribute('data-sol-tooltip', 'Escape tip');
+    document.body.appendChild(trigger);
+
+    initTooltips();
+    trigger.dispatchEvent(new MouseEvent('mouseenter'));
+
+    const tooltip = document.querySelector<HTMLElement>('.tooltip');
+    expect(tooltip?.style.opacity).toBe('1');
+
+    trigger.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    expect(tooltip?.style.opacity).toBe('0');
+    expect(trigger.getAttribute('aria-describedby')).toBeNull();
+  });
+
   it('destroy removes tooltip and listeners', () => {
     const trigger = document.createElement('button');
     trigger.setAttribute('data-sol-tooltip', 'Gone');
