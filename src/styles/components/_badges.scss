@@ -40,9 +40,9 @@
 }
 
 .badge-primary {
-  background-color: rgb(212 168 67 / 15%);
-  color: var(--gold-400);
-  border: 1px solid rgb(212 168 67 / 25%);
+  background-color: var(--badge-bg);
+  color: var(--accent-gold);
+  border: 1px solid var(--border-accent-gold);
 }
 
 .badge-gold {
@@ -128,9 +128,9 @@
 }
 
 .tag-gold {
-  background: rgb(212 168 67 / 12%);
-  border-color: rgb(212 168 67 / 25%);
-  color: var(--gold-400);
+  background: var(--badge-bg);
+  border-color: var(--border-accent-gold);
+  color: var(--accent-gold);
 }
 
 .tag-citrine {
@@ -150,7 +150,7 @@
   width: 2.5rem;
   height: 2.5rem;
   border-radius: var(--radius-full);
-  background: linear-gradient(145deg, var(--gold-400), var(--gold-500));
+  background: linear-gradient(145deg, var(--accent-gold), var(--accent-gold-hover));
   color: var(--gold-900);
   font-weight: var(--font-semibold);
   font-size: var(--text-sm);
@@ -183,10 +183,10 @@ $avatar-sizes: (
 
 .avatar-cameo {
   border-radius: 50% / 60%;
-  border: 3px solid var(--gold-400);
+  border: 3px solid var(--accent-gold);
   box-shadow:
     0 0 0 2px var(--surface-bg),
-    0 0 0 4px rgb(212 168 67 / 30%),
+    0 0 0 4px var(--border-accent-gold-strong),
     inset 0 0 8px rgb(0 0 0 / 15%);
 }
 

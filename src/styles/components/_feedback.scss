@@ -54,8 +54,8 @@
     color: var(--tooltip-text);
     background-color: var(--tooltip-bg);
     border-radius: var(--radius-lg);
-    border: 1px solid rgb(212 168 67 / 12%);
-    box-shadow: 0 4px 16px var(--glass-shadow);
+    border: 1px solid var(--border-accent-gold);
+    box-shadow: var(--material-shadow-sm);
     opacity: 0;
     pointer-events: none;
     transition: opacity var(--transition-normal) var(--easing-in-out);
@@ -130,7 +130,7 @@ $progress-variants: (
 // Baroque progress
 .progress-baroque {
   position: relative;
-  border: 2px solid var(--gold-400);
+  border: 2px solid var(--accent-gold);
   border-radius: var(--radius-lg);
 
   &::before,
@@ -142,7 +142,7 @@ $progress-variants: (
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    border: 1px solid var(--gold-400);
+    border: 1px solid var(--accent-gold);
     background: var(--surface-1);
   }
 

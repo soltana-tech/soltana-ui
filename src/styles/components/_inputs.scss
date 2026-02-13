@@ -158,27 +158,27 @@
 // ============================================================================
 
 .checkbox-baroque {
-  border: 2px solid var(--gold-400);
+  border: 2px solid var(--accent-gold);
   border-radius: var(--radius-sm);
 
   &:checked {
-    background: linear-gradient(145deg, var(--gold-400), var(--gold-500));
-    border-color: var(--gold-500);
+    background: linear-gradient(145deg, var(--accent-gold), var(--accent-gold-hover));
+    border-color: var(--accent-gold-hover);
   }
 }
 
 .radio-medallion {
-  border: 2px solid var(--gold-400);
+  border: 2px solid var(--accent-gold);
   box-shadow:
     0 0 0 2px var(--surface-bg),
-    0 0 0 3px rgb(212 168 67 / 20%);
+    0 0 0 3px var(--border-accent-gold);
 
   &:checked {
-    background: linear-gradient(145deg, var(--gold-400), var(--gold-500));
+    background: linear-gradient(145deg, var(--accent-gold), var(--accent-gold-hover));
     box-shadow:
       0 0 0 2px var(--surface-bg),
-      0 0 0 4px var(--gold-400),
-      0 0 12px rgb(212 168 67 / 30%);
+      0 0 0 4px var(--accent-gold),
+      0 0 12px var(--border-accent-gold-strong);
   }
 }
 

@@ -129,11 +129,11 @@ Material defines bg, shadows, blur, saturation, opacity, border. Surface redefin
 
 ### SCSS-3: Components hardcode colors
 
-`TODO` · Size: **L** · Depends on: SCSS-1
+`DONE` · Size: **L** · Depends on: SCSS-1
 
 `.btn-gold` hardcodes `var(--gold-gradient)`. `.card-baroque` hardcodes `var(--gold-400)`. `.card-stained-glass` defines its own blur/gradient. `.checkbox-baroque`, `.radio-medallion`, `.tabs-carved` all hardcode gold. None respond to material or theme changes.
 
-**Proposed fix:** Replace hardcoded color references with `--material-*` or `--accent-*` variables.
+- Progress: Replaced all hardcoded material-specific variables (`--neu-shadow-dark`, `--neu-shadow-mid`, `--neu-shadow-light`, `--neu-highlight`, `--neu-bg`, `--neu-accent-glow`, `--glass-shadow`) with semantic `--material-*` tokens. Replaced raw accent references (`--gold-400`, `--gold-500`, `--bronze-400`, `rgb(212 168 67 / ...)`) with `--accent-gold`, `--accent-gold-hover`, `--accent-primary`, `--border-accent-gold`, `--border-accent-gold-strong`, and `--badge-bg` tokens. Named color variants (`.btn-gold`, `.badge-gold`) and contrast text (`--gold-900`) excluded as intentional.
 
 ### SCSS-4: CSS custom property conflicts
 
