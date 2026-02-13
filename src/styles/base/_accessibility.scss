@@ -116,7 +116,7 @@
   background: var(--gold-300);
   border-radius: 0 0 var(--radius-md) var(--radius-md);
   text-decoration: none;
-  transition: top 0.15s ease;
+  transition: top var(--transition-normal) var(--easing-in-out);
 
   &:focus {
     top: 0;

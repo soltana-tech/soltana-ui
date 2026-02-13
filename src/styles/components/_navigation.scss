@@ -26,9 +26,9 @@
   border-radius: var(--radius-lg);
   cursor: pointer;
   transition:
-    color 0.2s ease,
-    background-color 0.2s ease,
-    box-shadow 0.2s ease;
+    color var(--transition-normal) var(--easing-in-out),
+    background-color var(--transition-normal) var(--easing-in-out),
+    box-shadow var(--transition-normal) var(--easing-in-out);
   user-select: none;
   border: none;
   background: none;
@@ -55,8 +55,8 @@
   gap: 0;
   overflow-x: auto;
   transition:
-    background 0.3s ease,
-    box-shadow 0.3s ease;
+    background var(--transition-slow) var(--easing-in-out),
+    box-shadow var(--transition-slow) var(--easing-in-out);
 }
 
 .tab {
@@ -72,8 +72,8 @@
   background: none;
   font-family: var(--font-sans);
   transition:
-    color 0.2s ease,
-    background-color 0.2s ease;
+    color var(--transition-normal) var(--easing-in-out),
+    background-color var(--transition-normal) var(--easing-in-out);
 
   &::after {
     content: '';
@@ -83,7 +83,7 @@
     right: 0;
     height: 2px;
     background-color: transparent;
-    transition: background-color 0.2s ease;
+    transition: background-color var(--transition-normal) var(--easing-in-out);
   }
 
   &:hover {
@@ -133,8 +133,8 @@
   font-size: var(--text-sm);
   letter-spacing: var(--tracking-refined);
   transition:
-    background 0.3s ease,
-    box-shadow 0.3s ease;
+    background var(--transition-slow) var(--easing-in-out),
+    box-shadow var(--transition-slow) var(--easing-in-out);
 
   th,
   td {
@@ -156,8 +156,8 @@
 
   tbody tr {
     transition:
-      background-color 0.2s ease,
-      box-shadow 0.2s ease;
+      background-color var(--transition-normal) var(--easing-in-out),
+      box-shadow var(--transition-normal) var(--easing-in-out);
 
     &:hover {
       background-color: var(--state-hover);

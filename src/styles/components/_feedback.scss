@@ -22,8 +22,8 @@
   line-height: 1.5;
   border-left: 3px solid transparent;
   transition:
-    background 0.3s ease,
-    box-shadow 0.3s ease;
+    background var(--transition-slow) var(--easing-in-out),
+    box-shadow var(--transition-slow) var(--easing-in-out);
 }
 
 @each $type in (success, warning, error, info) {
@@ -58,7 +58,7 @@
     box-shadow: 0 4px 16px var(--glass-shadow);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.2s ease;
+    transition: opacity var(--transition-normal) var(--easing-in-out);
     z-index: var(--z-tooltip);
   }
 
@@ -79,8 +79,8 @@
   overflow: hidden;
   box-shadow: var(--material-shadow-inset);
   transition:
-    background 0.3s ease,
-    box-shadow 0.3s ease;
+    background var(--transition-slow) var(--easing-in-out),
+    box-shadow var(--transition-slow) var(--easing-in-out);
 }
 
 .progress-bar {
@@ -92,7 +92,7 @@
     var(--accent-primary-hover)
   );
   border-radius: var(--radius-full);
-  transition: width 0.5s ease;
+  transition: width var(--transition-slower) var(--easing-in-out);
   position: relative;
 
   &::after {

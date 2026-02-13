@@ -31,8 +31,8 @@ body {
   color: var(--text-primary);
   background-color: var(--surface-bg);
   transition:
-    background-color var(--transition-slow) ease,
-    color var(--transition-slow) ease;
+    background-color var(--transition-slow) var(--easing-in-out),
+    color var(--transition-slow) var(--easing-in-out);
 }
 
 // ---- Heading defaults ----

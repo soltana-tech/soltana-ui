@@ -18,15 +18,15 @@
 // Ensures components render correctly even without initSoltana().
 
 :root {
-  // Material defaults (neumorphic baseline)
-  --material-bg: var(--neu-bg, #0e1028);
+  // Material defaults (neumorphic baseline, chained to theme-aware fallbacks)
+  --material-bg: var(--neu-bg, var(--surface-2));
   --material-shadow:
-    3px 3px 8px var(--neu-shadow-dark, rgb(0 0 0 / 65%)),
-    -3px -3px 8px var(--neu-shadow-light, rgb(255 255 255 / 5%));
+    3px 3px 8px var(--neu-shadow-dark, var(--glass-shadow)),
+    -3px -3px 8px var(--neu-shadow-light, var(--glass-inner-glow));
   --material-shadow-inset:
-    inset 2px 2px 5px var(--neu-shadow-dark, rgb(0 0 0 / 65%)),
-    inset -2px -2px 5px var(--neu-shadow-light, rgb(255 255 255 / 5%));
-  --material-border: var(--border-default, rgb(255 255 255 / 6%));
+    inset 2px 2px 5px var(--neu-shadow-dark, var(--glass-shadow)),
+    inset -2px -2px 5px var(--neu-shadow-light, var(--glass-inner-glow));
+  --material-border: var(--border-default);
 
   // Surface defaults (polished baseline)
   --surface-blur: 0px;

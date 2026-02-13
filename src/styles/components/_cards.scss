@@ -19,8 +19,8 @@
   box-shadow: var(--material-shadow);
   backdrop-filter: blur(var(--surface-blur)) saturate(var(--surface-saturation));
   transition:
-    box-shadow 0.3s ease,
-    transform 0.3s ease;
+    box-shadow var(--transition-slow) var(--easing-in-out),
+    transform var(--transition-slow) var(--easing-in-out);
 }
 
 .card-flat {

@@ -25,9 +25,9 @@
   background-color: var(--badge-bg);
   color: var(--text-secondary);
   transition:
-    background-color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
+    background-color var(--transition-normal) var(--easing-in-out),
+    box-shadow var(--transition-normal) var(--easing-in-out),
+    transform var(--transition-normal) var(--easing-in-out);
 
   &:hover {
     transform: translateY(-1px);
@@ -91,10 +91,10 @@
   box-shadow: var(--material-shadow);
   backdrop-filter: blur(var(--surface-blur)) saturate(var(--surface-saturation));
   transition:
-    background 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.2s ease,
-    border-color 0.2s ease;
+    background var(--transition-normal) var(--easing-in-out),
+    box-shadow var(--transition-normal) var(--easing-in-out),
+    transform var(--transition-normal) var(--easing-in-out),
+    border-color var(--transition-normal) var(--easing-in-out);
 
   &:hover {
     transform: translateY(-1px);
@@ -157,8 +157,8 @@
   overflow: hidden;
   flex-shrink: 0;
   transition:
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
+    box-shadow var(--transition-normal) var(--easing-in-out),
+    transform var(--transition-normal) var(--easing-in-out);
 
   img {
     width: 100%;
