@@ -46,3 +46,21 @@ export const patterns: Record<PatternName, (color?: string) => string> = {
   medallion,
   corner: cornerOrnament,
 };
+
+// ---------------------------------------------------------------------------
+// SVG Conversion Utilities
+// ---------------------------------------------------------------------------
+
+/** URL-encodes a raw SVG string into a `data:image/svg+xml,...` URI. */
+export const toDataUri = (svg: string): string =>
+  `data:image/svg+xml,${encodeURIComponent(svg.trim())}`;
+
+/** Parses a raw SVG string into a DOM `SVGElement` via DOMParser. */
+export const toElement = (svg: string): SVGElement => {
+  const doc = new DOMParser().parseFromString(svg.trim(), 'image/svg+xml');
+  const errorNode = doc.querySelector('parsererror');
+  if (errorNode) {
+    throw new Error(`Invalid SVG: ${errorNode.textContent}`);
+  }
+  return doc.documentElement as unknown as SVGElement;
+};

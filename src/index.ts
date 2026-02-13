@@ -19,7 +19,7 @@ export { loadSoltanaFonts } from './fonts/index.js';
 export { initModals, initTabs, initTooltips, initAll } from './enhancers/index.js';
 
 // SVG ornament pattern utilities
-export { patterns } from './ornaments/patterns.js';
+export { patterns, toDataUri, toElement } from './ornaments/patterns.js';
 export type { PatternName } from './ornaments/patterns.js';
 
 export const version = '1.0.0';

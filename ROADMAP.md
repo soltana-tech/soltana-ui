@@ -97,11 +97,11 @@ All `init*()` calls added event listeners with no removal. Double-calling double
 
 ### TS-8: SVG patterns are incomplete
 
-`TODO` · Size: **M**
+`DONE` · Size: **M**
 
-`src/ornaments/patterns.ts` exports SVG string generators but has no tests, no usage examples, no documentation, and no integration with the rest of the system.
+`src/ornaments/patterns.ts` exports SVG string generators but had no conversion utilities for practical use.
 
-**Proposed fix:** Either wire patterns into the ornament system with proper tests and docs, or remove the module until it's ready.
+- Progress: Added `toDataUri()` (encodeURIComponent-based data URI) and `toElement()` (DOMParser-based SVGElement) utilities. Both exported from `src/index.ts`. Tests added for round-trip encoding, element creation, and attribute preservation. Replaced emoji icons in `docs/components/SettingsPanel.ts` with inline SVGs.
 
 ---
 
