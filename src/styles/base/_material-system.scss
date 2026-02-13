@@ -1,9 +1,15 @@
 // ---------------------------------------------------------------------------
-// Material System
+// Material System — Two-tier abstraction consumed by all components.
 // ---------------------------------------------------------------------------
-// Abstract --material-* variables consumed by all components.
-// Activated by data attributes on <html> set by initSoltana(), or by
-// applying .material-* / .surface-* classes directly to elements.
+// MATERIAL tier (structural appearance):
+//   --material-bg, --material-shadow, --material-shadow-inset, --material-border
+//   Set by [data-material] on <html> or .material-* class overrides.
+// SURFACE tier (finish properties):
+//   --surface-blur, --surface-saturation, --surface-opacity,
+//   --surface-texture-opacity, --surface-overlay, --surface-sheen
+//   Set by [data-surface] on <html> or .surface-* class overrides.
+// Materials define depth and structure. Surfaces define finish and texture.
+// The two tiers are orthogonal — every combination produces a valid result.
 // ---------------------------------------------------------------------------
 
 // ============================================================================
@@ -12,6 +18,7 @@
 // Ensures components render correctly even without initSoltana().
 
 :root {
+  // Material defaults (neumorphic baseline)
   --material-bg: var(--neuro-bg, #0e1028);
   --material-shadow:
     3px 3px 8px var(--neuro-shadow-dark, rgb(0 0 0 / 65%)),
@@ -19,11 +26,12 @@
   --material-shadow-inset:
     inset 2px 2px 5px var(--neuro-shadow-dark, rgb(0 0 0 / 65%)),
     inset -2px -2px 5px var(--neuro-shadow-light, rgb(255 255 255 / 5%));
-  --material-blur: 0px;
-  --material-saturation: 100%;
-  --material-opacity: 1;
   --material-border: var(--border-default, rgb(255 255 255 / 6%));
 
+  // Surface defaults (polished baseline)
+  --surface-blur: 0px;
+  --surface-saturation: 100%;
+  --surface-opacity: 1;
   --surface-texture-opacity: 0;
   --surface-overlay: none;
   --surface-sheen: none;
@@ -41,9 +49,6 @@
   --material-shadow: 3px 3px 8px var(--neuro-shadow-dark), -3px -3px 8px var(--neuro-shadow-light);
   --material-shadow-inset:
     inset 2px 2px 5px var(--neuro-shadow-dark), inset -2px -2px 5px var(--neuro-shadow-light);
-  --material-blur: 0px;
-  --material-saturation: 100%;
-  --material-opacity: 1;
   --material-border: var(--border-default);
 }
 
@@ -52,9 +57,6 @@
   --material-bg: var(--glass-bg);
   --material-shadow: 0 8px 32px var(--glass-shadow);
   --material-shadow-inset: inset 0 1px 0 var(--glass-inner-glow);
-  --material-blur: 16px;
-  --material-saturation: 140%;
-  --material-opacity: 0.85;
   --material-border: var(--glass-border);
 }
 
@@ -67,9 +69,6 @@
   --material-shadow-inset:
     inset 2px 2px 6px var(--neuro-shadow-dark), inset -2px -2px 6px var(--neuro-shadow-light),
     inset 0 1px 0 var(--glass-inner-glow);
-  --material-blur: 12px;
-  --material-saturation: 120%;
-  --material-opacity: 0.9;
   --material-border: var(--glass-border);
 }
 
@@ -79,6 +78,9 @@
 
 [data-surface='polished'],
 .surface-polished {
+  --surface-blur: 0px;
+  --surface-saturation: 100%;
+  --surface-opacity: 1;
   --surface-texture-opacity: 0;
   --surface-overlay: none;
   --surface-sheen: none;
@@ -86,21 +88,23 @@
 
 [data-surface='frosted'],
 .surface-frosted {
-  --material-blur: 24px;
-  --material-saturation: 80%;
-  --material-opacity: 0.7;
+  --surface-blur: 24px;
+  --surface-saturation: 80%;
+  --surface-opacity: 0.7;
   --surface-texture-opacity: 0.06;
 }
 
 [data-surface='stained'],
 .surface-stained {
+  --surface-blur: 28px;
+  --surface-saturation: 100%;
+  --surface-opacity: 1;
   --material-bg: linear-gradient(
     135deg,
     var(--stained-primary),
     var(--stained-secondary),
     var(--stained-accent)
   );
-  --material-blur: 28px;
   --material-border: 2px solid rgb(40 35 30 / 40%);
   --surface-overlay: linear-gradient(
     135deg,
@@ -112,6 +116,9 @@
 
 [data-surface='metallic'],
 .surface-metallic {
+  --surface-blur: 0px;
+  --surface-saturation: 100%;
+  --surface-opacity: 1;
   --material-bg: linear-gradient(
     145deg,
     rgb(255 255 255 / 15%) 0%,

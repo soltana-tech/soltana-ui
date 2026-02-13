@@ -25,7 +25,7 @@
   border: 1px solid var(--input-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--material-shadow-inset);
-  backdrop-filter: blur(var(--material-blur)) saturate(var(--material-saturation));
+  backdrop-filter: blur(var(--surface-blur)) saturate(var(--surface-saturation));
   transition:
     border-color 0.3s ease,
     box-shadow 0.3s ease;

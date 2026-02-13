@@ -31,7 +31,7 @@
   color: var(--text-primary);
   cursor: pointer;
   box-shadow: var(--material-shadow);
-  backdrop-filter: blur(var(--material-blur)) saturate(var(--material-saturation));
+  backdrop-filter: blur(var(--surface-blur)) saturate(var(--surface-saturation));
   transition:
     background 0.3s ease,
     color 0.2s ease,

@@ -21,7 +21,7 @@
 
 .glass {
   background: var(--glass-bg);
-  backdrop-filter: blur(var(--material-blur, 16px)) saturate(var(--material-saturation, 140%));
+  backdrop-filter: blur(16px) saturate(140%);
   border: 1px solid var(--glass-border);
   box-shadow:
     0 8px 32px var(--glass-shadow),

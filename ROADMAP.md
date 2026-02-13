@@ -119,11 +119,11 @@ All `init*()` calls added event listeners with no removal. Double-calling double
 
 ### SCSS-2: Material vs surface overlap
 
-`TODO` · Size: **L** · Depends on: none
+`DONE` · Size: **L** · Depends on: none
 
 Material defines bg, shadows, blur, saturation, opacity, border. Surface redefines blur, saturation, opacity, texture, overlay — largely the same properties. `neuro + frosted` produces contradictory results. Developers can't reason about the interaction without reading SCSS.
 
-**Proposed fix:** Draw a hard line: material controls shadow/depth, surface controls texture/finish only (no blur or opacity overrides). Or collapse into one tier. Document the interaction explicitly.
+- Progress: Moved blur, saturation, opacity from `--material-*` to `--surface-*` namespace. Materials own structure (bg, shadow, border). Surfaces own finish (blur, saturation, opacity, texture, overlay, sheen). Tiers are now orthogonal. Stained/metallic `--material-bg` overrides remain as documented scope for SCSS-1.
 
 ### SCSS-3: Components hardcode colors
 

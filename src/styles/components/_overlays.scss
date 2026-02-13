@@ -44,7 +44,7 @@
   box-shadow:
     var(--material-shadow),
     0 24px 64px rgb(0 0 0 / 30%);
-  backdrop-filter: blur(var(--material-blur)) saturate(var(--material-saturation));
+  backdrop-filter: blur(var(--surface-blur)) saturate(var(--surface-saturation));
   width: 100%;
   max-width: 32rem;
   max-height: 85vh;
