@@ -13,7 +13,7 @@ describe('initSoltana', () => {
   it('applies default config', () => {
     initSoltana();
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
-    expect(document.documentElement.getAttribute('data-material')).toBe('neuro');
+    expect(document.documentElement.getAttribute('data-material')).toBe('neu');
     expect(document.documentElement.getAttribute('data-surface')).toBe('polished');
     expect(document.body.classList.contains('ornament-baroque')).toBe(false);
   });
@@ -77,7 +77,7 @@ describe('initSoltana', () => {
     soltana.reset();
 
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
-    expect(document.documentElement.getAttribute('data-material')).toBe('neuro');
+    expect(document.documentElement.getAttribute('data-material')).toBe('neu');
     expect(document.body.classList.contains('ornament-gilt')).toBe(false);
   });
 

@@ -15,7 +15,7 @@ const THEME_OPTIONS: OptionConfig[] = [
 const MATERIAL_OPTIONS: OptionConfig[] = [
   { value: 'flat', label: 'Flat' },
   { value: 'soft', label: 'Soft' },
-  { value: 'neuro', label: 'Neumorphic' },
+  { value: 'neu', label: 'Neumorphic' },
   { value: 'glass', label: 'Glassmorphic' },
   { value: 'metallic', label: 'Metallic' },
   { value: 'stone', label: 'Stone' },

@@ -10,13 +10,13 @@ export class PlaygroundControls {
     this.bindSelectControls();
     this.bindCopyButtons();
     this.bindModalTriggers();
-    this.bindNeuroToggles();
+    this.bindNeuToggles();
     this.bindColorPickers();
   }
 
   /**
    * Buttons that toggle a CSS class on a target element.
-   * Usage: <button data-toggle-class="neuro-raised" data-target="#preview-el">
+   * Usage: <button data-toggle-class="neu-raised" data-target="#preview-el">
    */
   private bindClassToggles(): void {
     document.querySelectorAll<HTMLButtonElement>('[data-toggle-class]').forEach((btn) => {
@@ -140,8 +140,8 @@ export class PlaygroundControls {
   }
 
   /** Neumorphic toggle buttons. */
-  private bindNeuroToggles(): void {
-    document.querySelectorAll('.neuro-toggle').forEach((toggle) => {
+  private bindNeuToggles(): void {
+    document.querySelectorAll('.neu-toggle').forEach((toggle) => {
       toggle.addEventListener('click', () => {
         toggle.classList.toggle('active');
       });

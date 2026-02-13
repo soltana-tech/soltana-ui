@@ -16,7 +16,7 @@ A CSS-first design system built around a 4-tier configuration model:
 | Tier | Options | Mechanism |
 |------|---------|-----------|
 | Theme | dark, light, sepia, auto | `[data-theme]` on `<html>` |
-| Material | neuro, glass, hybrid (to be replaced) | `[data-material]` on `<html>` |
+| Material | neu, glass, hybrid (to be replaced) | `[data-material]` on `<html>` |
 | Surface | polished, frosted, stained, metallic | `[data-surface]` on `<html>` |
 | Ornament | none, baroque, carved, faceted, gilt | `body` class |
 
@@ -111,17 +111,17 @@ All `init*()` calls added event listeners with no removal. Double-calling double
 
 `TODO` · Size: **XL** · Depends on: SCSS-2
 
-5 material files (neumorphic, glassmorphic, neuro-glass, metallic, stone) vs 3 config options (neuro, glass, hybrid). Metallic and stone are standalone utility classes disconnected from `data-material`. Setting `[data-material='neuro']` sets CSS variables but doesn't auto-apply component classes.
+5 material files (neumorphic, glassmorphic, neu-glass, metallic, stone) vs 3 config options (neu, glass, hybrid). Metallic and stone are standalone utility classes disconnected from `data-material`. Setting `[data-material='neu']` sets CSS variables but doesn't auto-apply component classes.
 
-`hybrid` doesn't scale — it's a hardcoded neuro+glass blend. As new materials are added, "hybrid of what?" becomes unanswerable.
+`hybrid` doesn't scale — it's a hardcoded neu+glass blend. As new materials are added, "hybrid of what?" becomes unanswerable.
 
-**Proposed fix:** Remove `hybrid`. Promote each material to a standalone config option: neuro, glass, metallic, stone, flat, soft. Wire all material files into the config system. Delete `neuro-glass.scss` or decompose its effects. Components consume `--material-*` variables exclusively.
+**Proposed fix:** Remove `hybrid`. Promote each material to a standalone config option: neu, glass, metallic, stone, flat, soft. Wire all material files into the config system. Delete `neu-glass.scss` or decompose its effects. Components consume `--material-*` variables exclusively.
 
 ### SCSS-2: Material vs surface overlap
 
 `DONE` · Size: **L** · Depends on: none
 
-Material defines bg, shadows, blur, saturation, opacity, border. Surface redefines blur, saturation, opacity, texture, overlay — largely the same properties. `neuro + frosted` produces contradictory results. Developers can't reason about the interaction without reading SCSS.
+Material defines bg, shadows, blur, saturation, opacity, border. Surface redefines blur, saturation, opacity, texture, overlay — largely the same properties. `neu + frosted` produces contradictory results. Developers can't reason about the interaction without reading SCSS.
 
 - Progress: Moved blur, saturation, opacity from `--material-*` to `--surface-*` namespace. Materials own structure (bg, shadow, border). Surfaces own finish (blur, saturation, opacity, texture, overlay, sheen). Tiers are now orthogonal. Stained/metallic `--material-bg` overrides remain as documented scope for SCSS-1.
 
@@ -137,7 +137,7 @@ Material defines bg, shadows, blur, saturation, opacity, border. Surface redefin
 
 `TODO` · Size: **M**
 
-`--neuro-bg` and `--surface-1` identical in dark theme. Material-specific variables in `:root` with no namespace. `--gold-gradient` embeds entire gradient at `:root` level. No semantic middle layer.
+`--neu-bg` and `--surface-1` identical in dark theme. Material-specific variables in `:root` with no namespace. `--gold-gradient` embeds entire gradient at `:root` level. No semantic middle layer.
 
 **Proposed fix:** Namespace material variables. Add semantic layer between raw colors and component consumption.
 
@@ -169,7 +169,7 @@ Duration tokens defined (fast: 75ms, normal: 150ms, slow: 300ms, slower: 500ms) 
 
 `TODO` · Size: **M**
 
-Single-dash everywhere (`.btn-gold`, `.card-baroque`) except card material variants use BEM double-dash (`.card--neuro`, `.card--glass`). Only BEM-style classes in the codebase.
+Single-dash everywhere (`.btn-gold`, `.card-baroque`) except card material variants use BEM double-dash (`.card--neu`, `.card--glass`). Only BEM-style classes in the codebase.
 
 **Proposed fix:** Standardize on one convention everywhere.
 
@@ -223,7 +223,7 @@ Marble textures use 4-8 radial gradients per variant (~20KB). Stained glass pres
 
 All current materials are visually assertive. No flat or near-flat option for clean professional layouts.
 
-**Proposed fix:** Add `flat` (minimal shadow, no blur, crisp edges) and `soft` (very slight shadow, gentle depth). Wire metallic and stone files into config. Final spectrum: flat → soft → neuro → glass → metallic → stone.
+**Proposed fix:** Add `flat` (minimal shadow, no blur, crisp edges) and `soft` (very slight shadow, gentle depth). Wire metallic and stone files into config. Final spectrum: flat → soft → neu → glass → metallic → stone.
 
 ### AES-2: Expand surface options
 
@@ -295,7 +295,7 @@ Baroque defined in 3 places (`_material-system.scss`, `_buttons.scss`, `_ornamen
 Named presets of proven tier combinations as starting points:
 
 - "Corporate Clean" — light, flat, matte, none
-- "Luxury Dark" — dark, neuro, polished, gilt
+- "Luxury Dark" — dark, neu, polished, gilt
 - "Frosted Modern" — dark, glass, frosted, subtle
 - "Classic Warm" — sepia, soft, paper, carved
 
@@ -389,7 +389,7 @@ No README ships with package. Version mismatch. Export subpaths point to main bu
 
 `TODO` · Size: **M**
 
-Can't see the same component in neuro vs glass vs metallic side by side. Settings panel changes everything globally.
+Can't see the same component in neu vs glass vs metallic side by side. Settings panel changes everything globally.
 
 ### DOC-2: No live code editor
 

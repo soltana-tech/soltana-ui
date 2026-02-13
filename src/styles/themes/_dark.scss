@@ -65,12 +65,12 @@
   --state-disabled-text: #5a5245;
 
   // Neumorphic shadows — "polished stone" (neutral for seamless blending)
-  --neuro-bg: #0e1028;
-  --neuro-shadow-light: rgb(255 255 255 / 5%);
-  --neuro-shadow-dark: rgb(0 0 0 / 65%);
-  --neuro-shadow-mid: rgb(0 0 0 / 40%);
-  --neuro-highlight: rgb(255 255 255 / 8%);
-  --neuro-accent-glow: rgb(212 168 67 / 15%);
+  --neu-bg: #0e1028;
+  --neu-shadow-light: rgb(255 255 255 / 5%);
+  --neu-shadow-dark: rgb(0 0 0 / 65%);
+  --neu-shadow-mid: rgb(0 0 0 / 40%);
+  --neu-highlight: rgb(255 255 255 / 8%);
+  --neu-accent-glow: rgb(212 168 67 / 15%);
 
   // Glassmorphic — "crystal glass" (35% opacity for better transparency)
   --glass-bg: rgb(14 16 40 / 35%);

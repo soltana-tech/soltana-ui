@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------
 // SVG-based decorative patterns, borders, and dividers rendered via
 // inline data URIs. All patterns use currentColor for theme-awareness.
-// Structural ornaments can be layered on any base material (neuro/glass).
+// Structural ornaments can be layered on any base material (neu/glass).
 // ---------------------------------------------------------------------------
 
 // ============================================================================
@@ -53,7 +53,7 @@
     height: 24px;
     border-radius: 50%;
     border: 2px solid var(--gold-400);
-    background: var(--surface-1, var(--neuro-bg));
+    background: var(--surface-1, var(--neu-bg));
     box-shadow:
       0 0 8px rgb(212 168 67 / 20%),
       inset 0 0 4px rgb(212 168 67 / 10%);
@@ -66,8 +66,8 @@
   position: relative;
   border: 3px solid var(--border-strong);
   box-shadow:
-    inset 3px 3px 8px var(--neuro-shadow-dark, rgb(0 0 0 / 20%)),
-    inset -3px -3px 8px var(--neuro-shadow-light, rgb(255 255 255 / 50%));
+    inset 3px 3px 8px var(--neu-shadow-dark, rgb(0 0 0 / 20%)),
+    inset -3px -3px 8px var(--neu-shadow-light, rgb(255 255 255 / 50%));
 
   // Chiseled edge highlight
   &::before {
@@ -150,7 +150,7 @@
     transform: translateX(-50%);
     width: 16px;
     height: 16px;
-    background: var(--surface-1, var(--neuro-bg));
+    background: var(--surface-1, var(--neu-bg));
     border: 2px solid var(--border-strong);
     clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
     pointer-events: none;

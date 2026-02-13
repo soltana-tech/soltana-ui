@@ -247,49 +247,49 @@ export function renderExamples(): string {
     <h3 class="text-xl font-semibold mb-4">Settings Panel</h3>
     <div class="card overflow-hidden">
       <div class="specimen__preview p-0">
-        <div class="p-8" style="background: var(--neuro-bg); min-height: 400px">
+        <div class="p-8" style="background: var(--neu-bg); min-height: 400px">
           <h4 class="font-serif text-2xl font-semibold mb-6">Settings</h4>
           <div class="grid gap-6" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))">
-            <div class="neuro-elevated" style="padding: 1.5rem">
+            <div class="neu-elevated" style="padding: 1.5rem">
               <h5 class="font-semibold mb-4">Appearance</h5>
               <div class="flex flex-col gap-4">
                 <div class="flex items-center justify-between">
                   <span class="text-sm">Dark Mode</span>
-                  <div class="neuro-toggle active"></div>
+                  <div class="neu-toggle active"></div>
                 </div>
                 <div class="flex items-center justify-between">
                   <span class="text-sm">Compact View</span>
-                  <div class="neuro-toggle"></div>
+                  <div class="neu-toggle"></div>
                 </div>
                 <div class="flex items-center justify-between">
                   <span class="text-sm">Animations</span>
-                  <div class="neuro-toggle active"></div>
+                  <div class="neu-toggle active"></div>
                 </div>
               </div>
             </div>
-            <div class="neuro-elevated" style="padding: 1.5rem">
+            <div class="neu-elevated" style="padding: 1.5rem">
               <h5 class="font-semibold mb-4">Notifications</h5>
               <div class="flex flex-col gap-4">
                 <div class="flex items-center justify-between">
                   <span class="text-sm">Email Alerts</span>
-                  <div class="neuro-toggle active"></div>
+                  <div class="neu-toggle active"></div>
                 </div>
                 <div class="flex items-center justify-between">
                   <span class="text-sm">Push Notifications</span>
-                  <div class="neuro-toggle"></div>
+                  <div class="neu-toggle"></div>
                 </div>
                 <div>
                   <label class="text-sm block mb-2">Notification Sound</label>
-                  <input class="neuro-input w-full" value="Default" />
+                  <input class="neu-input w-full" value="Default" />
                 </div>
               </div>
             </div>
-            <div class="neuro-elevated" style="padding: 1.5rem">
+            <div class="neu-elevated" style="padding: 1.5rem">
               <h5 class="font-semibold mb-4">Profile</h5>
               <div class="flex flex-col gap-3">
-                <input class="neuro-input w-full" value="John Doe" />
-                <input class="neuro-input w-full" value="john@example.com" />
-                <button class="neuro-button px-4 py-2 text-sm font-medium mt-2">Save Changes</button>
+                <input class="neu-input w-full" value="John Doe" />
+                <input class="neu-input w-full" value="john@example.com" />
+                <button class="neu-button px-4 py-2 text-sm font-medium mt-2">Save Changes</button>
               </div>
             </div>
           </div>

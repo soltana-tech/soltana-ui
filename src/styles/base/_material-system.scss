@@ -19,13 +19,13 @@
 
 :root {
   // Material defaults (neumorphic baseline)
-  --material-bg: var(--neuro-bg, #0e1028);
+  --material-bg: var(--neu-bg, #0e1028);
   --material-shadow:
-    3px 3px 8px var(--neuro-shadow-dark, rgb(0 0 0 / 65%)),
-    -3px -3px 8px var(--neuro-shadow-light, rgb(255 255 255 / 5%));
+    3px 3px 8px var(--neu-shadow-dark, rgb(0 0 0 / 65%)),
+    -3px -3px 8px var(--neu-shadow-light, rgb(255 255 255 / 5%));
   --material-shadow-inset:
-    inset 2px 2px 5px var(--neuro-shadow-dark, rgb(0 0 0 / 65%)),
-    inset -2px -2px 5px var(--neuro-shadow-light, rgb(255 255 255 / 5%));
+    inset 2px 2px 5px var(--neu-shadow-dark, rgb(0 0 0 / 65%)),
+    inset -2px -2px 5px var(--neu-shadow-light, rgb(255 255 255 / 5%));
   --material-border: var(--border-default, rgb(255 255 255 / 6%));
 
   // Surface defaults (polished baseline)
@@ -43,12 +43,12 @@
 // Data-attribute selectors activated by initSoltana().
 // Class selectors available for per-element overrides.
 
-[data-material='neuro'],
-.material-neuro {
-  --material-bg: var(--neuro-bg);
-  --material-shadow: 3px 3px 8px var(--neuro-shadow-dark), -3px -3px 8px var(--neuro-shadow-light);
+[data-material='neu'],
+.material-neu {
+  --material-bg: var(--neu-bg);
+  --material-shadow: 3px 3px 8px var(--neu-shadow-dark), -3px -3px 8px var(--neu-shadow-light);
   --material-shadow-inset:
-    inset 2px 2px 5px var(--neuro-shadow-dark), inset -2px -2px 5px var(--neuro-shadow-light);
+    inset 2px 2px 5px var(--neu-shadow-dark), inset -2px -2px 5px var(--neu-shadow-light);
   --material-border: var(--border-default);
 }
 
@@ -196,7 +196,7 @@ body.ornament-baroque {
       border-radius: 50%;
       border: 2px solid var(--accent-gold, #d4a843);
       background: var(--surface-1, #0e1028);
-      box-shadow: 0 0 8px var(--neuro-accent-glow, rgb(212 168 67 / 15%));
+      box-shadow: 0 0 8px var(--neu-accent-glow, rgb(212 168 67 / 15%));
       z-index: 2;
       pointer-events: none;
     }
@@ -249,7 +249,7 @@ body.ornament-gilt {
     box-shadow:
       var(--material-shadow),
       0 0 0 1px var(--accent-gold, #d4a843),
-      0 0 12px var(--neuro-accent-glow, rgb(212 168 67 / 15%));
+      0 0 12px var(--neu-accent-glow, rgb(212 168 67 / 15%));
 
     &::before {
       content: '';

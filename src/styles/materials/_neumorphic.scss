@@ -2,15 +2,15 @@
 // Neumorphic Design Utilities — "Polished Stone"
 // ---------------------------------------------------------------------------
 // Multi-layer soft UI recontextualized as polished stone surfaces.
-// Gold accent highlights. Theme-aware via --neuro-* custom properties.
+// Gold accent highlights. Theme-aware via --neu-* custom properties.
 // ---------------------------------------------------------------------------
 
 @use '../variables' as *;
 
 // ---- Base mixin ----
-@mixin neuro-base {
+@mixin neu-base {
   border: none;
-  background: var(--neuro-bg);
+  background: var(--neu-bg);
 }
 
 // ============================================================================
@@ -18,88 +18,88 @@
 // ============================================================================
 
 // Standard raised — 2-layer convex
-.neuro-raised {
-  @include neuro-base;
+.neu-raised {
+  @include neu-base;
   border-radius: var(--radius-xl);
   box-shadow:
-    6px 6px 14px var(--neuro-shadow-dark),
-    -6px -6px 14px var(--neuro-shadow-light);
+    6px 6px 14px var(--neu-shadow-dark),
+    -6px -6px 14px var(--neu-shadow-light);
 }
 
-.neuro-raised-sm {
-  @include neuro-base;
+.neu-raised-sm {
+  @include neu-base;
   border-radius: var(--radius-lg);
   box-shadow:
-    3px 3px 7px var(--neuro-shadow-dark),
-    -3px -3px 7px var(--neuro-shadow-light);
+    3px 3px 7px var(--neu-shadow-dark),
+    -3px -3px 7px var(--neu-shadow-light);
 }
 
-.neuro-raised-lg {
-  @include neuro-base;
+.neu-raised-lg {
+  @include neu-base;
   border-radius: var(--radius-2xl);
   box-shadow:
-    10px 10px 24px var(--neuro-shadow-dark),
-    -10px -10px 24px var(--neuro-shadow-light);
+    10px 10px 24px var(--neu-shadow-dark),
+    -10px -10px 24px var(--neu-shadow-light);
 }
 
 // Elevated — 3-layer with mid shadow and highlight top-edge
-.neuro-elevated {
-  @include neuro-base;
+.neu-elevated {
+  @include neu-base;
   border-radius: var(--radius-xl);
-  border-top: 1px solid var(--neuro-highlight);
+  border-top: 1px solid var(--neu-highlight);
   box-shadow:
-    0 2px 4px var(--neuro-shadow-mid),
-    6px 6px 16px var(--neuro-shadow-dark),
-    -4px -4px 12px var(--neuro-shadow-light);
+    0 2px 4px var(--neu-shadow-mid),
+    6px 6px 16px var(--neu-shadow-dark),
+    -4px -4px 12px var(--neu-shadow-light);
 }
 
 // Floating — dramatic elevation with diffuse shadows
-.neuro-floating {
-  @include neuro-base;
+.neu-floating {
+  @include neu-base;
   border-radius: var(--radius-2xl);
-  border-top: 1px solid var(--neuro-highlight);
+  border-top: 1px solid var(--neu-highlight);
   box-shadow:
-    0 4px 8px var(--neuro-shadow-mid),
-    12px 12px 32px var(--neuro-shadow-dark),
-    -8px -8px 24px var(--neuro-shadow-light);
+    0 4px 8px var(--neu-shadow-mid),
+    12px 12px 32px var(--neu-shadow-dark),
+    -8px -8px 24px var(--neu-shadow-light);
 }
 
 // Soft/Flat — barely perceptible, elegant background treatment
-.neuro-soft,
-.neuro-flat {
-  @include neuro-base;
+.neu-soft,
+.neu-flat {
+  @include neu-base;
   border-radius: var(--radius-xl);
   box-shadow:
-    2px 2px 6px var(--neuro-shadow-dark),
-    -2px -2px 6px var(--neuro-shadow-light);
+    2px 2px 6px var(--neu-shadow-dark),
+    -2px -2px 6px var(--neu-shadow-light);
 }
 
 // ============================================================================
 // INSET VARIANTS
 // ============================================================================
 
-.neuro-inset {
-  @include neuro-base;
+.neu-inset {
+  @include neu-base;
   border-radius: var(--radius-xl);
   box-shadow:
-    inset 6px 6px 14px var(--neuro-shadow-dark),
-    inset -6px -6px 14px var(--neuro-shadow-light);
+    inset 6px 6px 14px var(--neu-shadow-dark),
+    inset -6px -6px 14px var(--neu-shadow-light);
 }
 
-.neuro-inset-sm {
-  @include neuro-base;
+.neu-inset-sm {
+  @include neu-base;
   border-radius: var(--radius-lg);
   box-shadow:
-    inset 3px 3px 7px var(--neuro-shadow-dark),
-    inset -3px -3px 7px var(--neuro-shadow-light);
+    inset 3px 3px 7px var(--neu-shadow-dark),
+    inset -3px -3px 7px var(--neu-shadow-light);
 }
 
-.neuro-inset-lg {
-  @include neuro-base;
+.neu-inset-lg {
+  @include neu-base;
   border-radius: var(--radius-2xl);
   box-shadow:
-    inset 10px 10px 24px var(--neuro-shadow-dark),
-    inset -10px -10px 24px var(--neuro-shadow-light);
+    inset 10px 10px 24px var(--neu-shadow-dark),
+    inset -10px -10px 24px var(--neu-shadow-light);
 }
 
 // ============================================================================
@@ -107,14 +107,14 @@
 // ============================================================================
 
 // Button — raised that presses on click with accent glow on focus
-.neuro-button {
-  @include neuro-base;
+.neu-button {
+  @include neu-base;
   border-radius: var(--radius-xl);
-  border-top: 1px solid var(--neuro-highlight);
+  border-top: 1px solid var(--neu-highlight);
   box-shadow:
-    0 2px 4px var(--neuro-shadow-mid),
-    5px 5px 12px var(--neuro-shadow-dark),
-    -4px -4px 10px var(--neuro-shadow-light);
+    0 2px 4px var(--neu-shadow-mid),
+    5px 5px 12px var(--neu-shadow-dark),
+    -4px -4px 10px var(--neu-shadow-light);
   transition:
     box-shadow 0.3s ease,
     transform 0.2s ease,
@@ -124,35 +124,35 @@
   &:hover {
     transform: translateY(-1px);
     box-shadow:
-      0 4px 8px var(--neuro-shadow-mid),
-      6px 6px 16px var(--neuro-shadow-dark),
-      -5px -5px 12px var(--neuro-shadow-light);
+      0 4px 8px var(--neu-shadow-mid),
+      6px 6px 16px var(--neu-shadow-dark),
+      -5px -5px 12px var(--neu-shadow-light);
   }
 
   &:active {
     transform: translateY(0) scale(0.98);
     border-top-color: transparent;
     box-shadow:
-      inset 4px 4px 10px var(--neuro-shadow-dark),
-      inset -4px -4px 10px var(--neuro-shadow-light);
+      inset 4px 4px 10px var(--neu-shadow-dark),
+      inset -4px -4px 10px var(--neu-shadow-light);
   }
 
   &:focus-visible {
     outline: none;
     box-shadow:
       0 0 0 3px var(--state-focus-ring),
-      5px 5px 12px var(--neuro-shadow-dark),
-      -4px -4px 10px var(--neuro-shadow-light);
+      5px 5px 12px var(--neu-shadow-dark),
+      -4px -4px 10px var(--neu-shadow-light);
   }
 }
 
 // Input field — inset with accent glow on focus
-.neuro-input {
-  @include neuro-base;
+.neu-input {
+  @include neu-base;
   border-radius: var(--radius-lg);
   box-shadow:
-    inset 3px 3px 8px var(--neuro-shadow-dark),
-    inset -3px -3px 8px var(--neuro-shadow-light);
+    inset 3px 3px 8px var(--neu-shadow-dark),
+    inset -3px -3px 8px var(--neu-shadow-light);
   padding: 0.625rem 1rem;
   color: var(--text-primary);
   font-family: var(--font-sans);
@@ -166,22 +166,22 @@
   &:focus {
     outline: none;
     box-shadow:
-      inset 3px 3px 8px var(--neuro-shadow-dark),
-      inset -3px -3px 8px var(--neuro-shadow-light),
+      inset 3px 3px 8px var(--neu-shadow-dark),
+      inset -3px -3px 8px var(--neu-shadow-light),
       0 0 0 3px var(--state-focus-ring);
   }
 }
 
 // Toggle — with accent state
-.neuro-toggle {
-  @include neuro-base;
+.neu-toggle {
+  @include neu-base;
   position: relative;
   width: 3.5rem;
   height: 2rem;
   border-radius: var(--radius-full);
   box-shadow:
-    inset 4px 4px 10px var(--neuro-shadow-dark),
-    inset -4px -4px 10px var(--neuro-shadow-light);
+    inset 4px 4px 10px var(--neu-shadow-dark),
+    inset -4px -4px 10px var(--neu-shadow-light);
   cursor: pointer;
   transition: background 0.3s ease;
 
@@ -193,11 +193,11 @@
     width: 1.625rem;
     height: 1.625rem;
     border-radius: var(--radius-full);
-    background: var(--neuro-bg);
-    border-top: 1px solid var(--neuro-highlight);
+    background: var(--neu-bg);
+    border-top: 1px solid var(--neu-highlight);
     box-shadow:
-      3px 3px 7px var(--neuro-shadow-dark),
-      -3px -3px 7px var(--neuro-shadow-light);
+      3px 3px 7px var(--neu-shadow-dark),
+      -3px -3px 7px var(--neu-shadow-light);
     transition:
       transform 0.3s ease,
       background 0.3s ease,
@@ -208,7 +208,7 @@
     transform: translateX(1.5rem);
     background: var(--accent-primary);
     box-shadow:
-      2px 2px 6px var(--neuro-shadow-dark),
+      2px 2px 6px var(--neu-shadow-dark),
       0 0 12px rgb(212 168 67 / 25%);
   }
 }
@@ -217,27 +217,27 @@
 // CARDS
 // ============================================================================
 
-.neuro-card {
-  @include neuro-base;
+.neu-card {
+  @include neu-base;
   border-radius: var(--radius-2xl);
-  border-top: 1px solid var(--neuro-highlight);
+  border-top: 1px solid var(--neu-highlight);
   padding: 1.5rem;
   box-shadow:
-    0 2px 4px var(--neuro-shadow-mid),
-    8px 8px 20px var(--neuro-shadow-dark),
-    -6px -6px 16px var(--neuro-shadow-light);
+    0 2px 4px var(--neu-shadow-mid),
+    8px 8px 20px var(--neu-shadow-dark),
+    -6px -6px 16px var(--neu-shadow-light);
 }
 
 // Layered card with gold gradient overlay
-.neuro-card-layered {
-  @include neuro-base;
+.neu-card-layered {
+  @include neu-base;
   position: relative;
   border-radius: var(--radius-2xl);
   padding: 1.5rem;
   box-shadow:
-    0 2px 4px var(--neuro-shadow-mid),
-    8px 8px 20px var(--neuro-shadow-dark),
-    -6px -6px 16px var(--neuro-shadow-light);
+    0 2px 4px var(--neu-shadow-mid),
+    8px 8px 20px var(--neu-shadow-dark),
+    -6px -6px 16px var(--neu-shadow-light);
   overflow: hidden;
 
   &::before {
@@ -259,13 +259,13 @@
 // PROGRESS BAR
 // ============================================================================
 
-.neuro-progress {
-  @include neuro-base;
+.neu-progress {
+  @include neu-base;
   border-radius: var(--radius-full);
   height: 0.75rem;
   box-shadow:
-    inset 3px 3px 7px var(--neuro-shadow-dark),
-    inset -3px -3px 7px var(--neuro-shadow-light);
+    inset 3px 3px 7px var(--neu-shadow-dark),
+    inset -3px -3px 7px var(--neu-shadow-light);
   overflow: hidden;
 
   &-fill {
@@ -273,7 +273,7 @@
     border-radius: var(--radius-full);
     background: linear-gradient(90deg, var(--gold-500), var(--gold-400), var(--gold-300));
     box-shadow:
-      2px 2px 4px var(--neuro-shadow-dark),
+      2px 2px 4px var(--neu-shadow-dark),
       0 0 8px rgb(212 168 67 / 20%);
     transition: width 0.5s ease;
   }
@@ -283,20 +283,20 @@
 // PRESSED-ACTIVE STATE — used for interactive selection patterns
 // ============================================================================
 
-.neuro-pressed-active {
-  @include neuro-base;
+.neu-pressed-active {
+  @include neu-base;
   border-radius: var(--radius-xl);
   box-shadow:
-    inset 4px 4px 10px var(--neuro-shadow-dark),
-    inset -4px -4px 10px var(--neuro-shadow-light);
+    inset 4px 4px 10px var(--neu-shadow-dark),
+    inset -4px -4px 10px var(--neu-shadow-light);
 }
 
 // Gold-accented pressed state (use intentionally for premium feel)
-.neuro-pressed-gold {
-  @include neuro-base;
+.neu-pressed-gold {
+  @include neu-base;
   border-radius: var(--radius-xl);
   box-shadow:
-    inset 4px 4px 10px var(--neuro-shadow-dark),
-    inset -4px -4px 10px var(--neuro-shadow-light),
+    inset 4px 4px 10px var(--neu-shadow-dark),
+    inset -4px -4px 10px var(--neu-shadow-light),
     inset 0 0 0 1px var(--border-accent-gold, rgb(212 168 67 / 12%));
 }

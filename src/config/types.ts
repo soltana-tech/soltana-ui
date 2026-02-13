@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------
 
 export type Theme = 'dark' | 'light' | 'sepia' | 'auto';
-export type Material = 'flat' | 'soft' | 'neuro' | 'glass' | 'metallic' | 'stone';
+export type Material = 'flat' | 'soft' | 'neu' | 'glass' | 'metallic' | 'stone';
 export type Surface = 'polished' | 'frosted' | 'stained' | 'metallic';
 export type Ornament = 'none' | 'baroque' | 'carved' | 'faceted' | 'gilt';
 

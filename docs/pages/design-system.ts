@@ -242,8 +242,8 @@ export function renderDesignSystem(): string {
         <span class="tag">Tag</span>
       </div>
     </div>
-    <div class="material-neuro p-6 rounded-xl" style="min-height: 200px;">
-      <span class="tag tag-gold mb-3">.material-neuro</span>
+    <div class="material-neu p-6 rounded-xl" style="min-height: 200px;">
+      <span class="tag tag-gold mb-3">.material-neu</span>
       <p class="text-sm text-secondary mb-4 mt-3">Solid surfaces with soft dual shadows extruding from the surface. No transparency or blur. The polished marble aesthetic.</p>
       <div class="flex flex-wrap gap-2">
         <button class="btn btn-primary btn-sm">Primary</button>
@@ -300,7 +300,7 @@ export function renderDesignSystem(): string {
     'Material Override Classes',
     `
     <p class="text-sm text-secondary mb-4">The global material is set via <code>initSoltana()</code>. Use override classes for per-element exceptions:</p>
-    ${codeExample('<!-- Global material from config applies to all components -->\n<button class="btn btn-primary">Uses Global Material</button>\n<div class="card p-6">Uses Global Material</div>\n\n<!-- Override specific elements -->\n<button class="btn material-glass">Glass Button</button>\n<div class="card material-neuro p-6">Neumorphic Card</div>', 'html')}
+    ${codeExample('<!-- Global material from config applies to all components -->\n<button class="btn btn-primary">Uses Global Material</button>\n<div class="card p-6">Uses Global Material</div>\n\n<!-- Override specific elements -->\n<button class="btn material-glass">Glass Button</button>\n<div class="card material-neu p-6">Neumorphic Card</div>', 'html')}
   `
   )}
 
@@ -315,22 +315,22 @@ export function renderDesignSystem(): string {
   <h3 class="text-xl font-semibold mt-6 mb-4 font-serif">Surface Comparison Matrix</h3>
   <p class="text-sm text-secondary mb-6">Each surface renders differently depending on the active material. Glass uses blur effects, while neumorphic uses texture overlays and gradients.</p>
 
-  <!-- Neuro + Surfaces -->
+  <!-- Neu + Surfaces -->
   <h4 class="text-lg font-semibold mt-8 mb-3 text-secondary">Neumorphic Material</h4>
   <div class="grid gap-4 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))">
-    <div class="material-neuro surface-polished card p-5 rounded-xl text-center" style="min-height: 140px;">
+    <div class="material-neu surface-polished card p-5 rounded-xl text-center" style="min-height: 140px;">
       <span class="tag tag-gold mb-2">polished</span>
       <p class="text-sm text-secondary mt-2">Clean, solid surface. Default neumorphic look.</p>
     </div>
-    <div class="material-neuro surface-frosted card p-5 rounded-xl text-center" style="min-height: 140px;">
+    <div class="material-neu surface-frosted card p-5 rounded-xl text-center" style="min-height: 140px;">
       <span class="tag tag-sapphire mb-2">frosted</span>
       <p class="text-sm text-secondary mt-2">Subtle matte texture overlay for etched stone effect.</p>
     </div>
-    <div class="material-neuro surface-stained card p-5 rounded-xl text-center" style="min-height: 140px;">
+    <div class="material-neu surface-stained card p-5 rounded-xl text-center" style="min-height: 140px;">
       <span class="tag tag-ruby mb-2">stained</span>
       <p class="text-sm text-secondary mt-2">Jewel-toned color overlay for tinted stone.</p>
     </div>
-    <div class="material-neuro surface-metallic card p-5 rounded-xl text-center" style="min-height: 140px;">
+    <div class="material-neu surface-metallic card p-5 rounded-xl text-center" style="min-height: 140px;">
       <span class="tag tag-citrine mb-2">metallic</span>
       <p class="text-sm text-secondary mt-2">Brushed metal gradient sheen.</p>
     </div>
@@ -403,7 +403,7 @@ export function renderDesignSystem(): string {
     'Applying Surfaces',
     `
     <p class="text-sm text-secondary mb-4">Surfaces are set globally via <code>initSoltana()</code>. Use override classes for per-element exceptions:</p>
-    ${codeExample('// Set surface globally\nconst soltana = initSoltana({\n  material: "neuro",\n  surface: "frosted",  // All components get frosted surface\n});\n\n// Change at runtime\nsoltana.setSurface("metallic");', 'javascript')}
+    ${codeExample('// Set surface globally\nconst soltana = initSoltana({\n  material: "neu",\n  surface: "frosted",  // All components get frosted surface\n});\n\n// Change at runtime\nsoltana.setSurface("metallic");', 'javascript')}
     ${codeExample('<!-- Override surface on specific elements -->\n<div class="card surface-frosted p-6">Frosted card</div>\n\n<!-- Combine material + surface overrides -->\n<div class="card material-glass surface-stained p-6">Stained glass card</div>', 'html')}
   `
   )}
@@ -461,10 +461,10 @@ export function renderDesignSystem(): string {
           <p class="text-sm text-secondary mt-2">Glass + Gold leaf border</p>
         </div>
       </div>
-      <div class="material-neuro p-5 rounded-xl">
+      <div class="material-neu p-5 rounded-xl">
         <div class="ornament-carved card p-4 rounded-lg">
           <span class="tag tag-emerald">.ornament-carved</span>
-          <p class="text-sm text-secondary mt-2">Neuro + Carved stone relief</p>
+          <p class="text-sm text-secondary mt-2">Neu + Carved stone relief</p>
         </div>
       </div>
     </div>
