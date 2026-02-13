@@ -5,7 +5,16 @@
 // SCSS selector blocks for the chosen theme, material, surface, and ornament.
 // ---------------------------------------------------------------------------
 
-import type { SoltanaConfig, SoltanaInstance, Theme, Material, Surface, Ornament } from './types';
+import type {
+  SoltanaConfig,
+  SoltanaInstance,
+  EnhancerCleanup,
+  Theme,
+  Material,
+  Surface,
+  Ornament,
+} from './types';
+import { initAll } from '../enhancers/index.js';
 import { loadSoltanaFonts } from '../fonts/index';
 
 const DEFAULT_CONFIG: SoltanaConfig = {
@@ -14,6 +23,7 @@ const DEFAULT_CONFIG: SoltanaConfig = {
   surface: 'polished',
   ornament: 'none',
   fonts: false,
+  enhancers: true,
 };
 
 const ORNAMENT_CLASSES = [
@@ -31,6 +41,9 @@ const VALID_ORNAMENTS: readonly Ornament[] = ['none', 'baroque', 'carved', 'face
 // Module-level state for matchMedia listener cleanup
 let _mql: MediaQueryList | null = null;
 let _mqlHandler: (() => void) | null = null;
+
+// Module-level state for enhancer cleanup
+let _enhancerCleanup: EnhancerCleanup | null = null;
 
 function resolveTheme(theme: Theme): 'dark' | 'light' | 'sepia' {
   if (theme !== 'auto') return theme;
@@ -121,6 +134,15 @@ export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaIns
   applyConfig(state);
   setupAutoTheme(state);
 
+  // Initialize JS enhancers for interactive components
+  if (_enhancerCleanup) {
+    _enhancerCleanup.destroy();
+    _enhancerCleanup = null;
+  }
+  if (state.enhancers !== false) {
+    _enhancerCleanup = initAll();
+  }
+
   return {
     getState(): SoltanaConfig {
       return { ...state };
@@ -156,6 +178,13 @@ export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaIns
       applyOverrides(overrides);
     },
 
+    reinit(): void {
+      if (_enhancerCleanup) {
+        _enhancerCleanup.destroy();
+      }
+      _enhancerCleanup = initAll();
+    },
+
     reset(): void {
       Object.assign(state, DEFAULT_CONFIG);
       state.overrides = {};
@@ -163,10 +192,22 @@ export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaIns
       // Clear any inline override styles
       document.documentElement.removeAttribute('style');
       applyConfig(state);
+      // Re-initialize enhancers
+      if (_enhancerCleanup) {
+        _enhancerCleanup.destroy();
+        _enhancerCleanup = null;
+      }
+      if (state.enhancers !== false) {
+        _enhancerCleanup = initAll();
+      }
     },
 
     destroy(): void {
       teardownAutoTheme();
+      if (_enhancerCleanup) {
+        _enhancerCleanup.destroy();
+        _enhancerCleanup = null;
+      }
       const root = document.documentElement;
       root.removeAttribute('data-theme');
       root.removeAttribute('data-material');

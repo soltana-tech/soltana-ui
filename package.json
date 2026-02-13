@@ -40,14 +40,6 @@
     },
     "./css": "./dist/soltana-ui.css",
     "./style.css": "./dist/soltana-ui.css",
-    "./enhancers": {
-      "types": "./dist/enhancers/index.d.ts",
-      "import": "./dist/soltana-ui.js"
-    },
-    "./config": {
-      "types": "./dist/config/index.d.ts",
-      "import": "./dist/soltana-ui.js"
-    },
     "./scss": "./src/styles/index.scss",
     "./scss/*": "./src/styles/*"
   },

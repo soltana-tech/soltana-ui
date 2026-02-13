@@ -145,11 +145,11 @@ Material defines bg, shadows, blur, saturation, opacity, border. Surface redefin
 
 ### SCSS-5: Race condition in material defaults
 
-`TODO` · Size: **S**
+`DONE` · Size: **S**
 
-`:root` fallbacks in `_material-system.scss` are hardcoded colors. If JS hasn't set `[data-material]` yet, components render with hardcoded midnight blue.
+`:root` fallbacks in `_material-system.scss` were hardcoded colors. Components rendered with midnight blue before JS set `[data-material]`.
 
-**Proposed fix:** Use CSS variable fallbacks that chain to theme-aware defaults.
+- Progress: Replaced hardcoded color fallbacks with chained theme-aware variables (`var(--surface-2)`, `var(--glass-shadow)`, etc.).
 
 ### SCSS-6: Z-index scale is broken
 
@@ -163,11 +163,11 @@ Scale goes 0–50 but `.skip-link` hardcodes `z-index: 9999`. Modal backdrop sit
 
 ### SCSS-7: Transition durations inconsistent
 
-`TODO` · Size: **M**
+`DONE` · Size: **M**
 
-Duration tokens defined (fast: 75ms, normal: 150ms, slow: 300ms, slower: 500ms) but no component uses them. Buttons alone use 4 different hardcoded durations. Easing functions are raw `ease` not the defined cubic-bezier.
+Duration tokens were defined but unused. Components hardcoded durations and used raw `ease` instead of cubic-bezier tokens.
 
-**Proposed fix:** Use defined transition tokens in all components. Add easing presets to the token system.
+- Progress: Added easing token map (`$easings`) with `--easing-in`, `--easing-out`, `--easing-in-out` custom properties. Replaced all hardcoded durations and easing values across 11 component/material files with `var(--transition-*)` and `var(--easing-*)` tokens.
 
 ### SCSS-8: Naming convention inconsistent
 
@@ -179,11 +179,11 @@ Single-dash everywhere (`.btn-gold`, `.card-baroque`) except card material varia
 
 ### SCSS-9: Theme variable gaps
 
-`TODO` · Size: **S**
+`DONE` · Size: **S**
 
-Sepia theme missing `--border-accent-gold-strong` which exists in dark and light themes. Silent fallback to inherited values.
+Sepia theme was missing `--border-accent-gold-strong` and `--border-accent-gold`. Light and sepia themes were missing `--neu-accent-glow`.
 
-**Proposed fix:** Audit all three themes for variable parity.
+- Progress: Added missing variables to sepia (`--border-accent-gold`, `--border-accent-gold-strong`) and both sepia/light (`--neu-accent-glow`).
 
 ### SCSS-10: Color scales unused
 
@@ -345,11 +345,11 @@ No aspect-ratio (except golden ratio), animation, filter, transform utilities. W
 
 ### DX-1: First-time setup unclear
 
-`TODO` · Size: **M**
+`DONE` · Size: **M**
 
 CSS import separate from JS with no guidance. Silent failure — components render unstyled. 6 package export paths with no guidance on which to use.
 
-**Proposed fix:** Document required imports clearly. Consider single-import setup.
+- Progress: Removed redundant `./enhancers` and `./config` subpath exports from `package.json`. `initSoltana()` is now the single entry point — it handles both config and enhancer initialization. Remaining documentation gaps (onboarding guide, import examples) tracked by DOC-9/DOC-10.
 
 ### DX-2: Material vs surface confusing
 
@@ -367,11 +367,11 @@ Package exports TypeScript types for config but not for CSS classes. No way to d
 
 ### DX-4: Enhancers fail silently
 
-`TODO` · Size: **S**
+`DONE` · Size: **S**
 
 Using `[data-sol-modal]` without `initModals()` produces non-functional element. No warning.
 
-**Proposed fix:** Log a warning when `[data-sol-*]` element exists but enhancer hasn't been initialized.
+- Progress: `initSoltana()` now auto-initializes all enhancers by default (`enhancers: true`). Opt out with `enhancers: false`. Added `reinit()` for dynamically added `[data-sol-*]` elements. Enhancer cleanup folded into `destroy()` and `reset()`.
 
 ### DX-5: No framework integration
 

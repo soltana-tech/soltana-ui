@@ -2,6 +2,15 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { initSoltana } from './index';
 import { _resetFontLoader } from '../fonts/index';
 
+const mockDestroy = vi.fn();
+vi.mock('../enhancers/index.js', () => ({
+  initAll: vi.fn(() => ({ destroy: mockDestroy })),
+}));
+
+// Access the mock after vi.mock hoisting
+import { initAll } from '../enhancers/index.js';
+const mockInitAll = vi.mocked(initAll);
+
 describe('initSoltana', () => {
   beforeEach(() => {
     document.documentElement.removeAttribute('data-theme');
@@ -11,6 +20,8 @@ describe('initSoltana', () => {
     document.body.className = '';
     document.head.innerHTML = '';
     _resetFontLoader();
+    mockInitAll.mockClear();
+    mockDestroy.mockClear();
   });
 
   it('applies default config', () => {
@@ -202,5 +213,57 @@ describe('initSoltana', () => {
     expect(addSpy).toHaveBeenCalledTimes(2);
 
     vi.restoreAllMocks();
+  });
+
+  it('auto-initializes enhancers by default', () => {
+    initSoltana();
+    expect(mockInitAll).toHaveBeenCalledTimes(1);
+  });
+
+  it('skips enhancers when enhancers: false', () => {
+    initSoltana({ enhancers: false });
+    expect(mockInitAll).not.toHaveBeenCalled();
+  });
+
+  it('destroy cleans up enhancer listeners', () => {
+    const soltana = initSoltana();
+    expect(mockInitAll).toHaveBeenCalledTimes(1);
+
+    soltana.destroy();
+    expect(mockDestroy).toHaveBeenCalledTimes(1);
+  });
+
+  it('destroy with enhancers: false does not call enhancer cleanup', () => {
+    const soltana = initSoltana({ enhancers: false });
+    soltana.destroy();
+    expect(mockDestroy).not.toHaveBeenCalled();
+  });
+
+  it('reinit destroys and re-initializes enhancers', () => {
+    const soltana = initSoltana();
+    expect(mockInitAll).toHaveBeenCalledTimes(1);
+
+    soltana.reinit();
+    expect(mockDestroy).toHaveBeenCalledTimes(1);
+    expect(mockInitAll).toHaveBeenCalledTimes(2);
+  });
+
+  it('reset re-initializes enhancers', () => {
+    const soltana = initSoltana();
+    const destroyCountAfterInit = mockDestroy.mock.calls.length;
+    const initCountAfterInit = mockInitAll.mock.calls.length;
+
+    soltana.reset();
+    expect(mockDestroy).toHaveBeenCalledTimes(destroyCountAfterInit + 1);
+    expect(mockInitAll).toHaveBeenCalledTimes(initCountAfterInit + 1);
+  });
+
+  it('multiple initSoltana calls clean up previous enhancers', () => {
+    initSoltana();
+    const destroyCountAfterFirst = mockDestroy.mock.calls.length;
+
+    initSoltana();
+    // Second call should destroy the first enhancer setup
+    expect(mockDestroy).toHaveBeenCalledTimes(destroyCountAfterFirst + 1);
   });
 });

@@ -13,6 +13,7 @@ export interface SoltanaConfig {
   surface: Surface;
   ornament: Ornament;
   fonts?: boolean;
+  enhancers?: boolean;
   overrides?: Record<string, string>;
 }
 
@@ -23,6 +24,7 @@ export interface SoltanaInstance {
   setSurface(surface: Surface): void;
   setOrnament(ornament: Ornament): void;
   setOverrides(overrides: Record<string, string>): void;
+  reinit(): void;
   reset(): void;
   destroy(): void;
 }
