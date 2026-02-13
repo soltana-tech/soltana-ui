@@ -5,13 +5,19 @@
 // Handles open/close triggers, focus trapping, Escape key, and backdrop click.
 // ---------------------------------------------------------------------------
 
+import type { EnhancerCleanup } from '../config/types';
+
 const FOCUSABLE =
   'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), ' +
   'textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
+let _controller: AbortController | null = null;
+let _openCount = 0;
+
 function openModal(modal: HTMLElement): void {
   modal.classList.add('active');
   modal.setAttribute('aria-hidden', 'false');
+  _openCount++;
   document.body.style.overflow = 'hidden';
 
   // Focus the first focusable element inside the modal content
@@ -25,7 +31,10 @@ function openModal(modal: HTMLElement): void {
 function closeModal(modal: HTMLElement): void {
   modal.classList.remove('active');
   modal.setAttribute('aria-hidden', 'true');
-  document.body.style.overflow = '';
+  _openCount = Math.max(0, _openCount - 1);
+  if (_openCount === 0) {
+    document.body.style.overflow = '';
+  }
 }
 
 function trapFocus(modal: HTMLElement, e: KeyboardEvent): void {
@@ -57,46 +66,80 @@ function trapFocus(modal: HTMLElement, e: KeyboardEvent): void {
  * Enhance all [data-sol-modal] elements on the page.
  * Open triggers: elements with [data-modal-open="<modal-id>"]
  * Close triggers: elements with [data-modal-close] inside the modal
+ *
+ * Returns a cleanup object. Calling destroy() removes all listeners.
+ * Re-calling initModals() automatically cleans up previous listeners.
  */
-export function initModals(): void {
+export function initModals(): EnhancerCleanup {
+  _controller?.abort();
+  _controller = new AbortController();
+  _openCount = 0;
+  document.body.style.overflow = '';
+  const { signal } = _controller;
+
   // Open triggers
   document.querySelectorAll<HTMLElement>('[data-modal-open]').forEach((trigger) => {
-    trigger.addEventListener('click', () => {
-      const targetId = trigger.getAttribute('data-modal-open');
-      if (!targetId) return;
-      const modal = document.getElementById(targetId);
-      if (modal?.hasAttribute('data-sol-modal')) {
-        openModal(modal);
-      }
-    });
+    trigger.addEventListener(
+      'click',
+      () => {
+        const targetId = trigger.getAttribute('data-modal-open');
+        if (!targetId) return;
+        const modal = document.getElementById(targetId);
+        if (modal?.hasAttribute('data-sol-modal')) {
+          openModal(modal);
+        }
+      },
+      { signal }
+    );
   });
 
   // Close triggers and keyboard handling per modal
   document.querySelectorAll<HTMLElement>('[data-sol-modal]').forEach((modal) => {
     // Close buttons inside modal
     modal.querySelectorAll<HTMLElement>('[data-modal-close]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        closeModal(modal);
-      });
+      btn.addEventListener(
+        'click',
+        () => {
+          closeModal(modal);
+        },
+        { signal }
+      );
     });
 
     // Backdrop click
     const backdrop = modal.querySelector<HTMLElement>('.modal-backdrop');
-    backdrop?.addEventListener('click', (e) => {
-      if (e.target === backdrop) {
-        closeModal(modal);
-      }
-    });
+    backdrop?.addEventListener(
+      'click',
+      (e) => {
+        if (e.target === backdrop) {
+          closeModal(modal);
+        }
+      },
+      { signal }
+    );
 
     // Escape key and focus trapping
-    modal.addEventListener('keydown', (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        closeModal(modal);
-        return;
-      }
-      if (e.key === 'Tab') {
-        trapFocus(modal, e);
-      }
-    });
+    modal.addEventListener(
+      'keydown',
+      (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          closeModal(modal);
+          return;
+        }
+        if (e.key === 'Tab') {
+          trapFocus(modal, e);
+        }
+      },
+      { signal }
+    );
   });
+
+  return {
+    destroy() {
+      _controller?.abort();
+      _controller = null;
+      _openCount = 0;
+      document.body.style.overflow = '';
+    },
+  };
 }

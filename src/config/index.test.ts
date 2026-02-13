@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { initSoltana } from './index';
 
 describe('initSoltana', () => {
@@ -95,5 +95,66 @@ describe('initSoltana', () => {
     const resolved = document.documentElement.getAttribute('data-theme');
     expect(['dark', 'light']).toContain(resolved);
     expect(soltana.getState().theme).toBe('auto');
+  });
+
+  it('setOverrides works after reset', () => {
+    const soltana = initSoltana();
+    soltana.setOverrides({ '--a': '1' });
+    soltana.reset();
+
+    // Should not throw
+    soltana.setOverrides({ '--b': '2' });
+    expect(document.documentElement.style.getPropertyValue('--b')).toBe('2');
+  });
+
+  it('destroy removes data attributes and ornament classes', () => {
+    const soltana = initSoltana({
+      theme: 'sepia',
+      material: 'glass',
+      surface: 'frosted',
+      ornament: 'baroque',
+    });
+    soltana.setOverrides({ '--x': '10' });
+
+    soltana.destroy();
+
+    expect(document.documentElement.getAttribute('data-theme')).toBeNull();
+    expect(document.documentElement.getAttribute('data-material')).toBeNull();
+    expect(document.documentElement.getAttribute('data-surface')).toBeNull();
+    expect(document.body.classList.contains('ornament-baroque')).toBe(false);
+  });
+
+  it('warns on invalid theme', () => {
+    const spy = vi.spyOn(console, 'warn').mockImplementation(vi.fn());
+    initSoltana({ theme: 'neon' as never });
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining('Invalid theme'));
+    spy.mockRestore();
+  });
+
+  it('warns on invalid material', () => {
+    const spy = vi.spyOn(console, 'warn').mockImplementation(vi.fn());
+    initSoltana({ material: 'paper' as never });
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining('Invalid material'));
+    spy.mockRestore();
+  });
+
+  it('multiple initSoltana calls do not accumulate matchMedia listeners', () => {
+    const removeSpy = vi.fn();
+    const addSpy = vi.fn();
+    const mql = {
+      matches: false,
+      addEventListener: addSpy,
+      removeEventListener: removeSpy,
+    };
+    vi.spyOn(window, 'matchMedia').mockReturnValue(mql as unknown as MediaQueryList);
+
+    initSoltana({ theme: 'auto' });
+    initSoltana({ theme: 'auto' });
+
+    // Second call should have removed the first listener before adding a new one
+    expect(removeSpy).toHaveBeenCalled();
+    expect(addSpy).toHaveBeenCalledTimes(2);
+
+    vi.restoreAllMocks();
   });
 });

@@ -76,4 +76,34 @@ describe('initTabs', () => {
     tablist.dispatchEvent(new KeyboardEvent('keydown', { key: 'Home', bubbles: true }));
     expect(tabs[0].getAttribute('aria-selected')).toBe('true');
   });
+
+  it('double initTabs does not duplicate handlers', () => {
+    const container = createTabsFixture();
+    initTabs();
+    initTabs(); // second call should replace, not duplicate
+
+    const tabs = container.querySelectorAll<HTMLElement>('[role="tab"]');
+    const panels = container.querySelectorAll<HTMLElement>('[role="tabpanel"]');
+
+    tabs[1].click();
+
+    // Tab 1 should be active, tab 0 inactive — no duplication artifacts
+    expect(tabs[1].getAttribute('aria-selected')).toBe('true');
+    expect(tabs[0].getAttribute('aria-selected')).toBe('false');
+    expect(panels[1].hidden).toBe(false);
+    expect(panels[0].hidden).toBe(true);
+  });
+
+  it('destroy removes all listeners', () => {
+    const container = createTabsFixture();
+    const cleanup = initTabs();
+
+    cleanup.destroy();
+
+    const tabs = container.querySelectorAll<HTMLElement>('[role="tab"]');
+    tabs[1].click();
+
+    // Tab 0 should remain selected since listeners are gone
+    expect(tabs[0].getAttribute('aria-selected')).toBe('true');
+  });
 });

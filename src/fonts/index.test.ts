@@ -16,4 +16,14 @@ describe('loadSoltanaFonts', () => {
     expect(rels).toContain('preconnect');
     expect(rels).toContain('stylesheet');
   });
+
+  it('second call is a no-op', () => {
+    loadSoltanaFonts();
+    const countAfterFirst = document.head.querySelectorAll('link').length;
+
+    loadSoltanaFonts();
+    const countAfterSecond = document.head.querySelectorAll('link').length;
+
+    expect(countAfterSecond).toBe(countAfterFirst);
+  });
 });

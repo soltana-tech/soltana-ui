@@ -24,4 +24,9 @@ export interface SoltanaInstance {
   setOrnament(ornament: Ornament): void;
   setOverrides(overrides: Record<string, string>): void;
   reset(): void;
+  destroy(): void;
+}
+
+export interface EnhancerCleanup {
+  destroy(): void;
 }

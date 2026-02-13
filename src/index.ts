@@ -5,6 +5,7 @@ export { initSoltana } from './config/index.js';
 export type {
   SoltanaConfig,
   SoltanaInstance,
+  EnhancerCleanup,
   Theme,
   Material,
   Surface,

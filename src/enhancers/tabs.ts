@@ -5,6 +5,10 @@
 // Handles tab switching, keyboard navigation, and ARIA attributes.
 // ---------------------------------------------------------------------------
 
+import type { EnhancerCleanup } from '../config/types';
+
+let _controller: AbortController | null = null;
+
 function activateTab(container: HTMLElement, index: number): void {
   const tabs = container.querySelectorAll<HTMLElement>('[role="tab"]');
   const panels = container.querySelectorAll<HTMLElement>('[role="tabpanel"]');
@@ -42,8 +46,15 @@ function getActiveIndex(container: HTMLElement): number {
  *     <div role="tabpanel">Panel 1</div>
  *     <div role="tabpanel" hidden>Panel 2</div>
  *   </div>
+ *
+ * Returns a cleanup object. Calling destroy() removes all listeners.
+ * Re-calling initTabs() automatically cleans up previous listeners.
  */
-export function initTabs(): void {
+export function initTabs(): EnhancerCleanup {
+  _controller?.abort();
+  _controller = new AbortController();
+  const { signal } = _controller;
+
   document.querySelectorAll<HTMLElement>('[data-sol-tabs]').forEach((container) => {
     const tabs = container.querySelectorAll<HTMLElement>('[role="tab"]');
     const count = tabs.length;
@@ -70,44 +81,59 @@ export function initTabs(): void {
 
     // Click handler
     tabs.forEach((tab, i) => {
-      tab.addEventListener('click', () => {
-        activateTab(container, i);
-        tab.focus();
-      });
+      tab.addEventListener(
+        'click',
+        () => {
+          activateTab(container, i);
+          tab.focus();
+        },
+        { signal }
+      );
     });
 
     // Keyboard navigation on the tablist
     const tablist = container.querySelector('[role="tablist"]');
-    tablist?.addEventListener('keydown', (e: Event) => {
-      const ke = e as KeyboardEvent;
-      const current = getActiveIndex(container);
-      let next = current;
+    tablist?.addEventListener(
+      'keydown',
+      (e: Event) => {
+        const ke = e as KeyboardEvent;
+        const current = getActiveIndex(container);
+        let next = current;
 
-      switch (ke.key) {
-        case 'ArrowRight':
-        case 'ArrowDown':
-          ke.preventDefault();
-          next = (current + 1) % count;
-          break;
-        case 'ArrowLeft':
-        case 'ArrowUp':
-          ke.preventDefault();
-          next = (current - 1 + count) % count;
-          break;
-        case 'Home':
-          ke.preventDefault();
-          next = 0;
-          break;
-        case 'End':
-          ke.preventDefault();
-          next = count - 1;
-          break;
-        default:
-          return;
-      }
+        switch (ke.key) {
+          case 'ArrowRight':
+          case 'ArrowDown':
+            ke.preventDefault();
+            next = (current + 1) % count;
+            break;
+          case 'ArrowLeft':
+          case 'ArrowUp':
+            ke.preventDefault();
+            next = (current - 1 + count) % count;
+            break;
+          case 'Home':
+            ke.preventDefault();
+            next = 0;
+            break;
+          case 'End':
+            ke.preventDefault();
+            next = count - 1;
+            break;
+          default:
+            return;
+        }
 
-      activateTab(container, next);
-      tabs[next].focus();
-    });
+        activateTab(container, next);
+        tabs[next].focus();
+      },
+      { signal }
+    );
   });
+
+  return {
+    destroy() {
+      _controller?.abort();
+      _controller = null;
+    },
+  };
 }

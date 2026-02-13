@@ -72,4 +72,67 @@ describe('initModals', () => {
     backdrop?.click();
     expect(modal.classList.contains('active')).toBe(false);
   });
+
+  it('overflow stacking with multiple modals', () => {
+    const { modal: modal1, trigger: trigger1 } = createModalFixture();
+    // Create a second modal
+    const modal2 = document.createElement('div');
+    modal2.id = 'test-modal-2';
+    modal2.setAttribute('data-sol-modal', '');
+    modal2.setAttribute('aria-hidden', 'true');
+    modal2.innerHTML = `
+      <div class="modal-backdrop"></div>
+      <div class="modal__content" role="dialog" aria-modal="true">
+        <button data-modal-close>Close</button>
+      </div>
+    `;
+    const trigger2 = document.createElement('button');
+    trigger2.setAttribute('data-modal-open', 'test-modal-2');
+    document.body.appendChild(modal2);
+    document.body.appendChild(trigger2);
+
+    initModals();
+
+    trigger1.click();
+    trigger2.click();
+    expect(document.body.style.overflow).toBe('hidden');
+
+    // Close first modal — overflow should still be hidden
+    const close1 = modal1.querySelector<HTMLElement>('[data-modal-close]');
+    close1?.click();
+    expect(document.body.style.overflow).toBe('hidden');
+
+    // Close second modal — overflow should be restored
+    const close2 = modal2.querySelector<HTMLElement>('[data-modal-close]');
+    close2?.click();
+    expect(document.body.style.overflow).toBe('');
+  });
+
+  it('double initModals does not duplicate handlers', () => {
+    const { modal, trigger } = createModalFixture();
+    initModals();
+    initModals(); // second call should replace listeners, not duplicate
+
+    let openCount = 0;
+    const origAdd = modal.classList.add.bind(modal.classList);
+    modal.classList.add = (...args: string[]) => {
+      if (args.includes('active')) openCount++;
+      origAdd(...args);
+    };
+
+    trigger.click();
+    // If listeners were duplicated, openCount would be 2
+    expect(openCount).toBe(1);
+  });
+
+  it('destroy removes all listeners', () => {
+    const { modal, trigger } = createModalFixture();
+    const cleanup = initModals();
+
+    cleanup.destroy();
+
+    trigger.click();
+    expect(modal.classList.contains('active')).toBe(false);
+    expect(modal.getAttribute('aria-hidden')).toBe('true');
+  });
 });

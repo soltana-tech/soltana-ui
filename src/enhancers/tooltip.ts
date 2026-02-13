@@ -5,6 +5,9 @@
 // Creates and positions tooltips on hover/focus.
 // ---------------------------------------------------------------------------
 
+import type { EnhancerCleanup } from '../config/types';
+
+let _controller: AbortController | null = null;
 let tooltipEl: HTMLElement | null = null;
 let activeTarget: HTMLElement | null = null;
 
@@ -26,6 +29,11 @@ function showTooltip(target: HTMLElement): void {
   const text = target.getAttribute('data-sol-tooltip');
   if (!text) return;
 
+  // Clean up previous target's aria-describedby if switching targets
+  if (activeTarget && activeTarget !== target) {
+    activeTarget.removeAttribute('aria-describedby');
+  }
+
   const tip = getOrCreateTooltip();
   tip.textContent = text;
   tip.style.opacity = '1';
@@ -37,7 +45,10 @@ function showTooltip(target: HTMLElement): void {
   }
   target.setAttribute('aria-describedby', tip.id);
 
-  positionTooltip(target, tip);
+  // Defer positioning to next frame so the browser has painted the tooltip
+  requestAnimationFrame(() => {
+    positionTooltip(target, tip);
+  });
 }
 
 function hideTooltip(): void {
@@ -90,19 +101,53 @@ function positionTooltip(target: HTMLElement, tip: HTMLElement): void {
 /**
  * Enhance all [data-sol-tooltip] elements on the page.
  * Shows a positioned tooltip on hover/focus, hides on blur/mouseleave/Escape.
+ *
+ * Returns a cleanup object. Calling destroy() removes all listeners and the tooltip element.
+ * Re-calling initTooltips() automatically cleans up previous listeners.
  */
-export function initTooltips(): void {
+export function initTooltips(): EnhancerCleanup {
+  _controller?.abort();
+  _controller = new AbortController();
+  const { signal } = _controller;
+
   document.querySelectorAll<HTMLElement>('[data-sol-tooltip]').forEach((target) => {
-    target.addEventListener('mouseenter', () => {
-      showTooltip(target);
-    });
-    target.addEventListener('focus', () => {
-      showTooltip(target);
-    });
-    target.addEventListener('mouseleave', hideTooltip);
-    target.addEventListener('blur', hideTooltip);
-    target.addEventListener('keydown', (e: KeyboardEvent) => {
-      if (e.key === 'Escape') hideTooltip();
-    });
+    target.addEventListener(
+      'mouseenter',
+      () => {
+        showTooltip(target);
+      },
+      { signal }
+    );
+    target.addEventListener(
+      'focus',
+      () => {
+        showTooltip(target);
+      },
+      { signal }
+    );
+    target.addEventListener('mouseleave', hideTooltip, { signal });
+    target.addEventListener('blur', hideTooltip, { signal });
+    target.addEventListener(
+      'keydown',
+      (e: KeyboardEvent) => {
+        if (e.key === 'Escape') hideTooltip();
+      },
+      { signal }
+    );
   });
+
+  return {
+    destroy() {
+      _controller?.abort();
+      _controller = null;
+      if (tooltipEl?.isConnected) {
+        tooltipEl.remove();
+      }
+      tooltipEl = null;
+      if (activeTarget) {
+        activeTarget.removeAttribute('aria-describedby');
+        activeTarget = null;
+      }
+    },
+  };
 }
