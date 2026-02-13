@@ -16,7 +16,7 @@ A CSS-first design system built around a 4-tier configuration model:
 | Tier | Options | Mechanism |
 |------|---------|-----------|
 | Theme | dark, light, sepia, auto | `[data-theme]` on `<html>` |
-| Material | neu, glass, hybrid (to be replaced) | `[data-material]` on `<html>` |
+| Material | flat, soft, neu, glass, metallic, stone | `[data-material]` on `<html>` |
 | Surface | polished, frosted, stained, metallic | `[data-surface]` on `<html>` |
 | Ornament | none, baroque, carved, faceted, gilt | `body` class |
 
@@ -135,13 +135,29 @@ Material defines bg, shadows, blur, saturation, opacity, border. Surface redefin
 
 - Progress: Replaced all hardcoded material-specific variables (`--neu-shadow-dark`, `--neu-shadow-mid`, `--neu-shadow-light`, `--neu-highlight`, `--neu-bg`, `--neu-accent-glow`, `--glass-shadow`) with semantic `--material-*` tokens. Replaced raw accent references (`--gold-400`, `--gold-500`, `--bronze-400`, `rgb(212 168 67 / ...)`) with `--accent-gold`, `--accent-gold-hover`, `--accent-primary`, `--border-accent-gold`, `--border-accent-gold-strong`, and `--badge-bg` tokens. Named color variants (`.btn-gold`, `.badge-gold`) and contrast text (`--gold-900`) excluded as intentional.
 
-### SCSS-4: CSS custom property conflicts
+### SCSS-4: Themes are coupled to materials
 
-`TODO` · Size: **M**
+`TODO` · Size: **XL** · Depends on: SCSS-1, SCSS-2
 
-`--neu-bg` and `--surface-1` identical in dark theme. Material-specific variables in `:root` with no namespace. `--gold-gradient` embeds entire gradient at `:root` level. No semantic middle layer.
+Theme files (`_dark.scss`, `_light.scss`, `_sepia.scss`) define ~30 material-specific variables (`--neu-bg`, `--neu-shadow-dark`, `--glass-bg`, `--glass-border`, `--metallic-shadow`, `--stone-highlight`, etc.). This means themes have knowledge of every material. Adding a material requires editing every theme. Adding a theme requires knowing every material. The tiers are entangled when they should be fully independent.
 
-**Proposed fix:** Namespace material variables. Add semantic layer between raw colors and component consumption.
+Additionally, `--neu-bg` duplicates `--surface-1` as a hardcoded value in the dark theme rather than referencing the semantic token. `_ornamental.scss` and the ornament section of `_material-system.scss` reference `--neu-*` primitives directly.
+
+**Root cause:** There is no generic semantic layer between theme color decisions and material appearance. Materials consume theme-defined material-specific primitives instead of deriving their appearance from generic tokens.
+
+**Proposed fix:**
+
+1. Themes define generic depth/highlight/glow tokens instead of per-material variables:
+   - `--shadow-deep`, `--shadow-medium`, `--shadow-soft` (theme-tuned shadow colors at graduated intensities)
+   - `--highlight-strong`, `--highlight-subtle`, `--highlight-glow` (theme-tuned highlight colors)
+   - `--surface-translucent` (theme-aware translucent surface for glass-like materials)
+   - `--accent-glow` (theme-tuned accent glow for ornaments and gilt effects)
+2. Material selectors in `_material-system.scss` derive `--material-*` from these generic tokens. No material references `--neu-*`, `--glass-*`, `--metallic-*`, or `--stone-*` from themes.
+3. The `--neu-*`, `--glass-*`, etc. variable definitions move out of theme files and into the material files that consume them (if needed at all for material-specific utility classes like `.neu-raised`).
+4. Remove `--neu-*` references from `_ornamental.scss` and the ornament section of `_material-system.scss`; replace with semantic tokens.
+5. `_neumorphic.scss`, `_glassmorphic.scss`, `_metallic.scss`, `_stone.scss` utility classes derive from generic tokens or `--material-*` tokens.
+
+**Trade-off:** Some per-material-per-theme visual fine-tuning is lost (e.g., light theme currently uses subtly different shadow base colors for neu vs glass). If specific combinations need special treatment, the recipe/override system (COMB-1) handles it. The extensibility gain outweighs the loss of bespoke tuning.
 
 ### SCSS-5: Race condition in material defaults
 
@@ -217,25 +233,56 @@ Marble textures use 4-8 radial gradients per variant (~20KB). Stained glass pres
 
 **Proposed fix:** Shared gradient mixin. Conditional ornament generation. Audit unused presets.
 
+### SCSS-14: Per-element tier composition
+
+`TODO` · Size: **L** · Depends on: SCSS-4, ORN-1
+
+All 4 tiers should be independently overridable at any element via utility classes or data attributes. Currently `.material-*` and `.surface-*` classes partially work, but full composition — e.g., `<div class="card material-glass surface-frosted ornamented-gilt">` overriding a global `data-material='neu'` — has gaps and is untested.
+
+The tier combination count is linear (t + m + s + o rulesets), not multiplicative (t × m × s × o), because CSS custom properties cascade independently. No combination-specific CSS needs to be generated.
+
+**Proposed fix:**
+
+1. Validate that `.material-*`, `.surface-*`, `[data-theme]`, and ornament classes all work at any DOM depth, not just on `<html>` or `body`.
+2. Ensure stacking works: a `.material-glass` child inside a `[data-material='neu']` parent receives glass treatment, not neu.
+3. Add `.theme-dark`, `.theme-light`, `.theme-sepia` utility classes as aliases for `[data-theme]` overrides on arbitrary elements (themes define many tokens; a class is more ergonomic than a data attribute for per-element use).
+4. Document the composition model and test representative combinations.
+
+### SCSS-15: Extensibility architecture
+
+`TODO` · Size: **L** · Depends on: SCSS-4, SCSS-14
+
+No mechanism for users to add their own theme, material, surface, or ornament without modifying core files. The system should define a clear contract for each tier (which CSS custom properties a custom material must set, etc.) and the TypeScript layer should accept user-defined tier values.
+
+**Proposed fix:**
+
+1. Document the CSS contract per tier:
+   - Custom theme: must define `--surface-*`, `--text-*`, `--border-*`, `--accent-*`, `--shadow-*`, `--highlight-*` tokens.
+   - Custom material: must define `--material-bg`, `--material-shadow-*`, `--material-border`.
+   - Custom surface: must define `--surface-blur`, `--surface-saturation`, `--surface-opacity`, etc.
+   - Custom ornament: must define decoration via `box-shadow`/`outline`/`border-image` (no `::before`/`::after` to avoid conflicts per ORN-1).
+2. TypeScript types accept user-defined values. Replace strict string literal unions with extensible types (e.g., `BuiltinMaterial | (string & {})`) or a registration API.
+3. `warnInvalid()` becomes a registry check rather than a hardcoded array — builtins are pre-registered, user values are registered via config or `registerMaterial()` / `registerTheme()` etc.
+
 ---
 
 ## Aesthetic Range
 
 ### AES-1: Expand material options
 
-`TODO` · Size: **XL** · Depends on: SCSS-1, SCSS-2
+`TODO` · Size: **XL** · Depends on: SCSS-4
 
-All current materials are visually assertive. No flat or near-flat option for clean professional layouts.
+`flat` and `soft` materials already exist (added in SCSS-1). Metallic and stone are wired into config. The remaining gap is that adding *new* materials still requires editing every theme file to define material-specific shadow/highlight variables. After SCSS-4 decouples themes from materials, new materials can be added by defining a single `[data-material]` / `.material-*` ruleset that derives from generic tokens.
 
-**Proposed fix:** Add `flat` (minimal shadow, no blur, crisp edges) and `soft` (very slight shadow, gentle depth). Wire metallic and stone files into config. Final spectrum: flat → soft → neu → glass → metallic → stone.
+**Proposed fix:** After SCSS-4, validate that the generic token contract is sufficient for new materials. Add any additional materials identified in user research. Ensure new materials work across all themes without theme-specific variable definitions.
 
 ### AES-2: Expand surface options
 
-`TODO` · Size: **L**
+`TODO` · Size: **L** · Depends on: SCSS-4
 
 Polished is closest to neutral but the rest are all strong treatments. No calm option.
 
-**Proposed fix:** Add `matte` (zero sheen, solid color) and `paper`/`linen` (subtle texture at low opacity).
+**Proposed fix:** Add `matte` (zero sheen, solid color) and `paper`/`linen` (subtle texture at low opacity). After SCSS-4, new surfaces define `--surface-*` tokens only — no theme knowledge needed.
 
 ### AES-3: Expand ornament options
 
@@ -294,7 +341,7 @@ Baroque defined in 3 places (`_material-system.scss`, `_buttons.scss`, `_ornamen
 
 ### COMB-1: Recipe book
 
-`TODO` · Size: **M** · Depends on: AES-1
+`TODO` · Size: **M** · Depends on: AES-1, SCSS-14
 
 Named presets of proven tier combinations as starting points:
 
@@ -359,11 +406,11 @@ Both control visual appearance. Both modify blur and opacity. Contradictory conf
 
 ### DX-3: No class discoverability
 
-`TODO` · Size: **M**
+`TODO` · Size: **M** · Depends on: SCSS-14, SCSS-15
 
-Package exports TypeScript types for config but not for CSS classes. No way to discover `.card-baroque` without reading source.
+Package exports TypeScript types for config but not for CSS classes. No way to discover `.card-baroque` without reading source. Becomes more critical with per-element composition (SCSS-14) and extensibility (SCSS-15) — developers need to know which `.material-*`, `.surface-*`, and `.ornamented-*` utility classes are available and what custom values have been registered.
 
-**Proposed fix:** Export a class registry or TypeScript const map of available classes per component.
+**Proposed fix:** Export a class registry or TypeScript const map of available classes per tier and component. Include both builtin and user-registered values.
 
 ### DX-4: Enhancers fail silently
 
