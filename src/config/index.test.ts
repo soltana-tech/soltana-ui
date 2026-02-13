@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { initSoltana } from './index';
+import { _resetFontLoader } from '../fonts/index';
 
 describe('initSoltana', () => {
   beforeEach(() => {
@@ -8,6 +9,8 @@ describe('initSoltana', () => {
     document.documentElement.removeAttribute('data-surface');
     document.documentElement.removeAttribute('style');
     document.body.className = '';
+    document.head.innerHTML = '';
+    _resetFontLoader();
   });
 
   it('applies default config', () => {
@@ -146,6 +149,22 @@ describe('initSoltana', () => {
       expect(document.documentElement.getAttribute('data-material')).toBe(material);
     }
   );
+
+  it('default config does not inject font links', () => {
+    initSoltana();
+    const links = document.head.querySelectorAll('link');
+    expect(links.length).toBe(0);
+  });
+
+  it('fonts: true injects font links', () => {
+    initSoltana({ fonts: true });
+    const links = document.head.querySelectorAll('link');
+    expect(links.length).toBeGreaterThanOrEqual(3);
+
+    const rels = Array.from(links).map((l) => l.rel);
+    expect(rels).toContain('preconnect');
+    expect(rels).toContain('stylesheet');
+  });
 
   it('multiple initSoltana calls do not accumulate matchMedia listeners', () => {
     const removeSpy = vi.fn();

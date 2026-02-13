@@ -123,7 +123,7 @@ export function renderGettingStarted(): string {
     'soltana.config.js',
     `
     <p class="text-sm text-secondary mb-4">Create a configuration file in your project:</p>
-    ${codeExample("// soltana.config.js\nexport default {\n  // Base presets (required)\n  theme: 'dark',        // 'light' | 'dark' | 'sepia'\n  material: 'neu',   // 'flat' | 'soft' | 'neu' | 'glass' | 'metallic' | 'stone'\n  surface: 'polished',  // 'polished' | 'frosted' | 'stained' | 'metallic'\n  ornament: 'none',     // 'none' | 'baroque' | 'carved' | 'faceted' | 'gilt'\n  \n  // Variable overrides (optional)\n  overrides: {\n    '--accent-primary': '#ff6b6b',\n    '--gold-400': '#e8c547',\n    '--surface-bg': '#0a0a12',\n  },\n};", 'javascript')}
+    ${codeExample("// soltana.config.js\nexport default {\n  // Base presets (required)\n  theme: 'dark',        // 'light' | 'dark' | 'sepia'\n  material: 'neu',   // 'flat' | 'soft' | 'neu' | 'glass' | 'metallic' | 'stone'\n  surface: 'polished',  // 'polished' | 'frosted' | 'stained' | 'metallic'\n  ornament: 'none',     // 'none' | 'baroque' | 'carved' | 'faceted' | 'gilt'\n  fonts: true,          // opt-in: injects Google Fonts <link> into <head>\n  \n  // Variable overrides (optional)\n  overrides: {\n    '--accent-primary': '#ff6b6b',\n    '--gold-400': '#e8c547',\n    '--surface-bg': '#0a0a12',\n  },\n};", 'javascript')}
     <p class="text-sm text-secondary mt-4">Then initialize with your config:</p>
     ${codeExample("import config from './soltana.config.js';\nimport { initSoltana } from 'soltana-ui';\n\nconst soltana = initSoltana(config);", 'javascript')}
   `

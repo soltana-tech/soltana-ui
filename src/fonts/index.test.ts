@@ -1,10 +1,10 @@
-import { describe, it, expect, beforeEach } from 'vitest';
-import { loadSoltanaFonts } from './index';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { loadSoltanaFonts, _resetFontLoader } from './index';
 
 describe('loadSoltanaFonts', () => {
   beforeEach(() => {
-    // Clear head of injected links
     document.head.innerHTML = '';
+    _resetFontLoader();
   });
 
   it('adds preconnect and stylesheet links to head', () => {
@@ -25,5 +25,17 @@ describe('loadSoltanaFonts', () => {
     const countAfterSecond = document.head.querySelectorAll('link').length;
 
     expect(countAfterSecond).toBe(countAfterFirst);
+  });
+
+  it('onerror handler triggers console.warn', () => {
+    const spy = vi.spyOn(console, 'warn').mockImplementation(vi.fn());
+
+    loadSoltanaFonts();
+    const stylesheet = document.head.querySelector('link[rel="stylesheet"]')!;
+    expect(stylesheet).toBeInstanceOf(HTMLLinkElement);
+    (stylesheet as HTMLLinkElement).onerror!(new Event('error'));
+
+    expect(spy).toHaveBeenCalledWith('[soltana] Failed to load fonts from Google Fonts CDN');
+    spy.mockRestore();
   });
 });

@@ -39,5 +39,13 @@ export function loadSoltanaFonts(): void {
   const stylesheet = document.createElement('link');
   stylesheet.rel = 'stylesheet';
   stylesheet.href = FONT_CSS_URL;
+  stylesheet.onerror = () => {
+    console.warn('[soltana] Failed to load fonts from Google Fonts CDN');
+  };
   head.appendChild(stylesheet);
+}
+
+/** Reset internal loaded flag — for test isolation only. */
+export function _resetFontLoader(): void {
+  _loaded = false;
 }

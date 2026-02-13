@@ -13,7 +13,7 @@ const DEFAULT_CONFIG: SoltanaConfig = {
   material: 'neu',
   surface: 'polished',
   ornament: 'none',
-  fonts: true,
+  fonts: false,
 };
 
 const ORNAMENT_CLASSES = [
@@ -113,8 +113,8 @@ export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaIns
   warnInvalid('surface', state.surface, VALID_SURFACES);
   warnInvalid('ornament', state.ornament, VALID_ORNAMENTS);
 
-  // Load fonts unless explicitly disabled
-  if (state.fonts !== false) {
+  // Load Google Fonts when opted in
+  if (state.fonts === true) {
     loadSoltanaFonts();
   }
 
