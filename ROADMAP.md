@@ -109,13 +109,15 @@ All `init*()` calls added event listeners with no removal. Double-calling double
 
 ### SCSS-1: Material system is fractured
 
-`TODO` · Size: **XL** · Depends on: SCSS-2
+`DONE` · Size: **XL** · Depends on: SCSS-2
 
 5 material files (neumorphic, glassmorphic, neu-glass, metallic, stone) vs 3 config options (neu, glass, hybrid). Metallic and stone are standalone utility classes disconnected from `data-material`. Setting `[data-material='neu']` sets CSS variables but doesn't auto-apply component classes.
 
 `hybrid` doesn't scale — it's a hardcoded neu+glass blend. As new materials are added, "hybrid of what?" becomes unanswerable.
 
 **Proposed fix:** Remove `hybrid`. Promote each material to a standalone config option: neu, glass, metallic, stone, flat, soft. Wire all material files into the config system. Delete `neu-glass.scss` or decompose its effects. Components consume `--material-*` variables exclusively.
+
+- Progress: Consolidated material system. Added shadow scale (`--material-shadow-sm`, `--material-shadow-lg`, `--material-shadow-inset-sm`, `--material-shadow-inset-lg`) to all 6 materials. Removed duplicate component classes from material files (`.glass-card`, `.glass-nav`, `.glass-button`, `.glass-input`, `.glass-overlay`, `.glass-modal`, `.neu-card`, `.neu-button`, `.neu-input`, `.neu-progress`). Removed redundant card variants (`.card-glass`, `.card--neu`, `.card--glass`). Refactored `.neu-card-layered` and `.neu-toggle` to use `--material-*` tokens. Per-element material overrides use `.material-*` classes from `_material-system.scss`.
 
 ### SCSS-2: Material vs surface overlap
 
@@ -151,11 +153,13 @@ Material defines bg, shadows, blur, saturation, opacity, border. Surface redefin
 
 ### SCSS-6: Z-index scale is broken
 
-`TODO` · Size: **S**
+`DONE` · Size: **S**
 
 Scale goes 0–50 but `.skip-link` hardcodes `z-index: 9999`. Modal backdrop sits at z-50, colliding with tooltips. No intermediate values.
 
 **Proposed fix:** Semantic z-index scale: `--z-dropdown: 100`, `--z-modal: 200`, `--z-tooltip: 300`, `--z-skip-link: 9999`.
+
+- Progress: Added semantic entries to `$z-indices` map, generated `--z-*` custom properties in `:root`, replaced hardcoded values in skip-link, modal backdrop, CSS tooltip, and JS tooltip enhancer.
 
 ### SCSS-7: Transition durations inconsistent
 

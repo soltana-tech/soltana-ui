@@ -280,16 +280,16 @@ export function renderExamples(): string {
                 </div>
                 <div>
                   <label class="text-sm block mb-2">Notification Sound</label>
-                  <input class="neu-input w-full" value="Default" />
+                  <input class="input material-neu w-full" value="Default" />
                 </div>
               </div>
             </div>
             <div class="neu-elevated" style="padding: 1.5rem">
               <h5 class="font-semibold mb-4">Profile</h5>
               <div class="flex flex-col gap-3">
-                <input class="neu-input w-full" value="John Doe" />
-                <input class="neu-input w-full" value="john@example.com" />
-                <button class="neu-button px-4 py-2 text-sm font-medium mt-2">Save Changes</button>
+                <input class="input material-neu w-full" value="John Doe" />
+                <input class="input material-neu w-full" value="john@example.com" />
+                <button class="btn material-neu px-4 py-2 text-sm font-medium mt-2">Save Changes</button>
               </div>
             </div>
           </div>

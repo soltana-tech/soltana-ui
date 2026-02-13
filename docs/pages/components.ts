@@ -544,15 +544,15 @@ export function renderComponents(): string {
 
       <p class="overline mt-8 mb-4">Interactive Elements</p>
       <div class="flex flex-wrap gap-6 items-center">
-        <button class="neu-button px-6 py-3 text-sm font-medium">.neu-button</button>
-        <input class="neu-input" placeholder=".neu-input" />
+        <button class="btn material-neu px-6 py-3 text-sm font-medium">.btn.material-neu</button>
+        <input class="input material-neu" placeholder=".input.material-neu" />
         <div class="neu-toggle" id="neu-toggle-demo"></div>
       </div>
 
       <div class="mt-8">
-        <p class="text-sm font-medium mb-2">.neu-progress</p>
-        <div class="neu-progress">
-          <div class="neu-progress-fill" style="width: 60%"></div>
+        <p class="text-sm font-medium mb-2">.progress</p>
+        <div class="progress">
+          <div class="progress-bar" style="width: 60%"></div>
         </div>
       </div>
     </div>
@@ -591,8 +591,8 @@ export function renderComponents(): string {
       <div class="relative z-10">
         <p class="overline mb-4" style="color: rgba(255,255,255,0.5)">Standard</p>
         <div class="grid gap-6 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr))">
-          <div class="glass-card">
-            <p class="text-sm font-semibold mb-1" style="color: #fff">.glass-card</p>
+          <div class="card material-glass p-5">
+            <p class="text-sm font-semibold mb-1" style="color: #fff">.card.material-glass</p>
             <p class="text-xs" style="color: rgba(255,255,255,0.6)">Default frosted glass card.</p>
           </div>
           <div class="glass-accent p-5 rounded-2xl">
@@ -626,8 +626,8 @@ export function renderComponents(): string {
         </div>
 
         <div class="flex flex-wrap gap-4 items-center">
-          <button class="glass-button px-5 py-2 text-sm font-medium" style="color: #fff">.glass-button</button>
-          <input class="glass-input" placeholder=".glass-input" style="color: #fff; max-width: 200px" />
+          <button class="btn material-glass px-5 py-2 text-sm font-medium" style="color: #fff">.btn.material-glass</button>
+          <input class="input material-glass" placeholder=".input.material-glass" style="color: #fff; max-width: 200px" />
         </div>
       </div>
     </div>

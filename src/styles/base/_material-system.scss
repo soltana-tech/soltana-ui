@@ -20,12 +20,24 @@
 :root {
   // Material defaults (neumorphic baseline, chained to theme-aware fallbacks)
   --material-bg: var(--neu-bg, var(--surface-2));
+  --material-shadow-sm:
+    2px 2px 5px var(--neu-shadow-dark, var(--glass-shadow)),
+    -2px -2px 5px var(--neu-shadow-light, var(--glass-inner-glow));
   --material-shadow:
     3px 3px 8px var(--neu-shadow-dark, var(--glass-shadow)),
     -3px -3px 8px var(--neu-shadow-light, var(--glass-inner-glow));
+  --material-shadow-lg:
+    6px 6px 16px var(--neu-shadow-dark, var(--glass-shadow)),
+    -5px -5px 14px var(--neu-shadow-light, var(--glass-inner-glow));
+  --material-shadow-inset-sm:
+    inset 1px 1px 3px var(--neu-shadow-dark, var(--glass-shadow)),
+    inset -1px -1px 3px var(--neu-shadow-light, var(--glass-inner-glow));
   --material-shadow-inset:
     inset 2px 2px 5px var(--neu-shadow-dark, var(--glass-shadow)),
     inset -2px -2px 5px var(--neu-shadow-light, var(--glass-inner-glow));
+  --material-shadow-inset-lg:
+    inset 4px 4px 10px var(--neu-shadow-dark, var(--glass-shadow)),
+    inset -4px -4px 10px var(--neu-shadow-light, var(--glass-inner-glow));
   --material-border: var(--border-default);
 
   // Surface defaults (polished baseline)
@@ -46,50 +58,80 @@
 [data-material='neu'],
 .material-neu {
   --material-bg: var(--neu-bg);
+  --material-shadow-sm: 2px 2px 5px var(--neu-shadow-dark), -2px -2px 5px var(--neu-shadow-light);
   --material-shadow: 3px 3px 8px var(--neu-shadow-dark), -3px -3px 8px var(--neu-shadow-light);
+  --material-shadow-lg: 6px 6px 16px var(--neu-shadow-dark), -5px -5px 14px var(--neu-shadow-light);
+  --material-shadow-inset-sm:
+    inset 1px 1px 3px var(--neu-shadow-dark), inset -1px -1px 3px var(--neu-shadow-light);
   --material-shadow-inset:
     inset 2px 2px 5px var(--neu-shadow-dark), inset -2px -2px 5px var(--neu-shadow-light);
+  --material-shadow-inset-lg:
+    inset 4px 4px 10px var(--neu-shadow-dark), inset -4px -4px 10px var(--neu-shadow-light);
   --material-border: var(--border-default);
 }
 
 [data-material='glass'],
 .material-glass {
   --material-bg: var(--glass-bg);
+  --material-shadow-sm: 0 4px 16px var(--glass-shadow);
   --material-shadow: 0 8px 32px var(--glass-shadow);
+  --material-shadow-lg: 0 16px 48px var(--glass-shadow);
+  --material-shadow-inset-sm: inset 0 1px 0 var(--glass-inner-glow);
   --material-shadow-inset: inset 0 1px 0 var(--glass-inner-glow);
+  --material-shadow-inset-lg:
+    inset 0 2px 0 var(--glass-inner-glow), inset 0 0 12px var(--glass-shadow);
   --material-border: var(--glass-border);
 }
 
 [data-material='flat'],
 .material-flat {
   --material-bg: var(--surface-1);
+  --material-shadow-sm: none;
   --material-shadow: none;
+  --material-shadow-lg: none;
+  --material-shadow-inset-sm: none;
   --material-shadow-inset: none;
+  --material-shadow-inset-lg: none;
   --material-border: 1px solid var(--border-default);
 }
 
 [data-material='soft'],
 .material-soft {
   --material-bg: var(--surface-1);
+  --material-shadow-sm: 0 1px 2px rgb(0 0 0 / 5%);
   --material-shadow: 0 1px 3px rgb(0 0 0 / 8%), 0 1px 2px rgb(0 0 0 / 6%);
+  --material-shadow-lg: 0 4px 8px rgb(0 0 0 / 10%), 0 2px 4px rgb(0 0 0 / 6%);
+  --material-shadow-inset-sm: inset 0 1px 0 rgb(255 255 255 / 3%);
   --material-shadow-inset: inset 0 1px 0 rgb(255 255 255 / 4%);
+  --material-shadow-inset-lg: inset 0 2px 0 rgb(255 255 255 / 5%), inset 0 -1px 0 rgb(0 0 0 / 5%);
   --material-border: 1px solid var(--border-subtle);
 }
 
 [data-material='metallic'],
 .material-metallic {
   --material-bg: var(--surface-1);
+  --material-shadow-sm: 0 1px 4px var(--metallic-shadow);
   --material-shadow: 0 2px 8px var(--metallic-shadow), 0 0 1px var(--metallic-shadow);
+  --material-shadow-lg: 0 4px 16px var(--metallic-shadow), 0 0 2px var(--metallic-shadow);
+  --material-shadow-inset-sm: inset 0 1px 0 var(--metallic-highlight);
   --material-shadow-inset: inset 0 1px 0 var(--metallic-highlight), inset 0 -1px 0 rgb(0 0 0 / 10%);
+  --material-shadow-inset-lg:
+    inset 0 2px 0 var(--metallic-highlight), inset 0 -2px 0 rgb(0 0 0 / 12%);
   --material-border: 1px solid var(--metallic-border);
 }
 
 [data-material='stone'],
 .material-stone {
   --material-bg: var(--surface-2);
+  --material-shadow-sm: 0 1px 3px var(--stone-shadow);
   --material-shadow: 0 2px 6px var(--stone-shadow);
+  --material-shadow-lg: 0 4px 12px var(--stone-shadow);
+  --material-shadow-inset-sm:
+    inset 1px 1px 1px var(--stone-highlight), inset -1px -1px 1px var(--stone-shadow);
   --material-shadow-inset:
     inset 1px 1px 2px var(--stone-highlight), inset -1px -1px 2px var(--stone-shadow);
+  --material-shadow-inset-lg:
+    inset 2px 2px 4px var(--stone-highlight), inset -2px -2px 4px var(--stone-shadow);
   --material-border: 1px solid var(--stone-border);
 }
 

@@ -106,82 +106,15 @@
 // INTERACTIVE ELEMENTS
 // ============================================================================
 
-// Button — raised that presses on click with accent glow on focus
-.neu-button {
-  @include neu-base;
-  border-radius: var(--radius-xl);
-  border-top: 1px solid var(--neu-highlight);
-  box-shadow:
-    0 2px 4px var(--neu-shadow-mid),
-    5px 5px 12px var(--neu-shadow-dark),
-    -4px -4px 10px var(--neu-shadow-light);
-  transition:
-    box-shadow var(--transition-slow) var(--easing-in-out),
-    transform var(--transition-normal) var(--easing-in-out),
-    border-color var(--transition-slow) var(--easing-in-out);
-  cursor: pointer;
-
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow:
-      0 4px 8px var(--neu-shadow-mid),
-      6px 6px 16px var(--neu-shadow-dark),
-      -5px -5px 12px var(--neu-shadow-light);
-  }
-
-  &:active {
-    transform: translateY(0) scale(0.98);
-    border-top-color: transparent;
-    box-shadow:
-      inset 4px 4px 10px var(--neu-shadow-dark),
-      inset -4px -4px 10px var(--neu-shadow-light);
-  }
-
-  &:focus-visible {
-    outline: none;
-    box-shadow:
-      0 0 0 3px var(--state-focus-ring),
-      5px 5px 12px var(--neu-shadow-dark),
-      -4px -4px 10px var(--neu-shadow-light);
-  }
-}
-
-// Input field — inset with accent glow on focus
-.neu-input {
-  @include neu-base;
-  border-radius: var(--radius-lg);
-  box-shadow:
-    inset 3px 3px 8px var(--neu-shadow-dark),
-    inset -3px -3px 8px var(--neu-shadow-light);
-  padding: 0.625rem 1rem;
-  color: var(--text-primary);
-  font-family: var(--font-sans);
-  font-size: var(--text-base);
-  letter-spacing: var(--tracking-refined);
-
-  &::placeholder {
-    color: var(--text-muted);
-  }
-
-  &:focus {
-    outline: none;
-    box-shadow:
-      inset 3px 3px 8px var(--neu-shadow-dark),
-      inset -3px -3px 8px var(--neu-shadow-light),
-      0 0 0 3px var(--state-focus-ring);
-  }
-}
-
-// Toggle — with accent state
+// Toggle — standalone component (no base .toggle exists yet; see COMP-1)
 .neu-toggle {
-  @include neu-base;
+  border: none;
+  background: var(--material-bg);
   position: relative;
   width: 3.5rem;
   height: 2rem;
   border-radius: var(--radius-full);
-  box-shadow:
-    inset 4px 4px 10px var(--neu-shadow-dark),
-    inset -4px -4px 10px var(--neu-shadow-light);
+  box-shadow: var(--material-shadow-inset-lg);
   cursor: pointer;
   transition: background var(--transition-slow) var(--easing-in-out);
 
@@ -193,11 +126,8 @@
     width: 1.625rem;
     height: 1.625rem;
     border-radius: var(--radius-full);
-    background: var(--neu-bg);
-    border-top: 1px solid var(--neu-highlight);
-    box-shadow:
-      3px 3px 7px var(--neu-shadow-dark),
-      -3px -3px 7px var(--neu-shadow-light);
+    background: var(--material-bg);
+    box-shadow: var(--material-shadow-sm);
     transition:
       transform var(--transition-slow) var(--easing-in-out),
       background var(--transition-slow) var(--easing-in-out),
@@ -207,9 +137,7 @@
   &.active::after {
     transform: translateX(1.5rem);
     background: var(--accent-primary);
-    box-shadow:
-      2px 2px 6px var(--neu-shadow-dark),
-      0 0 12px rgb(212 168 67 / 25%);
+    box-shadow: var(--material-shadow-sm);
   }
 }
 
@@ -217,27 +145,14 @@
 // CARDS
 // ============================================================================
 
-.neu-card {
-  @include neu-base;
-  border-radius: var(--radius-2xl);
-  border-top: 1px solid var(--neu-highlight);
-  padding: 1.5rem;
-  box-shadow:
-    0 2px 4px var(--neu-shadow-mid),
-    8px 8px 20px var(--neu-shadow-dark),
-    -6px -6px 16px var(--neu-shadow-light);
-}
-
 // Layered card with gold gradient overlay
 .neu-card-layered {
-  @include neu-base;
+  border: none;
+  background: var(--material-bg);
   position: relative;
   border-radius: var(--radius-2xl);
   padding: 1.5rem;
-  box-shadow:
-    0 2px 4px var(--neu-shadow-mid),
-    8px 8px 20px var(--neu-shadow-dark),
-    -6px -6px 16px var(--neu-shadow-light);
+  box-shadow: var(--material-shadow-lg);
   overflow: hidden;
 
   &::before {
@@ -252,30 +167,6 @@
     );
     border-radius: inherit;
     pointer-events: none;
-  }
-}
-
-// ============================================================================
-// PROGRESS BAR
-// ============================================================================
-
-.neu-progress {
-  @include neu-base;
-  border-radius: var(--radius-full);
-  height: 0.75rem;
-  box-shadow:
-    inset 3px 3px 7px var(--neu-shadow-dark),
-    inset -3px -3px 7px var(--neu-shadow-light);
-  overflow: hidden;
-
-  &-fill {
-    height: 100%;
-    border-radius: var(--radius-full);
-    background: linear-gradient(90deg, var(--gold-500), var(--gold-400), var(--gold-300));
-    box-shadow:
-      2px 2px 4px var(--neu-shadow-dark),
-      0 0 8px rgb(212 168 67 / 20%);
-    transition: width var(--transition-slower) var(--easing-in-out);
   }
 }
 

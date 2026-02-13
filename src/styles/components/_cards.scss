@@ -318,43 +318,6 @@
 }
 
 // ============================================================================
-// GLASS CARD
-// ============================================================================
-
-.card-glass {
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--surface-blur, 16px)) saturate(var(--surface-saturation, 140%));
-  border: 1px solid var(--glass-border);
-  box-shadow:
-    0 8px 32px var(--glass-shadow),
-    inset 0 1px 0 var(--glass-inner-glow);
-}
-
-// ============================================================================
-// MATERIAL VARIANTS
-// ============================================================================
-
-.card--neu {
-  background: var(--neu-bg);
-  border: none;
-  border-top: 1px solid var(--neu-highlight);
-  box-shadow:
-    0 2px 4px var(--neu-shadow-mid),
-    6px 6px 16px var(--neu-shadow-dark),
-    -5px -5px 14px var(--neu-shadow-light);
-  backdrop-filter: none;
-}
-
-.card--glass {
-  background: linear-gradient(145deg, var(--glass-gradient-start), var(--glass-gradient-end));
-  backdrop-filter: blur(var(--surface-blur, 16px)) saturate(var(--surface-saturation, 140%));
-  border: 1px solid var(--glass-border);
-  box-shadow:
-    0 8px 32px var(--glass-shadow),
-    inset 0 1px 0 var(--glass-inner-glow);
-}
-
-// ============================================================================
 // CARD SECTIONS
 // ============================================================================
 
