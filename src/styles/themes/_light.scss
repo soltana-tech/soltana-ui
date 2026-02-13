@@ -8,6 +8,10 @@
 [data-theme='light'] {
   color-scheme: light;
 
+  // =========================================================================
+  // SEMANTIC TOKENS
+  // =========================================================================
+
   // Surface colors — cool marble with subtle blue-gray undertones
   --surface-bg: #f6f7fa;
   --surface-1: #fff;
@@ -63,38 +67,23 @@
   --state-disabled-bg: #e2e5ed;
   --state-disabled-text: #7e8594;
 
-  // Neumorphic shadows — cool marble
-  --neu-bg: #e2e5ed;
-  --neu-shadow-light: rgb(255 255 255 / 88%);
-  --neu-shadow-dark: rgb(140 150 170 / 35%);
-  --neu-shadow-mid: rgb(140 150 170 / 20%);
-  --neu-highlight: rgb(255 255 255 / 65%);
-  --neu-accent-glow: rgb(87 99 120 / 10%);
+  // =========================================================================
+  // CHANNEL TOKENS — consumed by _material-system.scss to derive primitives
+  // =========================================================================
 
-  // Glassmorphic — silver-tinted crystal (35% opacity for better transparency)
-  --glass-bg: rgb(255 255 255 / 35%);
-  --glass-border: rgb(146 156 176 / 15%);
-  --glass-shadow: rgb(85 97 120 / 10%);
-  --glass-gradient-start: rgb(255 255 255 / 50%);
-  --glass-gradient-end: rgb(238 240 245 / 30%);
-  --glass-inner-glow: rgb(255 255 255 / 45%);
+  --shadow-color: 140 150 170;
+  --highlight-color: 255 255 255;
+  --accent-glow: rgb(87 99 120 / 10%);
 
   // Stained glass tints (light: subtle cool tones)
   --stained-primary: rgb(87 99 120 / 12%);
   --stained-secondary: rgb(107 33 168 / 8%);
   --stained-accent: rgb(146 112 12 / 10%);
 
-  // Metallic — crisp highlights on cool marble
-  --metallic-shadow: rgb(0 0 0 / 20%);
-  --metallic-highlight: rgb(255 255 255 / 70%);
-  --metallic-border: rgb(140 150 170 / 20%);
+  // =========================================================================
+  // COMPONENT TOKENS
+  // =========================================================================
 
-  // Stone — carved depth on light surfaces
-  --stone-shadow: rgb(140 150 170 / 30%);
-  --stone-highlight: rgb(255 255 255 / 50%);
-  --stone-border: rgb(140 150 170 / 12%);
-
-  // Component-specific
   --input-bg: #fff;
   --input-border: rgb(85 97 120 / 14%);
   --input-border-focus: #576378;

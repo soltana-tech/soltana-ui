@@ -1,43 +1,124 @@
 // ---------------------------------------------------------------------------
-// Material System — Two-tier abstraction consumed by all components.
+// Material System
 // ---------------------------------------------------------------------------
-// MATERIAL tier (structural appearance):
-//   --material-bg, --material-shadow, --material-shadow-inset, --material-border
-//   Set by [data-material] on <html> or .material-* class overrides.
-// SURFACE tier (finish properties):
-//   --surface-blur, --surface-saturation, --surface-opacity,
-//   --surface-texture-opacity, --surface-overlay, --surface-sheen
-//   Set by [data-surface] on <html> or .surface-* class overrides.
+// Owns three layers of the design system abstraction:
+// 1. MATERIAL PRIMITIVES (--neu-*, --glass-*, --metallic-*, --stone-*)
+//    Derived from theme channel tokens (--shadow-color, --highlight-color).
+//    Per-theme overrides handle materials with unique color bases.
+// 2. MATERIAL TOKENS (--material-bg, --material-shadow-*, --material-border)
+//    Set by [data-material] selectors, consumed by all components.
+// 3. SURFACE TOKENS (--surface-blur, --surface-saturation, etc.)
+//    Set by [data-surface] selectors. Orthogonal to materials.
 // Materials define depth and structure. Surfaces define finish and texture.
 // The two tiers are orthogonal — every combination produces a valid result.
 // ---------------------------------------------------------------------------
 
 // ============================================================================
-// DEFAULT VALUES (neumorphic baseline)
+// MATERIAL PRIMITIVES
+// ============================================================================
+// Derived from theme channel tokens (--shadow-color, --highlight-color).
+// Per-theme overrides below handle materials whose base colors differ.
+// Consumed by material selectors and material utility files.
+// ============================================================================
+
+:root {
+  // Neumorphic
+  --neu-bg: var(--surface-2);
+  --neu-shadow-dark: rgb(var(--shadow-color) / 65%);
+  --neu-shadow-light: rgb(var(--highlight-color) / 5%);
+  --neu-shadow-mid: rgb(var(--shadow-color) / 40%);
+  --neu-highlight: rgb(var(--highlight-color) / 8%);
+  --neu-accent-glow: var(--accent-glow);
+
+  // Glassmorphic
+  --glass-bg: rgb(14 16 40 / 35%);
+  --glass-border: rgb(var(--highlight-color) / 8%);
+  --glass-shadow: rgb(var(--shadow-color) / 45%);
+  --glass-gradient-start: rgb(var(--highlight-color) / 8%);
+  --glass-gradient-end: rgb(var(--highlight-color) / 3%);
+  --glass-inner-glow: rgb(var(--highlight-color) / 10%);
+
+  // Metallic
+  --metallic-shadow: rgb(var(--shadow-color) / 50%);
+  --metallic-highlight: rgb(var(--highlight-color) / 20%);
+  --metallic-border: rgb(var(--highlight-color) / 15%);
+
+  // Stone
+  --stone-shadow: rgb(var(--shadow-color) / 40%);
+  --stone-highlight: rgb(var(--highlight-color) / 8%);
+  --stone-border: rgb(var(--highlight-color) / 6%);
+}
+
+[data-theme='light'] {
+  // Neumorphic — inverted depth (strong highlights, soft shadows)
+  --neu-bg: var(--surface-3);
+  --neu-shadow-dark: rgb(var(--shadow-color) / 35%);
+  --neu-shadow-light: rgb(var(--highlight-color) / 88%);
+  --neu-shadow-mid: rgb(var(--shadow-color) / 20%);
+  --neu-highlight: rgb(var(--highlight-color) / 65%);
+
+  // Glassmorphic
+  --glass-bg: rgb(var(--highlight-color) / 35%);
+  --glass-border: rgb(146 156 176 / 15%); // blue-gray
+  --glass-shadow: rgb(85 97 120 / 10%); // darker blue-gray
+  --glass-gradient-start: rgb(var(--highlight-color) / 50%);
+  --glass-gradient-end: rgb(238 240 245 / 30%); // surface-2 channels
+  --glass-inner-glow: rgb(var(--highlight-color) / 45%);
+
+  // Metallic
+  --metallic-shadow: rgb(0 0 0 / 20%); // pure black
+  --metallic-highlight: rgb(var(--highlight-color) / 70%);
+  --metallic-border: rgb(var(--shadow-color) / 20%);
+
+  // Stone
+  --stone-shadow: rgb(var(--shadow-color) / 30%);
+  --stone-highlight: rgb(var(--highlight-color) / 50%);
+  --stone-border: rgb(var(--shadow-color) / 12%);
+}
+
+[data-theme='sepia'] {
+  // Neumorphic — warm parchment depth
+  --neu-shadow-dark: rgb(var(--shadow-color) / 45%);
+  --neu-shadow-light: rgb(var(--highlight-color) / 82%);
+  --neu-shadow-mid: rgb(var(--shadow-color) / 28%);
+  --neu-highlight: rgb(var(--highlight-color) / 58%);
+
+  // Glassmorphic
+  --glass-bg: rgb(232 220 192 / 45%); // surface-bg channels
+  --glass-border: rgb(160 110 43 / 18%); // accent-primary channels
+  --glass-shadow: rgb(94 63 27 / 14%); // warm brown
+  --glass-gradient-start: rgb(var(--highlight-color) / 55%);
+  --glass-gradient-end: rgb(232 220 192 / 28%); // surface-bg channels
+  --glass-inner-glow: rgb(var(--highlight-color) / 48%);
+
+  // Metallic — warm bronze
+  --metallic-shadow: rgb(60 50 35 / 35%); // warm dark
+  --metallic-highlight: rgb(255 245 220 / 30%); // warm white
+  --metallic-border: rgb(160 110 43 / 22%); // accent channels
+
+  // Stone
+  --stone-shadow: rgb(var(--shadow-color) / 35%);
+  --stone-highlight: rgb(var(--highlight-color) / 40%);
+  --stone-border: rgb(var(--shadow-color) / 14%);
+}
+
+// ============================================================================
+// DEFAULT VALUES (neumorphic baseline — primitives defined above)
 // ============================================================================
 // Ensures components render correctly even without initSoltana().
 
 :root {
-  // Material defaults (neumorphic baseline, chained to theme-aware fallbacks)
-  --material-bg: var(--neu-bg, var(--surface-2));
-  --material-shadow-sm:
-    2px 2px 5px var(--neu-shadow-dark, var(--glass-shadow)),
-    -2px -2px 5px var(--neu-shadow-light, var(--glass-inner-glow));
-  --material-shadow:
-    3px 3px 8px var(--neu-shadow-dark, var(--glass-shadow)),
-    -3px -3px 8px var(--neu-shadow-light, var(--glass-inner-glow));
-  --material-shadow-lg:
-    6px 6px 16px var(--neu-shadow-dark, var(--glass-shadow)),
-    -5px -5px 14px var(--neu-shadow-light, var(--glass-inner-glow));
+  // Material defaults (neumorphic baseline)
+  --material-bg: var(--neu-bg);
+  --material-shadow-sm: 2px 2px 5px var(--neu-shadow-dark), -2px -2px 5px var(--neu-shadow-light);
+  --material-shadow: 3px 3px 8px var(--neu-shadow-dark), -3px -3px 8px var(--neu-shadow-light);
+  --material-shadow-lg: 6px 6px 16px var(--neu-shadow-dark), -5px -5px 14px var(--neu-shadow-light);
   --material-shadow-inset-sm:
-    inset 1px 1px 3px var(--neu-shadow-dark, var(--glass-shadow)),
-    inset -1px -1px 3px var(--neu-shadow-light, var(--glass-inner-glow));
+    inset 1px 1px 3px var(--neu-shadow-dark), inset -1px -1px 3px var(--neu-shadow-light);
   --material-shadow-inset:
-    inset 2px 2px 5px var(--neu-shadow-dark, var(--glass-shadow)),
-    inset -2px -2px 5px var(--neu-shadow-light, var(--glass-inner-glow));
+    inset 2px 2px 5px var(--neu-shadow-dark), inset -2px -2px 5px var(--neu-shadow-light);
   --material-shadow-inset-lg:
-    inset 4px 4px 10px var(--neu-shadow-dark, var(--glass-shadow)),
-    inset -4px -4px 10px var(--neu-shadow-light, var(--glass-inner-glow));
+    inset 4px 4px 10px var(--neu-shadow-dark), inset -4px -4px 10px var(--neu-shadow-light);
   --material-border: var(--border-default);
 
   // Surface defaults (polished baseline)
@@ -238,7 +319,7 @@ body.ornament-baroque {
       border-radius: 50%;
       border: 2px solid var(--accent-gold, #d4a843);
       background: var(--surface-1, #0e1028);
-      box-shadow: 0 0 8px var(--neu-accent-glow, rgb(212 168 67 / 15%));
+      box-shadow: 0 0 8px var(--accent-glow, rgb(212 168 67 / 15%));
       z-index: 2;
       pointer-events: none;
     }
@@ -291,7 +372,7 @@ body.ornament-gilt {
     box-shadow:
       var(--material-shadow),
       0 0 0 1px var(--accent-gold, #d4a843),
-      0 0 12px var(--neu-accent-glow, rgb(212 168 67 / 15%));
+      0 0 12px var(--accent-glow, rgb(212 168 67 / 15%));
 
     &::before {
       content: '';

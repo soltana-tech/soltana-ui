@@ -8,6 +8,10 @@
 [data-theme='sepia'] {
   color-scheme: light;
 
+  // =========================================================================
+  // SEMANTIC TOKENS
+  // =========================================================================
+
   // Surface colors — deeper champagne with amber undertones
   --surface-bg: #e8dcc0;
   --surface-1: #f2e8d2;
@@ -63,38 +67,23 @@
   --state-disabled-bg: #d0c098;
   --state-disabled-text: #7a6b50;
 
-  // Neumorphic shadows — warm parchment with bronze tint
-  --neu-bg: #ddd0b0;
-  --neu-shadow-light: rgb(242 232 210 / 82%);
-  --neu-shadow-dark: rgb(140 120 85 / 45%);
-  --neu-shadow-mid: rgb(140 120 85 / 28%);
-  --neu-highlight: rgb(242 232 210 / 58%);
-  --neu-accent-glow: rgb(160 110 43 / 12%);
+  // =========================================================================
+  // CHANNEL TOKENS — consumed by _material-system.scss to derive primitives
+  // =========================================================================
 
-  // Glassmorphic — amber-tinted crystal
-  --glass-bg: rgb(232 220 192 / 45%);
-  --glass-border: rgb(160 110 43 / 18%);
-  --glass-shadow: rgb(94 63 27 / 14%);
-  --glass-gradient-start: rgb(242 232 210 / 55%);
-  --glass-gradient-end: rgb(232 220 192 / 28%);
-  --glass-inner-glow: rgb(242 232 210 / 48%);
+  --shadow-color: 140 120 85;
+  --highlight-color: 242 232 210;
+  --accent-glow: rgb(160 110 43 / 12%);
 
   // Stained glass tints (sepia: amber and bronze tones)
   --stained-primary: rgb(160 110 43 / 15%);
   --stained-secondary: rgb(26 120 84 / 10%);
   --stained-accent: rgb(184 134 11 / 12%);
 
-  // Metallic — warm bronze reflections
-  --metallic-shadow: rgb(60 50 35 / 35%);
-  --metallic-highlight: rgb(255 245 220 / 30%);
-  --metallic-border: rgb(160 110 43 / 22%);
+  // =========================================================================
+  // COMPONENT TOKENS
+  // =========================================================================
 
-  // Stone — carved depth on warm parchment
-  --stone-shadow: rgb(140 120 85 / 35%);
-  --stone-highlight: rgb(242 232 210 / 40%);
-  --stone-border: rgb(140 120 85 / 14%);
-
-  // Component-specific
   --input-bg: #f2e8d2;
   --input-border: rgb(94 63 27 / 16%);
   --input-border-focus: #a06e2b;

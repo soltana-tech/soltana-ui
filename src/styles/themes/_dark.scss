@@ -9,6 +9,10 @@
 [data-theme='dark'] {
   color-scheme: dark;
 
+  // =========================================================================
+  // SEMANTIC TOKENS
+  // =========================================================================
+
   // Surface colors — deep midnight navy
   --surface-bg: #08091a;
   --surface-1: #0e1028;
@@ -64,38 +68,23 @@
   --state-disabled-bg: #151838;
   --state-disabled-text: #5a5245;
 
-  // Neumorphic shadows — "polished stone" (neutral for seamless blending)
-  --neu-bg: #0e1028;
-  --neu-shadow-light: rgb(255 255 255 / 5%);
-  --neu-shadow-dark: rgb(0 0 0 / 65%);
-  --neu-shadow-mid: rgb(0 0 0 / 40%);
-  --neu-highlight: rgb(255 255 255 / 8%);
-  --neu-accent-glow: rgb(212 168 67 / 15%);
+  // =========================================================================
+  // CHANNEL TOKENS — consumed by _material-system.scss to derive primitives
+  // =========================================================================
 
-  // Glassmorphic — "crystal glass" (35% opacity for better transparency)
-  --glass-bg: rgb(14 16 40 / 35%);
-  --glass-border: rgb(255 255 255 / 8%);
-  --glass-shadow: rgb(0 0 0 / 45%);
-  --glass-gradient-start: rgb(255 255 255 / 8%);
-  --glass-gradient-end: rgb(255 255 255 / 3%);
-  --glass-inner-glow: rgb(255 255 255 / 10%);
+  --shadow-color: 0 0 0;
+  --highlight-color: 255 255 255;
+  --accent-glow: rgb(212 168 67 / 15%);
 
-  // Stained glass tints (dark: vivid jewel tones)
+  // Stained glass accent tints
   --stained-primary: rgb(212 168 67 / 15%);
   --stained-secondary: rgb(168 85 247 / 12%);
   --stained-accent: rgb(16 185 129 / 10%);
 
-  // Metallic — sharp reflective highlights on dark surfaces
-  --metallic-shadow: rgb(0 0 0 / 50%);
-  --metallic-highlight: rgb(255 255 255 / 20%);
-  --metallic-border: rgb(255 255 255 / 15%);
+  // =========================================================================
+  // COMPONENT TOKENS
+  // =========================================================================
 
-  // Stone — carved depth on dark surfaces
-  --stone-shadow: rgb(0 0 0 / 40%);
-  --stone-highlight: rgb(255 255 255 / 8%);
-  --stone-border: rgb(255 255 255 / 6%);
-
-  // Component-specific — neutral borders for seamless neumorphic
   --input-bg: rgb(255 255 255 / 4%);
   --input-border: rgb(255 255 255 / 8%);
   --input-border-focus: #d4a843;

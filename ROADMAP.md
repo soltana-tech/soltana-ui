@@ -137,27 +137,11 @@ Material defines bg, shadows, blur, saturation, opacity, border. Surface redefin
 
 ### SCSS-4: Themes are coupled to materials
 
-`TODO` · Size: **XL** · Depends on: SCSS-1, SCSS-2
+`DONE` · Size: **XL** · Depends on: SCSS-1, SCSS-2
 
-Theme files (`_dark.scss`, `_light.scss`, `_sepia.scss`) define ~30 material-specific variables (`--neu-bg`, `--neu-shadow-dark`, `--glass-bg`, `--glass-border`, `--metallic-shadow`, `--stone-highlight`, etc.). This means themes have knowledge of every material. Adding a material requires editing every theme. Adding a theme requires knowing every material. The tiers are entangled when they should be fully independent.
+Theme files (`_dark.scss`, `_light.scss`, `_sepia.scss`) defined ~18 material-specific variables (`--neu-bg`, `--neu-shadow-dark`, `--glass-bg`, `--glass-border`, `--metallic-shadow`, `--stone-highlight`, etc.). Themes had knowledge of every material — adding a material required editing every theme file.
 
-Additionally, `--neu-bg` duplicates `--surface-1` as a hardcoded value in the dark theme rather than referencing the semantic token. `_ornamental.scss` and the ornament section of `_material-system.scss` reference `--neu-*` primitives directly.
-
-**Root cause:** There is no generic semantic layer between theme color decisions and material appearance. Materials consume theme-defined material-specific primitives instead of deriving their appearance from generic tokens.
-
-**Proposed fix:**
-
-1. Themes define generic depth/highlight/glow tokens instead of per-material variables:
-   - `--shadow-deep`, `--shadow-medium`, `--shadow-soft` (theme-tuned shadow colors at graduated intensities)
-   - `--highlight-strong`, `--highlight-subtle`, `--highlight-glow` (theme-tuned highlight colors)
-   - `--surface-translucent` (theme-aware translucent surface for glass-like materials)
-   - `--accent-glow` (theme-tuned accent glow for ornaments and gilt effects)
-2. Material selectors in `_material-system.scss` derive `--material-*` from these generic tokens. No material references `--neu-*`, `--glass-*`, `--metallic-*`, or `--stone-*` from themes.
-3. The `--neu-*`, `--glass-*`, etc. variable definitions move out of theme files and into the material files that consume them (if needed at all for material-specific utility classes like `.neu-raised`).
-4. Remove `--neu-*` references from `_ornamental.scss` and the ornament section of `_material-system.scss`; replace with semantic tokens.
-5. `_neumorphic.scss`, `_glassmorphic.scss`, `_metallic.scss`, `_stone.scss` utility classes derive from generic tokens or `--material-*` tokens.
-
-**Trade-off:** Some per-material-per-theme visual fine-tuning is lost (e.g., light theme currently uses subtly different shadow base colors for neu vs glass). If specific combinations need special treatment, the recipe/override system (COMB-1) handles it. The extensibility gain outweighs the loss of bespoke tuning.
+- Progress: Themes now define 3 channel tokens (`--shadow-color`, `--highlight-color`, `--accent-glow`) instead of per-material primitives. `_material-system.scss` owns all material primitives (`--neu-*`, `--glass-*`, `--metallic-*`, `--stone-*`) and derives them from channel tokens, with per-theme `[data-theme]` overrides for materials that need unique color bases. Removed `--neu-*` references from `_ornamental.scss` (replaced with `--shadow-color`/`--highlight-color` expressions). Replaced `--neu-accent-glow` with `--accent-glow` in ornament selectors. Added section headers (SEMANTIC TOKENS, CHANNEL TOKENS, COMPONENT TOKENS) to all theme files.
 
 ### SCSS-5: Race condition in material defaults
 
