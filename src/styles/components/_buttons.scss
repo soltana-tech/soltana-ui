@@ -309,7 +309,7 @@
     box-shadow:
       var(--material-shadow),
       inset 0 0 12px var(--neuro-shadow-mid),
-      0 0 15px rgb(212 168 67 / 15%);
+      0 0 15px var(--neuro-accent-glow, rgb(212 168 67 / 15%));
   }
 }
 
@@ -350,7 +350,7 @@
   &:hover {
     box-shadow:
       var(--material-shadow),
-      0 0 20px rgb(212 168 67 / 12%);
+      0 0 20px var(--neuro-accent-glow, rgb(212 168 67 / 15%));
 
     &::before,
     &::after {
@@ -392,6 +392,35 @@
       var(--surface-2) 100%
     );
   }
+}
+
+// ============================================================================
+// METALLIC SHINE ANIMATION
+// ============================================================================
+
+@keyframes gold-shine-sweep {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+  }
+
+  100% {
+    transform: translateX(200%) skewX(-15deg);
+  }
+}
+
+// ============================================================================
+// EMBOSSED VARIANT
+// ============================================================================
+
+.btn-embossed {
+  background: var(--material-bg);
+  color: var(--accent-primary);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 10%),
+    inset 0 -1px 0 rgb(0 0 0 / 15%),
+    var(--material-shadow);
+  border: 1px solid var(--material-border);
+  backdrop-filter: none;
 }
 
 // ============================================================================

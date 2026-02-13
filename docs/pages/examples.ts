@@ -428,8 +428,8 @@ export function renderExamples(): string {
                 A refined design system merging classical elegance with modern depth.
               </p>
               <div class="flex gap-4 justify-center">
-                <sol-button variant="gold" size="lg">Explore</sol-button>
-                <sol-button variant="outline" size="lg">Documentation</sol-button>
+                <button class="btn btn-gold btn-lg">Explore</button>
+                <button class="btn btn-outline btn-lg">Documentation</button>
               </div>
             </div>
 
@@ -487,9 +487,9 @@ export function renderExamples(): string {
                   <h3 class="font-serif text-2xl font-bold">Estate Analytics</h3>
                 </div>
                 <div class="flex gap-2">
-                  <sol-button variant="ghost" size="xs">7D</sol-button>
-                  <sol-button variant="outline" size="xs">30D</sol-button>
-                  <sol-button variant="ghost" size="xs">90D</sol-button>
+                  <button class="btn btn-ghost btn-xs">7D</button>
+                  <button class="btn btn-outline btn-xs">30D</button>
+                  <button class="btn btn-ghost btn-xs">90D</button>
                 </div>
               </div>
             </div>

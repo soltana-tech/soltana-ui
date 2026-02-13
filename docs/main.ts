@@ -1,8 +1,8 @@
 import '../src/styles/index.scss';
 import './docs.scss';
 
-// Register Web Components for the docs site
-import '../src/components/index';
+// Initialize enhancers for interactive components (modals, tabs, tooltips)
+import { initAll } from '../src/enhancers/index';
 
 import { initSoltana, type Theme } from '../src/config';
 import { PlaygroundControls } from './components/PlaygroundControls';
@@ -68,9 +68,10 @@ router.register('components', renderComponents);
 router.register('patterns', renderPatterns);
 router.register('examples', renderExamples);
 
-// Re-bind playground controls after each page render
+// Re-bind playground controls and enhancers after each page render
 router.onAfterRender(() => {
   playground.bindAll();
+  initAll();
 
   // Bind swatch copy-to-clipboard
   document.querySelectorAll<HTMLElement>('.swatch').forEach((swatch) => {

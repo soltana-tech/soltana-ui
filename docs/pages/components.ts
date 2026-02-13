@@ -730,75 +730,92 @@ export function renderComponents(): string {
 
   <div class="ornament-divider mt-12 mb-12"></div>
 
-  <!-- ====== WEB COMPONENTS ====== -->
-  <div class="section-heading" id="comp-web-components">
-    <h2 class="text-2xl font-bold">Web Components</h2>
-    <p class="text-secondary mt-2">Shadow DOM components with encapsulated styling. Use as custom HTML elements.</p>
+  <!-- ====== EXTENDED CARD VARIANTS ====== -->
+  <div class="section-heading" id="comp-card-variants">
+    <h2 class="text-2xl font-bold">Card Variants</h2>
+    <p class="text-secondary mt-2">Cards with ornamental styling, gold borders, and multiple visual variants.</p>
   </div>
 
-  <h3 class="text-xl font-semibold mt-8 mb-4 font-serif" id="wc-card">sol-card</h3>
+  <h3 class="text-xl font-semibold mt-8 mb-4 font-serif" id="card-variants">Card Styles</h3>
   <p class="text-secondary mb-4">Card with ornamental corners, gold borders, and multiple variants.</p>
   <div class="grid gap-6" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))">
-    <sol-card variant="default" elevation="raised">
-      <span slot="header">Default Card</span>
-      <p>Neumorphic raised card with soft depth.</p>
-    </sol-card>
-    <sol-card variant="ornate" elevation="raised">
-      <span slot="header">Ornate Card</span>
-      <p>Four corner ornaments for a classical frame.</p>
-    </sol-card>
-    <sol-card variant="baroque" elevation="raised">
-      <span slot="header">Baroque Card</span>
-      <p>Full ornamental frame with medallion.</p>
-    </sol-card>
-    <sol-card variant="glass" elevation="raised">
-      <span slot="header">Glass Card</span>
-      <p>Crystal glass with backdrop blur effect.</p>
-    </sol-card>
+    <div class="card card-default">
+      <div class="card-header">Default Card</div>
+      <div class="card-body">
+        <p>Neumorphic raised card with soft depth.</p>
+      </div>
+    </div>
+    <div class="card ornament-baroque">
+      <div class="card-header">Ornate Card</div>
+      <div class="card-body">
+        <p>Four corner ornaments for a classical frame.</p>
+      </div>
+    </div>
+    <div class="card ornament-baroque">
+      <div class="card-header">Baroque Card</div>
+      <div class="card-body">
+        <p>Full ornamental frame with medallion.</p>
+      </div>
+    </div>
+    <div class="card material-glass">
+      <div class="card-header">Glass Card</div>
+      <div class="card-body">
+        <p>Crystal glass with backdrop blur effect.</p>
+      </div>
+    </div>
   </div>
 
-  <h3 class="text-xl font-semibold mt-10 mb-4 font-serif" id="wc-button">sol-button</h3>
+  <h3 class="text-xl font-semibold mt-10 mb-4 font-serif" id="btn-extended">Extended Buttons</h3>
   <p class="text-secondary mb-4">Button with material-aware styling and metallic finishes.</p>
 
   <h4 class="text-lg font-semibold mt-4 mb-3">Standard Variants</h4>
   <div class="flex flex-wrap gap-4 items-center mb-6">
-    <sol-button variant="primary">Primary</sol-button>
-    <sol-button variant="secondary">Secondary</sol-button>
-    <sol-button variant="outline">Outline</sol-button>
-    <sol-button variant="ghost">Ghost</sol-button>
-    <sol-button variant="danger">Danger</sol-button>
-    <sol-button variant="success">Success</sol-button>
+    <button class="btn btn-primary">Primary</button>
+    <button class="btn btn-secondary">Secondary</button>
+    <button class="btn btn-outline">Outline</button>
+    <button class="btn btn-ghost">Ghost</button>
+    <button class="btn btn-danger">Danger</button>
+    <button class="btn btn-success">Success</button>
   </div>
 
   <h4 class="text-lg font-semibold mt-4 mb-3">Material Variants</h4>
   <div class="flex flex-wrap gap-4 items-center mb-6">
-    <sol-button variant="primary" material="neuro">Neuro</sol-button>
-    <sol-button variant="primary" material="glass">Glass</sol-button>
-    <sol-button variant="primary" material="hybrid">Hybrid</sol-button>
+    <button class="btn btn-primary material-neuro">Neuro</button>
+    <button class="btn btn-primary material-glass">Glass</button>
+    <button class="btn btn-primary material-hybrid">Hybrid</button>
   </div>
 
   <h4 class="text-lg font-semibold mt-4 mb-3">Metallic Variants</h4>
   <div class="flex flex-wrap gap-4 items-center mb-6">
-    <sol-button variant="gold">Gold</sol-button>
-    <sol-button variant="silver">Silver</sol-button>
-    <sol-button variant="bronze">Bronze</sol-button>
-    <sol-button variant="platinum">Platinum</sol-button>
+    <button class="btn btn-gold">Gold</button>
+    <button class="btn btn-silver">Silver</button>
+    <button class="btn btn-bronze">Bronze</button>
+    <button class="btn btn-platinum">Platinum</button>
   </div>
 
   <h4 class="text-lg font-semibold mt-4 mb-3">Structural Variants</h4>
   <div class="flex flex-wrap gap-4 items-center">
-    <sol-button variant="chiseled">Chiseled</sol-button>
-    <sol-button variant="baroque">Baroque</sol-button>
-    <sol-button variant="faceted">Faceted</sol-button>
-    <sol-button variant="medallion">M</sol-button>
+    <button class="btn ornament-carved">Chiseled</button>
+    <button class="btn ornament-baroque">Baroque</button>
+    <button class="btn ornament-faceted">Faceted</button>
+    <button class="btn btn-primary" style="border-radius: 50%; width: 40px; height: 40px; padding: 0;">M</button>
   </div>
 
-  <h3 class="text-xl font-semibold mt-10 mb-4 font-serif" id="wc-input">sol-input</h3>
+  <h3 class="text-xl font-semibold mt-10 mb-4 font-serif" id="input-extended">Extended Inputs</h3>
   <p class="text-secondary mb-4">Input field with label, validation states, and icons.</p>
   <div class="grid gap-6" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))">
-    <sol-input label="Default Input" placeholder="Enter text..."></sol-input>
-    <sol-input label="With Value" value="Hello World"></sol-input>
-    <sol-input label="Disabled" placeholder="Cannot edit" disabled></sol-input>
+    <div class="input-group">
+      <label class="input-label">Default Input</label>
+      <input class="input" placeholder="Enter text..." />
+    </div>
+    <div class="input-group">
+      <label class="input-label">With Value</label>
+      <input class="input" value="Hello World" />
+    </div>
+    <div class="input-group">
+      <label class="input-label">Disabled</label>
+      <input class="input" placeholder="Cannot edit" disabled />
+    </div>
   </div>
 
 </div>

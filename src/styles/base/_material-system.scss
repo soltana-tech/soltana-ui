@@ -1,19 +1,17 @@
 // ---------------------------------------------------------------------------
 // Material System
 // ---------------------------------------------------------------------------
-// Abstract variables that all components use. Values are set by initSoltana()
-// based on the configured material/surface/ornament presets.
-// Override classes allow per-element exceptions.
+// Abstract --material-* variables consumed by all components.
+// Activated by data attributes on <html> set by initSoltana(), or by
+// applying .material-* / .surface-* classes directly to elements.
 // ---------------------------------------------------------------------------
 
 // ============================================================================
 // DEFAULT VALUES (neumorphic baseline)
 // ============================================================================
-// These defaults ensure components render correctly even without initSoltana().
-// The runtime will override these based on config.
+// Ensures components render correctly even without initSoltana().
 
 :root {
-  // Material properties
   --material-bg: var(--neuro-bg, #0e1028);
   --material-shadow:
     3px 3px 8px var(--neuro-shadow-dark, rgb(0 0 0 / 65%)),
@@ -26,16 +24,18 @@
   --material-opacity: 1;
   --material-border: var(--border-default, rgb(255 255 255 / 6%));
 
-  // Surface effect properties (for neuro-specific surface treatments)
   --surface-texture-opacity: 0;
   --surface-overlay: none;
   --surface-sheen: none;
 }
 
 // ============================================================================
-// MATERIAL OVERRIDE CLASSES
+// MATERIAL SELECTORS
 // ============================================================================
+// Data-attribute selectors activated by initSoltana().
+// Class selectors available for per-element overrides.
 
+[data-material='neuro'],
 .material-neuro {
   --material-bg: var(--neuro-bg);
   --material-shadow: 3px 3px 8px var(--neuro-shadow-dark), -3px -3px 8px var(--neuro-shadow-light);
@@ -47,6 +47,7 @@
   --material-border: var(--border-default);
 }
 
+[data-material='glass'],
 .material-glass {
   --material-bg: var(--glass-bg);
   --material-shadow: 0 8px 32px var(--glass-shadow);
@@ -57,6 +58,7 @@
   --material-border: var(--glass-border);
 }
 
+[data-material='hybrid'],
 .material-hybrid {
   --material-bg: linear-gradient(145deg, var(--glass-gradient-start), var(--glass-gradient-end));
   --material-shadow:
@@ -72,28 +74,26 @@
 }
 
 // ============================================================================
-// SURFACE OVERRIDE CLASSES
+// SURFACE SELECTORS
 // ============================================================================
 
+[data-surface='polished'],
 .surface-polished {
-  // Default clean surface - no modifications needed
   --surface-texture-opacity: 0;
   --surface-overlay: none;
   --surface-sheen: none;
 }
 
+[data-surface='frosted'],
 .surface-frosted {
-  // Glass/hybrid: heavy blur with desaturation
   --material-blur: 24px;
   --material-saturation: 80%;
   --material-opacity: 0.7;
-
-  // Neuro: etched/matte texture
   --surface-texture-opacity: 0.06;
 }
 
+[data-surface='stained'],
 .surface-stained {
-  // Glass/hybrid: colored translucent gradient
   --material-bg: linear-gradient(
     135deg,
     var(--stained-primary),
@@ -102,8 +102,6 @@
   );
   --material-blur: 28px;
   --material-border: 2px solid rgb(40 35 30 / 40%);
-
-  // Neuro: subtle jewel-toned color overlay
   --surface-overlay: linear-gradient(
     135deg,
     rgb(212 168 67 / 6%),
@@ -112,8 +110,8 @@
   );
 }
 
+[data-surface='metallic'],
 .surface-metallic {
-  // Glass/hybrid: gradient sheen with reflective highlights
   --material-bg: linear-gradient(
     145deg,
     rgb(255 255 255 / 15%) 0%,
@@ -121,8 +119,6 @@
     transparent 60%,
     rgb(0 0 0 / 10%) 100%
   );
-
-  // Neuro: brushed metal gradient sheen
   --surface-sheen: linear-gradient(
     145deg,
     rgb(255 255 255 / 12%) 0%,
@@ -135,7 +131,6 @@
 // ============================================================================
 // ORNAMENT COMPONENT SELECTOR LIST
 // ============================================================================
-// Components that receive ornament decorations when body has ornament class
 
 $ornament-components: '.btn', '.card', '.input', '.modal', '.tag', '.badge', '.ornamental';
 
@@ -143,9 +138,8 @@ $ornament-components: '.btn', '.card', '.input', '.modal', '.tag', '.badge', '.o
 // GLOBAL ORNAMENT STYLES (applied via body class)
 // ============================================================================
 // When body has an ornament class, all matching components receive decorations.
-// Per-element overrides still work by adding .ornament-* directly to an element.
+// Per-element ornament classes are defined in decorative/_ornamental.scss.
 
-// Baroque: Rococo frame with inner border and medallion accent
 body.ornament-baroque {
   #{$ornament-components} {
     position: relative;
@@ -154,14 +148,13 @@ body.ornament-baroque {
       content: '';
       position: absolute;
       inset: 4px;
-      border: 1px solid rgb(212 168 67 / 25%);
+      border: 1px solid var(--border-accent-gold, rgb(212 168 67 / 25%));
       border-radius: inherit;
       pointer-events: none;
       z-index: 1;
     }
   }
 
-  // Medallion only on larger components (cards, modals)
   .card,
   .modal {
     &::after {
@@ -173,16 +166,15 @@ body.ornament-baroque {
       width: 16px;
       height: 16px;
       border-radius: 50%;
-      border: 2px solid var(--gold-400, #d4a843);
+      border: 2px solid var(--accent-gold, #d4a843);
       background: var(--surface-1, #0e1028);
-      box-shadow: 0 0 8px rgb(212 168 67 / 20%);
+      box-shadow: 0 0 8px var(--neuro-accent-glow, rgb(212 168 67 / 15%));
       z-index: 2;
       pointer-events: none;
     }
   }
 }
 
-// Carved: Stone relief border with beveled light/dark edges
 body.ornament-carved {
   #{$ornament-components} {
     position: relative;
@@ -201,7 +193,6 @@ body.ornament-carved {
   }
 }
 
-// Faceted: Gem-cut edge highlights with diagonal gradient overlay
 body.ornament-faceted {
   #{$ornament-components} {
     position: relative;
@@ -224,20 +215,19 @@ body.ornament-faceted {
   }
 }
 
-// Gilt: Gold leaf border with subtle warm glow
 body.ornament-gilt {
   #{$ornament-components} {
     position: relative;
     box-shadow:
       var(--material-shadow),
-      0 0 0 1px var(--gold-400, #d4a843),
-      0 0 12px rgb(212 168 67 / 15%);
+      0 0 0 1px var(--accent-gold, #d4a843),
+      0 0 12px var(--neuro-accent-glow, rgb(212 168 67 / 15%));
 
     &::before {
       content: '';
       position: absolute;
       inset: 2px;
-      border: 1px solid rgb(212 168 67 / 20%);
+      border: 1px solid var(--border-accent-gold, rgb(212 168 67 / 20%));
       border-radius: inherit;
       pointer-events: none;
       z-index: 1;
@@ -245,110 +235,10 @@ body.ornament-gilt {
   }
 }
 
-// ============================================================================
-// PER-ELEMENT ORNAMENT OVERRIDE CLASSES
-// ============================================================================
-// These allow overriding the global ornament on specific elements
-
+// .ornament-none: removes ornament from specific elements
 .ornament-none {
-  // Remove ornament from specific element
   &::before,
   &::after {
     display: none !important;
   }
-}
-
-.ornament-baroque {
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 4px;
-    border: 1px solid rgb(212 168 67 / 25%);
-    border-radius: inherit;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    border: 2px solid var(--gold-400, #d4a843);
-    background: var(--surface-1, #0e1028);
-    box-shadow: 0 0 8px rgb(212 168 67 / 20%);
-    z-index: 2;
-    pointer-events: none;
-  }
-}
-
-.ornament-carved {
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    border: 1px solid rgb(255 255 255 / 12%);
-    border-bottom-color: rgb(0 0 0 / 10%);
-    border-right-color: rgb(0 0 0 / 10%);
-    pointer-events: none;
-    z-index: 1;
-  }
-}
-
-.ornament-faceted {
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(
-      135deg,
-      rgb(255 255 255 / 15%) 0%,
-      transparent 30%,
-      transparent 70%,
-      rgb(0 0 0 / 8%) 100%
-    );
-    pointer-events: none;
-    z-index: 1;
-  }
-}
-
-.ornament-gilt {
-  position: relative;
-  box-shadow:
-    var(--material-shadow),
-    0 0 0 1px var(--gold-400, #d4a843),
-    0 0 12px rgb(212 168 67 / 15%);
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 2px;
-    border: 1px solid rgb(212 168 67 / 20%);
-    border-radius: inherit;
-    pointer-events: none;
-    z-index: 1;
-  }
-}
-
-// ============================================================================
-// THEME OVERRIDE CLASSES
-// ============================================================================
-
-.theme-dark,
-.theme-light,
-.theme-sepia {
-  // Theme classes are handled by initSoltana() setting CSS variables
-  // These classes exist for per-element theme overrides if needed
 }

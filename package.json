@@ -1,7 +1,7 @@
 {
   "name": "soltana-ui",
   "version": "1.0.0",
-  "description": "A design system inspired by classical architecture, precious materials, and timeless elegance. Features neumorphic, glassmorphic, and hybrid material systems.",
+  "description": "A CSS-first design system inspired by classical architecture and precious materials. Features neumorphic, glassmorphic, and hybrid material systems with a 4-tier configuration model.",
   "type": "module",
   "private": false,
   "license": "MIT",
@@ -17,9 +17,9 @@
     "scss",
     "neumorphic",
     "glassmorphic",
-    "web-components",
     "ui-library",
-    "components"
+    "design-tokens",
+    "theming"
   ],
   "files": [
     "dist",
@@ -40,14 +40,9 @@
     },
     "./css": "./dist/soltana-ui.css",
     "./style.css": "./dist/soltana-ui.css",
-    "./components": {
-      "types": "./dist/components/index.d.ts",
+    "./enhancers": {
+      "types": "./dist/enhancers/index.d.ts",
       "import": "./dist/soltana-ui.js"
-    },
-    "./runtime": {
-      "types": "./dist/runtime/index.d.ts",
-      "import": "./dist/runtime.js",
-      "require": "./dist/runtime.umd.cjs"
     },
     "./config": {
       "types": "./dist/config/index.d.ts",
@@ -58,15 +53,15 @@
   },
   "sideEffects": [
     "*.css",
-    "*.scss",
-    "./dist/soltana-ui.js",
-    "./src/components/index.ts"
+    "*.scss"
   ],
   "scripts": {
     "dev": "npm run docs:dev",
     "build": "tsc --noEmit && vite build",
     "docs:dev": "DOCS=true vite --config vite.config.ts",
     "docs:build": "DOCS=true vite build --config vite.config.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "lint": "npm run lint:ts && npm run lint:style",
     "lint:ts": "eslint .",
     "lint:style": "stylelint \"**/*.{css,scss}\" --allow-empty-input",
@@ -81,6 +76,7 @@
     "@types/node": "^25.2.3",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
+    "jsdom": "^26.1.0",
     "postcss": "^8.5.6",
     "prettier": "^3.8.1",
     "prettier-plugin-organize-imports": "^4.3.0",
@@ -92,7 +88,8 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.55.0",
     "vite": "^7.3.1",
-    "vite-plugin-dts": "^4.5.4"
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "^3.2.4"
   },
   "peerDependencies": {
     "sass": "^1.50.0"

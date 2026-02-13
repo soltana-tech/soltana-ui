@@ -2,7 +2,7 @@
 // Soltana Config Types
 // ---------------------------------------------------------------------------
 
-export type Theme = 'dark' | 'light' | 'sepia';
+export type Theme = 'dark' | 'light' | 'sepia' | 'auto';
 export type Material = 'neuro' | 'glass' | 'hybrid';
 export type Surface = 'polished' | 'frosted' | 'stained' | 'metallic';
 export type Ornament = 'none' | 'baroque' | 'carved' | 'faceted' | 'gilt';
@@ -12,6 +12,7 @@ export interface SoltanaConfig {
   material: Material;
   surface: Surface;
   ornament: Ornament;
+  fonts?: boolean;
   overrides?: Record<string, string>;
 }
 

@@ -7,7 +7,6 @@ const isDocsMode = process.env.DOCS === 'true';
 export default defineConfig(
   isDocsMode
     ? {
-        // Documentation site build
         root: resolve(__dirname, 'docs'),
         base: './',
         build: {
@@ -21,7 +20,6 @@ export default defineConfig(
         },
       }
     : {
-        // Library build
         plugins: [
           dts({
             include: ['src/**/*.ts'],
@@ -30,25 +28,17 @@ export default defineConfig(
         ],
         build: {
           lib: {
-            entry: {
-              'soltana-ui': resolve(__dirname, 'src/index.ts'),
-              runtime: resolve(__dirname, 'src/runtime/index.ts'),
-            },
+            entry: resolve(__dirname, 'src/index.ts'),
             name: 'SoltanaUI',
             formats: ['es', 'umd'],
-            fileName: (format, entryName) => {
-              if (format === 'umd') {
-                return `${entryName}.umd.cjs`;
-              }
-              return `${entryName}.js`;
+            fileName: (format) => {
+              if (format === 'umd') return 'soltana-ui.umd.cjs';
+              return 'soltana-ui.js';
             },
           },
           cssFileName: 'soltana-ui',
           rollupOptions: {
-            external: [],
             output: {
-              globals: {},
-              // Ensure CSS is extracted to a single file
               assetFileNames: (assetInfo) => {
                 if (assetInfo.name?.endsWith('.css')) {
                   return 'soltana-ui.css';
@@ -57,13 +47,8 @@ export default defineConfig(
               },
             },
           },
-          // Generate minified version
-          minify: 'terser',
+          minify: 'esbuild',
           sourcemap: false,
-        },
-        define: {
-          // Ensure custom element definitions are preserved
-          'process.env.NODE_ENV': JSON.stringify('production'),
         },
       }
 );

@@ -5,7 +5,8 @@
 // Variables are applied to :root by initSoltana() when theme: 'dark'.
 // ---------------------------------------------------------------------------
 
-:root {
+:root,
+[data-theme='dark'] {
   color-scheme: dark;
 
   // Surface colors — deep midnight navy
