@@ -1,6 +1,6 @@
 ---
 name: audit
-description: Review, plan from, and update the AUDIT.md roadmap. Use when the user wants to check audit status, pick the next item to work on, formulate an implementation plan from an audit item, or mark items as done.
+description: Review, plan from, and update the roadmap. Use when the user wants to check audit status, pick the next item to work on, formulate an implementation plan from an audit item, or mark items as done.
 user-invocable: true
 argument-hint: [action] [item-id]
 allowed-tools: Read, Edit, Grep, Glob, Task, EnterPlanMode
