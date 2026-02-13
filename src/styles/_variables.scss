@@ -135,6 +135,10 @@ $z-indices: (
   30: 30,
   40: 40,
   50: 50,
+  dropdown: 100,
+  modal: 200,
+  tooltip: 300,
+  skip-link: 9999,
   auto: auto,
 );
 
@@ -279,6 +283,13 @@ $ivory-900: #3a332a;
   // Transition tokens
   @each $key, $val in $transitions {
     --transition-#{$key}: #{$val};
+  }
+
+  // Z-index tokens
+  @each $key, $val in $z-indices {
+    @if $val != auto {
+      --z-#{$key}: #{$val};
+    }
   }
 
   // Font families

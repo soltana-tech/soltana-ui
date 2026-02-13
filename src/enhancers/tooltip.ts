@@ -17,7 +17,8 @@ function getOrCreateTooltip(): HTMLElement {
   tooltipEl.className = 'tooltip';
   tooltipEl.setAttribute('role', 'tooltip');
   tooltipEl.style.position = 'fixed';
-  tooltipEl.style.zIndex = '9999';
+  tooltipEl.style.zIndex =
+    getComputedStyle(document.documentElement).getPropertyValue('--z-tooltip').trim() || '300';
   tooltipEl.style.pointerEvents = 'none';
   tooltipEl.style.opacity = '0';
   tooltipEl.style.transition = 'opacity 0.15s ease';
