@@ -1,19 +1,26 @@
 // ---------------------------------------------------------------------------
 // Toggle Component
 // ---------------------------------------------------------------------------
-// Standalone toggle switch using --relief-* tokens.
+// Tier-aware toggle switch consuming --relief-*, --finish-*, and --state-*
+// tokens. Renders as a track with a sliding thumb pseudo-element.
+// ARIA: use role="switch" with aria-checked and tabindex="0".
+//   <div class="toggle" role="switch" aria-checked="false" tabindex="0">
 // ---------------------------------------------------------------------------
 
 .toggle {
-  border: none;
-  background: var(--relief-bg);
   position: relative;
   width: 3.5rem;
   height: 2rem;
+  border: 1px solid var(--relief-border);
   border-radius: var(--radius-full);
+  background: var(--relief-bg);
   box-shadow: var(--relief-shadow-inset-lg);
+  backdrop-filter: blur(var(--finish-blur)) saturate(var(--finish-saturation));
   cursor: pointer;
-  transition: background var(--transition-slow) var(--easing-in-out);
+  transition:
+    background var(--transition-slow) var(--easing-in-out),
+    border-color var(--transition-slow) var(--easing-in-out),
+    box-shadow var(--transition-slow) var(--easing-in-out);
 
   &::after {
     content: '';
@@ -31,9 +38,27 @@
       box-shadow var(--transition-slow) var(--easing-in-out);
   }
 
-  &.active::after {
-    transform: translateX(1.5rem);
+  &.active {
     background: var(--accent-primary);
-    box-shadow: var(--relief-shadow-sm);
+    border-color: transparent;
+
+    &::after {
+      transform: translateX(1.5rem);
+      background: var(--accent-primary);
+      box-shadow: var(--relief-shadow);
+    }
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  &.disabled {
+    background: var(--state-disabled-bg);
+    border-color: var(--border-subtle);
+    cursor: not-allowed;
+    box-shadow: none;
+    backdrop-filter: none;
   }
 }
