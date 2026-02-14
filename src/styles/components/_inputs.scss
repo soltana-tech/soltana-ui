@@ -35,12 +35,10 @@
     color: var(--input-placeholder);
   }
 
-  &:focus {
+  &:focus-visible {
     outline: none;
     border-color: var(--input-border-focus);
-    box-shadow:
-      var(--relief-shadow-inset),
-      0 0 0 3px var(--state-focus-ring);
+    box-shadow: var(--relief-shadow-inset), var(--focus-ring-shadow);
   }
 
   &:disabled {
@@ -73,8 +71,10 @@
 .input-error {
   border-color: var(--color-error);
 
-  &:focus {
-    box-shadow: 0 0 0 3px rgb(239 68 68 / 20%);
+  &:focus-visible {
+    box-shadow:
+      var(--relief-shadow-inset),
+      0 0 0 3px var(--color-error-subtle);
   }
 }
 
@@ -126,8 +126,20 @@
   }
 
   &:focus-visible {
-    outline: 2px solid var(--accent-primary);
-    outline-offset: 2px;
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  &:disabled {
+    background-color: var(--state-disabled-bg);
+    border-color: var(--border-subtle);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  &:disabled:checked {
+    background-color: var(--state-disabled-text);
+    border-color: var(--state-disabled-text);
   }
 }
 
@@ -258,7 +270,20 @@
   }
 
   input:focus-visible + & {
-    outline: 2px solid var(--accent-primary);
-    outline-offset: 2px;
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  input:disabled + & {
+    background-color: var(--state-disabled-bg);
+    cursor: not-allowed;
+
+    &::before {
+      box-shadow: none;
+    }
+  }
+
+  input:disabled:checked + & {
+    background: var(--state-disabled-text);
   }
 }

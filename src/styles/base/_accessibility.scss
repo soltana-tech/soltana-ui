@@ -19,51 +19,54 @@
 }
 
 // ---- High Contrast Mode ----
-// Increases visual clarity for users who need stronger contrast.
+// Token-level overrides for users who need stronger contrast.
 @media (prefers-contrast: more) {
   :root {
     --border-default: rgb(212 168 67 / 30%);
     --border-subtle: rgb(212 168 67 / 20%);
     --border-strong: rgb(212 168 67 / 50%);
-  }
 
-  .glass,
-  .glass-luxury,
-  .glass-frosted-heavy {
-    backdrop-filter: none;
-    background: var(--surface-2);
-    border: 2px solid var(--border-strong);
+    // Eliminate translucency
+    --finish-blur: 0px;
+    --finish-saturation: 100%;
+    --finish-opacity: 1;
+
+    // Enhanced focus ring
+    --focus-ring-width: 3px;
+
+    // Collapse lower hierarchy into secondary
+    --text-muted: var(--text-secondary);
+    --text-tertiary: var(--text-secondary);
   }
+}
+
+// ---- Focus Ring Tokens ----
+:root {
+  --focus-ring-color: var(--accent-primary);
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 3px;
+  --focus-ring-shadow: 0 0 0 3px var(--state-focus-ring);
 }
 
 // ---- Focus Styles ----
-// Gold accent focus ring, visible on all interactive elements.
+// Consistent focus ring on all interactive elements via tokens.
 :focus-visible {
-  outline: 2px solid var(--gold-400);
-  outline-offset: 3px;
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
 }
 
-// Generic focus ring utility (uses theme accent)
+// Generic focus ring utility
 .focus-ring {
   &:focus-visible {
-    outline: 2px solid var(--accent-primary);
-    outline-offset: 3px;
-  }
-}
-
-// Gold-specific focus ring
-.focus-ring-gold {
-  &:focus-visible {
-    outline: 2px solid var(--gold-400);
-    outline-offset: 3px;
-    box-shadow: 0 0 0 4px rgb(212 168 67 / 20%);
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
   }
 }
 
 .focus-ring-inset {
   &:focus-visible {
-    outline: 2px solid var(--accent-primary);
-    outline-offset: -3px;
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: calc(-1 * var(--focus-ring-offset));
   }
 }
 
@@ -114,8 +117,8 @@
 
   &:focus {
     top: 0;
-    outline: 2px solid var(--gold-400);
-    outline-offset: 2px;
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
   }
 }
 

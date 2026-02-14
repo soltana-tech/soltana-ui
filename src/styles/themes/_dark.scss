@@ -25,8 +25,8 @@
   // Text colors — warm ivory hierarchy
   --text-primary: #f5f0e6;
   --text-secondary: #c5b99b;
-  --text-tertiary: #8a7e6a;
-  --text-muted: #5a5245;
+  --text-tertiary: #978b77;
+  --text-muted: #897d69;
   --text-inverse: #08091a;
 
   // Border colors — neutral alpha for seamless neumorphic, gold reserved for accents
@@ -67,7 +67,7 @@
   --state-active: rgb(212 168 67 / 14%);
   --state-focus-ring: rgb(212 168 67 / 40%);
   --state-disabled-bg: #151838;
-  --state-disabled-text: #5a5245;
+  --state-disabled-text: #897d69;
 
   // =========================================================================
   // CHANNEL TOKENS — consumed by _material-system.scss to derive primitives
@@ -84,7 +84,7 @@
   --input-bg: rgb(255 255 255 / 4%);
   --input-border: rgb(255 255 255 / 8%);
   --input-border-focus: #d4a843;
-  --input-placeholder: #5a5245;
+  --input-placeholder: #897d69;
   --card-bg: rgb(14 16 40 / 60%);
   --card-border: rgb(255 255 255 / 6%);
   --badge-bg: rgb(212 168 67 / 10%);
