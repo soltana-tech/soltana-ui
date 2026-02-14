@@ -39,7 +39,7 @@
 
 .card-ornate {
   position: relative;
-  border: 1px solid var(--border-accent-gold, rgb(212 168 67 / 20%));
+  border: 1px solid var(--border-accent-gold);
 
   &::before,
   &::after {
@@ -91,7 +91,7 @@
     content: '';
     position: absolute;
     inset: 4px;
-    border: 1px solid var(--border-accent-gold-strong, rgb(212 168 67 / 30%));
+    border: 1px solid var(--border-accent-gold-strong);
     border-radius: 1px;
     pointer-events: none;
     z-index: 1;
@@ -109,8 +109,8 @@
     border: 2px solid var(--accent-gold);
     background: var(--surface-1);
     box-shadow:
-      0 0 8px var(--border-accent-gold, rgb(212 168 67 / 20%)),
-      inset 0 0 4px var(--badge-bg, rgb(212 168 67 / 10%));
+      0 0 8px var(--border-accent-gold),
+      inset 0 0 4px var(--badge-bg);
     z-index: 2;
     pointer-events: none;
   }

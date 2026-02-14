@@ -188,7 +188,7 @@
   @include btn-metallic(
     var(--gold-gradient),
     var(--gold-900),
-    rgb(212 168 67 / 25%),
+    var(--border-accent-gold-strong),
     $glow-opacity-hover: 40%,
     $shine-color: rgb(255 255 255 / 20%)
   );

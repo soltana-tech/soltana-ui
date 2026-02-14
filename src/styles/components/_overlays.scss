@@ -157,7 +157,7 @@
     content: '';
     position: absolute;
     inset: 4px;
-    border: 1px solid var(--border-accent-gold, rgb(212 168 67 / 25%));
+    border: 1px solid var(--border-accent-gold);
     pointer-events: none;
   }
 
@@ -172,6 +172,6 @@
     border-radius: 50%;
     border: 2px solid var(--accent-gold);
     background: var(--surface-1);
-    box-shadow: 0 0 12px var(--border-accent-gold, rgb(212 168 67 / 25%));
+    box-shadow: 0 0 12px var(--border-accent-gold);
   }
 }

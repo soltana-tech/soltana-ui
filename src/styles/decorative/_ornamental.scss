@@ -37,7 +37,7 @@
     content: '';
     position: absolute;
     inset: 4px;
-    border: 1px solid rgb(212 168 67 / 30%);
+    border: 1px solid var(--border-accent-gold-strong);
     border-radius: 1px;
     pointer-events: none;
   }
@@ -55,8 +55,8 @@
     border: 2px solid var(--gold-400);
     background: var(--surface-1);
     box-shadow:
-      0 0 8px rgb(212 168 67 / 20%),
-      inset 0 0 4px rgb(212 168 67 / 10%);
+      0 0 8px var(--border-accent-gold),
+      inset 0 0 4px var(--accent-gold-subtle);
     pointer-events: none;
   }
 }
@@ -90,13 +90,13 @@
     0 0 0 1px var(--gold-600),
     0 0 0 4px var(--surface-bg, #fff),
     0 0 0 5px var(--gold-400),
-    0 0 12px rgb(212 168 67 / 25%);
+    0 0 12px var(--border-accent-gold);
 
   &::before {
     content: '';
     position: absolute;
     inset: 2px;
-    border: 1px solid rgb(212 168 67 / 20%);
+    border: 1px solid var(--border-accent-gold);
     pointer-events: none;
   }
 }
@@ -201,7 +201,7 @@
     height: var(--ornament-size-md);
     border-radius: 50%;
     border: 2px solid var(--ornament-color);
-    box-shadow: inset 0 0 4px rgb(212 168 67 / 20%);
+    box-shadow: inset 0 0 4px var(--border-accent-gold);
     opacity: var(--ornament-opacity);
     pointer-events: none;
   }
@@ -298,7 +298,7 @@
   border: 1px solid var(--gold-400);
   box-shadow:
     inset 0 1px 0 rgb(254 243 199 / 30%),
-    0 0 8px rgb(212 168 67 / 15%);
+    0 0 8px var(--border-accent-gold);
 }
 
 // Beaded edges — Beaded molding pattern
@@ -360,8 +360,8 @@
     border: 2px solid var(--gold-400);
     box-shadow:
       0 0 0 4px var(--surface-bg, #fff),
-      0 0 0 6px rgb(212 168 67 / 25%),
-      inset 0 0 12px rgb(212 168 67 / 10%);
+      0 0 0 6px var(--border-accent-gold),
+      inset 0 0 12px var(--accent-gold-subtle);
     pointer-events: none;
     z-index: 1;
   }
@@ -451,7 +451,7 @@
     content: '';
     position: absolute;
     inset: 8px;
-    border: 1px solid rgb(212 168 67 / 15%);
+    border: 1px solid var(--border-accent-gold);
     border-radius: 50% / 20%;
     pointer-events: none;
   }
@@ -580,8 +580,8 @@
 
 // ---- Classical Border Frame ----
 .ornament-border-classical {
-  border: 1px solid rgb(212 168 67 / 25%);
-  outline: 1px solid rgb(212 168 67 / 12%);
+  border: 1px solid var(--border-accent-gold-strong);
+  outline: 1px solid var(--border-accent-gold);
   outline-offset: 4px;
 }
 
@@ -596,7 +596,7 @@
   border: 2px solid var(--gold-400);
   box-shadow:
     0 0 0 4px var(--surface-bg),
-    0 0 0 6px rgb(212 168 67 / 25%);
+    0 0 0 6px var(--border-accent-gold);
 }
 
 .ornament-medallion-lg {
@@ -605,14 +605,14 @@
   border-width: 2px;
   box-shadow:
     0 0 0 5px var(--surface-bg),
-    0 0 0 7px rgb(212 168 67 / 25%),
+    0 0 0 7px var(--border-accent-gold),
     0 0 0 10px var(--surface-bg),
-    0 0 0 11px rgb(212 168 67 / 12%);
+    0 0 0 11px var(--accent-gold-subtle);
 }
 
 // ---- Column-Inspired Side Borders ----
 .ornament-column-left {
-  border-left: 3px solid rgb(212 168 67 / 20%);
+  border-left: 3px solid var(--border-accent-gold);
   padding-left: 1.5rem;
   position: relative;
 
@@ -623,12 +623,12 @@
     top: 0;
     bottom: 0;
     width: 1px;
-    background: rgb(212 168 67 / 10%);
+    background: var(--accent-gold-subtle);
   }
 }
 
 .ornament-column-right {
-  border-right: 3px solid rgb(212 168 67 / 20%);
+  border-right: 3px solid var(--border-accent-gold);
   padding-right: 1.5rem;
   position: relative;
 
@@ -639,7 +639,7 @@
     top: 0;
     bottom: 0;
     width: 1px;
-    background: rgb(212 168 67 / 10%);
+    background: var(--accent-gold-subtle);
   }
 }
 

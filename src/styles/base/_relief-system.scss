@@ -247,8 +247,8 @@
 [data-ornament='baroque'] .ornament {
   box-shadow:
     var(--relief-shadow),
-    inset 0 0 0 3px var(--border-accent-gold, rgb(212 168 67 / 25%)),
-    0 0 8px var(--accent-glow, rgb(212 168 67 / 15%));
+    inset 0 0 0 3px var(--border-accent-gold),
+    0 0 8px var(--accent-glow);
 }
 
 [data-ornament='beveled'] .ornament {
@@ -268,9 +268,9 @@
 [data-ornament='gilt'] .ornament {
   box-shadow:
     var(--relief-shadow),
-    inset 0 0 0 2px var(--border-accent-gold, rgb(212 168 67 / 20%)),
+    inset 0 0 0 2px var(--border-accent-gold),
     0 0 0 1px var(--accent-gold, #d4a843),
-    0 0 12px var(--accent-glow, rgb(212 168 67 / 15%));
+    0 0 12px var(--accent-glow);
 }
 
 // ---- Explicit per-element overrides ----
@@ -280,8 +280,8 @@
 .ornament.ornament-baroque {
   box-shadow:
     var(--relief-shadow),
-    inset 0 0 0 3px var(--border-accent-gold, rgb(212 168 67 / 25%)),
-    0 0 8px var(--accent-glow, rgb(212 168 67 / 15%));
+    inset 0 0 0 3px var(--border-accent-gold),
+    0 0 8px var(--accent-glow);
 }
 
 .ornament-beveled,
@@ -304,7 +304,7 @@
 .ornament.ornament-gilt {
   box-shadow:
     var(--relief-shadow),
-    inset 0 0 0 2px var(--border-accent-gold, rgb(212 168 67 / 20%)),
+    inset 0 0 0 2px var(--border-accent-gold),
     0 0 0 1px var(--accent-gold, #d4a843),
-    0 0 12px var(--accent-glow, rgb(212 168 67 / 15%));
+    0 0 12px var(--accent-glow);
 }
