@@ -10,7 +10,12 @@ export type {
   Relief,
   Finish,
   Ornament,
+  RecipeName,
+  Recipe,
 } from './config/types.js';
+
+// Recipe presets
+export { RECIPES, VALID_RECIPE_NAMES } from './config/recipes.js';
 
 // Font loading
 export { loadSoltanaFonts } from './fonts/index.js';

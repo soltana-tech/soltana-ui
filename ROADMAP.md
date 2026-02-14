@@ -295,7 +295,7 @@ Baroque defined in 3 places (`_relief-system.scss`, `_buttons.scss`, `_ornamenta
 
 ### COMB-1: Recipe book
 
-`TODO` · Size: **M** · Depends on: DX-2b, DX-2c, DX-2d, SCSS-14
+`DONE` · Size: **M** · Depends on: DX-2b, DX-2c, DX-2d, SCSS-14
 
 Named presets of proven tier combinations as starting points:
 
@@ -305,6 +305,8 @@ Named presets of proven tier combinations as starting points:
 - "Classic Warm" — sepia, soft, matte, beveled
 
 Recipes don't replace config — they're starting points. Docs should showcase each with screenshots.
+
+- Progress: Added `RecipeName`, `Recipe` types and `RECIPES` map with 4 built-in recipes. `applyRecipe()` on `SoltanaInstance` delegates to existing setters. Invalid recipe names trigger `console.warn`. Settings panel includes recipe selector with active state sync. Design system page shows live preview cards using per-element tier override classes. Tests cover data integrity, all recipes, invalid names, and post-recipe customization.
 
 ### COMB-2: Visual regression testing
 

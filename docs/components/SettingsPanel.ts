@@ -1,4 +1,12 @@
-import type { SoltanaInstance, Theme, Relief, Finish, Ornament } from '../../src/config';
+import type {
+  SoltanaInstance,
+  Theme,
+  Relief,
+  Finish,
+  Ornament,
+  RecipeName,
+} from '../../src/config';
+import { RECIPES } from '../../src/config';
 
 interface OptionConfig {
   value: string;
@@ -48,6 +56,11 @@ const ORNAMENT_OPTIONS: OptionConfig[] = [
   { value: 'beveled', label: 'Beveled' },
   { value: 'faceted', label: 'Faceted' },
 ];
+
+const RECIPE_OPTIONS: OptionConfig[] = Object.entries(RECIPES).map(([key, recipe]) => ({
+  value: key,
+  label: recipe.name,
+}));
 
 /**
  * Settings panel for the 4-tier design system.
@@ -282,6 +295,7 @@ export class SettingsPanel {
         </button>
       </div>
       <div class="settings-panel__body">
+        ${this.buildRecipeSection()}
         ${this.buildSection('Color Mode', 'theme', THEME_OPTIONS)}
         ${this.buildSection('Relief', 'relief', RELIEF_OPTIONS)}
         ${this.buildSection('Finish', 'finish', FINISH_OPTIONS)}
@@ -289,6 +303,23 @@ export class SettingsPanel {
       </div>
       <div class="settings-panel__footer">
         <button class="settings-reset" data-action="reset">Reset to Defaults</button>
+      </div>
+    `;
+  }
+
+  private buildRecipeSection(): string {
+    const optionsHTML = RECIPE_OPTIONS.map(
+      (opt) => `
+        <button class="settings-option settings-recipe" data-recipe="${opt.value}">
+          ${opt.label}
+        </button>
+      `
+    ).join('');
+
+    return `
+      <div class="settings-section">
+        <span class="settings-section__label">Recipes</span>
+        <div class="settings-options">${optionsHTML}</div>
       </div>
     `;
   }
@@ -332,6 +363,18 @@ export class SettingsPanel {
         const value = target.dataset.value;
         if (tier && value) {
           this.handleOptionClick(tier, value);
+        }
+      });
+    });
+
+    // Recipe buttons
+    this.container?.querySelectorAll('.settings-recipe').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const target = e.currentTarget as HTMLElement;
+        const recipeName = target.dataset.recipe;
+        if (recipeName) {
+          this.soltana.applyRecipe(recipeName as RecipeName);
+          this.updateActiveStates();
         }
       });
     });
@@ -383,11 +426,26 @@ export class SettingsPanel {
   private updateActiveStates(): void {
     const state = this.soltana.getState();
 
-    this.container?.querySelectorAll('.settings-option').forEach((btn) => {
+    // Tier option buttons
+    this.container?.querySelectorAll('.settings-option:not(.settings-recipe)').forEach((btn) => {
       const el = btn as HTMLElement;
       const tier = el.dataset.tier as keyof typeof state;
       const value = el.dataset.value;
       el.classList.toggle('active', state[tier] === value);
+    });
+
+    // Recipe buttons — active when all 4 tiers match
+    this.container?.querySelectorAll('.settings-recipe').forEach((btn) => {
+      const el = btn as HTMLElement;
+      const recipeName = el.dataset.recipe as RecipeName;
+      const recipe = RECIPES[recipeName] as (typeof RECIPES)[RecipeName] | undefined;
+      if (!recipe) return;
+      const matches =
+        state.theme === recipe.theme &&
+        state.relief === recipe.relief &&
+        state.finish === recipe.finish &&
+        state.ornament === recipe.ornament;
+      el.classList.toggle('active', matches);
     });
   }
 

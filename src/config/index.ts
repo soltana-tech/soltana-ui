@@ -13,9 +13,11 @@ import type {
   Relief,
   Finish,
   Ornament,
+  RecipeName,
 } from './types';
 import { initAll } from '../enhancers/index.js';
 import { loadSoltanaFonts } from '../fonts/index';
+import { RECIPES, VALID_RECIPE_NAMES } from './recipes';
 
 const DEFAULT_CONFIG: SoltanaConfig = {
   theme: 'dark',
@@ -163,6 +165,20 @@ export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaIns
       applyOrnament(ornament);
     },
 
+    applyRecipe(recipeName: RecipeName): void {
+      if (!VALID_RECIPE_NAMES.includes(recipeName)) {
+        console.warn(
+          `[soltana] Invalid recipe "${recipeName}". Expected: ${VALID_RECIPE_NAMES.join(', ')}`
+        );
+        return;
+      }
+      const recipe = RECIPES[recipeName];
+      this.setTheme(recipe.theme);
+      this.setRelief(recipe.relief);
+      this.setFinish(recipe.finish);
+      this.setOrnament(recipe.ornament);
+    },
+
     setOverrides(overrides: Record<string, string>): void {
       state.overrides = { ...state.overrides, ...overrides };
       applyOverrides(overrides);
@@ -208,4 +224,14 @@ export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaIns
   };
 }
 
-export type { SoltanaConfig, SoltanaInstance, Theme, Relief, Finish, Ornament } from './types';
+export type {
+  SoltanaConfig,
+  SoltanaInstance,
+  Theme,
+  Relief,
+  Finish,
+  Ornament,
+  RecipeName,
+  Recipe,
+} from './types';
+export { RECIPES, VALID_RECIPE_NAMES } from './recipes';

@@ -7,6 +7,8 @@ import {
   specimenBlock,
   codeExample,
 } from '../utils/helpers';
+import { RECIPES } from '../../src/config';
+import type { RecipeName } from '../../src/config';
 
 // Color card that uses the color as a tinted glass background
 function jewelCard(name: string, variable: string, hex: string): string {
@@ -41,6 +43,32 @@ function metallicPreview(name: string, className: string): string {
     <button class="btn ${className}">${name}</button>`;
 }
 
+function recipeCard(key: RecipeName): string {
+  const recipe = RECIPES[key];
+  const tierClasses = [
+    `theme-${recipe.theme}`,
+    `relief-${recipe.relief}`,
+    `finish-${recipe.finish}`,
+    recipe.ornament !== 'none' ? `ornament-${recipe.ornament}` : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
+  return `
+    <div class="${tierClasses} card p-6 rounded-xl" style="min-height: 180px;">
+      <span class="tag tag-gold mb-2">${recipe.name}</span>
+      <p class="text-sm text-secondary mt-2">${recipe.description}</p>
+      <div class="flex flex-wrap gap-2 mt-3">
+        <button class="btn btn-primary btn-sm">Primary</button>
+        <button class="btn btn-secondary btn-sm">Secondary</button>
+        <span class="badge badge-primary">Badge</span>
+      </div>
+      <div class="text-xs text-tertiary mt-3">
+        ${recipe.theme} / ${recipe.relief} / ${recipe.finish} / ${recipe.ornament}
+      </div>
+    </div>`;
+}
+
 export function renderDesignSystem(): string {
   return `
 <div class="page-design-system">
@@ -48,6 +76,7 @@ export function renderDesignSystem(): string {
   ${sectionHeading('Design System', 'overview', 'Colors, typography, reliefs, finishes, and ornamental details — all reactive to the 4-tier system.')}
 
   ${quickNav([
+    { label: 'Recipes', href: '#recipes' },
     { label: 'Colors', href: '#colors' },
     { label: 'Typography', href: '#typography' },
     { label: 'Reliefs', href: '#reliefs' },
@@ -56,6 +85,27 @@ export function renderDesignSystem(): string {
     { label: 'Composition', href: '#composition' },
     { label: 'Spacing', href: '#spacing' },
   ])}
+
+  ${ornamentDivider()}
+
+  <!-- ================================================================== -->
+  <!-- RECIPES -->
+  <!-- ================================================================== -->
+
+  ${sectionHeading('Recipes', 'recipes', 'Named presets of proven tier combinations. Apply a recipe as a starting point, then customize individual tiers.')}
+
+  <div class="grid gap-6 mt-8" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))">
+    ${(Object.keys(RECIPES) as RecipeName[]).map((key) => recipeCard(key)).join('')}
+  </div>
+
+  ${specimenBlock(
+    'Using Recipes',
+    `
+    <p class="text-sm text-secondary mb-4">Recipes set all four tiers at once via the <code>applyRecipe()</code> API. They are starting points — individual tiers can be changed afterward.</p>
+    ${codeExample("import { initSoltana } from 'soltana-ui';\n\nconst soltana = initSoltana();\n\n// Apply a recipe\nsoltana.applyRecipe('luxury-dark');\n\n// Customize individual tiers afterward\nsoltana.setFinish('frosted');", 'javascript')}
+    ${codeExample("import { RECIPES } from 'soltana-ui';\n\n// Inspect available recipes\nfor (const [key, recipe] of Object.entries(RECIPES)) {\n  console.log(key, recipe.name, recipe.description);\n}", 'javascript')}
+  `
+  )}
 
   ${ornamentDivider()}
 
