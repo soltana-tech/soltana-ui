@@ -3,9 +3,9 @@
 // ---------------------------------------------------------------------------
 
 export type Theme = 'dark' | 'light' | 'sepia' | 'auto';
-export type Relief = 'flat' | 'soft' | 'neu' | 'glass' | 'metallic' | 'stone';
-export type Finish = 'polished' | 'frosted' | 'stained' | 'metallic';
-export type Ornament = 'none' | 'baroque' | 'carved' | 'faceted' | 'gilt';
+export type Relief = 'flat' | 'soft' | 'lifted' | 'neu' | 'sharp' | 'hewn';
+export type Finish = 'matte' | 'translucent' | 'frosted' | 'tinted' | 'glossy';
+export type Ornament = 'none' | 'gilt' | 'baroque' | 'beveled' | 'faceted';
 
 export interface SoltanaConfig {
   theme: Theme;

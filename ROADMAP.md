@@ -388,7 +388,7 @@ This is pre-release. Zero references to the old names must remain anywhere in th
 
 ### DX-2b: Restructure relief options
 
-`TODO` · Size: **XL** · Depends on: DX-2a
+`DONE` · Size: **XL** · Depends on: DX-2a
 
 Replace the current relief (formerly material) option set. Remove glass, metallic, and stone. Add lifted, sharp, and hewn.
 
@@ -415,9 +415,11 @@ Replace the current relief (formerly material) option set. Remove glass, metalli
 - Implement `lifted`, `sharp`, `hewn` as `[data-relief]` / `.relief-*` rulesets deriving from generic channel tokens
 - Each must define `--relief-bg`, `--relief-shadow-*`, `--relief-border`
 
+- Progress: Deleted `_glassmorphic.scss`, `_metallic.scss`, `_stone.scss` and all associated primitives (`--glass-*`, `--metallic-*`, `--stone-*`) from relief system and theme files. Removed glass/metallic/stone relief selectors and component references (`.card-stained-glass`, `.card-cathedral`, `.card-colonnade`, `.card-marble`). Added `lifted` (Material Design-style elevation), `sharp` (hard-edged zero-blur shadows), and `hewn` (chiseled asymmetric insets) as new relief options with full shadow scale support.
+
 ### DX-2c: Restructure finish options
 
-`TODO` · Size: **L** · Depends on: DX-2a
+`DONE` · Size: **L** · Depends on: DX-2a
 
 Replace the current finish (formerly surface) option set. Rename polished → glossy, stained → tinted. Remove metallic finish. Add matte and translucent.
 
@@ -433,9 +435,11 @@ Replace the current finish (formerly surface) option set. Rename polished → gl
 
 **Scope bleed (accepted):** `tinted` and `glossy` may override `--relief-bg`. Finishes may tint the background but do not define shadow direction or shape (relief's responsibility).
 
+- Progress: Replaced `polished` → `matte`, `stained` → `tinted`, `metallic` (finish) → `glossy`. Added `translucent` (semi-transparent, no blur). Removed `--stained-*` tokens from all theme files. New finishes use existing channel tokens (`--accent-glow`, `--shadow-color`, `--highlight-color`).
+
 ### DX-2d: Restructure ornament options
 
-`TODO` · Size: **M** · Depends on: DX-2a
+`DONE` · Size: **M** · Depends on: DX-2a
 
 Rename carved → beveled. Update descriptions for existing ornaments.
 
@@ -448,6 +452,8 @@ Rename carved → beveled. Update descriptions for existing ornaments.
 | baroque | Rococo frame with inner gold border and filigree |
 | beveled | Light/dark edge highlights, subtle 3D frame |
 | faceted | Gem-cut edge highlights with prismatic inset glow |
+
+- Progress: Renamed `carved` → `beveled` across relief system selectors, card component (`.card-carved` → `.card-beveled`), navigation (`.tabs-carved` → `.tabs-beveled`), and ornamental file (`.frame-carved` → `.frame-beveled`). Updated TypeScript types, config validation, tests, and all documentation.
 
 ### DX-3: No class discoverability
 

@@ -18,7 +18,7 @@ import { renderPatterns } from './pages/patterns';
 const soltana = initSoltana({
   theme: 'dark',
   relief: 'neu',
-  finish: 'polished',
+  finish: 'matte',
   ornament: 'none',
 });
 

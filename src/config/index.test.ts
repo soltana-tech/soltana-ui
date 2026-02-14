@@ -29,19 +29,19 @@ describe('initSoltana', () => {
     initSoltana();
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
     expect(document.documentElement.getAttribute('data-relief')).toBe('neu');
-    expect(document.documentElement.getAttribute('data-finish')).toBe('polished');
+    expect(document.documentElement.getAttribute('data-finish')).toBe('matte');
     expect(document.documentElement.getAttribute('data-ornament')).toBe('none');
   });
 
   it('applies custom config', () => {
     initSoltana({
       theme: 'light',
-      relief: 'glass',
+      relief: 'lifted',
       finish: 'frosted',
       ornament: 'gilt',
     });
     expect(document.documentElement.getAttribute('data-theme')).toBe('light');
-    expect(document.documentElement.getAttribute('data-relief')).toBe('glass');
+    expect(document.documentElement.getAttribute('data-relief')).toBe('lifted');
     expect(document.documentElement.getAttribute('data-finish')).toBe('frosted');
     expect(document.documentElement.getAttribute('data-ornament')).toBe('gilt');
   });
@@ -54,22 +54,22 @@ describe('initSoltana', () => {
 
   it('setRelief updates data-relief', () => {
     const soltana = initSoltana();
-    soltana.setRelief('metallic');
-    expect(document.documentElement.getAttribute('data-relief')).toBe('metallic');
+    soltana.setRelief('sharp');
+    expect(document.documentElement.getAttribute('data-relief')).toBe('sharp');
   });
 
   it('setFinish updates data-finish', () => {
     const soltana = initSoltana();
-    soltana.setFinish('stained');
-    expect(document.documentElement.getAttribute('data-finish')).toBe('stained');
+    soltana.setFinish('tinted');
+    expect(document.documentElement.getAttribute('data-finish')).toBe('tinted');
   });
 
   it('setOrnament updates data-ornament attribute', () => {
     const soltana = initSoltana({ ornament: 'baroque' });
     expect(document.documentElement.getAttribute('data-ornament')).toBe('baroque');
 
-    soltana.setOrnament('carved');
-    expect(document.documentElement.getAttribute('data-ornament')).toBe('carved');
+    soltana.setOrnament('beveled');
+    expect(document.documentElement.getAttribute('data-ornament')).toBe('beveled');
 
     soltana.setOrnament('none');
     expect(document.documentElement.getAttribute('data-ornament')).toBe('none');
@@ -84,7 +84,7 @@ describe('initSoltana', () => {
   it('reset restores defaults and clears overrides', () => {
     const soltana = initSoltana({
       theme: 'sepia',
-      relief: 'glass',
+      relief: 'lifted',
       ornament: 'gilt',
     });
     soltana.setOverrides({ '--custom': 'value' });
@@ -92,17 +92,17 @@ describe('initSoltana', () => {
 
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
     expect(document.documentElement.getAttribute('data-relief')).toBe('neu');
-    expect(document.documentElement.getAttribute('data-finish')).toBe('polished');
+    expect(document.documentElement.getAttribute('data-finish')).toBe('matte');
     expect(document.documentElement.getAttribute('data-ornament')).toBe('none');
     expect(document.documentElement.style.getPropertyValue('--custom')).toBe('');
   });
 
   it('getState returns current config', () => {
-    const soltana = initSoltana({ theme: 'light', relief: 'metallic' });
+    const soltana = initSoltana({ theme: 'light', relief: 'sharp' });
     const state = soltana.getState();
     expect(state.theme).toBe('light');
-    expect(state.relief).toBe('metallic');
-    expect(state.finish).toBe('polished');
+    expect(state.relief).toBe('sharp');
+    expect(state.finish).toBe('matte');
     expect(state.ornament).toBe('none');
   });
 
@@ -116,7 +116,7 @@ describe('initSoltana', () => {
   it('destroy removes all data attributes and inline styles', () => {
     const soltana = initSoltana({
       theme: 'sepia',
-      relief: 'glass',
+      relief: 'lifted',
       finish: 'frosted',
       ornament: 'baroque',
     });
@@ -134,7 +134,7 @@ describe('initSoltana', () => {
   it.each([
     ['theme', { theme: 'neon' as never }],
     ['relief', { relief: 'paper' as never }],
-    ['finish', { finish: 'matte' as never }],
+    ['finish', { finish: 'satin' as never }],
     ['ornament', { ornament: 'gothic' as never }],
   ] as const)('warns on invalid %s', (name, overrides) => {
     const spy = vi.spyOn(console, 'warn').mockImplementation(vi.fn());

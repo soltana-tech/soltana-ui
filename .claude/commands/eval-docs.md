@@ -9,15 +9,15 @@ Identify gaps, inconsistencies, redundancies, and opportunities for improvement.
 
 1. **Feature and Option Coverage**
 
-   - Verify all public API functions are documented (`initSoltana`, `setTheme`, `setMaterial`, `setSurface`, `setOrnament`, `setOverrides`, `getState`, `reset`)
-   - Verify all config types are documented (`Theme`, `Material`, `Surface`, `Ornament`, `SoltanaConfig`)
-   - Verify all material options are documented (`flat`, `soft`, `neu`, `glass`, `metallic`, `stone`)
-   - Verify all surface options are documented (`polished`, `frosted`, `stained`, `metallic`)
-   - Verify all ornament options are documented (`none`, `baroque`, `carved`, `faceted`, `gilt`)
+   - Verify all public API functions are documented (`initSoltana`, `setTheme`, `setRelief`, `setFinish`, `setOrnament`, `setOverrides`, `getState`, `reset`)
+   - Verify all config types are documented (`Theme`, `Relief`, `Finish`, `Ornament`, `SoltanaConfig`)
+   - Verify all relief options are documented (`flat`, `soft`, `lifted`, `neu`, `sharp`, `hewn`)
+   - Verify all finish options are documented (`matte`, `translucent`, `frosted`, `tinted`, `glossy`)
+   - Verify all ornament options are documented (`none`, `gilt`, `baroque`, `beveled`, `faceted`)
    - Verify all theme options are documented (`dark`, `light`, `sepia`, `auto`)
    - Verify all enhancers are documented (`initModals`, `initTabs`, `initTooltips`, `initAll`)
    - Verify all CSS component classes are documented (buttons, cards, inputs, badges, alerts, avatars, progress, switches, tooltips, tables, modals, skeletons)
-   - Verify all utility classes are documented (material overrides, surface overrides, neumorphic utilities, glassmorphic utilities, ornamental frames/dividers/corners)
+   - Verify all utility classes are documented (relief overrides, finish overrides, neumorphic utilities, ornamental frames/dividers/corners)
    - Flag any features/classes in code that lack documentation
    - Flag any documented features/classes that don't exist in code
 
@@ -27,7 +27,7 @@ Identify gaps, inconsistencies, redundancies, and opportunities for improvement.
    - Verify parameter defaults in docs match code defaults
    - Verify CSS class names in docs match actual class names in SCSS
    - Verify behavior descriptions match actual implementation
-   - Verify the 4-tier system description matches actual tier interactions
+   - Verify the 4-tier system (theme, relief, finish, ornament) description matches actual tier interactions
    - Flag outdated or incorrect examples
    - Flag class names or config values that don't match implementation
    - Flag missing edge case documentation
@@ -37,7 +37,7 @@ Identify gaps, inconsistencies, redundancies, and opportunities for improvement.
    - Verify docs explain "how to use" rather than "how it works internally"
    - Flag overly technical or implementation-focused explanations
    - Verify common use cases are covered with clear examples
-   - Verify docs answer "why would I use this?" for each material/surface/ornament
+   - Verify docs answer "why would I use this?" for each relief/finish/ornament
    - Flag missing practical guidance or best practices
    - Verify configuration recommendations are user-centric
 
@@ -61,7 +61,7 @@ Identify gaps, inconsistencies, redundancies, and opportunities for improvement.
 6. **Completeness and Clarity**
 
    - Verify all config options have clear descriptions
-   - Verify all materials/surfaces/ornaments have visual examples
+   - Verify all reliefs/finishes/ornaments have visual examples
    - Verify error conditions are documented (invalid config values)
    - Verify CSS custom property overrides are documented
    - Flag vague or ambiguous explanations

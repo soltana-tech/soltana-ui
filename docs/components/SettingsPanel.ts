@@ -27,25 +27,26 @@ const THEME_OPTIONS: OptionConfig[] = [
 const RELIEF_OPTIONS: OptionConfig[] = [
   { value: 'flat', label: 'Flat' },
   { value: 'soft', label: 'Soft' },
+  { value: 'lifted', label: 'Lifted' },
   { value: 'neu', label: 'Neumorphic' },
-  { value: 'glass', label: 'Glassmorphic' },
-  { value: 'metallic', label: 'Metallic' },
-  { value: 'stone', label: 'Stone' },
+  { value: 'sharp', label: 'Sharp' },
+  { value: 'hewn', label: 'Hewn' },
 ];
 
 const FINISH_OPTIONS: OptionConfig[] = [
-  { value: 'polished', label: 'Polished' },
+  { value: 'matte', label: 'Matte' },
+  { value: 'translucent', label: 'Translucent' },
   { value: 'frosted', label: 'Frosted' },
-  { value: 'stained', label: 'Stained' },
-  { value: 'metallic', label: 'Metallic' },
+  { value: 'tinted', label: 'Tinted' },
+  { value: 'glossy', label: 'Glossy' },
 ];
 
 const ORNAMENT_OPTIONS: OptionConfig[] = [
   { value: 'none', label: 'None' },
-  { value: 'baroque', label: 'Baroque' },
-  { value: 'carved', label: 'Carved' },
-  { value: 'faceted', label: 'Faceted' },
   { value: 'gilt', label: 'Gilt' },
+  { value: 'baroque', label: 'Baroque' },
+  { value: 'beveled', label: 'Beveled' },
+  { value: 'faceted', label: 'Faceted' },
 ];
 
 /**

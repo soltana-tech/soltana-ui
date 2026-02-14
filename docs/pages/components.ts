@@ -22,7 +22,6 @@ export function renderComponents(): string {
       'Modals',
       'Relief Demo',
       'Neumorphic',
-      'Glassmorphic',
     ],
     'comp-'
   )}
@@ -469,26 +468,26 @@ export function renderComponents(): string {
         </div>
         <div class="progress mt-3"><div class="progress-bar" style="width: 65%"></div></div>
       </div>
-      <div data-relief="glass" class="p-6 rounded-xl" style="background: var(--glass-bg); backdrop-filter: blur(16px) saturate(140%); border: 1px solid var(--glass-border);">
-        <span class="tag tag-sapphire mb-3">Glassmorphic</span>
+      <div data-relief="lifted" class="p-6 rounded-xl" style="background: var(--surface-2);">
+        <span class="tag tag-sapphire mb-3">Lifted</span>
         <div class="flex flex-wrap gap-2 mt-3 mb-3">
           <button class="btn btn-primary btn-sm">Primary</button>
           <button class="btn btn-secondary btn-sm">Secondary</button>
         </div>
-        <input class="input input-sm mb-3" placeholder="Glass input..." />
+        <input class="input input-sm mb-3" placeholder="Lifted input..." />
         <div class="flex gap-2">
           <span class="badge badge-success">Active</span>
           <span class="tag tag-sapphire">Status</span>
         </div>
         <div class="progress mt-3"><div class="progress-bar" style="width: 65%"></div></div>
       </div>
-      <div data-relief="metallic" class="p-6 rounded-xl" style="background: var(--surface-1); border: 1px solid var(--metallic-border);">
-        <span class="tag tag-citrine mb-3">Metallic</span>
+      <div data-relief="sharp" class="p-6 rounded-xl" style="background: var(--surface-2);">
+        <span class="tag tag-citrine mb-3">Sharp</span>
         <div class="flex flex-wrap gap-2 mt-3 mb-3">
           <button class="btn btn-primary btn-sm">Primary</button>
           <button class="btn btn-secondary btn-sm">Secondary</button>
         </div>
-        <input class="input input-sm mb-3" placeholder="Metallic input..." />
+        <input class="input input-sm mb-3" placeholder="Sharp input..." />
         <div class="flex gap-2">
           <span class="badge badge-success">Active</span>
           <span class="tag tag-sapphire">Status</span>
@@ -576,80 +575,32 @@ export function renderComponents(): string {
   `
   )}
 
-  <!-- ====== GLASSMORPHIC ====== -->
+  <!-- ====== HEWN ====== -->
   ${specimen(
-    'Glassmorphic Components',
-    'comp-glassmorphic',
+    'Hewn Components',
+    'comp-hewn',
     `
-    <p class="text-sm text-muted mb-4">Advanced frosted glass effects including luxury, chrome, frosted-heavy, and tinted-gradient variants.</p>
-    <div class="p-8 rounded-2xl relative overflow-hidden" style="background: linear-gradient(135deg, #1a1b3a, #2d1b4e, #1a2a3a); min-height: 500px">
-      <!-- Decorative blobs -->
-      <div class="absolute" style="width: 200px; height: 200px; border-radius: 50%; background: rgba(189,147,249,0.3); filter: blur(50px); top: -30px; left: 20%;"></div>
-      <div class="absolute" style="width: 160px; height: 160px; border-radius: 50%; background: rgba(255,121,198,0.2); filter: blur(40px); bottom: -20px; right: 15%;"></div>
-      <div class="absolute" style="width: 120px; height: 120px; border-radius: 50%; background: rgba(139,233,253,0.15); filter: blur(30px); top: 50%; left: 60%;"></div>
-
-      <div class="relative z-10">
-        <p class="overline mb-4" style="color: rgba(255,255,255,0.5)">Standard</p>
-        <div class="grid gap-6 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr))">
-          <div class="card relief-glass p-5">
-            <p class="text-sm font-semibold mb-1" style="color: #fff">.card.relief-glass</p>
-            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Default frosted glass card.</p>
-          </div>
-          <div class="glass-accent p-5 rounded-2xl">
-            <p class="text-sm font-semibold mb-1" style="color: #fff">.glass-accent</p>
-            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Purple-tinted variant.</p>
-          </div>
-          <div class="glass-cyan p-5 rounded-2xl">
-            <p class="text-sm font-semibold mb-1" style="color: #fff">.glass-cyan</p>
-            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Cyan-tinted variant.</p>
-          </div>
+    <p class="text-sm text-muted mb-4">Chiseled asymmetric inset shadows creating a carved-from-surface appearance.</p>
+    <div class="p-8 rounded-2xl" style="background: var(--surface-2)">
+      <div class="grid gap-6 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr))">
+        <div class="card relief-hewn p-5">
+          <p class="text-sm font-semibold mb-1">.card.relief-hewn</p>
+          <p class="text-xs text-muted">Carved inset shadow effect.</p>
         </div>
-
-        <p class="overline mb-4" style="color: rgba(255,255,255,0.5)">Premium</p>
-        <div class="grid gap-6 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr))">
-          <div class="glass-luxury p-5 rounded-2xl">
-            <p class="text-sm font-semibold mb-1" style="color: #fff">.glass-luxury</p>
-            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Multi-layer with inner glow.</p>
-          </div>
-          <div class="glass-frosted-heavy p-5 rounded-2xl">
-            <p class="text-sm font-semibold mb-1" style="color: #fff">.glass-frosted-heavy</p>
-            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Strong blur + saturate.</p>
-          </div>
-          <div class="glass-chrome p-5 rounded-2xl">
-            <p class="text-sm font-semibold mb-1" style="color: #fff">.glass-chrome</p>
-            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Metallic/reflective variant.</p>
-          </div>
-          <div class="glass-tinted-gradient p-5 rounded-2xl">
-            <p class="text-sm font-semibold mb-1" style="color: #fff">.glass-tinted-gradient</p>
-            <p class="text-xs" style="color: rgba(255,255,255,0.6)">Directional gradient glass.</p>
-          </div>
+        <div class="card relief-sharp p-5">
+          <p class="text-sm font-semibold mb-1">.card.relief-sharp</p>
+          <p class="text-xs text-muted">Hard-edged crisp shadows.</p>
         </div>
-
-        <div class="flex flex-wrap gap-4 items-center">
-          <button class="btn relief-glass px-5 py-2 text-sm font-medium" style="color: #fff">.btn.relief-glass</button>
-          <input class="input relief-glass" placeholder=".input.relief-glass" style="color: #fff; max-width: 200px" />
+        <div class="card relief-lifted p-5">
+          <p class="text-sm font-semibold mb-1">.card.relief-lifted</p>
+          <p class="text-xs text-muted">Material-style elevation.</p>
         </div>
       </div>
-    </div>
 
-    <!-- Playground -->
-    <div class="playground mt-6 p-4 rounded-xl" style="background: var(--surface-2)">
-      <p class="text-sm font-semibold mb-3">Playground — Glass Blur Intensity</p>
-      <div class="flex flex-wrap gap-4 items-end mb-4">
-        <div class="input-group">
-          <label class="input-label">Blur: <span class="range-value">12px</span></label>
-          <input type="range" min="0" max="40" value="12" data-css-var="--playground-blur" data-unit="px" data-target="#glass-playground-box" />
-        </div>
-        <div class="input-group">
-          <label class="input-label">Opacity: <span class="range-value">0.55</span></label>
-          <input type="range" min="0" max="100" value="55" data-css-var="--playground-opacity" data-unit="" data-target="#glass-playground-box" />
-        </div>
-      </div>
-      <div class="p-8 rounded-2xl relative overflow-hidden" style="background: linear-gradient(135deg, var(--dracula-green), var(--dracula-purple), var(--dracula-pink))">
-        <div id="glass-playground-box" class="p-6 rounded-xl text-center text-sm font-medium"
-          style="color: #fff; --playground-blur: 12px; --playground-opacity: 55; backdrop-filter: blur(var(--playground-blur)); -webkit-backdrop-filter: blur(var(--playground-blur)); background: rgba(255,255,255, calc(var(--playground-opacity) / 100 * 0.3)); border: 1px solid rgba(255,255,255, calc(var(--playground-opacity) / 100 * 0.4)); border-radius: var(--radius-xl); box-shadow: 0 8px 32px rgba(0,0,0,0.2);">
-          Interactive Glass Box
-        </div>
+      <div class="flex flex-wrap gap-4 items-center">
+        <button class="btn relief-hewn px-5 py-2 text-sm font-medium">.btn.relief-hewn</button>
+        <button class="btn relief-sharp px-5 py-2 text-sm font-medium">.btn.relief-sharp</button>
+        <button class="btn relief-lifted px-5 py-2 text-sm font-medium">.btn.relief-lifted</button>
       </div>
     </div>
   `
@@ -706,16 +657,16 @@ export function renderComponents(): string {
         <p>Full ornamental frame with medallion.</p>
       </div>
     </div>
-    <div class="card relief-glass">
-      <div class="card-header">Glass Card</div>
+    <div class="card relief-lifted">
+      <div class="card-header">Lifted Card</div>
       <div class="card-body">
-        <p>Crystal glass with backdrop blur effect.</p>
+        <p>Material-style layered elevation shadows.</p>
       </div>
     </div>
   </div>
 
   <h3 class="text-xl font-semibold mt-10 mb-4 font-serif" id="btn-extended">Extended Buttons</h3>
-  <p class="text-secondary mb-4">Button with relief-aware styling and metallic finishes.</p>
+  <p class="text-secondary mb-4">Button with relief-aware styling.</p>
 
   <h4 class="text-lg font-semibold mt-4 mb-3">Standard Variants</h4>
   <div class="flex flex-wrap gap-4 items-center mb-6">
@@ -730,22 +681,19 @@ export function renderComponents(): string {
   <h4 class="text-lg font-semibold mt-4 mb-3">Relief Variants</h4>
   <div class="flex flex-wrap gap-4 items-center mb-6">
     <button class="btn btn-primary relief-neu">Neu</button>
-    <button class="btn btn-primary relief-glass">Glass</button>
-    <button class="btn btn-primary relief-metallic">Metallic</button>
-    <button class="btn btn-primary relief-stone">Stone</button>
+    <button class="btn btn-primary relief-lifted">Lifted</button>
+    <button class="btn btn-primary relief-sharp">Sharp</button>
+    <button class="btn btn-primary relief-hewn">Hewn</button>
   </div>
 
-  <h4 class="text-lg font-semibold mt-4 mb-3">Metallic Variants</h4>
+  <h4 class="text-lg font-semibold mt-4 mb-3">Named Variants</h4>
   <div class="flex flex-wrap gap-4 items-center mb-6">
     <button class="btn btn-gold">Gold</button>
-    <button class="btn btn-silver">Silver</button>
-    <button class="btn btn-bronze">Bronze</button>
-    <button class="btn btn-platinum">Platinum</button>
   </div>
 
   <h4 class="text-lg font-semibold mt-4 mb-3">Structural Variants</h4>
   <div class="flex flex-wrap gap-4 items-center">
-    <button class="btn ornament-carved">Chiseled</button>
+    <button class="btn ornament-beveled">Beveled</button>
     <button class="btn ornament-baroque">Baroque</button>
     <button class="btn ornament-faceted">Faceted</button>
     <button class="btn btn-primary" style="border-radius: 50%; width: 40px; height: 40px; padding: 0;">M</button>

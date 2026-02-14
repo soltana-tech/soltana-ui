@@ -20,16 +20,16 @@ import { loadSoltanaFonts } from '../fonts/index';
 const DEFAULT_CONFIG: SoltanaConfig = {
   theme: 'dark',
   relief: 'neu',
-  finish: 'polished',
+  finish: 'matte',
   ornament: 'none',
   fonts: false,
   enhancers: true,
 };
 
 const VALID_THEMES: readonly Theme[] = ['dark', 'light', 'sepia', 'auto'];
-const VALID_RELIEFS: readonly Relief[] = ['flat', 'soft', 'neu', 'glass', 'metallic', 'stone'];
-const VALID_FINISHES: readonly Finish[] = ['polished', 'frosted', 'stained', 'metallic'];
-const VALID_ORNAMENTS: readonly Ornament[] = ['none', 'baroque', 'carved', 'faceted', 'gilt'];
+const VALID_RELIEFS: readonly Relief[] = ['flat', 'soft', 'lifted', 'neu', 'sharp', 'hewn'];
+const VALID_FINISHES: readonly Finish[] = ['matte', 'translucent', 'frosted', 'tinted', 'glossy'];
+const VALID_ORNAMENTS: readonly Ornament[] = ['none', 'gilt', 'baroque', 'beveled', 'faceted'];
 
 // Module-level state for matchMedia listener cleanup
 let _mql: MediaQueryList | null = null;

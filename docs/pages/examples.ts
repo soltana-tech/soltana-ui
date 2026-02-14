@@ -135,9 +135,9 @@ export function renderExamples(): string {
       <div class="specimen__preview p-0">
         <div class="relative overflow-hidden" style="background: var(--surface-bg); min-height: 520px">
           <!-- Atmospheric gradient blobs -->
-          <div class="absolute" style="width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, var(--stained-secondary), transparent); top: -150px; right: -100px;"></div>
+          <div class="absolute" style="width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, var(--color-info-subtle), transparent); top: -150px; right: -100px;"></div>
           <div class="absolute" style="width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, var(--color-info-subtle), transparent); bottom: -120px; left: -80px;"></div>
-          <div class="absolute" style="width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, var(--stained-accent), transparent); top: 40%; left: 50%;"></div>
+          <div class="absolute" style="width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, var(--color-success-subtle), transparent); top: 40%; left: 50%;"></div>
 
           <!-- Glass navbar -->
           <nav class="flex items-center justify-between px-8 py-4 relative z-10" style="backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-subtle)">
@@ -158,7 +158,7 @@ export function renderExamples(): string {
           <div class="text-center px-8 pt-20 pb-24 relative z-10">
             <span class="overline mb-4 inline-block" style="color: var(--accent-secondary)">New Release v2.0</span>
             <h1 class="font-serif mb-6" style="font-size: 4rem; line-height: 1.05; font-weight: 600;">Build beautiful<br/>interfaces <span style="background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">effortlessly</span></h1>
-            <p class="text-lg mb-10 mx-auto text-secondary" style="max-width: 520px; letter-spacing: 0.02em;">A complete design system with flat, soft, neumorphic, glass, metallic, and stone reliefs for prestigious web applications.</p>
+            <p class="text-lg mb-10 mx-auto text-secondary" style="max-width: 520px; letter-spacing: 0.02em;">A complete design system with flat, soft, lifted, neumorphic, sharp, and hewn reliefs for prestigious web applications.</p>
             <div class="flex justify-center gap-4">
               <button class="btn btn-primary btn-lg">Start Building</button>
               <button class="btn btn-outline btn-lg">View Docs</button>
@@ -176,9 +176,9 @@ export function renderExamples(): string {
       <div class="specimen__preview p-0">
         <div class="relative overflow-hidden p-6" style="background: var(--surface-bg); min-height: 420px;">
           <!-- Decorative blobs -->
-          <div class="absolute" style="width: 250px; height: 250px; border-radius: 50%; background: var(--stained-secondary); filter: blur(60px); top: -50px; left: 20%;"></div>
-          <div class="absolute" style="width: 200px; height: 200px; border-radius: 50%; background: var(--stained-accent); filter: blur(50px); bottom: -30px; right: 15%;"></div>
-          <div class="absolute" style="width: 150px; height: 150px; border-radius: 50%; background: var(--stained-primary); filter: blur(40px); top: 40%; left: 60%;"></div>
+          <div class="absolute" style="width: 250px; height: 250px; border-radius: 50%; background: var(--color-info-subtle); filter: blur(60px); top: -50px; left: 20%;"></div>
+          <div class="absolute" style="width: 200px; height: 200px; border-radius: 50%; background: var(--color-success-subtle); filter: blur(50px); bottom: -30px; right: 15%;"></div>
+          <div class="absolute" style="width: 150px; height: 150px; border-radius: 50%; background: var(--color-warning-subtle); filter: blur(40px); top: 40%; left: 60%;"></div>
 
           <div class="relative z-10">
             <!-- Glass navbar -->
@@ -386,7 +386,7 @@ export function renderExamples(): string {
               <ul class="mb-4 text-secondary" style="list-style: disc; padding-left: 1.5rem">
                 <li class="mb-1">Deeper atmospheric dark palette</li>
                 <li class="mb-1">Serif/sans dual typography with Cormorant Garamond</li>
-                <li class="mb-1">Six relief variants: flat, soft, neumorphic, glass, metallic, and stone</li>
+                <li class="mb-1">Six relief variants: flat, soft, lifted, neumorphic, sharp, and hewn</li>
                 <li class="mb-1">Gradient background utilities and refined spacing</li>
               </ul>
               <p class="mb-4 text-secondary">Review the attached design system documentation and share feedback by Friday.</p>
@@ -415,8 +415,8 @@ export function renderExamples(): string {
       <div class="specimen__preview p-0">
         <div class="relative overflow-hidden" style="background: var(--surface-bg); min-height: 600px">
           <!-- Gold atmospheric glow -->
-          <div class="absolute" style="width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, var(--stained-accent), transparent 60%); top: -200px; right: -100px;"></div>
-          <div class="absolute" style="width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, var(--stained-secondary), transparent 60%); bottom: -150px; left: -100px;"></div>
+          <div class="absolute" style="width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, var(--color-success-subtle), transparent 60%); top: -200px; right: -100px;"></div>
+          <div class="absolute" style="width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, var(--color-info-subtle), transparent 60%); bottom: -150px; left: -100px;"></div>
 
           <div class="relative z-10 px-8 py-12">
             <div class="text-center mb-16">
@@ -477,7 +477,7 @@ export function renderExamples(): string {
     <div class="card overflow-hidden">
       <div class="specimen__preview p-0">
         <div class="relative overflow-hidden" style="background: var(--surface-bg); min-height: 500px">
-          <div class="absolute" style="width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, var(--stained-accent), transparent); top: -100px; left: 10%;"></div>
+          <div class="absolute" style="width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, var(--color-success-subtle), transparent); top: -100px; left: 10%;"></div>
 
           <div class="relative z-10 p-6">
             <div class="card mb-6" style="padding: 1rem 1.5rem; border-radius: var(--radius-xl)">

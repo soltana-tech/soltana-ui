@@ -256,9 +256,9 @@ export function renderDesignSystem(): string {
         <span class="tag">Tag</span>
       </div>
     </div>
-    <div class="relief-glass p-6 rounded-xl" style="min-height: 200px;">
-      <span class="tag tag-sapphire mb-3">.relief-glass</span>
-      <p class="text-sm text-secondary mb-4 mt-3">Translucent backgrounds with backdrop blur and saturation. Single-direction drop shadows. The crystal palace aesthetic.</p>
+    <div class="relief-lifted p-6 rounded-xl" style="min-height: 200px;">
+      <span class="tag tag-sapphire mb-3">.relief-lifted</span>
+      <p class="text-sm text-secondary mb-4 mt-3">Layered ambient + key shadows creating Material Design-style elevation. Versatile and modern.</p>
       <div class="flex flex-wrap gap-2">
         <button class="btn btn-primary btn-sm">Primary</button>
         <button class="btn btn-secondary btn-sm">Secondary</button>
@@ -269,9 +269,9 @@ export function renderDesignSystem(): string {
         <span class="tag">Tag</span>
       </div>
     </div>
-    <div class="relief-metallic p-6 rounded-xl" style="min-height: 200px;">
-      <span class="tag tag-citrine mb-3">.relief-metallic</span>
-      <p class="text-sm text-secondary mb-4 mt-3">Sharp, polished surfaces with crisp edge shadows and reflective highlights. The brushed metal aesthetic.</p>
+    <div class="relief-sharp p-6 rounded-xl" style="min-height: 200px;">
+      <span class="tag tag-citrine mb-3">.relief-sharp</span>
+      <p class="text-sm text-secondary mb-4 mt-3">Hard-edged shadows with crisp offsets and zero blur. Bold and graphic.</p>
       <div class="flex flex-wrap gap-2">
         <button class="btn btn-primary btn-sm">Primary</button>
         <button class="btn btn-secondary btn-sm">Secondary</button>
@@ -282,9 +282,9 @@ export function renderDesignSystem(): string {
         <span class="tag">Tag</span>
       </div>
     </div>
-    <div class="relief-stone p-6 rounded-xl" style="min-height: 200px;">
-      <span class="tag tag-emerald mb-3">.relief-stone</span>
-      <p class="text-sm text-secondary mb-4 mt-3">Heavy, carved surfaces with chiseled asymmetric inset shadows. The quarried stone aesthetic.</p>
+    <div class="relief-hewn p-6 rounded-xl" style="min-height: 200px;">
+      <span class="tag tag-emerald mb-3">.relief-hewn</span>
+      <p class="text-sm text-secondary mb-4 mt-3">Chiseled asymmetric inset shadows creating a carved-from-surface appearance.</p>
       <div class="flex flex-wrap gap-2">
         <button class="btn btn-primary btn-sm">Primary</button>
         <button class="btn btn-secondary btn-sm">Secondary</button>
@@ -301,7 +301,7 @@ export function renderDesignSystem(): string {
     'Relief Override Classes',
     `
     <p class="text-sm text-secondary mb-4">The global relief is set via <code>initSoltana()</code>. Use override classes for per-element exceptions:</p>
-    ${codeExample('<!-- Global relief from config applies to all components -->\n<button class="btn btn-primary">Uses Global Relief</button>\n<div class="card p-6">Uses Global Relief</div>\n\n<!-- Override specific elements -->\n<button class="btn relief-glass">Glass Button</button>\n<div class="card relief-neu p-6">Neumorphic Card</div>', 'html')}
+    ${codeExample('<!-- Global relief from config applies to all components -->\n<button class="btn btn-primary">Uses Global Relief</button>\n<div class="card p-6">Uses Global Relief</div>\n\n<!-- Override specific elements -->\n<button class="btn relief-lifted">Lifted Button</button>\n<div class="card relief-neu p-6">Neumorphic Card</div>', 'html')}
   `
   )}
 
@@ -311,92 +311,83 @@ export function renderDesignSystem(): string {
   <!-- FINISHES -->
   <!-- ================================================================== -->
 
-  ${sectionHeading('Finish Treatments', 'finishes', 'Four texture and finish variations applied on top of reliefs. Finishes adapt to the active relief.')}
+  ${sectionHeading('Finish Treatments', 'finishes', 'Five texture and finish variations applied on top of reliefs. Finishes adapt to the active relief.')}
 
   <h3 class="text-xl font-semibold mt-6 mb-4 font-serif">Finish Comparison Matrix</h3>
-  <p class="text-sm text-secondary mb-6">Each finish renders differently depending on the active relief. Glass uses blur effects, while neumorphic uses texture overlays and gradients.</p>
+  <p class="text-sm text-secondary mb-6">Each finish renders differently depending on the active relief. Finishes control blur, opacity, overlays, and sheen — orthogonal to the relief's shadow structure.</p>
 
   <!-- Neu + Finishes -->
   <h4 class="text-lg font-semibold mt-8 mb-3 text-secondary">Neumorphic Relief</h4>
-  <div class="grid gap-4 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))">
-    <div class="relief-neu finish-polished card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag tag-gold mb-2">polished</span>
-      <p class="text-sm text-secondary mt-2">Clean, solid surface. Default neumorphic look.</p>
+  <div class="grid gap-4 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr))">
+    <div class="relief-neu finish-matte card p-5 rounded-xl text-center" style="min-height: 140px;">
+      <span class="tag tag-gold mb-2">matte</span>
+      <p class="text-sm text-secondary mt-2">Clean, solid surface. Default look.</p>
+    </div>
+    <div class="relief-neu finish-translucent card p-5 rounded-xl text-center" style="min-height: 140px;">
+      <span class="tag mb-2">translucent</span>
+      <p class="text-sm text-secondary mt-2">Semi-transparent, no blur.</p>
     </div>
     <div class="relief-neu finish-frosted card p-5 rounded-xl text-center" style="min-height: 140px;">
       <span class="tag tag-sapphire mb-2">frosted</span>
-      <p class="text-sm text-secondary mt-2">Subtle matte texture overlay for etched stone effect.</p>
+      <p class="text-sm text-secondary mt-2">Backdrop blur with desaturation.</p>
     </div>
-    <div class="relief-neu finish-stained card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag tag-ruby mb-2">stained</span>
-      <p class="text-sm text-secondary mt-2">Jewel-toned color overlay for tinted stone.</p>
+    <div class="relief-neu finish-tinted card p-5 rounded-xl text-center" style="min-height: 140px;">
+      <span class="tag tag-ruby mb-2">tinted</span>
+      <p class="text-sm text-secondary mt-2">Colored accent overlay.</p>
     </div>
-    <div class="relief-neu finish-metallic card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag tag-citrine mb-2">metallic</span>
-      <p class="text-sm text-secondary mt-2">Brushed metal gradient sheen.</p>
-    </div>
-  </div>
-
-  <!-- Glass + Finishes -->
-  <h4 class="text-lg font-semibold mt-8 mb-3 text-secondary">Glassmorphic Relief</h4>
-  <div class="grid gap-4 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))">
-    <div class="relief-glass finish-polished card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag tag-gold mb-2">polished</span>
-      <p class="text-sm text-secondary mt-2">Clear glass with standard blur.</p>
-    </div>
-    <div class="relief-glass finish-frosted card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag tag-sapphire mb-2">frosted</span>
-      <p class="text-sm text-secondary mt-2">Heavy blur with desaturation, like etched glass.</p>
-    </div>
-    <div class="relief-glass finish-stained card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag tag-ruby mb-2">stained</span>
-      <p class="text-sm text-secondary mt-2">Colored translucent gradient.</p>
-    </div>
-    <div class="relief-glass finish-metallic card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag tag-citrine mb-2">metallic</span>
-      <p class="text-sm text-secondary mt-2">Reflective gradient highlights.</p>
+    <div class="relief-neu finish-glossy card p-5 rounded-xl text-center" style="min-height: 140px;">
+      <span class="tag tag-citrine mb-2">glossy</span>
+      <p class="text-sm text-secondary mt-2">Directional specular highlight.</p>
     </div>
   </div>
 
-  <!-- Metallic + Finishes -->
-  <h4 class="text-lg font-semibold mt-8 mb-3 text-secondary">Metallic Relief</h4>
-  <div class="grid gap-4 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))">
-    <div class="relief-metallic finish-polished card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag tag-gold mb-2">polished</span>
-      <p class="text-sm text-secondary mt-2">Clean reflective metal surface.</p>
+  <!-- Lifted + Finishes -->
+  <h4 class="text-lg font-semibold mt-8 mb-3 text-secondary">Lifted Relief</h4>
+  <div class="grid gap-4 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr))">
+    <div class="relief-lifted finish-matte card p-5 rounded-xl text-center" style="min-height: 140px;">
+      <span class="tag tag-gold mb-2">matte</span>
+      <p class="text-sm text-secondary mt-2">Clean elevated surface.</p>
     </div>
-    <div class="relief-metallic finish-frosted card p-5 rounded-xl text-center" style="min-height: 140px;">
+    <div class="relief-lifted finish-translucent card p-5 rounded-xl text-center" style="min-height: 140px;">
+      <span class="tag mb-2">translucent</span>
+      <p class="text-sm text-secondary mt-2">Floating translucent panel.</p>
+    </div>
+    <div class="relief-lifted finish-frosted card p-5 rounded-xl text-center" style="min-height: 140px;">
       <span class="tag tag-sapphire mb-2">frosted</span>
-      <p class="text-sm text-secondary mt-2">Brushed satin metal finish.</p>
+      <p class="text-sm text-secondary mt-2">Frosted glass with elevation.</p>
     </div>
-    <div class="relief-metallic finish-stained card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag tag-ruby mb-2">stained</span>
-      <p class="text-sm text-secondary mt-2">Anodized tinted metal.</p>
+    <div class="relief-lifted finish-tinted card p-5 rounded-xl text-center" style="min-height: 140px;">
+      <span class="tag tag-ruby mb-2">tinted</span>
+      <p class="text-sm text-secondary mt-2">Tinted elevated surface.</p>
     </div>
-    <div class="relief-metallic finish-metallic card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag tag-citrine mb-2">metallic</span>
-      <p class="text-sm text-secondary mt-2">Full chrome with directional sheen.</p>
+    <div class="relief-lifted finish-glossy card p-5 rounded-xl text-center" style="min-height: 140px;">
+      <span class="tag tag-citrine mb-2">glossy</span>
+      <p class="text-sm text-secondary mt-2">Polished elevated sheen.</p>
     </div>
   </div>
 
-  <!-- Stone + Finishes -->
-  <h4 class="text-lg font-semibold mt-8 mb-3 text-secondary">Stone Relief</h4>
-  <div class="grid gap-4 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))">
-    <div class="relief-stone finish-polished card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag tag-gold mb-2">polished</span>
-      <p class="text-sm text-secondary mt-2">Smooth carved stone surface.</p>
+  <!-- Hewn + Finishes -->
+  <h4 class="text-lg font-semibold mt-8 mb-3 text-secondary">Hewn Relief</h4>
+  <div class="grid gap-4 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr))">
+    <div class="relief-hewn finish-matte card p-5 rounded-xl text-center" style="min-height: 140px;">
+      <span class="tag tag-gold mb-2">matte</span>
+      <p class="text-sm text-secondary mt-2">Smooth carved surface.</p>
     </div>
-    <div class="relief-stone finish-frosted card p-5 rounded-xl text-center" style="min-height: 140px;">
+    <div class="relief-hewn finish-translucent card p-5 rounded-xl text-center" style="min-height: 140px;">
+      <span class="tag mb-2">translucent</span>
+      <p class="text-sm text-secondary mt-2">Translucent chiseled panel.</p>
+    </div>
+    <div class="relief-hewn finish-frosted card p-5 rounded-xl text-center" style="min-height: 140px;">
       <span class="tag tag-sapphire mb-2">frosted</span>
-      <p class="text-sm text-secondary mt-2">Rough-hewn sandblasted stone.</p>
+      <p class="text-sm text-secondary mt-2">Rough-hewn sandblasted effect.</p>
     </div>
-    <div class="relief-stone finish-stained card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag tag-ruby mb-2">stained</span>
-      <p class="text-sm text-secondary mt-2">Mineral-stained quarried stone.</p>
+    <div class="relief-hewn finish-tinted card p-5 rounded-xl text-center" style="min-height: 140px;">
+      <span class="tag tag-ruby mb-2">tinted</span>
+      <p class="text-sm text-secondary mt-2">Mineral-tinted carved stone.</p>
     </div>
-    <div class="relief-stone finish-metallic card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag tag-citrine mb-2">metallic</span>
-      <p class="text-sm text-secondary mt-2">Ore-veined polished stone.</p>
+    <div class="relief-hewn finish-glossy card p-5 rounded-xl text-center" style="min-height: 140px;">
+      <span class="tag tag-citrine mb-2">glossy</span>
+      <p class="text-sm text-secondary mt-2">Polished carved stone.</p>
     </div>
   </div>
 
@@ -404,8 +395,8 @@ export function renderDesignSystem(): string {
     'Applying Finishes',
     `
     <p class="text-sm text-secondary mb-4">Finishes are set globally via <code>initSoltana()</code>. Use override classes for per-element exceptions:</p>
-    ${codeExample('// Set finish globally\nconst soltana = initSoltana({\n  relief: "neu",\n  finish: "frosted",  // All components get frosted finish\n});\n\n// Change at runtime\nsoltana.setFinish("metallic");', 'javascript')}
-    ${codeExample('<!-- Override finish on specific elements -->\n<div class="card finish-frosted p-6">Frosted card</div>\n\n<!-- Combine relief + finish overrides -->\n<div class="card relief-glass finish-stained p-6">Stained glass card</div>', 'html')}
+    ${codeExample('// Set finish globally\nconst soltana = initSoltana({\n  relief: "neu",\n  finish: "frosted",  // All components get frosted finish\n});\n\n// Change at runtime\nsoltana.setFinish("glossy");', 'javascript')}
+    ${codeExample('<!-- Override finish on specific elements -->\n<div class="card finish-frosted p-6">Frosted card</div>\n\n<!-- Combine relief + finish overrides -->\n<div class="card relief-lifted finish-tinted p-6">Tinted lifted card</div>', 'html')}
   `
   )}
 
@@ -425,10 +416,10 @@ export function renderDesignSystem(): string {
       <p class="text-sm text-secondary mt-2">Rococo frame with inner border and medallion accent at top.</p>
       <button class="btn btn-sm mt-3">Inside Baroque</button>
     </div>
-    <div class="ornament-carved card p-6 rounded-lg" style="min-height: 160px;">
-      <span class="tag tag-emerald mb-2">.ornament-carved</span>
-      <p class="text-sm text-secondary mt-2">Stone relief border with beveled light/dark edges.</p>
-      <button class="btn btn-sm mt-3">Inside Carved</button>
+    <div class="ornament-beveled card p-6 rounded-lg" style="min-height: 160px;">
+      <span class="tag tag-emerald mb-2">.ornament-beveled</span>
+      <p class="text-sm text-secondary mt-2">Light/dark edge highlights creating a subtle 3D frame.</p>
+      <button class="btn btn-sm mt-3">Inside Beveled</button>
     </div>
     <div class="ornament-faceted card p-6 rounded-lg" style="min-height: 160px;">
       <span class="tag tag-sapphire mb-2">.ornament-faceted</span>
@@ -456,16 +447,16 @@ export function renderDesignSystem(): string {
     `
     <p class="text-sm text-secondary mb-4">Ornaments compose with any relief for unique combinations:</p>
     <div class="grid gap-6" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))">
-      <div class="relief-glass p-5 rounded-xl">
+      <div class="relief-lifted p-5 rounded-xl">
         <div class="ornament-gilt card p-4 rounded-lg">
           <span class="tag tag-citrine">.ornament-gilt</span>
-          <p class="text-sm text-secondary mt-2">Glass + Gold leaf border</p>
+          <p class="text-sm text-secondary mt-2">Lifted + Gold leaf border</p>
         </div>
       </div>
       <div class="relief-neu p-5 rounded-xl">
-        <div class="ornament-carved card p-4 rounded-lg">
-          <span class="tag tag-emerald">.ornament-carved</span>
-          <p class="text-sm text-secondary mt-2">Neu + Carved stone relief</p>
+        <div class="ornament-beveled card p-4 rounded-lg">
+          <span class="tag tag-emerald">.ornament-beveled</span>
+          <p class="text-sm text-secondary mt-2">Neu + Beveled frame</p>
         </div>
       </div>
     </div>
@@ -499,25 +490,26 @@ export function renderDesignSystem(): string {
           <code class="text-sm">.relief-flat</code><br>
           <code class="text-sm">.relief-soft</code><br>
           <code class="text-sm">.relief-neu</code><br>
-          <code class="text-sm">.relief-glass</code><br>
-          <code class="text-sm">.relief-metallic</code><br>
-          <code class="text-sm">.relief-stone</code>
+          <code class="text-sm">.relief-lifted</code><br>
+          <code class="text-sm">.relief-sharp</code><br>
+          <code class="text-sm">.relief-hewn</code>
         </div>
       </div>
       <div class="card p-4">
         <span class="tag tag-emerald mb-2">Finish</span>
         <div class="space-y-1 mt-2">
-          <code class="text-sm">.finish-polished</code><br>
+          <code class="text-sm">.finish-matte</code><br>
+          <code class="text-sm">.finish-translucent</code><br>
           <code class="text-sm">.finish-frosted</code><br>
-          <code class="text-sm">.finish-stained</code><br>
-          <code class="text-sm">.finish-metallic</code>
+          <code class="text-sm">.finish-tinted</code><br>
+          <code class="text-sm">.finish-glossy</code>
         </div>
       </div>
       <div class="card p-4">
         <span class="tag tag-citrine mb-2">Ornament</span>
         <div class="space-y-1 mt-2">
           <code class="text-sm">.ornament-baroque</code><br>
-          <code class="text-sm">.ornament-carved</code><br>
+          <code class="text-sm">.ornament-beveled</code><br>
           <code class="text-sm">.ornament-faceted</code><br>
           <code class="text-sm">.ornament-gilt</code>
         </div>
@@ -530,9 +522,9 @@ export function renderDesignSystem(): string {
   <p class="text-sm text-secondary mb-6">Each card below overrides multiple tiers independently, regardless of the global config.</p>
 
   <div class="grid gap-6" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))">
-    <div class="theme-light relief-glass finish-frosted card p-5 rounded-xl">
-      <span class="tag tag-sapphire mb-2">Light + Glass + Frosted</span>
-      <p class="text-sm text-secondary mt-2">Overrides theme to light, relief to glass, and finish to frosted — independent of global config.</p>
+    <div class="theme-light relief-lifted finish-frosted card p-5 rounded-xl">
+      <span class="tag tag-sapphire mb-2">Light + Lifted + Frosted</span>
+      <p class="text-sm text-secondary mt-2">Overrides theme to light, relief to lifted, and finish to frosted — independent of global config.</p>
       <button class="btn btn-sm mt-3">Button</button>
     </div>
     <div class="theme-sepia relief-neu ornament-gilt card p-5 rounded-xl">
@@ -540,8 +532,8 @@ export function renderDesignSystem(): string {
       <p class="text-sm text-secondary mt-2">Warm parchment theme with neumorphic depth and gold leaf ornament.</p>
       <button class="btn btn-sm mt-3">Button</button>
     </div>
-    <div class="theme-dark relief-stone finish-metallic ornament-carved card p-5 rounded-xl">
-      <span class="tag tag-emerald mb-2">Dark + Stone + Metallic + Carved</span>
+    <div class="theme-dark relief-hewn finish-glossy ornament-beveled card p-5 rounded-xl">
+      <span class="tag tag-emerald mb-2">Dark + Hewn + Glossy + Beveled</span>
       <p class="text-sm text-secondary mt-2">All four tiers overridden on a single element.</p>
       <button class="btn btn-sm mt-3">Button</button>
     </div>
@@ -551,7 +543,7 @@ export function renderDesignSystem(): string {
     'Usage',
     `
     <p class="text-sm text-secondary mb-4">Add utility classes to any element to override inherited tier values:</p>
-    ${codeExample('<!-- Global config: dark theme, neu relief, polished finish -->\n\n<!-- Override theme on a section -->\n<section class="theme-light">\n  <p>Light tokens apply here, even inside a dark page.</p>\n\n  <!-- Further override relief + ornament -->\n  <div class="card relief-glass ornament-gilt p-6">\n    Glass relief with gilt ornament, light theme inherited from parent.\n  </div>\n</section>\n\n<!-- Override all four tiers on one element -->\n<div class="theme-sepia relief-stone finish-frosted ornament-carved card p-6">\n  Fully composed: sepia + stone + frosted + carved.\n</div>', 'html')}
+    ${codeExample('<!-- Global config: dark theme, neu relief, matte finish -->\n\n<!-- Override theme on a section -->\n<section class="theme-light">\n  <p>Light tokens apply here, even inside a dark page.</p>\n\n  <!-- Further override relief + ornament -->\n  <div class="card relief-lifted ornament-gilt p-6">\n    Lifted relief with gilt ornament, light theme inherited from parent.\n  </div>\n</section>\n\n<!-- Override all four tiers on one element -->\n<div class="theme-sepia relief-hewn finish-frosted ornament-beveled card p-6">\n  Fully composed: sepia + hewn + frosted + beveled.\n</div>', 'html')}
   `
   )}
 
