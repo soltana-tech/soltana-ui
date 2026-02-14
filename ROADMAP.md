@@ -28,16 +28,16 @@ Classical "estate" aesthetic with gold accents, jewel tones, serif typography (C
 
 ### Competitive Positioning
 
-No existing CSS design system unifies neumorphic, glassmorphic, metallic, and stone materials under a single configurable architecture. The niche is real and unoccupied. The unique value is the configurable material system. The gap between architectural vision and implementation execution is the central issue.
+No existing CSS design system offers a composable, orthogonal tier architecture where shadow model (relief), surface treatment (finish), decoration (ornament), and color scheme (theme) are independently configurable per-element. The niche is real and unoccupied. The unique value is the 4-axis configuration model — not any single visual style, but the ability to compose them.
 
 ### Strengths to Preserve
 
 - **Token system architecture** — Sass maps generate compile-time variables and `:root` custom properties in parallel. Production-grade.
 - **Typography scale** — `[font-size, line-height]` tuples that scale intelligently. Thoughtful and correct.
-- **Material abstraction pattern** — `--relief-*` variable layer is elegant. Components consume semantic tokens and auto-switch on `[data-relief]` change.
-- **Glassmorphic depth** — Most fully realized material. Jewel-toned glass, lead-line overlays, stained glass presets.
+- **Orthogonal tier model** — `--relief-*` and `--finish-*` variable layers cascade independently. Components consume semantic tokens and auto-switch on data attribute change. Tier count is additive (t + r + f + o rulesets), not multiplicative.
+- **Per-element composition** — `.theme-*`, `.relief-*`, `.finish-*`, `.ornament-*` utility classes override global config at any element. Enables mixed-tier layouts without custom CSS.
 - **Accessibility foundation** — `prefers-reduced-motion`, `prefers-contrast`, `.sr-only`, `.skip-link`, focus rings. Solid base layer.
-- **Metallic button mixin** — Well-parametrized with gradient, glow, shine animation. Should be extracted for reuse.
+- **Recipe system** — Named presets (`corporate-clean`, `luxury-dark`, etc.) as curated starting points. Demonstrates the tier model without hardcoding combinations.
 
 ---
 
@@ -209,11 +209,13 @@ Breakpoints defined but only used by `.container`. No responsive variants, no fl
 
 ### SCSS-12: Accessibility gaps
 
-`TODO` · Size: **M**
+`DONE` · Size: **M**
 
 Focus mechanisms inconsistent (outline on buttons, box-shadow on inputs). `--text-muted` ~4.2:1 contrast (below AA 4.5:1). `--text-tertiary` ~3.8:1. Disabled states use only `opacity: 0.5`. No color-blind accommodations.
 
 **Proposed fix:** Standardize focus ring. Increase muted/tertiary contrast to AA. Use more than opacity for disabled states.
+
+- Progress: Raised `--text-muted` to WCAG AA (≥4.5:1) in all three themes, cascading to `--state-disabled-text` and `--input-placeholder`. Added focus ring tokens (`--focus-ring-color`, `--focus-ring-width`, `--focus-ring-offset`, `--focus-ring-shadow`) to `:root`. Updated global `:focus-visible`, `.focus-ring`, `.focus-ring-inset`, and skip-link to use tokens. Removed unused `.focus-ring-gold`. Replaced stale `.glass*` `prefers-contrast` block with token-level overrides (`--finish-*` opacity, `--focus-ring-width`, text hierarchy collapse). Rewrote button disabled state from `opacity: 0.5` + `pointer-events: none` to explicit `--state-disabled-bg`/`--state-disabled-text`. Migrated input `:focus` to `:focus-visible` with `--focus-ring-shadow`. Added disabled states for checkbox, radio, and switch components.
 
 ### SCSS-13: CSS bloat
 
@@ -248,6 +250,18 @@ No mechanism for users to add their own theme, relief, finish, or ornament witho
    - Custom ornament: must define decoration via `box-shadow`/`outline`/`border-image` (no `::before`/`::after` to avoid conflicts per ORN-1).
 2. TypeScript types accept user-defined values. Replace strict string literal unions with extensible types (e.g., `BuiltinRelief | (string & {})`) or a registration API.
 3. `warnInvalid()` becomes a registry check rather than a hardcoded array — builtins are pre-registered, user values are registered via config or `registerRelief()` / `registerTheme()` etc.
+
+### SCSS-16: Stale code from DX-2 restructure
+
+`TODO` · Size: **S**
+
+Dead code and stale references left behind after the DX-2a/b/c rename and restructure:
+
+- `_accessibility.scss`: `prefers-contrast: more` media query targets removed classes `.glass`, `.glass-luxury`, `.glass-frosted-heavy`. Dead selectors that match nothing.
+- `_dark.scss` line 73: comment says "consumed by _material-system.scss" — file was renamed to `_relief-system.scss` in DX-2a.
+- `_classical.scss`: hardcodes gold color values (`#c9a84c`, etc.) instead of using `--accent-gold` / `--accent-primary` tokens. Partially overlaps with SCSS-3 scope but this file was missed.
+
+**Proposed fix:** Remove dead selectors, update stale comments, replace hardcoded colors with tokens.
 
 ---
 
@@ -483,70 +497,117 @@ No React hooks, Vue composables, or Svelte stores. Hydration mismatches in SSR f
 
 `TODO` · Size: **M**
 
-No README ships with package. Version mismatch. Export subpaths point to main bundle. Config template missing. No CHANGELOG.
+Package is not publish-ready. Issues found:
+
+- **No LICENSE file** — `package.json` declares MIT but no `LICENSE` file exists. Blocks npm publish.
+- **No README.md** — nothing ships with the package.
+- **No CHANGELOG.md** — no version history.
+- `package.json` description still says "glassmorphic" and "hybrid" — stale after DX-2b removals.
+- `package.json` keywords include "glassmorphic" — stale.
+- `files` array includes `soltana.config.template.js` — file doesn't exist.
+- Unused `postcss` devDependency.
+
+**Proposed fix:** Add LICENSE, README, CHANGELOG. Clean stale metadata. Remove phantom file reference and unused dependency.
+
+### DX-7: CI/CD pipeline
+
+`TODO` · Size: **L**
+
+No GitHub Actions workflows. No automated build verification, test runs, or lint checks on PR. No automated npm publish. Prerequisite for COMB-2 (visual regression testing).
+
+**Proposed fix:** GitHub Actions workflow for build + test + lint on push/PR. Separate publish workflow on tag/release.
 
 ---
 
 ## Documentation & Playground
 
-### DOC-1: No relief comparison view
+> **Philosophy:** The 4-tier system is orthogonal — tiers compose independently, and the combination space is too large to enumerate statically. The docs should teach the *model* (4 independent axes, per-element composition, recipes) and provide interactive tools for exploration, not attempt to display every possible combination with hardcoded demos. Static examples should demonstrate concepts and guide understanding; the playground handles exploration.
+
+### DOC-1: Stale documentation references
 
 `TODO` · Size: **M**
 
-Can't see the same component in different reliefs side by side. Settings panel changes everything globally.
+Docs reference components, tier options, and CSS variables that no longer exist after the DX-2 rename/restructure and SCSS architecture overhaul. Specific issues:
 
-### DOC-2: No live code editor
+- `docs/index.html` line 2: `data-finish="polished"` — stale, should be `matte` or another valid finish.
+- `getting-started.ts` uses `finish: "polished"` in Quick Start and Runtime API examples. `polished` was renamed to `glossy` in DX-2c.
+- `components.ts` Relief Demo hardcodes `--neu-bg`, `--neu-shadow-dark`, `--neu-shadow-light` inline styles instead of `--relief-*` tokens.
+- `examples.ts` Settings Panel hardcodes `background: var(--neu-bg)` instead of semantic tokens.
+- `examples.ts` Marketing Landing lists "Polished Stone" and "Crystal Glass" as feature highlights — glass, metallic, and stone reliefs were deleted in DX-2b.
+- `docs/components/SettingsPanel.ts` hardcodes tier option lists instead of importing from `src/config/types.ts`. Options will drift as tiers are added/removed.
 
-`TODO` · Size: **L**
+**Proposed fix:** Audit all doc pages for references to removed tier options (`polished`, `stained`, `glass`, `metallic`, `stone`, `carved`, `hybrid`), removed CSS variables (`--neu-bg`, `--neu-shadow-dark`, `--neu-shadow-light`, `--glass-*`, `--metallic-*`, `--stone-*`, `--stained-*`), and removed classes (`.card-stained-glass`, `.card-cathedral`, `.card-colonnade`, `.card-marble`). Replace with current equivalents. Have SettingsPanel import tier options from the config module.
 
-See rendered components but can't type HTML and see it styled. No CodePen-like sandbox.
+### DOC-2: Component playground
 
-### DOC-3: No variant matrix
+`TODO` · Size: **XL**
 
-`TODO` · Size: **M**
+The current docs use hardcoded HTML demos for every component variant. With an orthogonal 4-tier system this approach is unsustainable — the combination space is too large to enumerate and every tier change invalidates static examples. The playground replaces all hardcoded component demos with interactive, dynamic workspaces.
 
-No view showing all permutations of a component (button in 6 variants x 5 sizes x all reliefs).
+Each component gets a playground with three panels:
 
-### DOC-4: No configuration export
+1. **Preview pane** — Live rendering of the component, responding to all 4 tiers in real time.
+2. **Controls interface** — Tier overrides (relief, finish, ornament, theme), component-specific properties (variant, size, state, content), and per-element composition toggles. Controls are component-specific.
+3. **Code output** — Generated HTML/CSS reflecting the current state, updated live. Copy-to-clipboard. Syntax highlighted.
+
+The playground is the answer to "how does this component look in configuration X?" — instead of pre-rendering hundreds of static combinations, it lets users explore the full space interactively.
+
+This subsumes:
+- Relief/finish comparison — toggle any tier per component.
+- Variant matrix — controls expose all permutations without a separate matrix view.
+- CSS variable inspector — collapsible panel showing active `--relief-*`, `--finish-*`, `--accent-*` values for the previewed component.
+
+Reference implementations for UX inspiration: CSS gradient generators, cubic-bezier editors, Tailwind CSS playground, Storybook controls addon.
+
+### DOC-3: No configuration export
 
 `TODO` · Size: **M**
 
 Changing settings doesn't update URL. Refreshing loses state. No way to share config or generate a config file.
 
-### DOC-5: No CSS variable inspector
-
-`TODO` · Size: **M**
-
-No way to see which `--relief-*`, `--finish-*`, `--accent-*` variables are active without DevTools.
-
-### DOC-6: No accessibility playground
+### DOC-4: No accessibility playground
 
 `TODO` · Size: **M**
 
 No toggle for high contrast, reduced motion, or focus indicator visibility.
 
-### DOC-7: No responsive preview
+### DOC-5: No responsive preview
 
 `TODO` · Size: **M**
 
 No viewport resizer. No way to preview mobile/tablet reflow.
 
-### DOC-8: Navigation is limiting
+### DOC-6: Navigation and site structure
 
-`TODO` · Size: **M**
+`TODO` · Size: **L**
 
-5 tabs + in-page quick-nav. No persistent sidebar. Finding a component takes 3+ clicks.
+Current structure is 5 flat tabs with in-page quick-nav. No persistent sidebar. Finding a component takes 3+ clicks. No search. No deep linking (hash-based routing loses in-page anchors on tab switch).
 
-**Proposed fix:** Persistent sidebar listing all components. Search bar.
+The site needs to support three main sections: **Guide** (educational content about the tier model, per-element composition, customization), **Playground** (per-component interactive workspaces from DOC-2), and **Gallery** (curated showcases from DOC-9). Current 5-tab layout doesn't accommodate this.
 
-### DOC-9: Onboarding gaps
+**Proposed fix:** Persistent sidebar with section hierarchy. Search bar with component/token index. Deep-linkable URLs for individual components and guide sections (e.g., `#playground/card`, `#guide/composition`).
+
+### DOC-7: Onboarding gaps
 
 `TODO` · Size: **M**
 
 No hero/value proposition. No visual walkthrough. No "build your first component" tutorial. Settings panel hidden behind gear icon. No "next steps" after Getting Started.
 
-### DOC-10: Missing documentation sections
+### DOC-8: Missing documentation sections
 
 `TODO` · Size: **L**
 
 No accessibility guide, responsive guide, color system deep-dive, typography guide, animation/motion guide, customization deep-dive, troubleshooting/FAQ.
+
+### DOC-9: Gallery / showcase
+
+`TODO` · Size: **M** · Depends on: DOC-2, DOC-3
+
+Curated showcase of recipes, example layouts, and real-world uses. Inspired by Three.js examples gallery — visually browsable, inspirational, not exhaustive.
+
+Each gallery entry should:
+- Show a visual thumbnail of the configuration in use.
+- Link to the playground with that configuration pre-loaded (depends on DOC-3 shareable state).
+- Display the recipe or tier config used.
+
+Built-in recipes (`corporate-clean`, `luxury-dark`, `frosted-modern`, `classic-warm`) are the initial gallery entries. Structure should support community/user-submitted entries later.
