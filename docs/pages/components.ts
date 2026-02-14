@@ -20,7 +20,7 @@ export function renderComponents(): string {
       'Tooltips',
       'Tables',
       'Modals',
-      'Material Demo',
+      'Relief Demo',
       'Neumorphic',
       'Glassmorphic',
     ],
@@ -449,14 +449,14 @@ export function renderComponents(): string {
   `
   )}
 
-  <!-- ====== MATERIAL DEMO ====== -->
+  <!-- ====== RELIEF DEMO ====== -->
   ${specimen(
-    'Material Demo',
-    'comp-material-demo',
+    'Relief Demo',
+    'comp-relief-demo',
     `
-    <p class="text-sm text-muted mb-6">The same components rendered in each material context. Change the global material in the settings panel to see all components update.</p>
+    <p class="text-sm text-muted mb-6">The same components rendered in each relief context. Change the global relief in the settings panel to see all components update.</p>
     <div class="grid gap-6" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))">
-      <div data-material="neu" class="p-6 rounded-xl" style="background: var(--neu-bg); box-shadow: 6px 6px 14px var(--neu-shadow-dark), -6px -6px 14px var(--neu-shadow-light);">
+      <div data-relief="neu" class="p-6 rounded-xl" style="background: var(--neu-bg); box-shadow: 6px 6px 14px var(--neu-shadow-dark), -6px -6px 14px var(--neu-shadow-light);">
         <span class="tag tag-gold mb-3">Neumorphic</span>
         <div class="flex flex-wrap gap-2 mt-3 mb-3">
           <button class="btn btn-primary btn-sm">Primary</button>
@@ -469,7 +469,7 @@ export function renderComponents(): string {
         </div>
         <div class="progress mt-3"><div class="progress-bar" style="width: 65%"></div></div>
       </div>
-      <div data-material="glass" class="p-6 rounded-xl" style="background: var(--glass-bg); backdrop-filter: blur(16px) saturate(140%); border: 1px solid var(--glass-border);">
+      <div data-relief="glass" class="p-6 rounded-xl" style="background: var(--glass-bg); backdrop-filter: blur(16px) saturate(140%); border: 1px solid var(--glass-border);">
         <span class="tag tag-sapphire mb-3">Glassmorphic</span>
         <div class="flex flex-wrap gap-2 mt-3 mb-3">
           <button class="btn btn-primary btn-sm">Primary</button>
@@ -482,7 +482,7 @@ export function renderComponents(): string {
         </div>
         <div class="progress mt-3"><div class="progress-bar" style="width: 65%"></div></div>
       </div>
-      <div data-material="metallic" class="p-6 rounded-xl" style="background: var(--surface-1); border: 1px solid var(--metallic-border);">
+      <div data-relief="metallic" class="p-6 rounded-xl" style="background: var(--surface-1); border: 1px solid var(--metallic-border);">
         <span class="tag tag-citrine mb-3">Metallic</span>
         <div class="flex flex-wrap gap-2 mt-3 mb-3">
           <button class="btn btn-primary btn-sm">Primary</button>
@@ -544,8 +544,8 @@ export function renderComponents(): string {
 
       <p class="overline mt-8 mb-4">Interactive Elements</p>
       <div class="flex flex-wrap gap-6 items-center">
-        <button class="btn material-neu px-6 py-3 text-sm font-medium">.btn.material-neu</button>
-        <input class="input material-neu" placeholder=".input.material-neu" />
+        <button class="btn relief-neu px-6 py-3 text-sm font-medium">.btn.relief-neu</button>
+        <input class="input relief-neu" placeholder=".input.relief-neu" />
         <div class="neu-toggle" id="neu-toggle-demo"></div>
       </div>
 
@@ -591,8 +591,8 @@ export function renderComponents(): string {
       <div class="relative z-10">
         <p class="overline mb-4" style="color: rgba(255,255,255,0.5)">Standard</p>
         <div class="grid gap-6 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr))">
-          <div class="card material-glass p-5">
-            <p class="text-sm font-semibold mb-1" style="color: #fff">.card.material-glass</p>
+          <div class="card relief-glass p-5">
+            <p class="text-sm font-semibold mb-1" style="color: #fff">.card.relief-glass</p>
             <p class="text-xs" style="color: rgba(255,255,255,0.6)">Default frosted glass card.</p>
           </div>
           <div class="glass-accent p-5 rounded-2xl">
@@ -626,8 +626,8 @@ export function renderComponents(): string {
         </div>
 
         <div class="flex flex-wrap gap-4 items-center">
-          <button class="btn material-glass px-5 py-2 text-sm font-medium" style="color: #fff">.btn.material-glass</button>
-          <input class="input material-glass" placeholder=".input.material-glass" style="color: #fff; max-width: 200px" />
+          <button class="btn relief-glass px-5 py-2 text-sm font-medium" style="color: #fff">.btn.relief-glass</button>
+          <input class="input relief-glass" placeholder=".input.relief-glass" style="color: #fff; max-width: 200px" />
         </div>
       </div>
     </div>
@@ -706,7 +706,7 @@ export function renderComponents(): string {
         <p>Full ornamental frame with medallion.</p>
       </div>
     </div>
-    <div class="card material-glass">
+    <div class="card relief-glass">
       <div class="card-header">Glass Card</div>
       <div class="card-body">
         <p>Crystal glass with backdrop blur effect.</p>
@@ -715,7 +715,7 @@ export function renderComponents(): string {
   </div>
 
   <h3 class="text-xl font-semibold mt-10 mb-4 font-serif" id="btn-extended">Extended Buttons</h3>
-  <p class="text-secondary mb-4">Button with material-aware styling and metallic finishes.</p>
+  <p class="text-secondary mb-4">Button with relief-aware styling and metallic finishes.</p>
 
   <h4 class="text-lg font-semibold mt-4 mb-3">Standard Variants</h4>
   <div class="flex flex-wrap gap-4 items-center mb-6">
@@ -727,12 +727,12 @@ export function renderComponents(): string {
     <button class="btn btn-success">Success</button>
   </div>
 
-  <h4 class="text-lg font-semibold mt-4 mb-3">Material Variants</h4>
+  <h4 class="text-lg font-semibold mt-4 mb-3">Relief Variants</h4>
   <div class="flex flex-wrap gap-4 items-center mb-6">
-    <button class="btn btn-primary material-neu">Neu</button>
-    <button class="btn btn-primary material-glass">Glass</button>
-    <button class="btn btn-primary material-metallic">Metallic</button>
-    <button class="btn btn-primary material-stone">Stone</button>
+    <button class="btn btn-primary relief-neu">Neu</button>
+    <button class="btn btn-primary relief-glass">Glass</button>
+    <button class="btn btn-primary relief-metallic">Metallic</button>
+    <button class="btn btn-primary relief-stone">Stone</button>
   </div>
 
   <h4 class="text-lg font-semibold mt-4 mb-3">Metallic Variants</h4>

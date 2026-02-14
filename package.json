@@ -1,7 +1,7 @@
 {
   "name": "soltana-ui",
   "version": "1.0.0",
-  "description": "A CSS-first design system inspired by classical architecture and precious materials. Features neumorphic, glassmorphic, and hybrid material systems with a 4-tier configuration model.",
+  "description": "A CSS-first design system inspired by classical architecture and precious materials. Features neumorphic, glassmorphic, and hybrid relief systems with a 4-tier configuration model.",
   "type": "module",
   "private": false,
   "license": "MIT",

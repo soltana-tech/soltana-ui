@@ -2,7 +2,7 @@
 // Feedback Components
 // ---------------------------------------------------------------------------
 // Alerts, tooltips, progress bars, and skeleton loaders.
-// Uses --material-* variables for automatic material switching.
+// Uses --relief-* variables for automatic relief switching.
 // ---------------------------------------------------------------------------
 
 @use 'sass:list';
@@ -55,7 +55,7 @@
     background-color: var(--tooltip-bg);
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-accent-gold);
-    box-shadow: var(--material-shadow-sm);
+    box-shadow: var(--relief-shadow-sm);
     opacity: 0;
     pointer-events: none;
     transition: opacity var(--transition-normal) var(--easing-in-out);
@@ -77,7 +77,7 @@
   background-color: var(--surface-3);
   border-radius: var(--radius-full);
   overflow: hidden;
-  box-shadow: var(--material-shadow-inset);
+  box-shadow: var(--relief-shadow-inset);
   transition:
     background var(--transition-slow) var(--easing-in-out),
     box-shadow var(--transition-slow) var(--easing-in-out);

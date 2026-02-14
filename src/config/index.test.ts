@@ -14,8 +14,8 @@ const mockInitAll = vi.mocked(initAll);
 describe('initSoltana', () => {
   beforeEach(() => {
     document.documentElement.removeAttribute('data-theme');
-    document.documentElement.removeAttribute('data-material');
-    document.documentElement.removeAttribute('data-surface');
+    document.documentElement.removeAttribute('data-relief');
+    document.documentElement.removeAttribute('data-finish');
     document.documentElement.removeAttribute('style');
     document.body.className = '';
     document.documentElement.removeAttribute('data-ornament');
@@ -28,21 +28,21 @@ describe('initSoltana', () => {
   it('applies default config', () => {
     initSoltana();
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
-    expect(document.documentElement.getAttribute('data-material')).toBe('neu');
-    expect(document.documentElement.getAttribute('data-surface')).toBe('polished');
+    expect(document.documentElement.getAttribute('data-relief')).toBe('neu');
+    expect(document.documentElement.getAttribute('data-finish')).toBe('polished');
     expect(document.documentElement.getAttribute('data-ornament')).toBe('none');
   });
 
   it('applies custom config', () => {
     initSoltana({
       theme: 'light',
-      material: 'glass',
-      surface: 'frosted',
+      relief: 'glass',
+      finish: 'frosted',
       ornament: 'gilt',
     });
     expect(document.documentElement.getAttribute('data-theme')).toBe('light');
-    expect(document.documentElement.getAttribute('data-material')).toBe('glass');
-    expect(document.documentElement.getAttribute('data-surface')).toBe('frosted');
+    expect(document.documentElement.getAttribute('data-relief')).toBe('glass');
+    expect(document.documentElement.getAttribute('data-finish')).toBe('frosted');
     expect(document.documentElement.getAttribute('data-ornament')).toBe('gilt');
   });
 
@@ -52,16 +52,16 @@ describe('initSoltana', () => {
     expect(document.documentElement.getAttribute('data-theme')).toBe('sepia');
   });
 
-  it('setMaterial updates data-material', () => {
+  it('setRelief updates data-relief', () => {
     const soltana = initSoltana();
-    soltana.setMaterial('metallic');
-    expect(document.documentElement.getAttribute('data-material')).toBe('metallic');
+    soltana.setRelief('metallic');
+    expect(document.documentElement.getAttribute('data-relief')).toBe('metallic');
   });
 
-  it('setSurface updates data-surface', () => {
+  it('setFinish updates data-finish', () => {
     const soltana = initSoltana();
-    soltana.setSurface('stained');
-    expect(document.documentElement.getAttribute('data-surface')).toBe('stained');
+    soltana.setFinish('stained');
+    expect(document.documentElement.getAttribute('data-finish')).toBe('stained');
   });
 
   it('setOrnament updates data-ornament attribute', () => {
@@ -84,25 +84,25 @@ describe('initSoltana', () => {
   it('reset restores defaults and clears overrides', () => {
     const soltana = initSoltana({
       theme: 'sepia',
-      material: 'glass',
+      relief: 'glass',
       ornament: 'gilt',
     });
     soltana.setOverrides({ '--custom': 'value' });
     soltana.reset();
 
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
-    expect(document.documentElement.getAttribute('data-material')).toBe('neu');
-    expect(document.documentElement.getAttribute('data-surface')).toBe('polished');
+    expect(document.documentElement.getAttribute('data-relief')).toBe('neu');
+    expect(document.documentElement.getAttribute('data-finish')).toBe('polished');
     expect(document.documentElement.getAttribute('data-ornament')).toBe('none');
     expect(document.documentElement.style.getPropertyValue('--custom')).toBe('');
   });
 
   it('getState returns current config', () => {
-    const soltana = initSoltana({ theme: 'light', material: 'metallic' });
+    const soltana = initSoltana({ theme: 'light', relief: 'metallic' });
     const state = soltana.getState();
     expect(state.theme).toBe('light');
-    expect(state.material).toBe('metallic');
-    expect(state.surface).toBe('polished');
+    expect(state.relief).toBe('metallic');
+    expect(state.finish).toBe('polished');
     expect(state.ornament).toBe('none');
   });
 
@@ -116,8 +116,8 @@ describe('initSoltana', () => {
   it('destroy removes all data attributes and inline styles', () => {
     const soltana = initSoltana({
       theme: 'sepia',
-      material: 'glass',
-      surface: 'frosted',
+      relief: 'glass',
+      finish: 'frosted',
       ornament: 'baroque',
     });
     soltana.setOverrides({ '--x': '10' });
@@ -125,16 +125,16 @@ describe('initSoltana', () => {
     soltana.destroy();
 
     expect(document.documentElement.getAttribute('data-theme')).toBeNull();
-    expect(document.documentElement.getAttribute('data-material')).toBeNull();
-    expect(document.documentElement.getAttribute('data-surface')).toBeNull();
+    expect(document.documentElement.getAttribute('data-relief')).toBeNull();
+    expect(document.documentElement.getAttribute('data-finish')).toBeNull();
     expect(document.documentElement.getAttribute('data-ornament')).toBeNull();
     expect(document.documentElement.getAttribute('style')).toBeNull();
   });
 
   it.each([
     ['theme', { theme: 'neon' as never }],
-    ['material', { material: 'paper' as never }],
-    ['surface', { surface: 'matte' as never }],
+    ['relief', { relief: 'paper' as never }],
+    ['finish', { finish: 'matte' as never }],
     ['ornament', { ornament: 'gothic' as never }],
   ] as const)('warns on invalid %s', (name, overrides) => {
     const spy = vi.spyOn(console, 'warn').mockImplementation(vi.fn());

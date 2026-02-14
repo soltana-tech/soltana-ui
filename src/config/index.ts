@@ -2,7 +2,7 @@
 // Soltana Design System - Config Runtime
 // ---------------------------------------------------------------------------
 // initSoltana() sets data attributes on <html> to activate SCSS selector
-// blocks for the chosen theme, material, surface, and ornament.
+// blocks for the chosen theme, relief, finish, and ornament.
 // ---------------------------------------------------------------------------
 
 import type {
@@ -10,8 +10,8 @@ import type {
   SoltanaInstance,
   EnhancerCleanup,
   Theme,
-  Material,
-  Surface,
+  Relief,
+  Finish,
   Ornament,
 } from './types';
 import { initAll } from '../enhancers/index.js';
@@ -19,16 +19,16 @@ import { loadSoltanaFonts } from '../fonts/index';
 
 const DEFAULT_CONFIG: SoltanaConfig = {
   theme: 'dark',
-  material: 'neu',
-  surface: 'polished',
+  relief: 'neu',
+  finish: 'polished',
   ornament: 'none',
   fonts: false,
   enhancers: true,
 };
 
 const VALID_THEMES: readonly Theme[] = ['dark', 'light', 'sepia', 'auto'];
-const VALID_MATERIALS: readonly Material[] = ['flat', 'soft', 'neu', 'glass', 'metallic', 'stone'];
-const VALID_SURFACES: readonly Surface[] = ['polished', 'frosted', 'stained', 'metallic'];
+const VALID_RELIEFS: readonly Relief[] = ['flat', 'soft', 'neu', 'glass', 'metallic', 'stone'];
+const VALID_FINISHES: readonly Finish[] = ['polished', 'frosted', 'stained', 'metallic'];
 const VALID_ORNAMENTS: readonly Ornament[] = ['none', 'baroque', 'carved', 'faceted', 'gilt'];
 
 // Module-level state for matchMedia listener cleanup
@@ -59,8 +59,8 @@ function applyConfig(state: SoltanaConfig): void {
   const root = document.documentElement;
 
   root.setAttribute('data-theme', resolveTheme(state.theme));
-  root.setAttribute('data-material', state.material);
-  root.setAttribute('data-surface', state.surface);
+  root.setAttribute('data-relief', state.relief);
+  root.setAttribute('data-finish', state.finish);
   applyOrnament(state.ornament);
 
   if (state.overrides) {
@@ -104,7 +104,7 @@ function warnInvalid(name: string, value: string, valid: readonly string[]): voi
 
 /**
  * Initialize the Soltana design system.
- * Sets data attributes on <html> to activate SCSS theme/material/surface/
+ * Sets data attributes on <html> to activate SCSS theme/relief/finish/
  * ornament selectors.
  */
 export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaInstance {
@@ -112,8 +112,8 @@ export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaIns
 
   // Validate config values
   warnInvalid('theme', state.theme, VALID_THEMES);
-  warnInvalid('material', state.material, VALID_MATERIALS);
-  warnInvalid('surface', state.surface, VALID_SURFACES);
+  warnInvalid('relief', state.relief, VALID_RELIEFS);
+  warnInvalid('finish', state.finish, VALID_FINISHES);
   warnInvalid('ornament', state.ornament, VALID_ORNAMENTS);
 
   // Load Google Fonts when opted in
@@ -145,16 +145,16 @@ export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaIns
       setupAutoTheme(state);
     },
 
-    setMaterial(material: Material): void {
-      warnInvalid('material', material, VALID_MATERIALS);
-      state.material = material;
-      document.documentElement.setAttribute('data-material', material);
+    setRelief(relief: Relief): void {
+      warnInvalid('relief', relief, VALID_RELIEFS);
+      state.relief = relief;
+      document.documentElement.setAttribute('data-relief', relief);
     },
 
-    setSurface(surface: Surface): void {
-      warnInvalid('surface', surface, VALID_SURFACES);
-      state.surface = surface;
-      document.documentElement.setAttribute('data-surface', surface);
+    setFinish(finish: Finish): void {
+      warnInvalid('finish', finish, VALID_FINISHES);
+      state.finish = finish;
+      document.documentElement.setAttribute('data-finish', finish);
     },
 
     setOrnament(ornament: Ornament): void {
@@ -200,12 +200,12 @@ export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaIns
       }
       const root = document.documentElement;
       root.removeAttribute('data-theme');
-      root.removeAttribute('data-material');
-      root.removeAttribute('data-surface');
+      root.removeAttribute('data-relief');
+      root.removeAttribute('data-finish');
       root.removeAttribute('style');
       root.removeAttribute('data-ornament');
     },
   };
 }
 
-export type { SoltanaConfig, SoltanaInstance, Theme, Material, Surface, Ornament } from './types';
+export type { SoltanaConfig, SoltanaInstance, Theme, Relief, Finish, Ornament } from './types';

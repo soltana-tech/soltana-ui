@@ -7,8 +7,8 @@ export type {
   SoltanaInstance,
   EnhancerCleanup,
   Theme,
-  Material,
-  Surface,
+  Relief,
+  Finish,
   Ornament,
 } from './config/types.js';
 

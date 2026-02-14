@@ -23,7 +23,7 @@ export function renderExamples(): string {
   <!-- ====== DASHBOARD ====== -->
   <div class="specimen mt-10" id="example-dashboard">
     <h3 class="text-xl font-semibold mb-4">Dashboard Layout</h3>
-    <p class="text-sm text-muted mb-4">This example responds to the Material, Surface, and Ornament settings. Try changing them!</p>
+    <p class="text-sm text-muted mb-4">This example responds to the Relief, Finish, and Ornament settings. Try changing them!</p>
     <div class="card overflow-hidden">
       <div class="specimen__preview p-0">
         <div class="flex" style="min-height: 520px">
@@ -158,7 +158,7 @@ export function renderExamples(): string {
           <div class="text-center px-8 pt-20 pb-24 relative z-10">
             <span class="overline mb-4 inline-block" style="color: var(--accent-secondary)">New Release v2.0</span>
             <h1 class="font-serif mb-6" style="font-size: 4rem; line-height: 1.05; font-weight: 600;">Build beautiful<br/>interfaces <span style="background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">effortlessly</span></h1>
-            <p class="text-lg mb-10 mx-auto text-secondary" style="max-width: 520px; letter-spacing: 0.02em;">A complete design system with flat, soft, neumorphic, glass, metallic, and stone materials for prestigious web applications.</p>
+            <p class="text-lg mb-10 mx-auto text-secondary" style="max-width: 520px; letter-spacing: 0.02em;">A complete design system with flat, soft, neumorphic, glass, metallic, and stone reliefs for prestigious web applications.</p>
             <div class="flex justify-center gap-4">
               <button class="btn btn-primary btn-lg">Start Building</button>
               <button class="btn btn-outline btn-lg">View Docs</button>
@@ -280,16 +280,16 @@ export function renderExamples(): string {
                 </div>
                 <div>
                   <label class="text-sm block mb-2">Notification Sound</label>
-                  <input class="input material-neu w-full" value="Default" />
+                  <input class="input relief-neu w-full" value="Default" />
                 </div>
               </div>
             </div>
             <div class="neu-elevated" style="padding: 1.5rem">
               <h5 class="font-semibold mb-4">Profile</h5>
               <div class="flex flex-col gap-3">
-                <input class="input material-neu w-full" value="John Doe" />
-                <input class="input material-neu w-full" value="john@example.com" />
-                <button class="btn material-neu px-4 py-2 text-sm font-medium mt-2">Save Changes</button>
+                <input class="input relief-neu w-full" value="John Doe" />
+                <input class="input relief-neu w-full" value="john@example.com" />
+                <button class="btn relief-neu px-4 py-2 text-sm font-medium mt-2">Save Changes</button>
               </div>
             </div>
           </div>
@@ -301,7 +301,7 @@ export function renderExamples(): string {
   <!-- ====== EMAIL CLIENT ====== -->
   <div class="specimen mt-10" id="example-email-client">
     <h3 class="text-xl font-semibold mb-4">Email Client Layout</h3>
-    <p class="text-sm text-muted mb-4">This example also responds to Material, Surface, and Ornament settings.</p>
+    <p class="text-sm text-muted mb-4">This example also responds to Relief, Finish, and Ornament settings.</p>
     <div class="card overflow-hidden">
       <div class="specimen__preview p-0">
         <div class="flex" style="min-height: 440px">
@@ -386,7 +386,7 @@ export function renderExamples(): string {
               <ul class="mb-4 text-secondary" style="list-style: disc; padding-left: 1.5rem">
                 <li class="mb-1">Deeper atmospheric dark palette</li>
                 <li class="mb-1">Serif/sans dual typography with Cormorant Garamond</li>
-                <li class="mb-1">Six material variants: flat, soft, neumorphic, glass, metallic, and stone</li>
+                <li class="mb-1">Six relief variants: flat, soft, neumorphic, glass, metallic, and stone</li>
                 <li class="mb-1">Gradient background utilities and refined spacing</li>
               </ul>
               <p class="mb-4 text-secondary">Review the attached design system documentation and share feedback by Friday.</p>

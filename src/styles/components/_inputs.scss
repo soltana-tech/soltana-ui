@@ -2,7 +2,7 @@
 // Form Input Components
 // ---------------------------------------------------------------------------
 // Text inputs, selects, textareas, checkboxes, radios, and input groups.
-// Uses --material-* variables for automatic material switching.
+// Uses --relief-* variables for automatic relief switching.
 // ---------------------------------------------------------------------------
 
 @use '../variables' as *;
@@ -24,8 +24,8 @@
   background-color: var(--input-bg);
   border: 1px solid var(--input-border);
   border-radius: var(--radius-lg);
-  box-shadow: var(--material-shadow-inset);
-  backdrop-filter: blur(var(--surface-blur)) saturate(var(--surface-saturation));
+  box-shadow: var(--relief-shadow-inset);
+  backdrop-filter: blur(var(--finish-blur)) saturate(var(--finish-saturation));
   transition:
     border-color var(--transition-slow) var(--easing-in-out),
     box-shadow var(--transition-slow) var(--easing-in-out);
@@ -39,7 +39,7 @@
     outline: none;
     border-color: var(--input-border-focus);
     box-shadow:
-      var(--material-shadow-inset),
+      var(--relief-shadow-inset),
       0 0 0 3px var(--state-focus-ring);
   }
 

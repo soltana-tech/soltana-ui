@@ -109,12 +109,12 @@
 // Toggle — standalone component (no base .toggle exists yet; see COMP-1)
 .neu-toggle {
   border: none;
-  background: var(--material-bg);
+  background: var(--relief-bg);
   position: relative;
   width: 3.5rem;
   height: 2rem;
   border-radius: var(--radius-full);
-  box-shadow: var(--material-shadow-inset-lg);
+  box-shadow: var(--relief-shadow-inset-lg);
   cursor: pointer;
   transition: background var(--transition-slow) var(--easing-in-out);
 
@@ -126,8 +126,8 @@
     width: 1.625rem;
     height: 1.625rem;
     border-radius: var(--radius-full);
-    background: var(--material-bg);
-    box-shadow: var(--material-shadow-sm);
+    background: var(--relief-bg);
+    box-shadow: var(--relief-shadow-sm);
     transition:
       transform var(--transition-slow) var(--easing-in-out),
       background var(--transition-slow) var(--easing-in-out),
@@ -137,7 +137,7 @@
   &.active::after {
     transform: translateX(1.5rem);
     background: var(--accent-primary);
-    box-shadow: var(--material-shadow-sm);
+    box-shadow: var(--relief-shadow-sm);
   }
 }
 
@@ -148,11 +148,11 @@
 // Layered card with gold gradient overlay
 .neu-card-layered {
   border: none;
-  background: var(--material-bg);
+  background: var(--relief-bg);
   position: relative;
   border-radius: var(--radius-2xl);
   padding: 1.5rem;
-  box-shadow: var(--material-shadow-lg);
+  box-shadow: var(--relief-shadow-lg);
   overflow: hidden;
 
   &::before {

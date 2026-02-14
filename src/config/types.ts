@@ -3,14 +3,14 @@
 // ---------------------------------------------------------------------------
 
 export type Theme = 'dark' | 'light' | 'sepia' | 'auto';
-export type Material = 'flat' | 'soft' | 'neu' | 'glass' | 'metallic' | 'stone';
-export type Surface = 'polished' | 'frosted' | 'stained' | 'metallic';
+export type Relief = 'flat' | 'soft' | 'neu' | 'glass' | 'metallic' | 'stone';
+export type Finish = 'polished' | 'frosted' | 'stained' | 'metallic';
 export type Ornament = 'none' | 'baroque' | 'carved' | 'faceted' | 'gilt';
 
 export interface SoltanaConfig {
   theme: Theme;
-  material: Material;
-  surface: Surface;
+  relief: Relief;
+  finish: Finish;
   ornament: Ornament;
   fonts?: boolean;
   enhancers?: boolean;
@@ -20,8 +20,8 @@ export interface SoltanaConfig {
 export interface SoltanaInstance {
   getState(): SoltanaConfig;
   setTheme(theme: Theme): void;
-  setMaterial(material: Material): void;
-  setSurface(surface: Surface): void;
+  setRelief(relief: Relief): void;
+  setFinish(finish: Finish): void;
   setOrnament(ornament: Ornament): void;
   setOverrides(overrides: Record<string, string>): void;
   reinit(): void;

@@ -22,7 +22,7 @@ A CSS-first design system built around a 4-tier configuration model:
 
 \* `auto` resolves to dark or light via `prefers-color-scheme`. It is a runtime resolver, not a static token set — there is no `.theme-auto` utility class.
 
-> **Note:** The codebase currently uses `material`/`surface` naming and different option sets. DX-2a–d track the rename and restructuring.
+> **Note:** The codebase previously used `material`/`surface` naming. DX-2a completed the rename.
 
 Classical "estate" aesthetic with gold accents, jewel tones, serif typography (Cinzel + Raleway). Ships ~139KB CSS + ~10KB JS with TypeScript enhancers for modals, tabs, and tooltips.
 
@@ -34,7 +34,7 @@ No existing CSS design system unifies neumorphic, glassmorphic, metallic, and st
 
 - **Token system architecture** — Sass maps generate compile-time variables and `:root` custom properties in parallel. Production-grade.
 - **Typography scale** — `[font-size, line-height]` tuples that scale intelligently. Thoughtful and correct.
-- **Material abstraction pattern** — `--material-*` variable layer is elegant. Components consume semantic tokens and auto-switch on `[data-material]` change.
+- **Material abstraction pattern** — `--relief-*` variable layer is elegant. Components consume semantic tokens and auto-switch on `[data-relief]` change.
 - **Glassmorphic depth** — Most fully realized material. Jewel-toned glass, lead-line overlays, stained glass presets.
 - **Accessibility foundation** — `prefers-reduced-motion`, `prefers-contrast`, `.sr-only`, `.skip-link`, focus rings. Solid base layer.
 - **Metallic button mixin** — Well-parametrized with gradient, glow, shine animation. Should be extracted for reuse.
@@ -115,13 +115,13 @@ All `init*()` calls added event listeners with no removal. Double-calling double
 
 `DONE` · Size: **XL** · Depends on: SCSS-2
 
-5 material files (neumorphic, glassmorphic, neu-glass, metallic, stone) vs 3 config options (neu, glass, hybrid). Metallic and stone are standalone utility classes disconnected from `data-material`. Setting `[data-material='neu']` sets CSS variables but doesn't auto-apply component classes.
+5 material files (neumorphic, glassmorphic, neu-glass, metallic, stone) vs 3 config options (neu, glass, hybrid). Metallic and stone are standalone utility classes disconnected from `data-relief`. Setting `[data-relief='neu']` sets CSS variables but doesn't auto-apply component classes.
 
 `hybrid` doesn't scale — it's a hardcoded neu+glass blend. As new materials are added, "hybrid of what?" becomes unanswerable.
 
-**Proposed fix:** Remove `hybrid`. Promote each material to a standalone config option: neu, glass, metallic, stone, flat, soft. Wire all material files into the config system. Delete `neu-glass.scss` or decompose its effects. Components consume `--material-*` variables exclusively.
+**Proposed fix:** Remove `hybrid`. Promote each material to a standalone config option: neu, glass, metallic, stone, flat, soft. Wire all material files into the config system. Delete `neu-glass.scss` or decompose its effects. Components consume `--relief-*` variables exclusively.
 
-- Progress: Consolidated material system. Added shadow scale (`--material-shadow-sm`, `--material-shadow-lg`, `--material-shadow-inset-sm`, `--material-shadow-inset-lg`) to all 6 materials. Removed duplicate component classes from material files (`.glass-card`, `.glass-nav`, `.glass-button`, `.glass-input`, `.glass-overlay`, `.glass-modal`, `.neu-card`, `.neu-button`, `.neu-input`, `.neu-progress`). Removed redundant card variants (`.card-glass`, `.card--neu`, `.card--glass`). Refactored `.neu-card-layered` and `.neu-toggle` to use `--material-*` tokens. Per-element material overrides use `.material-*` classes from `_material-system.scss`.
+- Progress: Consolidated material system. Added shadow scale (`--relief-shadow-sm`, `--relief-shadow-lg`, `--relief-shadow-inset-sm`, `--relief-shadow-inset-lg`) to all 6 materials. Removed duplicate component classes from material files (`.glass-card`, `.glass-nav`, `.glass-button`, `.glass-input`, `.glass-overlay`, `.glass-modal`, `.neu-card`, `.neu-button`, `.neu-input`, `.neu-progress`). Removed redundant card variants (`.card-glass`, `.card--neu`, `.card--glass`). Refactored `.neu-card-layered` and `.neu-toggle` to use `--relief-*` tokens. Per-element material overrides use `.relief-*` classes from `_relief-system.scss`.
 
 ### SCSS-2: Material vs surface overlap
 
@@ -129,7 +129,7 @@ All `init*()` calls added event listeners with no removal. Double-calling double
 
 Material defines bg, shadows, blur, saturation, opacity, border. Surface redefines blur, saturation, opacity, texture, overlay — largely the same properties. `neu + frosted` produces contradictory results. Developers can't reason about the interaction without reading SCSS.
 
-- Progress: Moved blur, saturation, opacity from `--material-*` to `--surface-*` namespace. Materials own structure (bg, shadow, border). Surfaces own finish (blur, saturation, opacity, texture, overlay, sheen). Tiers are now orthogonal. Stained/metallic `--material-bg` overrides remain as documented scope for SCSS-1.
+- Progress: Moved blur, saturation, opacity from `--relief-*` to `--finish-*` namespace. Reliefs own structure (bg, shadow, border). Finishes own treatment (blur, saturation, opacity, texture, overlay, sheen). Tiers are now orthogonal. Stained/metallic `--relief-bg` overrides remain as documented scope for SCSS-1.
 
 ### SCSS-3: Components hardcode colors
 
@@ -137,7 +137,7 @@ Material defines bg, shadows, blur, saturation, opacity, border. Surface redefin
 
 `.btn-gold` hardcodes `var(--gold-gradient)`. `.card-baroque` hardcodes `var(--gold-400)`. `.card-stained-glass` defines its own blur/gradient. `.checkbox-baroque`, `.radio-medallion`, `.tabs-carved` all hardcode gold. None respond to material or theme changes.
 
-- Progress: Replaced all hardcoded material-specific variables (`--neu-shadow-dark`, `--neu-shadow-mid`, `--neu-shadow-light`, `--neu-highlight`, `--neu-bg`, `--neu-accent-glow`, `--glass-shadow`) with semantic `--material-*` tokens. Replaced raw accent references (`--gold-400`, `--gold-500`, `--bronze-400`, `rgb(212 168 67 / ...)`) with `--accent-gold`, `--accent-gold-hover`, `--accent-primary`, `--border-accent-gold`, `--border-accent-gold-strong`, and `--badge-bg` tokens. Named color variants (`.btn-gold`, `.badge-gold`) and contrast text (`--gold-900`) excluded as intentional.
+- Progress: Replaced all hardcoded material-specific variables (`--neu-shadow-dark`, `--neu-shadow-mid`, `--neu-shadow-light`, `--neu-highlight`, `--neu-bg`, `--neu-accent-glow`, `--glass-shadow`) with semantic `--relief-*` tokens. Replaced raw accent references (`--gold-400`, `--gold-500`, `--bronze-400`, `rgb(212 168 67 / ...)`) with `--accent-gold`, `--accent-gold-hover`, `--accent-primary`, `--border-accent-gold`, `--border-accent-gold-strong`, and `--badge-bg` tokens. Named color variants (`.btn-gold`, `.badge-gold`) and contrast text (`--gold-900`) excluded as intentional.
 
 ### SCSS-4: Themes are coupled to materials
 
@@ -145,13 +145,13 @@ Material defines bg, shadows, blur, saturation, opacity, border. Surface redefin
 
 Theme files (`_dark.scss`, `_light.scss`, `_sepia.scss`) defined ~18 material-specific variables (`--neu-bg`, `--neu-shadow-dark`, `--glass-bg`, `--glass-border`, `--metallic-shadow`, `--stone-highlight`, etc.). Themes had knowledge of every material — adding a material required editing every theme file.
 
-- Progress: Themes now define 3 channel tokens (`--shadow-color`, `--highlight-color`, `--accent-glow`) instead of per-material primitives. `_material-system.scss` owns all material primitives (`--neu-*`, `--glass-*`, `--metallic-*`, `--stone-*`) and derives them from channel tokens, with per-theme `[data-theme]` overrides for materials that need unique color bases. Removed `--neu-*` references from `_ornamental.scss` (replaced with `--shadow-color`/`--highlight-color` expressions). Replaced `--neu-accent-glow` with `--accent-glow` in ornament selectors. Added section headers (SEMANTIC TOKENS, CHANNEL TOKENS, COMPONENT TOKENS) to all theme files.
+- Progress: Themes now define 3 channel tokens (`--shadow-color`, `--highlight-color`, `--accent-glow`) instead of per-material primitives. `_relief-system.scss` owns all material primitives (`--neu-*`, `--glass-*`, `--metallic-*`, `--stone-*`) and derives them from channel tokens, with per-theme `[data-theme]` overrides for materials that need unique color bases. Removed `--neu-*` references from `_ornamental.scss` (replaced with `--shadow-color`/`--highlight-color` expressions). Replaced `--neu-accent-glow` with `--accent-glow` in ornament selectors. Added section headers (SEMANTIC TOKENS, CHANNEL TOKENS, COMPONENT TOKENS) to all theme files.
 
 ### SCSS-5: Race condition in material defaults
 
 `DONE` · Size: **S**
 
-`:root` fallbacks in `_material-system.scss` were hardcoded colors. Components rendered with midnight blue before JS set `[data-material]`.
+`:root` fallbacks in `_relief-system.scss` were hardcoded colors. Components rendered with midnight blue before JS set `[data-relief]`.
 
 - Progress: Replaced hardcoded color fallbacks with chained theme-aware variables (`var(--surface-2)`, `var(--glass-shadow)`, etc.).
 
@@ -227,11 +227,11 @@ Marble textures use 4-8 radial gradients per variant (~20KB). Stained glass pres
 
 `DONE` · Size: **L** · Depends on: SCSS-4, ORN-1
 
-All 4 tiers should be independently overridable at any element via utility classes or data attributes. Currently `.material-*` and `.surface-*` classes partially work, but full composition — e.g., `<div class="card material-glass surface-frosted ornamented-gilt">` overriding a global `data-material='neu'` — has gaps and is untested.
+All 4 tiers should be independently overridable at any element via utility classes or data attributes. Currently `.relief-*` and `.finish-*` classes partially work, but full composition — e.g., `<div class="card relief-glass finish-frosted ornamented-gilt">` overriding a global `data-relief='neu'` — has gaps and is untested.
 
 The tier combination count is linear (t + m + s + o rulesets), not multiplicative (t × m × s × o), because CSS custom properties cascade independently. No combination-specific CSS needs to be generated.
 
-- Progress: Added `.theme-dark`, `.theme-light`, `.theme-sepia` utility classes by comma-joining to existing `[data-theme]` selectors in theme files and material primitive blocks. All four tiers now support per-element overrides via utility classes (`.theme-*`, `.material-*`, `.surface-*`, `.ornament-*`). Added composition docs section with reference table, live demos, and cascade explanation.
+- Progress: Added `.theme-dark`, `.theme-light`, `.theme-sepia` utility classes by comma-joining to existing `[data-theme]` selectors in theme files and material primitive blocks. All four tiers now support per-element overrides via utility classes (`.theme-*`, `.relief-*`, `.finish-*`, `.ornament-*`). Added composition docs section with reference table, live demos, and cascade explanation.
 
 ### SCSS-15: Extensibility architecture
 
@@ -285,9 +285,9 @@ Ornaments apply globally via `body.ornament-baroque` using `::before`/`::after` 
 
 `DONE` · Size: **L** · Depends on: ORN-1
 
-Baroque defined in 3 places (`_material-system.scss`, `_buttons.scss`, `_ornamental.scss`) with no shared code. Each implements "baroque" differently. Combining them produces visual breakage.
+Baroque defined in 3 places (`_relief-system.scss`, `_buttons.scss`, `_ornamental.scss`) with no shared code. Each implements "baroque" differently. Combining them produces visual breakage.
 
-- Progress: Removed global `body.ornament-*` selectors from `_material-system.scss`. Single ornament definition set in `_material-system.scss` using `box-shadow`. Component-specific variants (`.btn-baroque`, `.card-baroque`) remain as separate decorative treatments that don't conflict. Switched from `body` classes to `data-ornament` attribute on `<html>` for consistency with other tiers.
+- Progress: Removed global `body.ornament-*` selectors from `_relief-system.scss`. Single ornament definition set in `_relief-system.scss` using `box-shadow`. Component-specific variants (`.btn-baroque`, `.card-baroque`) remain as separate decorative treatments that don't conflict. Switched from `body` classes to `data-ornament` attribute on `<html>` for consistency with other tiers.
 
 ---
 
@@ -354,7 +354,7 @@ CSS import separate from JS with no guidance. Silent failure — components rend
 
 ### DX-2a: Rename material → relief, surface → finish
 
-`TODO` · Size: **XL** · Depends on: SCSS-2
+`DONE` · Size: **XL** · Depends on: SCSS-2
 
 "Material" and "surface" are near-synonymous in everyday English. The distinction — shadow/depth model vs. finish/treatment — requires reading the SCSS to understand.
 
@@ -383,6 +383,8 @@ This is pre-release. Zero references to the old names must remain anywhere in th
 4. **Documentation** — all doc pages, code examples, helper text, nav labels, section headings.
 5. **Roadmap** — context table at top, all item descriptions and progress notes referencing the old names.
 6. **Package exports** — any subpath or type export using the old names.
+
+- Progress: Renamed all material→relief and surface→finish references across SCSS, TypeScript, tests, documentation, and package metadata.
 
 ### DX-2b: Restructure relief options
 

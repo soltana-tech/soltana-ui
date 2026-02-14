@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------
 // Badge, Pill, and Tag Components
 // ---------------------------------------------------------------------------
-// Uses --material-* variables for automatic material switching.
+// Uses --relief-* variables for automatic relief switching.
 // ---------------------------------------------------------------------------
 
 @use 'sass:list';
@@ -85,11 +85,11 @@
   font-weight: var(--font-medium);
   letter-spacing: var(--tracking-elegant);
   border-radius: var(--radius-full);
-  border: 1px solid var(--material-border);
+  border: 1px solid var(--relief-border);
   color: var(--text-secondary);
-  background: var(--material-bg);
-  box-shadow: var(--material-shadow);
-  backdrop-filter: blur(var(--surface-blur)) saturate(var(--surface-saturation));
+  background: var(--relief-bg);
+  box-shadow: var(--relief-shadow);
+  backdrop-filter: blur(var(--finish-blur)) saturate(var(--finish-saturation));
   transition:
     background var(--transition-normal) var(--easing-in-out),
     box-shadow var(--transition-normal) var(--easing-in-out),

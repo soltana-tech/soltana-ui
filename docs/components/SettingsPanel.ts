@@ -1,4 +1,4 @@
-import type { SoltanaInstance, Theme, Material, Surface, Ornament } from '../../src/config';
+import type { SoltanaInstance, Theme, Relief, Finish, Ornament } from '../../src/config';
 
 interface OptionConfig {
   value: string;
@@ -24,7 +24,7 @@ const THEME_OPTIONS: OptionConfig[] = [
   },
 ];
 
-const MATERIAL_OPTIONS: OptionConfig[] = [
+const RELIEF_OPTIONS: OptionConfig[] = [
   { value: 'flat', label: 'Flat' },
   { value: 'soft', label: 'Soft' },
   { value: 'neu', label: 'Neumorphic' },
@@ -33,7 +33,7 @@ const MATERIAL_OPTIONS: OptionConfig[] = [
   { value: 'stone', label: 'Stone' },
 ];
 
-const SURFACE_OPTIONS: OptionConfig[] = [
+const FINISH_OPTIONS: OptionConfig[] = [
   { value: 'polished', label: 'Polished' },
   { value: 'frosted', label: 'Frosted' },
   { value: 'stained', label: 'Stained' },
@@ -50,7 +50,7 @@ const ORNAMENT_OPTIONS: OptionConfig[] = [
 
 /**
  * Settings panel for the 4-tier design system.
- * Uses the initSoltana() API to control theme, material, surface, and ornament.
+ * Uses the initSoltana() API to control theme, relief, finish, and ornament.
  */
 export class SettingsPanel {
   private container: HTMLElement | null = null;
@@ -77,11 +77,11 @@ export class SettingsPanel {
         width: 320px;
         max-height: calc(100vh - 80px);
         overflow-y: auto;
-        background: var(--material-bg, var(--surface-2));
-        backdrop-filter: blur(var(--material-blur, 16px)) saturate(var(--material-saturation, 140%));
-        border: 1px solid var(--material-border, var(--border-default));
+        background: var(--relief-bg, var(--surface-2));
+        backdrop-filter: blur(var(--finish-blur, 16px)) saturate(var(--finish-saturation, 140%));
+        border: 1px solid var(--relief-border, var(--border-default));
         border-radius: var(--radius-xl);
-        box-shadow: var(--material-shadow);
+        box-shadow: var(--relief-shadow);
         z-index: 1000;
         transform: translateX(calc(100% + 20px));
         opacity: 0;
@@ -282,8 +282,8 @@ export class SettingsPanel {
       </div>
       <div class="settings-panel__body">
         ${this.buildSection('Color Mode', 'theme', THEME_OPTIONS)}
-        ${this.buildSection('Material', 'material', MATERIAL_OPTIONS)}
-        ${this.buildSection('Surface', 'surface', SURFACE_OPTIONS)}
+        ${this.buildSection('Relief', 'relief', RELIEF_OPTIONS)}
+        ${this.buildSection('Finish', 'finish', FINISH_OPTIONS)}
         ${this.buildSection('Ornament', 'ornament', ORNAMENT_OPTIONS)}
       </div>
       <div class="settings-panel__footer">
@@ -366,11 +366,11 @@ export class SettingsPanel {
       case 'theme':
         this.soltana.setTheme(value as Theme);
         break;
-      case 'material':
-        this.soltana.setMaterial(value as Material);
+      case 'relief':
+        this.soltana.setRelief(value as Relief);
         break;
-      case 'surface':
-        this.soltana.setSurface(value as Surface);
+      case 'finish':
+        this.soltana.setFinish(value as Finish);
         break;
       case 'ornament':
         this.soltana.setOrnament(value as Ornament);

@@ -2,7 +2,7 @@
 // Navigation Components
 // ---------------------------------------------------------------------------
 // Nav items, tabs, and table styles.
-// Uses --material-* variables for automatic material switching.
+// Uses --relief-* variables for automatic relief switching.
 // ---------------------------------------------------------------------------
 
 @use '../variables' as *;
@@ -180,8 +180,8 @@
   }
 
   tbody tr {
-    background: var(--material-bg);
-    box-shadow: var(--material-shadow);
+    background: var(--relief-bg);
+    box-shadow: var(--relief-shadow);
 
     td:first-child {
       border-radius: var(--radius-lg) 0 0 var(--radius-lg);

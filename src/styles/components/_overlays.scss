@@ -2,7 +2,7 @@
 // Overlay Components
 // ---------------------------------------------------------------------------
 // Modals and backdrop styles.
-// Uses --material-* variables for automatic material switching.
+// Uses --relief-* variables for automatic relief switching.
 // ---------------------------------------------------------------------------
 
 @use '../variables' as *;
@@ -37,14 +37,14 @@
 .modal {
   position: relative;
   background: var(--surface-1);
-  border: 1px solid var(--material-border);
+  border: 1px solid var(--relief-border);
   outline: 1px solid var(--border-subtle);
   outline-offset: 4px;
   border-radius: var(--radius-2xl);
   box-shadow:
-    var(--material-shadow),
+    var(--relief-shadow),
     0 24px 64px rgb(0 0 0 / 30%);
-  backdrop-filter: blur(var(--surface-blur)) saturate(var(--surface-saturation));
+  backdrop-filter: blur(var(--finish-blur)) saturate(var(--finish-saturation));
   width: 100%;
   max-width: 32rem;
   max-height: 85vh;
@@ -150,7 +150,7 @@
       var(--accent-gold-hover)
     )
     1;
-  box-shadow: var(--material-shadow-lg), var(--material-shadow-inset-sm);
+  box-shadow: var(--relief-shadow-lg), var(--relief-shadow-inset-sm);
   backdrop-filter: none;
 
   &::before {

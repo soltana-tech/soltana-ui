@@ -1,24 +1,24 @@
 // ---------------------------------------------------------------------------
-// Material System
+// Relief System
 // ---------------------------------------------------------------------------
 // Owns three layers of the design system abstraction:
-// 1. MATERIAL PRIMITIVES (--neu-*, --glass-*, --metallic-*, --stone-*)
+// 1. RELIEF PRIMITIVES (--neu-*, --glass-*, --metallic-*, --stone-*)
 //    Derived from theme channel tokens (--shadow-color, --highlight-color).
-//    Per-theme overrides handle materials with unique color bases.
-// 2. MATERIAL TOKENS (--material-bg, --material-shadow-*, --material-border)
-//    Set by [data-material] selectors, consumed by all components.
-// 3. SURFACE TOKENS (--surface-blur, --surface-saturation, etc.)
-//    Set by [data-surface] selectors. Orthogonal to materials.
-// Materials define depth and structure. Surfaces define finish and texture.
+//    Per-theme overrides handle reliefs with unique color bases.
+// 2. RELIEF TOKENS (--relief-bg, --relief-shadow-*, --relief-border)
+//    Set by [data-relief] selectors, consumed by all components.
+// 3. FINISH TOKENS (--finish-blur, --finish-saturation, etc.)
+//    Set by [data-finish] selectors. Orthogonal to reliefs.
+// Reliefs define depth and structure. Finishes define texture and treatment.
 // The two tiers are orthogonal — every combination produces a valid result.
 // ---------------------------------------------------------------------------
 
 // ============================================================================
-// MATERIAL PRIMITIVES
+// RELIEF PRIMITIVES
 // ============================================================================
 // Derived from theme channel tokens (--shadow-color, --highlight-color).
-// Per-theme overrides below handle materials whose base colors differ.
-// Consumed by material selectors and material utility files.
+// Per-theme overrides below handle reliefs whose base colors differ.
+// Consumed by relief selectors and relief utility files.
 // ============================================================================
 
 :root,
@@ -112,149 +112,149 @@
 // Ensures components render correctly even without initSoltana().
 
 :root {
-  // Material defaults (neumorphic baseline)
-  --material-bg: var(--neu-bg);
-  --material-shadow-sm: 2px 2px 5px var(--neu-shadow-dark), -2px -2px 5px var(--neu-shadow-light);
-  --material-shadow: 3px 3px 8px var(--neu-shadow-dark), -3px -3px 8px var(--neu-shadow-light);
-  --material-shadow-lg: 6px 6px 16px var(--neu-shadow-dark), -5px -5px 14px var(--neu-shadow-light);
-  --material-shadow-inset-sm:
+  // Relief defaults (neumorphic baseline)
+  --relief-bg: var(--neu-bg);
+  --relief-shadow-sm: 2px 2px 5px var(--neu-shadow-dark), -2px -2px 5px var(--neu-shadow-light);
+  --relief-shadow: 3px 3px 8px var(--neu-shadow-dark), -3px -3px 8px var(--neu-shadow-light);
+  --relief-shadow-lg: 6px 6px 16px var(--neu-shadow-dark), -5px -5px 14px var(--neu-shadow-light);
+  --relief-shadow-inset-sm:
     inset 1px 1px 3px var(--neu-shadow-dark), inset -1px -1px 3px var(--neu-shadow-light);
-  --material-shadow-inset:
+  --relief-shadow-inset:
     inset 2px 2px 5px var(--neu-shadow-dark), inset -2px -2px 5px var(--neu-shadow-light);
-  --material-shadow-inset-lg:
+  --relief-shadow-inset-lg:
     inset 4px 4px 10px var(--neu-shadow-dark), inset -4px -4px 10px var(--neu-shadow-light);
-  --material-border: var(--border-default);
+  --relief-border: var(--border-default);
 
-  // Surface defaults (polished baseline)
-  --surface-blur: 0px;
-  --surface-saturation: 100%;
-  --surface-opacity: 1;
-  --surface-texture-opacity: 0;
-  --surface-overlay: none;
-  --surface-sheen: none;
+  // Finish defaults (polished baseline)
+  --finish-blur: 0px;
+  --finish-saturation: 100%;
+  --finish-opacity: 1;
+  --finish-texture-opacity: 0;
+  --finish-overlay: none;
+  --finish-sheen: none;
 }
 
 // ============================================================================
-// MATERIAL SELECTORS
+// RELIEF SELECTORS
 // ============================================================================
 // Data-attribute selectors activated by initSoltana().
 // Class selectors available for per-element overrides.
 
-[data-material='neu'],
-.material-neu {
-  --material-bg: var(--neu-bg);
-  --material-shadow-sm: 2px 2px 5px var(--neu-shadow-dark), -2px -2px 5px var(--neu-shadow-light);
-  --material-shadow: 3px 3px 8px var(--neu-shadow-dark), -3px -3px 8px var(--neu-shadow-light);
-  --material-shadow-lg: 6px 6px 16px var(--neu-shadow-dark), -5px -5px 14px var(--neu-shadow-light);
-  --material-shadow-inset-sm:
+[data-relief='neu'],
+.relief-neu {
+  --relief-bg: var(--neu-bg);
+  --relief-shadow-sm: 2px 2px 5px var(--neu-shadow-dark), -2px -2px 5px var(--neu-shadow-light);
+  --relief-shadow: 3px 3px 8px var(--neu-shadow-dark), -3px -3px 8px var(--neu-shadow-light);
+  --relief-shadow-lg: 6px 6px 16px var(--neu-shadow-dark), -5px -5px 14px var(--neu-shadow-light);
+  --relief-shadow-inset-sm:
     inset 1px 1px 3px var(--neu-shadow-dark), inset -1px -1px 3px var(--neu-shadow-light);
-  --material-shadow-inset:
+  --relief-shadow-inset:
     inset 2px 2px 5px var(--neu-shadow-dark), inset -2px -2px 5px var(--neu-shadow-light);
-  --material-shadow-inset-lg:
+  --relief-shadow-inset-lg:
     inset 4px 4px 10px var(--neu-shadow-dark), inset -4px -4px 10px var(--neu-shadow-light);
-  --material-border: var(--border-default);
+  --relief-border: var(--border-default);
 }
 
-[data-material='glass'],
-.material-glass {
-  --material-bg: var(--glass-bg);
-  --material-shadow-sm: 0 4px 16px var(--glass-shadow);
-  --material-shadow: 0 8px 32px var(--glass-shadow);
-  --material-shadow-lg: 0 16px 48px var(--glass-shadow);
-  --material-shadow-inset-sm: inset 0 1px 0 var(--glass-inner-glow);
-  --material-shadow-inset: inset 0 1px 0 var(--glass-inner-glow);
-  --material-shadow-inset-lg:
+[data-relief='glass'],
+.relief-glass {
+  --relief-bg: var(--glass-bg);
+  --relief-shadow-sm: 0 4px 16px var(--glass-shadow);
+  --relief-shadow: 0 8px 32px var(--glass-shadow);
+  --relief-shadow-lg: 0 16px 48px var(--glass-shadow);
+  --relief-shadow-inset-sm: inset 0 1px 0 var(--glass-inner-glow);
+  --relief-shadow-inset: inset 0 1px 0 var(--glass-inner-glow);
+  --relief-shadow-inset-lg:
     inset 0 2px 0 var(--glass-inner-glow), inset 0 0 12px var(--glass-shadow);
-  --material-border: var(--glass-border);
+  --relief-border: var(--glass-border);
 }
 
-[data-material='flat'],
-.material-flat {
-  --material-bg: var(--surface-1);
-  --material-shadow-sm: none;
-  --material-shadow: none;
-  --material-shadow-lg: none;
-  --material-shadow-inset-sm: none;
-  --material-shadow-inset: none;
-  --material-shadow-inset-lg: none;
-  --material-border: 1px solid var(--border-default);
+[data-relief='flat'],
+.relief-flat {
+  --relief-bg: var(--surface-1);
+  --relief-shadow-sm: none;
+  --relief-shadow: none;
+  --relief-shadow-lg: none;
+  --relief-shadow-inset-sm: none;
+  --relief-shadow-inset: none;
+  --relief-shadow-inset-lg: none;
+  --relief-border: 1px solid var(--border-default);
 }
 
-[data-material='soft'],
-.material-soft {
-  --material-bg: var(--surface-1);
-  --material-shadow-sm: 0 1px 2px rgb(0 0 0 / 5%);
-  --material-shadow: 0 1px 3px rgb(0 0 0 / 8%), 0 1px 2px rgb(0 0 0 / 6%);
-  --material-shadow-lg: 0 4px 8px rgb(0 0 0 / 10%), 0 2px 4px rgb(0 0 0 / 6%);
-  --material-shadow-inset-sm: inset 0 1px 0 rgb(255 255 255 / 3%);
-  --material-shadow-inset: inset 0 1px 0 rgb(255 255 255 / 4%);
-  --material-shadow-inset-lg: inset 0 2px 0 rgb(255 255 255 / 5%), inset 0 -1px 0 rgb(0 0 0 / 5%);
-  --material-border: 1px solid var(--border-subtle);
+[data-relief='soft'],
+.relief-soft {
+  --relief-bg: var(--surface-1);
+  --relief-shadow-sm: 0 1px 2px rgb(0 0 0 / 5%);
+  --relief-shadow: 0 1px 3px rgb(0 0 0 / 8%), 0 1px 2px rgb(0 0 0 / 6%);
+  --relief-shadow-lg: 0 4px 8px rgb(0 0 0 / 10%), 0 2px 4px rgb(0 0 0 / 6%);
+  --relief-shadow-inset-sm: inset 0 1px 0 rgb(255 255 255 / 3%);
+  --relief-shadow-inset: inset 0 1px 0 rgb(255 255 255 / 4%);
+  --relief-shadow-inset-lg: inset 0 2px 0 rgb(255 255 255 / 5%), inset 0 -1px 0 rgb(0 0 0 / 5%);
+  --relief-border: 1px solid var(--border-subtle);
 }
 
-[data-material='metallic'],
-.material-metallic {
-  --material-bg: var(--surface-1);
-  --material-shadow-sm: 0 1px 4px var(--metallic-shadow);
-  --material-shadow: 0 2px 8px var(--metallic-shadow), 0 0 1px var(--metallic-shadow);
-  --material-shadow-lg: 0 4px 16px var(--metallic-shadow), 0 0 2px var(--metallic-shadow);
-  --material-shadow-inset-sm: inset 0 1px 0 var(--metallic-highlight);
-  --material-shadow-inset: inset 0 1px 0 var(--metallic-highlight), inset 0 -1px 0 rgb(0 0 0 / 10%);
-  --material-shadow-inset-lg:
+[data-relief='metallic'],
+.relief-metallic {
+  --relief-bg: var(--surface-1);
+  --relief-shadow-sm: 0 1px 4px var(--metallic-shadow);
+  --relief-shadow: 0 2px 8px var(--metallic-shadow), 0 0 1px var(--metallic-shadow);
+  --relief-shadow-lg: 0 4px 16px var(--metallic-shadow), 0 0 2px var(--metallic-shadow);
+  --relief-shadow-inset-sm: inset 0 1px 0 var(--metallic-highlight);
+  --relief-shadow-inset: inset 0 1px 0 var(--metallic-highlight), inset 0 -1px 0 rgb(0 0 0 / 10%);
+  --relief-shadow-inset-lg:
     inset 0 2px 0 var(--metallic-highlight), inset 0 -2px 0 rgb(0 0 0 / 12%);
-  --material-border: 1px solid var(--metallic-border);
+  --relief-border: 1px solid var(--metallic-border);
 }
 
-[data-material='stone'],
-.material-stone {
-  --material-bg: var(--surface-2);
-  --material-shadow-sm: 0 1px 3px var(--stone-shadow);
-  --material-shadow: 0 2px 6px var(--stone-shadow);
-  --material-shadow-lg: 0 4px 12px var(--stone-shadow);
-  --material-shadow-inset-sm:
+[data-relief='stone'],
+.relief-stone {
+  --relief-bg: var(--surface-2);
+  --relief-shadow-sm: 0 1px 3px var(--stone-shadow);
+  --relief-shadow: 0 2px 6px var(--stone-shadow);
+  --relief-shadow-lg: 0 4px 12px var(--stone-shadow);
+  --relief-shadow-inset-sm:
     inset 1px 1px 1px var(--stone-highlight), inset -1px -1px 1px var(--stone-shadow);
-  --material-shadow-inset:
+  --relief-shadow-inset:
     inset 1px 1px 2px var(--stone-highlight), inset -1px -1px 2px var(--stone-shadow);
-  --material-shadow-inset-lg:
+  --relief-shadow-inset-lg:
     inset 2px 2px 4px var(--stone-highlight), inset -2px -2px 4px var(--stone-shadow);
-  --material-border: 1px solid var(--stone-border);
+  --relief-border: 1px solid var(--stone-border);
 }
 
 // ============================================================================
-// SURFACE SELECTORS
+// FINISH SELECTORS
 // ============================================================================
 
-[data-surface='polished'],
-.surface-polished {
-  --surface-blur: 0px;
-  --surface-saturation: 100%;
-  --surface-opacity: 1;
-  --surface-texture-opacity: 0;
-  --surface-overlay: none;
-  --surface-sheen: none;
+[data-finish='polished'],
+.finish-polished {
+  --finish-blur: 0px;
+  --finish-saturation: 100%;
+  --finish-opacity: 1;
+  --finish-texture-opacity: 0;
+  --finish-overlay: none;
+  --finish-sheen: none;
 }
 
-[data-surface='frosted'],
-.surface-frosted {
-  --surface-blur: 24px;
-  --surface-saturation: 80%;
-  --surface-opacity: 0.7;
-  --surface-texture-opacity: 0.06;
+[data-finish='frosted'],
+.finish-frosted {
+  --finish-blur: 24px;
+  --finish-saturation: 80%;
+  --finish-opacity: 0.7;
+  --finish-texture-opacity: 0.06;
 }
 
-[data-surface='stained'],
-.surface-stained {
-  --surface-blur: 28px;
-  --surface-saturation: 100%;
-  --surface-opacity: 1;
-  --material-bg: linear-gradient(
+[data-finish='stained'],
+.finish-stained {
+  --finish-blur: 28px;
+  --finish-saturation: 100%;
+  --finish-opacity: 1;
+  --relief-bg: linear-gradient(
     135deg,
     var(--stained-primary),
     var(--stained-secondary),
     var(--stained-accent)
   );
-  --material-border: 2px solid rgb(40 35 30 / 40%);
-  --surface-overlay: linear-gradient(
+  --relief-border: 2px solid rgb(40 35 30 / 40%);
+  --finish-overlay: linear-gradient(
     135deg,
     rgb(212 168 67 / 6%),
     rgb(168 85 247 / 5%),
@@ -262,19 +262,19 @@
   );
 }
 
-[data-surface='metallic'],
-.surface-metallic {
-  --surface-blur: 0px;
-  --surface-saturation: 100%;
-  --surface-opacity: 1;
-  --material-bg: linear-gradient(
+[data-finish='metallic'],
+.finish-metallic {
+  --finish-blur: 0px;
+  --finish-saturation: 100%;
+  --finish-opacity: 1;
+  --relief-bg: linear-gradient(
     145deg,
     rgb(255 255 255 / 15%) 0%,
     transparent 40%,
     transparent 60%,
     rgb(0 0 0 / 10%) 100%
   );
-  --surface-sheen: linear-gradient(
+  --finish-sheen: linear-gradient(
     145deg,
     rgb(255 255 255 / 12%) 0%,
     transparent 35%,
@@ -290,35 +290,35 @@
 // Config-default: .ornament reads the active ornament from [data-ornament].
 // Explicit override: .ornament-baroque forces baroque regardless of config.
 // All implementations use box-shadow — no ::before/::after conflicts.
-// Each includes var(--material-shadow) so material depth is preserved.
+// Each includes var(--relief-shadow) so relief depth is preserved.
 // ============================================================================
 
 // ---- Config-default (reads from [data-ornament] on <html>) ----
 
 [data-ornament='baroque'] .ornament {
   box-shadow:
-    var(--material-shadow),
+    var(--relief-shadow),
     inset 0 0 0 3px var(--border-accent-gold, rgb(212 168 67 / 25%)),
     0 0 8px var(--accent-glow, rgb(212 168 67 / 15%));
 }
 
 [data-ornament='carved'] .ornament {
   box-shadow:
-    var(--material-shadow),
+    var(--relief-shadow),
     inset 1px 1px 0 rgb(var(--highlight-color) / 12%),
     inset -1px -1px 0 rgb(var(--shadow-color) / 10%);
 }
 
 [data-ornament='faceted'] .ornament {
   box-shadow:
-    var(--material-shadow),
+    var(--relief-shadow),
     inset 3px 3px 6px rgb(var(--highlight-color) / 8%),
     inset -2px -2px 4px rgb(var(--shadow-color) / 5%);
 }
 
 [data-ornament='gilt'] .ornament {
   box-shadow:
-    var(--material-shadow),
+    var(--relief-shadow),
     inset 0 0 0 2px var(--border-accent-gold, rgb(212 168 67 / 20%)),
     0 0 0 1px var(--accent-gold, #d4a843),
     0 0 12px var(--accent-glow, rgb(212 168 67 / 15%));
@@ -330,7 +330,7 @@
 .ornament-baroque,
 .ornament.ornament-baroque {
   box-shadow:
-    var(--material-shadow),
+    var(--relief-shadow),
     inset 0 0 0 3px var(--border-accent-gold, rgb(212 168 67 / 25%)),
     0 0 8px var(--accent-glow, rgb(212 168 67 / 15%));
 }
@@ -338,7 +338,7 @@
 .ornament-carved,
 .ornament.ornament-carved {
   box-shadow:
-    var(--material-shadow),
+    var(--relief-shadow),
     inset 1px 1px 0 rgb(var(--highlight-color) / 12%),
     inset -1px -1px 0 rgb(var(--shadow-color) / 10%);
 }
@@ -346,7 +346,7 @@
 .ornament-faceted,
 .ornament.ornament-faceted {
   box-shadow:
-    var(--material-shadow),
+    var(--relief-shadow),
     inset 3px 3px 6px rgb(var(--highlight-color) / 8%),
     inset -2px -2px 4px rgb(var(--shadow-color) / 5%);
 }
@@ -354,7 +354,7 @@
 .ornament-gilt,
 .ornament.ornament-gilt {
   box-shadow:
-    var(--material-shadow),
+    var(--relief-shadow),
     inset 0 0 0 2px var(--border-accent-gold, rgb(212 168 67 / 20%)),
     0 0 0 1px var(--accent-gold, #d4a843),
     0 0 12px var(--accent-glow, rgb(212 168 67 / 15%));
