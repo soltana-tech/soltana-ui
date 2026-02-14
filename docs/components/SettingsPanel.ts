@@ -6,7 +6,13 @@ import type {
   Ornament,
   RecipeName,
 } from '../../src/config';
-import { RECIPES } from '../../src/config';
+import {
+  RECIPES,
+  VALID_THEMES,
+  VALID_RELIEFS,
+  VALID_FINISHES,
+  VALID_ORNAMENTS,
+} from '../../src/config';
 
 interface OptionConfig {
   value: string;
@@ -14,48 +20,40 @@ interface OptionConfig {
   icon?: string;
 }
 
-const THEME_OPTIONS: OptionConfig[] = [
-  {
-    value: 'light',
-    label: 'Light',
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><line x1="8" y1="1" x2="8" y2="3"/><line x1="8" y1="13" x2="8" y2="15"/><line x1="1" y1="8" x2="3" y2="8"/><line x1="13" y1="8" x2="15" y2="8"/><line x1="3.05" y1="3.05" x2="4.46" y2="4.46"/><line x1="11.54" y1="11.54" x2="12.95" y2="12.95"/><line x1="3.05" y1="12.95" x2="4.46" y2="11.54"/><line x1="11.54" y1="4.46" x2="12.95" y2="3.05"/></svg>',
-  },
-  {
-    value: 'dark',
-    label: 'Dark',
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M14 9.5A6.5 6.5 0 0 1 6.5 2 6.5 6.5 0 1 0 14 9.5z"/></svg>',
-  },
-  {
-    value: 'sepia',
-    label: 'Sepia',
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/><line x1="6" y1="4" x2="10" y2="4"/><line x1="6" y1="7" x2="10" y2="7"/><line x1="6" y1="10" x2="8" y2="10"/></svg>',
-  },
-];
+const THEME_ICONS = new Map<string, string>([
+  [
+    'light',
+    '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><line x1="8" y1="1" x2="8" y2="3"/><line x1="8" y1="13" x2="8" y2="15"/><line x1="1" y1="8" x2="3" y2="8"/><line x1="13" y1="8" x2="15" y2="8"/><line x1="3.05" y1="3.05" x2="4.46" y2="4.46"/><line x1="11.54" y1="11.54" x2="12.95" y2="12.95"/><line x1="3.05" y1="12.95" x2="4.46" y2="11.54"/><line x1="11.54" y1="4.46" x2="12.95" y2="3.05"/></svg>',
+  ],
+  [
+    'dark',
+    '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M14 9.5A6.5 6.5 0 0 1 6.5 2 6.5 6.5 0 1 0 14 9.5z"/></svg>',
+  ],
+  [
+    'sepia',
+    '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/><line x1="6" y1="4" x2="10" y2="4"/><line x1="6" y1="7" x2="10" y2="7"/><line x1="6" y1="10" x2="8" y2="10"/></svg>',
+  ],
+  [
+    'auto',
+    '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="5"/><path d="M8 3v10"/><path d="M8 3a5 5 0 0 1 0 10"/></svg>',
+  ],
+]);
 
-const RELIEF_OPTIONS: OptionConfig[] = [
-  { value: 'flat', label: 'Flat' },
-  { value: 'soft', label: 'Soft' },
-  { value: 'lifted', label: 'Lifted' },
-  { value: 'neu', label: 'Neumorphic' },
-  { value: 'sharp', label: 'Sharp' },
-  { value: 'hewn', label: 'Hewn' },
-];
+/** Custom display labels for tier values that differ from simple capitalization. */
+const LABEL_OVERRIDES = new Map<string, string>([['neu', 'Neumorphic']]);
 
-const FINISH_OPTIONS: OptionConfig[] = [
-  { value: 'matte', label: 'Matte' },
-  { value: 'translucent', label: 'Translucent' },
-  { value: 'frosted', label: 'Frosted' },
-  { value: 'tinted', label: 'Tinted' },
-  { value: 'glossy', label: 'Glossy' },
-];
+function toOptions(values: readonly string[], icons?: Map<string, string>): OptionConfig[] {
+  return values.map((v) => ({
+    value: v,
+    label: LABEL_OVERRIDES.get(v) ?? v.charAt(0).toUpperCase() + v.slice(1),
+    ...(icons?.get(v) ? { icon: icons.get(v) } : {}),
+  }));
+}
 
-const ORNAMENT_OPTIONS: OptionConfig[] = [
-  { value: 'none', label: 'None' },
-  { value: 'gilt', label: 'Gilt' },
-  { value: 'baroque', label: 'Baroque' },
-  { value: 'beveled', label: 'Beveled' },
-  { value: 'faceted', label: 'Faceted' },
-];
+const THEME_OPTIONS: OptionConfig[] = toOptions(VALID_THEMES, THEME_ICONS);
+const RELIEF_OPTIONS: OptionConfig[] = toOptions(VALID_RELIEFS);
+const FINISH_OPTIONS: OptionConfig[] = toOptions(VALID_FINISHES);
+const ORNAMENT_OPTIONS: OptionConfig[] = toOptions(VALID_ORNAMENTS);
 
 const RECIPE_OPTIONS: OptionConfig[] = Object.entries(RECIPES).map(([key, recipe]) => ({
   value: key,

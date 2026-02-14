@@ -235,3 +235,4 @@ export type {
   Recipe,
 } from './types';
 export { RECIPES, VALID_RECIPE_NAMES } from './recipes';
+export { VALID_THEMES, VALID_RELIEFS, VALID_FINISHES, VALID_ORNAMENTS };

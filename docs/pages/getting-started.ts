@@ -30,6 +30,7 @@ export function renderGettingStarted(): string {
         <span class="tag tag-gold">dark</span>
         <span class="tag">light</span>
         <span class="tag">sepia</span>
+        <span class="tag">auto</span>
       </div>
       ${codeExample("soltana.setTheme('dark')", 'javascript')}
     </div>
@@ -112,7 +113,7 @@ export function renderGettingStarted(): string {
   ${specimenBlock(
     'Basic HTML Template',
     `
-    ${codeExample('<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <title>My Soltana App</title>\n  <link rel="stylesheet" href="https://unpkg.com/soltana-ui/dist/soltana-ui.css">\n</head>\n<body>\n  <div class="container mx-auto p-8">\n    <h1 class="text-4xl font-serif mb-4">Welcome</h1>\n    <p class="text-secondary mb-6">Your elegant application starts here.</p>\n    <div class="flex gap-3">\n      <button class="btn btn-primary">Get Started</button>\n      <button class="btn btn-secondary">Learn More</button>\n    </div>\n  </div>\n\n  <script type="module">\n    import { initSoltana } from "https://unpkg.com/soltana-ui";\n    const soltana = initSoltana({\n      theme: "dark",\n      relief: "neu",\n      finish: "polished",\n      ornament: "none",\n    });\n  </script>\n</body>\n</html>', 'html')}
+    ${codeExample('<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <title>My Soltana App</title>\n  <link rel="stylesheet" href="https://unpkg.com/soltana-ui/dist/soltana-ui.css">\n</head>\n<body>\n  <div class="container mx-auto p-8">\n    <h1 class="text-4xl font-serif mb-4">Welcome</h1>\n    <p class="text-secondary mb-6">Your elegant application starts here.</p>\n    <div class="flex gap-3">\n      <button class="btn btn-primary">Get Started</button>\n      <button class="btn btn-secondary">Learn More</button>\n    </div>\n  </div>\n\n  <script type="module">\n    import { initSoltana } from "https://unpkg.com/soltana-ui";\n    const soltana = initSoltana({\n      theme: "dark",\n      relief: "neu",\n      finish: "matte",\n      ornament: "none",\n    });\n  </script>\n</body>\n</html>', 'html')}
   `
   )}
 
@@ -124,7 +125,7 @@ export function renderGettingStarted(): string {
     'soltana.config.js',
     `
     <p class="text-sm text-secondary mb-4">Create a configuration file in your project:</p>
-    ${codeExample("// soltana.config.js\nexport default {\n  // Base presets (required)\n  theme: 'dark',        // 'light' | 'dark' | 'sepia'\n  relief: 'neu',   // 'flat' | 'soft' | 'lifted' | 'neu' | 'sharp' | 'hewn'\n  finish: 'matte',  // 'matte' | 'translucent' | 'frosted' | 'tinted' | 'glossy'\n  ornament: 'none',     // 'none' | 'gilt' | 'baroque' | 'beveled' | 'faceted'\n  fonts: true,          // opt-in: injects Google Fonts <link> into <head>\n  \n  // Variable overrides (optional)\n  overrides: {\n    '--accent-primary': '#ff6b6b',\n    '--gold-400': '#e8c547',\n    '--surface-bg': '#0a0a12',\n  },\n};", 'javascript')}
+    ${codeExample("// soltana.config.js\nexport default {\n  // Base presets (required)\n  theme: 'dark',        // 'light' | 'dark' | 'sepia' | 'auto'\n  relief: 'neu',   // 'flat' | 'soft' | 'lifted' | 'neu' | 'sharp' | 'hewn'\n  finish: 'matte',  // 'matte' | 'translucent' | 'frosted' | 'tinted' | 'glossy'\n  ornament: 'none',     // 'none' | 'gilt' | 'baroque' | 'beveled' | 'faceted'\n  fonts: true,          // opt-in: injects Google Fonts <link> into <head>\n  \n  // Variable overrides (optional)\n  overrides: {\n    '--accent-primary': '#ff6b6b',\n    '--gold-400': '#e8c547',\n    '--surface-bg': '#0a0a12',\n  },\n};", 'javascript')}
     <p class="text-sm text-secondary mt-4">Then initialize with your config:</p>
     ${codeExample("import config from './soltana.config.js';\nimport { initSoltana } from 'soltana-ui';\n\nconst soltana = initSoltana(config);", 'javascript')}
   `
@@ -134,7 +135,7 @@ export function renderGettingStarted(): string {
     'Runtime API',
     `
     <p class="text-sm text-secondary mb-4">Change tiers at runtime for user preferences or dynamic theming:</p>
-    ${codeExample("// Get current state\nconsole.log(soltana.getState());\n// { theme: 'dark', relief: 'neu', finish: 'polished', ornament: 'none' }\n\n// Change individual tiers\nsoltana.setTheme('light');\nsoltana.setRelief('lifted');\nsoltana.setFinish('frosted');\nsoltana.setOrnament('baroque');\n\n// Apply custom variable overrides\nsoltana.setOverrides({\n  '--accent-primary': '#your-brand-color',\n});\n\n// Reset to defaults\nsoltana.reset();", 'javascript')}
+    ${codeExample("// Get current state\nconsole.log(soltana.getState());\n// { theme: 'dark', relief: 'neu', finish: 'matte', ornament: 'none' }\n\n// Change individual tiers\nsoltana.setTheme('light');\nsoltana.setRelief('lifted');\nsoltana.setFinish('frosted');\nsoltana.setOrnament('baroque');\n\n// Apply custom variable overrides\nsoltana.setOverrides({\n  '--accent-primary': '#your-brand-color',\n});\n\n// Reset to defaults\nsoltana.reset();", 'javascript')}
   `
   )}
 
