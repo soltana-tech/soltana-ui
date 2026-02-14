@@ -15,10 +15,14 @@ A CSS-first design system built around a 4-tier configuration model:
 
 | Tier | Options | Mechanism |
 |------|---------|-----------|
-| Theme | dark, light, sepia, auto | `[data-theme]` on `<html>` |
-| Material | flat, soft, neu, glass, metallic, stone | `[data-material]` on `<html>` |
-| Surface | polished, frosted, stained, metallic | `[data-surface]` on `<html>` |
-| Ornament | none, baroque, carved, faceted, gilt | `[data-ornament]` on `<html>` |
+| Theme | dark, light, sepia, auto* | `[data-theme]` on `<html>` |
+| Relief | flat, soft, lifted, neu, sharp, hewn | `[data-relief]` on `<html>` |
+| Finish | matte, translucent, frosted, tinted, glossy | `[data-finish]` on `<html>` |
+| Ornament | none, gilt, baroque, beveled, faceted | `[data-ornament]` on `<html>` |
+
+\* `auto` resolves to dark or light via `prefers-color-scheme`. It is a runtime resolver, not a static token set — there is no `.theme-auto` utility class.
+
+> **Note:** The codebase currently uses `material`/`surface` naming and different option sets. DX-2a–d track the rename and restructuring.
 
 Classical "estate" aesthetic with gold accents, jewel tones, serif typography (Cinzel + Raleway). Ships ~139KB CSS + ~10KB JS with TypeScript enhancers for modals, tabs, and tooltips.
 
@@ -171,11 +175,13 @@ Duration tokens were defined but unused. Components hardcoded durations and used
 
 ### SCSS-8: Naming convention inconsistent
 
-`TODO` · Size: **M**
+`DONE` · Size: **M**
 
 Single-dash everywhere (`.btn-gold`, `.card-baroque`) except card material variants use BEM double-dash (`.card--neu`, `.card--glass`). Only BEM-style classes in the codebase.
 
 **Proposed fix:** Standardize on one convention everywhere.
+
+- Progress: The BEM double-dash classes (`.card--neu`, `.card--glass`) were removed during SCSS-1 (material system consolidation). Full audit of all SCSS files confirms zero BEM double-dash selectors remain. Single-dash kebab-case is used consistently throughout.
 
 ### SCSS-9: Theme variable gaps
 
@@ -229,47 +235,23 @@ The tier combination count is linear (t + m + s + o rulesets), not multiplicativ
 
 ### SCSS-15: Extensibility architecture
 
-`TODO` · Size: **L** · Depends on: SCSS-4, SCSS-14
+`TODO` · Size: **L** · Depends on: SCSS-4, SCSS-14, DX-2a
 
-No mechanism for users to add their own theme, material, surface, or ornament without modifying core files. The system should define a clear contract for each tier (which CSS custom properties a custom material must set, etc.) and the TypeScript layer should accept user-defined tier values.
+No mechanism for users to add their own theme, relief, finish, or ornament without modifying core files. The system should define a clear contract for each tier (which CSS custom properties a custom relief must set, etc.) and the TypeScript layer should accept user-defined tier values.
 
 **Proposed fix:**
 
 1. Document the CSS contract per tier:
    - Custom theme: must define `--surface-*`, `--text-*`, `--border-*`, `--accent-*`, `--shadow-*`, `--highlight-*` tokens.
-   - Custom material: must define `--material-bg`, `--material-shadow-*`, `--material-border`.
-   - Custom surface: must define `--surface-blur`, `--surface-saturation`, `--surface-opacity`, etc.
+   - Custom relief: must define `--relief-bg`, `--relief-shadow-*`, `--relief-border`.
+   - Custom finish: must define `--finish-blur`, `--finish-saturation`, `--finish-opacity`, etc.
    - Custom ornament: must define decoration via `box-shadow`/`outline`/`border-image` (no `::before`/`::after` to avoid conflicts per ORN-1).
-2. TypeScript types accept user-defined values. Replace strict string literal unions with extensible types (e.g., `BuiltinMaterial | (string & {})`) or a registration API.
-3. `warnInvalid()` becomes a registry check rather than a hardcoded array — builtins are pre-registered, user values are registered via config or `registerMaterial()` / `registerTheme()` etc.
+2. TypeScript types accept user-defined values. Replace strict string literal unions with extensible types (e.g., `BuiltinRelief | (string & {})`) or a registration API.
+3. `warnInvalid()` becomes a registry check rather than a hardcoded array — builtins are pre-registered, user values are registered via config or `registerRelief()` / `registerTheme()` etc.
 
 ---
 
 ## Aesthetic Range
-
-### AES-1: Expand material options
-
-`TODO` · Size: **XL** · Depends on: SCSS-4
-
-`flat` and `soft` materials already exist (added in SCSS-1). Metallic and stone are wired into config. The remaining gap is that adding *new* materials still requires editing every theme file to define material-specific shadow/highlight variables. After SCSS-4 decouples themes from materials, new materials can be added by defining a single `[data-material]` / `.material-*` ruleset that derives from generic tokens.
-
-**Proposed fix:** After SCSS-4, validate that the generic token contract is sufficient for new materials. Add any additional materials identified in user research. Ensure new materials work across all themes without theme-specific variable definitions.
-
-### AES-2: Expand surface options
-
-`TODO` · Size: **L** · Depends on: SCSS-4
-
-Polished is closest to neutral but the rest are all strong treatments. No calm option.
-
-**Proposed fix:** Add `matte` (zero sheen, solid color) and `paper`/`linen` (subtle texture at low opacity). After SCSS-4, new surfaces define `--surface-*` tokens only — no theme knowledge needed.
-
-### AES-3: Expand ornament options
-
-`TODO` · Size: **M** · Depends on: ORN-1
-
-All ornaments are decorative. No middle ground between "none" and "gold filigree."
-
-**Proposed fix:** Add `subtle` (thin accent line or gentle shadow) and `minimal` (barely-there border treatment).
 
 ### AES-4: Neutral palette option
 
@@ -313,14 +295,14 @@ Baroque defined in 3 places (`_material-system.scss`, `_buttons.scss`, `_ornamen
 
 ### COMB-1: Recipe book
 
-`TODO` · Size: **M** · Depends on: AES-1, SCSS-14
+`TODO` · Size: **M** · Depends on: DX-2b, DX-2c, DX-2d, SCSS-14
 
 Named presets of proven tier combinations as starting points:
 
 - "Corporate Clean" — light, flat, matte, none
-- "Luxury Dark" — dark, neu, polished, gilt
-- "Frosted Modern" — dark, glass, frosted, subtle
-- "Classic Warm" — sepia, soft, paper, carved
+- "Luxury Dark" — dark, neu, glossy, gilt
+- "Frosted Modern" — dark, lifted, frosted, none
+- "Classic Warm" — sepia, soft, matte, beveled
 
 Recipes don't replace config — they're starting points. Docs should showcase each with screenshots.
 
@@ -328,13 +310,13 @@ Recipes don't replace config — they're starting points. Docs should showcase e
 
 `TODO` · Size: **L**
 
-Render every component in every theme x material x surface combination. Capture screenshots. Compare against baselines. Tools: Playwright + Percy/Chromatic/BackstopJS.
+Render every component in every theme x relief x finish combination. Capture screenshots. Compare against baselines. Tools: Playwright + Percy/Chromatic/BackstopJS.
 
 ### COMB-3: Accessibility scoring per combination
 
 `TODO` · Size: **L** · Depends on: COMB-2
 
-Run axe-core against each theme x material combination automatically. Flag contrast failures, missing focus indicators. Every combination should meet WCAG AA.
+Run axe-core against each theme x relief combination automatically. Flag contrast failures, missing focus indicators. Every combination should meet WCAG AA.
 
 ### COMB-4: Cross-browser visual testing
 
@@ -370,17 +352,106 @@ CSS import separate from JS with no guidance. Silent failure — components rend
 
 - Progress: Removed redundant `./enhancers` and `./config` subpath exports from `package.json`. `initSoltana()` is now the single entry point — it handles both config and enhancer initialization. Remaining documentation gaps (onboarding guide, import examples) tracked by DOC-9/DOC-10.
 
-### DX-2: Material vs surface confusing
+### DX-2a: Rename material → relief, surface → finish
 
-`TODO` · Size: **M** · Depends on: SCSS-2
+`TODO` · Size: **XL** · Depends on: SCSS-2
 
-Both control visual appearance. Both modify blur and opacity. Contradictory configs silently allowed. Mental model needs clarification.
+"Material" and "surface" are near-synonymous in everyday English. The distinction — shadow/depth model vs. finish/treatment — requires reading the SCSS to understand.
+
+**Decision:** Rename the tiers to **relief** (shadow/elevation model) and **finish** (texture/post-processing treatment).
+
+**CSS variable renames:**
+
+- `--material-bg` → `--relief-bg`
+- `--material-shadow-sm` / `-md` / `-lg` → `--relief-shadow-sm` / `-md` / `-lg`
+- `--material-shadow-inset-sm` / `-md` / `-lg` → `--relief-shadow-inset-sm` / `-md` / `-lg`
+- `--material-border` → `--relief-border`
+- `--surface-blur` → `--finish-blur`
+- `--surface-saturation` → `--finish-saturation`
+- `--surface-opacity` → `--finish-opacity`
+- `--surface-texture-opacity` → `--finish-texture-opacity`
+- `--surface-overlay` → `--finish-overlay`
+- `--surface-sheen` → `--finish-sheen`
+
+**Scope — complete overhaul, no deprecation layer:**
+
+This is pre-release. Zero references to the old names must remain anywhere in the codebase after completion. No aliases, no backward-compatibility shims, no `// formerly material` comments, no deprecated TypeScript types. Every occurrence of `material` (as a tier name) and `surface` (as a tier name) must be replaced with `relief` and `finish` respectively across:
+
+1. **SCSS** — `_material-system.scss` (rename file to `_relief-system.scss`), all `--material-*` / `--surface-*` variables, all `[data-material]` / `[data-surface]` selectors, all `.material-*` / `.surface-*` utility classes, all component files consuming these tokens.
+2. **TypeScript** — config types, `initSoltana()` options, setter methods (`setMaterial()` → `setRelief()`, `setSurface()` → `setFinish()`), validation arrays, data attribute application in DOM.
+3. **Tests** — all test files referencing material/surface config, data attributes, or utility classes.
+4. **Documentation** — all doc pages, code examples, helper text, nav labels, section headings.
+5. **Roadmap** — context table at top, all item descriptions and progress notes referencing the old names.
+6. **Package exports** — any subpath or type export using the old names.
+
+### DX-2b: Restructure relief options
+
+`TODO` · Size: **XL** · Depends on: DX-2a
+
+Replace the current relief (formerly material) option set. Remove glass, metallic, and stone. Add lifted, sharp, and hewn.
+
+**Target relief options:**
+
+| Option | Description |
+|--------|-------------|
+| flat | No shadows, border-only elevation |
+| soft | Gentle diffuse drop shadows, single light source |
+| lifted | Layered ambient + key shadows, material-style elevation |
+| neu | Neumorphic dual-directional shadows, embedded appearance |
+| sharp | Hard-edged shadows with crisp inset highlights |
+| hewn | Chiseled asymmetric inset shadows, carved-from-surface appearance |
+
+**Removals:**
+
+- Delete `_glassmorphic.scss` and all glass-related SCSS (`.glass-*` classes, `[data-relief='glass']` selectors, `--glass-*` primitives)
+- Delete `_metallic.scss` and all metallic-relief-related SCSS
+- Delete `_stone.scss` and all stone-related SCSS
+- Remove from TypeScript types, validation arrays, documentation
+
+**Additions:**
+
+- Implement `lifted`, `sharp`, `hewn` as `[data-relief]` / `.relief-*` rulesets deriving from generic channel tokens
+- Each must define `--relief-bg`, `--relief-shadow-*`, `--relief-border`
+
+### DX-2c: Restructure finish options
+
+`TODO` · Size: **L** · Depends on: DX-2a
+
+Replace the current finish (formerly surface) option set. Rename polished → glossy, stained → tinted. Remove metallic finish. Add matte and translucent.
+
+**Target finish options:**
+
+| Option | Description |
+|--------|-------------|
+| matte | Opaque, no effects — the neutral baseline |
+| translucent | Semi-transparent background, no blur |
+| frosted | Backdrop blur with desaturation and optional grain |
+| tinted | Colored gradient overlay, stained-glass warmth |
+| glossy | Directional specular highlight, polished surface reflection |
+
+**Scope bleed (accepted):** `tinted` and `glossy` may override `--relief-bg`. Finishes may tint the background but do not define shadow direction or shape (relief's responsibility).
+
+### DX-2d: Restructure ornament options
+
+`TODO` · Size: **M** · Depends on: DX-2a
+
+Rename carved → beveled. Update descriptions for existing ornaments.
+
+**Target ornament options:**
+
+| Option | Description |
+|--------|-------------|
+| none | No decoration (default) |
+| gilt | Gold leaf border with outer ring and warm glow |
+| baroque | Rococo frame with inner gold border and filigree |
+| beveled | Light/dark edge highlights, subtle 3D frame |
+| faceted | Gem-cut edge highlights with prismatic inset glow |
 
 ### DX-3: No class discoverability
 
-`TODO` · Size: **M** · Depends on: SCSS-14, SCSS-15
+`TODO` · Size: **M** · Depends on: SCSS-14, SCSS-15, DX-2a
 
-Package exports TypeScript types for config but not for CSS classes. No way to discover `.card-baroque` without reading source. Becomes more critical with per-element composition (SCSS-14) and extensibility (SCSS-15) — developers need to know which `.material-*`, `.surface-*`, and `.ornamented-*` utility classes are available and what custom values have been registered.
+Package exports TypeScript types for config but not for CSS classes. No way to discover `.card-baroque` without reading source. Becomes more critical with per-element composition (SCSS-14) and extensibility (SCSS-15) — developers need to know which `.relief-*`, `.finish-*`, and `.ornament-*` utility classes are available and what custom values have been registered.
 
 **Proposed fix:** Export a class registry or TypeScript const map of available classes per tier and component. Include both builtin and user-registered values.
 
@@ -408,11 +479,11 @@ No README ships with package. Version mismatch. Export subpaths point to main bu
 
 ## Documentation & Playground
 
-### DOC-1: No material comparison view
+### DOC-1: No relief comparison view
 
 `TODO` · Size: **M**
 
-Can't see the same component in neu vs glass vs metallic side by side. Settings panel changes everything globally.
+Can't see the same component in different reliefs side by side. Settings panel changes everything globally.
 
 ### DOC-2: No live code editor
 
@@ -424,7 +495,7 @@ See rendered components but can't type HTML and see it styled. No CodePen-like s
 
 `TODO` · Size: **M**
 
-No view showing all permutations of a component (button in 6 variants x 5 sizes x all materials).
+No view showing all permutations of a component (button in 6 variants x 5 sizes x all reliefs).
 
 ### DOC-4: No configuration export
 
@@ -436,7 +507,7 @@ Changing settings doesn't update URL. Refreshing loses state. No way to share co
 
 `TODO` · Size: **M**
 
-No way to see which `--material-*`, `--surface-*`, `--accent-*` variables are active without DevTools.
+No way to see which `--relief-*`, `--finish-*`, `--accent-*` variables are active without DevTools.
 
 ### DOC-6: No accessibility playground
 
