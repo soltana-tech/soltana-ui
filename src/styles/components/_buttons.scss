@@ -137,7 +137,7 @@
 }
 
 // ============================================================================
-// JEWEL VARIANTS
+// SEMANTIC VARIANTS
 // ============================================================================
 
 @mixin btn-jewel($color, $color-deep, $glow-base, $glow-hover) {
@@ -172,6 +172,184 @@
     rgb(16 185 129 / 20%),
     rgb(16 185 129 / 30%)
   );
+}
+
+// ============================================================================
+// ORNAMENT VARIANT
+// ============================================================================
+
+@mixin btn-metallic($shine-color: rgb(255 255 255 / 25%)) {
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--ornament-color), white 30%),
+    var(--ornament-color),
+    color-mix(in srgb, var(--ornament-color), black 20%)
+  );
+  color: color-mix(in srgb, var(--ornament-color), black 70%);
+  border-color: transparent;
+  box-shadow:
+    var(--relief-shadow),
+    0 2px 12px color-mix(in srgb, var(--ornament-color), transparent 70%);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 40%,
+      $shine-color 45%,
+      color-mix(in srgb, $shine-color, transparent 50%) 50%,
+      $shine-color 55%,
+      transparent 60%
+    );
+    transform: translateX(-100%) skewX(-15deg);
+    pointer-events: none;
+  }
+
+  &:hover::after {
+    animation: ornament-shine-sweep 0.8s ease-in-out;
+  }
+
+  &:hover {
+    box-shadow:
+      var(--relief-shadow),
+      0 4px 20px color-mix(in srgb, var(--ornament-color), transparent 60%);
+  }
+}
+
+@keyframes ornament-shine-sweep {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+  }
+
+  100% {
+    transform: translateX(200%) skewX(-15deg);
+  }
+}
+
+// ---- Tier mixins ----
+
+@mixin btn-ornament-gilt {
+  @include btn-metallic;
+}
+
+@mixin btn-ornament-baroque {
+  @include btn-metallic($shine-color: rgb(255 255 255 / 20%));
+  border-radius: var(--radius-sm);
+  padding: 0.625rem 2rem;
+  overflow: visible;
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    top: -4px;
+    left: -4px;
+    border: 2px solid var(--ornament-color);
+    border-width: 2px 0 0 2px;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+}
+
+@mixin btn-ornament-beveled {
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--border-strong);
+  background: linear-gradient(175deg, var(--surface-2) 0%, var(--surface-3) 100%);
+  box-shadow: var(--relief-shadow-inset), var(--relief-shadow);
+  clip-path: polygon(
+    6px 0,
+    calc(100% - 6px) 0,
+    100% 6px,
+    100% calc(100% - 6px),
+    calc(100% - 6px) 100%,
+    6px 100%,
+    0 calc(100% - 6px),
+    0 6px
+  );
+  backdrop-filter: none;
+
+  &:active {
+    box-shadow: var(--relief-shadow-inset);
+  }
+}
+
+@mixin btn-ornament-faceted {
+  border-radius: 0;
+  border: 1px solid var(--ornament-color);
+  background: linear-gradient(
+    135deg,
+    var(--surface-1) 0%,
+    var(--surface-2) 25%,
+    var(--surface-3) 50%,
+    var(--surface-2) 75%,
+    var(--surface-1) 100%
+  );
+  clip-path: polygon(
+    12px 0,
+    calc(100% - 12px) 0,
+    100% 50%,
+    calc(100% - 12px) 100%,
+    12px 100%,
+    0 50%
+  );
+  padding: 0.5rem 2rem;
+  box-shadow: var(--relief-shadow);
+  backdrop-filter: none;
+
+  &:hover {
+    background: linear-gradient(
+      135deg,
+      var(--surface-2) 0%,
+      var(--surface-3) 25%,
+      var(--surface-1) 50%,
+      var(--surface-3) 75%,
+      var(--surface-2) 100%
+    );
+  }
+}
+
+// ---- Config-default (reads [data-ornament] from <html>) ----
+[data-ornament='gilt'] .btn-ornament {
+  @include btn-ornament-gilt;
+}
+
+[data-ornament='baroque'] .btn-ornament {
+  @include btn-ornament-baroque;
+}
+
+[data-ornament='beveled'] .btn-ornament {
+  @include btn-ornament-beveled;
+}
+
+[data-ornament='faceted'] .btn-ornament {
+  @include btn-ornament-faceted;
+}
+
+// ---- Per-element overrides ----
+.ornament-gilt .btn-ornament,
+.btn-ornament.ornament-gilt {
+  @include btn-ornament-gilt;
+}
+
+.ornament-baroque .btn-ornament,
+.btn-ornament.ornament-baroque {
+  @include btn-ornament-baroque;
+}
+
+.ornament-beveled .btn-ornament,
+.btn-ornament.ornament-beveled {
+  @include btn-ornament-beveled;
+}
+
+.ornament-faceted .btn-ornament,
+.btn-ornament.ornament-faceted {
+  @include btn-ornament-faceted;
 }
 
 // ============================================================================

@@ -5,13 +5,23 @@ import {
   dentil,
   medallion,
   cornerOrnament,
+  facetedDivider,
+  facetedCorner,
   patterns,
   toDataUri,
   toElement,
 } from './patterns';
 import type { PatternName } from './patterns';
 
-const PATTERN_FNS = { greekKey, scrollwork, dentil, medallion, cornerOrnament };
+const PATTERN_FNS = {
+  greekKey,
+  scrollwork,
+  dentil,
+  medallion,
+  cornerOrnament,
+  facetedDivider,
+  facetedCorner,
+};
 
 describe('ornament patterns', () => {
   it.each(Object.entries(PATTERN_FNS))(
@@ -30,7 +40,15 @@ describe('ornament patterns', () => {
   });
 
   it('patterns map contains all expected keys', () => {
-    const expected: PatternName[] = ['greek-key', 'scrollwork', 'dentil', 'medallion', 'corner'];
+    const expected: PatternName[] = [
+      'greek-key',
+      'scrollwork',
+      'dentil',
+      'medallion',
+      'corner',
+      'faceted-divider',
+      'faceted-corner',
+    ];
     expect(Object.keys(patterns).sort()).toEqual([...expected].sort());
   });
 

@@ -14,7 +14,10 @@
     "declaration-empty-line-before": null,
     "scss/dollar-variable-empty-line-before": null,
     "custom-property-empty-line-before": null,
-    "property-no-vendor-prefix": [true, { "ignoreProperties": ["backdrop-filter", "appearance"] }],
+    "property-no-vendor-prefix": [
+      true,
+      { "ignoreProperties": ["backdrop-filter", "appearance", "/mask-/"] }
+    ],
     "scss/at-extend-no-missing-placeholder": null,
     "declaration-block-no-duplicate-properties": [
       true,

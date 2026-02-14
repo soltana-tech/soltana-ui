@@ -37,7 +37,29 @@ export const cornerOrnament = (color = 'currentColor'): string => `
     d="M8 28V12a4 4 0 0 1 4-4h16"/>
 </svg>`;
 
-export type PatternName = 'greek-key' | 'scrollwork' | 'dentil' | 'medallion' | 'corner';
+export const facetedDivider = (color = 'currentColor'): string => `
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="20" viewBox="0 0 200 20">
+  <line x1="0" y1="10" x2="200" y2="10" stroke="${color}" stroke-width="1" opacity="0.4"/>
+  <polygon points="80,10 90,2 100,10 90,18" fill="none" stroke="${color}" stroke-width="1.5"/>
+  <polygon points="100,10 110,2 120,10 110,18" fill="none" stroke="${color}" stroke-width="1.5"/>
+  <line x1="60" y1="4" x2="60" y2="16" stroke="${color}" stroke-width="1" opacity="0.5"/>
+  <line x1="140" y1="4" x2="140" y2="16" stroke="${color}" stroke-width="1" opacity="0.5"/>
+</svg>`;
+
+export const facetedCorner = (color = 'currentColor'): string => `
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <polygon points="12,2 22,12 12,22 2,12" fill="none" stroke="${color}" stroke-width="1.5"/>
+  <polygon points="12,6 18,12 12,18 6,12" fill="none" stroke="${color}" stroke-width="0.75" opacity="0.5"/>
+</svg>`;
+
+export type PatternName =
+  | 'greek-key'
+  | 'scrollwork'
+  | 'dentil'
+  | 'medallion'
+  | 'corner'
+  | 'faceted-divider'
+  | 'faceted-corner';
 
 export const patterns: Record<PatternName, (color?: string) => string> = {
   'greek-key': greekKey,
@@ -45,6 +67,8 @@ export const patterns: Record<PatternName, (color?: string) => string> = {
   dentil,
   medallion,
   corner: cornerOrnament,
+  'faceted-divider': facetedDivider,
+  'faceted-corner': facetedCorner,
 };
 
 // ---------------------------------------------------------------------------

@@ -1,9 +1,10 @@
 // ---------------------------------------------------------------------------
-// Classical Ornamental System — Versailles & Rococo Inspired
+// Ornament Tier System
 // ---------------------------------------------------------------------------
-// SVG-based decorative patterns, borders, and dividers rendered via
-// inline data URIs. All patterns use currentColor for theme-awareness.
-// Structural ornaments can be layered on any relief (flat, soft, lifted, neu, sharp, hewn).
+// Tier-aware decorative elements: .frame, .corner, .edge, .divider,
+// .medallion. Each auto-styles from [data-ornament] on <html> and
+// supports per-element override via .ornament-{value} utility classes.
+// SVG decorations use mask-image so --ornament-color propagates fully.
 // ---------------------------------------------------------------------------
 
 // ============================================================================
@@ -22,12 +23,43 @@
 }
 
 // ============================================================================
-// FRAME SYSTEMS — Full border treatments
+// MASK-IMAGE HELPER
+// ============================================================================
+// Converts SVG data URIs to masks so background-color (--ornament-color)
+// controls the visible color. All SVGs use white strokes/fills as masks.
+
+@mixin svg-mask($url, $size: contain, $repeat: no-repeat) {
+  -webkit-mask-image: url($url);
+  mask-image: url($url);
+  -webkit-mask-size: $size;
+  mask-size: $size;
+  -webkit-mask-repeat: $repeat;
+  mask-repeat: $repeat;
+  background-color: var(--ornament-color);
+}
+
+// ============================================================================
+// FRAME MIXINS — Full border treatments (one per tier)
 // ============================================================================
 
-// Baroque Frame — Full Rococo frame with scrollwork corners
-.frame-baroque {
-  position: relative;
+@mixin frame-gilt {
+  border: 2px solid var(--ornament-color);
+  box-shadow:
+    0 0 0 1px var(--ornament-color-dark),
+    0 0 0 4px var(--surface-bg, #fff),
+    0 0 0 5px var(--ornament-color),
+    0 0 12px var(--border-accent-gold);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border: 1px solid var(--border-accent-gold);
+    pointer-events: none;
+  }
+}
+
+@mixin frame-baroque {
   border: 3px solid;
   border-image: linear-gradient(
       145deg,
@@ -36,9 +68,7 @@
       color-mix(in srgb, var(--ornament-color), black 15%)
     )
     1;
-  padding: 1.5rem;
 
-  // Ornamental frame overlay
   &::before {
     content: '';
     position: absolute;
@@ -67,15 +97,12 @@
   }
 }
 
-// Beveled Frame — Stone relief border
-.frame-beveled {
-  position: relative;
+@mixin frame-beveled {
   border: 3px solid var(--border-strong);
   box-shadow:
     inset 3px 3px 8px rgb(var(--shadow-color) / 20%),
     inset -3px -3px 8px rgb(var(--highlight-color) / 50%);
 
-  // Chiseled edge highlight
   &::before {
     content: '';
     position: absolute;
@@ -88,117 +115,44 @@
   }
 }
 
-// Gilt Frame — Gold leaf edge treatment
-.frame-gilt {
-  position: relative;
+@mixin frame-faceted {
   border: 2px solid var(--ornament-color);
-  box-shadow:
-    0 0 0 1px var(--ornament-color-dark),
-    0 0 0 4px var(--surface-bg, #fff),
-    0 0 0 5px var(--ornament-color),
-    0 0 12px var(--border-accent-gold);
+  clip-path: polygon(
+    12px 0,
+    calc(100% - 12px) 0,
+    100% 12px,
+    100% calc(100% - 12px),
+    calc(100% - 12px) 100%,
+    12px 100%,
+    0 calc(100% - 12px),
+    0 12px
+  );
 
   &::before {
     content: '';
     position: absolute;
-    inset: 2px;
-    border: 1px solid var(--border-accent-gold);
-    pointer-events: none;
-  }
-}
-
-// Colonnade Frame — Column-inspired vertical elements
-.frame-colonnade {
-  position: relative;
-  border-left: 4px solid var(--border-strong);
-  border-right: 4px solid var(--border-strong);
-  padding: 1rem 2rem;
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: linear-gradient(
-      180deg,
-      transparent 0%,
-      var(--ornament-color) 10%,
-      var(--ornament-color) 90%,
-      transparent 100%
+    inset: 4px;
+    border: 1px solid var(--ornament-color);
+    opacity: 0.4;
+    clip-path: polygon(
+      8px 0,
+      calc(100% - 8px) 0,
+      100% 8px,
+      100% calc(100% - 8px),
+      calc(100% - 8px) 100%,
+      8px 100%,
+      0 calc(100% - 8px),
+      0 8px
     );
-    opacity: 0.3;
-  }
-
-  &::before {
-    left: 8px;
-  }
-
-  &::after {
-    right: 8px;
-  }
-}
-
-// Arcade Frame — Arched frame (Romanesque/Gothic)
-.frame-arcade {
-  position: relative;
-  border: 2px solid var(--border-strong);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  overflow: visible;
-
-  // Arch keystone
-  &::before {
-    content: '';
-    position: absolute;
-    top: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 16px;
-    height: 16px;
-    background: var(--surface-1);
-    border: 2px solid var(--border-strong);
-    clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
     pointer-events: none;
   }
 }
 
 // ============================================================================
-// CORNER ORNAMENTS — Utility classes for decorative corners
+// CORNER MIXINS — Decorative corner marks (one per tier)
 // ============================================================================
 
-// Flourish corners — Acanthus leaf style
-.corner-flourish {
-  position: relative;
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    width: var(--ornament-size-lg);
-    height: var(--ornament-size-lg);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23d4a843' stroke-width='1.5' d='M2 22Q8 18 12 12Q8 8 2 2 M22 2Q18 8 12 12'/%3E%3C/svg%3E");
-    background-size: contain;
-    opacity: var(--ornament-opacity);
-    pointer-events: none;
-  }
-
-  &::before {
-    top: 4px;
-    left: 4px;
-  }
-
-  &::after {
-    top: 4px;
-    right: 4px;
-    transform: scaleX(-1);
-  }
-}
-
-// Rosette corners — Circular ornamental
-.corner-rosette {
-  position: relative;
-
+@mixin corner-gilt {
   &::before,
   &::after {
     content: '';
@@ -223,46 +177,16 @@
   }
 }
 
-// Shell corners — Rococo shell motif
-.corner-shell {
-  position: relative;
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    width: var(--ornament-size-xl);
-    height: var(--ornament-size-xl);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath fill='none' stroke='%23d4a843' stroke-width='1.2' d='M4 28Q16 24 16 8Q16 24 28 28 M8 26Q16 20 16 12 M24 26Q16 20 16 12'/%3E%3Ccircle cx='16' cy='6' r='2' fill='%23d4a843' opacity='0.5'/%3E%3C/svg%3E");
-    background-size: contain;
-    opacity: var(--ornament-opacity);
-    pointer-events: none;
-  }
-
-  &::before {
-    top: 0;
-    left: 0;
-  }
-
-  &::after {
-    top: 0;
-    right: 0;
-    transform: scaleX(-1);
-  }
-}
-
-// Fleur-de-lis corners
-.corner-fleur {
-  position: relative;
-
+@mixin corner-baroque {
   &::before,
   &::after {
     content: '';
     position: absolute;
     width: var(--ornament-size-lg);
     height: var(--ornament-size-lg);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23d4a843' opacity='0.6' d='M12 2Q14 8 12 14Q10 8 12 2z M12 14Q18 10 22 16Q16 16 12 14z M12 14Q6 10 2 16Q8 16 12 14z M12 14L12 22'/%3E%3C/svg%3E");
-    background-size: contain;
+    @include svg-mask(
+      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='white' stroke-width='1.5' d='M2 22Q8 18 12 12Q8 8 2 2 M22 2Q18 8 12 12'/%3E%3C/svg%3E"
+    );
     opacity: var(--ornament-opacity);
     pointer-events: none;
   }
@@ -270,46 +194,80 @@
   &::before {
     top: 4px;
     left: 4px;
-    transform: rotate(-45deg);
   }
 
   &::after {
     top: 4px;
     right: 4px;
-    transform: rotate(45deg);
+    transform: scaleX(-1);
   }
 }
 
-// ============================================================================
-// EDGE TREATMENTS — Border enhancements
-// ============================================================================
-
-// Beveled edges — Chamfered appearance
-.edge-beveled {
-  position: relative;
-  border: 2px solid var(--border-strong);
-
-  &::before {
+@mixin corner-beveled {
+  &::before,
+  &::after {
     content: '';
     position: absolute;
-    inset: 0;
-    border: 1px solid;
-    border-color: rgb(255 255 255 / 20%) rgb(0 0 0 / 10%) rgb(0 0 0 / 10%) rgb(255 255 255 / 20%);
+    width: 24px;
+    height: 24px;
+    border-color: var(--border-strong);
+    border-style: solid;
+    box-shadow:
+      1px 1px 0 rgb(255 255 255 / 15%),
+      -1px -1px 0 rgb(0 0 0 / 8%);
+    opacity: var(--ornament-opacity);
     pointer-events: none;
+  }
+
+  &::before {
+    top: 8px;
+    left: 8px;
+    border-width: 3px 0 0 3px;
+  }
+
+  &::after {
+    top: 8px;
+    right: 8px;
+    border-width: 3px 3px 0 0;
   }
 }
 
-// Gilded edges — Gold-lined
-.edge-gilded {
+@mixin corner-faceted {
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background-color: var(--ornament-color);
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    opacity: var(--ornament-opacity);
+    pointer-events: none;
+  }
+
+  &::before {
+    top: 6px;
+    left: 6px;
+  }
+
+  &::after {
+    top: 6px;
+    right: 6px;
+  }
+}
+
+// ============================================================================
+// EDGE MIXINS — Border enhancements (one per tier)
+// ============================================================================
+
+@mixin edge-gilt {
   border: 1px solid var(--ornament-color);
   box-shadow:
     inset 0 1px 0 rgb(254 243 199 / 30%),
     0 0 8px var(--border-accent-gold);
 }
 
-// Beaded edges — Beaded molding pattern
-.edge-beaded {
-  position: relative;
+@mixin edge-baroque {
   border: 2px solid var(--border-default);
 
   &::before {
@@ -323,189 +281,38 @@
   }
 }
 
-// Dentil edges — Dentil molding pattern
-.edge-dentil {
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: -8px;
-    left: 0;
-    right: 0;
-    height: 8px;
-    background-image: repeating-linear-gradient(
-      90deg,
-      var(--ornament-color) 0,
-      var(--ornament-color) 6px,
-      transparent 6px,
-      transparent 12px
-    );
-    opacity: 0.4;
-    pointer-events: none;
-  }
-}
-
-// ============================================================================
-// MEDALLIONS & CRESTS — Decorative focal points
-// ============================================================================
-
-// Center medallion — For card/panel centers
-.medallion-center {
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    border: 2px solid var(--ornament-color);
-    box-shadow:
-      0 0 0 4px var(--surface-bg, #fff),
-      0 0 0 6px var(--border-accent-gold),
-      inset 0 0 12px var(--accent-gold-subtle);
-    pointer-events: none;
-    z-index: 1;
-  }
-}
-
-// Top crest — Heraldic crest at top center
-.crest-top {
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: -16px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40px;
-    height: 32px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='32' viewBox='0 0 40 32'%3E%3Cpath fill='none' stroke='%23d4a843' stroke-width='1.5' d='M20 4L8 12L8 24L20 30L32 24L32 12Z'/%3E%3Cpath fill='none' stroke='%23d4a843' stroke-width='1' opacity='0.5' d='M20 8L12 14L12 22L20 26L28 22L28 14Z'/%3E%3Ccircle cx='20' cy='17' r='3' fill='%23d4a843' opacity='0.4'/%3E%3C/svg%3E");
-    background-size: contain;
-    background-repeat: no-repeat;
-    pointer-events: none;
-    z-index: 2;
-  }
-}
-
-// Corner seal — Wax seal style accent
-.seal-corner {
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    right: -8px;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: linear-gradient(
-      145deg,
-      color-mix(in srgb, var(--ornament-color), white 40%),
-      color-mix(in srgb, var(--ornament-color), black 15%)
-    );
-    border: 2px solid var(--ornament-color-dark);
-    box-shadow:
-      2px 2px 8px rgb(0 0 0 / 25%),
-      inset 1px 1px 2px rgb(255 255 255 / 30%);
-    pointer-events: none;
-    z-index: 2;
-  }
-}
-
-// ============================================================================
-// RELIEF PATTERNS — Textured overlays
-// ============================================================================
-
-// Damask relief pattern
-.relief-damask {
-  position: relative;
+@mixin edge-beveled {
+  border: 2px solid var(--border-strong);
 
   &::before {
     content: '';
     position: absolute;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath fill='%23d4a843' opacity='0.06' d='M30 5Q40 15 30 25Q20 15 30 5z M30 35Q40 45 30 55Q20 45 30 35z M5 30Q15 20 25 30Q15 40 5 30z M35 30Q45 20 55 30Q45 40 35 30z'/%3E%3C/svg%3E");
-    background-size: 60px 60px;
-    border-radius: inherit;
+    border: 1px solid;
+    border-color: rgb(255 255 255 / 20%) rgb(0 0 0 / 10%) rgb(0 0 0 / 10%) rgb(255 255 255 / 20%);
     pointer-events: none;
   }
 }
 
-// Acanthus relief pattern
-.relief-acanthus {
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cpath fill='none' stroke='%23d4a843' stroke-width='0.8' opacity='0.1' d='M40 10Q50 20 40 40Q30 20 40 10z M40 70Q50 60 40 40Q30 60 40 70z M10 40Q20 30 40 40Q20 50 10 40z M70 40Q60 30 40 40Q60 50 70 40z'/%3E%3C/svg%3E");
-    background-size: 80px 80px;
-    border-radius: inherit;
-    pointer-events: none;
-  }
-}
-
-// Cartouche frame relief
-.relief-cartouche {
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 8px;
-    border: 1px solid var(--border-accent-gold);
-    border-radius: 50% / 20%;
-    pointer-events: none;
-  }
+@mixin edge-faceted {
+  border: 2px solid var(--ornament-color);
+  background-image: linear-gradient(
+    135deg,
+    rgb(255 255 255 / 6%) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgb(255 255 255 / 6%) 50%,
+    rgb(255 255 255 / 6%) 75%,
+    transparent 75%
+  );
+  background-size: 8px 8px;
 }
 
 // ============================================================================
-// DIVIDERS — Horizontal separators
+// DIVIDER MIXINS — Horizontal separators (one per tier)
 // ============================================================================
 
-// ---- Greek Key Divider ----
-.ornament-divider-greek-key {
-  width: 100%;
-  height: 24px;
-  background-repeat: repeat-x;
-  background-position: center;
-  background-size: 24px 24px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23d4a843' stroke-width='1.5' d='M0 12h6v6h12v-12h-12v6'/%3E%3C/svg%3E");
-  opacity: 0.6;
-}
-
-// ---- Scrollwork / Acanthus Divider ----
-.ornament-divider-scrollwork {
-  width: 100%;
-  height: 32px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 200px 32px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='32' viewBox='0 0 200 32'%3E%3Cpath fill='none' stroke='%23d4a843' stroke-width='1.5' stroke-linecap='round' d='M10 16c0-8 12-8 12 0s12 8 12 0-12-8-12 0 M56 16c0-8 12-8 12 0s12 8 12 0-12-8-12 0 M100 8l0 16 M122 16c0-8 12-8 12 0s12 8 12 0-12-8-12 0 M166 16c0-8 12-8 12 0s12 8 12 0-12-8-12 0'/%3E%3Ccircle cx='100' cy='16' r='4' fill='%23d4a843' opacity='0.6'/%3E%3C/svg%3E");
-}
-
-// ---- Dentil Molding Divider ----
-.ornament-divider-dentil {
-  width: 100%;
-  height: 12px;
-  background-repeat: repeat-x;
-  background-position: center;
-  background-size: 16px 12px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='12' viewBox='0 0 16 12'%3E%3Crect x='2' y='2' width='6' height='8' fill='%23d4a843' opacity='0.5'/%3E%3C/svg%3E");
-}
-
-// ---- Simple Divider with Center Medallion ----
-.ornament-divider {
-  position: relative;
-  width: 100%;
+@mixin divider-none {
   height: 2px;
   background: linear-gradient(
     90deg,
@@ -529,98 +336,386 @@
   }
 }
 
-// ---- Corner Ornaments ----
-// Apply to a positioned container; adds ornamental flourishes at each corner.
-.ornament-corner {
-  position: relative;
+@mixin divider-gilt {
+  height: 28px;
 
-  &::before,
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    @include svg-mask(
+      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'%3E%3Cpath fill='none' stroke='white' stroke-width='1' stroke-linecap='round' d='M20 14c0-6 6-10 12-6s6 12 0 12-12-6-12-12 M52 14c8-8 16 0 16 0s8 8 16 0 M100 8c4 0 6 3 6 6s-2 6-6 6-6-3-6-6 2-6 6-6 M120 14l4-6 4 6-4 6z M140 14c0-6 6-10 12-6s6 12 0 12-12-6-12-12 M172 14c8-8 16 0 16 0s8 8 16 0'/%3E%3Ccircle cx='120' cy='14' r='2' fill='white' opacity='0.7'/%3E%3Ccircle cx='20' cy='14' r='1.5' fill='white' opacity='0.4'/%3E%3Ccircle cx='220' cy='14' r='1.5' fill='white' opacity='0.4'/%3E%3C/svg%3E",
+      $size: 240px 28px
+    );
+    -webkit-mask-position: center;
+    mask-position: center;
+  }
+}
+
+@mixin divider-baroque {
+  height: 32px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    @include svg-mask(
+      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='32' viewBox='0 0 200 32'%3E%3Cpath fill='none' stroke='white' stroke-width='1.5' stroke-linecap='round' d='M10 16c0-8 12-8 12 0s12 8 12 0-12-8-12 0 M56 16c0-8 12-8 12 0s12 8 12 0-12-8-12 0 M100 8l0 16 M122 16c0-8 12-8 12 0s12 8 12 0-12-8-12 0 M166 16c0-8 12-8 12 0s12 8 12 0-12-8-12 0'/%3E%3Ccircle cx='100' cy='16' r='4' fill='white' opacity='0.6'/%3E%3C/svg%3E",
+      $size: 200px 32px
+    );
+    -webkit-mask-position: center;
+    mask-position: center;
+  }
+}
+
+@mixin divider-beveled {
+  height: 24px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    @include svg-mask(
+      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='white' stroke-width='1.5' d='M0 12h6v6h12v-12h-12v6'/%3E%3C/svg%3E",
+      $size: 24px 24px,
+      $repeat: repeat-x
+    );
+    -webkit-mask-position: center;
+    mask-position: center;
+    opacity: 0.6;
+  }
+}
+
+@mixin divider-faceted {
+  height: 20px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--ornament-color);
+    opacity: 0.4;
+  }
+
   &::after {
     content: '';
     position: absolute;
-    width: 24px;
-    height: 24px;
-    border-color: var(--ornament-color);
-    border-style: solid;
-    opacity: 0.5;
-    pointer-events: none;
-  }
-
-  &::before {
-    top: 8px;
-    left: 8px;
-    border-width: 2px 0 0 2px;
-  }
-
-  &::after {
-    top: 8px;
-    right: 8px;
-    border-width: 2px 2px 0 0;
-  }
-}
-
-// Bottom corners require a wrapper child or additional element
-.ornament-corner-full {
-  position: relative;
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    border-color: var(--ornament-color);
-    border-style: solid;
-    opacity: 0.5;
-    pointer-events: none;
-  }
-
-  &::before {
-    bottom: 8px;
-    left: 8px;
-    border-width: 0 0 2px 2px;
-  }
-
-  &::after {
-    bottom: 8px;
-    right: 8px;
-    border-width: 0 2px 2px 0;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 20px,
+      var(--ornament-color) 20px,
+      var(--ornament-color) 28px,
+      transparent 28px,
+      transparent 36px
+    );
+    clip-path: polygon(
+      0% 50%,
+      4px 0%,
+      calc(100% - 4px) 0%,
+      100% 50%,
+      calc(100% - 4px) 100%,
+      4px 100%
+    );
+    opacity: 0.35;
   }
 }
 
-// ---- Classical Border Frame ----
-.ornament-border-classical {
-  border: 1px solid var(--border-accent-gold-strong);
-  outline: 1px solid var(--border-accent-gold);
-  outline-offset: 4px;
-}
+// ============================================================================
+// MEDALLION MIXINS — Decorative focal points (one per tier)
+// ============================================================================
 
-// ---- Medallion — circular ornamental element ----
-.ornament-medallion {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
+@mixin medallion-gilt {
   border: 2px solid var(--ornament-color);
   box-shadow:
     0 0 0 4px var(--surface-bg),
     0 0 0 6px var(--border-accent-gold);
 }
 
-.ornament-medallion-lg {
-  width: 64px;
-  height: 64px;
-  border-width: 2px;
+@mixin medallion-baroque {
+  border: 2px solid var(--ornament-color);
   box-shadow:
-    0 0 0 5px var(--surface-bg),
-    0 0 0 7px var(--border-accent-gold),
-    0 0 0 10px var(--surface-bg),
-    0 0 0 11px var(--accent-gold-subtle);
+    0 0 0 4px var(--surface-bg, #fff),
+    0 0 0 6px var(--border-accent-gold),
+    inset 0 0 12px var(--accent-gold-subtle);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 32px;
+    @include svg-mask(
+      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='32' viewBox='0 0 40 32'%3E%3Cpath fill='none' stroke='white' stroke-width='1.5' d='M20 4L8 12L8 24L20 30L32 24L32 12Z'/%3E%3Cpath fill='none' stroke='white' stroke-width='1' opacity='0.5' d='M20 8L12 14L12 22L20 26L28 22L28 14Z'/%3E%3Ccircle cx='20' cy='17' r='3' fill='white' opacity='0.4'/%3E%3C/svg%3E"
+    );
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 2;
+  }
 }
 
-// ---- Column-Inspired Side Borders ----
+@mixin medallion-beveled {
+  border: 3px solid var(--border-strong);
+  box-shadow:
+    inset 2px 2px 6px rgb(var(--shadow-color) / 15%),
+    inset -2px -2px 6px rgb(var(--highlight-color) / 40%),
+    0 0 0 4px var(--surface-bg);
+}
+
+@mixin medallion-faceted {
+  border: 2px solid var(--ornament-color);
+  clip-path: polygon(50% 0%, 85% 15%, 100% 50%, 85% 85%, 50% 100%, 15% 85%, 0% 50%, 15% 15%);
+}
+
+// ============================================================================
+// BASE ELEMENT CLASSES — Structural defaults
+// ============================================================================
+
+.frame {
+  position: relative;
+  padding: 1.5rem;
+}
+
+.corner {
+  position: relative;
+}
+
+.edge {
+  position: relative;
+}
+
+.divider {
+  position: relative;
+  width: 100%;
+  @include divider-none;
+}
+
+.medallion {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.medallion-lg {
+  width: 64px;
+  height: 64px;
+}
+
+// ============================================================================
+// CONFIG-DEFAULT SELECTORS — Read [data-ornament] from <html>
+// ============================================================================
+
+// ---- gilt ----
+
+[data-ornament='gilt'] .frame {
+  @include frame-gilt;
+}
+
+[data-ornament='gilt'] .corner {
+  @include corner-gilt;
+}
+
+[data-ornament='gilt'] .edge {
+  @include edge-gilt;
+}
+
+[data-ornament='gilt'] .divider {
+  @include divider-gilt;
+}
+
+[data-ornament='gilt'] .medallion {
+  @include medallion-gilt;
+}
+
+// ---- baroque ----
+
+[data-ornament='baroque'] .frame {
+  @include frame-baroque;
+}
+
+[data-ornament='baroque'] .corner {
+  @include corner-baroque;
+}
+
+[data-ornament='baroque'] .edge {
+  @include edge-baroque;
+}
+
+[data-ornament='baroque'] .divider {
+  @include divider-baroque;
+}
+
+[data-ornament='baroque'] .medallion {
+  @include medallion-baroque;
+}
+
+// ---- beveled ----
+
+[data-ornament='beveled'] .frame {
+  @include frame-beveled;
+}
+
+[data-ornament='beveled'] .corner {
+  @include corner-beveled;
+}
+
+[data-ornament='beveled'] .edge {
+  @include edge-beveled;
+}
+
+[data-ornament='beveled'] .divider {
+  @include divider-beveled;
+}
+
+[data-ornament='beveled'] .medallion {
+  @include medallion-beveled;
+}
+
+// ---- faceted ----
+
+[data-ornament='faceted'] .frame {
+  @include frame-faceted;
+}
+
+[data-ornament='faceted'] .corner {
+  @include corner-faceted;
+}
+
+[data-ornament='faceted'] .edge {
+  @include edge-faceted;
+}
+
+[data-ornament='faceted'] .divider {
+  @include divider-faceted;
+}
+
+[data-ornament='faceted'] .medallion {
+  @include medallion-faceted;
+}
+
+// ============================================================================
+// PER-ELEMENT OVERRIDES — Higher specificity than config-default
+// ============================================================================
+
+// ---- gilt ----
+.ornament-gilt .frame,
+.frame.ornament-gilt {
+  @include frame-gilt;
+}
+
+.ornament-gilt .corner,
+.corner.ornament-gilt {
+  @include corner-gilt;
+}
+
+.ornament-gilt .edge,
+.edge.ornament-gilt {
+  @include edge-gilt;
+}
+
+.ornament-gilt .divider,
+.divider.ornament-gilt {
+  @include divider-gilt;
+}
+
+.ornament-gilt .medallion,
+.medallion.ornament-gilt {
+  @include medallion-gilt;
+}
+
+// ---- baroque ----
+.ornament-baroque .frame,
+.frame.ornament-baroque {
+  @include frame-baroque;
+}
+
+.ornament-baroque .corner,
+.corner.ornament-baroque {
+  @include corner-baroque;
+}
+
+.ornament-baroque .edge,
+.edge.ornament-baroque {
+  @include edge-baroque;
+}
+
+.ornament-baroque .divider,
+.divider.ornament-baroque {
+  @include divider-baroque;
+}
+
+.ornament-baroque .medallion,
+.medallion.ornament-baroque {
+  @include medallion-baroque;
+}
+
+// ---- beveled ----
+.ornament-beveled .frame,
+.frame.ornament-beveled {
+  @include frame-beveled;
+}
+
+.ornament-beveled .corner,
+.corner.ornament-beveled {
+  @include corner-beveled;
+}
+
+.ornament-beveled .edge,
+.edge.ornament-beveled {
+  @include edge-beveled;
+}
+
+.ornament-beveled .divider,
+.divider.ornament-beveled {
+  @include divider-beveled;
+}
+
+.ornament-beveled .medallion,
+.medallion.ornament-beveled {
+  @include medallion-beveled;
+}
+
+// ---- faceted ----
+.ornament-faceted .frame,
+.frame.ornament-faceted {
+  @include frame-faceted;
+}
+
+.ornament-faceted .corner,
+.corner.ornament-faceted {
+  @include corner-faceted;
+}
+
+.ornament-faceted .edge,
+.edge.ornament-faceted {
+  @include edge-faceted;
+}
+
+.ornament-faceted .divider,
+.divider.ornament-faceted {
+  @include divider-faceted;
+}
+
+.ornament-faceted .medallion,
+.medallion.ornament-faceted {
+  @include medallion-faceted;
+}
+
+// ============================================================================
+// COLUMN UTILITIES — Side border accents (not tier-dependent)
+// ============================================================================
+
 .ornament-column-left {
   border-left: 3px solid var(--border-accent-gold);
   padding-left: 1.5rem;
@@ -653,110 +748,8 @@
   }
 }
 
-// ---- Filigree Divider — intricate lace-like metalwork ----
-.ornament-divider-filigree {
-  width: 100%;
-  height: 28px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 240px 28px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'%3E%3Cpath fill='none' stroke='%23d4a843' stroke-width='1' stroke-linecap='round' d='M20 14c0-6 6-10 12-6s6 12 0 12-12-6-12-12 M52 14c8-8 16 0 16 0s8 8 16 0 M100 8c4 0 6 3 6 6s-2 6-6 6-6-3-6-6 2-6 6-6 M120 14l4-6 4 6-4 6z M140 14c0-6 6-10 12-6s6 12 0 12-12-6-12-12 M172 14c8-8 16 0 16 0s8 8 16 0'/%3E%3Ccircle cx='120' cy='14' r='2' fill='%23d4a843' opacity='0.7'/%3E%3Ccircle cx='20' cy='14' r='1.5' fill='%23d4a843' opacity='0.4'/%3E%3Ccircle cx='220' cy='14' r='1.5' fill='%23d4a843' opacity='0.4'/%3E%3C/svg%3E");
-}
-
-// ---- Rococo Scrollwork Divider — asymmetric baroque curves ----
-.ornament-divider-rococo {
-  width: 100%;
-  height: 36px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 280px 36px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='36' viewBox='0 0 280 36'%3E%3Cpath fill='none' stroke='%23d4a843' stroke-width='1.2' stroke-linecap='round' d='M20 18Q30 4 50 10T80 18Q90 26 100 18 M100 18Q110 10 120 14T140 18 M140 18Q150 22 160 14T180 18 M180 18Q190 10 210 26T240 18T260 10'/%3E%3Cpath fill='none' stroke='%23d4a843' stroke-width='0.8' opacity='0.4' d='M60 8Q70 2 80 8 M200 28Q210 34 220 28 M110 24Q120 30 130 24 M160 8Q170 2 180 8'/%3E%3Ccircle cx='140' cy='18' r='3' fill='none' stroke='%23d4a843' stroke-width='1.5'/%3E%3Ccircle cx='140' cy='18' r='1' fill='%23d4a843' opacity='0.6'/%3E%3C/svg%3E");
-}
-
-// ---- Acanthus Leaf Capital — for column-top decoration ----
-.ornament-acanthus {
-  width: 100%;
-  height: 40px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 120px 40px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='40' viewBox='0 0 120 40'%3E%3Cpath fill='none' stroke='%23d4a843' stroke-width='1.2' stroke-linecap='round' d='M60 35Q50 25 30 28Q20 20 35 12Q25 5 40 6Q50 0 60 6Q70 0 80 6Q95 5 85 12Q100 20 90 28Q70 25 60 35z'/%3E%3Cpath fill='none' stroke='%23d4a843' stroke-width='0.8' opacity='0.5' d='M60 30Q55 22 45 25 M60 30Q65 22 75 25 M60 22Q55 15 48 16 M60 22Q65 15 72 16 M60 14Q55 10 52 8 M60 14Q65 10 68 8'/%3E%3Ccircle cx='60' cy='10' r='2' fill='%23d4a843' opacity='0.4'/%3E%3C/svg%3E");
-}
-
-// ---- Fleur-de-lis Divider ----
-.ornament-divider-fleur {
-  width: 100%;
-  height: 28px;
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      var(--accent-gold) 20%,
-      var(--accent-gold) 80%,
-      transparent
-    );
-    opacity: 0.3;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 20px;
-    height: 20px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath fill='%23d4a843' opacity='0.6' d='M10 2Q12 6 10 10Q8 6 10 2z M10 10Q14 8 16 12Q12 12 10 10z M10 10Q6 8 4 12Q8 12 10 10z M10 10L10 18'/%3E%3C/svg%3E");
-    background-size: contain;
-    background-repeat: no-repeat;
-  }
-}
-
-// ---- Gold modifier for any ornament ----
-.ornament-gold {
-  &.ornament-divider {
-    opacity: 0.6;
-  }
-
-  &.ornament-corner::before,
-  &.ornament-corner::after,
-  &.ornament-corner-full::before,
-  &.ornament-corner-full::after {
-    opacity: 0.7;
-    border-color: color-mix(in srgb, var(--ornament-color), white 40%);
-  }
-}
-
-// ---- Theme-aware accent modifier ----
-.ornament-accent {
-  &.ornament-divider {
-    background: linear-gradient(
-      90deg,
-      transparent,
-      var(--accent-primary) 20%,
-      var(--accent-primary) 80%,
-      transparent
-    );
-  }
-
-  &.ornament-corner::before,
-  &.ornament-corner::after,
-  &.ornament-corner-full::before,
-  &.ornament-corner-full::after {
-    border-color: var(--accent-primary);
-  }
-}
-
 // ============================================================================
-// ORNAMENT MODIFIERS — Intensity and color variations
+// ORNAMENT MODIFIERS — Intensity, metal, and size variations
 // ============================================================================
 
 // Intensity modifiers
