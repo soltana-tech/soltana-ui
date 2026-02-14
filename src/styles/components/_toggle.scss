@@ -1,0 +1,39 @@
+// ---------------------------------------------------------------------------
+// Toggle Component
+// ---------------------------------------------------------------------------
+// Standalone toggle switch using --relief-* tokens.
+// ---------------------------------------------------------------------------
+
+.toggle {
+  border: none;
+  background: var(--relief-bg);
+  position: relative;
+  width: 3.5rem;
+  height: 2rem;
+  border-radius: var(--radius-full);
+  box-shadow: var(--relief-shadow-inset-lg);
+  cursor: pointer;
+  transition: background var(--transition-slow) var(--easing-in-out);
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 1.625rem;
+    height: 1.625rem;
+    border-radius: var(--radius-full);
+    background: var(--relief-bg);
+    box-shadow: var(--relief-shadow-sm);
+    transition:
+      transform var(--transition-slow) var(--easing-in-out),
+      background var(--transition-slow) var(--easing-in-out),
+      box-shadow var(--transition-slow) var(--easing-in-out);
+  }
+
+  &.active::after {
+    transform: translateX(1.5rem);
+    background: var(--accent-primary);
+    box-shadow: var(--relief-shadow-sm);
+  }
+}

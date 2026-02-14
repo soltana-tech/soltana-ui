@@ -108,50 +108,22 @@
 
 $progress-variants: (
   success: (
-    var(--jewel-emerald-deep),
-    var(--jewel-emerald),
+    color-mix(in srgb, var(--color-success), black 35%),
+    var(--color-success),
   ),
   warning: (
-    var(--gold-500),
-    var(--gold-300),
+    color-mix(in srgb, var(--color-warning), black 35%),
+    var(--color-warning),
   ),
   error: (
-    var(--jewel-ruby-deep),
-    var(--jewel-ruby),
+    color-mix(in srgb, var(--color-error), black 35%),
+    var(--color-error),
   ),
 );
 
 @each $name, $colors in $progress-variants {
   .progress-#{$name} .progress-bar {
     background: linear-gradient(90deg, list.nth($colors, 1), list.nth($colors, 2));
-  }
-}
-
-// Baroque progress
-.progress-baroque {
-  position: relative;
-  border: 2px solid var(--accent-gold);
-  border-radius: var(--radius-lg);
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    border: 1px solid var(--accent-gold);
-    background: var(--surface-1);
-  }
-
-  &::before {
-    left: -12px;
-  }
-
-  &::after {
-    right: -12px;
   }
 }
 

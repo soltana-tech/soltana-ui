@@ -10,7 +10,7 @@ export class PlaygroundControls {
     this.bindSelectControls();
     this.bindCopyButtons();
     this.bindModalTriggers();
-    this.bindNeuToggles();
+    this.bindToggles();
     this.bindColorPickers();
   }
 
@@ -139,9 +139,9 @@ export class PlaygroundControls {
     });
   }
 
-  /** Neumorphic toggle buttons. */
-  private bindNeuToggles(): void {
-    document.querySelectorAll('.neu-toggle').forEach((toggle) => {
+  /** Toggle buttons. */
+  private bindToggles(): void {
+    document.querySelectorAll('.toggle').forEach((toggle) => {
       toggle.addEventListener('click', () => {
         toggle.classList.toggle('active');
       });

@@ -45,30 +45,11 @@
   border: 1px solid var(--border-accent-gold);
 }
 
-.badge-gold {
-  background: var(--gold-gradient);
-  color: var(--gold-900);
-}
-
 @each $type in (success, warning, error, info) {
   .badge-#{$type} {
     background-color: var(--color-#{$type}-subtle);
     color: var(--color-#{$type}-text);
   }
-}
-
-.badge-jewel {
-  background: linear-gradient(
-    145deg,
-    rgb(168 85 247 / 25%),
-    rgb(59 130 246 / 20%),
-    rgb(16 185 129 / 20%)
-  );
-  backdrop-filter: blur(8px);
-  border: 1px solid rgb(168 85 247 / 30%);
-  box-shadow:
-    0 2px 8px rgb(168 85 247 / 15%),
-    inset 0 1px 0 rgb(255 255 255 / 15%);
 }
 
 // ============================================================================
@@ -102,43 +83,6 @@
   }
 }
 
-// Jewel-toned tag variants
-.tag-emerald {
-  background: rgb(16 185 129 / 12%);
-  border-color: rgb(16 185 129 / 25%);
-  color: var(--jewel-emerald);
-}
-
-.tag-sapphire {
-  background: rgb(59 130 246 / 12%);
-  border-color: rgb(59 130 246 / 25%);
-  color: var(--jewel-sapphire);
-}
-
-.tag-ruby {
-  background: rgb(239 68 68 / 12%);
-  border-color: rgb(239 68 68 / 25%);
-  color: var(--jewel-ruby);
-}
-
-.tag-amethyst {
-  background: rgb(168 85 247 / 12%);
-  border-color: rgb(168 85 247 / 25%);
-  color: var(--jewel-amethyst);
-}
-
-.tag-gold {
-  background: var(--badge-bg);
-  border-color: var(--border-accent-gold);
-  color: var(--accent-gold);
-}
-
-.tag-citrine {
-  background: rgb(232 200 64 / 12%);
-  border-color: rgb(232 200 64 / 25%);
-  color: var(--jewel-citrine);
-}
-
 // ============================================================================
 // AVATAR
 // ============================================================================
@@ -151,7 +95,7 @@
   height: 2.5rem;
   border-radius: var(--radius-full);
   background: linear-gradient(145deg, var(--accent-gold), var(--accent-gold-hover));
-  color: var(--gold-900);
+  color: var(--text-inverse);
   font-weight: var(--font-semibold);
   font-size: var(--text-sm);
   overflow: hidden;

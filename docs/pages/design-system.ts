@@ -37,12 +37,6 @@ function swatchCard(name: string, variable: string, hex: string): string {
     </div>`;
 }
 
-// Metallic button preview
-function metallicPreview(name: string, className: string): string {
-  return `
-    <button class="btn ${className}">${name}</button>`;
-}
-
 function recipeCard(key: RecipeName): string {
   const recipe = RECIPES[key];
   const tierClasses = [
@@ -56,7 +50,7 @@ function recipeCard(key: RecipeName): string {
 
   return `
     <div class="${tierClasses} card p-6 rounded-xl" style="min-height: 180px;">
-      <span class="tag tag-gold mb-2">${recipe.name}</span>
+      <span class="tag mb-2">${recipe.name}</span>
       <p class="text-sm text-secondary mt-2">${recipe.description}</p>
       <div class="flex flex-wrap gap-2 mt-3">
         <button class="btn btn-primary btn-sm">Primary</button>
@@ -143,50 +137,6 @@ export function renderDesignSystem(): string {
     ${swatchCard('Gold 900', '--gold-900', '#2c2005')}
   </div>
 
-  <h3 class="text-xl font-semibold mt-10 mb-4 font-serif">Metallic Surfaces</h3>
-  <p class="text-sm text-secondary mb-4">Gradient-based metallic finishes with animated shine on hover.</p>
-  <div class="flex flex-wrap gap-3 mt-4">
-    ${metallicPreview('Gold', 'btn-gold')}
-    ${metallicPreview('Silver', 'btn-silver')}
-    ${metallicPreview('Bronze', 'btn-bronze')}
-    ${metallicPreview('Platinum', 'btn-platinum')}
-  </div>
-
-  <div class="grid gap-6 mt-6" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))">
-    <div>
-      <h4 class="text-sm font-semibold mb-2 text-secondary">Silver</h4>
-      <div class="swatch-grid swatch-grid--compact">
-        ${swatchCard('200', '--silver-200', '#d8dde6')}
-        ${swatchCard('400', '--silver-400', '#929cb0')}
-        ${swatchCard('600', '--silver-600', '#576378')}
-      </div>
-    </div>
-    <div>
-      <h4 class="text-sm font-semibold mb-2 text-secondary">Bronze</h4>
-      <div class="swatch-grid swatch-grid--compact">
-        ${swatchCard('200', '--bronze-200', '#f0cd9e')}
-        ${swatchCard('400', '--bronze-400', '#cd8d3a')}
-        ${swatchCard('600', '--bronze-600', '#7e5522')}
-      </div>
-    </div>
-    <div>
-      <h4 class="text-sm font-semibold mb-2 text-secondary">Copper</h4>
-      <div class="swatch-grid swatch-grid--compact">
-        ${swatchCard('200', '--copper-200', '#f5c4a1')}
-        ${swatchCard('400', '--copper-400', '#d97e4a')}
-        ${swatchCard('600', '--copper-600', '#934f2b')}
-      </div>
-    </div>
-    <div>
-      <h4 class="text-sm font-semibold mb-2 text-secondary">Platinum</h4>
-      <div class="swatch-grid swatch-grid--compact">
-        ${swatchCard('200', '--platinum-200', '#dce1ea')}
-        ${swatchCard('400', '--platinum-400', '#a8b3c7')}
-        ${swatchCard('600', '--platinum-600', '#6d7b94')}
-      </div>
-    </div>
-  </div>
-
   ${ornamentDivider()}
 
   <!-- ================================================================== -->
@@ -200,19 +150,19 @@ export function renderDesignSystem(): string {
     `
     <div class="space-y-4">
       <div class="flex items-baseline gap-4">
-        <span class="tag tag-gold" style="min-width: 3rem; justify-content: center;">5xl</span>
+        <span class="tag" style="min-width: 3rem; justify-content: center;">5xl</span>
         <span class="text-5xl font-serif">Display</span>
       </div>
       <div class="flex items-baseline gap-4">
-        <span class="tag tag-gold" style="min-width: 3rem; justify-content: center;">4xl</span>
+        <span class="tag" style="min-width: 3rem; justify-content: center;">4xl</span>
         <span class="text-4xl font-serif">Heading 1</span>
       </div>
       <div class="flex items-baseline gap-4">
-        <span class="tag tag-gold" style="min-width: 3rem; justify-content: center;">3xl</span>
+        <span class="tag" style="min-width: 3rem; justify-content: center;">3xl</span>
         <span class="text-3xl font-serif">Heading 2</span>
       </div>
       <div class="flex items-baseline gap-4">
-        <span class="tag tag-gold" style="min-width: 3rem; justify-content: center;">2xl</span>
+        <span class="tag" style="min-width: 3rem; justify-content: center;">2xl</span>
         <span class="text-2xl font-serif">Heading 3</span>
       </div>
       <div class="flex items-baseline gap-4">
@@ -240,17 +190,17 @@ export function renderDesignSystem(): string {
     `
     <div class="grid gap-6" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))">
       <div class="card p-4">
-        <span class="tag tag-gold mb-2">--font-serif</span>
+        <span class="tag mb-2">--font-serif</span>
         <p class="text-2xl font-serif mt-2">Cinzel Decorative</p>
         <p class="text-sm text-secondary mt-1">Headlines, display text, formal elements</p>
       </div>
       <div class="card p-4">
-        <span class="tag tag-sapphire mb-2">--font-sans</span>
+        <span class="tag mb-2">--font-sans</span>
         <p class="text-2xl font-sans mt-2">Raleway</p>
         <p class="text-sm text-secondary mt-1">Body text, UI elements, buttons</p>
       </div>
       <div class="card p-4">
-        <span class="tag tag-emerald mb-2">--font-mono</span>
+        <span class="tag mb-2">--font-mono</span>
         <p class="text-2xl font-mono mt-2">JetBrains Mono</p>
         <p class="text-sm text-secondary mt-1">Code, technical content</p>
       </div>
@@ -294,7 +244,7 @@ export function renderDesignSystem(): string {
       </div>
     </div>
     <div class="relief-neu p-6 rounded-xl" style="min-height: 200px;">
-      <span class="tag tag-gold mb-3">.relief-neu</span>
+      <span class="tag mb-3">.relief-neu</span>
       <p class="text-sm text-secondary mb-4 mt-3">Solid surfaces with soft dual shadows extruding from the surface. No transparency or blur. The polished marble aesthetic.</p>
       <div class="flex flex-wrap gap-2">
         <button class="btn btn-primary btn-sm">Primary</button>
@@ -307,7 +257,7 @@ export function renderDesignSystem(): string {
       </div>
     </div>
     <div class="relief-lifted p-6 rounded-xl" style="min-height: 200px;">
-      <span class="tag tag-sapphire mb-3">.relief-lifted</span>
+      <span class="tag mb-3">.relief-lifted</span>
       <p class="text-sm text-secondary mb-4 mt-3">Layered ambient + key shadows creating Material Design-style elevation. Versatile and modern.</p>
       <div class="flex flex-wrap gap-2">
         <button class="btn btn-primary btn-sm">Primary</button>
@@ -320,7 +270,7 @@ export function renderDesignSystem(): string {
       </div>
     </div>
     <div class="relief-sharp p-6 rounded-xl" style="min-height: 200px;">
-      <span class="tag tag-citrine mb-3">.relief-sharp</span>
+      <span class="tag mb-3">.relief-sharp</span>
       <p class="text-sm text-secondary mb-4 mt-3">Hard-edged shadows with crisp offsets and zero blur. Bold and graphic.</p>
       <div class="flex flex-wrap gap-2">
         <button class="btn btn-primary btn-sm">Primary</button>
@@ -333,7 +283,7 @@ export function renderDesignSystem(): string {
       </div>
     </div>
     <div class="relief-hewn p-6 rounded-xl" style="min-height: 200px;">
-      <span class="tag tag-emerald mb-3">.relief-hewn</span>
+      <span class="tag mb-3">.relief-hewn</span>
       <p class="text-sm text-secondary mb-4 mt-3">Chiseled asymmetric inset shadows creating a carved-from-surface appearance.</p>
       <div class="flex flex-wrap gap-2">
         <button class="btn btn-primary btn-sm">Primary</button>
@@ -370,7 +320,7 @@ export function renderDesignSystem(): string {
   <h4 class="text-lg font-semibold mt-8 mb-3 text-secondary">Neumorphic Relief</h4>
   <div class="grid gap-4 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr))">
     <div class="relief-neu finish-matte card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag tag-gold mb-2">matte</span>
+      <span class="tag mb-2">matte</span>
       <p class="text-sm text-secondary mt-2">Clean, solid surface. Default look.</p>
     </div>
     <div class="relief-neu finish-translucent card p-5 rounded-xl text-center" style="min-height: 140px;">
@@ -378,15 +328,15 @@ export function renderDesignSystem(): string {
       <p class="text-sm text-secondary mt-2">Semi-transparent, no blur.</p>
     </div>
     <div class="relief-neu finish-frosted card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag tag-sapphire mb-2">frosted</span>
+      <span class="tag mb-2">frosted</span>
       <p class="text-sm text-secondary mt-2">Backdrop blur with desaturation.</p>
     </div>
     <div class="relief-neu finish-tinted card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag tag-ruby mb-2">tinted</span>
+      <span class="tag mb-2">tinted</span>
       <p class="text-sm text-secondary mt-2">Colored accent overlay.</p>
     </div>
     <div class="relief-neu finish-glossy card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag tag-citrine mb-2">glossy</span>
+      <span class="tag mb-2">glossy</span>
       <p class="text-sm text-secondary mt-2">Directional specular highlight.</p>
     </div>
   </div>
@@ -395,7 +345,7 @@ export function renderDesignSystem(): string {
   <h4 class="text-lg font-semibold mt-8 mb-3 text-secondary">Lifted Relief</h4>
   <div class="grid gap-4 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr))">
     <div class="relief-lifted finish-matte card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag tag-gold mb-2">matte</span>
+      <span class="tag mb-2">matte</span>
       <p class="text-sm text-secondary mt-2">Clean elevated surface.</p>
     </div>
     <div class="relief-lifted finish-translucent card p-5 rounded-xl text-center" style="min-height: 140px;">
@@ -403,15 +353,15 @@ export function renderDesignSystem(): string {
       <p class="text-sm text-secondary mt-2">Floating translucent panel.</p>
     </div>
     <div class="relief-lifted finish-frosted card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag tag-sapphire mb-2">frosted</span>
+      <span class="tag mb-2">frosted</span>
       <p class="text-sm text-secondary mt-2">Frosted glass with elevation.</p>
     </div>
     <div class="relief-lifted finish-tinted card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag tag-ruby mb-2">tinted</span>
+      <span class="tag mb-2">tinted</span>
       <p class="text-sm text-secondary mt-2">Tinted elevated surface.</p>
     </div>
     <div class="relief-lifted finish-glossy card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag tag-citrine mb-2">glossy</span>
+      <span class="tag mb-2">glossy</span>
       <p class="text-sm text-secondary mt-2">Polished elevated sheen.</p>
     </div>
   </div>
@@ -420,7 +370,7 @@ export function renderDesignSystem(): string {
   <h4 class="text-lg font-semibold mt-8 mb-3 text-secondary">Hewn Relief</h4>
   <div class="grid gap-4 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr))">
     <div class="relief-hewn finish-matte card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag tag-gold mb-2">matte</span>
+      <span class="tag mb-2">matte</span>
       <p class="text-sm text-secondary mt-2">Smooth carved surface.</p>
     </div>
     <div class="relief-hewn finish-translucent card p-5 rounded-xl text-center" style="min-height: 140px;">
@@ -428,15 +378,15 @@ export function renderDesignSystem(): string {
       <p class="text-sm text-secondary mt-2">Translucent chiseled panel.</p>
     </div>
     <div class="relief-hewn finish-frosted card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag tag-sapphire mb-2">frosted</span>
+      <span class="tag mb-2">frosted</span>
       <p class="text-sm text-secondary mt-2">Rough-hewn sandblasted effect.</p>
     </div>
     <div class="relief-hewn finish-tinted card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag tag-ruby mb-2">tinted</span>
+      <span class="tag mb-2">tinted</span>
       <p class="text-sm text-secondary mt-2">Mineral-tinted carved stone.</p>
     </div>
     <div class="relief-hewn finish-glossy card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag tag-citrine mb-2">glossy</span>
+      <span class="tag mb-2">glossy</span>
       <p class="text-sm text-secondary mt-2">Polished carved stone.</p>
     </div>
   </div>
@@ -462,22 +412,22 @@ export function renderDesignSystem(): string {
 
   <div class="grid gap-6 mt-8" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr))">
     <div class="ornament-baroque card p-6 rounded-lg" style="min-height: 160px;">
-      <span class="tag tag-gold mb-2">.ornament-baroque</span>
+      <span class="tag mb-2">.ornament-baroque</span>
       <p class="text-sm text-secondary mt-2">Rococo frame with inner border and medallion accent at top.</p>
       <button class="btn btn-sm mt-3">Inside Baroque</button>
     </div>
     <div class="ornament-beveled card p-6 rounded-lg" style="min-height: 160px;">
-      <span class="tag tag-emerald mb-2">.ornament-beveled</span>
+      <span class="tag mb-2">.ornament-beveled</span>
       <p class="text-sm text-secondary mt-2">Light/dark edge highlights creating a subtle 3D frame.</p>
       <button class="btn btn-sm mt-3">Inside Beveled</button>
     </div>
     <div class="ornament-faceted card p-6 rounded-lg" style="min-height: 160px;">
-      <span class="tag tag-sapphire mb-2">.ornament-faceted</span>
+      <span class="tag mb-2">.ornament-faceted</span>
       <p class="text-sm text-secondary mt-2">Gem-cut edge highlights with diagonal gradient overlay.</p>
       <button class="btn btn-sm mt-3">Inside Faceted</button>
     </div>
     <div class="ornament-gilt card p-6 rounded-lg" style="min-height: 160px;">
-      <span class="tag tag-citrine mb-2">.ornament-gilt</span>
+      <span class="tag mb-2">.ornament-gilt</span>
       <p class="text-sm text-secondary mt-2">Gold leaf border with subtle warm glow.</p>
       <button class="btn btn-sm mt-3">Inside Gilt</button>
     </div>
@@ -499,13 +449,13 @@ export function renderDesignSystem(): string {
     <div class="grid gap-6" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))">
       <div class="relief-lifted p-5 rounded-xl">
         <div class="ornament-gilt card p-4 rounded-lg">
-          <span class="tag tag-citrine">.ornament-gilt</span>
+          <span class="tag">.ornament-gilt</span>
           <p class="text-sm text-secondary mt-2">Lifted + Gold leaf border</p>
         </div>
       </div>
       <div class="relief-neu p-5 rounded-xl">
         <div class="ornament-beveled card p-4 rounded-lg">
-          <span class="tag tag-emerald">.ornament-beveled</span>
+          <span class="tag">.ornament-beveled</span>
           <p class="text-sm text-secondary mt-2">Neu + Beveled frame</p>
         </div>
       </div>
@@ -527,7 +477,7 @@ export function renderDesignSystem(): string {
     <p class="text-sm text-secondary mb-4">Each tier provides utility classes that override the global config on a per-element basis. CSS custom properties set directly on an element always override inherited values from ancestors.</p>
     <div class="grid gap-4" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr))">
       <div class="card p-4">
-        <span class="tag tag-gold mb-2">Theme</span>
+        <span class="tag mb-2">Theme</span>
         <div class="space-y-1 mt-2">
           <code class="text-sm">.theme-dark</code><br>
           <code class="text-sm">.theme-light</code><br>
@@ -535,7 +485,7 @@ export function renderDesignSystem(): string {
         </div>
       </div>
       <div class="card p-4">
-        <span class="tag tag-sapphire mb-2">Relief</span>
+        <span class="tag mb-2">Relief</span>
         <div class="space-y-1 mt-2">
           <code class="text-sm">.relief-flat</code><br>
           <code class="text-sm">.relief-soft</code><br>
@@ -546,7 +496,7 @@ export function renderDesignSystem(): string {
         </div>
       </div>
       <div class="card p-4">
-        <span class="tag tag-emerald mb-2">Finish</span>
+        <span class="tag mb-2">Finish</span>
         <div class="space-y-1 mt-2">
           <code class="text-sm">.finish-matte</code><br>
           <code class="text-sm">.finish-translucent</code><br>
@@ -556,7 +506,7 @@ export function renderDesignSystem(): string {
         </div>
       </div>
       <div class="card p-4">
-        <span class="tag tag-citrine mb-2">Ornament</span>
+        <span class="tag mb-2">Ornament</span>
         <div class="space-y-1 mt-2">
           <code class="text-sm">.ornament-baroque</code><br>
           <code class="text-sm">.ornament-beveled</code><br>
@@ -573,17 +523,17 @@ export function renderDesignSystem(): string {
 
   <div class="grid gap-6" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))">
     <div class="theme-light relief-lifted finish-frosted card p-5 rounded-xl">
-      <span class="tag tag-sapphire mb-2">Light + Lifted + Frosted</span>
+      <span class="tag mb-2">Light + Lifted + Frosted</span>
       <p class="text-sm text-secondary mt-2">Overrides theme to light, relief to lifted, and finish to frosted — independent of global config.</p>
       <button class="btn btn-sm mt-3">Button</button>
     </div>
     <div class="theme-sepia relief-neu ornament-gilt card p-5 rounded-xl">
-      <span class="tag tag-citrine mb-2">Sepia + Neu + Gilt</span>
+      <span class="tag mb-2">Sepia + Neu + Gilt</span>
       <p class="text-sm text-secondary mt-2">Warm parchment theme with neumorphic depth and gold leaf ornament.</p>
       <button class="btn btn-sm mt-3">Button</button>
     </div>
     <div class="theme-dark relief-hewn finish-glossy ornament-beveled card p-5 rounded-xl">
-      <span class="tag tag-emerald mb-2">Dark + Hewn + Glossy + Beveled</span>
+      <span class="tag mb-2">Dark + Hewn + Glossy + Beveled</span>
       <p class="text-sm text-secondary mt-2">All four tiers overridden on a single element.</p>
       <button class="btn btn-sm mt-3">Button</button>
     </div>
@@ -633,7 +583,7 @@ export function renderDesignSystem(): string {
           ([key, value]) => `
         <div class="flex items-center gap-4">
           <span class="tag" style="min-width: 2.5rem; justify-content: center;">${key}</span>
-          <div class="h-4 rounded" style="width: calc(${key} * 0.25rem + 4px); background: linear-gradient(90deg, var(--accent-primary), var(--gold-400));"></div>
+          <div class="h-4 rounded" style="width: calc(${key} * 0.25rem + 4px); background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));"></div>
           <span class="text-sm text-secondary">${value}</span>
         </div>
       `

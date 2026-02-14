@@ -21,7 +21,6 @@ export function renderComponents(): string {
       'Tables',
       'Modals',
       'Relief Demo',
-      'Neumorphic',
     ],
     'comp-'
   )}
@@ -245,15 +244,6 @@ export function renderComponents(): string {
       <span class="tag">SCSS</span>
       <span class="tag">Vite</span>
     </div>
-    <p class="text-sm font-medium mb-3">Jewel-Toned Tags</p>
-    <div class="flex flex-wrap gap-2">
-      <span class="tag tag-emerald">Emerald</span>
-      <span class="tag tag-sapphire">Sapphire</span>
-      <span class="tag tag-ruby">Ruby</span>
-      <span class="tag tag-amethyst">Amethyst</span>
-      <span class="tag tag-gold">Gold</span>
-      <span class="tag tag-citrine">Citrine</span>
-    </div>
   `
   )}
 
@@ -456,7 +446,7 @@ export function renderComponents(): string {
     <p class="text-sm text-muted mb-6">The same components rendered in each relief context. Change the global relief in the settings panel to see all components update.</p>
     <div class="grid gap-6" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))">
       <div data-relief="neu" class="p-6 rounded-xl" style="background: var(--neu-bg); box-shadow: 6px 6px 14px var(--neu-shadow-dark), -6px -6px 14px var(--neu-shadow-light);">
-        <span class="tag tag-gold mb-3">Neumorphic</span>
+        <span class="tag mb-3">Neumorphic</span>
         <div class="flex flex-wrap gap-2 mt-3 mb-3">
           <button class="btn btn-primary btn-sm">Primary</button>
           <button class="btn btn-secondary btn-sm">Secondary</button>
@@ -464,12 +454,12 @@ export function renderComponents(): string {
         <input class="input input-sm mb-3" placeholder="Neu input..." />
         <div class="flex gap-2">
           <span class="badge badge-success">Active</span>
-          <span class="tag tag-sapphire">Status</span>
+          <span class="tag">Status</span>
         </div>
         <div class="progress mt-3"><div class="progress-bar" style="width: 65%"></div></div>
       </div>
       <div data-relief="lifted" class="p-6 rounded-xl" style="background: var(--surface-2);">
-        <span class="tag tag-sapphire mb-3">Lifted</span>
+        <span class="tag mb-3">Lifted</span>
         <div class="flex flex-wrap gap-2 mt-3 mb-3">
           <button class="btn btn-primary btn-sm">Primary</button>
           <button class="btn btn-secondary btn-sm">Secondary</button>
@@ -477,12 +467,12 @@ export function renderComponents(): string {
         <input class="input input-sm mb-3" placeholder="Lifted input..." />
         <div class="flex gap-2">
           <span class="badge badge-success">Active</span>
-          <span class="tag tag-sapphire">Status</span>
+          <span class="tag">Status</span>
         </div>
         <div class="progress mt-3"><div class="progress-bar" style="width: 65%"></div></div>
       </div>
       <div data-relief="sharp" class="p-6 rounded-xl" style="background: var(--surface-2);">
-        <span class="tag tag-citrine mb-3">Sharp</span>
+        <span class="tag mb-3">Sharp</span>
         <div class="flex flex-wrap gap-2 mt-3 mb-3">
           <button class="btn btn-primary btn-sm">Primary</button>
           <button class="btn btn-secondary btn-sm">Secondary</button>
@@ -490,86 +480,9 @@ export function renderComponents(): string {
         <input class="input input-sm mb-3" placeholder="Sharp input..." />
         <div class="flex gap-2">
           <span class="badge badge-success">Active</span>
-          <span class="tag tag-sapphire">Status</span>
+          <span class="tag">Status</span>
         </div>
         <div class="progress mt-3"><div class="progress-bar" style="width: 65%"></div></div>
-      </div>
-    </div>
-  `
-  )}
-
-  <!-- ====== NEUMORPHIC ====== -->
-  ${specimen(
-    'Neumorphic Components',
-    'comp-neumorphic',
-    `
-    <p class="text-sm text-muted mb-4">Multi-layer neumorphism with elevated, floating, and soft variants. Theme-aware shadow pairs.</p>
-    <div class="p-8 rounded-2xl" style="background: var(--neu-bg)">
-      <p class="overline mb-4">Basic Variants</p>
-      <div class="grid gap-8" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))">
-        <div class="neu-raised p-6 text-center">
-          <p class="text-sm font-medium">.neu-raised</p>
-        </div>
-        <div class="neu-inset p-6 text-center">
-          <p class="text-sm font-medium">.neu-inset</p>
-        </div>
-        <div class="neu-flat p-6 text-center">
-          <p class="text-sm font-medium">.neu-flat</p>
-        </div>
-        <div class="neu-soft p-6 text-center">
-          <p class="text-sm font-medium">.neu-soft</p>
-        </div>
-      </div>
-
-      <p class="overline mt-8 mb-4">Enhanced Variants</p>
-      <div class="grid gap-8" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr))">
-        <div class="neu-elevated p-6 text-center">
-          <p class="text-sm font-medium">.neu-elevated</p>
-          <p class="text-xs text-muted mt-1">3-layer shadow with highlight</p>
-        </div>
-        <div class="neu-floating p-6 text-center">
-          <p class="text-sm font-medium">.neu-floating</p>
-          <p class="text-xs text-muted mt-1">Dramatic elevation</p>
-        </div>
-        <div class="neu-pressed-active p-6 text-center">
-          <p class="text-sm font-medium">.neu-pressed-active</p>
-          <p class="text-xs text-muted mt-1">Accent-tinted inset</p>
-        </div>
-        <div class="neu-card-layered">
-          <p class="text-sm font-medium mb-2">.neu-card-layered</p>
-          <p class="text-xs text-muted">Gradient overlay card</p>
-        </div>
-      </div>
-
-      <p class="overline mt-8 mb-4">Interactive Elements</p>
-      <div class="flex flex-wrap gap-6 items-center">
-        <button class="btn relief-neu px-6 py-3 text-sm font-medium">.btn.relief-neu</button>
-        <input class="input relief-neu" placeholder=".input.relief-neu" />
-        <div class="neu-toggle" id="neu-toggle-demo"></div>
-      </div>
-
-      <div class="mt-8">
-        <p class="text-sm font-medium mb-2">.progress</p>
-        <div class="progress">
-          <div class="progress-bar" style="width: 60%"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Playground -->
-    <div class="playground mt-6 p-4 rounded-xl" style="background: var(--surface-2)">
-      <p class="text-sm font-semibold mb-3">Playground — Neumorphic Depth</p>
-      <div class="flex flex-wrap gap-4 items-end mb-4">
-        <div class="input-group">
-          <label class="input-label">Shadow Spread: <span class="range-value">12px</span></label>
-          <input type="range" min="2" max="30" value="12" data-css-var="--playground-neu-spread" data-unit="px" data-target="#neu-playground-box" />
-        </div>
-      </div>
-      <div class="p-8 rounded-2xl" style="background: var(--neu-bg)">
-        <div id="neu-playground-box" class="p-6 rounded-xl text-center text-sm font-medium"
-          style="background: var(--neu-bg); --playground-neu-spread: 12px; box-shadow: var(--playground-neu-spread) var(--playground-neu-spread) calc(var(--playground-neu-spread) * 2) var(--neu-shadow-dark), calc(var(--playground-neu-spread) * -1) calc(var(--playground-neu-spread) * -1) calc(var(--playground-neu-spread) * 2) var(--neu-shadow-light); border-radius: var(--radius-xl);">
-          Interactive Neumorphic Box
-        </div>
       </div>
     </div>
   `
@@ -686,12 +599,7 @@ export function renderComponents(): string {
     <button class="btn btn-primary relief-hewn">Hewn</button>
   </div>
 
-  <h4 class="text-lg font-semibold mt-4 mb-3">Named Variants</h4>
-  <div class="flex flex-wrap gap-4 items-center mb-6">
-    <button class="btn btn-gold">Gold</button>
-  </div>
-
-  <h4 class="text-lg font-semibold mt-4 mb-3">Structural Variants</h4>
+  <h4 class="text-lg font-semibold mt-4 mb-3">Ornament Variants</h4>
   <div class="flex flex-wrap gap-4 items-center">
     <button class="btn ornament-beveled">Beveled</button>
     <button class="btn ornament-baroque">Baroque</button>
