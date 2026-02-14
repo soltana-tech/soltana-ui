@@ -21,7 +21,9 @@
 // Consumed by material selectors and material utility files.
 // ============================================================================
 
-:root {
+:root,
+[data-theme='dark'],
+.theme-dark {
   // Neumorphic
   --neu-bg: var(--surface-2);
   --neu-shadow-dark: rgb(var(--shadow-color) / 65%);
@@ -49,7 +51,8 @@
   --stone-border: rgb(var(--highlight-color) / 6%);
 }
 
-[data-theme='light'] {
+[data-theme='light'],
+.theme-light {
   // Neumorphic — inverted depth (strong highlights, soft shadows)
   --neu-bg: var(--surface-3);
   --neu-shadow-dark: rgb(var(--shadow-color) / 35%);
@@ -76,7 +79,8 @@
   --stone-border: rgb(var(--shadow-color) / 12%);
 }
 
-[data-theme='sepia'] {
+[data-theme='sepia'],
+.theme-sepia {
   // Neumorphic — warm parchment depth
   --neu-shadow-dark: rgb(var(--shadow-color) / 45%);
   --neu-shadow-light: rgb(var(--highlight-color) / 82%);

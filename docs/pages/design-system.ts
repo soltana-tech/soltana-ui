@@ -53,6 +53,7 @@ export function renderDesignSystem(): string {
     { label: 'Materials', href: '#materials' },
     { label: 'Surfaces', href: '#surfaces' },
     { label: 'Ornaments', href: '#ornaments' },
+    { label: 'Composition', href: '#composition' },
     { label: 'Spacing', href: '#spacing' },
   ])}
 
@@ -468,6 +469,98 @@ export function renderDesignSystem(): string {
         </div>
       </div>
     </div>
+  `
+  )}
+
+  ${ornamentDivider()}
+
+  <!-- ================================================================== -->
+  <!-- COMPOSITION -->
+  <!-- ================================================================== -->
+
+  ${sectionHeading('Per-Element Composition', 'composition', 'All four tiers — theme, material, surface, ornament — can be independently overridden on any element via utility classes.')}
+
+  ${specimenBlock(
+    'Tier Override Classes',
+    `
+    <p class="text-sm text-secondary mb-4">Each tier provides utility classes that override the global config on a per-element basis. CSS custom properties set directly on an element always override inherited values from ancestors.</p>
+    <div class="grid gap-4" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr))">
+      <div class="card p-4">
+        <span class="tag tag-gold mb-2">Theme</span>
+        <div class="space-y-1 mt-2">
+          <code class="text-sm">.theme-dark</code><br>
+          <code class="text-sm">.theme-light</code><br>
+          <code class="text-sm">.theme-sepia</code>
+        </div>
+      </div>
+      <div class="card p-4">
+        <span class="tag tag-sapphire mb-2">Material</span>
+        <div class="space-y-1 mt-2">
+          <code class="text-sm">.material-flat</code><br>
+          <code class="text-sm">.material-soft</code><br>
+          <code class="text-sm">.material-neu</code><br>
+          <code class="text-sm">.material-glass</code><br>
+          <code class="text-sm">.material-metallic</code><br>
+          <code class="text-sm">.material-stone</code>
+        </div>
+      </div>
+      <div class="card p-4">
+        <span class="tag tag-emerald mb-2">Surface</span>
+        <div class="space-y-1 mt-2">
+          <code class="text-sm">.surface-polished</code><br>
+          <code class="text-sm">.surface-frosted</code><br>
+          <code class="text-sm">.surface-stained</code><br>
+          <code class="text-sm">.surface-metallic</code>
+        </div>
+      </div>
+      <div class="card p-4">
+        <span class="tag tag-citrine mb-2">Ornament</span>
+        <div class="space-y-1 mt-2">
+          <code class="text-sm">.ornament-baroque</code><br>
+          <code class="text-sm">.ornament-carved</code><br>
+          <code class="text-sm">.ornament-faceted</code><br>
+          <code class="text-sm">.ornament-gilt</code>
+        </div>
+      </div>
+    </div>
+  `
+  )}
+
+  <h3 class="text-xl font-semibold mt-8 mb-4 font-serif">Composition in Action</h3>
+  <p class="text-sm text-secondary mb-6">Each card below overrides multiple tiers independently, regardless of the global config.</p>
+
+  <div class="grid gap-6" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))">
+    <div class="theme-light material-glass surface-frosted card p-5 rounded-xl">
+      <span class="tag tag-sapphire mb-2">Light + Glass + Frosted</span>
+      <p class="text-sm text-secondary mt-2">Overrides theme to light, material to glass, and surface to frosted — independent of global config.</p>
+      <button class="btn btn-sm mt-3">Button</button>
+    </div>
+    <div class="theme-sepia material-neu ornament-gilt card p-5 rounded-xl">
+      <span class="tag tag-citrine mb-2">Sepia + Neu + Gilt</span>
+      <p class="text-sm text-secondary mt-2">Warm parchment theme with neumorphic depth and gold leaf ornament.</p>
+      <button class="btn btn-sm mt-3">Button</button>
+    </div>
+    <div class="theme-dark material-stone surface-metallic ornament-carved card p-5 rounded-xl">
+      <span class="tag tag-emerald mb-2">Dark + Stone + Metallic + Carved</span>
+      <p class="text-sm text-secondary mt-2">All four tiers overridden on a single element.</p>
+      <button class="btn btn-sm mt-3">Button</button>
+    </div>
+  </div>
+
+  ${specimenBlock(
+    'Usage',
+    `
+    <p class="text-sm text-secondary mb-4">Add utility classes to any element to override inherited tier values:</p>
+    ${codeExample('<!-- Global config: dark theme, neu material, polished surface -->\n\n<!-- Override theme on a section -->\n<section class="theme-light">\n  <p>Light tokens apply here, even inside a dark page.</p>\n\n  <!-- Further override material + ornament -->\n  <div class="card material-glass ornament-gilt p-6">\n    Glass material with gilt ornament, light theme inherited from parent.\n  </div>\n</section>\n\n<!-- Override all four tiers on one element -->\n<div class="theme-sepia material-stone surface-frosted ornament-carved card p-6">\n  Fully composed: sepia + stone + frosted + carved.\n</div>', 'html')}
+  `
+  )}
+
+  ${specimenBlock(
+    'How It Works',
+    `
+    <p class="text-sm text-secondary mb-4">CSS custom properties set directly on an element always override values inherited from ancestors. The innermost class wins:</p>
+    ${codeExample('<!-- Stacking depth: innermost wins -->\n<html data-theme="dark">           <!-- dark tokens -->\n  <div class="theme-light">        <!-- light tokens -->\n    <div class="theme-dark">       <!-- dark tokens again -->\n      Content uses dark theme.\n    </div>\n  </div>\n</html>', 'html')}
+    <p class="text-sm text-secondary mt-4">Tier combination count is linear (t + m + s + o rulesets), not multiplicative. No combination-specific CSS is generated — each tier cascades independently via custom properties.</p>
   `
   )}
 

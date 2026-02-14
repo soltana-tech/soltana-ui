@@ -219,18 +219,13 @@ Marble textures use 4-8 radial gradients per variant (~20KB). Stained glass pres
 
 ### SCSS-14: Per-element tier composition
 
-`TODO` · Size: **L** · Depends on: SCSS-4, ORN-1
+`DONE` · Size: **L** · Depends on: SCSS-4, ORN-1
 
 All 4 tiers should be independently overridable at any element via utility classes or data attributes. Currently `.material-*` and `.surface-*` classes partially work, but full composition — e.g., `<div class="card material-glass surface-frosted ornamented-gilt">` overriding a global `data-material='neu'` — has gaps and is untested.
 
 The tier combination count is linear (t + m + s + o rulesets), not multiplicative (t × m × s × o), because CSS custom properties cascade independently. No combination-specific CSS needs to be generated.
 
-**Proposed fix:**
-
-1. Validate that `.material-*`, `.surface-*`, `[data-theme]`, and ornament classes all work at any DOM depth, not just on `<html>` or `body`.
-2. Ensure stacking works: a `.material-glass` child inside a `[data-material='neu']` parent receives glass treatment, not neu.
-3. Add `.theme-dark`, `.theme-light`, `.theme-sepia` utility classes as aliases for `[data-theme]` overrides on arbitrary elements (themes define many tokens; a class is more ergonomic than a data attribute for per-element use).
-4. Document the composition model and test representative combinations.
+- Progress: Added `.theme-dark`, `.theme-light`, `.theme-sepia` utility classes by comma-joining to existing `[data-theme]` selectors in theme files and material primitive blocks. All four tiers now support per-element overrides via utility classes (`.theme-*`, `.material-*`, `.surface-*`, `.ornament-*`). Added composition docs section with reference table, live demos, and cascade explanation.
 
 ### SCSS-15: Extensibility architecture
 
