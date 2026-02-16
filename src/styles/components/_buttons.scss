@@ -9,6 +9,7 @@
 @use 'sass:string';
 @use '../variables' as *;
 @use '../base/register' as *;
+@use '../base/transitions' as *;
 
 // ============================================================================
 // BASE BUTTON
@@ -33,12 +34,7 @@
   cursor: pointer;
   box-shadow: var(--relief-shadow);
   @include finish-surface;
-  transition:
-    background var(--transition-slow) var(--easing-in-out),
-    color var(--transition-normal) var(--easing-in-out),
-    border-color var(--transition-slow) var(--easing-in-out),
-    box-shadow var(--transition-slow) var(--easing-in-out),
-    transform var(--transition-normal) var(--easing-in-out);
+  @include transition-interactive;
   user-select: none;
   white-space: nowrap;
 
@@ -358,8 +354,12 @@ $sel-active: ();
 }
 
 @include register-ornament('beveled') {
-  --btn-ornament-bg: linear-gradient(175deg, var(--surface-2) 0%, var(--surface-3) 100%);
-  --btn-ornament-border-color: var(--border-strong);
+  --btn-ornament-bg: linear-gradient(
+    175deg,
+    var(--relief-surface-raised) 0%,
+    var(--relief-surface-deep) 100%
+  );
+  --btn-ornament-border-color: var(--ornament-bevel-border);
   --btn-ornament-border-width: 2px;
   --btn-ornament-shadow: var(--relief-shadow-inset);
   --btn-ornament-clip: polygon(
@@ -379,11 +379,11 @@ $sel-active: ();
 @include register-ornament('faceted') {
   --btn-ornament-bg: linear-gradient(
     135deg,
-    var(--surface-1) 0%,
-    var(--surface-2) 25%,
-    var(--surface-3) 50%,
-    var(--surface-2) 75%,
-    var(--surface-1) 100%
+    var(--relief-surface-flat) 0%,
+    var(--relief-surface-raised) 25%,
+    var(--relief-surface-deep) 50%,
+    var(--relief-surface-raised) 75%,
+    var(--relief-surface-flat) 100%
   );
   --btn-ornament-border-color: var(--ornament-color);
   --btn-ornament-shadow: 0 0 0 0 transparent;
@@ -399,11 +399,11 @@ $sel-active: ();
   --btn-ornament-padding: 0.5rem 2rem;
   --btn-ornament-hover-bg: linear-gradient(
     135deg,
-    var(--surface-2) 0%,
-    var(--surface-3) 25%,
-    var(--surface-1) 50%,
-    var(--surface-3) 75%,
-    var(--surface-2) 100%
+    var(--relief-surface-raised) 0%,
+    var(--relief-surface-deep) 25%,
+    var(--relief-surface-flat) 50%,
+    var(--relief-surface-deep) 75%,
+    var(--relief-surface-raised) 100%
   );
 }
 

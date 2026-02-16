@@ -1,0 +1,30 @@
+// ---------------------------------------------------------------------------
+// Transition Mixins
+// ---------------------------------------------------------------------------
+// Standardized transition patterns for interactive components.
+// ---------------------------------------------------------------------------
+
+@mixin transition-interactive($duration: var(--transition-slow)) {
+  transition:
+    background $duration var(--easing-in-out),
+    color $duration var(--easing-in-out),
+    border-color $duration var(--easing-in-out),
+    box-shadow $duration var(--easing-in-out),
+    transform var(--transition-normal) var(--easing-in-out);
+}
+
+@mixin transition-depth($duration: var(--transition-slow)) {
+  transition:
+    box-shadow $duration var(--easing-in-out),
+    transform $duration var(--easing-in-out);
+}
+
+@mixin transition-feedback($duration: var(--transition-slow)) {
+  transition:
+    background $duration var(--easing-in-out),
+    box-shadow $duration var(--easing-in-out);
+}
+
+@mixin transition-property($prop, $duration: var(--transition-normal)) {
+  transition: $prop $duration var(--easing-in-out);
+}

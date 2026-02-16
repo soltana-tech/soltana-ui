@@ -67,13 +67,13 @@ $golden-ratio: 1.618;
 .columns-classical {
   column-count: 2;
   column-gap: math.pow($golden-ratio, 2) * 1rem;
-  column-rule: 1px solid var(--border-decorative);
+  column-rule: 1px solid var(--ornament-border);
 }
 
 .columns-classical-3 {
   column-count: 3;
   column-gap: math.pow($golden-ratio, 2) * 1rem;
-  column-rule: 1px solid var(--border-decorative);
+  column-rule: 1px solid var(--ornament-border);
 }
 
 // ---- Pediment — triangular/arched top section ----
@@ -118,8 +118,8 @@ $golden-ratio: 1.618;
 .entablature {
   position: relative;
   padding: 1rem $golden-ratio * 1rem;
-  border-top: 2px solid var(--border-decorative-strong);
-  border-bottom: 1px solid var(--border-decorative);
+  border-top: 2px solid var(--ornament-border-strong);
+  border-bottom: 1px solid var(--ornament-border);
 
   &::before {
     content: '';
@@ -128,15 +128,15 @@ $golden-ratio: 1.618;
     left: 0;
     right: 0;
     height: 1px;
-    background: var(--border-decorative);
+    background: var(--ornament-border);
   }
 }
 
 // ---- Plinth — base section ----
 .plinth {
   padding: $golden-ratio * 1rem;
-  background: var(--surface-2);
-  border-top: 1px solid var(--border-default);
+  background: var(--relief-surface-raised);
+  border-top: 1px solid var(--relief-border-default);
   position: relative;
 
   &::before {

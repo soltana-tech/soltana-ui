@@ -8,6 +8,7 @@
 // ---------------------------------------------------------------------------
 
 @use '../base/register' as *;
+@use '../base/transitions' as *;
 
 .toggle {
   position: relative;
@@ -18,10 +19,7 @@
   box-shadow: var(--relief-shadow-inset-lg);
   @include finish-surface;
   cursor: pointer;
-  transition:
-    background var(--transition-slow) var(--easing-in-out),
-    border-color var(--transition-slow) var(--easing-in-out),
-    box-shadow var(--transition-slow) var(--easing-in-out);
+  @include transition-interactive;
 
   &::after {
     content: '';
@@ -33,10 +31,7 @@
     border-radius: var(--radius-full);
     background: var(--relief-bg);
     box-shadow: var(--relief-shadow-sm);
-    transition:
-      transform var(--transition-slow) var(--easing-in-out),
-      background var(--transition-slow) var(--easing-in-out),
-      box-shadow var(--transition-slow) var(--easing-in-out);
+    @include transition-interactive;
   }
 
   &.active {

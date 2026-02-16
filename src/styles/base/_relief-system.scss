@@ -27,7 +27,7 @@
 [data-theme='dark'],
 .theme-dark {
   // Neumorphic
-  --neu-bg: var(--surface-2);
+  --neu-bg: var(--relief-surface-deep);
   --neu-shadow-dark: rgb(var(--shadow-color) / 65%);
   --neu-shadow-light: rgb(var(--highlight-color) / 5%);
   --neu-shadow-mid: rgb(var(--shadow-color) / 40%);
@@ -37,7 +37,7 @@
 [data-theme='light'],
 .theme-light {
   // Neumorphic — inverted depth (strong highlights, soft shadows)
-  --neu-bg: var(--surface-3);
+  --neu-bg: var(--relief-surface-deep);
   --neu-shadow-dark: rgb(var(--shadow-color) / 35%);
   --neu-shadow-light: rgb(var(--highlight-color) / 88%);
   --neu-shadow-mid: rgb(var(--shadow-color) / 20%);
@@ -47,7 +47,7 @@
 [data-theme='sepia'],
 .theme-sepia {
   // Neumorphic — warm parchment depth
-  --neu-bg: var(--surface-3);
+  --neu-bg: var(--relief-surface-deep);
   --neu-shadow-dark: rgb(var(--shadow-color) / 45%);
   --neu-shadow-light: rgb(var(--highlight-color) / 82%);
   --neu-shadow-mid: rgb(var(--shadow-color) / 28%);
@@ -71,22 +71,22 @@
     inset 2px 2px 5px var(--neu-shadow-dark), inset -2px -2px 5px var(--neu-shadow-light);
   --relief-shadow-inset-lg:
     inset 4px 4px 10px var(--neu-shadow-dark), inset -4px -4px 10px var(--neu-shadow-light);
-  --relief-border: var(--border-default);
+  --relief-border: var(--relief-border-default);
 }
 
 @include register-relief('flat') {
-  --relief-bg: var(--surface-1);
+  --relief-bg: var(--relief-surface-flat);
   --relief-shadow-sm: none;
   --relief-shadow: none;
   --relief-shadow-lg: none;
   --relief-shadow-inset-sm: none;
   --relief-shadow-inset: none;
   --relief-shadow-inset-lg: none;
-  --relief-border: 1px solid var(--border-default);
+  --relief-border: 1px solid var(--relief-border-default);
 }
 
 @include register-relief('soft') {
-  --relief-bg: var(--surface-1);
+  --relief-bg: var(--relief-surface-flat);
   --relief-shadow-sm: 0 1px 2px rgb(var(--shadow-color) / 5%);
   --relief-shadow: 0 1px 3px rgb(var(--shadow-color) / 8%), 0 1px 2px rgb(var(--shadow-color) / 6%);
   --relief-shadow-lg:
@@ -95,11 +95,11 @@
   --relief-shadow-inset: inset 0 1px 0 rgb(var(--highlight-color) / 4%);
   --relief-shadow-inset-lg:
     inset 0 2px 0 rgb(var(--highlight-color) / 5%), inset 0 -1px 0 rgb(var(--shadow-color) / 5%);
-  --relief-border: 1px solid var(--border-subtle);
+  --relief-border: 1px solid var(--relief-border-subtle);
 }
 
 @include register-relief('lifted') {
-  --relief-bg: var(--surface-2);
+  --relief-bg: var(--relief-surface-raised);
   --relief-shadow-sm:
     0 1px 3px rgb(var(--shadow-color) / 12%), 0 1px 2px rgb(var(--shadow-color) / 24%);
   --relief-shadow:
@@ -113,7 +113,7 @@
 }
 
 @include register-relief('sharp') {
-  --relief-bg: var(--surface-2);
+  --relief-bg: var(--relief-surface-raised);
   --relief-shadow-sm: 2px 2px 0 rgb(var(--shadow-color) / 20%);
   --relief-shadow: 4px 4px 0 rgb(var(--shadow-color) / 25%);
   --relief-shadow-lg: 8px 8px 0 rgb(var(--shadow-color) / 30%);
@@ -124,7 +124,7 @@
 }
 
 @include register-relief('hewn') {
-  --relief-bg: var(--surface-2);
+  --relief-bg: var(--relief-surface-raised);
   --relief-shadow-sm:
     inset 2px 2px 4px rgb(var(--shadow-color) / 18%),
     inset -1px -1px 3px rgb(var(--highlight-color) / 5%);
@@ -148,7 +148,6 @@
   --finish-blur: 0px;
   --finish-saturation: 100%;
   --finish-opacity: 1;
-  --finish-texture-opacity: 0;
   --finish-overlay: none;
   --finish-sheen: none;
 }
@@ -157,7 +156,6 @@
   --finish-blur: 0px;
   --finish-saturation: 100%;
   --finish-opacity: 0.65;
-  --finish-texture-opacity: 0;
   --finish-overlay: none;
   --finish-sheen: none;
 }
@@ -166,14 +164,12 @@
   --finish-blur: 24px;
   --finish-saturation: 80%;
   --finish-opacity: 0.7;
-  --finish-texture-opacity: 0.06;
 }
 
 @include register-finish('tinted') {
   --finish-blur: 0px;
   --finish-saturation: 100%;
   --finish-opacity: 1;
-  --finish-texture-opacity: 0;
   --finish-overlay: linear-gradient(
     135deg,
     color-mix(in srgb, var(--accent-glow) 8%, transparent) 0%,
@@ -187,7 +183,6 @@
   --finish-blur: 0px;
   --finish-saturation: 100%;
   --finish-opacity: 1;
-  --finish-texture-opacity: 0;
   --finish-overlay: none;
   --finish-sheen: linear-gradient(
     135deg,

@@ -7,6 +7,7 @@
 @use 'sass:list';
 @use '../variables' as *;
 @use '../base/register' as *;
+@use '../base/transitions' as *;
 
 // ============================================================================
 // BADGES
@@ -25,10 +26,7 @@
   border-radius: var(--radius-md);
   background-color: var(--badge-bg);
   color: var(--text-secondary);
-  transition:
-    background-color var(--transition-normal) var(--easing-in-out),
-    box-shadow var(--transition-normal) var(--easing-in-out),
-    transform var(--transition-normal) var(--easing-in-out);
+  @include transition-interactive(var(--transition-normal));
 
   &:hover {
     transform: translateY(-1px);
@@ -42,8 +40,8 @@
 
 .badge-primary {
   background-color: var(--badge-bg);
-  color: var(--accent-decorative);
-  border: 1px solid var(--border-decorative);
+  color: var(--ornament-base);
+  border: 1px solid var(--ornament-border);
 }
 
 @each $type in (success, warning, error, info) {
@@ -71,11 +69,7 @@
   color: var(--text-secondary);
   box-shadow: var(--relief-shadow);
   @include finish-surface;
-  transition:
-    background var(--transition-normal) var(--easing-in-out),
-    box-shadow var(--transition-normal) var(--easing-in-out),
-    transform var(--transition-normal) var(--easing-in-out),
-    border-color var(--transition-normal) var(--easing-in-out);
+  @include transition-interactive(var(--transition-normal));
 
   &:hover {
     transform: translateY(-1px);
@@ -100,9 +94,7 @@
   font-size: var(--text-sm);
   overflow: hidden;
   flex-shrink: 0;
-  transition:
-    box-shadow var(--transition-normal) var(--easing-in-out),
-    transform var(--transition-normal) var(--easing-in-out);
+  @include transition-depth(var(--transition-normal));
 
   img {
     width: 100%;
@@ -127,10 +119,10 @@ $avatar-sizes: (
 
 .avatar-cameo {
   border-radius: 50% / 60%;
-  border: 3px solid var(--accent-decorative);
+  border: 3px solid var(--ornament-base);
   box-shadow:
-    0 0 0 2px var(--surface-bg),
-    0 0 0 4px var(--border-decorative-strong),
+    0 0 0 2px var(--ornament-ring-bg),
+    0 0 0 4px var(--ornament-border-strong),
     inset 0 0 8px rgb(var(--shadow-color) / 15%);
 }
 

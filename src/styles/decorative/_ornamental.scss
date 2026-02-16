@@ -35,8 +35,8 @@ $std-ornament-border: 2px solid var(--ornament-color);
 // ============================================================================
 
 :root {
-  --ornament-color: var(--accent-decorative);
-  --ornament-color-dark: color-mix(in srgb, var(--accent-decorative), black 30%);
+  --ornament-color: var(--ornament-base);
+  --ornament-color-dark: color-mix(in srgb, var(--ornament-base), black 30%);
   --ornament-gradient: linear-gradient(
     145deg,
     color-mix(in srgb, var(--ornament-color), white 30%),
@@ -247,24 +247,24 @@ $std-ornament-border: 2px solid var(--ornament-color);
   // Frame
   --ornament-frame-border: #{$std-ornament-border};
   --ornament-frame-shadow:
-    0 0 0 1px var(--ornament-color-dark), 0 0 0 4px var(--surface-bg, #fff),
-    0 0 0 5px var(--ornament-color), 0 0 12px var(--border-decorative);
+    0 0 0 1px var(--ornament-color-dark), 0 0 0 4px var(--ornament-ring-bg, #fff),
+    0 0 0 5px var(--ornament-color), 0 0 12px var(--ornament-border);
   --ornament-frame-inner-display: block;
   --ornament-frame-inner-inset: 2px;
-  --ornament-frame-inner-border: 1px solid var(--border-decorative);
+  --ornament-frame-inner-border: 1px solid var(--ornament-border);
   --ornament-frame-inner-opacity: 1;
 
   // Corner
   --ornament-corner-display: block;
   --ornament-corner-radius: 50%;
   --ornament-corner-border: #{$std-ornament-border};
-  --ornament-corner-shadow: inset 0 0 4px var(--border-decorative);
+  --ornament-corner-shadow: inset 0 0 4px var(--ornament-border);
 
   // Edge
   --ornament-edge-border: 1px solid var(--ornament-color);
   --ornament-edge-shadow:
     inset 0 1px 0 color-mix(in srgb, var(--ornament-color) 30%, transparent),
-    0 0 8px var(--border-decorative);
+    0 0 8px var(--ornament-border);
 
   // Divider
   @include ornament-divider-mask-reset;
@@ -274,11 +274,11 @@ $std-ornament-border: 2px solid var(--ornament-color);
 
   // Medallion
   --ornament-medallion-border: #{$std-ornament-border};
-  --ornament-medallion-shadow: 0 0 0 4px var(--surface-bg), 0 0 0 6px var(--border-decorative);
+  --ornament-medallion-shadow: 0 0 0 4px var(--ornament-ring-bg), 0 0 0 6px var(--ornament-border);
 
   // Relief .ornament class
   --ornament-box-shadow:
-    inset 0 0 0 2px var(--border-decorative), 0 0 0 1px var(--accent-decorative),
+    inset 0 0 0 2px var(--ornament-border), 0 0 0 1px var(--ornament-base),
     0 0 12px var(--accent-glow);
 }
 
@@ -296,14 +296,14 @@ $std-ornament-border: 2px solid var(--ornament-color);
     1;
   --ornament-frame-inner-display: block;
   --ornament-frame-inner-inset: 4px;
-  --ornament-frame-inner-border: 1px solid var(--border-decorative-strong);
+  --ornament-frame-inner-border: 1px solid var(--ornament-border-strong);
   --ornament-frame-inner-radius: 1px;
   --ornament-frame-inner-opacity: 1;
   --ornament-frame-decor-display: block;
   --ornament-frame-decor-border: #{$std-ornament-border};
-  --ornament-frame-decor-bg: var(--surface-1);
+  --ornament-frame-decor-bg: var(--ornament-surface);
   --ornament-frame-decor-shadow:
-    0 0 8px var(--border-decorative), inset 0 0 4px var(--accent-decorative-subtle);
+    0 0 8px var(--ornament-border), inset 0 0 4px var(--ornament-base-subtle);
 
   // Corner
   --ornament-corner-display: block;
@@ -314,7 +314,7 @@ $std-ornament-border: 2px solid var(--ornament-color);
   --ornament-corner-offset: 4px;
 
   // Edge
-  --ornament-edge-border: 2px solid var(--border-default);
+  --ornament-edge-border: 2px solid var(--ornament-border);
   --ornament-edge-before-display: block;
   --ornament-edge-before-inset: -6px;
   --ornament-edge-before-border: 4px dotted var(--ornament-color);
@@ -329,20 +329,20 @@ $std-ornament-border: 2px solid var(--ornament-color);
   // Medallion
   --ornament-medallion-border: #{$std-ornament-border};
   --ornament-medallion-shadow:
-    0 0 0 4px var(--surface-bg, #fff), 0 0 0 6px var(--border-decorative),
-    inset 0 0 12px var(--accent-decorative-subtle);
+    0 0 0 4px var(--ornament-ring-bg, #fff), 0 0 0 6px var(--ornament-border),
+    inset 0 0 12px var(--ornament-base-subtle);
   --ornament-medallion-crest-display: block;
   --ornament-medallion-crest-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='32' viewBox='0 0 40 32'%3E%3Cpath fill='none' stroke='white' stroke-width='1.5' d='M20 4L8 12L8 24L20 30L32 24L32 12Z'/%3E%3Cpath fill='none' stroke='white' stroke-width='1' opacity='0.5' d='M20 8L12 14L12 22L20 26L28 22L28 14Z'/%3E%3Ccircle cx='20' cy='17' r='3' fill='white' opacity='0.4'/%3E%3C/svg%3E");
 
   // Relief .ornament class
-  --ornament-box-shadow: inset 0 0 0 3px var(--border-decorative), 0 0 8px var(--accent-glow);
+  --ornament-box-shadow: inset 0 0 0 3px var(--ornament-border), 0 0 8px var(--accent-glow);
 }
 
 // ---- beveled ----
 
 @include register-ornament('beveled') {
   // Frame
-  --ornament-frame-border: 3px solid var(--border-strong);
+  --ornament-frame-border: 3px solid var(--ornament-bevel-border);
   --ornament-frame-shadow:
     inset 3px 3px 8px rgb(var(--shadow-color) / 20%),
     inset -3px -3px 8px rgb(var(--highlight-color) / 50%);
@@ -357,7 +357,7 @@ $std-ornament-border: 2px solid var(--ornament-color);
   // Corner
   --ornament-corner-display: block;
   --ornament-corner-size: 24px;
-  --ornament-corner-border: solid var(--border-strong);
+  --ornament-corner-border: solid var(--ornament-bevel-border);
   --ornament-corner-shadow:
     1px 1px 0 rgb(var(--highlight-color) / 15%), -1px -1px 0 rgb(var(--shadow-color) / 8%);
   --ornament-corner-offset: 8px;
@@ -365,7 +365,7 @@ $std-ornament-border: 2px solid var(--ornament-color);
   --ornament-corner-tr-border-width: 3px 3px 0 0;
 
   // Edge
-  --ornament-edge-border: 2px solid var(--border-strong);
+  --ornament-edge-border: 2px solid var(--ornament-bevel-border);
   --ornament-edge-before-display: block;
   --ornament-edge-before-border: 1px solid;
   --ornament-edge-before-inset: 0;
@@ -380,10 +380,10 @@ $std-ornament-border: 2px solid var(--ornament-color);
   --ornament-divider-before-opacity: 0.6;
 
   // Medallion
-  --ornament-medallion-border: 3px solid var(--border-strong);
+  --ornament-medallion-border: 3px solid var(--ornament-bevel-border);
   --ornament-medallion-shadow:
     inset 2px 2px 6px rgb(var(--shadow-color) / 15%),
-    inset -2px -2px 6px rgb(var(--highlight-color) / 40%), 0 0 0 4px var(--surface-bg);
+    inset -2px -2px 6px rgb(var(--highlight-color) / 40%), 0 0 0 4px var(--ornament-ring-bg);
 
   // Relief .ornament class
   --ornament-box-shadow:
@@ -497,7 +497,7 @@ $std-ornament-border: 2px solid var(--ornament-color);
 // ============================================================================
 
 .ornament-column-left {
-  border-left: 3px solid var(--border-decorative);
+  border-left: 3px solid var(--ornament-border);
   padding-left: 1.5rem;
   position: relative;
 
@@ -508,12 +508,12 @@ $std-ornament-border: 2px solid var(--ornament-color);
     top: 0;
     bottom: 0;
     width: 1px;
-    background: var(--accent-decorative-subtle);
+    background: var(--ornament-base-subtle);
   }
 }
 
 .ornament-column-right {
-  border-right: 3px solid var(--border-decorative);
+  border-right: 3px solid var(--ornament-border);
   padding-right: 1.5rem;
   position: relative;
 
@@ -524,7 +524,7 @@ $std-ornament-border: 2px solid var(--ornament-color);
     top: 0;
     bottom: 0;
     width: 1px;
-    background: var(--accent-decorative-subtle);
+    background: var(--ornament-base-subtle);
   }
 }
 

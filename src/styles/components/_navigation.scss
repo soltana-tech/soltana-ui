@@ -6,6 +6,7 @@
 // ---------------------------------------------------------------------------
 
 @use '../variables' as *;
+@use '../base/transitions' as *;
 
 // ============================================================================
 // NAV
@@ -25,10 +26,7 @@
   color: var(--text-secondary);
   border-radius: var(--radius-lg);
   cursor: pointer;
-  transition:
-    color var(--transition-normal) var(--easing-in-out),
-    background-color var(--transition-normal) var(--easing-in-out),
-    box-shadow var(--transition-normal) var(--easing-in-out);
+  @include transition-interactive(var(--transition-normal));
   user-select: none;
   border: none;
   background: none;
@@ -54,9 +52,7 @@
   border-bottom: 2px solid var(--border-default);
   gap: 0;
   overflow-x: auto;
-  transition:
-    background var(--transition-slow) var(--easing-in-out),
-    box-shadow var(--transition-slow) var(--easing-in-out);
+  @include transition-feedback;
 }
 
 .tab {
@@ -114,8 +110,8 @@
     height: 3px;
     background: repeating-linear-gradient(
       90deg,
-      var(--accent-decorative) 0,
-      var(--accent-decorative) 8px,
+      var(--ornament-base) 0,
+      var(--ornament-base) 8px,
       transparent 8px,
       transparent 16px
     );
@@ -175,7 +171,7 @@
   border-spacing: 0 4px;
 
   th {
-    background: linear-gradient(145deg, var(--accent-decorative), var(--accent-decorative-hover));
+    background: linear-gradient(145deg, var(--ornament-base), var(--ornament-base-hover));
     color: var(--text-inverse);
   }
 

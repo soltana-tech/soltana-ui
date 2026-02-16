@@ -7,6 +7,7 @@
 
 @use '../variables' as *;
 @use '../base/register' as *;
+@use '../base/transitions' as *;
 
 // ============================================================================
 // BASE CARD
@@ -18,9 +19,7 @@
   border-radius: var(--radius-2xl);
   box-shadow: var(--relief-shadow);
   @include finish-surface;
-  transition:
-    box-shadow var(--transition-slow) var(--easing-in-out),
-    transform var(--transition-slow) var(--easing-in-out);
+  @include transition-depth;
 }
 
 .card-flat {

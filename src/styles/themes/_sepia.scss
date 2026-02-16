@@ -78,6 +78,29 @@
   --accent-glow: color-mix(in srgb, var(--accent-primary) 12%, transparent);
 
   // =========================================================================
+  // RELIEF BRIDGE TOKENS — consumed by _relief-system.scss
+  // =========================================================================
+
+  --relief-surface-flat: var(--surface-1);
+  --relief-surface-raised: var(--surface-2);
+  --relief-surface-deep: var(--surface-3);
+  --relief-border-default: var(--border-default);
+  --relief-border-subtle: var(--border-subtle);
+
+  // =========================================================================
+  // ORNAMENT BRIDGE TOKENS — consumed by _ornamental.scss, _classical.scss
+  // =========================================================================
+
+  --ornament-base: var(--accent-decorative);
+  --ornament-base-hover: var(--accent-decorative-hover);
+  --ornament-base-subtle: var(--accent-decorative-subtle);
+  --ornament-border: var(--border-decorative);
+  --ornament-border-strong: var(--border-decorative-strong);
+  --ornament-ring-bg: var(--surface-bg);
+  --ornament-surface: var(--surface-1);
+  --ornament-bevel-border: var(--border-strong);
+
+  // =========================================================================
   // COMPONENT TOKENS
   // =========================================================================
 
