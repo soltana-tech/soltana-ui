@@ -8,6 +8,7 @@
 @use 'sass:list';
 @use 'sass:string';
 @use '../variables' as *;
+@use 'generate' as gen;
 
 // Escape leading digits for valid CSS class names (e.g. 2xl → \32 xl)
 @function escape-bp($name) {
@@ -201,36 +202,10 @@
     }
 
     // ========================================================================
-    // GRID COLUMNS
+    // GRID
     // ========================================================================
 
-    @for $i from 1 through 12 {
-      .#{$bp}\:grid-cols-#{$i} {
-        grid-template-columns: repeat(#{$i}, minmax(0, 1fr));
-      }
-
-      .#{$bp}\:col-span-#{$i} {
-        grid-column: span #{$i} / span #{$i};
-      }
-    }
-
-    .#{$bp}\:col-span-full {
-      grid-column: 1 / -1;
-    }
-
-    // ========================================================================
-    // GRID ROWS
-    // ========================================================================
-
-    @for $i from 1 through 6 {
-      .#{$bp}\:grid-rows-#{$i} {
-        grid-template-rows: repeat(#{$i}, minmax(0, 1fr));
-      }
-
-      .#{$bp}\:row-span-#{$i} {
-        grid-row: span #{$i} / span #{$i};
-      }
-    }
+    @include gen.generate-grid('#{$bp}\\:');
 
     // ========================================================================
     // POSITION
@@ -298,76 +273,20 @@
     // GAP
     // ========================================================================
 
-    @each $step in $gap-steps {
-      .#{$bp}\:gap-#{$step} {
-        gap: calc(#{$step} * 0.25rem);
-      }
-
-      .#{$bp}\:gap-x-#{$step} {
-        column-gap: calc(#{$step} * 0.25rem);
-      }
-
-      .#{$bp}\:gap-y-#{$step} {
-        row-gap: calc(#{$step} * 0.25rem);
-      }
-    }
+    @include gen.generate-gap('#{$bp}\\:');
 
     // ========================================================================
     // PADDING (shorthand axes)
     // ========================================================================
 
-    @each $step in $space-keys {
-      $val: calc(#{$step} * 0.25rem);
-
-      .#{$bp}\:p-#{$step} {
-        padding: $val;
-      }
-
-      .#{$bp}\:px-#{$step} {
-        padding-left: $val;
-        padding-right: $val;
-      }
-
-      .#{$bp}\:py-#{$step} {
-        padding-top: $val;
-        padding-bottom: $val;
-      }
-    }
+    @include gen.generate-padding('#{$bp}\\:', $directions: false);
 
     // ========================================================================
     // MARGIN (shorthand axes + auto)
     // ========================================================================
 
-    @each $step in $space-keys {
-      $val: calc(#{$step} * 0.25rem);
-
-      .#{$bp}\:m-#{$step} {
-        margin: $val;
-      }
-
-      .#{$bp}\:mx-#{$step} {
-        margin-left: $val;
-        margin-right: $val;
-      }
-
-      .#{$bp}\:my-#{$step} {
-        margin-top: $val;
-        margin-bottom: $val;
-      }
-    }
-
-    .#{$bp}\:mx-auto {
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .#{$bp}\:ml-auto {
-      margin-left: auto;
-    }
-
-    .#{$bp}\:mr-auto {
-      margin-right: auto;
-    }
+    @include gen.generate-margin('#{$bp}\\:', $directions: false);
+    @include gen.generate-auto-margins('#{$bp}\\:');
 
     // ========================================================================
     // WIDTH (fractional + auto)

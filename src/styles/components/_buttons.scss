@@ -141,7 +141,7 @@
 
 @mixin btn-semantic-glow($color, $color-deep, $glow-base, $glow-hover) {
   background: linear-gradient(145deg, $color, $color-deep);
-  color: #fff;
+  color: var(--text-inverse);
   border-color: transparent;
   box-shadow:
     var(--relief-shadow),

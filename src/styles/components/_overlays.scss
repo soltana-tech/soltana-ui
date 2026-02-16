@@ -15,7 +15,7 @@
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgb(0 0 0 / 60%);
+  background: rgb(var(--shadow-color) / 60%);
   backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
@@ -44,7 +44,7 @@
   border-radius: var(--radius-2xl);
   box-shadow:
     var(--relief-shadow),
-    0 24px 64px rgb(0 0 0 / 30%);
+    0 24px 64px rgb(var(--shadow-color) / 30%);
   @include finish-backdrop;
   width: 100%;
   max-width: 32rem;

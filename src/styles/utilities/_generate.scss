@@ -1,0 +1,125 @@
+// ---------------------------------------------------------------------------
+// Utility Generation Mixins
+// ---------------------------------------------------------------------------
+// Shared loop bodies for spacing, gap, and grid utilities.
+// Consumed by _spacing.scss (non-responsive) and _responsive.scss (prefixed).
+// ---------------------------------------------------------------------------
+
+@use '../variables' as *;
+
+@mixin generate-gap($prefix: '') {
+  @each $step in $gap-steps {
+    .#{$prefix}gap-#{$step} {
+      gap: calc(#{$step} * 0.25rem);
+    }
+    .#{$prefix}gap-x-#{$step} {
+      column-gap: calc(#{$step} * 0.25rem);
+    }
+    .#{$prefix}gap-y-#{$step} {
+      row-gap: calc(#{$step} * 0.25rem);
+    }
+  }
+}
+
+@mixin generate-padding($prefix: '', $directions: true) {
+  @each $step in $space-keys {
+    $val: calc(#{$step} * 0.25rem);
+
+    .#{$prefix}p-#{$step} {
+      padding: $val;
+    }
+    .#{$prefix}px-#{$step} {
+      padding-left: $val;
+      padding-right: $val;
+    }
+    .#{$prefix}py-#{$step} {
+      padding-top: $val;
+      padding-bottom: $val;
+    }
+    @if $directions {
+      .#{$prefix}pt-#{$step} {
+        padding-top: $val;
+      }
+      .#{$prefix}pr-#{$step} {
+        padding-right: $val;
+      }
+      .#{$prefix}pb-#{$step} {
+        padding-bottom: $val;
+      }
+      .#{$prefix}pl-#{$step} {
+        padding-left: $val;
+      }
+    }
+  }
+}
+
+@mixin generate-margin($prefix: '', $directions: true) {
+  @each $step in $space-keys {
+    $val: calc(#{$step} * 0.25rem);
+
+    .#{$prefix}m-#{$step} {
+      margin: $val;
+    }
+    .#{$prefix}mx-#{$step} {
+      margin-left: $val;
+      margin-right: $val;
+    }
+    .#{$prefix}my-#{$step} {
+      margin-top: $val;
+      margin-bottom: $val;
+    }
+    @if $directions {
+      .#{$prefix}mt-#{$step} {
+        margin-top: $val;
+      }
+      .#{$prefix}mr-#{$step} {
+        margin-right: $val;
+      }
+      .#{$prefix}mb-#{$step} {
+        margin-bottom: $val;
+      }
+      .#{$prefix}ml-#{$step} {
+        margin-left: $val;
+      }
+    }
+  }
+}
+
+@mixin generate-auto-margins($prefix: '') {
+  .#{$prefix}mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .#{$prefix}ml-auto {
+    margin-left: auto;
+  }
+
+  .#{$prefix}mr-auto {
+    margin-right: auto;
+  }
+}
+
+@mixin generate-grid($prefix: '') {
+  @for $i from 1 through 12 {
+    .#{$prefix}grid-cols-#{$i} {
+      grid-template-columns: repeat(#{$i}, minmax(0, 1fr));
+    }
+    .#{$prefix}col-span-#{$i} {
+      grid-column: span #{$i} / span #{$i};
+    }
+  }
+
+  .#{$prefix}col-span-full {
+    grid-column: 1 / -1;
+  }
+
+  @for $i from 1 through 6 {
+    .#{$prefix}grid-rows-#{$i} {
+      grid-template-rows: repeat(#{$i}, minmax(0, 1fr));
+    }
+    .#{$prefix}row-span-#{$i} {
+      grid-row: span #{$i} / span #{$i};
+    }
+  }
+}

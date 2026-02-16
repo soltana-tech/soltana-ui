@@ -5,6 +5,7 @@
 // ---------------------------------------------------------------------------
 
 @use '../variables' as *;
+@use 'generate' as gen;
 
 // ============================================================================
 // DISPLAY
@@ -175,27 +176,7 @@
   display: inline-grid;
 }
 
-@for $i from 1 through 12 {
-  .grid-cols-#{$i} {
-    grid-template-columns: repeat(#{$i}, minmax(0, 1fr));
-  }
-  .col-span-#{$i} {
-    grid-column: span #{$i} / span #{$i};
-  }
-}
-
-.col-span-full {
-  grid-column: 1 / -1;
-}
-
-@for $i from 1 through 6 {
-  .grid-rows-#{$i} {
-    grid-template-rows: repeat(#{$i}, minmax(0, 1fr));
-  }
-  .row-span-#{$i} {
-    grid-row: span #{$i} / span #{$i};
-  }
-}
+@include gen.generate-grid;
 
 // ============================================================================
 // POSITIONING
