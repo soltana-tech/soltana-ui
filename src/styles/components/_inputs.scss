@@ -22,11 +22,10 @@
   letter-spacing: var(--tracking-refined);
   line-height: 1.5;
   color: var(--text-primary);
-  background-color: var(--input-bg);
   border: 1px solid var(--input-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--relief-shadow-inset);
-  @include finish-backdrop;
+  @include finish-surface(var(--input-bg));
   transition:
     border-color var(--transition-slow) var(--easing-in-out),
     box-shadow var(--transition-slow) var(--easing-in-out);

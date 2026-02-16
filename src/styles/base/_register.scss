@@ -46,7 +46,9 @@
 // Shared Property Mixins
 // ---------------------------------------------------------------------------
 
-@mixin finish-backdrop {
+@mixin finish-surface($bg: var(--relief-bg)) {
+  background-color: color-mix(in srgb, #{$bg} calc(var(--finish-opacity, 1) * 100%), transparent);
+  background-image: var(--finish-sheen, none), var(--finish-overlay, none);
   backdrop-filter: blur(var(--finish-blur)) saturate(var(--finish-saturation));
 }
 

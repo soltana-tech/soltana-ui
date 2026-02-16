@@ -6,6 +6,7 @@
 // ---------------------------------------------------------------------------
 
 @use 'sass:list';
+@use 'sass:string';
 @use '../variables' as *;
 @use '../base/register' as *;
 
@@ -28,11 +29,10 @@
   text-transform: uppercase;
   border: 1px solid var(--relief-border);
   border-radius: var(--radius-lg);
-  background: var(--relief-bg);
   color: var(--text-primary);
   cursor: pointer;
   box-shadow: var(--relief-shadow);
-  @include finish-backdrop;
+  @include finish-surface;
   transition:
     background var(--transition-slow) var(--easing-in-out),
     color var(--transition-normal) var(--easing-in-out),
@@ -108,6 +108,7 @@
 
 .btn-ghost {
   background-color: transparent;
+  background-image: none;
   color: var(--text-primary);
   border-color: transparent;
   box-shadow: none;
@@ -125,6 +126,7 @@
 
 .btn-outline {
   background-color: transparent;
+  background-image: none;
   border: 2px solid var(--accent-primary);
   color: var(--accent-primary);
   box-shadow: none;
@@ -297,22 +299,45 @@
 // ---- Per-element override consuming selectors (specificity (0,2,0)) ----
 
 $btn-ornament-names: gilt, baroque, beveled, faceted;
+$sel-base: ();
+$sel-hover: ();
+$sel-active: ();
 
 @each $name in $btn-ornament-names {
-  .ornament-#{$name} .btn-ornament,
-  .btn-ornament.ornament-#{$name} {
-    @include btn-ornament-consume;
-  }
+  $sel-base: list.append($sel-base, string.unquote('.ornament-#{$name} .btn-ornament'), comma);
+  $sel-base: list.append($sel-base, string.unquote('.btn-ornament.ornament-#{$name}'), comma);
+  $sel-hover: list.append(
+    $sel-hover,
+    string.unquote('.ornament-#{$name} .btn-ornament:hover'),
+    comma
+  );
+  $sel-hover: list.append(
+    $sel-hover,
+    string.unquote('.btn-ornament.ornament-#{$name}:hover'),
+    comma
+  );
+  $sel-active: list.append(
+    $sel-active,
+    string.unquote('.ornament-#{$name} .btn-ornament:active'),
+    comma
+  );
+  $sel-active: list.append(
+    $sel-active,
+    string.unquote('.btn-ornament.ornament-#{$name}:active'),
+    comma
+  );
+}
 
-  .ornament-#{$name} .btn-ornament:hover,
-  .btn-ornament.ornament-#{$name}:hover {
-    @include btn-ornament-consume-hover;
-  }
+#{$sel-base} {
+  @include btn-ornament-consume;
+}
 
-  .ornament-#{$name} .btn-ornament:active,
-  .btn-ornament.ornament-#{$name}:active {
-    @include btn-ornament-consume-active;
-  }
+#{$sel-hover} {
+  @include btn-ornament-consume-hover;
+}
+
+#{$sel-active} {
+  @include btn-ornament-consume-active;
 }
 
 // ---- Tier token blocks ----

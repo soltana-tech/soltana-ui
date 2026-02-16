@@ -32,7 +32,6 @@
   --neu-shadow-light: rgb(var(--highlight-color) / 5%);
   --neu-shadow-mid: rgb(var(--shadow-color) / 40%);
   --neu-highlight: rgb(var(--highlight-color) / 8%);
-  --neu-accent-glow: var(--accent-glow);
 }
 
 [data-theme='light'],
@@ -48,6 +47,7 @@
 [data-theme='sepia'],
 .theme-sepia {
   // Neumorphic — warm parchment depth
+  --neu-bg: var(--surface-3);
   --neu-shadow-dark: rgb(var(--shadow-color) / 45%);
   --neu-shadow-light: rgb(var(--highlight-color) / 82%);
   --neu-shadow-mid: rgb(var(--shadow-color) / 28%);
@@ -176,7 +176,7 @@
   --finish-texture-opacity: 0;
   --finish-overlay: linear-gradient(
     135deg,
-    rgb(var(--accent-glow) / 8%) 0%,
+    color-mix(in srgb, var(--accent-glow) 8%, transparent) 0%,
     transparent 50%,
     rgb(var(--shadow-color) / 6%) 100%
   );

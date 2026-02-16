@@ -5,6 +5,7 @@
 // Cinzel Decorative for ornamental display moments.
 // ---------------------------------------------------------------------------
 
+@use 'sass:list';
 @use '../variables' as *;
 
 // ---- Base typography ----
@@ -155,28 +156,32 @@ b {
 }
 
 // ---- Display text classes (Cinzel serif, editorial) ----
-.display-lg {
-  font-family: var(--font-serif);
-  font-size: var(--text-7xl);
-  font-weight: var(--font-bold);
-  line-height: 1.05;
-  letter-spacing: var(--tracking-display);
-}
+$display-sizes: (
+  lg: (
+    var(--text-7xl),
+    1.05,
+    var(--tracking-display),
+  ),
+  md: (
+    var(--text-6xl),
+    1.1,
+    var(--tracking-display),
+  ),
+  sm: (
+    var(--text-5xl),
+    1.15,
+    var(--tracking-elegant),
+  ),
+);
 
-.display-md {
-  font-family: var(--font-serif);
-  font-size: var(--text-6xl);
-  font-weight: var(--font-bold);
-  line-height: 1.1;
-  letter-spacing: var(--tracking-display);
-}
-
-.display-sm {
-  font-family: var(--font-serif);
-  font-size: var(--text-5xl);
-  font-weight: var(--font-bold);
-  line-height: 1.15;
-  letter-spacing: var(--tracking-elegant);
+@each $name, $vals in $display-sizes {
+  .display-#{$name} {
+    font-family: var(--font-serif);
+    font-size: list.nth($vals, 1);
+    font-weight: var(--font-bold);
+    line-height: list.nth($vals, 2);
+    letter-spacing: list.nth($vals, 3);
+  }
 }
 
 // Ornamental display — Cinzel Decorative for hero/page titles
@@ -333,25 +338,13 @@ b {
   white-space: nowrap;
 }
 
-.line-clamp-1 {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.line-clamp-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+@for $i from 1 through 3 {
+  .line-clamp-#{$i} {
+    display: -webkit-box;
+    -webkit-line-clamp: #{$i};
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }
 
 // ---- Word break ----

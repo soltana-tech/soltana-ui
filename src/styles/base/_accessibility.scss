@@ -26,10 +26,12 @@
     --border-subtle: var(--border-decorative);
     --border-strong: var(--accent-decorative);
 
-    // Eliminate translucency
+    // Eliminate translucency and decorative overlays
     --finish-blur: 0px;
     --finish-saturation: 100%;
     --finish-opacity: 1;
+    --finish-overlay: none;
+    --finish-sheen: none;
 
     // Enhanced focus ring
     --focus-ring-width: 3px;

@@ -69,9 +69,8 @@
   border-radius: var(--radius-full);
   border: 1px solid var(--relief-border);
   color: var(--text-secondary);
-  background: var(--relief-bg);
   box-shadow: var(--relief-shadow);
-  @include finish-backdrop;
+  @include finish-surface;
   transition:
     background var(--transition-normal) var(--easing-in-out),
     box-shadow var(--transition-normal) var(--easing-in-out),

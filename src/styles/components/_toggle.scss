@@ -15,9 +15,8 @@
   height: 2rem;
   border: 1px solid var(--relief-border);
   border-radius: var(--radius-full);
-  background: var(--relief-bg);
   box-shadow: var(--relief-shadow-inset-lg);
-  @include finish-backdrop;
+  @include finish-surface;
   cursor: pointer;
   transition:
     background var(--transition-slow) var(--easing-in-out),

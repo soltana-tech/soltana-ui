@@ -14,11 +14,10 @@
 
 .card {
   position: relative;
-  background: var(--relief-bg);
   border: 1px solid var(--relief-border);
   border-radius: var(--radius-2xl);
   box-shadow: var(--relief-shadow);
-  @include finish-backdrop;
+  @include finish-surface;
   transition:
     box-shadow var(--transition-slow) var(--easing-in-out),
     transform var(--transition-slow) var(--easing-in-out);

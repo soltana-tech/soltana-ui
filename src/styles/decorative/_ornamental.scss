@@ -14,6 +14,22 @@
 
 $std-ornament-border: 2px solid var(--ornament-color);
 
+// Shared divider token resets for mask-based ornament tiers (gilt, baroque, beveled).
+// Each tier @includes this, then sets its own height, mask, and mask-size.
+@mixin ornament-divider-mask-reset {
+  --ornament-divider-bg: none;
+  --ornament-divider-opacity: 1;
+  --ornament-divider-before-inset: 0;
+  --ornament-divider-before-top: auto;
+  --ornament-divider-before-left: auto;
+  --ornament-divider-before-width: auto;
+  --ornament-divider-before-height: auto;
+  --ornament-divider-before-transform: none;
+  --ornament-divider-before-bg: transparent;
+  --ornament-divider-before-bg-color: var(--ornament-color);
+  --ornament-divider-before-radius: 0;
+}
+
 // ============================================================================
 // GLOBAL ORNAMENT TOKENS
 // ============================================================================
@@ -251,18 +267,8 @@ $std-ornament-border: 2px solid var(--ornament-color);
     0 0 8px var(--border-decorative);
 
   // Divider
+  @include ornament-divider-mask-reset;
   --ornament-divider-height: 28px;
-  --ornament-divider-bg: none;
-  --ornament-divider-opacity: 1;
-  --ornament-divider-before-inset: 0;
-  --ornament-divider-before-top: auto;
-  --ornament-divider-before-left: auto;
-  --ornament-divider-before-width: auto;
-  --ornament-divider-before-height: auto;
-  --ornament-divider-before-transform: none;
-  --ornament-divider-before-bg: transparent;
-  --ornament-divider-before-bg-color: var(--ornament-color);
-  --ornament-divider-before-radius: 0;
   --ornament-divider-before-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'%3E%3Cpath fill='none' stroke='white' stroke-width='1' stroke-linecap='round' d='M20 14c0-6 6-10 12-6s6 12 0 12-12-6-12-12 M52 14c8-8 16 0 16 0s8 8 16 0 M100 8c4 0 6 3 6 6s-2 6-6 6-6-3-6-6 2-6 6-6 M120 14l4-6 4 6-4 6z M140 14c0-6 6-10 12-6s6 12 0 12-12-6-12-12 M172 14c8-8 16 0 16 0s8 8 16 0'/%3E%3Ccircle cx='120' cy='14' r='2' fill='white' opacity='0.7'/%3E%3Ccircle cx='20' cy='14' r='1.5' fill='white' opacity='0.4'/%3E%3Ccircle cx='220' cy='14' r='1.5' fill='white' opacity='0.4'/%3E%3C/svg%3E");
   --ornament-divider-before-mask-size: 240px 28px;
 
@@ -315,18 +321,8 @@ $std-ornament-border: 2px solid var(--ornament-color);
   --ornament-edge-before-opacity: 0.3;
 
   // Divider
+  @include ornament-divider-mask-reset;
   --ornament-divider-height: 32px;
-  --ornament-divider-bg: none;
-  --ornament-divider-opacity: 1;
-  --ornament-divider-before-inset: 0;
-  --ornament-divider-before-top: auto;
-  --ornament-divider-before-left: auto;
-  --ornament-divider-before-width: auto;
-  --ornament-divider-before-height: auto;
-  --ornament-divider-before-transform: none;
-  --ornament-divider-before-bg: transparent;
-  --ornament-divider-before-bg-color: var(--ornament-color);
-  --ornament-divider-before-radius: 0;
   --ornament-divider-before-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='32' viewBox='0 0 200 32'%3E%3Cpath fill='none' stroke='white' stroke-width='1.5' stroke-linecap='round' d='M10 16c0-8 12-8 12 0s12 8 12 0-12-8-12 0 M56 16c0-8 12-8 12 0s12 8 12 0-12-8-12 0 M100 8l0 16 M122 16c0-8 12-8 12 0s12 8 12 0-12-8-12 0 M166 16c0-8 12-8 12 0s12 8 12 0-12-8-12 0'/%3E%3Ccircle cx='100' cy='16' r='4' fill='white' opacity='0.6'/%3E%3C/svg%3E");
   --ornament-divider-before-mask-size: 200px 32px;
 
@@ -376,18 +372,8 @@ $std-ornament-border: 2px solid var(--ornament-color);
   --ornament-edge-before-opacity: 1;
 
   // Divider
+  @include ornament-divider-mask-reset;
   --ornament-divider-height: 24px;
-  --ornament-divider-bg: none;
-  --ornament-divider-opacity: 1;
-  --ornament-divider-before-inset: 0;
-  --ornament-divider-before-top: auto;
-  --ornament-divider-before-left: auto;
-  --ornament-divider-before-width: auto;
-  --ornament-divider-before-height: auto;
-  --ornament-divider-before-transform: none;
-  --ornament-divider-before-bg: transparent;
-  --ornament-divider-before-bg-color: var(--ornament-color);
-  --ornament-divider-before-radius: 0;
   --ornament-divider-before-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='white' stroke-width='1.5' d='M0 12h6v6h12v-12h-12v6'/%3E%3C/svg%3E");
   --ornament-divider-before-mask-size: 24px 24px;
   --ornament-divider-before-mask-repeat: repeat-x;
