@@ -1,0 +1,440 @@
+// ---------------------------------------------------------------------------
+// Responsive Utilities
+// ---------------------------------------------------------------------------
+// Breakpoint-prefixed layout utilities. Visual/tier classes are excluded —
+// responsive concerns are limited to the layout sphere.
+// ---------------------------------------------------------------------------
+
+@use 'sass:list';
+@use 'sass:string';
+@use '../variables' as *;
+
+// Escape leading digits for valid CSS class names (e.g. 2xl → \32 xl)
+@function escape-bp($name) {
+  $str: '#{$name}';
+  $first: string.slice($str, 1, 1);
+  $digits: ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
+  @if list.index($digits, $first) {
+    @return '\\3' + $first + ' ' + string.slice($str, 2);
+  }
+  @return $str;
+}
+
+@each $bp-name, $bp-value in $breakpoints {
+  $bp: escape-bp($bp-name);
+
+  @media (min-width: #{$bp-value}) {
+    // ========================================================================
+    // DISPLAY
+    // ========================================================================
+
+    .#{$bp}\:block {
+      display: block;
+    }
+
+    .#{$bp}\:inline-block {
+      display: inline-block;
+    }
+
+    .#{$bp}\:inline {
+      display: inline;
+    }
+
+    .#{$bp}\:flex {
+      display: flex;
+    }
+
+    .#{$bp}\:inline-flex {
+      display: inline-flex;
+    }
+
+    .#{$bp}\:grid {
+      display: grid;
+    }
+
+    .#{$bp}\:inline-grid {
+      display: inline-grid;
+    }
+
+    .#{$bp}\:hidden {
+      display: none;
+    }
+
+    .#{$bp}\:contents {
+      display: contents;
+    }
+
+    // ========================================================================
+    // FLEX DIRECTION
+    // ========================================================================
+
+    .#{$bp}\:flex-row {
+      flex-direction: row;
+    }
+
+    .#{$bp}\:flex-col {
+      flex-direction: column;
+    }
+
+    .#{$bp}\:flex-row-reverse {
+      flex-direction: row-reverse;
+    }
+
+    .#{$bp}\:flex-col-reverse {
+      flex-direction: column-reverse;
+    }
+
+    // ========================================================================
+    // FLEX WRAP
+    // ========================================================================
+
+    .#{$bp}\:flex-wrap {
+      flex-wrap: wrap;
+    }
+
+    .#{$bp}\:flex-nowrap {
+      flex-wrap: nowrap;
+    }
+
+    // ========================================================================
+    // FLEX SIZING
+    // ========================================================================
+
+    .#{$bp}\:flex-1 {
+      flex: 1 1 0%;
+    }
+
+    .#{$bp}\:flex-auto {
+      flex: 1 1 auto;
+    }
+
+    .#{$bp}\:flex-initial {
+      flex: 0 1 auto;
+    }
+
+    .#{$bp}\:flex-none {
+      flex: none;
+    }
+
+    .#{$bp}\:grow {
+      flex-grow: 1;
+    }
+
+    .#{$bp}\:grow-0 {
+      flex-grow: 0;
+    }
+
+    .#{$bp}\:shrink {
+      flex-shrink: 1;
+    }
+
+    .#{$bp}\:shrink-0 {
+      flex-shrink: 0;
+    }
+
+    // ========================================================================
+    // ALIGNMENT
+    // ========================================================================
+
+    .#{$bp}\:items-start {
+      align-items: flex-start;
+    }
+
+    .#{$bp}\:items-center {
+      align-items: center;
+    }
+
+    .#{$bp}\:items-end {
+      align-items: flex-end;
+    }
+
+    .#{$bp}\:items-baseline {
+      align-items: baseline;
+    }
+
+    .#{$bp}\:items-stretch {
+      align-items: stretch;
+    }
+
+    .#{$bp}\:justify-start {
+      justify-content: flex-start;
+    }
+
+    .#{$bp}\:justify-center {
+      justify-content: center;
+    }
+
+    .#{$bp}\:justify-end {
+      justify-content: flex-end;
+    }
+
+    .#{$bp}\:justify-between {
+      justify-content: space-between;
+    }
+
+    .#{$bp}\:justify-around {
+      justify-content: space-around;
+    }
+
+    .#{$bp}\:justify-evenly {
+      justify-content: space-evenly;
+    }
+
+    .#{$bp}\:self-auto {
+      align-self: auto;
+    }
+
+    .#{$bp}\:self-start {
+      align-self: flex-start;
+    }
+
+    .#{$bp}\:self-center {
+      align-self: center;
+    }
+
+    .#{$bp}\:self-end {
+      align-self: flex-end;
+    }
+
+    .#{$bp}\:self-stretch {
+      align-self: stretch;
+    }
+
+    // ========================================================================
+    // GRID COLUMNS
+    // ========================================================================
+
+    @for $i from 1 through 12 {
+      .#{$bp}\:grid-cols-#{$i} {
+        grid-template-columns: repeat(#{$i}, minmax(0, 1fr));
+      }
+
+      .#{$bp}\:col-span-#{$i} {
+        grid-column: span #{$i} / span #{$i};
+      }
+    }
+
+    .#{$bp}\:col-span-full {
+      grid-column: 1 / -1;
+    }
+
+    // ========================================================================
+    // GRID ROWS
+    // ========================================================================
+
+    @for $i from 1 through 6 {
+      .#{$bp}\:grid-rows-#{$i} {
+        grid-template-rows: repeat(#{$i}, minmax(0, 1fr));
+      }
+
+      .#{$bp}\:row-span-#{$i} {
+        grid-row: span #{$i} / span #{$i};
+      }
+    }
+
+    // ========================================================================
+    // POSITION
+    // ========================================================================
+
+    .#{$bp}\:relative {
+      position: relative;
+    }
+
+    .#{$bp}\:absolute {
+      position: absolute;
+    }
+
+    .#{$bp}\:fixed {
+      position: fixed;
+    }
+
+    .#{$bp}\:sticky {
+      position: sticky;
+    }
+
+    .#{$bp}\:static {
+      position: static;
+    }
+
+    .#{$bp}\:inset-0 {
+      inset: 0;
+    }
+
+    .#{$bp}\:top-0 {
+      top: 0;
+    }
+
+    .#{$bp}\:right-0 {
+      right: 0;
+    }
+
+    .#{$bp}\:bottom-0 {
+      bottom: 0;
+    }
+
+    .#{$bp}\:left-0 {
+      left: 0;
+    }
+
+    // ========================================================================
+    // OVERFLOW
+    // ========================================================================
+
+    @each $val in $overflow-values {
+      .#{$bp}\:overflow-#{$val} {
+        overflow: $val;
+      }
+
+      .#{$bp}\:overflow-x-#{$val} {
+        overflow-x: $val;
+      }
+
+      .#{$bp}\:overflow-y-#{$val} {
+        overflow-y: $val;
+      }
+    }
+
+    // ========================================================================
+    // GAP
+    // ========================================================================
+
+    @each $step in $gap-steps {
+      .#{$bp}\:gap-#{$step} {
+        gap: calc(#{$step} * 0.25rem);
+      }
+
+      .#{$bp}\:gap-x-#{$step} {
+        column-gap: calc(#{$step} * 0.25rem);
+      }
+
+      .#{$bp}\:gap-y-#{$step} {
+        row-gap: calc(#{$step} * 0.25rem);
+      }
+    }
+
+    // ========================================================================
+    // PADDING (shorthand axes)
+    // ========================================================================
+
+    @each $step in $space-keys {
+      $val: calc(#{$step} * 0.25rem);
+
+      .#{$bp}\:p-#{$step} {
+        padding: $val;
+      }
+
+      .#{$bp}\:px-#{$step} {
+        padding-left: $val;
+        padding-right: $val;
+      }
+
+      .#{$bp}\:py-#{$step} {
+        padding-top: $val;
+        padding-bottom: $val;
+      }
+    }
+
+    // ========================================================================
+    // MARGIN (shorthand axes + auto)
+    // ========================================================================
+
+    @each $step in $space-keys {
+      $val: calc(#{$step} * 0.25rem);
+
+      .#{$bp}\:m-#{$step} {
+        margin: $val;
+      }
+
+      .#{$bp}\:mx-#{$step} {
+        margin-left: $val;
+        margin-right: $val;
+      }
+
+      .#{$bp}\:my-#{$step} {
+        margin-top: $val;
+        margin-bottom: $val;
+      }
+    }
+
+    .#{$bp}\:mx-auto {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .#{$bp}\:ml-auto {
+      margin-left: auto;
+    }
+
+    .#{$bp}\:mr-auto {
+      margin-right: auto;
+    }
+
+    // ========================================================================
+    // WIDTH (fractional + auto)
+    // ========================================================================
+
+    .#{$bp}\:w-auto {
+      width: auto;
+    }
+
+    @each $name, $val in $size-fractions {
+      .#{$bp}\:w-#{$name} {
+        width: $val;
+      }
+    }
+
+    // ========================================================================
+    // MAX WIDTH
+    // ========================================================================
+
+    @each $name, $val in $max-widths {
+      .#{$bp}\:max-w-#{$name} {
+        max-width: $val;
+      }
+    }
+
+    // ========================================================================
+    // TEXT ALIGN
+    // ========================================================================
+
+    .#{$bp}\:text-left {
+      text-align: left;
+    }
+
+    .#{$bp}\:text-center {
+      text-align: center;
+    }
+
+    .#{$bp}\:text-right {
+      text-align: right;
+    }
+
+    // ========================================================================
+    // VISIBILITY
+    // ========================================================================
+
+    .#{$bp}\:visible {
+      visibility: visible;
+    }
+
+    .#{$bp}\:invisible {
+      visibility: hidden;
+    }
+
+    // ========================================================================
+    // ORDER
+    // ========================================================================
+
+    .#{$bp}\:order-first {
+      order: -9999;
+    }
+
+    .#{$bp}\:order-last {
+      order: 9999;
+    }
+
+    .#{$bp}\:order-none {
+      order: 0;
+    }
+  }
+}
