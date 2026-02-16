@@ -190,40 +190,166 @@ $opacities: (0, 5, 10, 20, 25, 30, 40, 50, 60, 70, 75, 80, 90, 95, 100);
 // TRANSFORMS
 // ============================================================================
 
-.scale-95 {
-  transform: scale(0.95);
+// --- Scale ---
+
+$scale-values: (0, 50, 75, 90, 95, 100, 105, 110, 125, 150);
+
+@each $val in $scale-values {
+  .scale-#{$val} {
+    transform: scale(calc(#{$val} / 100));
+  }
 }
 
-.scale-100 {
-  transform: scale(1);
+// --- Rotate ---
+
+$rotate-values: (0, 1, 2, 3, 6, 12, 45, 90, 180);
+
+@each $val in $rotate-values {
+  .rotate-#{$val} {
+    transform: rotate(#{$val}deg);
+  }
+
+  @if $val != 0 {
+    .-rotate-#{$val} {
+      transform: rotate(-#{$val}deg);
+    }
+  }
 }
 
-.scale-105 {
-  transform: scale(1.05);
+// --- Translate ---
+
+$translate-steps: (0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 64);
+
+@each $step in $translate-steps {
+  .translate-x-#{$step} {
+    transform: translateX(calc(#{$step} * 0.25rem));
+  }
+
+  .translate-y-#{$step} {
+    transform: translateY(calc(#{$step} * 0.25rem));
+  }
+
+  @if $step != 0 {
+    .-translate-x-#{$step} {
+      transform: translateX(calc(#{$step} * -0.25rem));
+    }
+
+    .-translate-y-#{$step} {
+      transform: translateY(calc(#{$step} * -0.25rem));
+    }
+  }
 }
 
-.scale-110 {
-  transform: scale(1.1);
+// Percentage-based translate
+.translate-x-1\/2 {
+  transform: translateX(50%);
 }
 
-.rotate-45 {
-  transform: rotate(45deg);
+.translate-y-1\/2 {
+  transform: translateY(50%);
 }
 
-.rotate-90 {
-  transform: rotate(90deg);
+.translate-x-full {
+  transform: translateX(100%);
 }
 
-.rotate-180 {
-  transform: rotate(180deg);
+.translate-y-full {
+  transform: translateY(100%);
 }
 
-.-rotate-45 {
-  transform: rotate(-45deg);
+.-translate-x-1\/2 {
+  transform: translateX(-50%);
 }
 
-.-rotate-90 {
-  transform: rotate(-90deg);
+.-translate-y-1\/2 {
+  transform: translateY(-50%);
+}
+
+.-translate-x-full {
+  transform: translateX(-100%);
+}
+
+.-translate-y-full {
+  transform: translateY(-100%);
+}
+
+// --- Skew ---
+
+$skew-values: (1, 2, 3, 6, 12);
+
+@each $val in $skew-values {
+  .skew-x-#{$val} {
+    transform: skewX(#{$val}deg);
+  }
+
+  .skew-y-#{$val} {
+    transform: skewY(#{$val}deg);
+  }
+
+  .-skew-x-#{$val} {
+    transform: skewX(-#{$val}deg);
+  }
+
+  .-skew-y-#{$val} {
+    transform: skewY(-#{$val}deg);
+  }
+}
+
+// ============================================================================
+// ANIMATIONS
+// ============================================================================
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ping {
+  75%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-ping {
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+.animate-none {
+  animation: none;
 }
 
 // ============================================================================

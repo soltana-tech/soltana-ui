@@ -245,28 +245,39 @@
 // OVERFLOW
 // ============================================================================
 
-.overflow-auto {
-  overflow: auto;
+$overflow-values: (auto, hidden, visible, scroll, clip);
+
+@each $val in $overflow-values {
+  .overflow-#{$val} {
+    overflow: $val;
+  }
+
+  .overflow-x-#{$val} {
+    overflow-x: $val;
+  }
+
+  .overflow-y-#{$val} {
+    overflow-y: $val;
+  }
 }
 
-.overflow-hidden {
-  overflow: hidden;
-}
+// ============================================================================
+// ASPECT RATIO
+// ============================================================================
 
-.overflow-visible {
-  overflow: visible;
-}
+$aspect-ratios: (
+  auto: auto,
+  square: '1 / 1',
+  video: '16 / 9',
+  photo: '4 / 3',
+  portrait: '3 / 4',
+  wide: '21 / 9',
+);
 
-.overflow-scroll {
-  overflow: scroll;
-}
-
-.overflow-x-auto {
-  overflow-x: auto;
-}
-
-.overflow-y-auto {
-  overflow-y: auto;
+@each $name, $val in $aspect-ratios {
+  .aspect-#{$name} {
+    aspect-ratio: #{$val};
+  }
 }
 
 // ============================================================================
