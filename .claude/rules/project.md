@@ -28,7 +28,7 @@ No existing CSS design system offers a composable, orthogonal tier architecture 
 
 ## Issue Tracking
 
-All project issues are tracked via GitHub Issues on the `soltana-tech/soltana-ui` repository. Use the `/issues` skill to interact with them. Reference issues in commits with `#N` and auto-close with `Fixes #N`.
+All project issues are tracked via GitHub Issues on the `soltana-tech/soltana-ui` repository. Use the `/issues` skill to interact with them.
 
 ### Issue Types
 
