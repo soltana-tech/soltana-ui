@@ -70,8 +70,8 @@
   }
 }
 
-// ---- Screen Reader Only ----
-.sr-only {
+// ---- Visually Hidden (shared by .sr-only, .sr-only-focusable, .aria-live-region) ----
+@mixin visually-hidden {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -83,18 +83,15 @@
   border-width: 0;
 }
 
+// ---- Screen Reader Only ----
+.sr-only {
+  @include visually-hidden;
+}
+
 // Focusable screen reader only — becomes visible on focus
 .sr-only-focusable {
   &:not(:focus, :focus-within) {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-    border-width: 0;
+    @include visually-hidden;
   }
 }
 
@@ -124,13 +121,5 @@
 
 // ---- Live Region ----
 .aria-live-region {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-  border-width: 0;
+  @include visually-hidden;
 }

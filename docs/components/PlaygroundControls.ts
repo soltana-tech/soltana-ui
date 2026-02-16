@@ -144,6 +144,8 @@ export class PlaygroundControls {
     document.querySelectorAll('.toggle').forEach((toggle) => {
       toggle.addEventListener('click', () => {
         toggle.classList.toggle('active');
+        const isActive = toggle.classList.contains('active');
+        toggle.setAttribute('aria-checked', String(isActive));
       });
     });
   }

@@ -13,6 +13,8 @@
 // The two tiers are orthogonal — every combination produces a valid result.
 // ---------------------------------------------------------------------------
 
+@use 'register' as *;
+
 // ============================================================================
 // RELIEF PRIMITIVES
 // ============================================================================
@@ -53,41 +55,12 @@
 }
 
 // ============================================================================
-// DEFAULT VALUES (neumorphic baseline — primitives defined above)
-// ============================================================================
-// Ensures components render correctly even without initSoltana().
-
-:root {
-  // Relief defaults (neumorphic baseline)
-  --relief-bg: var(--neu-bg);
-  --relief-shadow-sm: 2px 2px 5px var(--neu-shadow-dark), -2px -2px 5px var(--neu-shadow-light);
-  --relief-shadow: 3px 3px 8px var(--neu-shadow-dark), -3px -3px 8px var(--neu-shadow-light);
-  --relief-shadow-lg: 6px 6px 16px var(--neu-shadow-dark), -5px -5px 14px var(--neu-shadow-light);
-  --relief-shadow-inset-sm:
-    inset 1px 1px 3px var(--neu-shadow-dark), inset -1px -1px 3px var(--neu-shadow-light);
-  --relief-shadow-inset:
-    inset 2px 2px 5px var(--neu-shadow-dark), inset -2px -2px 5px var(--neu-shadow-light);
-  --relief-shadow-inset-lg:
-    inset 4px 4px 10px var(--neu-shadow-dark), inset -4px -4px 10px var(--neu-shadow-light);
-  --relief-border: var(--border-default);
-
-  // Finish defaults (matte baseline)
-  --finish-blur: 0px;
-  --finish-saturation: 100%;
-  --finish-opacity: 1;
-  --finish-texture-opacity: 0;
-  --finish-overlay: none;
-  --finish-sheen: none;
-}
-
-// ============================================================================
 // RELIEF SELECTORS
 // ============================================================================
 // Data-attribute selectors activated by initSoltana().
 // Class selectors available for per-element overrides.
 
-[data-relief='neu'],
-.relief-neu {
+@include register-relief('neu') {
   --relief-bg: var(--neu-bg);
   --relief-shadow-sm: 2px 2px 5px var(--neu-shadow-dark), -2px -2px 5px var(--neu-shadow-light);
   --relief-shadow: 3px 3px 8px var(--neu-shadow-dark), -3px -3px 8px var(--neu-shadow-light);
@@ -101,8 +74,7 @@
   --relief-border: var(--border-default);
 }
 
-[data-relief='flat'],
-.relief-flat {
+@include register-relief('flat') {
   --relief-bg: var(--surface-1);
   --relief-shadow-sm: none;
   --relief-shadow: none;
@@ -113,20 +85,20 @@
   --relief-border: 1px solid var(--border-default);
 }
 
-[data-relief='soft'],
-.relief-soft {
+@include register-relief('soft') {
   --relief-bg: var(--surface-1);
-  --relief-shadow-sm: 0 1px 2px rgb(0 0 0 / 5%);
-  --relief-shadow: 0 1px 3px rgb(0 0 0 / 8%), 0 1px 2px rgb(0 0 0 / 6%);
-  --relief-shadow-lg: 0 4px 8px rgb(0 0 0 / 10%), 0 2px 4px rgb(0 0 0 / 6%);
-  --relief-shadow-inset-sm: inset 0 1px 0 rgb(255 255 255 / 3%);
-  --relief-shadow-inset: inset 0 1px 0 rgb(255 255 255 / 4%);
-  --relief-shadow-inset-lg: inset 0 2px 0 rgb(255 255 255 / 5%), inset 0 -1px 0 rgb(0 0 0 / 5%);
+  --relief-shadow-sm: 0 1px 2px rgb(var(--shadow-color) / 5%);
+  --relief-shadow: 0 1px 3px rgb(var(--shadow-color) / 8%), 0 1px 2px rgb(var(--shadow-color) / 6%);
+  --relief-shadow-lg:
+    0 4px 8px rgb(var(--shadow-color) / 10%), 0 2px 4px rgb(var(--shadow-color) / 6%);
+  --relief-shadow-inset-sm: inset 0 1px 0 rgb(var(--highlight-color) / 3%);
+  --relief-shadow-inset: inset 0 1px 0 rgb(var(--highlight-color) / 4%);
+  --relief-shadow-inset-lg:
+    inset 0 2px 0 rgb(var(--highlight-color) / 5%), inset 0 -1px 0 rgb(var(--shadow-color) / 5%);
   --relief-border: 1px solid var(--border-subtle);
 }
 
-[data-relief='lifted'],
-.relief-lifted {
+@include register-relief('lifted') {
   --relief-bg: var(--surface-2);
   --relief-shadow-sm:
     0 1px 3px rgb(var(--shadow-color) / 12%), 0 1px 2px rgb(var(--shadow-color) / 24%);
@@ -140,8 +112,7 @@
   --relief-border: 1px solid rgb(var(--shadow-color) / 6%);
 }
 
-[data-relief='sharp'],
-.relief-sharp {
+@include register-relief('sharp') {
   --relief-bg: var(--surface-2);
   --relief-shadow-sm: 2px 2px 0 rgb(var(--shadow-color) / 20%);
   --relief-shadow: 4px 4px 0 rgb(var(--shadow-color) / 25%);
@@ -152,8 +123,7 @@
   --relief-border: 1px solid rgb(var(--shadow-color) / 15%);
 }
 
-[data-relief='hewn'],
-.relief-hewn {
+@include register-relief('hewn') {
   --relief-bg: var(--surface-2);
   --relief-shadow-sm:
     inset 2px 2px 4px rgb(var(--shadow-color) / 18%),
@@ -174,8 +144,7 @@
 // FINISH SELECTORS
 // ============================================================================
 
-[data-finish='matte'],
-.finish-matte {
+@include register-finish('matte') {
   --finish-blur: 0px;
   --finish-saturation: 100%;
   --finish-opacity: 1;
@@ -184,8 +153,7 @@
   --finish-sheen: none;
 }
 
-[data-finish='translucent'],
-.finish-translucent {
+@include register-finish('translucent') {
   --finish-blur: 0px;
   --finish-saturation: 100%;
   --finish-opacity: 0.65;
@@ -194,16 +162,14 @@
   --finish-sheen: none;
 }
 
-[data-finish='frosted'],
-.finish-frosted {
+@include register-finish('frosted') {
   --finish-blur: 24px;
   --finish-saturation: 80%;
   --finish-opacity: 0.7;
   --finish-texture-opacity: 0.06;
 }
 
-[data-finish='tinted'],
-.finish-tinted {
+@include register-finish('tinted') {
   --finish-blur: 0px;
   --finish-saturation: 100%;
   --finish-opacity: 1;
@@ -217,8 +183,7 @@
   --finish-sheen: none;
 }
 
-[data-finish='glossy'],
-.finish-glossy {
+@include register-finish('glossy') {
   --finish-blur: 0px;
   --finish-saturation: 100%;
   --finish-opacity: 1;

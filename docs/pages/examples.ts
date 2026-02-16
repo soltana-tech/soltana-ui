@@ -433,7 +433,7 @@ export function renderExamples(): string {
               </div>
             </div>
 
-            <div class="divider mb-12"></div>
+            <div class="separator mb-12"></div>
 
             <div class="grid gap-6" style="grid-template-columns: repeat(3, 1fr); max-width: 900px; margin: 0 auto;">
               ${[

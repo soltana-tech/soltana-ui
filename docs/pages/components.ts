@@ -16,7 +16,7 @@ export function renderComponents(): string {
       'Alerts',
       'Avatars',
       'Progress',
-      'Switches',
+      'Toggles',
       'Tooltips',
       'Tables',
       'Modals',
@@ -328,24 +328,18 @@ export function renderComponents(): string {
   `
   )}
 
-  <!-- ====== SWITCHES ====== -->
+  <!-- ====== TOGGLES ====== -->
   ${specimen(
-    'Switches',
-    'comp-switches',
+    'Toggles',
+    'comp-toggles',
     `
     <div class="flex flex-wrap gap-6 items-center">
       <label class="flex items-center gap-3">
-        <label class="switch">
-          <input type="checkbox" checked />
-          <span class="switch-slider"></span>
-        </label>
+        <div class="toggle active" role="switch" aria-checked="true" tabindex="0"></div>
         <span class="text-sm">Enabled</span>
       </label>
       <label class="flex items-center gap-3">
-        <label class="switch">
-          <input type="checkbox" />
-          <span class="switch-slider"></span>
-        </label>
+        <div class="toggle" role="switch" aria-checked="false" tabindex="0"></div>
         <span class="text-sm">Disabled</span>
       </label>
     </div>
