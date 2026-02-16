@@ -42,7 +42,7 @@
   --accent-secondary-active: color-mix(in oklch, var(--accent-secondary), black 25%);
 
   // Decorative accent (ornaments, highlights)
-  --accent-decorative: #92700c;
+  --accent-decorative: #755a00;
   --accent-decorative-hover: color-mix(in oklch, var(--accent-decorative), black 15%);
   --accent-decorative-subtle: color-mix(in srgb, var(--accent-decorative) 12%, transparent);
   --border-decorative: color-mix(in srgb, var(--accent-decorative) 25%, transparent);

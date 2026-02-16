@@ -11,11 +11,8 @@ for (const combo of combinations) {
   test(`a11y: ${label}`, async ({ page }) => {
     await renderCombination(page, combo);
 
-    // color-contrast excluded: known contrast issues in light/sepia themes
-    // tracked for resolution in the design system SCSS layer
     const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
-      .disableRules(['color-contrast'])
       .analyze();
 
     for (const violation of results.violations) {

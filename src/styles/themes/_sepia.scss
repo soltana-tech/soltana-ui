@@ -34,7 +34,7 @@
   --border-strong: rgb(94 63 27 / 28%);
 
   // Accent colors — seed tokens (user-overridable)
-  --accent-primary: #a06e2b;
+  --accent-primary: #6a4518;
   --accent-primary-hover: color-mix(in oklch, var(--accent-primary), black 15%);
   --accent-primary-active: color-mix(in oklch, var(--accent-primary), black 25%);
   --accent-secondary: #1a7854;
@@ -42,7 +42,7 @@
   --accent-secondary-active: color-mix(in oklch, var(--accent-secondary), black 25%);
 
   // Decorative accent (ornaments, highlights)
-  --accent-decorative: #b8860b;
+  --accent-decorative: #654a00;
   --accent-decorative-hover: color-mix(in oklch, var(--accent-decorative), black 15%);
   --accent-decorative-subtle: color-mix(in srgb, var(--accent-decorative) 10%, transparent);
   --border-decorative: color-mix(in srgb, var(--accent-decorative) 22%, transparent);
@@ -51,10 +51,10 @@
   // Semantic colors — warm-shifted, distinct from light
   --color-success: #1a7854;
   --color-success-subtle: rgb(26 120 84 / 12%);
-  --color-success-text: #156543;
-  --color-warning: #a06e2b;
+  --color-success-text: #0e5538;
+  --color-warning: #6a4518;
   --color-warning-subtle: rgb(160 110 43 / 12%);
-  --color-warning-text: #7e5522;
+  --color-warning-text: #6b4819;
   --color-error: #a02020;
   --color-error-subtle: rgb(160 32 32 / 10%);
   --color-error-text: #882020;
