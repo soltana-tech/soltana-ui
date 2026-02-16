@@ -6,6 +6,7 @@
 // ---------------------------------------------------------------------------
 
 @use '../variables' as *;
+@use '../base/register' as *;
 
 // ============================================================================
 // TEXT INPUT
@@ -25,7 +26,7 @@
   border: 1px solid var(--input-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--relief-shadow-inset);
-  backdrop-filter: blur(var(--finish-blur)) saturate(var(--finish-saturation));
+  @include finish-backdrop;
   transition:
     border-color var(--transition-slow) var(--easing-in-out),
     box-shadow var(--transition-slow) var(--easing-in-out);

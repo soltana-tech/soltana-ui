@@ -7,6 +7,8 @@
 //   <div class="toggle" role="switch" aria-checked="false" tabindex="0">
 // ---------------------------------------------------------------------------
 
+@use '../base/register' as *;
+
 .toggle {
   position: relative;
   width: 3.5rem;
@@ -15,7 +17,7 @@
   border-radius: var(--radius-full);
   background: var(--relief-bg);
   box-shadow: var(--relief-shadow-inset-lg);
-  backdrop-filter: blur(var(--finish-blur)) saturate(var(--finish-saturation));
+  @include finish-backdrop;
   cursor: pointer;
   transition:
     background var(--transition-slow) var(--easing-in-out),

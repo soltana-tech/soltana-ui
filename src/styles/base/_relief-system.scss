@@ -241,5 +241,5 @@
 // ============================================================================
 
 .ornament {
-  box-shadow: var(--ornament-box-shadow, var(--relief-shadow));
+  box-shadow: var(--relief-shadow), var(--ornament-box-shadow, 0 0 0 0 transparent);
 }

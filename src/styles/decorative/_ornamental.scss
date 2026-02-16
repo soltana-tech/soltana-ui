@@ -93,12 +93,11 @@
     box-shadow: var(--ornament-corner-shadow, none);
     background-color: var(--ornament-corner-bg, transparent);
     clip-path: var(--ornament-corner-clip, none);
-    -webkit-mask-image: var(--ornament-corner-mask, none);
-    mask-image: var(--ornament-corner-mask, none);
-    -webkit-mask-size: var(--ornament-corner-mask-size, contain);
-    mask-size: var(--ornament-corner-mask-size, contain);
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
+    @include mask(
+      var(--ornament-corner-mask, none),
+      $size: var(--ornament-corner-mask-size, contain),
+      $repeat: no-repeat
+    );
     opacity: var(--ornament-opacity);
     pointer-events: none;
   }
@@ -162,14 +161,12 @@
     height: var(--ornament-divider-before-height, 8px);
     transform: var(--ornament-divider-before-transform, translate(-50%, -50%) rotate(45deg));
     background: var(--ornament-divider-before-bg, var(--ornament-color));
-    -webkit-mask-image: var(--ornament-divider-before-mask, none);
-    mask-image: var(--ornament-divider-before-mask, none);
-    -webkit-mask-size: var(--ornament-divider-before-mask-size, contain);
-    mask-size: var(--ornament-divider-before-mask-size, contain);
-    -webkit-mask-repeat: var(--ornament-divider-before-mask-repeat, no-repeat);
-    mask-repeat: var(--ornament-divider-before-mask-repeat, no-repeat);
-    -webkit-mask-position: center;
-    mask-position: center;
+    @include mask(
+      var(--ornament-divider-before-mask, none),
+      $size: var(--ornament-divider-before-mask-size, contain),
+      $repeat: var(--ornament-divider-before-mask-repeat, no-repeat),
+      $position: center
+    );
     border-radius: var(--ornament-divider-before-radius, 1px);
     opacity: var(--ornament-divider-before-opacity, 1);
     background-color: var(--ornament-divider-before-bg-color, transparent);
@@ -207,10 +204,7 @@
     transform: translateX(-50%);
     width: 40px;
     height: 32px;
-    -webkit-mask-image: var(--ornament-medallion-crest-mask, none);
-    mask-image: var(--ornament-medallion-crest-mask, none);
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
+    @include mask(var(--ornament-medallion-crest-mask, none), $repeat: no-repeat);
     background-color: var(--ornament-medallion-crest-bg, var(--ornament-color));
     pointer-events: none;
     z-index: 2;
@@ -276,8 +270,8 @@
 
   // Relief .ornament class
   --ornament-box-shadow:
-    var(--relief-shadow), inset 0 0 0 2px var(--border-decorative),
-    0 0 0 1px var(--accent-decorative), 0 0 12px var(--accent-glow);
+    inset 0 0 0 2px var(--border-decorative), 0 0 0 1px var(--accent-decorative),
+    0 0 12px var(--accent-glow);
 }
 
 // ---- baroque ----
@@ -343,8 +337,7 @@
   --ornament-medallion-crest-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='32' viewBox='0 0 40 32'%3E%3Cpath fill='none' stroke='white' stroke-width='1.5' d='M20 4L8 12L8 24L20 30L32 24L32 12Z'/%3E%3Cpath fill='none' stroke='white' stroke-width='1' opacity='0.5' d='M20 8L12 14L12 22L20 26L28 22L28 14Z'/%3E%3Ccircle cx='20' cy='17' r='3' fill='white' opacity='0.4'/%3E%3C/svg%3E");
 
   // Relief .ornament class
-  --ornament-box-shadow:
-    var(--relief-shadow), inset 0 0 0 3px var(--border-decorative), 0 0 8px var(--accent-glow);
+  --ornament-box-shadow: inset 0 0 0 3px var(--border-decorative), 0 0 8px var(--accent-glow);
 }
 
 // ---- beveled ----
@@ -406,7 +399,7 @@
 
   // Relief .ornament class
   --ornament-box-shadow:
-    var(--relief-shadow), inset 1px 1px 0 rgb(var(--highlight-color) / 12%),
+    inset 1px 1px 0 rgb(var(--highlight-color) / 12%),
     inset -1px -1px 0 rgb(var(--shadow-color) / 10%);
 }
 
@@ -507,7 +500,7 @@
 
   // Relief .ornament class
   --ornament-box-shadow:
-    var(--relief-shadow), inset 3px 3px 6px rgb(var(--highlight-color) / 8%),
+    inset 3px 3px 6px rgb(var(--highlight-color) / 8%),
     inset -2px -2px 4px rgb(var(--shadow-color) / 5%);
 }
 

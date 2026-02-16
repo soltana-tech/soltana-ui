@@ -250,11 +250,6 @@ $fluid-font-sizes: (
 
 // ---- CSS custom properties ----
 :root {
-  // Spacing tokens
-  @each $key, $val in $spacing-steps {
-    --space-#{$key}: #{$val};
-  }
-
   // Radius tokens
   @each $key, $val in $radii {
     --radius-#{$key}: #{$val};

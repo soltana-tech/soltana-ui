@@ -6,6 +6,7 @@
 
 @use 'sass:list';
 @use '../variables' as *;
+@use '../base/register' as *;
 
 // ============================================================================
 // BADGES
@@ -70,7 +71,7 @@
   color: var(--text-secondary);
   background: var(--relief-bg);
   box-shadow: var(--relief-shadow);
-  backdrop-filter: blur(var(--finish-blur)) saturate(var(--finish-saturation));
+  @include finish-backdrop;
   transition:
     background var(--transition-normal) var(--easing-in-out),
     box-shadow var(--transition-normal) var(--easing-in-out),

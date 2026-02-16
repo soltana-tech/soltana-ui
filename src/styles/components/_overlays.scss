@@ -6,6 +6,7 @@
 // ---------------------------------------------------------------------------
 
 @use '../variables' as *;
+@use '../base/register' as *;
 
 // ============================================================================
 // MODAL BACKDROP
@@ -44,7 +45,7 @@
   box-shadow:
     var(--relief-shadow),
     0 24px 64px rgb(0 0 0 / 30%);
-  backdrop-filter: blur(var(--finish-blur)) saturate(var(--finish-saturation));
+  @include finish-backdrop;
   width: 100%;
   max-width: 32rem;
   max-height: 85vh;

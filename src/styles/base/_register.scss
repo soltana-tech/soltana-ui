@@ -41,3 +41,28 @@
     @content;
   }
 }
+
+// ---------------------------------------------------------------------------
+// Shared Property Mixins
+// ---------------------------------------------------------------------------
+
+@mixin finish-backdrop {
+  backdrop-filter: blur(var(--finish-blur)) saturate(var(--finish-saturation));
+}
+
+@mixin mask($image, $size: null, $repeat: null, $position: null) {
+  -webkit-mask-image: $image;
+  mask-image: $image;
+  @if $size {
+    -webkit-mask-size: $size;
+    mask-size: $size;
+  }
+  @if $repeat {
+    -webkit-mask-repeat: $repeat;
+    mask-repeat: $repeat;
+  }
+  @if $position {
+    -webkit-mask-position: $position;
+    mask-position: $position;
+  }
+}
