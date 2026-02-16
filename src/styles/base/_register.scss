@@ -1,0 +1,43 @@
+// ---------------------------------------------------------------------------
+// Tier Registration Mixins
+// ---------------------------------------------------------------------------
+// Emit dual-selector blocks (data-attribute + utility class) for custom tier
+// values from a single @content block.
+// ---------------------------------------------------------------------------
+
+// Theme: [data-theme] + .theme-* selectors.
+// Does NOT include :root — that is reserved for the default theme.
+@mixin register-theme($name) {
+  [data-theme='#{$name}'],
+  .theme-#{$name} {
+    @content;
+  }
+}
+
+// Relief: [data-relief] + .relief-* selectors.
+@mixin register-relief($name) {
+  [data-relief='#{$name}'],
+  .relief-#{$name} {
+    @content;
+  }
+}
+
+// Finish: [data-finish] + .finish-* selectors.
+@mixin register-finish($name) {
+  [data-finish='#{$name}'],
+  .finish-#{$name} {
+    @content;
+  }
+}
+
+// Ornament: :where([data-ornament]) for zero-specificity config cascade,
+// plus .ornament-* for per-element overrides.
+@mixin register-ornament($name) {
+  :where([data-ornament='#{$name}']) {
+    @content;
+  }
+
+  .ornament-#{$name} {
+    @content;
+  }
+}

@@ -1,5 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { initSoltana } from './index';
+import {
+  initSoltana,
+  registerTierValue,
+  VALID_THEMES,
+  VALID_RELIEFS,
+  VALID_FINISHES,
+  VALID_ORNAMENTS,
+} from './index';
 import { _resetFontLoader } from '../fonts/index';
 
 const mockDestroy = vi.fn();
@@ -204,7 +211,7 @@ describe('initSoltana', () => {
   it('fonts: true injects font links', () => {
     initSoltana({ fonts: true });
     const links = document.head.querySelectorAll('link');
-    expect(links.length).toBeGreaterThanOrEqual(3);
+    expect(links.length).toBe(3);
 
     const rels = Array.from(links).map((l) => l.rel);
     expect(rels).toContain('preconnect');
@@ -317,5 +324,60 @@ describe('initSoltana', () => {
     initSoltana();
     // Second call should destroy the first enhancer setup
     expect(mockDestroy).toHaveBeenCalledTimes(destroyCountAfterFirst + 1);
+  });
+
+  it('setOverrides accumulates across multiple calls', () => {
+    const soltana = initSoltana();
+    soltana.setOverrides({ '--a': '1' });
+    soltana.setOverrides({ '--b': '2' });
+
+    expect(document.documentElement.style.getPropertyValue('--a')).toBe('1');
+    expect(document.documentElement.style.getPropertyValue('--b')).toBe('2');
+
+    const state = soltana.getState();
+    expect(state.overrides).toEqual({ '--a': '1', '--b': '2' });
+  });
+
+  it('applies overrides from initial config', () => {
+    initSoltana({ overrides: { '--init-var': 'hello' } });
+    expect(document.documentElement.style.getPropertyValue('--init-var')).toBe('hello');
+  });
+});
+
+describe('registerTierValue', () => {
+  it.each([
+    ['theme', VALID_THEMES],
+    ['relief', VALID_RELIEFS],
+    ['finish', VALID_FINISHES],
+    ['ornament', VALID_ORNAMENTS],
+  ] as const)('registers a custom %s value', (tier, validArray) => {
+    const value = `custom-${tier}-${String(Date.now())}`;
+    expect(validArray).not.toContain(value);
+
+    registerTierValue(tier, value);
+    expect(validArray).toContain(value);
+  });
+
+  it('does not duplicate an already-registered value', () => {
+    const value = `dedup-${String(Date.now())}`;
+    registerTierValue('theme', value);
+    const countAfterFirst = VALID_THEMES.filter((v) => v === value).length;
+
+    registerTierValue('theme', value);
+    const countAfterSecond = VALID_THEMES.filter((v) => v === value).length;
+
+    expect(countAfterFirst).toBe(1);
+    expect(countAfterSecond).toBe(1);
+  });
+
+  it('suppresses strict-mode warning after registration', () => {
+    const spy = vi.spyOn(console, 'warn').mockImplementation(vi.fn());
+    const value = `registered-${String(Date.now())}`;
+
+    registerTierValue('relief', value);
+    initSoltana({ relief: value, strict: true });
+
+    expect(spy).not.toHaveBeenCalledWith(expect.stringContaining(`Unknown relief`));
+    spy.mockRestore();
   });
 });

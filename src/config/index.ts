@@ -15,6 +15,7 @@ import type {
   Ornament,
   RecipeName,
   Recipe,
+  TierName,
 } from './types';
 import { initAll } from '../enhancers/index.js';
 import { loadSoltanaFonts } from '../fonts/index';
@@ -30,10 +31,27 @@ const DEFAULT_CONFIG: SoltanaConfig = {
   strict: false,
 };
 
-const VALID_THEMES: readonly Theme[] = ['dark', 'light', 'sepia', 'auto'];
-const VALID_RELIEFS: readonly Relief[] = ['flat', 'soft', 'lifted', 'neu', 'sharp', 'hewn'];
-const VALID_FINISHES: readonly Finish[] = ['matte', 'translucent', 'frosted', 'tinted', 'glossy'];
-const VALID_ORNAMENTS: readonly Ornament[] = ['none', 'gilt', 'baroque', 'beveled', 'faceted'];
+const VALID_THEMES: Theme[] = ['dark', 'light', 'sepia', 'auto'];
+const VALID_RELIEFS: Relief[] = ['flat', 'soft', 'lifted', 'neu', 'sharp', 'hewn'];
+const VALID_FINISHES: Finish[] = ['matte', 'translucent', 'frosted', 'tinted', 'glossy'];
+const VALID_ORNAMENTS: Ornament[] = ['none', 'gilt', 'baroque', 'beveled', 'faceted'];
+
+/**
+ * Register a custom tier value so `strict` mode does not warn for it.
+ * Call before `initSoltana()` or at any point before the value is used.
+ */
+export function registerTierValue(tier: TierName, value: string): void {
+  const registry: Record<TierName, string[]> = {
+    theme: VALID_THEMES,
+    relief: VALID_RELIEFS,
+    finish: VALID_FINISHES,
+    ornament: VALID_ORNAMENTS,
+  };
+  const arr = registry[tier];
+  if (!arr.includes(value)) {
+    arr.push(value);
+  }
+}
 
 // Module-level state for matchMedia listener cleanup
 let _mql: MediaQueryList | null = null;
@@ -244,6 +262,7 @@ export type {
   BuiltInFinish,
   BuiltInOrnament,
   BuiltInRecipeName,
+  TierName,
 } from './types';
 export { RECIPES, VALID_RECIPE_NAMES } from './recipes';
 export { VALID_THEMES, VALID_RELIEFS, VALID_FINISHES, VALID_ORNAMENTS };

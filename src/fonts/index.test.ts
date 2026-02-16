@@ -10,7 +10,7 @@ describe('loadSoltanaFonts', () => {
   it('adds preconnect and stylesheet links to head', () => {
     loadSoltanaFonts();
     const links = document.head.querySelectorAll('link');
-    expect(links.length).toBeGreaterThanOrEqual(3);
+    expect(links.length).toBe(3);
 
     const rels = Array.from(links).map((l) => l.rel);
     expect(rels).toContain('preconnect');

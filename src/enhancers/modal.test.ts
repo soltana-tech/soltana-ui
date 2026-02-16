@@ -141,15 +141,19 @@ describe('initModals', () => {
     const focusables = modal.querySelectorAll<HTMLElement>(
       'button:not([disabled]), input:not([disabled])'
     );
+    const first = focusables[0];
     const last = focusables[focusables.length - 1];
 
     // Focus the last focusable element, then Tab
     last.focus();
+    expect(document.activeElement).toBe(last);
+
     const event = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true });
     const spy = vi.spyOn(event, 'preventDefault');
     modal.dispatchEvent(event);
 
     expect(spy).toHaveBeenCalled();
+    expect(document.activeElement).toBe(first);
   });
 
   it('Shift+Tab wraps focus backward within modal', () => {
@@ -161,9 +165,12 @@ describe('initModals', () => {
       'button:not([disabled]), input:not([disabled])'
     );
     const first = focusables[0];
+    const last = focusables[focusables.length - 1];
 
     // Focus the first focusable element, then Shift+Tab
     first.focus();
+    expect(document.activeElement).toBe(first);
+
     const event = new KeyboardEvent('keydown', {
       key: 'Tab',
       shiftKey: true,
@@ -173,6 +180,36 @@ describe('initModals', () => {
     modal.dispatchEvent(event);
 
     expect(spy).toHaveBeenCalled();
+    expect(document.activeElement).toBe(last);
+  });
+
+  it('focuses first focusable element on open', () => {
+    vi.useFakeTimers();
+    const { modal, trigger } = createModalFixture();
+    initModals();
+
+    trigger.click();
+    vi.runAllTimers();
+
+    const closeBtn = modal.querySelector<HTMLElement>('[data-modal-close]');
+    expect(document.activeElement).toBe(closeBtn);
+    vi.useRealTimers();
+  });
+
+  it('clicking inside modal content does not close the modal', () => {
+    const { modal, trigger } = createModalFixture();
+    initModals();
+
+    trigger.click();
+    expect(modal.classList.contains('active')).toBe(true);
+
+    const content = modal.querySelector<HTMLElement>('.modal__content');
+    content?.click();
+    expect(modal.classList.contains('active')).toBe(true);
+
+    const input = modal.querySelector<HTMLElement>('input');
+    input?.click();
+    expect(modal.classList.contains('active')).toBe(true);
   });
 
   it('trigger pointing to nonexistent modal id does nothing', () => {

@@ -50,28 +50,6 @@ describe('applyRecipe', () => {
     mockDestroy.mockClear();
   });
 
-  it('sets all 4 data attributes for corporate-clean', () => {
-    const soltana = initSoltana();
-    soltana.applyRecipe('corporate-clean');
-
-    const root = document.documentElement;
-    expect(root.getAttribute('data-theme')).toBe('light');
-    expect(root.getAttribute('data-relief')).toBe('flat');
-    expect(root.getAttribute('data-finish')).toBe('matte');
-    expect(root.getAttribute('data-ornament')).toBe('none');
-  });
-
-  it('getState reflects recipe values after applying luxury-dark', () => {
-    const soltana = initSoltana();
-    soltana.applyRecipe('luxury-dark');
-
-    const state = soltana.getState();
-    expect(state.theme).toBe('dark');
-    expect(state.relief).toBe('neu');
-    expect(state.finish).toBe('glossy');
-    expect(state.ornament).toBe('gilt');
-  });
-
   it.each(Object.entries(RECIPES))(
     '%s applies tier values matching RECIPES definition',
     (key, recipe) => {

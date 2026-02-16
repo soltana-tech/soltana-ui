@@ -41,7 +41,15 @@
     "./css": "./dist/soltana-ui.css",
     "./style.css": "./dist/soltana-ui.css",
     "./scss": "./src/styles/index.scss",
-    "./scss/*": "./src/styles/*"
+    "./scss/*": "./src/styles/*",
+    "./plugins": {
+      "types": "./dist/plugins/types.d.ts",
+      "import": "./dist/plugins/index.js"
+    },
+    "./postcss": {
+      "types": "./dist/plugins/postcss-soltana-treeshake.d.ts",
+      "import": "./dist/plugins/postcss-soltana-treeshake.js"
+    }
   },
   "sideEffects": [
     "*.css",
@@ -49,7 +57,7 @@
   ],
   "scripts": {
     "dev": "npm run docs:dev",
-    "build": "tsc --noEmit && vite build",
+    "build": "tsc --noEmit && vite build && tsc -p tsconfig.plugins.json",
     "docs:dev": "DOCS=true vite --config vite.config.ts",
     "docs:build": "DOCS=true vite build --config vite.config.ts",
     "test": "vitest run",

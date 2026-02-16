@@ -28,10 +28,16 @@ describe('ornament patterns', () => {
     '%s returns valid SVG with currentColor by default',
     (_name, fn) => {
       const svg = fn();
-      expect(svg).toContain('<svg');
       expect(svg).toContain('currentColor');
     }
   );
+
+  it.each(Object.entries(PATTERN_FNS))('%s parses as valid SVG', (_name, fn) => {
+    const svg = fn();
+    const el = toElement(svg);
+    expect(el.tagName).toBe('svg');
+    expect(el.getAttribute('viewBox')).toBeTruthy();
+  });
 
   it.each(Object.entries(PATTERN_FNS))('%s interpolates custom color', (_name, fn) => {
     const svg = fn('#ff0000');

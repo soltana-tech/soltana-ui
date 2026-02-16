@@ -1,7 +1,7 @@
 import './styles/index.scss';
 
 // Configuration runtime
-export { initSoltana } from './config/index.js';
+export { initSoltana, registerTierValue } from './config/index.js';
 export type {
   SoltanaConfig,
   SoltanaInstance,
@@ -17,6 +17,7 @@ export type {
   BuiltInFinish,
   BuiltInOrnament,
   BuiltInRecipeName,
+  TierName,
 } from './config/types.js';
 
 // Recipe presets

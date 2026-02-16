@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { initTooltips } from './tooltip';
 
 describe('initTooltips', () => {
@@ -127,6 +127,44 @@ describe('initTooltips', () => {
     trigger.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     expect(tooltip?.style.opacity).toBe('0');
     expect(trigger.getAttribute('aria-describedby')).toBeNull();
+  });
+
+  it.each(['top', 'bottom', 'left', 'right'])(
+    'positions tooltip with data-tooltip-position="%s"',
+    (position) => {
+      vi.useFakeTimers();
+      const trigger = document.createElement('button');
+      trigger.setAttribute('data-sol-tooltip', 'Positioned');
+      trigger.setAttribute('data-tooltip-position', position);
+      document.body.appendChild(trigger);
+
+      initTooltips();
+      trigger.dispatchEvent(new MouseEvent('mouseenter'));
+      vi.runAllTimers();
+
+      const tooltip = document.querySelector<HTMLElement>('.tooltip');
+      expect(tooltip).toBeTruthy();
+      expect(tooltip?.style.top).toBeTruthy();
+      expect(tooltip?.style.left).toBeTruthy();
+      vi.useRealTimers();
+    }
+  );
+
+  it('defaults to top positioning when data-tooltip-position is absent', () => {
+    vi.useFakeTimers();
+    const trigger = document.createElement('button');
+    trigger.setAttribute('data-sol-tooltip', 'Default pos');
+    document.body.appendChild(trigger);
+
+    initTooltips();
+    trigger.dispatchEvent(new MouseEvent('mouseenter'));
+    vi.runAllTimers();
+
+    const tooltip = document.querySelector<HTMLElement>('.tooltip');
+    expect(tooltip).toBeTruthy();
+    expect(tooltip?.style.top).toBeTruthy();
+    expect(tooltip?.style.left).toBeTruthy();
+    vi.useRealTimers();
   });
 
   it('destroy removes tooltip and listeners', () => {

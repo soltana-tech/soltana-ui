@@ -55,3 +55,5 @@ export interface SoltanaInstance {
 export interface EnhancerCleanup {
   destroy(): void;
 }
+
+export type TierName = 'theme' | 'relief' | 'finish' | 'ornament';
