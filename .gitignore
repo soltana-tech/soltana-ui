@@ -27,6 +27,9 @@ test-results/
 playwright-report/
 blob-report/
 
+# Audit drafts
+.claude/audit/draft-issues-*.md
+
 # Local environment
 .env
 .env.local
