@@ -32,10 +32,52 @@ No existing CSS design system offers a composable, orthogonal tier architecture 
 
 All project issues are tracked via GitHub Issues on the `soltana-tech/soltana-ui` repository. Use the `/issues` skill to interact with them. Reference issues in commits with `#N` and auto-close with `Fixes #N`.
 
+### Issue Types
+
+Types are tracked via GitHub's native Issue Type field (org-level), not labels:
+
+| Type | Use for |
+|------|---------|
+| Bug | Broken behavior or incorrect output |
+| Feature | New user-facing capability or functionality |
+| Security | Security vulnerability or hardening |
+| Task | Internal, operational, or DX work that does not change user-facing behavior |
+
 ### Label Taxonomy
 
 **Layer**: `layer: scss`, `layer: typescript`, `layer: docs`
-**Type**: `type: bug`, `type: feature`, `type: security`
 **Triage**: `triage: invalid`, `triage: wontfix`
 **Size**: `size: S`, `size: M`, `size: L`, `size: XL`
 **Status**: `status: blocked`
+
+### Issue Creation Conventions
+
+When creating issues via `/issues create`, gather:
+- **Issue type**: Bug, Feature, Security, or Task (set via GitHub Issue Types, not labels)
+- **Layer label**: `layer: scss`, `layer: typescript`, `layer: docs`, or none
+- **Size label**: `size: S`, `size: M`, `size: L`, `size: XL`
+- **Description**
+- **Proposed fix** (optional)
+- **Dependencies** (optional — if provided, also add `status: blocked` label)
+
+Issue body template:
+
+```
+## Description
+<description>
+
+## Proposed fix
+<proposed fix or "N/A">
+
+## Dependencies
+<Depends on #N, #M or "None">
+```
+
+### Priority Heuristics
+
+When recommending the next issue via `/issues next`:
+
+1. Exclude issues labeled `status: blocked`
+2. **Type**: Bug > Security > Task > Feature
+3. **Size**: `size: S` > `size: M` > `size: L` > `size: XL`
+4. **Age**: lower issue number first (older issues)
