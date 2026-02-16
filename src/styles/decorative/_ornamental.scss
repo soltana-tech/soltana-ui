@@ -14,6 +14,12 @@
 :root {
   --ornament-color: var(--accent-gold);
   --ornament-color-dark: color-mix(in srgb, var(--accent-gold), black 30%);
+  --ornament-gradient: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--ornament-color), white 30%),
+    var(--ornament-color),
+    color-mix(in srgb, var(--ornament-color), black 20%)
+  );
   --ornament-opacity: 0.5;
   --ornament-opacity-strong: 0.7;
   --ornament-size-sm: 12px;
@@ -337,9 +343,12 @@
 }
 
 @mixin divider-gilt {
+  background: none;
+  opacity: 1;
   height: 28px;
 
   &::before {
+    transform: none;
     content: '';
     position: absolute;
     inset: 0;
@@ -353,9 +362,12 @@
 }
 
 @mixin divider-baroque {
+  background: none;
+  opacity: 1;
   height: 32px;
 
   &::before {
+    transform: none;
     content: '';
     position: absolute;
     inset: 0;
@@ -369,9 +381,12 @@
 }
 
 @mixin divider-beveled {
+  background: none;
+  opacity: 1;
   height: 24px;
 
   &::before {
+    transform: none;
     content: '';
     position: absolute;
     inset: 0;
@@ -387,9 +402,12 @@
 }
 
 @mixin divider-faceted {
+  background: none;
+  opacity: 1;
   height: 20px;
 
   &::before {
+    transform: none;
     content: '';
     position: absolute;
     top: 50%;
@@ -513,203 +531,272 @@
 }
 
 // ============================================================================
-// CONFIG-DEFAULT SELECTORS — Read [data-ornament] from <html>
+// PLACEHOLDER SELECTORS — Single mixin expansion per element×tier
 // ============================================================================
 
-// ---- gilt ----
-
-[data-ornament='gilt'] .frame {
+// ---- frame ----
+%frame-gilt {
   @include frame-gilt;
 }
-
-[data-ornament='gilt'] .corner {
-  @include corner-gilt;
-}
-
-[data-ornament='gilt'] .edge {
-  @include edge-gilt;
-}
-
-[data-ornament='gilt'] .divider {
-  @include divider-gilt;
-}
-
-[data-ornament='gilt'] .medallion {
-  @include medallion-gilt;
-}
-
-// ---- baroque ----
-
-[data-ornament='baroque'] .frame {
+%frame-baroque {
   @include frame-baroque;
 }
-
-[data-ornament='baroque'] .corner {
-  @include corner-baroque;
-}
-
-[data-ornament='baroque'] .edge {
-  @include edge-baroque;
-}
-
-[data-ornament='baroque'] .divider {
-  @include divider-baroque;
-}
-
-[data-ornament='baroque'] .medallion {
-  @include medallion-baroque;
-}
-
-// ---- beveled ----
-
-[data-ornament='beveled'] .frame {
+%frame-beveled {
   @include frame-beveled;
 }
-
-[data-ornament='beveled'] .corner {
-  @include corner-beveled;
-}
-
-[data-ornament='beveled'] .edge {
-  @include edge-beveled;
-}
-
-[data-ornament='beveled'] .divider {
-  @include divider-beveled;
-}
-
-[data-ornament='beveled'] .medallion {
-  @include medallion-beveled;
-}
-
-// ---- faceted ----
-
-[data-ornament='faceted'] .frame {
+%frame-faceted {
   @include frame-faceted;
 }
 
-[data-ornament='faceted'] .corner {
+// ---- corner ----
+%corner-gilt {
+  @include corner-gilt;
+}
+%corner-baroque {
+  @include corner-baroque;
+}
+%corner-beveled {
+  @include corner-beveled;
+}
+%corner-faceted {
   @include corner-faceted;
 }
 
-[data-ornament='faceted'] .edge {
+// ---- edge ----
+%edge-gilt {
+  @include edge-gilt;
+}
+%edge-baroque {
+  @include edge-baroque;
+}
+%edge-beveled {
+  @include edge-beveled;
+}
+%edge-faceted {
   @include edge-faceted;
 }
 
-[data-ornament='faceted'] .divider {
+// ---- divider ----
+%divider-gilt {
+  @include divider-gilt;
+}
+%divider-baroque {
+  @include divider-baroque;
+}
+%divider-beveled {
+  @include divider-beveled;
+}
+%divider-faceted {
   @include divider-faceted;
 }
 
-[data-ornament='faceted'] .medallion {
+// ---- medallion ----
+%medallion-gilt {
+  @include medallion-gilt;
+}
+%medallion-baroque {
+  @include medallion-baroque;
+}
+%medallion-beveled {
+  @include medallion-beveled;
+}
+%medallion-faceted {
   @include medallion-faceted;
 }
 
 // ============================================================================
-// PER-ELEMENT OVERRIDES — Higher specificity than config-default
+// TIER SELECTORS — Config-default + per-element override (merged via @extend)
+// ============================================================================
+// :where([data-ornament]) lowers config-default specificity to (0,1,0).
+// .ornament-X selectors remain at (0,2,0) and always override config.
 // ============================================================================
 
 // ---- gilt ----
+
+:where([data-ornament='gilt']) .frame {
+  @extend %frame-gilt;
+}
+
 .ornament-gilt .frame,
 .frame.ornament-gilt {
-  @include frame-gilt;
+  @extend %frame-gilt;
+}
+
+:where([data-ornament='gilt']) .corner {
+  @extend %corner-gilt;
 }
 
 .ornament-gilt .corner,
 .corner.ornament-gilt {
-  @include corner-gilt;
+  @extend %corner-gilt;
+}
+
+:where([data-ornament='gilt']) .edge {
+  @extend %edge-gilt;
 }
 
 .ornament-gilt .edge,
 .edge.ornament-gilt {
-  @include edge-gilt;
+  @extend %edge-gilt;
+}
+
+:where([data-ornament='gilt']) .divider {
+  @extend %divider-gilt;
 }
 
 .ornament-gilt .divider,
 .divider.ornament-gilt {
-  @include divider-gilt;
+  @extend %divider-gilt;
+}
+
+:where([data-ornament='gilt']) .medallion {
+  @extend %medallion-gilt;
 }
 
 .ornament-gilt .medallion,
 .medallion.ornament-gilt {
-  @include medallion-gilt;
+  @extend %medallion-gilt;
 }
 
 // ---- baroque ----
+
+:where([data-ornament='baroque']) .frame {
+  @extend %frame-baroque;
+}
+
 .ornament-baroque .frame,
 .frame.ornament-baroque {
-  @include frame-baroque;
+  @extend %frame-baroque;
+}
+
+:where([data-ornament='baroque']) .corner {
+  @extend %corner-baroque;
 }
 
 .ornament-baroque .corner,
 .corner.ornament-baroque {
-  @include corner-baroque;
+  @extend %corner-baroque;
+}
+
+:where([data-ornament='baroque']) .edge {
+  @extend %edge-baroque;
 }
 
 .ornament-baroque .edge,
 .edge.ornament-baroque {
-  @include edge-baroque;
+  @extend %edge-baroque;
+}
+
+:where([data-ornament='baroque']) .divider {
+  @extend %divider-baroque;
 }
 
 .ornament-baroque .divider,
 .divider.ornament-baroque {
-  @include divider-baroque;
+  @extend %divider-baroque;
+}
+
+:where([data-ornament='baroque']) .medallion {
+  @extend %medallion-baroque;
 }
 
 .ornament-baroque .medallion,
 .medallion.ornament-baroque {
-  @include medallion-baroque;
+  @extend %medallion-baroque;
 }
 
 // ---- beveled ----
+
+:where([data-ornament='beveled']) .frame {
+  @extend %frame-beveled;
+}
+
 .ornament-beveled .frame,
 .frame.ornament-beveled {
-  @include frame-beveled;
+  @extend %frame-beveled;
+}
+
+:where([data-ornament='beveled']) .corner {
+  @extend %corner-beveled;
 }
 
 .ornament-beveled .corner,
 .corner.ornament-beveled {
-  @include corner-beveled;
+  @extend %corner-beveled;
+}
+
+:where([data-ornament='beveled']) .edge {
+  @extend %edge-beveled;
 }
 
 .ornament-beveled .edge,
 .edge.ornament-beveled {
-  @include edge-beveled;
+  @extend %edge-beveled;
+}
+
+:where([data-ornament='beveled']) .divider {
+  @extend %divider-beveled;
 }
 
 .ornament-beveled .divider,
 .divider.ornament-beveled {
-  @include divider-beveled;
+  @extend %divider-beveled;
+}
+
+:where([data-ornament='beveled']) .medallion {
+  @extend %medallion-beveled;
 }
 
 .ornament-beveled .medallion,
 .medallion.ornament-beveled {
-  @include medallion-beveled;
+  @extend %medallion-beveled;
 }
 
 // ---- faceted ----
+
+:where([data-ornament='faceted']) .frame {
+  @extend %frame-faceted;
+}
+
 .ornament-faceted .frame,
 .frame.ornament-faceted {
-  @include frame-faceted;
+  @extend %frame-faceted;
+}
+
+:where([data-ornament='faceted']) .corner {
+  @extend %corner-faceted;
 }
 
 .ornament-faceted .corner,
 .corner.ornament-faceted {
-  @include corner-faceted;
+  @extend %corner-faceted;
+}
+
+:where([data-ornament='faceted']) .edge {
+  @extend %edge-faceted;
 }
 
 .ornament-faceted .edge,
 .edge.ornament-faceted {
-  @include edge-faceted;
+  @extend %edge-faceted;
+}
+
+:where([data-ornament='faceted']) .divider {
+  @extend %divider-faceted;
 }
 
 .ornament-faceted .divider,
 .divider.ornament-faceted {
-  @include divider-faceted;
+  @extend %divider-faceted;
+}
+
+:where([data-ornament='faceted']) .medallion {
+  @extend %medallion-faceted;
 }
 
 .ornament-faceted .medallion,
 .medallion.ornament-faceted {
-  @include medallion-faceted;
+  @extend %medallion-faceted;
 }
 
 // ============================================================================

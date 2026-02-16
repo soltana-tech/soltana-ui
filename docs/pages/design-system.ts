@@ -10,21 +10,6 @@ import {
 import { RECIPES } from '../../src/config';
 import type { RecipeName } from '../../src/config';
 
-// Color card that uses the color as a tinted glass background
-function jewelCard(name: string, variable: string, hex: string): string {
-  return `
-    <div class="jewel-card" data-copy="var(${variable})" title="Click to copy"
-         style="background: linear-gradient(145deg, ${hex}dd, ${hex}88); box-shadow: 0 8px 24px ${hex}44;">
-      <div class="text-lg font-semibold">${name}</div>
-      <code class="text-xs" style="opacity: 0.8;">${variable}</code>
-      <div class="text-xs mt-1" style="opacity: 0.7;">${hex}</div>
-      <div class="flex gap-2 mt-3">
-        <button class="btn btn-sm" style="background: ${hex}; color: #fff; border: none; box-shadow: 0 2px 8px ${hex}66;">Button</button>
-        <span class="badge" style="background: ${hex}33; color: ${hex}; border: 1px solid ${hex}44;">Badge</span>
-      </div>
-    </div>`;
-}
-
 // Gold scale card with gradient
 function swatchCard(name: string, variable: string, hex: string): string {
   return `
@@ -109,20 +94,7 @@ export function renderDesignSystem(): string {
 
   ${sectionHeading('Color Palette', 'colors', 'The signature estate palette. Click any item to copy its CSS variable.')}
 
-  <h3 class="text-xl font-semibold mt-6 mb-4 font-serif">Jewel Tones</h3>
-  <p class="text-sm text-secondary mb-4">Rich, saturated colors inspired by precious gemstones. Each shown as an interactive component.</p>
-  <div class="grid gap-4" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr))">
-    ${jewelCard('Emerald', '--jewel-emerald', '#10b981')}
-    ${jewelCard('Sapphire', '--jewel-sapphire', '#3b82f6')}
-    ${jewelCard('Ruby', '--jewel-ruby', '#ef4444')}
-    ${jewelCard('Amethyst', '--jewel-amethyst', '#a855f7')}
-    ${jewelCard('Citrine', '--jewel-citrine', '#e8c840')}
-    ${jewelCard('Topaz', '--jewel-topaz', '#e8922e')}
-    ${jewelCard('Jade', '--jewel-jade', '#2ea87a')}
-    ${jewelCard('Turquoise', '--jewel-turquoise', '#3cc0b8')}
-  </div>
-
-  <h3 class="text-xl font-semibold mt-10 mb-4 font-serif">Gold Scale</h3>
+  <h3 class="text-xl font-semibold mt-6 mb-4 font-serif">Gold Scale</h3>
   <p class="text-sm text-secondary mb-4">The primary accent palette, from light cream to deep brown.</p>
   <div class="swatch-grid">
     ${swatchCard('Gold 50', '--gold-50', '#fefce8')}

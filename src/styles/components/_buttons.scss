@@ -179,12 +179,7 @@
 // ============================================================================
 
 @mixin btn-metallic($shine-color: rgb(255 255 255 / 25%)) {
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--ornament-color), white 30%),
-    var(--ornament-color),
-    color-mix(in srgb, var(--ornament-color), black 20%)
-  );
+  background: var(--ornament-gradient);
   color: color-mix(in srgb, var(--ornament-color), black 70%);
   border-color: transparent;
   box-shadow:
@@ -314,42 +309,56 @@
   }
 }
 
-// ---- Config-default (reads [data-ornament] from <html>) ----
-[data-ornament='gilt'] .btn-ornament {
+// ---- Placeholder selectors (single mixin expansion per tier) ----
+%btn-ornament-gilt {
   @include btn-ornament-gilt;
 }
-
-[data-ornament='baroque'] .btn-ornament {
+%btn-ornament-baroque {
   @include btn-ornament-baroque;
 }
-
-[data-ornament='beveled'] .btn-ornament {
+%btn-ornament-beveled {
   @include btn-ornament-beveled;
 }
-
-[data-ornament='faceted'] .btn-ornament {
+%btn-ornament-faceted {
   @include btn-ornament-faceted;
 }
 
-// ---- Per-element overrides ----
+// ---- Tier selectors (config-default + per-element, merged via @extend) ----
+
+:where([data-ornament='gilt']) .btn-ornament {
+  @extend %btn-ornament-gilt;
+}
+
 .ornament-gilt .btn-ornament,
 .btn-ornament.ornament-gilt {
-  @include btn-ornament-gilt;
+  @extend %btn-ornament-gilt;
+}
+
+:where([data-ornament='baroque']) .btn-ornament {
+  @extend %btn-ornament-baroque;
 }
 
 .ornament-baroque .btn-ornament,
 .btn-ornament.ornament-baroque {
-  @include btn-ornament-baroque;
+  @extend %btn-ornament-baroque;
+}
+
+:where([data-ornament='beveled']) .btn-ornament {
+  @extend %btn-ornament-beveled;
 }
 
 .ornament-beveled .btn-ornament,
 .btn-ornament.ornament-beveled {
-  @include btn-ornament-beveled;
+  @extend %btn-ornament-beveled;
+}
+
+:where([data-ornament='faceted']) .btn-ornament {
+  @extend %btn-ornament-faceted;
 }
 
 .ornament-faceted .btn-ornament,
 .btn-ornament.ornament-faceted {
-  @include btn-ornament-faceted;
+  @extend %btn-ornament-faceted;
 }
 
 // ============================================================================

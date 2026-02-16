@@ -27,33 +27,33 @@ export function renderGettingStarted(): string {
       <h4 class="font-semibold text-lg">Theme</h4>
       <p class="text-sm text-secondary">The foundational color palette and tone.</p>
       <div class="flex flex-wrap gap-2 mt-2">
-        <span class="tag tag-gold">dark</span>
+        <span class="tag">dark</span>
         <span class="tag">light</span>
         <span class="tag">sepia</span>
         <span class="tag">auto</span>
       </div>
       ${codeExample("soltana.setTheme('dark')", 'javascript')}
     </div>
-    <div class="tier-demo" style="border-left: 4px solid var(--gold-400);">
-      <span class="tier-number" style="color: var(--gold-400);">2</span>
+    <div class="tier-demo" style="border-left: 4px solid var(--accent-primary);">
+      <span class="tier-number" style="color: var(--accent-primary);">2</span>
       <h4 class="font-semibold text-lg">Relief</h4>
       <p class="text-sm text-secondary">Transforms how every component renders: shadows, blur, transparency.</p>
       <div class="flex flex-wrap gap-2 mt-2">
         <span class="tag">flat</span>
         <span class="tag">soft</span>
         <span class="tag">lifted</span>
-        <span class="tag tag-gold">neu</span>
+        <span class="tag">neu</span>
         <span class="tag">sharp</span>
         <span class="tag">hewn</span>
       </div>
       ${codeExample("soltana.setRelief('neu')", 'javascript')}
     </div>
-    <div class="tier-demo" style="border-left: 4px solid var(--jewel-sapphire, #3b82f6);">
-      <span class="tier-number" style="color: var(--jewel-sapphire, #3b82f6);">3</span>
+    <div class="tier-demo" style="border-left: 4px solid var(--accent-primary);">
+      <span class="tier-number" style="color: var(--accent-primary);">3</span>
       <h4 class="font-semibold text-lg">Finish</h4>
       <p class="text-sm text-secondary">Texture and finish applied on top of the relief.</p>
       <div class="flex flex-wrap gap-2 mt-2">
-        <span class="tag tag-sapphire">matte</span>
+        <span class="tag">matte</span>
         <span class="tag">translucent</span>
         <span class="tag">frosted</span>
         <span class="tag">tinted</span>
@@ -61,12 +61,12 @@ export function renderGettingStarted(): string {
       </div>
       ${codeExample("soltana.setFinish('matte')", 'javascript')}
     </div>
-    <div class="tier-demo" style="border-left: 4px solid var(--jewel-emerald, #10b981);">
-      <span class="tier-number" style="color: var(--jewel-emerald, #10b981);">4</span>
+    <div class="tier-demo" style="border-left: 4px solid var(--accent-primary);">
+      <span class="tier-number" style="color: var(--accent-primary);">4</span>
       <h4 class="font-semibold text-lg">Ornament</h4>
       <p class="text-sm text-secondary">Decorative structural accents layered onto elements.</p>
       <div class="flex flex-wrap gap-2 mt-2">
-        <span class="tag tag-emerald">none</span>
+        <span class="tag">none</span>
         <span class="tag">gilt</span>
         <span class="tag">baroque</span>
         <span class="tag">beveled</span>

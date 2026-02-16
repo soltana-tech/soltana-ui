@@ -301,24 +301,6 @@
   font-size: 0.625rem;
 }
 
-// ---- Jewel color card (used in color palette redesign) ----
-.jewel-card {
-  padding: 1.25rem;
-  border-radius: var(--radius-xl);
-  backdrop-filter: blur(12px) saturate(140%);
-  border: 1px solid rgb(255 255 255 / 10%);
-  color: #fff;
-  cursor: pointer;
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgb(0 0 0 / 25%);
-  }
-}
-
 // ---- Specimen blocks ----
 .specimen__preview {
   padding: 1.5rem;
