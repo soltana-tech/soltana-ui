@@ -218,9 +218,7 @@ $rotate-values: (0, 1, 2, 3, 6, 12, 45, 90, 180);
 
 // --- Translate ---
 
-$translate-steps: (0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 64);
-
-@each $step in $translate-steps {
+@each $step in $space-keys {
   .translate-x-#{$step} {
     transform: translateX(calc(#{$step} * 0.25rem));
   }

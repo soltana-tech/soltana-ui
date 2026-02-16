@@ -294,12 +294,11 @@
 
 // ---- Per-element override consuming selectors (specificity (0,2,0)) ----
 
-$btn-ornament-names: gilt, baroque, beveled, faceted;
 $sel-base: ();
 $sel-hover: ();
 $sel-active: ();
 
-@each $name in $btn-ornament-names {
+@each $name in $ornament-names {
   $sel-base: list.append($sel-base, string.unquote('.ornament-#{$name} .btn-ornament'), comma);
   $sel-base: list.append($sel-base, string.unquote('.btn-ornament.ornament-#{$name}'), comma);
   $sel-hover: list.append(

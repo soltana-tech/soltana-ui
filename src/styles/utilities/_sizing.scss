@@ -5,15 +5,15 @@
 // ---------------------------------------------------------------------------
 
 @use '../variables' as *;
+@use 'generate' as gen;
 
 // ============================================================================
 // FRACTIONAL & KEYWORD SIZES
 // ============================================================================
 
+@include gen.generate-width-fractions;
+
 @each $name, $val in $size-fractions {
-  .w-#{$name} {
-    width: $val;
-  }
   .h-#{$name} {
     height: $val;
   }
@@ -43,11 +43,7 @@
 // MAX WIDTH
 // ============================================================================
 
-@each $name, $val in $max-widths {
-  .max-w-#{$name} {
-    max-width: $val;
-  }
-}
+@include gen.generate-max-widths;
 
 // ============================================================================
 // FIXED SIZES (full spacing scale)

@@ -1,8 +1,8 @@
 // ---------------------------------------------------------------------------
 // Utility Generation Mixins
 // ---------------------------------------------------------------------------
-// Shared loop bodies for spacing, gap, and grid utilities.
-// Consumed by _spacing.scss (non-responsive) and _responsive.scss (prefixed).
+// Shared loop bodies for spacing, gap, grid, layout, and sizing utilities.
+// Consumed by base partials (non-responsive) and _responsive.scss (prefixed).
 // ---------------------------------------------------------------------------
 
 @use '../variables' as *;
@@ -120,6 +120,288 @@
     }
     .#{$prefix}row-span-#{$i} {
       grid-row: span #{$i} / span #{$i};
+    }
+  }
+}
+
+// ============================================================================
+// DISPLAY
+// ============================================================================
+
+@mixin generate-display($prefix: '') {
+  .#{$prefix}block {
+    display: block;
+  }
+  .#{$prefix}inline-block {
+    display: inline-block;
+  }
+  .#{$prefix}inline {
+    display: inline;
+  }
+  .#{$prefix}flex {
+    display: flex;
+  }
+  .#{$prefix}inline-flex {
+    display: inline-flex;
+  }
+  .#{$prefix}grid {
+    display: grid;
+  }
+  .#{$prefix}inline-grid {
+    display: inline-grid;
+  }
+  .#{$prefix}hidden {
+    display: none;
+  }
+  .#{$prefix}contents {
+    display: contents;
+  }
+}
+
+// ============================================================================
+// FLEX DIRECTION
+// ============================================================================
+
+@mixin generate-flex-direction($prefix: '') {
+  .#{$prefix}flex-row {
+    flex-direction: row;
+  }
+  .#{$prefix}flex-col {
+    flex-direction: column;
+  }
+  .#{$prefix}flex-row-reverse {
+    flex-direction: row-reverse;
+  }
+  .#{$prefix}flex-col-reverse {
+    flex-direction: column-reverse;
+  }
+}
+
+// ============================================================================
+// FLEX WRAP
+// ============================================================================
+
+@mixin generate-flex-wrap($prefix: '') {
+  .#{$prefix}flex-wrap {
+    flex-wrap: wrap;
+  }
+  .#{$prefix}flex-nowrap {
+    flex-wrap: nowrap;
+  }
+}
+
+// ============================================================================
+// FLEX SIZING
+// ============================================================================
+
+@mixin generate-flex-sizing($prefix: '') {
+  .#{$prefix}flex-1 {
+    flex: 1 1 0%;
+  }
+  .#{$prefix}flex-auto {
+    flex: 1 1 auto;
+  }
+  .#{$prefix}flex-initial {
+    flex: 0 1 auto;
+  }
+  .#{$prefix}flex-none {
+    flex: none;
+  }
+  .#{$prefix}grow {
+    flex-grow: 1;
+  }
+  .#{$prefix}grow-0 {
+    flex-grow: 0;
+  }
+  .#{$prefix}shrink {
+    flex-shrink: 1;
+  }
+  .#{$prefix}shrink-0 {
+    flex-shrink: 0;
+  }
+}
+
+// ============================================================================
+// ALIGNMENT
+// ============================================================================
+
+@mixin generate-alignment($prefix: '') {
+  .#{$prefix}items-start {
+    align-items: flex-start;
+  }
+  .#{$prefix}items-center {
+    align-items: center;
+  }
+  .#{$prefix}items-end {
+    align-items: flex-end;
+  }
+  .#{$prefix}items-baseline {
+    align-items: baseline;
+  }
+  .#{$prefix}items-stretch {
+    align-items: stretch;
+  }
+  .#{$prefix}justify-start {
+    justify-content: flex-start;
+  }
+  .#{$prefix}justify-center {
+    justify-content: center;
+  }
+  .#{$prefix}justify-end {
+    justify-content: flex-end;
+  }
+  .#{$prefix}justify-between {
+    justify-content: space-between;
+  }
+  .#{$prefix}justify-around {
+    justify-content: space-around;
+  }
+  .#{$prefix}justify-evenly {
+    justify-content: space-evenly;
+  }
+  .#{$prefix}self-auto {
+    align-self: auto;
+  }
+  .#{$prefix}self-start {
+    align-self: flex-start;
+  }
+  .#{$prefix}self-center {
+    align-self: center;
+  }
+  .#{$prefix}self-end {
+    align-self: flex-end;
+  }
+  .#{$prefix}self-stretch {
+    align-self: stretch;
+  }
+}
+
+// ============================================================================
+// POSITION
+// ============================================================================
+
+@mixin generate-position($prefix: '') {
+  .#{$prefix}relative {
+    position: relative;
+  }
+  .#{$prefix}absolute {
+    position: absolute;
+  }
+  .#{$prefix}fixed {
+    position: fixed;
+  }
+  .#{$prefix}sticky {
+    position: sticky;
+  }
+  .#{$prefix}static {
+    position: static;
+  }
+  .#{$prefix}inset-0 {
+    inset: 0;
+  }
+  .#{$prefix}top-0 {
+    top: 0;
+  }
+  .#{$prefix}right-0 {
+    right: 0;
+  }
+  .#{$prefix}bottom-0 {
+    bottom: 0;
+  }
+  .#{$prefix}left-0 {
+    left: 0;
+  }
+}
+
+// ============================================================================
+// OVERFLOW
+// ============================================================================
+
+@mixin generate-overflow($prefix: '') {
+  @each $val in $overflow-values {
+    .#{$prefix}overflow-#{$val} {
+      overflow: $val;
+    }
+    .#{$prefix}overflow-x-#{$val} {
+      overflow-x: $val;
+    }
+    .#{$prefix}overflow-y-#{$val} {
+      overflow-y: $val;
+    }
+  }
+}
+
+// ============================================================================
+// TEXT ALIGN
+// ============================================================================
+
+@mixin generate-text-align($prefix: '') {
+  .#{$prefix}text-left {
+    text-align: left;
+  }
+  .#{$prefix}text-center {
+    text-align: center;
+  }
+  .#{$prefix}text-right {
+    text-align: right;
+  }
+}
+
+// ============================================================================
+// VISIBILITY
+// ============================================================================
+
+@mixin generate-visibility($prefix: '') {
+  .#{$prefix}visible {
+    visibility: visible;
+  }
+  .#{$prefix}invisible {
+    visibility: hidden;
+  }
+}
+
+// ============================================================================
+// ORDER
+// ============================================================================
+
+@mixin generate-order($prefix: '') {
+  .#{$prefix}order-first {
+    order: -9999;
+  }
+  .#{$prefix}order-last {
+    order: 9999;
+  }
+  .#{$prefix}order-none {
+    order: 0;
+  }
+}
+
+// ============================================================================
+// WIDTH FRACTIONS
+// ============================================================================
+
+@mixin generate-width-fractions($prefix: '', $include-auto: false) {
+  @if $include-auto {
+    .#{$prefix}w-auto {
+      width: auto;
+    }
+  }
+
+  @each $name, $val in $size-fractions {
+    .#{$prefix}w-#{$name} {
+      width: $val;
+    }
+  }
+}
+
+// ============================================================================
+// MAX WIDTHS
+// ============================================================================
+
+@mixin generate-max-widths($prefix: '') {
+  @each $name, $val in $max-widths {
+    .#{$prefix}max-w-#{$name} {
+      max-width: $val;
     }
   }
 }

@@ -164,6 +164,8 @@
   --finish-blur: 24px;
   --finish-saturation: 80%;
   --finish-opacity: 0.7;
+  --finish-overlay: none;
+  --finish-sheen: none;
 }
 
 @include register-finish('tinted') {

@@ -11,170 +11,20 @@
 // DISPLAY
 // ============================================================================
 
-.block {
-  display: block;
-}
-
-.inline-block {
-  display: inline-block;
-}
-
-.inline {
-  display: inline;
-}
-
-.hidden {
-  display: none;
-}
-
-.contents {
-  display: contents;
-}
+@include gen.generate-display;
 
 // ============================================================================
 // FLEXBOX
 // ============================================================================
 
-.flex {
-  display: flex;
-}
-
-.inline-flex {
-  display: inline-flex;
-}
-
-.flex-row {
-  flex-direction: row;
-}
-
-.flex-col {
-  flex-direction: column;
-}
-
-.flex-row-reverse {
-  flex-direction: row-reverse;
-}
-
-.flex-col-reverse {
-  flex-direction: column-reverse;
-}
-
-.flex-wrap {
-  flex-wrap: wrap;
-}
-
-.flex-nowrap {
-  flex-wrap: nowrap;
-}
-
-.flex-1 {
-  flex: 1 1 0%;
-}
-
-.flex-auto {
-  flex: 1 1 auto;
-}
-
-.flex-initial {
-  flex: 0 1 auto;
-}
-
-.flex-none {
-  flex: none;
-}
-
-.grow {
-  flex-grow: 1;
-}
-
-.grow-0 {
-  flex-grow: 0;
-}
-
-.shrink {
-  flex-shrink: 1;
-}
-
-.shrink-0 {
-  flex-shrink: 0;
-}
-
-// Alignment
-.items-start {
-  align-items: flex-start;
-}
-
-.items-center {
-  align-items: center;
-}
-
-.items-end {
-  align-items: flex-end;
-}
-
-.items-baseline {
-  align-items: baseline;
-}
-
-.items-stretch {
-  align-items: stretch;
-}
-
-.justify-start {
-  justify-content: flex-start;
-}
-
-.justify-center {
-  justify-content: center;
-}
-
-.justify-end {
-  justify-content: flex-end;
-}
-
-.justify-between {
-  justify-content: space-between;
-}
-
-.justify-around {
-  justify-content: space-around;
-}
-
-.justify-evenly {
-  justify-content: space-evenly;
-}
-
-.self-auto {
-  align-self: auto;
-}
-
-.self-start {
-  align-self: flex-start;
-}
-
-.self-center {
-  align-self: center;
-}
-
-.self-end {
-  align-self: flex-end;
-}
-
-.self-stretch {
-  align-self: stretch;
-}
+@include gen.generate-flex-direction;
+@include gen.generate-flex-wrap;
+@include gen.generate-flex-sizing;
+@include gen.generate-alignment;
 
 // ============================================================================
 // GRID
 // ============================================================================
-
-.grid {
-  display: grid;
-}
-
-.inline-grid {
-  display: inline-grid;
-}
 
 @include gen.generate-grid;
 
@@ -182,63 +32,13 @@
 // POSITIONING
 // ============================================================================
 
-.relative {
-  position: relative;
-}
-
-.absolute {
-  position: absolute;
-}
-
-.fixed {
-  position: fixed;
-}
-
-.sticky {
-  position: sticky;
-}
-
-.static {
-  position: static;
-}
-
-.inset-0 {
-  inset: 0;
-}
-
-.top-0 {
-  top: 0;
-}
-
-.right-0 {
-  right: 0;
-}
-
-.bottom-0 {
-  bottom: 0;
-}
-
-.left-0 {
-  left: 0;
-}
+@include gen.generate-position;
 
 // ============================================================================
 // OVERFLOW
 // ============================================================================
 
-@each $val in $overflow-values {
-  .overflow-#{$val} {
-    overflow: $val;
-  }
-
-  .overflow-x-#{$val} {
-    overflow-x: $val;
-  }
-
-  .overflow-y-#{$val} {
-    overflow-y: $val;
-  }
-}
+@include gen.generate-overflow;
 
 // ============================================================================
 // ASPECT RATIO
@@ -273,17 +73,7 @@ $aspect-ratios: (
 // ORDER
 // ============================================================================
 
-.order-first {
-  order: -9999;
-}
-
-.order-last {
-  order: 9999;
-}
-
-.order-none {
-  order: 0;
-}
+@include gen.generate-order;
 
 // ============================================================================
 // CONTAINER
