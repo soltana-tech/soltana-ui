@@ -31,6 +31,7 @@ export default tseslint.config(
       'dist/',
       'docs-dist/',
       'node_modules/',
+      'tests/',
       '*.config.js',
       '*.config.ts',
       '*.config.template.js',

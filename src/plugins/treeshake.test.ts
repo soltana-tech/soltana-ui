@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import postcss from 'postcss';
-import soltanaTreeshake from '../postcss-soltana-treeshake';
-import type { SoltanaTreeshakeOptions } from '../types';
+import soltanaTreeshake from './postcss-soltana-treeshake';
+import type { SoltanaTreeshakeOptions } from './types';
 
 async function run(css: string, options: SoltanaTreeshakeOptions): Promise<string> {
   const result = await postcss([soltanaTreeshake(options)]).process(css, { from: undefined });

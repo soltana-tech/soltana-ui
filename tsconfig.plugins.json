@@ -6,5 +6,5 @@
     "noEmit": false
   },
   "include": ["src/plugins/**/*.ts"],
-  "exclude": ["src/plugins/__tests__/**"]
+  "exclude": ["src/plugins/*.test.ts"]
 }
