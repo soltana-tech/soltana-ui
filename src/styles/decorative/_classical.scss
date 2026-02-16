@@ -82,13 +82,13 @@ $golden-ratio: 1.618;
 .columns-classical {
   column-count: 2;
   column-gap: 2.618rem;
-  column-rule: 1px solid var(--border-accent-gold);
+  column-rule: 1px solid var(--border-decorative);
 }
 
 .columns-classical-3 {
   column-count: 3;
   column-gap: 2.618rem;
-  column-rule: 1px solid var(--border-accent-gold);
+  column-rule: 1px solid var(--border-decorative);
 }
 
 // ---- Pediment — triangular/arched top section ----
@@ -133,8 +133,8 @@ $golden-ratio: 1.618;
 .entablature {
   position: relative;
   padding: 1rem 1.618rem;
-  border-top: 2px solid var(--border-accent-gold-strong);
-  border-bottom: 1px solid var(--border-accent-gold);
+  border-top: 2px solid var(--border-decorative-strong);
+  border-bottom: 1px solid var(--border-decorative);
 
   &::before {
     content: '';
@@ -143,7 +143,7 @@ $golden-ratio: 1.618;
     left: 0;
     right: 0;
     height: 1px;
-    background: var(--border-accent-gold);
+    background: var(--border-decorative);
   }
 }
 

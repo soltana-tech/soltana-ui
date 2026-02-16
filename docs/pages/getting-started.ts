@@ -143,7 +143,7 @@ export function renderGettingStarted(): string {
     'CSS Custom Properties',
     `
     <p class="text-sm text-secondary mb-4">Override any design token using CSS custom properties:</p>
-    ${codeExample(':root {\n  --accent-primary: #your-brand-color;\n  --accent-gold: #your-gold-tone;\n  --font-serif: "Your Serif Font", serif;\n  --font-sans: "Your Sans Font", sans-serif;\n}', 'css')}
+    ${codeExample(':root {\n  --accent-primary: #your-brand-color;\n  --accent-decorative: #your-gold-tone;\n  --font-serif: "Your Serif Font", serif;\n  --font-sans: "Your Sans Font", sans-serif;\n}', 'css')}
   `
   )}
 
@@ -187,7 +187,7 @@ export function renderGettingStarted(): string {
     'Custom Ornament',
     `
     <p class="text-sm text-secondary mb-4">Ornaments use the same token contract as other tiers. Set <code>--ornament-*</code> tokens on a <code>[data-ornament]</code> selector — base element classes (<code>.frame</code>, <code>.corner</code>, <code>.edge</code>, <code>.divider</code>, <code>.medallion</code>) consume them via <code>var()</code>. Unused tokens default to inert values (<code>none</code>, <code>0</code>, <code>transparent</code>).</p>
-    ${codeExample('/* A simple custom ornament — borders + shadows only (~8 tokens) */\n[data-ornament="royal"] {\n  --ornament-frame-border: 3px double var(--ornament-color);\n  --ornament-frame-shadow: 0 0 0 2px var(--ornament-color-dark), 0 0 16px var(--border-accent-gold);\n  --ornament-frame-inner-display: block;\n  --ornament-frame-inner-inset: 4px;\n  --ornament-frame-inner-border: 1px solid var(--ornament-color);\n  --ornament-frame-inner-opacity: 0.6;\n  --ornament-corner-display: block;\n  --ornament-corner-radius: 50%;\n  --ornament-corner-border: 2px solid var(--ornament-color);\n  --ornament-edge-border: 2px double var(--ornament-color);\n  --ornament-medallion-border: 3px solid var(--ornament-color);\n  --ornament-medallion-shadow: 0 0 12px var(--border-accent-gold);\n  --ornament-box-shadow: var(--relief-shadow), 0 0 0 2px var(--ornament-color);\n}', 'css')}
+    ${codeExample('/* A simple custom ornament — borders + shadows only (~8 tokens) */\n[data-ornament="royal"] {\n  --ornament-frame-border: 3px double var(--ornament-color);\n  --ornament-frame-shadow: 0 0 0 2px var(--ornament-color-dark), 0 0 16px var(--border-decorative);\n  --ornament-frame-inner-display: block;\n  --ornament-frame-inner-inset: 4px;\n  --ornament-frame-inner-border: 1px solid var(--ornament-color);\n  --ornament-frame-inner-opacity: 0.6;\n  --ornament-corner-display: block;\n  --ornament-corner-radius: 50%;\n  --ornament-corner-border: 2px solid var(--ornament-color);\n  --ornament-edge-border: 2px double var(--ornament-color);\n  --ornament-medallion-border: 3px solid var(--ornament-color);\n  --ornament-medallion-shadow: 0 0 12px var(--border-decorative);\n  --ornament-box-shadow: var(--relief-shadow), 0 0 0 2px var(--ornament-color);\n}', 'css')}
     <p class="text-sm text-secondary mt-4">Then activate it like any built-in ornament:</p>
     ${codeExample("soltana.setOrnament('royal');", 'javascript')}
   `

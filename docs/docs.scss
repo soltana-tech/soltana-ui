@@ -203,8 +203,8 @@
   background: linear-gradient(
     90deg,
     transparent,
-    var(--accent-gold, var(--accent-primary)) 20%,
-    var(--accent-gold, var(--accent-primary)) 80%,
+    var(--accent-decorative, var(--accent-primary)) 20%,
+    var(--accent-decorative, var(--accent-primary)) 80%,
     transparent
   );
   opacity: 0.3;
@@ -219,7 +219,7 @@
     transform: translate(-50%, -50%) rotate(45deg);
     width: 6px;
     height: 6px;
-    background: var(--accent-gold, var(--accent-primary));
+    background: var(--accent-decorative, var(--accent-primary));
     border-radius: 1px;
     opacity: 0.8;
   }
@@ -410,7 +410,7 @@ input[type='range'] {
     90deg,
     transparent 0%,
     var(--border-default) 15%,
-    var(--accent-gold, var(--accent-primary)) 50%,
+    var(--accent-decorative, var(--accent-primary)) 50%,
     var(--border-default) 85%,
     transparent 100%
   );
@@ -425,7 +425,7 @@ input[type='range'] {
     transform: translate(-50%, -50%) rotate(45deg);
     width: 5px;
     height: 5px;
-    background: var(--accent-gold, var(--accent-primary));
+    background: var(--accent-decorative, var(--accent-primary));
     border-radius: 1px;
     opacity: 0.6;
   }

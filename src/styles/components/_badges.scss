@@ -41,8 +41,8 @@
 
 .badge-primary {
   background-color: var(--badge-bg);
-  color: var(--accent-gold);
-  border: 1px solid var(--border-accent-gold);
+  color: var(--accent-decorative);
+  border: 1px solid var(--border-decorative);
 }
 
 @each $type in (success, warning, error, info) {
@@ -94,7 +94,7 @@
   width: 2.5rem;
   height: 2.5rem;
   border-radius: var(--radius-full);
-  background: linear-gradient(145deg, var(--accent-gold), var(--accent-gold-hover));
+  background: linear-gradient(145deg, var(--accent-decorative), var(--accent-decorative-hover));
   color: var(--text-inverse);
   font-weight: var(--font-semibold);
   font-size: var(--text-sm);
@@ -127,10 +127,10 @@ $avatar-sizes: (
 
 .avatar-cameo {
   border-radius: 50% / 60%;
-  border: 3px solid var(--accent-gold);
+  border: 3px solid var(--accent-decorative);
   box-shadow:
     0 0 0 2px var(--surface-bg),
-    0 0 0 4px var(--border-accent-gold-strong),
+    0 0 0 4px var(--border-decorative-strong),
     inset 0 0 8px rgb(0 0 0 / 15%);
 }
 

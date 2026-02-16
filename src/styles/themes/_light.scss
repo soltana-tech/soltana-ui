@@ -32,21 +32,21 @@
   --border-default: rgb(85 97 120 / 12%);
   --border-subtle: rgb(85 97 120 / 7%);
   --border-strong: rgb(85 97 120 / 20%);
-  --border-accent-gold: rgb(146 112 12 / 25%);
-  --border-accent-gold-strong: rgb(146 112 12 / 40%);
-  --accent-gold-subtle: rgb(146 112 12 / 12%);
 
-  // Accent colors — silver primary, amethyst secondary, gold reserved for highlights
+  // Accent colors — seed tokens (user-overridable)
   --accent-primary: #576378;
-  --accent-primary-hover: #454e60;
-  --accent-primary-active: #353c4a;
+  --accent-primary-hover: color-mix(in oklch, var(--accent-primary), black 15%);
+  --accent-primary-active: color-mix(in oklch, var(--accent-primary), black 25%);
   --accent-secondary: #6b21a8;
-  --accent-secondary-hover: #581c87;
-  --accent-secondary-active: #4c1d95;
+  --accent-secondary-hover: color-mix(in oklch, var(--accent-secondary), black 15%);
+  --accent-secondary-active: color-mix(in oklch, var(--accent-secondary), black 25%);
 
-  // Gold highlight (used sparingly for premium accents)
-  --accent-gold: #92700c;
-  --accent-gold-hover: #7a5e0a;
+  // Decorative accent (ornaments, highlights)
+  --accent-decorative: #92700c;
+  --accent-decorative-hover: color-mix(in oklch, var(--accent-decorative), black 15%);
+  --accent-decorative-subtle: color-mix(in srgb, var(--accent-decorative) 12%, transparent);
+  --border-decorative: color-mix(in srgb, var(--accent-decorative) 25%, transparent);
+  --border-decorative-strong: color-mix(in srgb, var(--accent-decorative) 40%, transparent);
 
   // Semantic colors — high contrast for marble background
   --color-success: #0d6b4e;
@@ -62,10 +62,10 @@
   --color-info-subtle: rgb(30 64 175 / 8%);
   --color-info-text: #1e3a8a;
 
-  // Interactive states — silver-tinted
-  --state-hover: rgb(85 97 120 / 6%);
-  --state-active: rgb(85 97 120 / 12%);
-  --state-focus-ring: rgb(87 99 120 / 35%);
+  // Interactive states — derived from accent-primary
+  --state-hover: color-mix(in srgb, var(--accent-primary) 6%, transparent);
+  --state-active: color-mix(in srgb, var(--accent-primary) 12%, transparent);
+  --state-focus-ring: color-mix(in srgb, var(--accent-primary) 35%, transparent);
   --state-disabled-bg: #e2e5ed;
   --state-disabled-text: #6b7280;
 
@@ -75,7 +75,7 @@
 
   --shadow-color: 140 150 170;
   --highlight-color: 255 255 255;
-  --accent-glow: rgb(87 99 120 / 10%);
+  --accent-glow: color-mix(in srgb, var(--accent-primary) 10%, transparent);
 
   // =========================================================================
   // COMPONENT TOKENS
@@ -83,11 +83,11 @@
 
   --input-bg: #fff;
   --input-border: rgb(85 97 120 / 14%);
-  --input-border-focus: #576378;
+  --input-border-focus: var(--accent-primary);
   --input-placeholder: #6b7280;
   --card-bg: rgb(255 255 255 / 78%);
   --card-border: rgb(85 97 120 / 10%);
-  --badge-bg: rgb(85 97 120 / 8%);
+  --badge-bg: color-mix(in srgb, var(--accent-primary) 8%, transparent);
   --tooltip-bg: #1e2128;
   --tooltip-text: #eef0f5;
   --scrollbar-thumb: rgb(85 97 120 / 15%);

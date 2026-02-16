@@ -29,25 +29,25 @@
   --text-muted: #897d69;
   --text-inverse: #08091a;
 
-  // Border colors — neutral alpha for seamless neumorphic, gold reserved for accents
+  // Border colors — neutral alpha for seamless neumorphic blending
   --border-default: rgb(255 255 255 / 6%);
   --border-subtle: rgb(255 255 255 / 3%);
   --border-strong: rgb(255 255 255 / 10%);
-  --border-accent-gold: rgb(212 168 67 / 20%);
-  --border-accent-gold-strong: rgb(212 168 67 / 35%);
-  --accent-gold-subtle: rgb(212 168 67 / 10%);
 
-  // Accent colors — gold primary, amethyst secondary
+  // Accent colors — seed tokens (user-overridable)
   --accent-primary: #d4a843;
-  --accent-primary-hover: #e0b94e;
-  --accent-primary-active: #b8920a;
+  --accent-primary-hover: color-mix(in oklch, var(--accent-primary), white 15%);
+  --accent-primary-active: color-mix(in oklch, var(--accent-primary), black 25%);
   --accent-secondary: #a855f7;
-  --accent-secondary-hover: #b971f8;
-  --accent-secondary-active: #9333ea;
+  --accent-secondary-hover: color-mix(in oklch, var(--accent-secondary), white 15%);
+  --accent-secondary-active: color-mix(in oklch, var(--accent-secondary), black 25%);
 
-  // Gold highlight (same as primary in dark)
-  --accent-gold: #d4a843;
-  --accent-gold-hover: #e0b94e;
+  // Decorative accent (ornaments, highlights)
+  --accent-decorative: #d4a843;
+  --accent-decorative-hover: color-mix(in oklch, var(--accent-decorative), white 15%);
+  --accent-decorative-subtle: color-mix(in srgb, var(--accent-decorative) 10%, transparent);
+  --border-decorative: color-mix(in srgb, var(--accent-decorative) 20%, transparent);
+  --border-decorative-strong: color-mix(in srgb, var(--accent-decorative) 35%, transparent);
 
   // Semantic colors — jewel-toned
   --color-success: #10b981;
@@ -63,10 +63,10 @@
   --color-info-subtle: rgb(59 130 246 / 12%);
   --color-info-text: #60a5fa;
 
-  // Interactive states
-  --state-hover: rgb(212 168 67 / 8%);
-  --state-active: rgb(212 168 67 / 14%);
-  --state-focus-ring: rgb(212 168 67 / 40%);
+  // Interactive states — derived from accent-primary
+  --state-hover: color-mix(in srgb, var(--accent-primary) 8%, transparent);
+  --state-active: color-mix(in srgb, var(--accent-primary) 14%, transparent);
+  --state-focus-ring: color-mix(in srgb, var(--accent-primary) 40%, transparent);
   --state-disabled-bg: #151838;
   --state-disabled-text: #897d69;
 
@@ -76,7 +76,7 @@
 
   --shadow-color: 0 0 0;
   --highlight-color: 255 255 255;
-  --accent-glow: rgb(212 168 67 / 15%);
+  --accent-glow: color-mix(in srgb, var(--accent-primary) 15%, transparent);
 
   // =========================================================================
   // COMPONENT TOKENS
@@ -84,11 +84,11 @@
 
   --input-bg: rgb(255 255 255 / 4%);
   --input-border: rgb(255 255 255 / 8%);
-  --input-border-focus: #d4a843;
+  --input-border-focus: var(--accent-primary);
   --input-placeholder: #897d69;
   --card-bg: rgb(14 16 40 / 60%);
   --card-border: rgb(255 255 255 / 6%);
-  --badge-bg: rgb(212 168 67 / 10%);
+  --badge-bg: color-mix(in srgb, var(--accent-primary) 10%, transparent);
   --tooltip-bg: #08091a;
   --tooltip-text: #f5f0e6;
   --scrollbar-thumb: rgb(255 255 255 / 12%);

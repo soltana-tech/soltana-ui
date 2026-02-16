@@ -22,9 +22,9 @@
 // Token-level overrides for users who need stronger contrast.
 @media (prefers-contrast: more) {
   :root {
-    --border-default: var(--border-accent-gold-strong);
-    --border-subtle: var(--border-accent-gold);
-    --border-strong: var(--accent-gold);
+    --border-default: var(--border-decorative-strong);
+    --border-subtle: var(--border-decorative);
+    --border-strong: var(--accent-decorative);
 
     // Eliminate translucency
     --finish-blur: 0px;

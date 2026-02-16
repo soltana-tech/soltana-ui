@@ -420,7 +420,7 @@ export function renderExamples(): string {
 
           <div class="relative z-10 px-8 py-12">
             <div class="text-center mb-16">
-              <p class="overline mb-6" style="color: var(--accent-gold)">Soltana Design System</p>
+              <p class="overline mb-6" style="color: var(--accent-decorative)">Soltana Design System</p>
               <h1 class="font-serif mb-6" style="font-size: 4.5rem; line-height: 1.05; font-weight: 700; letter-spacing: 0.08em; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                 Prestige in<br/>Every Pixel
               </h1>
@@ -456,7 +456,7 @@ export function renderExamples(): string {
                 .map(
                   (f) => `
                 <div class="card" style="padding: 1.5rem; border-radius: var(--radius-xl);">
-                  <svg class="mb-4" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${f.icon}</svg>
+                  <svg class="mb-4" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-decorative)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${f.icon}</svg>
                   <h4 class="font-semibold text-base mb-2 font-serif">${f.title}</h4>
                   <p class="text-sm text-secondary">${f.desc}</p>
                 </div>
@@ -483,7 +483,7 @@ export function renderExamples(): string {
             <div class="card mb-6" style="padding: 1rem 1.5rem; border-radius: var(--radius-xl)">
               <div class="flex items-center justify-between">
                 <div>
-                  <p class="overline" style="color: var(--accent-gold)">Overview</p>
+                  <p class="overline" style="color: var(--accent-decorative)">Overview</p>
                   <h3 class="font-serif text-2xl font-bold">Estate Analytics</h3>
                 </div>
                 <div class="flex gap-2">
@@ -504,7 +504,7 @@ export function renderExamples(): string {
                 .map(
                   (s) => `
                 <div class="card" style="padding: 1rem 1.25rem; border-radius: var(--radius-xl);">
-                  <p class="text-xs mb-1" style="color: var(--accent-gold)">${s.label}</p>
+                  <p class="text-xs mb-1" style="color: var(--accent-decorative)">${s.label}</p>
                   <p class="text-xl font-bold mb-1">${s.value}</p>
                   <span class="text-xs" style="color: ${s.up ? 'var(--color-success)' : 'var(--color-error)'}">${s.change}</span>
                 </div>
@@ -522,7 +522,7 @@ export function renderExamples(): string {
                   .map(
                     (h, i) => `
                   <div style="display: flex; flex-direction: column; gap: 2px; align-items: center; flex: 1;">
-                    <div style="width: 100%; height: ${String(h)}%; max-width: 32px; background: linear-gradient(to top, var(--accent-primary), var(--accent-gold)); border-radius: var(--radius-sm);"></div>
+                    <div style="width: 100%; height: ${String(h)}%; max-width: 32px; background: linear-gradient(to top, var(--accent-primary), var(--accent-decorative)); border-radius: var(--radius-sm);"></div>
                     <span class="text-xs text-muted" style="font-size: 0.6rem">${['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'][i]}</span>
                   </div>
                 `
