@@ -1,12 +1,13 @@
 // ---------------------------------------------------------------------------
 // Design Tokens & CSS Custom Properties
 // ---------------------------------------------------------------------------
-// Estate-inspired design tokens: spacing, type, shadow, easing.
+// Design tokens: spacing, type, shadow, easing, and icon URI generators.
 // Cinzel (serif) + Raleway (sans) + JetBrains Mono (mono).
 // ---------------------------------------------------------------------------
 
 @use 'sass:list';
 @use 'sass:map';
+@use 'sass:string';
 
 // ---- Spacing scale (4px base) ----
 $spacing-base: 0.25rem;
@@ -227,6 +228,25 @@ $fluid-font-sizes: (
   8xl: clamp(3.5rem, 1rem + 6.25vi, 6rem),
   9xl: clamp(4.5rem, 1rem + 8.75vi, 8rem),
 );
+
+// ---- Icon data-URI generators ----
+// Each function embeds a single SVG shape with a parameterized fill/stroke color,
+// so theme files can call them with the appropriate contrast color.
+
+@function icon-chevron($color) {
+  $c: '%23' + string.slice('#{$color}', 2);
+  @return url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='#{$c}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+}
+
+@function icon-checkmark($color) {
+  $c: '%23' + string.slice('#{$color}', 2);
+  @return url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='#{$c}' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+}
+
+@function icon-radio-dot($color) {
+  $c: '%23' + string.slice('#{$color}', 2);
+  @return url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='3.5' fill='#{$c}'/%3E%3C/svg%3E");
+}
 
 // ---- CSS custom properties ----
 :root {

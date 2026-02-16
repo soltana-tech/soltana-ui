@@ -1,9 +1,10 @@
 // ---------------------------------------------------------------------------
-// Estate Champagne (Sepia / Warm Theme)
+// Sepia Theme
 // ---------------------------------------------------------------------------
-// Deep champagne parchment with bronze accents and amber warmth.
-// Evokes aged leather, candlelit interiors, and antique finishes.
+// Warm champagne surfaces with espresso text and brown accents.
 // ---------------------------------------------------------------------------
+
+@use '../variables' as *;
 
 [data-theme='sepia'],
 .theme-sepia {
@@ -93,4 +94,9 @@
   --scrollbar-thumb: rgb(94 63 27 / 22%);
   --scrollbar-track: rgb(94 63 27 / 5%);
   --code-bg: #ddd0b0;
+
+  // Icon data URIs — colors chosen for contrast against accent-primary bg
+  --icon-select-chevron: #{icon-chevron(#3a2c12)};
+  --icon-checkbox-check: #{icon-checkmark(#f2e8d2)};
+  --icon-radio-dot: #{icon-radio-dot(#f2e8d2)};
 }
