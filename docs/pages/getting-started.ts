@@ -147,6 +147,51 @@ export function renderGettingStarted(): string {
   `
   )}
 
+  ${ornamentDivider()}
+
+  ${sectionHeading('Custom Tiers', 'custom-tiers', 'Define your own themes, reliefs, and finishes by implementing the CSS token contract for each tier.')}
+
+  ${specimenBlock(
+    'How It Works',
+    `
+    <p class="text-sm text-secondary mb-4">Each tier is driven by CSS custom properties set on <code>[data-{tier}]</code> attribute selectors. To add a custom option, define the required tokens in your CSS and pass the name to the config or setter methods. TypeScript provides autocomplete for built-in values while accepting any string.</p>
+    ${codeExample("// Custom values work alongside built-in ones\nconst soltana = initSoltana({\n  theme: 'midnight',  // your custom theme\n  relief: 'neu',      // built-in\n  finish: 'brushed',  // your custom finish\n  ornament: 'none',\n});\n\n// Setters accept custom values too\nsoltana.setTheme('neon');", 'javascript')}
+  `
+  )}
+
+  ${specimenBlock(
+    'Custom Theme',
+    `
+    <p class="text-sm text-secondary mb-4">Themes require ~47 tokens across surface, text, border, accent, semantic, state, channel, and component groups. Start from an existing theme file and override the values.</p>
+    ${codeExample('[data-theme="midnight"] {\n  /* Surface */\n  --surface-bg: #0a0a1a;\n  --surface-1: #12122a;\n  --surface-2: #1a1a3a;\n  --surface-3: #22224a;\n  --surface-4: #2a2a5a;\n  --surface-overlay: rgb(0 0 20 / 60%);\n\n  /* Text */\n  --text-primary: #e8e8ff;\n  --text-secondary: #b0b0d0;\n  --text-tertiary: #8080a0;\n  --text-muted: #606080;\n  --text-inverse: #0a0a1a;\n\n  /* Accent, border, state, channel, component tokens... */\n  /* See src/styles/themes/_dark.scss for the full list */\n}', 'css')}
+  `
+  )}
+
+  ${specimenBlock(
+    'Custom Relief',
+    `
+    <p class="text-sm text-secondary mb-4">Reliefs set 8 tokens controlling depth, shadows, and borders. These consume channel tokens (<code>--shadow-color</code>, <code>--highlight-color</code>) from the active theme.</p>
+    ${codeExample('[data-relief="glass"] {\n  --relief-bg: rgb(255 255 255 / 5%);\n  --relief-shadow-sm: 0 1px 2px rgb(var(--shadow-color) / 8%);\n  --relief-shadow: 0 4px 12px rgb(var(--shadow-color) / 12%);\n  --relief-shadow-lg: 0 8px 32px rgb(var(--shadow-color) / 18%);\n  --relief-shadow-inset-sm: inset 0 1px 1px rgb(var(--highlight-color) / 6%);\n  --relief-shadow-inset: inset 0 2px 4px rgb(var(--highlight-color) / 10%);\n  --relief-shadow-inset-lg: inset 0 4px 8px rgb(var(--highlight-color) / 14%);\n  --relief-border: 1px solid rgb(255 255 255 / 8%);\n}', 'css')}
+  `
+  )}
+
+  ${specimenBlock(
+    'Custom Finish',
+    `
+    <p class="text-sm text-secondary mb-4">Finishes control 6 tokens for backdrop filters, overlays, and sheen effects.</p>
+    ${codeExample('[data-finish="brushed"] {\n  --finish-blur: 0px;\n  --finish-saturation: 100%;\n  --finish-opacity: 1;\n  --finish-texture-opacity: 0.08;\n  --finish-overlay: linear-gradient(135deg, transparent 40%, rgb(255 255 255 / 3%) 100%);\n  --finish-sheen: none;\n}', 'css')}
+  `
+  )}
+
+  ${specimenBlock(
+    'Custom Recipes',
+    `
+    <p class="text-sm text-secondary mb-4">Register named presets that combine your custom tiers with built-in ones.</p>
+    ${codeExample("soltana.registerRecipe('my-brand', {\n  name: 'My Brand',\n  description: 'Dark midnight theme with glass relief.',\n  theme: 'midnight',\n  relief: 'glass',\n  finish: 'brushed',\n  ornament: 'gilt',\n});\n\nsoltana.applyRecipe('my-brand');", 'javascript')}
+    <p class="text-sm text-secondary mt-4"><strong>Note:</strong> Ornaments are not yet token-extensible. Custom ornament names will set the <code>data-ornament</code> attribute but require matching CSS to render.</p>
+  `
+  )}
+
 </div>
 `;
 }

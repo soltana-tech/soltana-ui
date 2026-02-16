@@ -12,6 +12,11 @@ export type {
   Ornament,
   RecipeName,
   Recipe,
+  BuiltInTheme,
+  BuiltInRelief,
+  BuiltInFinish,
+  BuiltInOrnament,
+  BuiltInRecipeName,
 } from './config/types.js';
 
 // Recipe presets

@@ -98,7 +98,7 @@ describe('applyRecipe', () => {
 
     soltana.applyRecipe('nonexistent' as RecipeName);
 
-    expect(spy).toHaveBeenCalledWith(expect.stringContaining('Invalid recipe'));
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining('Unknown recipe'));
     expect(soltana.getState().theme).toBe('sepia');
     expect(soltana.getState().relief).toBe('sharp');
     spy.mockRestore();

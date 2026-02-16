@@ -2,9 +2,9 @@
 // Soltana Recipes — Named presets of proven tier combinations
 // ---------------------------------------------------------------------------
 
-import type { RecipeName, Recipe } from './types';
+import type { Recipe } from './types';
 
-export const RECIPES: Readonly<Record<RecipeName, Recipe>> = {
+const recipes: Record<string, Recipe> = {
   'corporate-clean': {
     name: 'Corporate Clean',
     description: 'Minimal and professional with zero ornamentation.',
@@ -39,4 +39,11 @@ export const RECIPES: Readonly<Record<RecipeName, Recipe>> = {
   },
 };
 
-export const VALID_RECIPE_NAMES: readonly RecipeName[] = Object.keys(RECIPES) as RecipeName[];
+/** Read-only view of the recipe registry. */
+export const RECIPES: Readonly<Record<string, Recipe>> = recipes;
+
+export function registerRecipe(name: string, recipe: Recipe): void {
+  recipes[name] = recipe;
+}
+
+export const VALID_RECIPE_NAMES: readonly string[] = Object.keys(RECIPES);

@@ -132,14 +132,66 @@ describe('initSoltana', () => {
   });
 
   it.each([
-    ['theme', { theme: 'neon' as never }],
-    ['relief', { relief: 'paper' as never }],
-    ['finish', { finish: 'satin' as never }],
-    ['ornament', { ornament: 'gothic' as never }],
-  ] as const)('warns on invalid %s', (name, overrides) => {
+    ['theme', { theme: 'neon', strict: true }],
+    ['relief', { relief: 'paper', strict: true }],
+    ['finish', { finish: 'satin', strict: true }],
+    ['ornament', { ornament: 'gothic', strict: true }],
+  ] as const)('warns on unknown %s in strict mode', (name, overrides) => {
     const spy = vi.spyOn(console, 'warn').mockImplementation(vi.fn());
     initSoltana(overrides);
-    expect(spy).toHaveBeenCalledWith(expect.stringContaining(`Invalid ${name}`));
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining(`Unknown ${name}`));
+    spy.mockRestore();
+  });
+
+  it('does not warn on custom tier values by default', () => {
+    const spy = vi.spyOn(console, 'warn').mockImplementation(vi.fn());
+    initSoltana({ theme: 'neon', relief: 'paper', finish: 'satin', ornament: 'gothic' });
+    expect(spy).not.toHaveBeenCalled();
+    spy.mockRestore();
+  });
+
+  it('custom tier values set data attributes', () => {
+    const soltana = initSoltana({
+      theme: 'neon',
+      relief: 'glass',
+      finish: 'satin',
+      ornament: 'celtic',
+    });
+    expect(document.documentElement.getAttribute('data-theme')).toBe('neon');
+    expect(document.documentElement.getAttribute('data-relief')).toBe('glass');
+    expect(document.documentElement.getAttribute('data-finish')).toBe('satin');
+    expect(document.documentElement.getAttribute('data-ornament')).toBe('celtic');
+    expect(soltana.getState().theme).toBe('neon');
+    expect(soltana.getState().relief).toBe('glass');
+  });
+
+  it('setTheme accepts custom values', () => {
+    const soltana = initSoltana();
+    soltana.setTheme('neon');
+    expect(document.documentElement.getAttribute('data-theme')).toBe('neon');
+    expect(soltana.getState().theme).toBe('neon');
+  });
+
+  it('registerRecipe adds a recipe that applyRecipe can use', () => {
+    const soltana = initSoltana();
+    soltana.registerRecipe('my-preset', {
+      name: 'My Preset',
+      description: 'Custom recipe for testing.',
+      theme: 'dark',
+      relief: 'flat',
+      finish: 'matte',
+      ornament: 'gilt',
+    });
+    soltana.applyRecipe('my-preset');
+    expect(document.documentElement.getAttribute('data-ornament')).toBe('gilt');
+    expect(document.documentElement.getAttribute('data-relief')).toBe('flat');
+  });
+
+  it('applyRecipe warns on unknown recipe name', () => {
+    const spy = vi.spyOn(console, 'warn').mockImplementation(vi.fn());
+    const soltana = initSoltana();
+    soltana.applyRecipe('nonexistent');
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining('Unknown recipe'));
     spy.mockRestore();
   });
 
