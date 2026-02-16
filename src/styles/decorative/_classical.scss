@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 // ---------------------------------------------------------------------------
 // Classical Layout Utilities
 // ---------------------------------------------------------------------------
@@ -9,92 +11,75 @@
 // 1.618 : 1 ratio scale based on 1rem unit
 $golden-ratio: 1.618;
 
-.space-golden-1 {
-  --golden-space: 0.618rem; // ~10px
-}
-
-.space-golden-2 {
-  --golden-space: 1rem; // base
-}
-
-.space-golden-3 {
-  --golden-space: 1.618rem; // ~26px
-}
-
-.space-golden-4 {
-  --golden-space: 2.618rem; // ~42px
-}
-
-.space-golden-5 {
-  --golden-space: 4.236rem; // ~68px
-}
-
-.space-golden-6 {
-  --golden-space: 6.854rem; // ~110px
+// Exponent mapping: step 1 → φ⁻¹, step 2 → φ⁰ (base), step 3 → φ¹, ... step 6 → φ⁴
+@for $i from 1 through 6 {
+  .space-golden-#{$i} {
+    --golden-space: #{math.pow($golden-ratio, $i - 2) * 1rem};
+  }
 }
 
 // Golden ratio padding/margin utilities
 .p-golden {
-  padding: var(--golden-space, 1.618rem);
+  padding: var(--golden-space, #{$golden-ratio * 1rem});
 }
 
 .px-golden {
-  padding-left: var(--golden-space, 1.618rem);
-  padding-right: var(--golden-space, 1.618rem);
+  padding-left: var(--golden-space, #{$golden-ratio * 1rem});
+  padding-right: var(--golden-space, #{$golden-ratio * 1rem});
 }
 
 .py-golden {
-  padding-top: var(--golden-space, 1.618rem);
-  padding-bottom: var(--golden-space, 1.618rem);
+  padding-top: var(--golden-space, #{$golden-ratio * 1rem});
+  padding-bottom: var(--golden-space, #{$golden-ratio * 1rem});
 }
 
 .m-golden {
-  margin: var(--golden-space, 1.618rem);
+  margin: var(--golden-space, #{$golden-ratio * 1rem});
 }
 
 .mx-golden {
-  margin-left: var(--golden-space, 1.618rem);
-  margin-right: var(--golden-space, 1.618rem);
+  margin-left: var(--golden-space, #{$golden-ratio * 1rem});
+  margin-right: var(--golden-space, #{$golden-ratio * 1rem});
 }
 
 .my-golden {
-  margin-top: var(--golden-space, 1.618rem);
-  margin-bottom: var(--golden-space, 1.618rem);
+  margin-top: var(--golden-space, #{$golden-ratio * 1rem});
+  margin-bottom: var(--golden-space, #{$golden-ratio * 1rem});
 }
 
 .gap-golden {
-  gap: var(--golden-space, 1.618rem);
+  gap: var(--golden-space, #{$golden-ratio * 1rem});
 }
 
 // ---- Golden Ratio Container ----
 .ratio-golden {
   max-width: 100%;
-  aspect-ratio: 1.618 / 1;
+  aspect-ratio: #{$golden-ratio} / 1;
 }
 
 .ratio-golden-portrait {
   max-width: 100%;
-  aspect-ratio: 1 / 1.618;
+  aspect-ratio: 1 / #{$golden-ratio};
 }
 
 // ---- Classical Column Layout ----
 // Multi-column layout with elegant proportions
 .columns-classical {
   column-count: 2;
-  column-gap: 2.618rem;
+  column-gap: math.pow($golden-ratio, 2) * 1rem;
   column-rule: 1px solid var(--border-decorative);
 }
 
 .columns-classical-3 {
   column-count: 3;
-  column-gap: 2.618rem;
+  column-gap: math.pow($golden-ratio, 2) * 1rem;
   column-rule: 1px solid var(--border-decorative);
 }
 
 // ---- Pediment — triangular/arched top section ----
 .pediment {
   position: relative;
-  padding: 2.618rem 1.618rem 1.618rem;
+  padding: math.pow($golden-ratio, 2) * 1rem $golden-ratio * 1rem $golden-ratio * 1rem;
   text-align: center;
 
   &::before {
@@ -132,7 +117,7 @@ $golden-ratio: 1.618;
 // ---- Entablature — horizontal band (for headers/footers) ----
 .entablature {
   position: relative;
-  padding: 1rem 1.618rem;
+  padding: 1rem $golden-ratio * 1rem;
   border-top: 2px solid var(--border-decorative-strong);
   border-bottom: 1px solid var(--border-decorative);
 
@@ -149,7 +134,7 @@ $golden-ratio: 1.618;
 
 // ---- Plinth — base section ----
 .plinth {
-  padding: 1.618rem;
+  padding: $golden-ratio * 1rem;
   background: var(--surface-2);
   border-top: 1px solid var(--border-default);
   position: relative;
@@ -176,7 +161,7 @@ $golden-ratio: 1.618;
 // Combines pediment (top) + content + plinth (base) pattern
 .section-classical {
   position: relative;
-  padding: 4.236rem 1.618rem;
+  padding: math.pow($golden-ratio, 3) * 1rem $golden-ratio * 1rem;
 
   &::before {
     content: '';

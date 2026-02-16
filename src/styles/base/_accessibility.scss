@@ -48,25 +48,33 @@
   --focus-ring-shadow: 0 0 0 3px var(--state-focus-ring);
 }
 
+// ---- Focus Ring Mixin ----
+@mixin focus-ring-outline($inset: false) {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+
+  @if $inset {
+    outline-offset: calc(-1 * var(--focus-ring-offset));
+  } @else {
+    outline-offset: var(--focus-ring-offset);
+  }
+}
+
 // ---- Focus Styles ----
 // Consistent focus ring on all interactive elements via tokens.
 :focus-visible {
-  outline: var(--focus-ring-width) solid var(--focus-ring-color);
-  outline-offset: var(--focus-ring-offset);
+  @include focus-ring-outline;
 }
 
 // Generic focus ring utility
 .focus-ring {
   &:focus-visible {
-    outline: var(--focus-ring-width) solid var(--focus-ring-color);
-    outline-offset: var(--focus-ring-offset);
+    @include focus-ring-outline;
   }
 }
 
 .focus-ring-inset {
   &:focus-visible {
-    outline: var(--focus-ring-width) solid var(--focus-ring-color);
-    outline-offset: calc(-1 * var(--focus-ring-offset));
+    @include focus-ring-outline($inset: true);
   }
 }
 
@@ -114,8 +122,7 @@
 
   &:focus {
     top: 0;
-    outline: var(--focus-ring-width) solid var(--focus-ring-color);
-    outline-offset: var(--focus-ring-offset);
+    @include focus-ring-outline;
   }
 }
 

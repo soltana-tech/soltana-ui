@@ -14,9 +14,6 @@
   .w-#{$name} {
     width: $val;
   }
-}
-
-@each $name, $val in $size-fractions {
   .h-#{$name} {
     height: $val;
   }
