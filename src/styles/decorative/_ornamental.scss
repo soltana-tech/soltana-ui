@@ -1,14 +1,17 @@
 // ---------------------------------------------------------------------------
 // Ornament Tier System
 // ---------------------------------------------------------------------------
-// Tier-aware decorative elements: .frame, .corner, .edge, .divider,
+// Token-driven decorative elements: .frame, .corner, .edge, .divider,
 // .medallion. Each auto-styles from [data-ornament] on <html> and
 // supports per-element override via .ornament-{value} utility classes.
 // SVG decorations use mask-image so --ornament-color propagates fully.
+// Architecture: base element classes consume --ornament-* tokens via var()
+// with inert defaults. Tier selectors ONLY set token values.
+// Custom tiers define whichever tokens they need; unused tokens remain inert.
 // ---------------------------------------------------------------------------
 
 // ============================================================================
-// ORNAMENTAL CSS VARIABLES
+// GLOBAL ORNAMENT TOKENS
 // ============================================================================
 
 :root {
@@ -29,101 +32,524 @@
 }
 
 // ============================================================================
-// MASK-IMAGE HELPER
+// BASE ELEMENT CLASSES — Structural scaffolding + token consumption
 // ============================================================================
-// Converts SVG data URIs to masks so background-color (--ornament-color)
-// controls the visible color. All SVGs use white strokes/fills as masks.
+// Each class provides positioning/layout and consumes --ornament-* tokens.
+// When no tier is active, all defaults are inert (none, 0, transparent).
 
-@mixin svg-mask($url, $size: contain, $repeat: no-repeat) {
-  -webkit-mask-image: url($url);
-  mask-image: url($url);
-  -webkit-mask-size: $size;
-  mask-size: $size;
-  -webkit-mask-repeat: $repeat;
-  mask-repeat: $repeat;
-  background-color: var(--ornament-color);
-}
-
-// ============================================================================
-// FRAME MIXINS — Full border treatments (one per tier)
-// ============================================================================
-
-@mixin frame-gilt {
-  border: 2px solid var(--ornament-color);
-  box-shadow:
-    0 0 0 1px var(--ornament-color-dark),
-    0 0 0 4px var(--surface-bg, #fff),
-    0 0 0 5px var(--ornament-color),
-    0 0 12px var(--border-accent-gold);
+.frame {
+  position: relative;
+  padding: 1.5rem;
+  border: var(--ornament-frame-border, none);
+  border-image: var(--ornament-frame-border-image, none);
+  box-shadow: var(--ornament-frame-shadow, none);
+  clip-path: var(--ornament-frame-clip, none);
 
   &::before {
     content: '';
+    display: var(--ornament-frame-inner-display, none);
     position: absolute;
-    inset: 2px;
-    border: 1px solid var(--border-accent-gold);
+    inset: var(--ornament-frame-inner-inset, 0);
+    border: var(--ornament-frame-inner-border, none);
+    border-bottom-color: var(--ornament-frame-inner-border-bottom, unset);
+    border-right-color: var(--ornament-frame-inner-border-right, unset);
+    border-radius: var(--ornament-frame-inner-radius, 0);
+    clip-path: var(--ornament-frame-inner-clip, none);
+    opacity: var(--ornament-frame-inner-opacity, 0);
+    pointer-events: none;
+  }
+
+  &::after {
+    content: '';
+    display: var(--ornament-frame-decor-display, none);
+    position: absolute;
+    top: var(--ornament-frame-decor-offset, -12px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: var(--ornament-frame-decor-size, 24px);
+    height: var(--ornament-frame-decor-size, 24px);
+    border-radius: var(--ornament-frame-decor-radius, 50%);
+    border: var(--ornament-frame-decor-border, none);
+    background: var(--ornament-frame-decor-bg, transparent);
+    box-shadow: var(--ornament-frame-decor-shadow, none);
     pointer-events: none;
   }
 }
 
-@mixin frame-baroque {
-  border: 3px solid;
-  border-image: linear-gradient(
+.corner {
+  position: relative;
+
+  &::before,
+  &::after {
+    content: '';
+    display: var(--ornament-corner-display, none);
+    position: absolute;
+    width: var(--ornament-corner-size, var(--ornament-size-md));
+    height: var(--ornament-corner-size, var(--ornament-size-md));
+    border-radius: var(--ornament-corner-radius, 0);
+    border: var(--ornament-corner-border, none);
+    box-shadow: var(--ornament-corner-shadow, none);
+    background-color: var(--ornament-corner-bg, transparent);
+    clip-path: var(--ornament-corner-clip, none);
+    -webkit-mask-image: var(--ornament-corner-mask, none);
+    mask-image: var(--ornament-corner-mask, none);
+    -webkit-mask-size: var(--ornament-corner-mask-size, contain);
+    mask-size: var(--ornament-corner-mask-size, contain);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    opacity: var(--ornament-opacity);
+    pointer-events: none;
+  }
+
+  &::before {
+    top: var(--ornament-corner-offset, 6px);
+    left: var(--ornament-corner-offset, 6px);
+    border-width: var(--ornament-corner-tl-border-width, unset);
+  }
+
+  &::after {
+    top: var(--ornament-corner-offset, 6px);
+    right: var(--ornament-corner-offset, 6px);
+    border-width: var(--ornament-corner-tr-border-width, unset);
+    transform: var(--ornament-corner-after-transform, none);
+  }
+}
+
+.edge {
+  position: relative;
+  border: var(--ornament-edge-border, none);
+  box-shadow: var(--ornament-edge-shadow, none);
+  background-image: var(--ornament-edge-bg-image, none);
+  background-size: var(--ornament-edge-bg-size, auto);
+
+  &::before {
+    content: '';
+    display: var(--ornament-edge-before-display, none);
+    position: absolute;
+    inset: var(--ornament-edge-before-inset, 0);
+    border: var(--ornament-edge-before-border, none);
+    border-radius: inherit;
+    opacity: var(--ornament-edge-before-opacity, 1);
+    pointer-events: none;
+  }
+}
+
+.divider {
+  position: relative;
+  width: 100%;
+  height: var(--ornament-divider-height, 2px);
+  background: var(
+    --ornament-divider-bg,
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--ornament-color) 20%,
+      var(--ornament-color) 80%,
+      transparent
+    )
+  );
+  opacity: var(--ornament-divider-opacity, 0.4);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: var(--ornament-divider-before-inset, auto);
+    top: var(--ornament-divider-before-top, 50%);
+    left: var(--ornament-divider-before-left, 50%);
+    width: var(--ornament-divider-before-width, 8px);
+    height: var(--ornament-divider-before-height, 8px);
+    transform: var(--ornament-divider-before-transform, translate(-50%, -50%) rotate(45deg));
+    background: var(--ornament-divider-before-bg, var(--ornament-color));
+    -webkit-mask-image: var(--ornament-divider-before-mask, none);
+    mask-image: var(--ornament-divider-before-mask, none);
+    -webkit-mask-size: var(--ornament-divider-before-mask-size, contain);
+    mask-size: var(--ornament-divider-before-mask-size, contain);
+    -webkit-mask-repeat: var(--ornament-divider-before-mask-repeat, no-repeat);
+    mask-repeat: var(--ornament-divider-before-mask-repeat, no-repeat);
+    -webkit-mask-position: center;
+    mask-position: center;
+    border-radius: var(--ornament-divider-before-radius, 1px);
+    opacity: var(--ornament-divider-before-opacity, 1);
+    background-color: var(--ornament-divider-before-bg-color, transparent);
+  }
+
+  &::after {
+    content: '';
+    display: var(--ornament-divider-after-display, none);
+    position: absolute;
+    inset: 0;
+    background-image: var(--ornament-divider-after-bg-image, none);
+    clip-path: var(--ornament-divider-after-clip, none);
+    opacity: var(--ornament-divider-after-opacity, 1);
+  }
+}
+
+.medallion {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--ornament-medallion-radius, 50%);
+  position: relative;
+  border: var(--ornament-medallion-border, none);
+  box-shadow: var(--ornament-medallion-shadow, none);
+  clip-path: var(--ornament-medallion-clip, none);
+
+  &::before {
+    content: '';
+    display: var(--ornament-medallion-crest-display, none);
+    position: absolute;
+    top: var(--ornament-medallion-crest-offset, -16px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 32px;
+    -webkit-mask-image: var(--ornament-medallion-crest-mask, none);
+    mask-image: var(--ornament-medallion-crest-mask, none);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    background-color: var(--ornament-medallion-crest-bg, var(--ornament-color));
+    pointer-events: none;
+    z-index: 2;
+  }
+}
+
+.medallion-lg {
+  width: 64px;
+  height: 64px;
+}
+
+// ============================================================================
+// TIER TOKEN BLOCKS
+// ============================================================================
+// Each tier selector sets ONLY --ornament-* token values.
+// :where() provides (0,0,0) specificity for config-default cascade.
+// .ornament-* classes provide (0,1,0) specificity for per-element override.
+
+// ---- gilt ----
+
+:where([data-ornament='gilt']) {
+  // Frame
+  --ornament-frame-border: 2px solid var(--ornament-color);
+  --ornament-frame-shadow:
+    0 0 0 1px var(--ornament-color-dark), 0 0 0 4px var(--surface-bg, #fff),
+    0 0 0 5px var(--ornament-color), 0 0 12px var(--border-accent-gold);
+  --ornament-frame-inner-display: block;
+  --ornament-frame-inner-inset: 2px;
+  --ornament-frame-inner-border: 1px solid var(--border-accent-gold);
+  --ornament-frame-inner-opacity: 1;
+
+  // Corner
+  --ornament-corner-display: block;
+  --ornament-corner-radius: 50%;
+  --ornament-corner-border: 2px solid var(--ornament-color);
+  --ornament-corner-shadow: inset 0 0 4px var(--border-accent-gold);
+
+  // Edge
+  --ornament-edge-border: 1px solid var(--ornament-color);
+  --ornament-edge-shadow: inset 0 1px 0 rgb(254 243 199 / 30%), 0 0 8px var(--border-accent-gold);
+
+  // Divider
+  --ornament-divider-height: 28px;
+  --ornament-divider-bg: none;
+  --ornament-divider-opacity: 1;
+  --ornament-divider-before-inset: 0;
+  --ornament-divider-before-top: auto;
+  --ornament-divider-before-left: auto;
+  --ornament-divider-before-width: auto;
+  --ornament-divider-before-height: auto;
+  --ornament-divider-before-transform: none;
+  --ornament-divider-before-bg: transparent;
+  --ornament-divider-before-bg-color: var(--ornament-color);
+  --ornament-divider-before-radius: 0;
+  --ornament-divider-before-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'%3E%3Cpath fill='none' stroke='white' stroke-width='1' stroke-linecap='round' d='M20 14c0-6 6-10 12-6s6 12 0 12-12-6-12-12 M52 14c8-8 16 0 16 0s8 8 16 0 M100 8c4 0 6 3 6 6s-2 6-6 6-6-3-6-6 2-6 6-6 M120 14l4-6 4 6-4 6z M140 14c0-6 6-10 12-6s6 12 0 12-12-6-12-12 M172 14c8-8 16 0 16 0s8 8 16 0'/%3E%3Ccircle cx='120' cy='14' r='2' fill='white' opacity='0.7'/%3E%3Ccircle cx='20' cy='14' r='1.5' fill='white' opacity='0.4'/%3E%3Ccircle cx='220' cy='14' r='1.5' fill='white' opacity='0.4'/%3E%3C/svg%3E");
+  --ornament-divider-before-mask-size: 240px 28px;
+
+  // Medallion
+  --ornament-medallion-border: 2px solid var(--ornament-color);
+  --ornament-medallion-shadow: 0 0 0 4px var(--surface-bg), 0 0 0 6px var(--border-accent-gold);
+
+  // Relief .ornament class
+  --ornament-box-shadow:
+    var(--relief-shadow), inset 0 0 0 2px var(--border-accent-gold), 0 0 0 1px var(--accent-gold),
+    0 0 12px var(--accent-glow);
+}
+
+.ornament-gilt {
+  --ornament-frame-border: 2px solid var(--ornament-color);
+  --ornament-frame-shadow:
+    0 0 0 1px var(--ornament-color-dark), 0 0 0 4px var(--surface-bg, #fff),
+    0 0 0 5px var(--ornament-color), 0 0 12px var(--border-accent-gold);
+  --ornament-frame-inner-display: block;
+  --ornament-frame-inner-inset: 2px;
+  --ornament-frame-inner-border: 1px solid var(--border-accent-gold);
+  --ornament-frame-inner-opacity: 1;
+  --ornament-corner-display: block;
+  --ornament-corner-radius: 50%;
+  --ornament-corner-border: 2px solid var(--ornament-color);
+  --ornament-corner-shadow: inset 0 0 4px var(--border-accent-gold);
+  --ornament-edge-border: 1px solid var(--ornament-color);
+  --ornament-edge-shadow: inset 0 1px 0 rgb(254 243 199 / 30%), 0 0 8px var(--border-accent-gold);
+  --ornament-divider-height: 28px;
+  --ornament-divider-bg: none;
+  --ornament-divider-opacity: 1;
+  --ornament-divider-before-inset: 0;
+  --ornament-divider-before-top: auto;
+  --ornament-divider-before-left: auto;
+  --ornament-divider-before-width: auto;
+  --ornament-divider-before-height: auto;
+  --ornament-divider-before-transform: none;
+  --ornament-divider-before-bg: transparent;
+  --ornament-divider-before-bg-color: var(--ornament-color);
+  --ornament-divider-before-radius: 0;
+  --ornament-divider-before-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'%3E%3Cpath fill='none' stroke='white' stroke-width='1' stroke-linecap='round' d='M20 14c0-6 6-10 12-6s6 12 0 12-12-6-12-12 M52 14c8-8 16 0 16 0s8 8 16 0 M100 8c4 0 6 3 6 6s-2 6-6 6-6-3-6-6 2-6 6-6 M120 14l4-6 4 6-4 6z M140 14c0-6 6-10 12-6s6 12 0 12-12-6-12-12 M172 14c8-8 16 0 16 0s8 8 16 0'/%3E%3Ccircle cx='120' cy='14' r='2' fill='white' opacity='0.7'/%3E%3Ccircle cx='20' cy='14' r='1.5' fill='white' opacity='0.4'/%3E%3Ccircle cx='220' cy='14' r='1.5' fill='white' opacity='0.4'/%3E%3C/svg%3E");
+  --ornament-divider-before-mask-size: 240px 28px;
+  --ornament-medallion-border: 2px solid var(--ornament-color);
+  --ornament-medallion-shadow: 0 0 0 4px var(--surface-bg), 0 0 0 6px var(--border-accent-gold);
+  --ornament-box-shadow:
+    var(--relief-shadow), inset 0 0 0 2px var(--border-accent-gold), 0 0 0 1px var(--accent-gold),
+    0 0 12px var(--accent-glow);
+}
+
+// ---- baroque ----
+
+:where([data-ornament='baroque']) {
+  // Frame
+  --ornament-frame-border: 3px solid;
+  --ornament-frame-border-image: linear-gradient(
       145deg,
       var(--ornament-color),
       color-mix(in srgb, var(--ornament-color), #8b6914 50%),
       color-mix(in srgb, var(--ornament-color), black 15%)
     )
     1;
+  --ornament-frame-inner-display: block;
+  --ornament-frame-inner-inset: 4px;
+  --ornament-frame-inner-border: 1px solid var(--border-accent-gold-strong);
+  --ornament-frame-inner-radius: 1px;
+  --ornament-frame-inner-opacity: 1;
+  --ornament-frame-decor-display: block;
+  --ornament-frame-decor-border: 2px solid var(--ornament-color);
+  --ornament-frame-decor-bg: var(--surface-1);
+  --ornament-frame-decor-shadow:
+    0 0 8px var(--border-accent-gold), inset 0 0 4px var(--accent-gold-subtle);
 
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 4px;
-    border: 1px solid var(--border-accent-gold-strong);
-    border-radius: 1px;
-    pointer-events: none;
-  }
+  // Corner
+  --ornament-corner-display: block;
+  --ornament-corner-size: var(--ornament-size-lg);
+  --ornament-corner-bg: var(--ornament-color);
+  --ornament-corner-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='white' stroke-width='1.5' d='M2 22Q8 18 12 12Q8 8 2 2 M22 2Q18 8 12 12'/%3E%3C/svg%3E");
+  --ornament-corner-after-transform: scaleX(-1);
+  --ornament-corner-offset: 4px;
 
-  // Top center medallion
-  &::after {
-    content: '';
-    position: absolute;
-    top: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    border: 2px solid var(--ornament-color);
-    background: var(--surface-1);
-    box-shadow:
-      0 0 8px var(--border-accent-gold),
-      inset 0 0 4px var(--accent-gold-subtle);
-    pointer-events: none;
-  }
+  // Edge
+  --ornament-edge-border: 2px solid var(--border-default);
+  --ornament-edge-before-display: block;
+  --ornament-edge-before-inset: -6px;
+  --ornament-edge-before-border: 4px dotted var(--ornament-color);
+  --ornament-edge-before-opacity: 0.3;
+
+  // Divider
+  --ornament-divider-height: 32px;
+  --ornament-divider-bg: none;
+  --ornament-divider-opacity: 1;
+  --ornament-divider-before-inset: 0;
+  --ornament-divider-before-top: auto;
+  --ornament-divider-before-left: auto;
+  --ornament-divider-before-width: auto;
+  --ornament-divider-before-height: auto;
+  --ornament-divider-before-transform: none;
+  --ornament-divider-before-bg: transparent;
+  --ornament-divider-before-bg-color: var(--ornament-color);
+  --ornament-divider-before-radius: 0;
+  --ornament-divider-before-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='32' viewBox='0 0 200 32'%3E%3Cpath fill='none' stroke='white' stroke-width='1.5' stroke-linecap='round' d='M10 16c0-8 12-8 12 0s12 8 12 0-12-8-12 0 M56 16c0-8 12-8 12 0s12 8 12 0-12-8-12 0 M100 8l0 16 M122 16c0-8 12-8 12 0s12 8 12 0-12-8-12 0 M166 16c0-8 12-8 12 0s12 8 12 0-12-8-12 0'/%3E%3Ccircle cx='100' cy='16' r='4' fill='white' opacity='0.6'/%3E%3C/svg%3E");
+  --ornament-divider-before-mask-size: 200px 32px;
+
+  // Medallion
+  --ornament-medallion-border: 2px solid var(--ornament-color);
+  --ornament-medallion-shadow:
+    0 0 0 4px var(--surface-bg, #fff), 0 0 0 6px var(--border-accent-gold),
+    inset 0 0 12px var(--accent-gold-subtle);
+  --ornament-medallion-crest-display: block;
+  --ornament-medallion-crest-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='32' viewBox='0 0 40 32'%3E%3Cpath fill='none' stroke='white' stroke-width='1.5' d='M20 4L8 12L8 24L20 30L32 24L32 12Z'/%3E%3Cpath fill='none' stroke='white' stroke-width='1' opacity='0.5' d='M20 8L12 14L12 22L20 26L28 22L28 14Z'/%3E%3Ccircle cx='20' cy='17' r='3' fill='white' opacity='0.4'/%3E%3C/svg%3E");
+
+  // Relief .ornament class
+  --ornament-box-shadow:
+    var(--relief-shadow), inset 0 0 0 3px var(--border-accent-gold), 0 0 8px var(--accent-glow);
 }
 
-@mixin frame-beveled {
-  border: 3px solid var(--border-strong);
-  box-shadow:
+.ornament-baroque {
+  --ornament-frame-border: 3px solid;
+  --ornament-frame-border-image: linear-gradient(
+      145deg,
+      var(--ornament-color),
+      color-mix(in srgb, var(--ornament-color), #8b6914 50%),
+      color-mix(in srgb, var(--ornament-color), black 15%)
+    )
+    1;
+  --ornament-frame-inner-display: block;
+  --ornament-frame-inner-inset: 4px;
+  --ornament-frame-inner-border: 1px solid var(--border-accent-gold-strong);
+  --ornament-frame-inner-radius: 1px;
+  --ornament-frame-inner-opacity: 1;
+  --ornament-frame-decor-display: block;
+  --ornament-frame-decor-border: 2px solid var(--ornament-color);
+  --ornament-frame-decor-bg: var(--surface-1);
+  --ornament-frame-decor-shadow:
+    0 0 8px var(--border-accent-gold), inset 0 0 4px var(--accent-gold-subtle);
+  --ornament-corner-display: block;
+  --ornament-corner-size: var(--ornament-size-lg);
+  --ornament-corner-bg: var(--ornament-color);
+  --ornament-corner-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='white' stroke-width='1.5' d='M2 22Q8 18 12 12Q8 8 2 2 M22 2Q18 8 12 12'/%3E%3C/svg%3E");
+  --ornament-corner-after-transform: scaleX(-1);
+  --ornament-corner-offset: 4px;
+  --ornament-edge-border: 2px solid var(--border-default);
+  --ornament-edge-before-display: block;
+  --ornament-edge-before-inset: -6px;
+  --ornament-edge-before-border: 4px dotted var(--ornament-color);
+  --ornament-edge-before-opacity: 0.3;
+  --ornament-divider-height: 32px;
+  --ornament-divider-bg: none;
+  --ornament-divider-opacity: 1;
+  --ornament-divider-before-inset: 0;
+  --ornament-divider-before-top: auto;
+  --ornament-divider-before-left: auto;
+  --ornament-divider-before-width: auto;
+  --ornament-divider-before-height: auto;
+  --ornament-divider-before-transform: none;
+  --ornament-divider-before-bg: transparent;
+  --ornament-divider-before-bg-color: var(--ornament-color);
+  --ornament-divider-before-radius: 0;
+  --ornament-divider-before-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='32' viewBox='0 0 200 32'%3E%3Cpath fill='none' stroke='white' stroke-width='1.5' stroke-linecap='round' d='M10 16c0-8 12-8 12 0s12 8 12 0-12-8-12 0 M56 16c0-8 12-8 12 0s12 8 12 0-12-8-12 0 M100 8l0 16 M122 16c0-8 12-8 12 0s12 8 12 0-12-8-12 0 M166 16c0-8 12-8 12 0s12 8 12 0-12-8-12 0'/%3E%3Ccircle cx='100' cy='16' r='4' fill='white' opacity='0.6'/%3E%3C/svg%3E");
+  --ornament-divider-before-mask-size: 200px 32px;
+  --ornament-medallion-border: 2px solid var(--ornament-color);
+  --ornament-medallion-shadow:
+    0 0 0 4px var(--surface-bg, #fff), 0 0 0 6px var(--border-accent-gold),
+    inset 0 0 12px var(--accent-gold-subtle);
+  --ornament-medallion-crest-display: block;
+  --ornament-medallion-crest-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='32' viewBox='0 0 40 32'%3E%3Cpath fill='none' stroke='white' stroke-width='1.5' d='M20 4L8 12L8 24L20 30L32 24L32 12Z'/%3E%3Cpath fill='none' stroke='white' stroke-width='1' opacity='0.5' d='M20 8L12 14L12 22L20 26L28 22L28 14Z'/%3E%3Ccircle cx='20' cy='17' r='3' fill='white' opacity='0.4'/%3E%3C/svg%3E");
+  --ornament-box-shadow:
+    var(--relief-shadow), inset 0 0 0 3px var(--border-accent-gold), 0 0 8px var(--accent-glow);
+}
+
+// ---- beveled ----
+
+:where([data-ornament='beveled']) {
+  // Frame
+  --ornament-frame-border: 3px solid var(--border-strong);
+  --ornament-frame-shadow:
     inset 3px 3px 8px rgb(var(--shadow-color) / 20%),
     inset -3px -3px 8px rgb(var(--highlight-color) / 50%);
+  --ornament-frame-inner-display: block;
+  --ornament-frame-inner-inset: -1px;
+  --ornament-frame-inner-radius: inherit;
+  --ornament-frame-inner-border: 1px solid rgb(255 255 255 / 12%);
+  --ornament-frame-inner-border-bottom: rgb(0 0 0 / 10%);
+  --ornament-frame-inner-border-right: rgb(0 0 0 / 10%);
+  --ornament-frame-inner-opacity: 1;
 
-  &::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    border: 1px solid rgb(255 255 255 / 12%);
-    border-bottom-color: rgb(0 0 0 / 10%);
-    border-right-color: rgb(0 0 0 / 10%);
-    pointer-events: none;
-  }
+  // Corner
+  --ornament-corner-display: block;
+  --ornament-corner-size: 24px;
+  --ornament-corner-border: solid var(--border-strong);
+  --ornament-corner-shadow: 1px 1px 0 rgb(255 255 255 / 15%), -1px -1px 0 rgb(0 0 0 / 8%);
+  --ornament-corner-offset: 8px;
+  --ornament-corner-tl-border-width: 3px 0 0 3px;
+  --ornament-corner-tr-border-width: 3px 3px 0 0;
+
+  // Edge
+  --ornament-edge-border: 2px solid var(--border-strong);
+  --ornament-edge-before-display: block;
+  --ornament-edge-before-border: 1px solid;
+  --ornament-edge-before-inset: 0;
+  --ornament-edge-before-opacity: 1;
+
+  // Divider
+  --ornament-divider-height: 24px;
+  --ornament-divider-bg: none;
+  --ornament-divider-opacity: 1;
+  --ornament-divider-before-inset: 0;
+  --ornament-divider-before-top: auto;
+  --ornament-divider-before-left: auto;
+  --ornament-divider-before-width: auto;
+  --ornament-divider-before-height: auto;
+  --ornament-divider-before-transform: none;
+  --ornament-divider-before-bg: transparent;
+  --ornament-divider-before-bg-color: var(--ornament-color);
+  --ornament-divider-before-radius: 0;
+  --ornament-divider-before-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='white' stroke-width='1.5' d='M0 12h6v6h12v-12h-12v6'/%3E%3C/svg%3E");
+  --ornament-divider-before-mask-size: 24px 24px;
+  --ornament-divider-before-mask-repeat: repeat-x;
+  --ornament-divider-before-opacity: 0.6;
+
+  // Medallion
+  --ornament-medallion-border: 3px solid var(--border-strong);
+  --ornament-medallion-shadow:
+    inset 2px 2px 6px rgb(var(--shadow-color) / 15%),
+    inset -2px -2px 6px rgb(var(--highlight-color) / 40%), 0 0 0 4px var(--surface-bg);
+
+  // Relief .ornament class
+  --ornament-box-shadow:
+    var(--relief-shadow), inset 1px 1px 0 rgb(var(--highlight-color) / 12%),
+    inset -1px -1px 0 rgb(var(--shadow-color) / 10%);
 }
 
-@mixin frame-faceted {
-  border: 2px solid var(--ornament-color);
-  clip-path: polygon(
+.ornament-beveled {
+  --ornament-frame-border: 3px solid var(--border-strong);
+  --ornament-frame-shadow:
+    inset 3px 3px 8px rgb(var(--shadow-color) / 20%),
+    inset -3px -3px 8px rgb(var(--highlight-color) / 50%);
+  --ornament-frame-inner-display: block;
+  --ornament-frame-inner-inset: -1px;
+  --ornament-frame-inner-radius: inherit;
+  --ornament-frame-inner-border: 1px solid rgb(255 255 255 / 12%);
+  --ornament-frame-inner-border-bottom: rgb(0 0 0 / 10%);
+  --ornament-frame-inner-border-right: rgb(0 0 0 / 10%);
+  --ornament-frame-inner-opacity: 1;
+  --ornament-corner-display: block;
+  --ornament-corner-size: 24px;
+  --ornament-corner-border: solid var(--border-strong);
+  --ornament-corner-shadow: 1px 1px 0 rgb(255 255 255 / 15%), -1px -1px 0 rgb(0 0 0 / 8%);
+  --ornament-corner-offset: 8px;
+  --ornament-corner-tl-border-width: 3px 0 0 3px;
+  --ornament-corner-tr-border-width: 3px 3px 0 0;
+  --ornament-edge-border: 2px solid var(--border-strong);
+  --ornament-edge-before-display: block;
+  --ornament-edge-before-border: 1px solid;
+  --ornament-edge-before-inset: 0;
+  --ornament-edge-before-opacity: 1;
+  --ornament-divider-height: 24px;
+  --ornament-divider-bg: none;
+  --ornament-divider-opacity: 1;
+  --ornament-divider-before-inset: 0;
+  --ornament-divider-before-top: auto;
+  --ornament-divider-before-left: auto;
+  --ornament-divider-before-width: auto;
+  --ornament-divider-before-height: auto;
+  --ornament-divider-before-transform: none;
+  --ornament-divider-before-bg: transparent;
+  --ornament-divider-before-bg-color: var(--ornament-color);
+  --ornament-divider-before-radius: 0;
+  --ornament-divider-before-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='white' stroke-width='1.5' d='M0 12h6v6h12v-12h-12v6'/%3E%3C/svg%3E");
+  --ornament-divider-before-mask-size: 24px 24px;
+  --ornament-divider-before-mask-repeat: repeat-x;
+  --ornament-divider-before-opacity: 0.6;
+  --ornament-medallion-border: 3px solid var(--border-strong);
+  --ornament-medallion-shadow:
+    inset 2px 2px 6px rgb(var(--shadow-color) / 15%),
+    inset -2px -2px 6px rgb(var(--highlight-color) / 40%), 0 0 0 4px var(--surface-bg);
+  --ornament-box-shadow:
+    var(--relief-shadow), inset 1px 1px 0 rgb(var(--highlight-color) / 12%),
+    inset -1px -1px 0 rgb(var(--shadow-color) / 10%);
+}
+
+// ---- faceted ----
+
+:where([data-ornament='faceted']) {
+  // Frame
+  --ornament-frame-border: 2px solid var(--ornament-color);
+  --ornament-frame-clip: polygon(
     12px 0,
     calc(100% - 12px) 0,
     100% 12px,
@@ -133,176 +559,30 @@
     0 calc(100% - 12px),
     0 12px
   );
+  --ornament-frame-inner-display: block;
+  --ornament-frame-inner-inset: 4px;
+  --ornament-frame-inner-border: 1px solid var(--ornament-color);
+  --ornament-frame-inner-opacity: 0.4;
+  --ornament-frame-inner-clip: polygon(
+    8px 0,
+    calc(100% - 8px) 0,
+    100% 8px,
+    100% calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    8px 100%,
+    0 calc(100% - 8px),
+    0 8px
+  );
 
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 4px;
-    border: 1px solid var(--ornament-color);
-    opacity: 0.4;
-    clip-path: polygon(
-      8px 0,
-      calc(100% - 8px) 0,
-      100% 8px,
-      100% calc(100% - 8px),
-      calc(100% - 8px) 100%,
-      8px 100%,
-      0 calc(100% - 8px),
-      0 8px
-    );
-    pointer-events: none;
-  }
-}
+  // Corner
+  --ornament-corner-display: block;
+  --ornament-corner-size: 12px;
+  --ornament-corner-bg: var(--ornament-color);
+  --ornament-corner-clip: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
 
-// ============================================================================
-// CORNER MIXINS — Decorative corner marks (one per tier)
-// ============================================================================
-
-@mixin corner-gilt {
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    width: var(--ornament-size-md);
-    height: var(--ornament-size-md);
-    border-radius: 50%;
-    border: 2px solid var(--ornament-color);
-    box-shadow: inset 0 0 4px var(--border-accent-gold);
-    opacity: var(--ornament-opacity);
-    pointer-events: none;
-  }
-
-  &::before {
-    top: 6px;
-    left: 6px;
-  }
-
-  &::after {
-    top: 6px;
-    right: 6px;
-  }
-}
-
-@mixin corner-baroque {
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    width: var(--ornament-size-lg);
-    height: var(--ornament-size-lg);
-    @include svg-mask(
-      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='white' stroke-width='1.5' d='M2 22Q8 18 12 12Q8 8 2 2 M22 2Q18 8 12 12'/%3E%3C/svg%3E"
-    );
-    opacity: var(--ornament-opacity);
-    pointer-events: none;
-  }
-
-  &::before {
-    top: 4px;
-    left: 4px;
-  }
-
-  &::after {
-    top: 4px;
-    right: 4px;
-    transform: scaleX(-1);
-  }
-}
-
-@mixin corner-beveled {
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    border-color: var(--border-strong);
-    border-style: solid;
-    box-shadow:
-      1px 1px 0 rgb(255 255 255 / 15%),
-      -1px -1px 0 rgb(0 0 0 / 8%);
-    opacity: var(--ornament-opacity);
-    pointer-events: none;
-  }
-
-  &::before {
-    top: 8px;
-    left: 8px;
-    border-width: 3px 0 0 3px;
-  }
-
-  &::after {
-    top: 8px;
-    right: 8px;
-    border-width: 3px 3px 0 0;
-  }
-}
-
-@mixin corner-faceted {
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    background-color: var(--ornament-color);
-    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-    opacity: var(--ornament-opacity);
-    pointer-events: none;
-  }
-
-  &::before {
-    top: 6px;
-    left: 6px;
-  }
-
-  &::after {
-    top: 6px;
-    right: 6px;
-  }
-}
-
-// ============================================================================
-// EDGE MIXINS — Border enhancements (one per tier)
-// ============================================================================
-
-@mixin edge-gilt {
-  border: 1px solid var(--ornament-color);
-  box-shadow:
-    inset 0 1px 0 rgb(254 243 199 / 30%),
-    0 0 8px var(--border-accent-gold);
-}
-
-@mixin edge-baroque {
-  border: 2px solid var(--border-default);
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: -6px;
-    border: 4px dotted var(--ornament-color);
-    border-radius: inherit;
-    opacity: 0.3;
-    pointer-events: none;
-  }
-}
-
-@mixin edge-beveled {
-  border: 2px solid var(--border-strong);
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border: 1px solid;
-    border-color: rgb(255 255 255 / 20%) rgb(0 0 0 / 10%) rgb(0 0 0 / 10%) rgb(255 255 255 / 20%);
-    pointer-events: none;
-  }
-}
-
-@mixin edge-faceted {
-  border: 2px solid var(--ornament-color);
-  background-image: linear-gradient(
+  // Edge
+  --ornament-edge-border: 2px solid var(--ornament-color);
+  --ornament-edge-bg-image: linear-gradient(
     135deg,
     rgb(255 255 255 / 6%) 25%,
     transparent 25%,
@@ -311,492 +591,146 @@
     rgb(255 255 255 / 6%) 75%,
     transparent 75%
   );
-  background-size: 8px 8px;
-}
+  --ornament-edge-bg-size: 8px 8px;
 
-// ============================================================================
-// DIVIDER MIXINS — Horizontal separators (one per tier)
-// ============================================================================
-
-@mixin divider-none {
-  height: 2px;
-  background: linear-gradient(
+  // Divider
+  --ornament-divider-height: 20px;
+  --ornament-divider-bg: none;
+  --ornament-divider-opacity: 1;
+  --ornament-divider-before-inset: auto;
+  --ornament-divider-before-top: 50%;
+  --ornament-divider-before-left: 0;
+  --ornament-divider-before-width: 100%;
+  --ornament-divider-before-height: 2px;
+  --ornament-divider-before-transform: none;
+  --ornament-divider-before-bg: var(--ornament-color);
+  --ornament-divider-before-radius: 0;
+  --ornament-divider-before-opacity: 0.4;
+  --ornament-divider-after-display: block;
+  --ornament-divider-after-bg-image: repeating-linear-gradient(
     90deg,
-    transparent,
-    var(--ornament-color) 20%,
-    var(--ornament-color) 80%,
-    transparent
+    transparent 0,
+    transparent 20px,
+    var(--ornament-color) 20px,
+    var(--ornament-color) 28px,
+    transparent 28px,
+    transparent 36px
   );
-  opacity: 0.4;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(45deg);
-    width: 8px;
-    height: 8px;
-    background: var(--ornament-color);
-    border-radius: 1px;
-  }
-}
-
-@mixin divider-gilt {
-  background: none;
-  opacity: 1;
-  height: 28px;
-
-  &::before {
-    transform: none;
-    content: '';
-    position: absolute;
-    inset: 0;
-    @include svg-mask(
-      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'%3E%3Cpath fill='none' stroke='white' stroke-width='1' stroke-linecap='round' d='M20 14c0-6 6-10 12-6s6 12 0 12-12-6-12-12 M52 14c8-8 16 0 16 0s8 8 16 0 M100 8c4 0 6 3 6 6s-2 6-6 6-6-3-6-6 2-6 6-6 M120 14l4-6 4 6-4 6z M140 14c0-6 6-10 12-6s6 12 0 12-12-6-12-12 M172 14c8-8 16 0 16 0s8 8 16 0'/%3E%3Ccircle cx='120' cy='14' r='2' fill='white' opacity='0.7'/%3E%3Ccircle cx='20' cy='14' r='1.5' fill='white' opacity='0.4'/%3E%3Ccircle cx='220' cy='14' r='1.5' fill='white' opacity='0.4'/%3E%3C/svg%3E",
-      $size: 240px 28px
-    );
-    -webkit-mask-position: center;
-    mask-position: center;
-  }
-}
-
-@mixin divider-baroque {
-  background: none;
-  opacity: 1;
-  height: 32px;
-
-  &::before {
-    transform: none;
-    content: '';
-    position: absolute;
-    inset: 0;
-    @include svg-mask(
-      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='32' viewBox='0 0 200 32'%3E%3Cpath fill='none' stroke='white' stroke-width='1.5' stroke-linecap='round' d='M10 16c0-8 12-8 12 0s12 8 12 0-12-8-12 0 M56 16c0-8 12-8 12 0s12 8 12 0-12-8-12 0 M100 8l0 16 M122 16c0-8 12-8 12 0s12 8 12 0-12-8-12 0 M166 16c0-8 12-8 12 0s12 8 12 0-12-8-12 0'/%3E%3Ccircle cx='100' cy='16' r='4' fill='white' opacity='0.6'/%3E%3C/svg%3E",
-      $size: 200px 32px
-    );
-    -webkit-mask-position: center;
-    mask-position: center;
-  }
-}
-
-@mixin divider-beveled {
-  background: none;
-  opacity: 1;
-  height: 24px;
-
-  &::before {
-    transform: none;
-    content: '';
-    position: absolute;
-    inset: 0;
-    @include svg-mask(
-      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='white' stroke-width='1.5' d='M0 12h6v6h12v-12h-12v6'/%3E%3C/svg%3E",
-      $size: 24px 24px,
-      $repeat: repeat-x
-    );
-    -webkit-mask-position: center;
-    mask-position: center;
-    opacity: 0.6;
-  }
-}
-
-@mixin divider-faceted {
-  background: none;
-  opacity: 1;
-  height: 20px;
-
-  &::before {
-    transform: none;
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--ornament-color);
-    opacity: 0.4;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: repeating-linear-gradient(
-      90deg,
-      transparent 0,
-      transparent 20px,
-      var(--ornament-color) 20px,
-      var(--ornament-color) 28px,
-      transparent 28px,
-      transparent 36px
-    );
-    clip-path: polygon(
-      0% 50%,
-      4px 0%,
-      calc(100% - 4px) 0%,
-      100% 50%,
-      calc(100% - 4px) 100%,
-      4px 100%
-    );
-    opacity: 0.35;
-  }
-}
-
-// ============================================================================
-// MEDALLION MIXINS — Decorative focal points (one per tier)
-// ============================================================================
-
-@mixin medallion-gilt {
-  border: 2px solid var(--ornament-color);
-  box-shadow:
-    0 0 0 4px var(--surface-bg),
-    0 0 0 6px var(--border-accent-gold);
-}
-
-@mixin medallion-baroque {
-  border: 2px solid var(--ornament-color);
-  box-shadow:
-    0 0 0 4px var(--surface-bg, #fff),
-    0 0 0 6px var(--border-accent-gold),
-    inset 0 0 12px var(--accent-gold-subtle);
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: -16px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40px;
-    height: 32px;
-    @include svg-mask(
-      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='32' viewBox='0 0 40 32'%3E%3Cpath fill='none' stroke='white' stroke-width='1.5' d='M20 4L8 12L8 24L20 30L32 24L32 12Z'/%3E%3Cpath fill='none' stroke='white' stroke-width='1' opacity='0.5' d='M20 8L12 14L12 22L20 26L28 22L28 14Z'/%3E%3Ccircle cx='20' cy='17' r='3' fill='white' opacity='0.4'/%3E%3C/svg%3E"
-    );
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    pointer-events: none;
-    z-index: 2;
-  }
-}
-
-@mixin medallion-beveled {
-  border: 3px solid var(--border-strong);
-  box-shadow:
-    inset 2px 2px 6px rgb(var(--shadow-color) / 15%),
-    inset -2px -2px 6px rgb(var(--highlight-color) / 40%),
-    0 0 0 4px var(--surface-bg);
-}
-
-@mixin medallion-faceted {
-  border: 2px solid var(--ornament-color);
-  clip-path: polygon(50% 0%, 85% 15%, 100% 50%, 85% 85%, 50% 100%, 15% 85%, 0% 50%, 15% 15%);
-}
-
-// ============================================================================
-// BASE ELEMENT CLASSES — Structural defaults
-// ============================================================================
-
-.frame {
-  position: relative;
-  padding: 1.5rem;
-}
-
-.corner {
-  position: relative;
-}
-
-.edge {
-  position: relative;
-}
-
-.divider {
-  position: relative;
-  width: 100%;
-  @include divider-none;
-}
-
-.medallion {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  position: relative;
-}
-
-.medallion-lg {
-  width: 64px;
-  height: 64px;
-}
-
-// ============================================================================
-// PLACEHOLDER SELECTORS — Single mixin expansion per element×tier
-// ============================================================================
-
-// ---- frame ----
-%frame-gilt {
-  @include frame-gilt;
-}
-%frame-baroque {
-  @include frame-baroque;
-}
-%frame-beveled {
-  @include frame-beveled;
-}
-%frame-faceted {
-  @include frame-faceted;
-}
-
-// ---- corner ----
-%corner-gilt {
-  @include corner-gilt;
-}
-%corner-baroque {
-  @include corner-baroque;
-}
-%corner-beveled {
-  @include corner-beveled;
-}
-%corner-faceted {
-  @include corner-faceted;
-}
-
-// ---- edge ----
-%edge-gilt {
-  @include edge-gilt;
-}
-%edge-baroque {
-  @include edge-baroque;
-}
-%edge-beveled {
-  @include edge-beveled;
-}
-%edge-faceted {
-  @include edge-faceted;
-}
-
-// ---- divider ----
-%divider-gilt {
-  @include divider-gilt;
-}
-%divider-baroque {
-  @include divider-baroque;
-}
-%divider-beveled {
-  @include divider-beveled;
-}
-%divider-faceted {
-  @include divider-faceted;
-}
-
-// ---- medallion ----
-%medallion-gilt {
-  @include medallion-gilt;
-}
-%medallion-baroque {
-  @include medallion-baroque;
-}
-%medallion-beveled {
-  @include medallion-beveled;
-}
-%medallion-faceted {
-  @include medallion-faceted;
-}
-
-// ============================================================================
-// TIER SELECTORS — Config-default + per-element override (merged via @extend)
-// ============================================================================
-// :where([data-ornament]) lowers config-default specificity to (0,1,0).
-// .ornament-X selectors remain at (0,2,0) and always override config.
-// ============================================================================
-
-// ---- gilt ----
-
-:where([data-ornament='gilt']) .frame {
-  @extend %frame-gilt;
-}
-
-.ornament-gilt .frame,
-.frame.ornament-gilt {
-  @extend %frame-gilt;
-}
-
-:where([data-ornament='gilt']) .corner {
-  @extend %corner-gilt;
-}
-
-.ornament-gilt .corner,
-.corner.ornament-gilt {
-  @extend %corner-gilt;
-}
-
-:where([data-ornament='gilt']) .edge {
-  @extend %edge-gilt;
-}
-
-.ornament-gilt .edge,
-.edge.ornament-gilt {
-  @extend %edge-gilt;
-}
-
-:where([data-ornament='gilt']) .divider {
-  @extend %divider-gilt;
-}
-
-.ornament-gilt .divider,
-.divider.ornament-gilt {
-  @extend %divider-gilt;
-}
-
-:where([data-ornament='gilt']) .medallion {
-  @extend %medallion-gilt;
-}
-
-.ornament-gilt .medallion,
-.medallion.ornament-gilt {
-  @extend %medallion-gilt;
-}
-
-// ---- baroque ----
-
-:where([data-ornament='baroque']) .frame {
-  @extend %frame-baroque;
-}
-
-.ornament-baroque .frame,
-.frame.ornament-baroque {
-  @extend %frame-baroque;
-}
-
-:where([data-ornament='baroque']) .corner {
-  @extend %corner-baroque;
-}
-
-.ornament-baroque .corner,
-.corner.ornament-baroque {
-  @extend %corner-baroque;
-}
-
-:where([data-ornament='baroque']) .edge {
-  @extend %edge-baroque;
-}
-
-.ornament-baroque .edge,
-.edge.ornament-baroque {
-  @extend %edge-baroque;
-}
-
-:where([data-ornament='baroque']) .divider {
-  @extend %divider-baroque;
-}
-
-.ornament-baroque .divider,
-.divider.ornament-baroque {
-  @extend %divider-baroque;
-}
-
-:where([data-ornament='baroque']) .medallion {
-  @extend %medallion-baroque;
-}
-
-.ornament-baroque .medallion,
-.medallion.ornament-baroque {
-  @extend %medallion-baroque;
-}
-
-// ---- beveled ----
-
-:where([data-ornament='beveled']) .frame {
-  @extend %frame-beveled;
-}
-
-.ornament-beveled .frame,
-.frame.ornament-beveled {
-  @extend %frame-beveled;
-}
-
-:where([data-ornament='beveled']) .corner {
-  @extend %corner-beveled;
-}
-
-.ornament-beveled .corner,
-.corner.ornament-beveled {
-  @extend %corner-beveled;
-}
-
-:where([data-ornament='beveled']) .edge {
-  @extend %edge-beveled;
-}
-
-.ornament-beveled .edge,
-.edge.ornament-beveled {
-  @extend %edge-beveled;
-}
-
-:where([data-ornament='beveled']) .divider {
-  @extend %divider-beveled;
-}
-
-.ornament-beveled .divider,
-.divider.ornament-beveled {
-  @extend %divider-beveled;
-}
-
-:where([data-ornament='beveled']) .medallion {
-  @extend %medallion-beveled;
-}
-
-.ornament-beveled .medallion,
-.medallion.ornament-beveled {
-  @extend %medallion-beveled;
-}
-
-// ---- faceted ----
-
-:where([data-ornament='faceted']) .frame {
-  @extend %frame-faceted;
-}
-
-.ornament-faceted .frame,
-.frame.ornament-faceted {
-  @extend %frame-faceted;
-}
-
-:where([data-ornament='faceted']) .corner {
-  @extend %corner-faceted;
-}
-
-.ornament-faceted .corner,
-.corner.ornament-faceted {
-  @extend %corner-faceted;
-}
-
-:where([data-ornament='faceted']) .edge {
-  @extend %edge-faceted;
-}
-
-.ornament-faceted .edge,
-.edge.ornament-faceted {
-  @extend %edge-faceted;
-}
-
-:where([data-ornament='faceted']) .divider {
-  @extend %divider-faceted;
-}
-
-.ornament-faceted .divider,
-.divider.ornament-faceted {
-  @extend %divider-faceted;
-}
-
-:where([data-ornament='faceted']) .medallion {
-  @extend %medallion-faceted;
-}
-
-.ornament-faceted .medallion,
-.medallion.ornament-faceted {
-  @extend %medallion-faceted;
+  --ornament-divider-after-clip: polygon(
+    0% 50%,
+    4px 0%,
+    calc(100% - 4px) 0%,
+    100% 50%,
+    calc(100% - 4px) 100%,
+    4px 100%
+  );
+  --ornament-divider-after-opacity: 0.35;
+
+  // Medallion
+  --ornament-medallion-border: 2px solid var(--ornament-color);
+  --ornament-medallion-clip: polygon(
+    50% 0%,
+    85% 15%,
+    100% 50%,
+    85% 85%,
+    50% 100%,
+    15% 85%,
+    0% 50%,
+    15% 15%
+  );
+
+  // Relief .ornament class
+  --ornament-box-shadow:
+    var(--relief-shadow), inset 3px 3px 6px rgb(var(--highlight-color) / 8%),
+    inset -2px -2px 4px rgb(var(--shadow-color) / 5%);
+}
+
+.ornament-faceted {
+  --ornament-frame-border: 2px solid var(--ornament-color);
+  --ornament-frame-clip: polygon(
+    12px 0,
+    calc(100% - 12px) 0,
+    100% 12px,
+    100% calc(100% - 12px),
+    calc(100% - 12px) 100%,
+    12px 100%,
+    0 calc(100% - 12px),
+    0 12px
+  );
+  --ornament-frame-inner-display: block;
+  --ornament-frame-inner-inset: 4px;
+  --ornament-frame-inner-border: 1px solid var(--ornament-color);
+  --ornament-frame-inner-opacity: 0.4;
+  --ornament-frame-inner-clip: polygon(
+    8px 0,
+    calc(100% - 8px) 0,
+    100% 8px,
+    100% calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    8px 100%,
+    0 calc(100% - 8px),
+    0 8px
+  );
+  --ornament-corner-display: block;
+  --ornament-corner-size: 12px;
+  --ornament-corner-bg: var(--ornament-color);
+  --ornament-corner-clip: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  --ornament-edge-border: 2px solid var(--ornament-color);
+  --ornament-edge-bg-image: linear-gradient(
+    135deg,
+    rgb(255 255 255 / 6%) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgb(255 255 255 / 6%) 50%,
+    rgb(255 255 255 / 6%) 75%,
+    transparent 75%
+  );
+  --ornament-edge-bg-size: 8px 8px;
+  --ornament-divider-height: 20px;
+  --ornament-divider-bg: none;
+  --ornament-divider-opacity: 1;
+  --ornament-divider-before-inset: auto;
+  --ornament-divider-before-top: 50%;
+  --ornament-divider-before-left: 0;
+  --ornament-divider-before-width: 100%;
+  --ornament-divider-before-height: 2px;
+  --ornament-divider-before-transform: none;
+  --ornament-divider-before-bg: var(--ornament-color);
+  --ornament-divider-before-radius: 0;
+  --ornament-divider-before-opacity: 0.4;
+  --ornament-divider-after-display: block;
+  --ornament-divider-after-bg-image: repeating-linear-gradient(
+    90deg,
+    transparent 0,
+    transparent 20px,
+    var(--ornament-color) 20px,
+    var(--ornament-color) 28px,
+    transparent 28px,
+    transparent 36px
+  );
+  --ornament-divider-after-clip: polygon(
+    0% 50%,
+    4px 0%,
+    calc(100% - 4px) 0%,
+    100% 50%,
+    calc(100% - 4px) 100%,
+    4px 100%
+  );
+  --ornament-divider-after-opacity: 0.35;
+  --ornament-medallion-border: 2px solid var(--ornament-color);
+  --ornament-medallion-clip: polygon(
+    50% 0%,
+    85% 15%,
+    100% 50%,
+    85% 85%,
+    50% 100%,
+    15% 85%,
+    0% 50%,
+    15% 15%
+  );
+  --ornament-box-shadow:
+    var(--relief-shadow), inset 3px 3px 6px rgb(var(--highlight-color) / 8%),
+    inset -2px -2px 4px rgb(var(--shadow-color) / 5%);
 }
 
 // ============================================================================

@@ -184,11 +184,20 @@ export function renderGettingStarted(): string {
   )}
 
   ${specimenBlock(
+    'Custom Ornament',
+    `
+    <p class="text-sm text-secondary mb-4">Ornaments use the same token contract as other tiers. Set <code>--ornament-*</code> tokens on a <code>[data-ornament]</code> selector — base element classes (<code>.frame</code>, <code>.corner</code>, <code>.edge</code>, <code>.divider</code>, <code>.medallion</code>) consume them via <code>var()</code>. Unused tokens default to inert values (<code>none</code>, <code>0</code>, <code>transparent</code>).</p>
+    ${codeExample('/* A simple custom ornament — borders + shadows only (~8 tokens) */\n[data-ornament="royal"] {\n  --ornament-frame-border: 3px double var(--ornament-color);\n  --ornament-frame-shadow: 0 0 0 2px var(--ornament-color-dark), 0 0 16px var(--border-accent-gold);\n  --ornament-frame-inner-display: block;\n  --ornament-frame-inner-inset: 4px;\n  --ornament-frame-inner-border: 1px solid var(--ornament-color);\n  --ornament-frame-inner-opacity: 0.6;\n  --ornament-corner-display: block;\n  --ornament-corner-radius: 50%;\n  --ornament-corner-border: 2px solid var(--ornament-color);\n  --ornament-edge-border: 2px double var(--ornament-color);\n  --ornament-medallion-border: 3px solid var(--ornament-color);\n  --ornament-medallion-shadow: 0 0 12px var(--border-accent-gold);\n  --ornament-box-shadow: var(--relief-shadow), 0 0 0 2px var(--ornament-color);\n}', 'css')}
+    <p class="text-sm text-secondary mt-4">Then activate it like any built-in ornament:</p>
+    ${codeExample("soltana.setOrnament('royal');", 'javascript')}
+  `
+  )}
+
+  ${specimenBlock(
     'Custom Recipes',
     `
     <p class="text-sm text-secondary mb-4">Register named presets that combine your custom tiers with built-in ones.</p>
     ${codeExample("soltana.registerRecipe('my-brand', {\n  name: 'My Brand',\n  description: 'Dark midnight theme with glass relief.',\n  theme: 'midnight',\n  relief: 'glass',\n  finish: 'brushed',\n  ornament: 'gilt',\n});\n\nsoltana.applyRecipe('my-brand');", 'javascript')}
-    <p class="text-sm text-secondary mt-4"><strong>Note:</strong> Ornaments are not yet token-extensible. Custom ornament names will set the <code>data-ornament</code> attribute but require matching CSS to render.</p>
   `
   )}
 
