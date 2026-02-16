@@ -1,11 +1,14 @@
 # Commit Conventions
 
-## Issue References
+## Issue Reference Requirements
 
-- Reference the GitHub issue number in commits when work pertains to an issue
-- Use `Fixes #N` in the commit body to auto-close the issue on merge
-- Use `(#N)` in the subject line for partial progress that does not close the issue
-- No custom prefix scheme — use GitHub's native `#number` linking
+Every commit MUST include an issue reference when work pertains to an issue:
+
+1. Determine: does this commit fully resolve the issue?
+   - **Yes** → Add `Fixes #N` on a blank line in the commit **body**
+   - **No** → Add `(#N)` in the commit **subject line**
+2. Never omit the reference. Never put `Fixes #N` in the subject line.
+3. No custom prefix scheme — use GitHub's native `#number` linking.
 
 ## Examples
 
