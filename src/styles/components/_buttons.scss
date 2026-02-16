@@ -178,44 +178,6 @@
 // ORNAMENT VARIANT
 // ============================================================================
 
-@mixin btn-metallic($shine-color: rgb(255 255 255 / 25%)) {
-  background: var(--ornament-gradient);
-  color: color-mix(in srgb, var(--ornament-color), black 70%);
-  border-color: transparent;
-  box-shadow:
-    var(--relief-shadow),
-    0 2px 12px color-mix(in srgb, var(--ornament-color), transparent 70%);
-  position: relative;
-  overflow: hidden;
-  backdrop-filter: none;
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      105deg,
-      transparent 40%,
-      $shine-color 45%,
-      color-mix(in srgb, $shine-color, transparent 50%) 50%,
-      $shine-color 55%,
-      transparent 60%
-    );
-    transform: translateX(-100%) skewX(-15deg);
-    pointer-events: none;
-  }
-
-  &:hover::after {
-    animation: ornament-shine-sweep 0.8s ease-in-out;
-  }
-
-  &:hover {
-    box-shadow:
-      var(--relief-shadow),
-      0 4px 20px color-mix(in srgb, var(--ornament-color), transparent 60%);
-  }
-}
-
 @keyframes ornament-shine-sweep {
   0% {
     transform: translateX(-100%) skewX(-15deg);
@@ -226,38 +188,166 @@
   }
 }
 
-// ---- Tier mixins ----
+// ---- Base class: structural scaffolding + pseudo-element consumption ----
+// Pseudo-elements default to display: none, so .btn-ornament without an active
+// tier produces no visual change — the button keeps its .btn base styling.
 
-@mixin btn-ornament-gilt {
-  @include btn-metallic;
-}
+.btn-ornament {
+  position: relative;
 
-@mixin btn-ornament-baroque {
-  @include btn-metallic($shine-color: rgb(255 255 255 / 20%));
-  border-radius: var(--radius-sm);
-  padding: 0.625rem 2rem;
-  overflow: visible;
+  &::after {
+    content: '';
+    display: var(--btn-ornament-shine-display, none);
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 40%,
+      var(--btn-ornament-shine-color, rgb(255 255 255 / 25%)) 45%,
+      color-mix(in srgb, var(--btn-ornament-shine-color, rgb(255 255 255 / 25%)), transparent 50%)
+        50%,
+      var(--btn-ornament-shine-color, rgb(255 255 255 / 25%)) 55%,
+      transparent 60%
+    );
+    transform: translateX(-100%) skewX(-15deg);
+    pointer-events: none;
+  }
 
   &::before {
     content: '';
+    display: var(--btn-ornament-corner-display, none);
     position: absolute;
-    width: 12px;
-    height: 12px;
-    top: -4px;
-    left: -4px;
-    border: 2px solid var(--ornament-color);
-    border-width: 2px 0 0 2px;
-    opacity: 0.6;
+    width: var(--btn-ornament-corner-size, 12px);
+    height: var(--btn-ornament-corner-size, 12px);
+    top: var(--btn-ornament-corner-offset, -4px);
+    left: var(--btn-ornament-corner-offset, -4px);
+    border: var(--btn-ornament-corner-border, 2px solid var(--ornament-color));
+    border-width: var(--btn-ornament-corner-border-width, 2px 0 0 2px);
+    opacity: var(--btn-ornament-corner-opacity, 0.6);
     pointer-events: none;
+  }
+
+  &:hover::after {
+    animation: ornament-shine-sweep 0.8s ease-in-out;
   }
 }
 
-@mixin btn-ornament-beveled {
-  border-radius: var(--radius-sm);
-  border: 2px solid var(--border-strong);
-  background: linear-gradient(175deg, var(--surface-2) 0%, var(--surface-3) 100%);
-  box-shadow: var(--relief-shadow-inset), var(--relief-shadow);
-  clip-path: polygon(
+// ---- Consuming mixins ----
+
+@mixin btn-ornament-consume {
+  background: var(--btn-ornament-bg, var(--ornament-gradient));
+  color: var(--btn-ornament-color, color-mix(in srgb, var(--ornament-color), black 70%));
+  border-color: var(--btn-ornament-border-color, transparent);
+  border-width: var(--btn-ornament-border-width, 1px);
+  box-shadow: var(
+    --btn-ornament-shadow,
+    var(--relief-shadow),
+    0 2px 12px color-mix(in srgb, var(--ornament-color), transparent 70%)
+  );
+  clip-path: var(--btn-ornament-clip, none);
+  border-radius: var(--btn-ornament-radius, var(--radius-lg));
+  padding: var(--btn-ornament-padding, 0.5rem 1.25rem);
+  overflow: var(--btn-ornament-overflow, hidden);
+  backdrop-filter: var(--btn-ornament-backdrop, none);
+}
+
+@mixin btn-ornament-consume-hover {
+  box-shadow: var(
+    --btn-ornament-hover-shadow,
+    var(
+      --btn-ornament-shadow,
+      var(--relief-shadow),
+      0 2px 12px color-mix(in srgb, var(--ornament-color), transparent 70%)
+    )
+  );
+  background: var(--btn-ornament-hover-bg, var(--btn-ornament-bg, var(--ornament-gradient)));
+}
+
+@mixin btn-ornament-consume-active {
+  box-shadow: var(
+    --btn-ornament-active-shadow,
+    var(
+      --btn-ornament-shadow,
+      var(--relief-shadow),
+      0 2px 12px color-mix(in srgb, var(--ornament-color), transparent 70%)
+    )
+  );
+}
+
+// ---- Config-default consuming selectors (specificity (0,0,0) via :where()) ----
+
+:where([data-ornament]:not([data-ornament='none'])) .btn-ornament {
+  @include btn-ornament-consume;
+}
+
+:where([data-ornament]:not([data-ornament='none'])) .btn-ornament:hover {
+  @include btn-ornament-consume-hover;
+}
+
+:where([data-ornament]:not([data-ornament='none'])) .btn-ornament:active {
+  @include btn-ornament-consume-active;
+}
+
+// ---- Per-element override consuming selectors (specificity (0,2,0)) ----
+
+.ornament-gilt .btn-ornament,
+.btn-ornament.ornament-gilt,
+.ornament-baroque .btn-ornament,
+.btn-ornament.ornament-baroque,
+.ornament-beveled .btn-ornament,
+.btn-ornament.ornament-beveled,
+.ornament-faceted .btn-ornament,
+.btn-ornament.ornament-faceted {
+  @include btn-ornament-consume;
+}
+
+.ornament-gilt .btn-ornament:hover,
+.btn-ornament.ornament-gilt:hover,
+.ornament-baroque .btn-ornament:hover,
+.btn-ornament.ornament-baroque:hover,
+.ornament-beveled .btn-ornament:hover,
+.btn-ornament.ornament-beveled:hover,
+.ornament-faceted .btn-ornament:hover,
+.btn-ornament.ornament-faceted:hover {
+  @include btn-ornament-consume-hover;
+}
+
+.ornament-gilt .btn-ornament:active,
+.btn-ornament.ornament-gilt:active,
+.ornament-baroque .btn-ornament:active,
+.btn-ornament.ornament-baroque:active,
+.ornament-beveled .btn-ornament:active,
+.btn-ornament.ornament-beveled:active,
+.ornament-faceted .btn-ornament:active,
+.btn-ornament.ornament-faceted:active {
+  @include btn-ornament-consume-active;
+}
+
+// ---- Config-default tier token blocks (specificity (0,0,0) via :where()) ----
+
+:where([data-ornament='gilt']) {
+  --btn-ornament-shine-display: block;
+  --btn-ornament-hover-shadow:
+    var(--relief-shadow), 0 4px 20px color-mix(in srgb, var(--ornament-color), transparent 60%);
+}
+
+:where([data-ornament='baroque']) {
+  --btn-ornament-shine-display: block;
+  --btn-ornament-shine-color: rgb(255 255 255 / 20%);
+  --btn-ornament-radius: var(--radius-sm);
+  --btn-ornament-padding: 0.625rem 2rem;
+  --btn-ornament-overflow: visible;
+  --btn-ornament-corner-display: block;
+  --btn-ornament-hover-shadow:
+    var(--relief-shadow), 0 4px 20px color-mix(in srgb, var(--ornament-color), transparent 60%);
+}
+
+:where([data-ornament='beveled']) {
+  --btn-ornament-bg: linear-gradient(175deg, var(--surface-2) 0%, var(--surface-3) 100%);
+  --btn-ornament-border-color: var(--border-strong);
+  --btn-ornament-border-width: 2px;
+  --btn-ornament-shadow: var(--relief-shadow-inset), var(--relief-shadow);
+  --btn-ornament-clip: polygon(
     6px 0,
     calc(100% - 6px) 0,
     100% 6px,
@@ -267,17 +357,12 @@
     0 calc(100% - 6px),
     0 6px
   );
-  backdrop-filter: none;
-
-  &:active {
-    box-shadow: var(--relief-shadow-inset);
-  }
+  --btn-ornament-radius: var(--radius-sm);
+  --btn-ornament-active-shadow: var(--relief-shadow-inset);
 }
 
-@mixin btn-ornament-faceted {
-  border-radius: 0;
-  border: 1px solid var(--ornament-color);
-  background: linear-gradient(
+:where([data-ornament='faceted']) {
+  --btn-ornament-bg: linear-gradient(
     135deg,
     var(--surface-1) 0%,
     var(--surface-2) 25%,
@@ -285,7 +370,9 @@
     var(--surface-2) 75%,
     var(--surface-1) 100%
   );
-  clip-path: polygon(
+  --btn-ornament-border-color: var(--ornament-color);
+  --btn-ornament-shadow: var(--relief-shadow);
+  --btn-ornament-clip: polygon(
     12px 0,
     calc(100% - 12px) 0,
     100% 50%,
@@ -293,72 +380,85 @@
     12px 100%,
     0 50%
   );
-  padding: 0.5rem 2rem;
-  box-shadow: var(--relief-shadow);
-  backdrop-filter: none;
-
-  &:hover {
-    background: linear-gradient(
-      135deg,
-      var(--surface-2) 0%,
-      var(--surface-3) 25%,
-      var(--surface-1) 50%,
-      var(--surface-3) 75%,
-      var(--surface-2) 100%
-    );
-  }
+  --btn-ornament-radius: 0;
+  --btn-ornament-padding: 0.5rem 2rem;
+  --btn-ornament-hover-bg: linear-gradient(
+    135deg,
+    var(--surface-2) 0%,
+    var(--surface-3) 25%,
+    var(--surface-1) 50%,
+    var(--surface-3) 75%,
+    var(--surface-2) 100%
+  );
 }
 
-// ---- Placeholder selectors (single mixin expansion per tier) ----
-%btn-ornament-gilt {
-  @include btn-ornament-gilt;
-}
-%btn-ornament-baroque {
-  @include btn-ornament-baroque;
-}
-%btn-ornament-beveled {
-  @include btn-ornament-beveled;
-}
-%btn-ornament-faceted {
-  @include btn-ornament-faceted;
+// ---- Per-element override tier token blocks (specificity (0,1,0)) ----
+
+.ornament-gilt {
+  --btn-ornament-shine-display: block;
+  --btn-ornament-hover-shadow:
+    var(--relief-shadow), 0 4px 20px color-mix(in srgb, var(--ornament-color), transparent 60%);
 }
 
-// ---- Tier selectors (config-default + per-element, merged via @extend) ----
-
-:where([data-ornament='gilt']) .btn-ornament {
-  @extend %btn-ornament-gilt;
+.ornament-baroque {
+  --btn-ornament-shine-display: block;
+  --btn-ornament-shine-color: rgb(255 255 255 / 20%);
+  --btn-ornament-radius: var(--radius-sm);
+  --btn-ornament-padding: 0.625rem 2rem;
+  --btn-ornament-overflow: visible;
+  --btn-ornament-corner-display: block;
+  --btn-ornament-hover-shadow:
+    var(--relief-shadow), 0 4px 20px color-mix(in srgb, var(--ornament-color), transparent 60%);
 }
 
-.ornament-gilt .btn-ornament,
-.btn-ornament.ornament-gilt {
-  @extend %btn-ornament-gilt;
+.ornament-beveled {
+  --btn-ornament-bg: linear-gradient(175deg, var(--surface-2) 0%, var(--surface-3) 100%);
+  --btn-ornament-border-color: var(--border-strong);
+  --btn-ornament-border-width: 2px;
+  --btn-ornament-shadow: var(--relief-shadow-inset), var(--relief-shadow);
+  --btn-ornament-clip: polygon(
+    6px 0,
+    calc(100% - 6px) 0,
+    100% 6px,
+    100% calc(100% - 6px),
+    calc(100% - 6px) 100%,
+    6px 100%,
+    0 calc(100% - 6px),
+    0 6px
+  );
+  --btn-ornament-radius: var(--radius-sm);
+  --btn-ornament-active-shadow: var(--relief-shadow-inset);
 }
 
-:where([data-ornament='baroque']) .btn-ornament {
-  @extend %btn-ornament-baroque;
-}
-
-.ornament-baroque .btn-ornament,
-.btn-ornament.ornament-baroque {
-  @extend %btn-ornament-baroque;
-}
-
-:where([data-ornament='beveled']) .btn-ornament {
-  @extend %btn-ornament-beveled;
-}
-
-.ornament-beveled .btn-ornament,
-.btn-ornament.ornament-beveled {
-  @extend %btn-ornament-beveled;
-}
-
-:where([data-ornament='faceted']) .btn-ornament {
-  @extend %btn-ornament-faceted;
-}
-
-.ornament-faceted .btn-ornament,
-.btn-ornament.ornament-faceted {
-  @extend %btn-ornament-faceted;
+.ornament-faceted {
+  --btn-ornament-bg: linear-gradient(
+    135deg,
+    var(--surface-1) 0%,
+    var(--surface-2) 25%,
+    var(--surface-3) 50%,
+    var(--surface-2) 75%,
+    var(--surface-1) 100%
+  );
+  --btn-ornament-border-color: var(--ornament-color);
+  --btn-ornament-shadow: var(--relief-shadow);
+  --btn-ornament-clip: polygon(
+    12px 0,
+    calc(100% - 12px) 0,
+    100% 50%,
+    calc(100% - 12px) 100%,
+    12px 100%,
+    0 50%
+  );
+  --btn-ornament-radius: 0;
+  --btn-ornament-padding: 0.5rem 2rem;
+  --btn-ornament-hover-bg: linear-gradient(
+    135deg,
+    var(--surface-2) 0%,
+    var(--surface-3) 25%,
+    var(--surface-1) 50%,
+    var(--surface-3) 75%,
+    var(--surface-2) 100%
+  );
 }
 
 // ============================================================================
