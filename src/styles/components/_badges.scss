@@ -131,7 +131,7 @@ $avatar-sizes: (
   box-shadow:
     0 0 0 2px var(--surface-bg),
     0 0 0 4px var(--border-decorative-strong),
-    inset 0 0 8px rgb(0 0 0 / 15%);
+    inset 0 0 8px rgb(var(--shadow-color) / 15%);
 }
 
 // ============================================================================

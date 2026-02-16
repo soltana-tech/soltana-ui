@@ -254,10 +254,10 @@
     width: 1.125rem;
     left: 0.1875rem;
     bottom: 0.1875rem;
-    background-color: white;
+    background-color: rgb(var(--highlight-color));
     border-radius: var(--radius-full);
     transition: transform var(--transition-slow) var(--easing-in-out);
-    box-shadow: 0 1px 3px rgb(0 0 0 / 20%);
+    box-shadow: 0 1px 3px rgb(var(--shadow-color) / 20%);
   }
 
   input:checked + & {

@@ -7,6 +7,7 @@
 
 @use 'sass:list';
 @use '../variables' as *;
+@use '../base/register' as *;
 
 // ============================================================================
 // BASE BUTTON
@@ -81,7 +82,7 @@
   border-color: transparent;
   box-shadow:
     var(--relief-shadow),
-    inset 0 1px 0 rgb(255 255 255 / 15%);
+    inset 0 1px 0 rgb(var(--highlight-color) / 15%);
 
   &:hover {
     background: linear-gradient(145deg, var(--accent-primary-hover), var(--accent-primary));
@@ -89,8 +90,8 @@
 
   &:active {
     box-shadow:
-      inset 2px 2px 6px rgb(0 0 0 / 25%),
-      inset -1px -1px 4px rgb(255 255 255 / 8%);
+      inset 2px 2px 6px rgb(var(--shadow-color) / 25%),
+      inset -1px -1px 4px rgb(var(--highlight-color) / 8%);
   }
 }
 
@@ -136,11 +137,9 @@
   }
 }
 
-// ============================================================================
-// SEMANTIC VARIANTS
-// ============================================================================
+// ---- Semantic glow mixin: gradient + colored outer glow for danger/success ----
 
-@mixin btn-jewel($color, $color-deep, $glow-base, $glow-hover) {
+@mixin btn-semantic-glow($color, $color-deep, $glow-base, $glow-hover) {
   background: linear-gradient(145deg, $color, $color-deep);
   color: #fff;
   border-color: transparent;
@@ -157,20 +156,20 @@
 }
 
 .btn-danger {
-  @include btn-jewel(
+  @include btn-semantic-glow(
     var(--color-error),
     color-mix(in srgb, var(--color-error), black 35%),
-    rgb(239 68 68 / 25%),
-    rgb(239 68 68 / 35%)
+    color-mix(in srgb, var(--color-error) 25%, transparent),
+    color-mix(in srgb, var(--color-error) 35%, transparent)
   );
 }
 
 .btn-success {
-  @include btn-jewel(
+  @include btn-semantic-glow(
     var(--color-success),
     color-mix(in srgb, var(--color-success), black 35%),
-    rgb(16 185 129 / 20%),
-    rgb(16 185 129 / 30%)
+    color-mix(in srgb, var(--color-success) 20%, transparent),
+    color-mix(in srgb, var(--color-success) 30%, transparent)
   );
 }
 
@@ -203,10 +202,14 @@
     background: linear-gradient(
       105deg,
       transparent 40%,
-      var(--btn-ornament-shine-color, rgb(255 255 255 / 25%)) 45%,
-      color-mix(in srgb, var(--btn-ornament-shine-color, rgb(255 255 255 / 25%)), transparent 50%)
+      var(--btn-ornament-shine-color, rgb(var(--highlight-color) / 25%)) 45%,
+      color-mix(
+          in srgb,
+          var(--btn-ornament-shine-color, rgb(var(--highlight-color) / 25%)),
+          transparent 50%
+        )
         50%,
-      var(--btn-ornament-shine-color, rgb(255 255 255 / 25%)) 55%,
+      var(--btn-ornament-shine-color, rgb(var(--highlight-color) / 25%)) 55%,
       transparent 60%
     );
     transform: translateX(-100%) skewX(-15deg);
@@ -290,50 +293,36 @@
 
 // ---- Per-element override consuming selectors (specificity (0,2,0)) ----
 
-.ornament-gilt .btn-ornament,
-.btn-ornament.ornament-gilt,
-.ornament-baroque .btn-ornament,
-.btn-ornament.ornament-baroque,
-.ornament-beveled .btn-ornament,
-.btn-ornament.ornament-beveled,
-.ornament-faceted .btn-ornament,
-.btn-ornament.ornament-faceted {
-  @include btn-ornament-consume;
+$btn-ornament-names: gilt, baroque, beveled, faceted;
+
+@each $name in $btn-ornament-names {
+  .ornament-#{$name} .btn-ornament,
+  .btn-ornament.ornament-#{$name} {
+    @include btn-ornament-consume;
+  }
+
+  .ornament-#{$name} .btn-ornament:hover,
+  .btn-ornament.ornament-#{$name}:hover {
+    @include btn-ornament-consume-hover;
+  }
+
+  .ornament-#{$name} .btn-ornament:active,
+  .btn-ornament.ornament-#{$name}:active {
+    @include btn-ornament-consume-active;
+  }
 }
 
-.ornament-gilt .btn-ornament:hover,
-.btn-ornament.ornament-gilt:hover,
-.ornament-baroque .btn-ornament:hover,
-.btn-ornament.ornament-baroque:hover,
-.ornament-beveled .btn-ornament:hover,
-.btn-ornament.ornament-beveled:hover,
-.ornament-faceted .btn-ornament:hover,
-.btn-ornament.ornament-faceted:hover {
-  @include btn-ornament-consume-hover;
-}
+// ---- Tier token blocks ----
 
-.ornament-gilt .btn-ornament:active,
-.btn-ornament.ornament-gilt:active,
-.ornament-baroque .btn-ornament:active,
-.btn-ornament.ornament-baroque:active,
-.ornament-beveled .btn-ornament:active,
-.btn-ornament.ornament-beveled:active,
-.ornament-faceted .btn-ornament:active,
-.btn-ornament.ornament-faceted:active {
-  @include btn-ornament-consume-active;
-}
-
-// ---- Config-default tier token blocks (specificity (0,0,0) via :where()) ----
-
-:where([data-ornament='gilt']) {
+@include register-ornament('gilt') {
   --btn-ornament-shine-display: block;
   --btn-ornament-hover-shadow:
     var(--relief-shadow), 0 4px 20px color-mix(in srgb, var(--ornament-color), transparent 60%);
 }
 
-:where([data-ornament='baroque']) {
+@include register-ornament('baroque') {
   --btn-ornament-shine-display: block;
-  --btn-ornament-shine-color: rgb(255 255 255 / 20%);
+  --btn-ornament-shine-color: rgb(var(--highlight-color) / 20%);
   --btn-ornament-radius: var(--radius-sm);
   --btn-ornament-padding: 0.625rem 2rem;
   --btn-ornament-overflow: visible;
@@ -342,7 +331,7 @@
     var(--relief-shadow), 0 4px 20px color-mix(in srgb, var(--ornament-color), transparent 60%);
 }
 
-:where([data-ornament='beveled']) {
+@include register-ornament('beveled') {
   --btn-ornament-bg: linear-gradient(175deg, var(--surface-2) 0%, var(--surface-3) 100%);
   --btn-ornament-border-color: var(--border-strong);
   --btn-ornament-border-width: 2px;
@@ -361,76 +350,7 @@
   --btn-ornament-active-shadow: var(--relief-shadow-inset);
 }
 
-:where([data-ornament='faceted']) {
-  --btn-ornament-bg: linear-gradient(
-    135deg,
-    var(--surface-1) 0%,
-    var(--surface-2) 25%,
-    var(--surface-3) 50%,
-    var(--surface-2) 75%,
-    var(--surface-1) 100%
-  );
-  --btn-ornament-border-color: var(--ornament-color);
-  --btn-ornament-shadow: var(--relief-shadow);
-  --btn-ornament-clip: polygon(
-    12px 0,
-    calc(100% - 12px) 0,
-    100% 50%,
-    calc(100% - 12px) 100%,
-    12px 100%,
-    0 50%
-  );
-  --btn-ornament-radius: 0;
-  --btn-ornament-padding: 0.5rem 2rem;
-  --btn-ornament-hover-bg: linear-gradient(
-    135deg,
-    var(--surface-2) 0%,
-    var(--surface-3) 25%,
-    var(--surface-1) 50%,
-    var(--surface-3) 75%,
-    var(--surface-2) 100%
-  );
-}
-
-// ---- Per-element override tier token blocks (specificity (0,1,0)) ----
-
-.ornament-gilt {
-  --btn-ornament-shine-display: block;
-  --btn-ornament-hover-shadow:
-    var(--relief-shadow), 0 4px 20px color-mix(in srgb, var(--ornament-color), transparent 60%);
-}
-
-.ornament-baroque {
-  --btn-ornament-shine-display: block;
-  --btn-ornament-shine-color: rgb(255 255 255 / 20%);
-  --btn-ornament-radius: var(--radius-sm);
-  --btn-ornament-padding: 0.625rem 2rem;
-  --btn-ornament-overflow: visible;
-  --btn-ornament-corner-display: block;
-  --btn-ornament-hover-shadow:
-    var(--relief-shadow), 0 4px 20px color-mix(in srgb, var(--ornament-color), transparent 60%);
-}
-
-.ornament-beveled {
-  --btn-ornament-bg: linear-gradient(175deg, var(--surface-2) 0%, var(--surface-3) 100%);
-  --btn-ornament-border-color: var(--border-strong);
-  --btn-ornament-border-width: 2px;
-  --btn-ornament-shadow: var(--relief-shadow-inset), var(--relief-shadow);
-  --btn-ornament-clip: polygon(
-    6px 0,
-    calc(100% - 6px) 0,
-    100% 6px,
-    100% calc(100% - 6px),
-    calc(100% - 6px) 100%,
-    6px 100%,
-    0 calc(100% - 6px),
-    0 6px
-  );
-  --btn-ornament-radius: var(--radius-sm);
-  --btn-ornament-active-shadow: var(--relief-shadow-inset);
-}
-
-.ornament-faceted {
+@include register-ornament('faceted') {
   --btn-ornament-bg: linear-gradient(
     135deg,
     var(--surface-1) 0%,

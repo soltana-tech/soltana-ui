@@ -220,7 +220,7 @@ describe('postcss-soltana-treeshake', () => {
     it('preserves ornament modifier classes', async () => {
       const input = `
 .ornament-subtle { opacity: 0.5; }
-.ornament-silver { --ornament-color: silver; }
+.ornament-strong { --ornament-opacity: 0.7; }
 .ornament-sm { font-size: 0.875rem; }
 :where([data-ornament='baroque']) { --ornament-color: gold; }
       `.trim();
@@ -229,7 +229,7 @@ describe('postcss-soltana-treeshake', () => {
 
       // Modifier classes are not built-in tier values → never stripped
       expect(output).toContain('.ornament-subtle');
-      expect(output).toContain('.ornament-silver');
+      expect(output).toContain('.ornament-strong');
       expect(output).toContain('.ornament-sm');
       expect(output).not.toContain('baroque');
     });

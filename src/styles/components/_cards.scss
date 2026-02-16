@@ -51,9 +51,9 @@
     position: absolute;
     inset: -1px;
     border-radius: inherit;
-    border: 1px solid rgb(255 255 255 / 12%);
-    border-bottom-color: rgb(0 0 0 / 10%);
-    border-right-color: rgb(0 0 0 / 10%);
+    border: 1px solid rgb(var(--highlight-color) / 12%);
+    border-bottom-color: rgb(var(--shadow-color) / 10%);
+    border-right-color: rgb(var(--shadow-color) / 10%);
     pointer-events: none;
     z-index: 1;
   }
