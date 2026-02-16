@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { initSoltana } from './index';
-import { RECIPES, VALID_RECIPE_NAMES } from './recipes';
+import { RECIPES, getRecipeNames } from './recipes';
 import type { RecipeName } from './types';
 import { _resetFontLoader } from '../fonts/index';
 
@@ -22,8 +22,8 @@ describe('RECIPES data integrity', () => {
     expect(Object.keys(RECIPES)).toHaveLength(expectedKeys.length);
   });
 
-  it('VALID_RECIPE_NAMES matches RECIPES keys', () => {
-    expect([...VALID_RECIPE_NAMES].sort()).toEqual([...Object.keys(RECIPES)].sort());
+  it('getRecipeNames reflects registered recipes', () => {
+    expect(getRecipeNames().sort()).toEqual(Object.keys(RECIPES).sort());
   });
 
   it.each(Object.entries(RECIPES))('%s specifies all required fields', (_key, recipe) => {

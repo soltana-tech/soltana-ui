@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import postcss from 'postcss';
 import soltanaTreeshake from './postcss-soltana-treeshake';
 import type { SoltanaTreeshakeOptions } from './types';
@@ -266,6 +266,7 @@ describe('postcss-soltana-treeshake', () => {
     });
 
     it('include takes precedence when both include and exclude are provided', async () => {
+      const spy = vi.spyOn(console, 'warn').mockImplementation(vi.fn());
       const input = `
 [data-theme='dark'] { color: white; }
 [data-theme='light'] { color: black; }
@@ -280,6 +281,8 @@ describe('postcss-soltana-treeshake', () => {
       expect(output).toContain('dark');
       expect(output).not.toContain('light');
       expect(output).not.toContain('sepia');
+      expect(spy).toHaveBeenCalledWith(expect.stringContaining('both include and exclude'));
+      spy.mockRestore();
     });
 
     it('empty include array excludes all built-in values', async () => {

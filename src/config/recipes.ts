@@ -39,11 +39,18 @@ const recipes: Record<string, Recipe> = {
   },
 };
 
-/** Read-only view of the recipe registry. */
+/**
+ * Live view of the recipe registry. Reflects both built-in and user-registered
+ * recipes. Typed as Readonly to discourage direct mutation — use
+ * `registerRecipe()` to add entries.
+ */
 export const RECIPES: Readonly<Record<string, Recipe>> = recipes;
 
 export function registerRecipe(name: string, recipe: Recipe): void {
   recipes[name] = recipe;
 }
 
-export const VALID_RECIPE_NAMES: readonly string[] = Object.keys(RECIPES);
+/** Returns the names of all currently registered recipes (built-in + custom). */
+export function getRecipeNames(): string[] {
+  return Object.keys(recipes);
+}

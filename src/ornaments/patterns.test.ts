@@ -1,30 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import {
-  greekKey,
-  scrollwork,
-  dentil,
-  medallion,
-  cornerOrnament,
-  facetedDivider,
-  facetedCorner,
-  patterns,
-  toDataUri,
-  toElement,
-} from './patterns';
+import { patterns, toDataUri, toElement } from './patterns';
 import type { PatternName } from './patterns';
 
-const PATTERN_FNS = {
-  greekKey,
-  scrollwork,
-  dentil,
-  medallion,
-  cornerOrnament,
-  facetedDivider,
-  facetedCorner,
-};
-
 describe('ornament patterns', () => {
-  it.each(Object.entries(PATTERN_FNS))(
+  it.each(Object.entries(patterns))(
     '%s returns valid SVG with currentColor by default',
     (_name, fn) => {
       const svg = fn();
@@ -32,14 +11,14 @@ describe('ornament patterns', () => {
     }
   );
 
-  it.each(Object.entries(PATTERN_FNS))('%s parses as valid SVG', (_name, fn) => {
+  it.each(Object.entries(patterns))('%s parses as valid SVG', (_name, fn) => {
     const svg = fn();
     const el = toElement(svg);
     expect(el.tagName).toBe('svg');
     expect(el.getAttribute('viewBox')).toBeTruthy();
   });
 
-  it.each(Object.entries(PATTERN_FNS))('%s interpolates custom color', (_name, fn) => {
+  it.each(Object.entries(patterns))('%s interpolates custom color', (_name, fn) => {
     const svg = fn('#ff0000');
     expect(svg).toContain('#ff0000');
     expect(svg).not.toContain('currentColor');
@@ -67,7 +46,7 @@ describe('ornament patterns', () => {
 });
 
 describe('toDataUri', () => {
-  const svg = greekKey();
+  const svg = patterns['greek-key']();
 
   it('returns a data URI with the correct prefix', () => {
     expect(toDataUri(svg)).toMatch(/^data:image\/svg\+xml,/);
@@ -87,7 +66,7 @@ describe('toDataUri', () => {
 });
 
 describe('toElement', () => {
-  const svg = medallion();
+  const svg = patterns.medallion();
 
   it('returns an SVGElement', () => {
     const el = toElement(svg);

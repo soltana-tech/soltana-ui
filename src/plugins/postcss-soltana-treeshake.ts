@@ -8,12 +8,18 @@
 
 import type { Plugin, Rule } from 'postcss';
 import type { SoltanaTreeshakeOptions, TierConfig } from './types';
+import {
+  BUILT_IN_THEMES,
+  BUILT_IN_RELIEFS,
+  BUILT_IN_FINISHES,
+  BUILT_IN_ORNAMENTS,
+} from '../config/types';
 
-const BUILT_IN: Record<string, string[]> = {
-  theme: ['dark', 'light', 'sepia'],
-  relief: ['flat', 'soft', 'lifted', 'neu', 'sharp', 'hewn'],
-  finish: ['matte', 'translucent', 'frosted', 'tinted', 'glossy'],
-  ornament: ['none', 'gilt', 'baroque', 'beveled', 'faceted'],
+const BUILT_IN: Record<string, readonly string[]> = {
+  theme: BUILT_IN_THEMES,
+  relief: BUILT_IN_RELIEFS,
+  finish: BUILT_IN_FINISHES,
+  ornament: BUILT_IN_ORNAMENTS,
 };
 
 // Maps plural config keys to singular tier names used in selectors
@@ -44,6 +50,12 @@ function buildExcludeSet(options: SoltanaTreeshakeOptions): Map<string, Set<stri
     if (!tier || !(tier in BUILT_IN)) continue;
 
     const builtIn = BUILT_IN[tier];
+
+    if (tierConfig.include && tierConfig.exclude) {
+      console.warn(
+        `[soltana] Tier "${tier}" specifies both include and exclude; exclude will be ignored`
+      );
+    }
 
     let excluded: string[];
     if (tierConfig.include) {

@@ -5,6 +5,7 @@
 // blocks for the chosen theme, relief, finish, and ornament.
 // ---------------------------------------------------------------------------
 
+import { BUILT_IN_THEMES, BUILT_IN_RELIEFS, BUILT_IN_FINISHES, BUILT_IN_ORNAMENTS } from './types';
 import type {
   SoltanaConfig,
   SoltanaInstance,
@@ -31,10 +32,10 @@ const DEFAULT_CONFIG: SoltanaConfig = {
   strict: false,
 };
 
-const VALID_THEMES: Theme[] = ['dark', 'light', 'sepia', 'auto'];
-const VALID_RELIEFS: Relief[] = ['flat', 'soft', 'lifted', 'neu', 'sharp', 'hewn'];
-const VALID_FINISHES: Finish[] = ['matte', 'translucent', 'frosted', 'tinted', 'glossy'];
-const VALID_ORNAMENTS: Ornament[] = ['none', 'gilt', 'baroque', 'beveled', 'faceted'];
+const VALID_THEMES: Theme[] = [...BUILT_IN_THEMES, 'auto'];
+const VALID_RELIEFS: Relief[] = [...BUILT_IN_RELIEFS];
+const VALID_FINISHES: Finish[] = [...BUILT_IN_FINISHES];
+const VALID_ORNAMENTS: Ornament[] = [...BUILT_IN_ORNAMENTS];
 
 /**
  * Register a custom tier value so `strict` mode does not warn for it.
@@ -70,9 +71,15 @@ function applyOrnament(ornament: Ornament): void {
   document.documentElement.setAttribute('data-ornament', ornament);
 }
 
-function applyOverrides(overrides: Record<string, string>): void {
+function applyOverrides(overrides: Record<string, string>, strict: boolean): void {
   const root = document.documentElement;
   for (const [key, value] of Object.entries(overrides)) {
+    if (!key.startsWith('--')) {
+      console.warn(
+        `[soltana] Override key "${key}" is not a CSS custom property (must start with "--")`
+      );
+      if (strict) continue;
+    }
     root.style.setProperty(key, value);
   }
 }
@@ -86,7 +93,7 @@ function applyConfig(state: SoltanaConfig): void {
   applyOrnament(state.ornament);
 
   if (state.overrides) {
-    applyOverrides(state.overrides);
+    applyOverrides(state.overrides, !!state.strict);
   }
 }
 
@@ -124,6 +131,16 @@ function warnInvalid(name: string, value: string, valid: readonly string[], stri
   }
 }
 
+function resetEnhancers(state: SoltanaConfig): void {
+  if (_enhancerCleanup) {
+    _enhancerCleanup.destroy();
+    _enhancerCleanup = null;
+  }
+  if (state.enhancers !== false) {
+    _enhancerCleanup = initAll();
+  }
+}
+
 /**
  * Initialize the Soltana design system.
  * Sets data attributes on <html> to activate SCSS theme/relief/finish/
@@ -146,13 +163,32 @@ export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaIns
   applyConfig(state);
   setupAutoTheme(state);
 
-  // Initialize JS enhancers for interactive components
-  if (_enhancerCleanup) {
-    _enhancerCleanup.destroy();
-    _enhancerCleanup = null;
+  resetEnhancers(state);
+
+  // Internal setters (closure-captured, safe to destructure from the instance)
+  function setTheme(theme: Theme): void {
+    warnInvalid('theme', theme, VALID_THEMES, !!state.strict);
+    state.theme = theme;
+    document.documentElement.setAttribute('data-theme', resolveTheme(theme));
+    setupAutoTheme(state);
   }
-  if (state.enhancers !== false) {
-    _enhancerCleanup = initAll();
+
+  function setRelief(relief: Relief): void {
+    warnInvalid('relief', relief, VALID_RELIEFS, !!state.strict);
+    state.relief = relief;
+    document.documentElement.setAttribute('data-relief', relief);
+  }
+
+  function setFinish(finish: Finish): void {
+    warnInvalid('finish', finish, VALID_FINISHES, !!state.strict);
+    state.finish = finish;
+    document.documentElement.setAttribute('data-finish', finish);
+  }
+
+  function setOrnament(ornament: Ornament): void {
+    warnInvalid('ornament', ornament, VALID_ORNAMENTS, !!state.strict);
+    state.ornament = ornament;
+    applyOrnament(ornament);
   }
 
   return {
@@ -160,30 +196,10 @@ export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaIns
       return { ...state };
     },
 
-    setTheme(theme: Theme): void {
-      warnInvalid('theme', theme, VALID_THEMES, !!state.strict);
-      state.theme = theme;
-      document.documentElement.setAttribute('data-theme', resolveTheme(theme));
-      setupAutoTheme(state);
-    },
-
-    setRelief(relief: Relief): void {
-      warnInvalid('relief', relief, VALID_RELIEFS, !!state.strict);
-      state.relief = relief;
-      document.documentElement.setAttribute('data-relief', relief);
-    },
-
-    setFinish(finish: Finish): void {
-      warnInvalid('finish', finish, VALID_FINISHES, !!state.strict);
-      state.finish = finish;
-      document.documentElement.setAttribute('data-finish', finish);
-    },
-
-    setOrnament(ornament: Ornament): void {
-      warnInvalid('ornament', ornament, VALID_ORNAMENTS, !!state.strict);
-      state.ornament = ornament;
-      applyOrnament(ornament);
-    },
+    setTheme,
+    setRelief,
+    setFinish,
+    setOrnament,
 
     applyRecipe(recipeName: RecipeName): void {
       if (!(recipeName in RECIPES)) {
@@ -193,10 +209,10 @@ export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaIns
         return;
       }
       const recipe = RECIPES[recipeName];
-      this.setTheme(recipe.theme);
-      this.setRelief(recipe.relief);
-      this.setFinish(recipe.finish);
-      this.setOrnament(recipe.ornament);
+      setTheme(recipe.theme);
+      setRelief(recipe.relief);
+      setFinish(recipe.finish);
+      setOrnament(recipe.ornament);
     },
 
     registerRecipe(name: string, recipe: Recipe): void {
@@ -205,31 +221,33 @@ export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaIns
 
     setOverrides(overrides: Record<string, string>): void {
       state.overrides = { ...state.overrides, ...overrides };
-      applyOverrides(overrides);
+      applyOverrides(overrides, !!state.strict);
+    },
+
+    removeOverrides(keys: string[]): void {
+      const root = document.documentElement;
+      for (const key of keys) {
+        root.style.removeProperty(key);
+      }
+      if (state.overrides) {
+        const remaining = Object.fromEntries(
+          Object.entries(state.overrides).filter(([k]) => !keys.includes(k))
+        );
+        state.overrides = remaining;
+      }
     },
 
     reinit(): void {
-      if (_enhancerCleanup) {
-        _enhancerCleanup.destroy();
-      }
-      _enhancerCleanup = initAll();
+      resetEnhancers(state);
     },
 
     reset(): void {
       Object.assign(state, DEFAULT_CONFIG);
       state.overrides = {};
       teardownAutoTheme();
-      // Clear any inline override styles
       document.documentElement.removeAttribute('style');
       applyConfig(state);
-      // Re-initialize enhancers
-      if (_enhancerCleanup) {
-        _enhancerCleanup.destroy();
-        _enhancerCleanup = null;
-      }
-      if (state.enhancers !== false) {
-        _enhancerCleanup = initAll();
-      }
+      resetEnhancers(state);
     },
 
     destroy(): void {
@@ -264,5 +282,5 @@ export type {
   BuiltInRecipeName,
   TierName,
 } from './types';
-export { RECIPES, VALID_RECIPE_NAMES } from './recipes';
+export { RECIPES, getRecipeNames } from './recipes';
 export { VALID_THEMES, VALID_RELIEFS, VALID_FINISHES, VALID_ORNAMENTS };

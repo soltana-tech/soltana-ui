@@ -2,6 +2,12 @@ import './styles/index.scss';
 
 // Configuration runtime
 export { initSoltana, registerTierValue } from './config/index.js';
+export {
+  BUILT_IN_THEMES,
+  BUILT_IN_RELIEFS,
+  BUILT_IN_FINISHES,
+  BUILT_IN_ORNAMENTS,
+} from './config/types.js';
 export type {
   SoltanaConfig,
   SoltanaInstance,
@@ -21,7 +27,7 @@ export type {
 } from './config/types.js';
 
 // Recipe presets
-export { RECIPES, VALID_RECIPE_NAMES } from './config/recipes.js';
+export { RECIPES, getRecipeNames } from './config/recipes.js';
 
 // Font loading
 export { loadSoltanaFonts } from './fonts/index.js';

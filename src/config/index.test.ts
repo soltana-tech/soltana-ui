@@ -334,6 +334,40 @@ describe('initSoltana', () => {
     initSoltana({ overrides: { '--init-var': 'hello' } });
     expect(document.documentElement.style.getPropertyValue('--init-var')).toBe('hello');
   });
+
+  it('removeOverrides removes individual keys', () => {
+    const soltana = initSoltana();
+    soltana.setOverrides({ '--a': '1', '--b': '2', '--c': '3' });
+    soltana.removeOverrides(['--a', '--c']);
+
+    expect(document.documentElement.style.getPropertyValue('--a')).toBe('');
+    expect(document.documentElement.style.getPropertyValue('--b')).toBe('2');
+    expect(document.documentElement.style.getPropertyValue('--c')).toBe('');
+    expect(soltana.getState().overrides).toEqual({ '--b': '2' });
+  });
+
+  it('warns on non-custom-property override keys', () => {
+    const spy = vi.spyOn(console, 'warn').mockImplementation(vi.fn());
+    const soltana = initSoltana();
+    soltana.setOverrides({ color: 'red' });
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining('not a CSS custom property'));
+    spy.mockRestore();
+  });
+
+  it('strict mode skips non-custom-property override keys', () => {
+    const spy = vi.spyOn(console, 'warn').mockImplementation(vi.fn());
+    initSoltana({ strict: true, overrides: { color: 'red', '--valid': 'ok' } });
+    expect(document.documentElement.style.getPropertyValue('color')).toBe('');
+    expect(document.documentElement.style.getPropertyValue('--valid')).toBe('ok');
+    spy.mockRestore();
+  });
+
+  it('reinit respects enhancers: false', () => {
+    const soltana = initSoltana({ enhancers: false });
+    mockInitAll.mockClear();
+    soltana.reinit();
+    expect(mockInitAll).not.toHaveBeenCalled();
+  });
 });
 
 describe('registerTierValue', () => {
