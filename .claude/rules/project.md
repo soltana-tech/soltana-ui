@@ -13,8 +13,6 @@ A CSS-first design system built around a 4-tier configuration model:
 
 \* `auto` resolves to dark or light via `prefers-color-scheme`. It is a runtime resolver, not a static token set — there is no `.theme-auto` utility class.
 
-Classical "estate" aesthetic with gold accents, jewel tones, serif typography (Cinzel + Raleway). Ships ~139KB CSS + ~10KB JS with TypeScript enhancers for modals, tabs, and tooltips.
-
 ## Competitive Positioning
 
 No existing CSS design system offers a composable, orthogonal tier architecture where shadow model (relief), surface treatment (finish), decoration (ornament), and color scheme (theme) are independently configurable per-element. The niche is real and unoccupied. The unique value is the 4-axis configuration model — not any single visual style, but the ability to compose them.
