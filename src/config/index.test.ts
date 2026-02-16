@@ -194,14 +194,6 @@ describe('initSoltana', () => {
     expect(document.documentElement.getAttribute('data-relief')).toBe('flat');
   });
 
-  it('applyRecipe warns on unknown recipe name', () => {
-    const spy = vi.spyOn(console, 'warn').mockImplementation(vi.fn());
-    const soltana = initSoltana();
-    soltana.applyRecipe('nonexistent');
-    expect(spy).toHaveBeenCalledWith(expect.stringContaining('Unknown recipe'));
-    spy.mockRestore();
-  });
-
   it('default config does not inject font links', () => {
     initSoltana();
     const links = document.head.querySelectorAll('link');

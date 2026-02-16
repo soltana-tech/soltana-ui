@@ -129,41 +129,98 @@ describe('initTooltips', () => {
     expect(trigger.getAttribute('aria-describedby')).toBeNull();
   });
 
-  it.each(['top', 'bottom', 'left', 'right'])(
-    'positions tooltip with data-tooltip-position="%s"',
-    (position) => {
+  it.each([
+    ['top', '162px', '420px'],
+    ['bottom', '248px', '420px'],
+    ['left', '205px', '312px'],
+    ['right', '205px', '528px'],
+  ])(
+    'positions tooltip at correct coordinates for position="%s"',
+    (position, expectedTop, expectedLeft) => {
       vi.useFakeTimers();
+
       const trigger = document.createElement('button');
       trigger.setAttribute('data-sol-tooltip', 'Positioned');
       trigger.setAttribute('data-tooltip-position', position);
       document.body.appendChild(trigger);
 
+      trigger.getBoundingClientRect = () => ({
+        top: 200,
+        bottom: 240,
+        left: 400,
+        right: 520,
+        width: 120,
+        height: 40,
+        x: 400,
+        y: 200,
+        toJSON: () => ({}),
+      });
+
       initTooltips();
       trigger.dispatchEvent(new MouseEvent('mouseenter'));
+
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const tooltip = document.querySelector<HTMLElement>('.tooltip')!;
+      tooltip.getBoundingClientRect = () => ({
+        top: 0,
+        bottom: 30,
+        left: 0,
+        right: 80,
+        width: 80,
+        height: 30,
+        x: 0,
+        y: 0,
+        toJSON: () => ({}),
+      });
+
       vi.runAllTimers();
 
-      const tooltip = document.querySelector<HTMLElement>('.tooltip');
-      expect(tooltip).toBeTruthy();
-      expect(tooltip?.style.top).toBeTruthy();
-      expect(tooltip?.style.left).toBeTruthy();
+      expect(tooltip.style.top).toBe(expectedTop);
+      expect(tooltip.style.left).toBe(expectedLeft);
       vi.useRealTimers();
     }
   );
 
   it('defaults to top positioning when data-tooltip-position is absent', () => {
     vi.useFakeTimers();
+
     const trigger = document.createElement('button');
     trigger.setAttribute('data-sol-tooltip', 'Default pos');
     document.body.appendChild(trigger);
 
+    trigger.getBoundingClientRect = () => ({
+      top: 200,
+      bottom: 240,
+      left: 400,
+      right: 520,
+      width: 120,
+      height: 40,
+      x: 400,
+      y: 200,
+      toJSON: () => ({}),
+    });
+
     initTooltips();
     trigger.dispatchEvent(new MouseEvent('mouseenter'));
+
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const tooltip = document.querySelector<HTMLElement>('.tooltip')!;
+    tooltip.getBoundingClientRect = () => ({
+      top: 0,
+      bottom: 30,
+      left: 0,
+      right: 80,
+      width: 80,
+      height: 30,
+      x: 0,
+      y: 0,
+      toJSON: () => ({}),
+    });
+
     vi.runAllTimers();
 
-    const tooltip = document.querySelector<HTMLElement>('.tooltip');
-    expect(tooltip).toBeTruthy();
-    expect(tooltip?.style.top).toBeTruthy();
-    expect(tooltip?.style.left).toBeTruthy();
+    expect(tooltip.style.top).toBe('162px');
+    expect(tooltip.style.left).toBe('420px');
     vi.useRealTimers();
   });
 
