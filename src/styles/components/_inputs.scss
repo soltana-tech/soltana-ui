@@ -5,8 +5,6 @@
 // Uses --relief-* variables for automatic relief switching.
 // ---------------------------------------------------------------------------
 
-@use 'sass:list';
-@use 'sass:string';
 @use '../variables' as *;
 @use '../base/register' as *;
 @use '../base/transitions' as *;
@@ -212,41 +210,13 @@
   box-shadow: var(--radio-ornament-shadow, none);
 }
 
-// ---- Config-default consuming selectors ----
+// ---- Consuming selectors (config-default + per-element overrides) ----
 
-:where([data-ornament]:not([data-ornament='none'])) .checkbox-ornament {
+@include ornament-consume-selectors('checkbox-ornament') {
   @include checkbox-ornament-consume;
 }
 
-:where([data-ornament]:not([data-ornament='none'])) .radio-ornament {
-  @include radio-ornament-consume;
-}
-
-// ---- Per-element override consuming selectors ----
-
-$checkbox-sel: ();
-$radio-sel: ();
-
-@each $name in $ornament-names {
-  $checkbox-sel: list.append(
-    $checkbox-sel,
-    string.unquote('.ornament-#{$name} .checkbox-ornament'),
-    comma
-  );
-  $checkbox-sel: list.append(
-    $checkbox-sel,
-    string.unquote('.checkbox-ornament.ornament-#{$name}'),
-    comma
-  );
-  $radio-sel: list.append($radio-sel, string.unquote('.ornament-#{$name} .radio-ornament'), comma);
-  $radio-sel: list.append($radio-sel, string.unquote('.radio-ornament.ornament-#{$name}'), comma);
-}
-
-#{$checkbox-sel} {
-  @include checkbox-ornament-consume;
-}
-
-#{$radio-sel} {
+@include ornament-consume-selectors('radio-ornament') {
   @include radio-ornament-consume;
 }
 

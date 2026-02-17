@@ -5,8 +5,6 @@
 // Uses --relief-* variables for automatic relief switching.
 // ---------------------------------------------------------------------------
 
-@use 'sass:list';
-@use 'sass:string';
 @use '../variables' as *;
 @use '../base/register' as *;
 
@@ -175,22 +173,9 @@
   backdrop-filter: var(--modal-ornament-backdrop, none);
 }
 
-// ---- Config-default consuming selectors (specificity (0,0,0) via :where()) ----
+// ---- Consuming selectors (config-default + per-element overrides) ----
 
-:where([data-ornament]:not([data-ornament='none'])) .modal-ornament {
-  @include modal-ornament-consume;
-}
-
-// ---- Per-element override consuming selectors ----
-
-$modal-sel: ();
-
-@each $name in $ornament-names {
-  $modal-sel: list.append($modal-sel, string.unquote('.ornament-#{$name} .modal-ornament'), comma);
-  $modal-sel: list.append($modal-sel, string.unquote('.modal-ornament.ornament-#{$name}'), comma);
-}
-
-#{$modal-sel} {
+@include ornament-consume-selectors('modal-ornament') {
   @include modal-ornament-consume;
 }
 

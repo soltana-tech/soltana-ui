@@ -1,3 +1,7 @@
+@use 'sass:list';
+@use 'sass:string';
+@use '../variables' as vars;
+
 // ---------------------------------------------------------------------------
 // Tier Registration Mixins
 // ---------------------------------------------------------------------------
@@ -33,11 +37,37 @@
 // Ornament: :where([data-ornament]) for zero-specificity config cascade,
 // plus .ornament-* for per-element overrides.
 @mixin register-ornament($name) {
+  @if not list.index(vars.$ornament-names, $name) {
+    @warn "Ornament '#{$name}' is not in $ornament-names — per-element override selectors will not be generated.";
+  }
+
   :where([data-ornament='#{$name}']) {
     @content;
   }
 
   .ornament-#{$name} {
+    @content;
+  }
+}
+
+// Ornament consume selectors: emits both the config-default :where() selector
+// and per-element .ornament-* override selectors for a given component class.
+@mixin ornament-consume-selectors($class, $state: null) {
+  $state-suffix: '';
+  @if $state {
+    $state-suffix: ':#{$state}';
+  }
+
+  :where([data-ornament]:not([data-ornament='none'])) .#{$class}#{$state-suffix} {
+    @content;
+  }
+
+  $sel: ();
+  @each $name in vars.$ornament-names {
+    $sel: list.append($sel, string.unquote('.ornament-#{$name} .#{$class}#{$state-suffix}'), comma);
+    $sel: list.append($sel, string.unquote('.#{$class}.ornament-#{$name}#{$state-suffix}'), comma);
+  }
+  #{$sel} {
     @content;
   }
 }

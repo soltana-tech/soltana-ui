@@ -6,7 +6,6 @@
 // ---------------------------------------------------------------------------
 
 @use 'sass:list';
-@use 'sass:string';
 @use '../variables' as *;
 @use '../base/register' as *;
 @use '../base/transitions' as *;
@@ -278,60 +277,17 @@
     );
 }
 
-// ---- Config-default consuming selectors (specificity (0,0,0) via :where()) ----
+// ---- Consuming selectors (config-default + per-element overrides) ----
 
-:where([data-ornament]:not([data-ornament='none'])) .btn-ornament {
+@include ornament-consume-selectors('btn-ornament') {
   @include btn-ornament-consume;
 }
 
-:where([data-ornament]:not([data-ornament='none'])) .btn-ornament:hover {
+@include ornament-consume-selectors('btn-ornament', $state: hover) {
   @include btn-ornament-consume-hover;
 }
 
-:where([data-ornament]:not([data-ornament='none'])) .btn-ornament:active {
-  @include btn-ornament-consume-active;
-}
-
-// ---- Per-element override consuming selectors (specificity (0,2,0)) ----
-
-$sel-base: ();
-$sel-hover: ();
-$sel-active: ();
-
-@each $name in $ornament-names {
-  $sel-base: list.append($sel-base, string.unquote('.ornament-#{$name} .btn-ornament'), comma);
-  $sel-base: list.append($sel-base, string.unquote('.btn-ornament.ornament-#{$name}'), comma);
-  $sel-hover: list.append(
-    $sel-hover,
-    string.unquote('.ornament-#{$name} .btn-ornament:hover'),
-    comma
-  );
-  $sel-hover: list.append(
-    $sel-hover,
-    string.unquote('.btn-ornament.ornament-#{$name}:hover'),
-    comma
-  );
-  $sel-active: list.append(
-    $sel-active,
-    string.unquote('.ornament-#{$name} .btn-ornament:active'),
-    comma
-  );
-  $sel-active: list.append(
-    $sel-active,
-    string.unquote('.btn-ornament.ornament-#{$name}:active'),
-    comma
-  );
-}
-
-#{$sel-base} {
-  @include btn-ornament-consume;
-}
-
-#{$sel-hover} {
-  @include btn-ornament-consume-hover;
-}
-
-#{$sel-active} {
+@include ornament-consume-selectors('btn-ornament', $state: active) {
   @include btn-ornament-consume-active;
 }
 
