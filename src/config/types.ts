@@ -30,14 +30,17 @@ export interface Recipe {
   ornament: Ornament;
 }
 
+export interface SoltanaInitOptions {
+  fonts?: boolean;
+  enhancers?: boolean;
+  strict?: boolean;
+}
+
 export interface SoltanaConfig {
   theme: Theme;
   relief: Relief;
   finish: Finish;
   ornament: Ornament;
-  fonts?: boolean;
-  enhancers?: boolean;
-  strict?: boolean;
   overrides?: Record<string, string>;
 }
 

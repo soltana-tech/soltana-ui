@@ -9,6 +9,7 @@ import { VALID_THEMES, VALID_RELIEFS, VALID_FINISHES, VALID_ORNAMENTS } from './
 export { registerTierValue } from './validation';
 import type {
   SoltanaConfig,
+  SoltanaInitOptions,
   SoltanaInstance,
   EnhancerCleanup,
   Theme,
@@ -34,11 +35,14 @@ import {
 } from './register';
 import { teardown as teardownStylesheet } from './stylesheet';
 
-const DEFAULT_CONFIG: SoltanaConfig = {
+const DEFAULT_STATE: SoltanaConfig = {
   theme: 'dark',
   relief: 'neu',
   finish: 'matte',
   ornament: 'none',
+};
+
+const DEFAULT_INIT: Required<SoltanaInitOptions> = {
   fonts: false,
   enhancers: true,
   strict: false,
@@ -64,14 +68,14 @@ function applyOrnament(ornament: Ornament): void {
   document.documentElement.setAttribute('data-ornament', ornament);
 }
 
-function applyOverrides(overrides: Record<string, string>, strict: boolean): void {
+function applyOverrides(overrides: Record<string, string>): void {
   const root = document.documentElement;
   for (const [key, value] of Object.entries(overrides)) {
     if (!key.startsWith('--')) {
       console.warn(
         `[soltana] Override key "${key}" is not a CSS custom property (must start with "--")`
       );
-      if (strict) continue;
+      continue;
     }
     root.style.setProperty(key, value);
   }
@@ -86,7 +90,7 @@ function applyConfig(state: SoltanaConfig): void {
   applyOrnament(state.ornament);
 
   if (state.overrides) {
-    applyOverrides(state.overrides, !!state.strict);
+    applyOverrides(state.overrides);
   }
 }
 
@@ -124,12 +128,12 @@ function warnInvalid(name: string, value: string, valid: readonly string[], stri
   }
 }
 
-function resetEnhancers(state: SoltanaConfig): void {
+function resetEnhancers(enhancers: boolean): void {
   if (_enhancerCleanup) {
     _enhancerCleanup.destroy();
     _enhancerCleanup = null;
   }
-  if (state.enhancers !== false) {
+  if (enhancers) {
     _enhancerCleanup = initAll();
   }
 }
@@ -145,34 +149,42 @@ function dispatchChange(type: string, value: unknown): void {
  * Sets data attributes on <html> to activate SCSS theme/relief/finish/
  * ornament selectors.
  */
-export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaInstance {
+export function initSoltana(
+  userConfig: Partial<SoltanaConfig & SoltanaInitOptions> = {}
+): SoltanaInstance {
   _generation++;
   const myGen = _generation;
 
-  const state: SoltanaConfig = { ...DEFAULT_CONFIG, ...userConfig };
+  const { fonts, enhancers, strict, ...stateOverrides } = userConfig;
+  const state: SoltanaConfig = { ...DEFAULT_STATE, ...stateOverrides };
+  const initOpts: Required<SoltanaInitOptions> = {
+    fonts: fonts ?? DEFAULT_INIT.fonts,
+    enhancers: enhancers ?? DEFAULT_INIT.enhancers,
+    strict: strict ?? DEFAULT_INIT.strict,
+  };
 
   // Validate config values (only in strict mode)
-  warnInvalid('theme', state.theme, VALID_THEMES, !!state.strict);
-  warnInvalid('relief', state.relief, VALID_RELIEFS, !!state.strict);
-  warnInvalid('finish', state.finish, VALID_FINISHES, !!state.strict);
-  warnInvalid('ornament', state.ornament, VALID_ORNAMENTS, !!state.strict);
+  warnInvalid('theme', state.theme, VALID_THEMES, initOpts.strict);
+  warnInvalid('relief', state.relief, VALID_RELIEFS, initOpts.strict);
+  warnInvalid('finish', state.finish, VALID_FINISHES, initOpts.strict);
+  warnInvalid('ornament', state.ornament, VALID_ORNAMENTS, initOpts.strict);
 
   // Load Google Fonts when opted in
-  if (state.fonts === true) {
+  if (initOpts.fonts) {
     loadSoltanaFonts();
   }
 
   applyConfig(state);
   setupAutoTheme(state);
 
-  resetEnhancers(state);
+  resetEnhancers(initOpts.enhancers);
 
   // Track runtime registrations for cleanup
   const registrations: TierRegistration[] = [];
 
   // Internal setters (closure-captured, safe to destructure from the instance)
   function setTheme(theme: Theme): void {
-    warnInvalid('theme', theme, VALID_THEMES, !!state.strict);
+    warnInvalid('theme', theme, VALID_THEMES, initOpts.strict);
     state.theme = theme;
     document.documentElement.setAttribute('data-theme', resolveTheme(theme));
     setupAutoTheme(state);
@@ -180,21 +192,21 @@ export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaIns
   }
 
   function setRelief(relief: Relief): void {
-    warnInvalid('relief', relief, VALID_RELIEFS, !!state.strict);
+    warnInvalid('relief', relief, VALID_RELIEFS, initOpts.strict);
     state.relief = relief;
     document.documentElement.setAttribute('data-relief', relief);
     dispatchChange('relief', relief);
   }
 
   function setFinish(finish: Finish): void {
-    warnInvalid('finish', finish, VALID_FINISHES, !!state.strict);
+    warnInvalid('finish', finish, VALID_FINISHES, initOpts.strict);
     state.finish = finish;
     document.documentElement.setAttribute('data-finish', finish);
     dispatchChange('finish', finish);
   }
 
   function setOrnament(ornament: Ornament): void {
-    warnInvalid('ornament', ornament, VALID_ORNAMENTS, !!state.strict);
+    warnInvalid('ornament', ornament, VALID_ORNAMENTS, initOpts.strict);
     state.ornament = ornament;
     applyOrnament(ornament);
     dispatchChange('ornament', ornament);
@@ -230,7 +242,7 @@ export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaIns
 
     setOverrides(overrides: Record<string, string>): void {
       state.overrides = { ...state.overrides, ...overrides };
-      applyOverrides(overrides, !!state.strict);
+      applyOverrides(overrides);
       dispatchChange('overrides', overrides);
     },
 
@@ -273,7 +285,7 @@ export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaIns
     },
 
     reinit(): void {
-      resetEnhancers(state);
+      resetEnhancers(initOpts.enhancers);
     },
 
     reset(): void {
@@ -285,12 +297,12 @@ export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaIns
         reg.unregister();
       }
       teardownStylesheet();
-      Object.assign(state, DEFAULT_CONFIG);
+      Object.assign(state, DEFAULT_STATE);
       state.overrides = {};
       teardownAutoTheme();
       document.documentElement.removeAttribute('style');
       applyConfig(state);
-      resetEnhancers(state);
+      resetEnhancers(initOpts.enhancers);
       dispatchChange('reset', null);
     },
 
@@ -320,6 +332,7 @@ export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaIns
 
 export type {
   SoltanaConfig,
+  SoltanaInitOptions,
   SoltanaInstance,
   Theme,
   Relief,

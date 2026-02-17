@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { initSoltana } from './index';
 import { RECIPES } from './recipes';
 import type { RecipeName } from './types';
+import { BUILT_IN_THEMES, BUILT_IN_RELIEFS, BUILT_IN_FINISHES, BUILT_IN_ORNAMENTS } from './types';
 import { _resetFontLoader } from '../fonts/index';
 
 vi.mock('../enhancers/index.js');
@@ -32,6 +33,13 @@ describe('RECIPES data integrity', () => {
     expect(recipe).toHaveProperty('ornament');
     expect(typeof recipe.name).toBe('string');
     expect(typeof recipe.description).toBe('string');
+  });
+
+  it.each(Object.entries(RECIPES))('%s uses valid built-in tier values', (_key, recipe) => {
+    expect([...BUILT_IN_THEMES, 'auto']).toContain(recipe.theme);
+    expect([...BUILT_IN_RELIEFS]).toContain(recipe.relief);
+    expect([...BUILT_IN_FINISHES]).toContain(recipe.finish);
+    expect([...BUILT_IN_ORNAMENTS]).toContain(recipe.ornament);
   });
 });
 

@@ -10,6 +10,7 @@ export {
 } from './config/types.js';
 export type {
   SoltanaConfig,
+  SoltanaInitOptions,
   SoltanaInstance,
   EnhancerCleanup,
   Theme,

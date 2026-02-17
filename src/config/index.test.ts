@@ -373,12 +373,13 @@ describe('initSoltana', () => {
     const soltana = initSoltana();
     soltana.setOverrides({ color: 'red' });
     expect(spy).toHaveBeenCalledWith(expect.stringContaining('not a CSS custom property'));
+    expect(document.documentElement.style.getPropertyValue('color')).toBe('');
     spy.mockRestore();
   });
 
-  it('strict mode skips non-custom-property override keys', () => {
+  it('skips non-custom-property override keys', () => {
     const spy = vi.spyOn(console, 'warn').mockImplementation(vi.fn());
-    initSoltana({ strict: true, overrides: { color: 'red', '--valid': 'ok' } });
+    initSoltana({ overrides: { color: 'red', '--valid': 'ok' } });
     expect(document.documentElement.style.getPropertyValue('color')).toBe('');
     expect(document.documentElement.style.getPropertyValue('--valid')).toBe('ok');
     spy.mockRestore();
