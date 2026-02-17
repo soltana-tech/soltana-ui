@@ -28,6 +28,9 @@ playwright-report/
 blob-report/
 tests/**/*-snapshots/
 
+# A11y matrix results
+a11y-matrix-results/
+
 # Audit drafts
 .claude/audit/draft-issues-*.md
 

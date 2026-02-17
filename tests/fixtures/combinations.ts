@@ -3,7 +3,7 @@ import {
   VALID_RELIEFS,
   VALID_FINISHES,
   VALID_ORNAMENTS,
-} from '../../src/config/index';
+} from '../../src/config/validation';
 import { RECIPES } from '../../src/config/recipes';
 
 export interface TierCombination {

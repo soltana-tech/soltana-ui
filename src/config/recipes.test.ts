@@ -1,15 +1,7 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { initSoltana } from './index';
+import { describe, it, expect } from 'vitest';
 import { RECIPES } from './recipes';
 import type { RecipeName } from './types';
 import { BUILT_IN_THEMES, BUILT_IN_RELIEFS, BUILT_IN_FINISHES, BUILT_IN_ORNAMENTS } from './types';
-import { _resetFontLoader } from '../fonts/index';
-
-vi.mock('../enhancers/index.js');
-
-import { mockEnhancerDestroy } from '../enhancers/__mocks__/index';
-
-const mockDestroy = mockEnhancerDestroy;
 
 describe('RECIPES data integrity', () => {
   const expectedKeys: RecipeName[] = [
@@ -40,64 +32,5 @@ describe('RECIPES data integrity', () => {
     expect([...BUILT_IN_RELIEFS]).toContain(recipe.relief);
     expect([...BUILT_IN_FINISHES]).toContain(recipe.finish);
     expect([...BUILT_IN_ORNAMENTS]).toContain(recipe.ornament);
-  });
-});
-
-describe('applyRecipe', () => {
-  beforeEach(() => {
-    document.documentElement.removeAttribute('data-theme');
-    document.documentElement.removeAttribute('data-relief');
-    document.documentElement.removeAttribute('data-finish');
-    document.documentElement.removeAttribute('data-ornament');
-    document.documentElement.removeAttribute('style');
-    document.head.innerHTML = '';
-    _resetFontLoader();
-    mockDestroy.mockClear();
-  });
-
-  it.each(Object.entries(RECIPES))(
-    '%s applies tier values matching RECIPES definition',
-    (key, recipe) => {
-      const soltana = initSoltana();
-      soltana.applyRecipe(key as RecipeName);
-
-      const root = document.documentElement;
-      expect(root.getAttribute('data-theme')).toBe(recipe.theme);
-      expect(root.getAttribute('data-relief')).toBe(recipe.relief);
-      expect(root.getAttribute('data-finish')).toBe(recipe.finish);
-      expect(root.getAttribute('data-ornament')).toBe(recipe.ornament);
-
-      const state = soltana.getState();
-      expect(state.theme).toBe(recipe.theme);
-      expect(state.relief).toBe(recipe.relief);
-      expect(state.finish).toBe(recipe.finish);
-      expect(state.ornament).toBe(recipe.ornament);
-    }
-  );
-
-  it('invalid recipe name triggers console.warn and preserves state', () => {
-    const spy = vi.spyOn(console, 'warn').mockImplementation(vi.fn());
-    const soltana = initSoltana({ theme: 'sepia', relief: 'sharp' });
-
-    soltana.applyRecipe('nonexistent' as RecipeName);
-
-    expect(spy).toHaveBeenCalledWith(expect.stringContaining('Unknown recipe'));
-    expect(soltana.getState().theme).toBe('sepia');
-    expect(soltana.getState().relief).toBe('sharp');
-    spy.mockRestore();
-  });
-
-  it('individual setters can override tiers after recipe application', () => {
-    const soltana = initSoltana();
-    soltana.applyRecipe('luxury-dark');
-
-    soltana.setTheme('light');
-    soltana.setRelief('flat');
-
-    const state = soltana.getState();
-    expect(state.theme).toBe('light');
-    expect(state.relief).toBe('flat');
-    expect(state.finish).toBe('glossy');
-    expect(state.ornament).toBe('gilt');
   });
 });

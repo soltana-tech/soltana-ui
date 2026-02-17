@@ -110,7 +110,7 @@ export async function renderCombination(page: Page, combo: TierCombination): Pro
 </body>
 </html>`;
 
-  await page.setContent(html, { waitUntil: 'load' });
+  await page.setContent(html, { waitUntil: 'domcontentloaded' });
 }
 
 export function combinationLabel(combo: TierCombination): string {

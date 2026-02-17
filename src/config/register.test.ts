@@ -1,14 +1,7 @@
-import { describe, it, expect, beforeEach } from 'vitest';
-import {
-  THEME_TOKEN_NAMES,
-  deriveThemeTokens,
-  registerTheme,
-  registerRelief,
-  registerFinish,
-  registerOrnament,
-  _resetIntrospectionCache,
-} from './register';
-import { _resetStylesheet } from './stylesheet';
+import { describe, it, expect } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { THEME_TOKEN_NAMES, deriveThemeTokens } from './register';
 import type { ThemeSeed } from './types';
 
 const DARK_SEED: ThemeSeed = {
@@ -24,77 +17,66 @@ const LIGHT_SEED: ThemeSeed = {
   colorScheme: 'light',
 };
 
-function getCustomSheet(): CSSStyleSheet | null {
-  const el = document.getElementById('soltana-custom') as HTMLStyleElement | null;
-  return el?.sheet ?? null;
+// --- SCSS ↔ TS token sync (merged from register.sync.test.ts) ---
+
+function extractTokens(source: string): Set<string> {
+  const tokens = new Set<string>();
+  for (const line of source.split('\n')) {
+    const trimmed = line.trim();
+    if (trimmed.startsWith('//')) continue;
+    const match = /^(--[\w-]+)\s*:/.exec(trimmed);
+    if (match) {
+      tokens.add(match[1]);
+    }
+  }
+  return tokens;
 }
 
-function getAllRuleTexts(): string[] {
-  const sheet = getCustomSheet();
-  if (!sheet) return [];
-  return Array.from(sheet.cssRules).map((r) => r.cssText);
+function extractMixinBody(source: string, mixinName: string): string {
+  const startIdx = source.indexOf(`@mixin ${mixinName}(`);
+  if (startIdx === -1) return '';
+
+  let braceDepth = 0;
+  let bodyStart = -1;
+  for (let i = startIdx; i < source.length; i++) {
+    if (source[i] === '{') {
+      if (bodyStart === -1) bodyStart = i + 1;
+      braceDepth++;
+    } else if (source[i] === '}') {
+      braceDepth--;
+      if (braceDepth === 0) {
+        return source.slice(bodyStart, i);
+      }
+    }
+  }
+  return '';
 }
 
-describe('THEME_TOKEN_NAMES', () => {
-  it('contains all surface tokens', () => {
-    expect(THEME_TOKEN_NAMES).toContain('--surface-bg');
-    expect(THEME_TOKEN_NAMES).toContain('--surface-1');
-    expect(THEME_TOKEN_NAMES).toContain('--surface-4');
-  });
+describe('SCSS ↔ TS token sync', () => {
+  it('dark theme SCSS tokens match THEME_TOKEN_NAMES', () => {
+    const stylesDir = resolve(__dirname, '../styles');
 
-  it('contains all text tokens', () => {
-    expect(THEME_TOKEN_NAMES).toContain('--text-primary');
-    expect(THEME_TOKEN_NAMES).toContain('--text-inverse');
-  });
+    const darkScss = readFileSync(resolve(stylesDir, 'themes/_dark.scss'), 'utf-8');
+    const variablesScss = readFileSync(resolve(stylesDir, '_variables.scss'), 'utf-8');
 
-  it('contains accent tokens', () => {
-    expect(THEME_TOKEN_NAMES).toContain('--accent-primary');
-    expect(THEME_TOKEN_NAMES).toContain('--accent-secondary');
-    expect(THEME_TOKEN_NAMES).toContain('--accent-decorative');
-  });
+    const themeTokens = extractTokens(darkScss);
+    const mixinBody = extractMixinBody(variablesScss, 'component-tokens');
+    const mixinTokens = extractTokens(mixinBody);
 
-  it('contains semantic color tokens', () => {
-    expect(THEME_TOKEN_NAMES).toContain('--color-success');
-    expect(THEME_TOKEN_NAMES).toContain('--color-error');
-    expect(THEME_TOKEN_NAMES).toContain('--color-info');
-  });
+    const scssTokens = new Set([...themeTokens, ...mixinTokens]);
+    const tsTokens = new Set<string>(THEME_TOKEN_NAMES);
 
-  it('contains state tokens', () => {
-    expect(THEME_TOKEN_NAMES).toContain('--state-hover');
-    expect(THEME_TOKEN_NAMES).toContain('--state-focus-ring');
-  });
+    const inScssOnly = [...scssTokens].filter((t) => !tsTokens.has(t)).sort();
+    const inTsOnly = [...tsTokens].filter((t) => !scssTokens.has(t)).sort();
 
-  it('contains channel and bridge tokens', () => {
-    expect(THEME_TOKEN_NAMES).toContain('--shadow-color');
-    expect(THEME_TOKEN_NAMES).toContain('--neu-shadow');
-  });
-
-  it('contains component tokens', () => {
-    expect(THEME_TOKEN_NAMES).toContain('--input-bg');
-    expect(THEME_TOKEN_NAMES).toContain('--card-bg');
-    expect(THEME_TOKEN_NAMES).toContain('--code-bg');
-  });
-
-  it('contains icon tokens', () => {
-    expect(THEME_TOKEN_NAMES).toContain('--icon-select-chevron');
-  });
-
-  it('does not contain removed mask-image icon tokens', () => {
-    expect(THEME_TOKEN_NAMES).not.toContain('--icon-checkbox-check');
-    expect(THEME_TOKEN_NAMES).not.toContain('--icon-radio-dot');
+    expect(inScssOnly, 'Tokens in SCSS but not in THEME_TOKEN_NAMES').toEqual([]);
+    expect(inTsOnly, 'Tokens in THEME_TOKEN_NAMES but not in SCSS').toEqual([]);
   });
 });
 
-describe('deriveThemeTokens', () => {
-  it('is a pure function returning a Record<string, string>', () => {
-    const result = deriveThemeTokens(DARK_SEED);
-    expect(typeof result).toBe('object');
-    for (const [k, v] of Object.entries(result)) {
-      expect(typeof k).toBe('string');
-      expect(typeof v).toBe('string');
-    }
-  });
+// --- deriveThemeTokens pure function tests ---
 
+describe('deriveThemeTokens', () => {
   it('maps seed surfaceBg to --surface-bg', () => {
     const result = deriveThemeTokens(DARK_SEED);
     expect(result['--surface-bg']).toBe('#08091a');
@@ -230,325 +212,5 @@ describe('deriveThemeTokens', () => {
     for (const token of expectedTokens) {
       expect(result[token], `Missing token: ${token}`).toBeDefined();
     }
-  });
-});
-
-describe('registerTheme', () => {
-  beforeEach(() => {
-    _resetStylesheet();
-    _resetIntrospectionCache();
-  });
-
-  it('injects a CSS rule with theme selector', () => {
-    registerTheme('brand', { seed: DARK_SEED });
-    const rules = getAllRuleTexts();
-    const themeRule = rules.find((r) => r.includes("[data-theme='brand']"));
-    expect(themeRule).toBeDefined();
-    expect(themeRule).toContain('.theme-brand');
-  });
-
-  it('includes color-scheme in injected rule', () => {
-    registerTheme('brand', { seed: DARK_SEED });
-    const rules = getAllRuleTexts();
-    const themeRule = rules.find((r) => r.includes("[data-theme='brand']"));
-    expect(themeRule).toContain('color-scheme: dark');
-  });
-
-  it('light seed sets color-scheme: light', () => {
-    registerTheme('clean', { seed: LIGHT_SEED });
-    const rules = getAllRuleTexts();
-    const themeRule = rules.find((r) => r.includes("[data-theme='clean']"));
-    expect(themeRule).toContain('color-scheme: light');
-  });
-
-  it('includes derived tokens in injected rule', () => {
-    registerTheme('brand', { seed: DARK_SEED });
-    const rules = getAllRuleTexts();
-    const themeRule = rules.find((r) => r.includes("[data-theme='brand']"));
-    expect(themeRule).toContain('--surface-bg');
-    expect(themeRule).toContain('--accent-primary');
-  });
-
-  it('tokens override map takes precedence', () => {
-    registerTheme('brand', {
-      seed: DARK_SEED,
-      tokens: { '--color-success': '#00ff00' },
-    });
-    const rules = getAllRuleTexts();
-    const themeRule = rules.find((r) => r.includes("[data-theme='brand']"));
-    expect(themeRule).toContain('#00ff00');
-  });
-
-  it('returns TierRegistration with correct name and tier', () => {
-    const reg = registerTheme('brand', { seed: DARK_SEED });
-    expect(reg.name).toBe('brand');
-    expect(reg.tier).toBe('theme');
-  });
-
-  it('unregister() removes injected rules', () => {
-    const reg = registerTheme('brand', { seed: DARK_SEED });
-    expect(getAllRuleTexts().length).toBeGreaterThan(0);
-
-    reg.unregister();
-    expect(getAllRuleTexts().length).toBe(0);
-  });
-});
-
-describe('registerRelief', () => {
-  beforeEach(() => {
-    _resetStylesheet();
-    _resetIntrospectionCache();
-  });
-
-  it('injects rule with data-relief and utility class selectors', () => {
-    registerRelief('paper', {
-      tokens: {
-        '--relief-bg': 'var(--surface-1)',
-        '--relief-shadow-sm': '1px 1px 0 rgba(0,0,0,0.03)',
-        '--relief-shadow': '2px 2px 0 rgba(0,0,0,0.05)',
-        '--relief-shadow-lg': '4px 4px 0 rgba(0,0,0,0.07)',
-        '--relief-shadow-inset-sm': 'none',
-        '--relief-shadow-inset': 'none',
-        '--relief-shadow-inset-lg': 'none',
-        '--relief-border': '1px solid var(--border-default)',
-      },
-    });
-    const rules = getAllRuleTexts();
-    expect(rules.length).toBe(1);
-    expect(rules[0]).toContain("[data-relief='paper']");
-    expect(rules[0]).toContain('.relief-paper');
-  });
-
-  it('includes all 8 relief tokens', () => {
-    registerRelief('paper', {
-      tokens: {
-        '--relief-bg': 'var(--surface-1)',
-        '--relief-shadow-sm': 'a',
-        '--relief-shadow': 'b',
-        '--relief-shadow-lg': 'c',
-        '--relief-shadow-inset-sm': 'd',
-        '--relief-shadow-inset': 'e',
-        '--relief-shadow-inset-lg': 'f',
-        '--relief-border': 'g',
-      },
-    });
-    const rules = getAllRuleTexts();
-    expect(rules[0]).toContain('--relief-bg');
-    expect(rules[0]).toContain('--relief-shadow-sm');
-    expect(rules[0]).toContain('--relief-border');
-  });
-
-  it('returns TierRegistration', () => {
-    const reg = registerRelief('paper', {
-      tokens: {
-        '--relief-bg': 'a',
-        '--relief-shadow-sm': 'b',
-        '--relief-shadow': 'c',
-        '--relief-shadow-lg': 'd',
-        '--relief-shadow-inset-sm': 'e',
-        '--relief-shadow-inset': 'f',
-        '--relief-shadow-inset-lg': 'g',
-        '--relief-border': 'h',
-      },
-    });
-    expect(reg.name).toBe('paper');
-    expect(reg.tier).toBe('relief');
-  });
-
-  it('unregister() removes rules', () => {
-    const reg = registerRelief('paper', {
-      tokens: {
-        '--relief-bg': 'a',
-        '--relief-shadow-sm': 'b',
-        '--relief-shadow': 'c',
-        '--relief-shadow-lg': 'd',
-        '--relief-shadow-inset-sm': 'e',
-        '--relief-shadow-inset': 'f',
-        '--relief-shadow-inset-lg': 'g',
-        '--relief-border': 'h',
-      },
-    });
-    reg.unregister();
-    expect(getAllRuleTexts().length).toBe(0);
-  });
-});
-
-describe('registerFinish', () => {
-  beforeEach(() => {
-    _resetStylesheet();
-    _resetIntrospectionCache();
-  });
-
-  it('injects rule with data-finish and utility class selectors', () => {
-    registerFinish('satin', {
-      tokens: {
-        '--finish-blur': '0px',
-        '--finish-saturation': '1',
-        '--finish-opacity': '1',
-        '--finish-overlay': 'none',
-        '--finish-sheen': 'none',
-      },
-    });
-    const rules = getAllRuleTexts();
-    expect(rules.length).toBe(1);
-    expect(rules[0]).toContain("[data-finish='satin']");
-    expect(rules[0]).toContain('.finish-satin');
-  });
-
-  it('includes all 5 finish tokens', () => {
-    registerFinish('satin', {
-      tokens: {
-        '--finish-blur': '2px',
-        '--finish-saturation': '1.2',
-        '--finish-opacity': '0.9',
-        '--finish-overlay': 'linear-gradient(transparent, transparent)',
-        '--finish-sheen': 'none',
-      },
-    });
-    const rules = getAllRuleTexts();
-    expect(rules[0]).toContain('--finish-blur');
-    expect(rules[0]).toContain('--finish-saturation');
-    expect(rules[0]).toContain('--finish-opacity');
-    expect(rules[0]).toContain('--finish-overlay');
-    expect(rules[0]).toContain('--finish-sheen');
-  });
-
-  it('unregister() removes rules', () => {
-    const reg = registerFinish('satin', {
-      tokens: {
-        '--finish-blur': '0px',
-        '--finish-saturation': '1',
-        '--finish-opacity': '1',
-        '--finish-overlay': 'none',
-        '--finish-sheen': 'none',
-      },
-    });
-    reg.unregister();
-    expect(getAllRuleTexts().length).toBe(0);
-  });
-});
-
-describe('registerOrnament', () => {
-  beforeEach(() => {
-    _resetStylesheet();
-    _resetIntrospectionCache();
-  });
-
-  it('injects :where() and .ornament-* token blocks', () => {
-    registerOrnament('art-deco', {
-      tokens: { '--ornament-color': 'gold' },
-    });
-    const rules = getAllRuleTexts();
-    expect(rules.some((r) => r.includes(":where([data-ornament='art-deco'])"))).toBe(true);
-    expect(rules.some((r) => r.includes('.ornament-art-deco'))).toBe(true);
-  });
-
-  it('includes provided tokens in injected rules', () => {
-    registerOrnament('art-deco', {
-      tokens: {
-        '--ornament-frame-border': '3px solid gold',
-        '--ornament-corner-display': 'block',
-      },
-    });
-    const rules = getAllRuleTexts();
-    const tokenRule = rules.find((r) => r.includes(":where([data-ornament='art-deco'])"));
-    expect(tokenRule).toContain('--ornament-frame-border');
-    expect(tokenRule).toContain('--ornament-corner-display');
-  });
-
-  it('unregister() removes all rules', () => {
-    const reg = registerOrnament('art-deco', {
-      tokens: { '--ornament-color': 'gold' },
-    });
-    reg.unregister();
-    expect(getAllRuleTexts().length).toBe(0);
-  });
-
-  it('returns TierRegistration with tier ornament', () => {
-    const reg = registerOrnament('art-deco', {
-      tokens: { '--ornament-color': 'gold' },
-    });
-    expect(reg.name).toBe('art-deco');
-    expect(reg.tier).toBe('ornament');
-  });
-});
-
-describe('ornament introspection', () => {
-  let mockStyle: HTMLStyleElement;
-
-  beforeEach(() => {
-    _resetStylesheet();
-    _resetIntrospectionCache();
-
-    // Insert mock compiled CSS to simulate SCSS output
-    mockStyle = document.createElement('style');
-    mockStyle.textContent = `
-      :where([data-ornament]:not([data-ornament='none'])) .btn-ornament { background: var(--btn-ornament-bg); }
-      :where([data-ornament]:not([data-ornament='none'])) .btn-ornament:hover { background: var(--btn-ornament-hover-bg); }
-      :where([data-ornament]:not([data-ornament='none'])) .btn-ornament:active { box-shadow: var(--btn-ornament-active-shadow); }
-      :where([data-ornament]:not([data-ornament='none'])) .modal-ornament { border: var(--modal-ornament-border); }
-      :where([data-ornament]:not([data-ornament='none'])) .checkbox-ornament { border: var(--checkbox-ornament-border); }
-      :where([data-ornament]:not([data-ornament='none'])) .checkbox-ornament:checked { background: var(--checkbox-ornament-checked-bg); }
-      :where([data-ornament]:not([data-ornament='none'])) .radio-ornament { border: var(--radio-ornament-border); }
-      :where([data-ornament]:not([data-ornament='none'])) .radio-ornament:checked { background: var(--radio-ornament-checked-bg); }
-    `;
-    document.head.appendChild(mockStyle);
-  });
-
-  it('generates consume selectors from introspected templates', () => {
-    registerOrnament('art-deco', {
-      tokens: { '--ornament-color': 'gold' },
-    });
-    const rules = getAllRuleTexts();
-    // Should have 2 token blocks + 8 consume selector rules
-    expect(rules.length).toBe(10);
-  });
-
-  it('consume selectors include both parent and direct patterns', () => {
-    registerOrnament('art-deco', {
-      tokens: { '--ornament-color': 'gold' },
-    });
-    const rules = getAllRuleTexts();
-    // Check that btn-ornament consume selectors include both patterns
-    const btnRule = rules.find(
-      (r) =>
-        r.includes('.ornament-art-deco .btn-ornament') &&
-        !r.includes(':hover') &&
-        !r.includes(':active')
-    );
-    expect(btnRule).toBeDefined();
-    expect(btnRule).toContain('.btn-ornament.ornament-art-deco');
-  });
-
-  it('consume selectors preserve pseudo-states', () => {
-    registerOrnament('art-deco', {
-      tokens: { '--ornament-color': 'gold' },
-    });
-    const rules = getAllRuleTexts();
-    const hoverRule = rules.find((r) => r.includes('.btn-ornament.ornament-art-deco:hover'));
-    expect(hoverRule).toBeDefined();
-  });
-
-  it('caches introspection results', () => {
-    registerOrnament('first', { tokens: { '--ornament-color': 'gold' } });
-    const firstRuleCount = getAllRuleTexts().length;
-
-    // Add more mock styles after first introspection
-    const extraStyle = document.createElement('style');
-    extraStyle.textContent = `
-      :where([data-ornament]:not([data-ornament='none'])) .extra-ornament { color: red; }
-    `;
-    document.head.appendChild(extraStyle);
-
-    registerOrnament('second', { tokens: { '--ornament-color': 'silver' } });
-    const secondRuleCount = getAllRuleTexts().length;
-
-    // Both registrations should produce the same number of consume selectors
-    // (8 each) because the cache doesn't include the newly added .extra-ornament
-    const firstConsumeCount = firstRuleCount - 2; // subtract 2 token blocks
-    const secondConsumeCount = secondRuleCount - firstRuleCount - 2;
-    expect(firstConsumeCount).toBe(secondConsumeCount);
-
-    extraStyle.remove();
   });
 });

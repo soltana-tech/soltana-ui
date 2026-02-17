@@ -6,18 +6,18 @@
 // ---------------------------------------------------------------------------
 
 import { BUILT_IN_THEMES, BUILT_IN_RELIEFS, BUILT_IN_FINISHES, BUILT_IN_ORNAMENTS } from './types';
-import type { Theme, Relief, Finish, Ornament, TierName } from './types';
+import type { TierName } from './types';
 
-const VALID_THEMES: Theme[] = [...BUILT_IN_THEMES, 'auto'];
-const VALID_RELIEFS: Relief[] = [...BUILT_IN_RELIEFS];
-const VALID_FINISHES: Finish[] = [...BUILT_IN_FINISHES];
-const VALID_ORNAMENTS: Ornament[] = [...BUILT_IN_ORNAMENTS];
+const _themes: string[] = [...BUILT_IN_THEMES, 'auto'];
+const _reliefs: string[] = [...BUILT_IN_RELIEFS];
+const _finishes: string[] = [...BUILT_IN_FINISHES];
+const _ornaments: string[] = [...BUILT_IN_ORNAMENTS];
 
 const TIER_REGISTRY: Record<TierName, string[]> = {
-  theme: VALID_THEMES,
-  relief: VALID_RELIEFS,
-  finish: VALID_FINISHES,
-  ornament: VALID_ORNAMENTS,
+  theme: _themes,
+  relief: _reliefs,
+  finish: _finishes,
+  ornament: _ornaments,
 };
 
 /**
@@ -31,4 +31,7 @@ export function registerTierValue(tier: TierName, value: string): void {
   }
 }
 
-export { VALID_THEMES, VALID_RELIEFS, VALID_FINISHES, VALID_ORNAMENTS };
+export const VALID_THEMES: readonly string[] = _themes;
+export const VALID_RELIEFS: readonly string[] = _reliefs;
+export const VALID_FINISHES: readonly string[] = _finishes;
+export const VALID_ORNAMENTS: readonly string[] = _ornaments;
