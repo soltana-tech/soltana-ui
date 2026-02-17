@@ -6,6 +6,7 @@
 // ---------------------------------------------------------------------------
 
 @use '../variables' as *;
+@use 'generate' as gen;
 
 // ============================================================================
 // BORDER RADIUS
@@ -402,10 +403,4 @@ $skew-values: (1, 2, 3, 6, 12);
 // VISIBILITY
 // ============================================================================
 
-.visible {
-  visibility: visible;
-}
-
-.invisible {
-  visibility: hidden;
-}
+@include gen.generate-visibility;

@@ -2,9 +2,9 @@
 // Relief System
 // ---------------------------------------------------------------------------
 // Owns three layers of the design system abstraction:
-// 1. RELIEF PRIMITIVES (--neu-*)
-//    Derived from theme channel tokens (--shadow-color, --highlight-color).
-//    Per-theme overrides handle reliefs with unique color bases.
+// 1. RELIEF BRIDGE TOKENS (--relief-surface-*, --relief-border-*)
+//    Shared defaults in :root; per-theme overrides (--relief-surface-deep,
+//    --relief-neu-shadow, --relief-neu-light) live in theme files.
 // 2. RELIEF TOKENS (--relief-bg, --relief-shadow-*, --relief-border)
 //    Set by [data-relief] selectors, consumed by all components.
 // 3. FINISH TOKENS (--finish-blur, --finish-saturation, etc.)
@@ -16,42 +16,19 @@
 @use 'register' as *;
 
 // ============================================================================
-// RELIEF PRIMITIVES
+// RELIEF BRIDGE TOKENS
 // ============================================================================
-// Derived from theme channel tokens (--shadow-color, --highlight-color).
-// Per-theme overrides below handle reliefs whose base colors differ.
-// Consumed by relief selectors and relief utility files.
+// Shared defaults via var() indirection — resolve per-element at substitution
+// time, so per-element .theme-* overrides work correctly.
+// Per-theme overrides (--relief-surface-deep, --relief-neu-shadow,
+// --relief-neu-light) live in theme files.
 // ============================================================================
 
-:root,
-[data-theme='dark'],
-.theme-dark {
-  // Neumorphic
-  --neu-bg: var(--relief-surface-deep);
-  --neu-shadow-dark: rgb(var(--shadow-color) / 65%);
-  --neu-shadow-light: rgb(var(--highlight-color) / 5%);
-  --neu-shadow-mid: rgb(var(--shadow-color) / 40%);
-  --neu-highlight: rgb(var(--highlight-color) / 8%);
-}
-
-[data-theme='light'],
-.theme-light {
-  // Neumorphic — inverted depth (strong highlights, soft shadows)
-  --neu-bg: var(--relief-surface-deep);
-  --neu-shadow-dark: rgb(var(--shadow-color) / 35%);
-  --neu-shadow-light: rgb(var(--highlight-color) / 88%);
-  --neu-shadow-mid: rgb(var(--shadow-color) / 20%);
-  --neu-highlight: rgb(var(--highlight-color) / 65%);
-}
-
-[data-theme='sepia'],
-.theme-sepia {
-  // Neumorphic — warm parchment depth
-  --neu-bg: var(--relief-surface-deep);
-  --neu-shadow-dark: rgb(var(--shadow-color) / 45%);
-  --neu-shadow-light: rgb(var(--highlight-color) / 82%);
-  --neu-shadow-mid: rgb(var(--shadow-color) / 28%);
-  --neu-highlight: rgb(var(--highlight-color) / 58%);
+:root {
+  --relief-surface-flat: var(--surface-1);
+  --relief-surface-raised: var(--surface-2);
+  --relief-border-default: var(--border-default);
+  --relief-border-subtle: var(--border-subtle);
 }
 
 // ============================================================================
@@ -61,16 +38,16 @@
 // Class selectors available for per-element overrides.
 
 @include register-relief('neu') {
-  --relief-bg: var(--neu-bg);
-  --relief-shadow-sm: 2px 2px 5px var(--neu-shadow-dark), -2px -2px 5px var(--neu-shadow-light);
-  --relief-shadow: 3px 3px 8px var(--neu-shadow-dark), -3px -3px 8px var(--neu-shadow-light);
-  --relief-shadow-lg: 6px 6px 16px var(--neu-shadow-dark), -5px -5px 14px var(--neu-shadow-light);
+  --relief-bg: var(--relief-surface-deep);
+  --relief-shadow-sm: 2px 2px 5px var(--relief-neu-shadow), -2px -2px 5px var(--relief-neu-light);
+  --relief-shadow: 3px 3px 8px var(--relief-neu-shadow), -3px -3px 8px var(--relief-neu-light);
+  --relief-shadow-lg: 6px 6px 16px var(--relief-neu-shadow), -5px -5px 14px var(--relief-neu-light);
   --relief-shadow-inset-sm:
-    inset 1px 1px 3px var(--neu-shadow-dark), inset -1px -1px 3px var(--neu-shadow-light);
+    inset 1px 1px 3px var(--relief-neu-shadow), inset -1px -1px 3px var(--relief-neu-light);
   --relief-shadow-inset:
-    inset 2px 2px 5px var(--neu-shadow-dark), inset -2px -2px 5px var(--neu-shadow-light);
+    inset 2px 2px 5px var(--relief-neu-shadow), inset -2px -2px 5px var(--relief-neu-light);
   --relief-shadow-inset-lg:
-    inset 4px 4px 10px var(--neu-shadow-dark), inset -4px -4px 10px var(--neu-shadow-light);
+    inset 4px 4px 10px var(--relief-neu-shadow), inset -4px -4px 10px var(--relief-neu-light);
   --relief-border: var(--relief-border-default);
 }
 

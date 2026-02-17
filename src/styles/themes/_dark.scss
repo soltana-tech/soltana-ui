@@ -80,36 +80,14 @@
   --accent-glow: color-mix(in srgb, var(--accent-primary) 15%, transparent);
 
   // =========================================================================
-  // RELIEF BRIDGE TOKENS — consumed by _relief-system.scss
+  // BRIDGE TOKENS — per-theme overrides
+  // Shared defaults in _relief-system.scss and _ornamental.scss
   // =========================================================================
 
-  --relief-surface-flat: var(--surface-1);
-  --relief-surface-raised: var(--surface-2);
   --relief-surface-deep: var(--surface-2);
-  --relief-border-default: var(--border-default);
-  --relief-border-subtle: var(--border-subtle);
-
-  // =========================================================================
-  // ORNAMENT BRIDGE TOKENS — consumed by _ornamental.scss, _classical.scss
-  // =========================================================================
-
-  --ornament-base: var(--accent-decorative);
-  --ornament-base-hover: var(--accent-decorative-hover);
-  --ornament-base-subtle: var(--accent-decorative-subtle);
-  --ornament-border: var(--border-decorative);
-  --ornament-border-strong: var(--border-decorative-strong);
-  --ornament-ring-bg: var(--surface-bg);
-  --ornament-surface: var(--surface-1);
-  --ornament-bevel-border: var(--border-strong);
-  --ornament-shadow:
-    0 3px 6px rgb(var(--shadow-color) / 16%), 0 3px 6px rgb(var(--shadow-color) / 23%);
-  --ornament-shadow-lg:
-    0 10px 20px rgb(var(--shadow-color) / 19%), 0 6px 6px rgb(var(--shadow-color) / 23%);
-  --ornament-shadow-inset-sm: inset 0 1px 2px rgb(var(--shadow-color) / 10%);
-  --ornament-shadow-inset: inset 0 2px 4px rgb(var(--shadow-color) / 14%);
-  --ornament-surface-flat: var(--surface-1);
-  --ornament-surface-raised: var(--surface-2);
   --ornament-surface-deep: var(--surface-2);
+  --relief-neu-shadow: rgb(var(--shadow-color) / 65%);
+  --relief-neu-light: rgb(var(--highlight-color) / 5%);
 
   // =========================================================================
   // COMPONENT TOKENS

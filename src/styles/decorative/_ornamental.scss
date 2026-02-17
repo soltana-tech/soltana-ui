@@ -49,6 +49,25 @@ $std-ornament-border: 2px solid var(--ornament-color);
   --ornament-size-md: 18px;
   --ornament-size-lg: 24px;
   --ornament-size-xl: 32px;
+
+  // Shared bridge tokens — theme-agnostic defaults via var() indirection.
+  // Per-theme overrides (--ornament-surface-deep) live in theme files.
+  --ornament-base: var(--accent-decorative);
+  --ornament-base-hover: var(--accent-decorative-hover);
+  --ornament-base-subtle: var(--accent-decorative-subtle);
+  --ornament-border: var(--border-decorative);
+  --ornament-border-strong: var(--border-decorative-strong);
+  --ornament-ring-bg: var(--surface-bg);
+  --ornament-surface: var(--surface-1);
+  --ornament-bevel-border: var(--border-strong);
+  --ornament-shadow:
+    0 3px 6px rgb(var(--shadow-color) / 16%), 0 3px 6px rgb(var(--shadow-color) / 23%);
+  --ornament-shadow-lg:
+    0 10px 20px rgb(var(--shadow-color) / 19%), 0 6px 6px rgb(var(--shadow-color) / 23%);
+  --ornament-shadow-inset-sm: inset 0 1px 2px rgb(var(--shadow-color) / 10%);
+  --ornament-shadow-inset: inset 0 2px 4px rgb(var(--shadow-color) / 14%);
+  --ornament-surface-flat: var(--surface-1);
+  --ornament-surface-raised: var(--surface-2);
 }
 
 // ============================================================================
@@ -431,11 +450,11 @@ $std-ornament-border: 2px solid var(--ornament-color);
   --ornament-edge-border: #{$std-ornament-border};
   --ornament-edge-bg-image: linear-gradient(
     135deg,
-    rgb(255 255 255 / 6%) 25%,
+    rgb(var(--highlight-color) / 6%) 25%,
     transparent 25%,
     transparent 50%,
-    rgb(255 255 255 / 6%) 50%,
-    rgb(255 255 255 / 6%) 75%,
+    rgb(var(--highlight-color) / 6%) 50%,
+    rgb(var(--highlight-color) / 6%) 75%,
     transparent 75%
   );
   --ornament-edge-bg-size: 8px 8px;

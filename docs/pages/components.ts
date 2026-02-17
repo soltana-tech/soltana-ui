@@ -439,7 +439,7 @@ export function renderComponents(): string {
     `
     <p class="text-sm text-muted mb-6">The same components rendered in each relief context. Change the global relief in the settings panel to see all components update.</p>
     <div class="grid gap-6" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))">
-      <div data-relief="neu" class="p-6 rounded-xl" style="background: var(--neu-bg); box-shadow: 6px 6px 14px var(--neu-shadow-dark), -6px -6px 14px var(--neu-shadow-light);">
+      <div data-relief="neu" class="p-6 rounded-xl" style="background: var(--relief-surface-deep); box-shadow: 6px 6px 14px var(--relief-neu-shadow), -6px -6px 14px var(--relief-neu-light);">
         <span class="tag mb-3">Neumorphic</span>
         <div class="flex flex-wrap gap-2 mt-3 mb-3">
           <button class="btn btn-primary btn-sm">Primary</button>

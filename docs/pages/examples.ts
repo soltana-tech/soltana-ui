@@ -247,7 +247,7 @@ export function renderExamples(): string {
     <h3 class="text-xl font-semibold mb-4">Settings Panel</h3>
     <div class="card overflow-hidden">
       <div class="specimen__preview p-0">
-        <div class="p-8" style="background: var(--neu-bg); min-height: 400px">
+        <div class="p-8" style="background: var(--relief-surface-deep); min-height: 400px">
           <h4 class="font-serif text-2xl font-semibold mb-6">Settings</h4>
           <div class="grid gap-6" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))">
             <div class="card" style="padding: 1.5rem">
