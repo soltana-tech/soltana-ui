@@ -79,6 +79,10 @@ export interface ThemeSeed {
   accentPrimary: string;
   accentDecorative?: string;
   colorScheme?: 'light' | 'dark';
+  colorSuccess?: string;
+  colorWarning?: string;
+  colorError?: string;
+  colorInfo?: string;
 }
 
 export interface RegisterThemeOptions {

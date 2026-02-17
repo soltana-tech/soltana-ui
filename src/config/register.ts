@@ -101,8 +101,6 @@ export const THEME_TOKEN_NAMES = [
   '--code-bg',
   // Icon data URIs (not derived — provide via tokens overrides)
   '--icon-select-chevron',
-  '--icon-checkbox-check',
-  '--icon-radio-dot',
 ] as const;
 
 // ---------------------------------------------------------------------------
@@ -173,18 +171,58 @@ export function deriveThemeTokens(seed: ThemeSeed): Record<string, string> {
     '--border-decorative-strong': mixSrgb(decorative, isDark ? 35 : 40),
 
     // --- Semantic colors ---
-    '--color-success': isDark ? '#10b981' : '#0d6b4e',
-    '--color-success-subtle': isDark ? 'rgb(16 185 129 / 12%)' : 'rgb(13 107 78 / 8%)',
-    '--color-success-text': isDark ? '#34d399' : '#065f46',
-    '--color-warning': isDark ? '#fcd34d' : '#855c0a',
-    '--color-warning-subtle': isDark ? 'rgb(252 211 77 / 12%)' : 'rgb(133 92 10 / 8%)',
-    '--color-warning-text': isDark ? '#fde68a' : '#6b4a08',
-    '--color-error': isDark ? '#ef4444' : '#991b1b',
-    '--color-error-subtle': isDark ? 'rgb(239 68 68 / 12%)' : 'rgb(153 27 27 / 8%)',
-    '--color-error-text': isDark ? '#f87171' : '#7f1d1d',
-    '--color-info': isDark ? '#3b82f6' : '#1e40af',
-    '--color-info-subtle': isDark ? 'rgb(59 130 246 / 12%)' : 'rgb(30 64 175 / 8%)',
-    '--color-info-text': isDark ? '#60a5fa' : '#1e3a8a',
+    '--color-success': seed.colorSuccess ?? (isDark ? '#10b981' : '#0d6b4e'),
+    '--color-success-subtle': seed.colorSuccess
+      ? mixSrgb(seed.colorSuccess, isDark ? 12 : 8)
+      : isDark
+        ? 'rgb(16 185 129 / 12%)'
+        : 'rgb(13 107 78 / 8%)',
+    '--color-success-text': seed.colorSuccess
+      ? isDark
+        ? mix(seed.colorSuccess, 'white', 25)
+        : mix(seed.colorSuccess, 'black', 25)
+      : isDark
+        ? '#34d399'
+        : '#065f46',
+    '--color-warning': seed.colorWarning ?? (isDark ? '#fcd34d' : '#855c0a'),
+    '--color-warning-subtle': seed.colorWarning
+      ? mixSrgb(seed.colorWarning, isDark ? 12 : 8)
+      : isDark
+        ? 'rgb(252 211 77 / 12%)'
+        : 'rgb(133 92 10 / 8%)',
+    '--color-warning-text': seed.colorWarning
+      ? isDark
+        ? mix(seed.colorWarning, 'white', 25)
+        : mix(seed.colorWarning, 'black', 25)
+      : isDark
+        ? '#fde68a'
+        : '#6b4a08',
+    '--color-error': seed.colorError ?? (isDark ? '#ef4444' : '#991b1b'),
+    '--color-error-subtle': seed.colorError
+      ? mixSrgb(seed.colorError, isDark ? 12 : 8)
+      : isDark
+        ? 'rgb(239 68 68 / 12%)'
+        : 'rgb(153 27 27 / 8%)',
+    '--color-error-text': seed.colorError
+      ? isDark
+        ? mix(seed.colorError, 'white', 25)
+        : mix(seed.colorError, 'black', 25)
+      : isDark
+        ? '#f87171'
+        : '#7f1d1d',
+    '--color-info': seed.colorInfo ?? (isDark ? '#3b82f6' : '#1e40af'),
+    '--color-info-subtle': seed.colorInfo
+      ? mixSrgb(seed.colorInfo, isDark ? 12 : 8)
+      : isDark
+        ? 'rgb(59 130 246 / 12%)'
+        : 'rgb(30 64 175 / 8%)',
+    '--color-info-text': seed.colorInfo
+      ? isDark
+        ? mix(seed.colorInfo, 'white', 25)
+        : mix(seed.colorInfo, 'black', 25)
+      : isDark
+        ? '#60a5fa'
+        : '#1e3a8a',
 
     // --- Interactive states ---
     '--state-hover': mixSrgb(accent, isDark ? 8 : 6),
@@ -349,6 +387,12 @@ export function registerOrnament(name: string, options: RegisterOrnamentOptions)
 
   // Part 2: Consume selectors — replicate compiled per-element overrides
   const templates = introspectOrnamentTemplates();
+  if (templates.length === 0) {
+    console.warn(
+      '[soltana] Ornament introspection found 0 consume-selector templates. ' +
+        'Per-element .ornament-* overrides will not work for custom ornaments.'
+    );
+  }
   for (const t of templates) {
     const sel = `.ornament-${name} .${t.className}${t.pseudoState}, .${t.className}.ornament-${name}${t.pseudoState}`;
     rules.push(insertRule(`${sel} { ${t.cssText} }`));

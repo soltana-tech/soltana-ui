@@ -77,8 +77,11 @@ describe('THEME_TOKEN_NAMES', () => {
 
   it('contains icon tokens', () => {
     expect(THEME_TOKEN_NAMES).toContain('--icon-select-chevron');
-    expect(THEME_TOKEN_NAMES).toContain('--icon-checkbox-check');
-    expect(THEME_TOKEN_NAMES).toContain('--icon-radio-dot');
+  });
+
+  it('does not contain removed mask-image icon tokens', () => {
+    expect(THEME_TOKEN_NAMES).not.toContain('--icon-checkbox-check');
+    expect(THEME_TOKEN_NAMES).not.toContain('--icon-radio-dot');
   });
 });
 
@@ -180,8 +183,6 @@ describe('deriveThemeTokens', () => {
   it('does not include icon tokens (--icon-*)', () => {
     const result = deriveThemeTokens(DARK_SEED);
     expect(result['--icon-select-chevron']).toBeUndefined();
-    expect(result['--icon-checkbox-check']).toBeUndefined();
-    expect(result['--icon-radio-dot']).toBeUndefined();
   });
 
   it('produces bridge tokens as var() references', () => {
@@ -190,9 +191,41 @@ describe('deriveThemeTokens', () => {
     expect(result['--input-border-focus']).toBe('var(--accent-primary)');
   });
 
+  it('uses provided colorSuccess seed', () => {
+    const result = deriveThemeTokens({ ...DARK_SEED, colorSuccess: '#00cc66' });
+    expect(result['--color-success']).toBe('#00cc66');
+    expect(result['--color-success-subtle']).toContain('#00cc66');
+    expect(result['--color-success-text']).toContain('#00cc66');
+  });
+
+  it('uses provided colorError seed', () => {
+    const result = deriveThemeTokens({ ...DARK_SEED, colorError: '#ff2222' });
+    expect(result['--color-error']).toBe('#ff2222');
+    expect(result['--color-error-subtle']).toContain('#ff2222');
+    expect(result['--color-error-text']).toContain('#ff2222');
+  });
+
+  it('uses provided colorWarning seed', () => {
+    const result = deriveThemeTokens({ ...DARK_SEED, colorWarning: '#ffaa00' });
+    expect(result['--color-warning']).toBe('#ffaa00');
+  });
+
+  it('uses provided colorInfo seed', () => {
+    const result = deriveThemeTokens({ ...DARK_SEED, colorInfo: '#0066ff' });
+    expect(result['--color-info']).toBe('#0066ff');
+  });
+
+  it('falls back to defaults when semantic color seeds are omitted', () => {
+    const result = deriveThemeTokens(DARK_SEED);
+    expect(result['--color-success']).toBe('#10b981');
+    expect(result['--color-error']).toBe('#ef4444');
+    expect(result['--color-warning']).toBe('#fcd34d');
+    expect(result['--color-info']).toBe('#3b82f6');
+  });
+
   it('produces all expected non-icon tokens', () => {
     const result = deriveThemeTokens(DARK_SEED);
-    const iconTokens = ['--icon-select-chevron', '--icon-checkbox-check', '--icon-radio-dot'];
+    const iconTokens = ['--icon-select-chevron'];
     const expectedTokens = THEME_TOKEN_NAMES.filter((t) => !iconTokens.includes(t));
     for (const token of expectedTokens) {
       expect(result[token], `Missing token: ${token}`).toBeDefined();

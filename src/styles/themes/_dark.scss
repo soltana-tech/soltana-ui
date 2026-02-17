@@ -92,21 +92,19 @@
   // COMPONENT TOKENS
   // =========================================================================
 
-  --input-bg: rgb(255 255 255 / 4%);
-  --input-border: rgb(255 255 255 / 8%);
-  --input-border-focus: var(--accent-primary);
-  --input-placeholder: #897d69;
-  --card-bg: rgb(14 16 40 / 60%);
-  --card-border: rgb(255 255 255 / 6%);
-  --badge-bg: color-mix(in srgb, var(--accent-primary) 10%, transparent);
-  --tooltip-bg: #08091a;
-  --tooltip-text: #f5f0e6;
-  --scrollbar-thumb: rgb(255 255 255 / 12%);
-  --scrollbar-track: rgb(255 255 255 / 3%);
-  --code-bg: rgb(0 0 0 / 35%);
+  @include component-tokens(
+    $input-bg: rgb(255 255 255 / 4%),
+    $card-bg: rgb(14 16 40 / 60%),
+    $tooltip-bg: #08091a,
+    $tooltip-text: #f5f0e6,
+    $code-bg: rgb(0 0 0 / 35%),
+    $input-border: rgb(255 255 255 / 8%),
+    $input-placeholder: #897d69,
+    $card-border: rgb(255 255 255 / 6%),
+    $scrollbar-thumb: rgb(255 255 255 / 12%),
+    $scrollbar-track: rgb(255 255 255 / 3%)
+  );
 
   // Icon data URIs — colors chosen for contrast against accent-primary bg
   --icon-select-chevron: #{icon-chevron(#c5b99b)};
-  --icon-checkbox-check: #{icon-checkmark(#08091a)};
-  --icon-radio-dot: #{icon-radio-dot(#08091a)};
 }

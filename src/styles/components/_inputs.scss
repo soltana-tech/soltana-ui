@@ -14,7 +14,7 @@
 // TEXT INPUT
 // ============================================================================
 
-.input {
+@mixin input-base {
   position: relative;
   display: block;
   width: 100%;
@@ -47,6 +47,10 @@
     @include disabled-state;
     color: var(--state-disabled-text);
   }
+}
+
+.input {
+  @include input-base;
 }
 
 // ============================================================================
@@ -82,7 +86,7 @@
 // ============================================================================
 
 .select {
-  @extend .input;
+  @include input-base;
   padding-right: 2.5rem;
   background-image: var(--icon-select-chevron);
   background-repeat: no-repeat;
@@ -95,7 +99,7 @@
 // ============================================================================
 
 .textarea {
-  @extend .input;
+  @include input-base;
   min-height: 5rem;
   resize: vertical;
 }
@@ -138,23 +142,41 @@
 
 .checkbox {
   border-radius: var(--radius-md);
+  position: relative;
 
-  &:checked {
-    background-image: var(--icon-checkbox-check);
-    background-size: 0.75rem;
-    background-position: center;
-    background-repeat: no-repeat;
+  &:checked::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--text-inverse);
+    -webkit-mask-image: var(--icon-checkbox-mask);
+    mask-image: var(--icon-checkbox-mask);
+    -webkit-mask-size: 0.75rem;
+    mask-size: 0.75rem;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
   }
 }
 
 .radio {
   border-radius: var(--radius-full);
+  position: relative;
 
-  &:checked {
-    background-image: var(--icon-radio-dot);
-    background-size: 1rem;
-    background-position: center;
-    background-repeat: no-repeat;
+  &:checked::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--text-inverse);
+    -webkit-mask-image: var(--icon-radio-mask);
+    mask-image: var(--icon-radio-mask);
+    -webkit-mask-size: 1rem;
+    mask-size: 1rem;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
   }
 }
 
@@ -254,15 +276,15 @@
   --checkbox-ornament-shadow: inset 1px 1px 2px rgb(var(--shadow-color) / 15%);
   --checkbox-ornament-checked-bg: linear-gradient(
     175deg,
-    var(--relief-surface-raised),
-    var(--relief-surface-deep)
+    var(--ornament-surface-raised),
+    var(--ornament-surface-deep)
   );
   --radio-ornament-border: 2px solid var(--ornament-bevel-border);
   --radio-ornament-shadow: inset 1px 1px 2px rgb(var(--shadow-color) / 15%);
   --radio-ornament-checked-bg: linear-gradient(
     175deg,
-    var(--relief-surface-raised),
-    var(--relief-surface-deep)
+    var(--ornament-surface-raised),
+    var(--ornament-surface-deep)
   );
 }
 
@@ -271,16 +293,16 @@
   --checkbox-ornament-radius: 0;
   --checkbox-ornament-checked-bg: linear-gradient(
     135deg,
-    var(--relief-surface-flat),
-    var(--relief-surface-raised),
-    var(--relief-surface-deep)
+    var(--ornament-surface-flat),
+    var(--ornament-surface-raised),
+    var(--ornament-surface-deep)
   );
   --radio-ornament-border: 2px solid var(--ornament-color);
   --radio-ornament-checked-bg: linear-gradient(
     135deg,
-    var(--relief-surface-flat),
-    var(--relief-surface-raised),
-    var(--relief-surface-deep)
+    var(--ornament-surface-flat),
+    var(--ornament-surface-raised),
+    var(--ornament-surface-deep)
   );
 }
 

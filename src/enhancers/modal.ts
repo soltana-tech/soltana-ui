@@ -16,6 +16,7 @@ let _openCount = 0;
 
 function openModal(modal: HTMLElement): void {
   modal.classList.add('active');
+  modal.querySelector('.modal')?.classList.add('active');
   modal.setAttribute('aria-hidden', 'false');
   _openCount++;
   document.body.style.overflow = 'hidden';
@@ -30,6 +31,7 @@ function openModal(modal: HTMLElement): void {
 
 function closeModal(modal: HTMLElement): void {
   modal.classList.remove('active');
+  modal.querySelector('.modal')?.classList.remove('active');
   modal.setAttribute('aria-hidden', 'true');
   _openCount = Math.max(0, _openCount - 1);
   if (_openCount === 0) {

@@ -8,7 +8,7 @@ function createModalFixture(): { modal: HTMLElement; trigger: HTMLElement } {
   modal.setAttribute('aria-hidden', 'true');
   modal.innerHTML = `
     <div class="modal-backdrop"></div>
-    <div class="modal__content" role="dialog" aria-modal="true">
+    <div class="modal" role="dialog" aria-modal="true">
       <button data-modal-close>Close</button>
       <input type="text" />
     </div>
@@ -37,6 +37,21 @@ describe('initModals', () => {
     trigger.click();
     expect(modal.classList.contains('active')).toBe(true);
     expect(modal.getAttribute('aria-hidden')).toBe('false');
+  });
+
+  it('toggles .active on .modal child element', () => {
+    const { modal, trigger } = createModalFixture();
+    initModals();
+
+    const modalContent = modal.querySelector('.modal')!;
+    expect(modalContent.classList.contains('active')).toBe(false);
+
+    trigger.click();
+    expect(modalContent.classList.contains('active')).toBe(true);
+
+    const closeBtn = modal.querySelector<HTMLElement>('[data-modal-close]');
+    closeBtn?.click();
+    expect(modalContent.classList.contains('active')).toBe(false);
   });
 
   it('closes modal on close button click', () => {
@@ -82,7 +97,7 @@ describe('initModals', () => {
     modal2.setAttribute('aria-hidden', 'true');
     modal2.innerHTML = `
       <div class="modal-backdrop"></div>
-      <div class="modal__content" role="dialog" aria-modal="true">
+      <div class="modal" role="dialog" aria-modal="true">
         <button data-modal-close>Close</button>
       </div>
     `;
@@ -203,7 +218,7 @@ describe('initModals', () => {
     trigger.click();
     expect(modal.classList.contains('active')).toBe(true);
 
-    const content = modal.querySelector<HTMLElement>('.modal__content');
+    const content = modal.querySelector<HTMLElement>('.modal');
     content?.click();
     expect(modal.classList.contains('active')).toBe(true);
 

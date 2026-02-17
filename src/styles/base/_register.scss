@@ -67,9 +67,16 @@
 // Shared Property Mixins
 // ---------------------------------------------------------------------------
 
-@mixin finish-surface($bg: var(--relief-bg)) {
+@mixin finish-surface($bg: var(--relief-bg), $gradient: null) {
   background-color: color-mix(in srgb, #{$bg} calc(var(--finish-opacity, 1) * 100%), transparent);
-  background-image: var(--finish-sheen, none), var(--finish-overlay, none);
+  @if $gradient {
+    background-image:
+      var(--finish-sheen, none),
+      var(--finish-overlay, none),
+      #{$gradient};
+  } @else {
+    background-image: var(--finish-sheen, none), var(--finish-overlay, none);
+  }
   backdrop-filter: blur(var(--finish-blur)) saturate(var(--finish-saturation));
 }
 
