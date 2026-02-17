@@ -167,57 +167,59 @@
 // ORNAMENTAL CHECKBOX/RADIO VARIANTS
 // ============================================================================
 
-// ---- Base classes: consume ornament tokens ----
+// ---- Base classes: structural scaffolding + inert defaults ----
+// Without an active ornament tier, these fall back to standard input styling.
 
 .checkbox-ornament {
-  border: var(--checkbox-ornament-border, 2px solid var(--ornament-base));
+  border: var(--checkbox-ornament-border, 2px solid var(--input-border));
   border-radius: var(--checkbox-ornament-radius, var(--radius-md));
   box-shadow: var(--checkbox-ornament-shadow, none);
 
   &:checked {
-    background: var(
-      --checkbox-ornament-checked-bg,
-      linear-gradient(145deg, var(--ornament-base), var(--ornament-base-hover))
-    );
-    border-color: var(--checkbox-ornament-checked-border, var(--ornament-base-hover));
+    background: var(--checkbox-ornament-checked-bg, var(--accent-primary));
+    border-color: var(--checkbox-ornament-checked-border, var(--accent-primary));
     box-shadow: var(--checkbox-ornament-checked-shadow, none);
   }
 }
 
 .radio-ornament {
-  border: var(--radio-ornament-border, 2px solid var(--ornament-base));
+  border: var(--radio-ornament-border, 2px solid var(--input-border));
   box-shadow: var(--radio-ornament-shadow, none);
 
   &:checked {
-    background: var(
-      --radio-ornament-checked-bg,
-      linear-gradient(145deg, var(--ornament-base), var(--ornament-base-hover))
-    );
+    background: var(--radio-ornament-checked-bg, var(--accent-primary));
     box-shadow: var(--radio-ornament-checked-shadow, none);
   }
-}
-
-// ---- Consuming mixins ----
-
-@mixin checkbox-ornament-consume {
-  border: var(--checkbox-ornament-border, 2px solid var(--ornament-base));
-  border-radius: var(--checkbox-ornament-radius, var(--radius-md));
-  box-shadow: var(--checkbox-ornament-shadow, none);
-}
-
-@mixin radio-ornament-consume {
-  border: var(--radio-ornament-border, 2px solid var(--ornament-base));
-  box-shadow: var(--radio-ornament-shadow, none);
 }
 
 // ---- Consuming selectors (config-default + per-element overrides) ----
 
 @include ornament-consume-selectors('checkbox-ornament') {
-  @include checkbox-ornament-consume;
+  border: var(--checkbox-ornament-border, 2px solid var(--ornament-base));
+  border-radius: var(--checkbox-ornament-radius, var(--radius-md));
+  box-shadow: var(--checkbox-ornament-shadow, none);
+}
+
+@include ornament-consume-selectors('checkbox-ornament', $state: checked) {
+  background: var(
+    --checkbox-ornament-checked-bg,
+    linear-gradient(145deg, var(--ornament-base), var(--ornament-base-hover))
+  );
+  border-color: var(--checkbox-ornament-checked-border, var(--ornament-base-hover));
+  box-shadow: var(--checkbox-ornament-checked-shadow, none);
 }
 
 @include ornament-consume-selectors('radio-ornament') {
-  @include radio-ornament-consume;
+  border: var(--radio-ornament-border, 2px solid var(--ornament-base));
+  box-shadow: var(--radio-ornament-shadow, none);
+}
+
+@include ornament-consume-selectors('radio-ornament', $state: checked) {
+  background: var(
+    --radio-ornament-checked-bg,
+    linear-gradient(145deg, var(--ornament-base), var(--ornament-base-hover))
+  );
+  box-shadow: var(--radio-ornament-checked-shadow, none);
 }
 
 // ---- Tier token blocks ----
