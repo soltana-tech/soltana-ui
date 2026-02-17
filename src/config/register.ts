@@ -347,34 +347,30 @@ export function registerTheme(name: string, options: RegisterThemeOptions): Tier
   };
 }
 
-export function registerRelief(name: string, options: RegisterReliefOptions): TierRegistration {
-  const decls = buildDeclarations(options.tokens);
+function registerSimpleTier(
+  tier: 'relief' | 'finish',
+  name: string,
+  tokens: Record<string, string>
+): TierRegistration {
+  const decls = buildDeclarations(tokens);
   const rules: CSSRule[] = [];
-  rules.push(insertRule(`[data-relief='${name}'], .relief-${name} { ${decls} }`));
-  registerTierValue('relief', name);
-
+  rules.push(insertRule(`[data-${tier}='${name}'], .${tier}-${name} { ${decls} }`));
+  registerTierValue(tier, name);
   return {
     name,
-    tier: 'relief',
+    tier,
     unregister() {
       removeRules(rules);
     },
   };
 }
 
-export function registerFinish(name: string, options: RegisterFinishOptions): TierRegistration {
-  const decls = buildDeclarations(options.tokens);
-  const rules: CSSRule[] = [];
-  rules.push(insertRule(`[data-finish='${name}'], .finish-${name} { ${decls} }`));
-  registerTierValue('finish', name);
+export function registerRelief(name: string, options: RegisterReliefOptions): TierRegistration {
+  return registerSimpleTier('relief', name, options.tokens);
+}
 
-  return {
-    name,
-    tier: 'finish',
-    unregister() {
-      removeRules(rules);
-    },
-  };
+export function registerFinish(name: string, options: RegisterFinishOptions): TierRegistration {
+  return registerSimpleTier('finish', name, options.tokens);
 }
 
 export function registerOrnament(name: string, options: RegisterOrnamentOptions): TierRegistration {

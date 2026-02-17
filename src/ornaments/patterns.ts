@@ -86,5 +86,9 @@ export const toElement = (svg: string): SVGElement => {
   if (errorNode) {
     throw new Error(`Invalid SVG: ${errorNode.textContent}`);
   }
-  return doc.documentElement as unknown as SVGElement;
+  const el = doc.documentElement;
+  if (!(el instanceof SVGSVGElement)) {
+    throw new Error('Parsed document is not a valid SVG');
+  }
+  return el;
 };

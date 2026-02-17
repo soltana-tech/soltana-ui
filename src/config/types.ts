@@ -12,11 +12,8 @@ export type BuiltInTheme = (typeof BUILT_IN_THEMES)[number];
 export type BuiltInRelief = (typeof BUILT_IN_RELIEFS)[number];
 export type BuiltInFinish = (typeof BUILT_IN_FINISHES)[number];
 export type BuiltInOrnament = (typeof BUILT_IN_ORNAMENTS)[number];
-export type BuiltInRecipeName =
-  | 'corporate-clean'
-  | 'luxury-dark'
-  | 'frosted-modern'
-  | 'classic-warm';
+import type { BuiltInRecipeName } from './recipes';
+export type { BuiltInRecipeName };
 
 export type Theme = BuiltInTheme | 'auto' | (string & {});
 export type Relief = BuiltInRelief | (string & {});

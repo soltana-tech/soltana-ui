@@ -51,6 +51,9 @@ let _mqlHandler: (() => void) | null = null;
 // Module-level state for enhancer cleanup
 let _enhancerCleanup: EnhancerCleanup | null = null;
 
+// Generation counter for stale-instance detection
+let _generation = 0;
+
 function resolveTheme(theme: Theme): string {
   if (theme !== 'auto') return theme;
   if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return 'dark';
@@ -143,6 +146,9 @@ function dispatchChange(type: string, value: unknown): void {
  * ornament selectors.
  */
 export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaInstance {
+  _generation++;
+  const myGen = _generation;
+
   const state: SoltanaConfig = { ...DEFAULT_CONFIG, ...userConfig };
 
   // Validate config values (only in strict mode)
@@ -271,6 +277,10 @@ export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaIns
     },
 
     reset(): void {
+      if (myGen !== _generation) {
+        console.warn('[soltana] Stale instance — reset() ignored');
+        return;
+      }
       for (const reg of registrations.splice(0)) {
         reg.unregister();
       }
@@ -285,6 +295,10 @@ export function initSoltana(userConfig: Partial<SoltanaConfig> = {}): SoltanaIns
     },
 
     destroy(): void {
+      if (myGen !== _generation) {
+        console.warn('[soltana] Stale instance — destroy() ignored');
+        return;
+      }
       for (const reg of registrations.splice(0)) {
         reg.unregister();
       }
@@ -326,4 +340,4 @@ export type {
   RegisterOrnamentOptions,
   TierRegistration,
 } from './types';
-export { RECIPES, getRecipeNames } from './recipes';
+export { RECIPES } from './recipes';

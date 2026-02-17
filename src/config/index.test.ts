@@ -305,6 +305,32 @@ describe('initSoltana', () => {
     expect(mockInitAll).toHaveBeenCalledTimes(initCountAfterInit + 1);
   });
 
+  it('stale instance destroy() is a no-op', () => {
+    const first = initSoltana({ theme: 'sepia' });
+    initSoltana({ theme: 'light' });
+
+    const spy = vi.spyOn(console, 'warn').mockImplementation(vi.fn());
+    first.destroy();
+
+    // data attributes should remain (set by the second instance)
+    expect(document.documentElement.getAttribute('data-theme')).toBe('light');
+    expect(document.documentElement.getAttribute('data-relief')).toBe('neu');
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining('Stale instance'));
+    spy.mockRestore();
+  });
+
+  it('stale instance reset() is a no-op', () => {
+    const first = initSoltana({ theme: 'sepia' });
+    initSoltana({ theme: 'light' });
+
+    const spy = vi.spyOn(console, 'warn').mockImplementation(vi.fn());
+    first.reset();
+
+    expect(document.documentElement.getAttribute('data-theme')).toBe('light');
+    expect(spy).toHaveBeenCalledWith(expect.stringContaining('Stale instance'));
+    spy.mockRestore();
+  });
+
   it('multiple initSoltana calls clean up previous enhancers', () => {
     initSoltana();
     const destroyCountAfterFirst = mockDestroy.mock.calls.length;
