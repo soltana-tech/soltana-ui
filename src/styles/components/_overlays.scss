@@ -184,7 +184,7 @@
 @include register-ornament('gilt') {
   --modal-ornament-corner-display: block;
   --modal-ornament-shadow:
-    var(--relief-shadow), 0 0 20px color-mix(in srgb, var(--ornament-color), transparent 70%);
+    var(--ornament-shadow), 0 0 20px color-mix(in srgb, var(--ornament-color), transparent 70%);
 }
 
 @include register-ornament('baroque') {
@@ -199,13 +199,13 @@
   --modal-ornament-before-display: block;
   --modal-ornament-after-display: block;
   --modal-ornament-bg: var(--ornament-surface);
-  --modal-ornament-shadow: var(--relief-shadow-lg), var(--relief-shadow-inset-sm);
+  --modal-ornament-shadow: var(--ornament-shadow-lg), var(--ornament-shadow-inset-sm);
 }
 
 @include register-ornament('beveled') {
   --modal-ornament-border: 2px solid var(--ornament-bevel-border);
   --modal-ornament-shadow:
-    var(--relief-shadow), inset 1px 1px 0 rgb(var(--highlight-color) / 10%),
+    var(--ornament-shadow), inset 1px 1px 0 rgb(var(--highlight-color) / 10%),
     inset -1px -1px 0 rgb(var(--shadow-color) / 10%);
 }
 

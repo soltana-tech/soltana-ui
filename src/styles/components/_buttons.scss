@@ -311,12 +311,12 @@
 @include register-ornament('beveled') {
   --btn-ornament-bg: linear-gradient(
     175deg,
-    var(--relief-surface-raised) 0%,
-    var(--relief-surface-deep) 100%
+    var(--ornament-surface-raised) 0%,
+    var(--ornament-surface-deep) 100%
   );
   --btn-ornament-border-color: var(--ornament-bevel-border);
   --btn-ornament-border-width: 2px;
-  --btn-ornament-shadow: var(--relief-shadow-inset);
+  --btn-ornament-shadow: var(--ornament-shadow-inset);
   --btn-ornament-clip: polygon(
     6px 0,
     calc(100% - 6px) 0,
@@ -328,17 +328,17 @@
     0 6px
   );
   --btn-ornament-radius: var(--radius-sm);
-  --btn-ornament-active-shadow: var(--relief-shadow-inset);
+  --btn-ornament-active-shadow: var(--ornament-shadow-inset);
 }
 
 @include register-ornament('faceted') {
   --btn-ornament-bg: linear-gradient(
     135deg,
-    var(--relief-surface-flat) 0%,
-    var(--relief-surface-raised) 25%,
-    var(--relief-surface-deep) 50%,
-    var(--relief-surface-raised) 75%,
-    var(--relief-surface-flat) 100%
+    var(--ornament-surface-flat) 0%,
+    var(--ornament-surface-raised) 25%,
+    var(--ornament-surface-deep) 50%,
+    var(--ornament-surface-raised) 75%,
+    var(--ornament-surface-flat) 100%
   );
   --btn-ornament-border-color: var(--ornament-color);
   --btn-ornament-shadow: 0 0 0 0 transparent;
@@ -354,11 +354,11 @@
   --btn-ornament-padding: 0.5rem 2rem;
   --btn-ornament-hover-bg: linear-gradient(
     135deg,
-    var(--relief-surface-raised) 0%,
-    var(--relief-surface-deep) 25%,
-    var(--relief-surface-flat) 50%,
-    var(--relief-surface-deep) 75%,
-    var(--relief-surface-raised) 100%
+    var(--ornament-surface-raised) 0%,
+    var(--ornament-surface-deep) 25%,
+    var(--ornament-surface-flat) 50%,
+    var(--ornament-surface-deep) 75%,
+    var(--ornament-surface-raised) 100%
   );
 }
 

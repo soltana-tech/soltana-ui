@@ -101,6 +101,15 @@
   --ornament-ring-bg: var(--surface-bg);
   --ornament-surface: var(--surface-1);
   --ornament-bevel-border: var(--border-strong);
+  --ornament-shadow:
+    0 3px 6px rgb(var(--shadow-color) / 16%), 0 3px 6px rgb(var(--shadow-color) / 23%);
+  --ornament-shadow-lg:
+    0 10px 20px rgb(var(--shadow-color) / 19%), 0 6px 6px rgb(var(--shadow-color) / 23%);
+  --ornament-shadow-inset-sm: inset 0 1px 2px rgb(var(--shadow-color) / 10%);
+  --ornament-shadow-inset: inset 0 2px 4px rgb(var(--shadow-color) / 14%);
+  --ornament-surface-flat: var(--surface-1);
+  --ornament-surface-raised: var(--surface-2);
+  --ornament-surface-deep: var(--surface-2);
 
   // =========================================================================
   // COMPONENT TOKENS
