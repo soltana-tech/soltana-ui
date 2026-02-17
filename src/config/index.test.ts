@@ -9,14 +9,13 @@ import {
 } from './index';
 import { _resetFontLoader } from '../fonts/index';
 
-const mockDestroy = vi.fn();
-vi.mock('../enhancers/index.js', () => ({
-  initAll: vi.fn(() => ({ destroy: mockDestroy })),
-}));
+vi.mock('../enhancers/index.js');
 
-// Access the mock after vi.mock hoisting
 import { initAll } from '../enhancers/index.js';
+import { mockEnhancerDestroy } from '../enhancers/__mocks__/index';
+
 const mockInitAll = vi.mocked(initAll);
+const mockDestroy = mockEnhancerDestroy;
 
 describe('initSoltana', () => {
   beforeEach(() => {

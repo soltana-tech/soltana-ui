@@ -4,10 +4,11 @@ import { RECIPES, getRecipeNames } from './recipes';
 import type { RecipeName } from './types';
 import { _resetFontLoader } from '../fonts/index';
 
-const mockDestroy = vi.fn();
-vi.mock('../enhancers/index.js', () => ({
-  initAll: vi.fn(() => ({ destroy: mockDestroy })),
-}));
+vi.mock('../enhancers/index.js');
+
+import { mockEnhancerDestroy } from '../enhancers/__mocks__/index';
+
+const mockDestroy = mockEnhancerDestroy;
 
 describe('RECIPES data integrity', () => {
   const expectedKeys: RecipeName[] = [
@@ -22,8 +23,9 @@ describe('RECIPES data integrity', () => {
     expect(Object.keys(RECIPES)).toHaveLength(expectedKeys.length);
   });
 
-  it('getRecipeNames reflects registered recipes', () => {
-    expect(getRecipeNames().sort()).toEqual(Object.keys(RECIPES).sort());
+  it('getRecipeNames returns all expected recipe names', () => {
+    const expected = ['corporate-clean', 'luxury-dark', 'frosted-modern', 'classic-warm'];
+    expect(getRecipeNames().sort()).toEqual(expected.sort());
   });
 
   it.each(Object.entries(RECIPES))('%s specifies all required fields', (_key, recipe) => {

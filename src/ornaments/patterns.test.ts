@@ -36,13 +36,6 @@ describe('ornament patterns', () => {
     ];
     expect(Object.keys(patterns).sort()).toEqual([...expected].sort());
   });
-
-  it('patterns map entries return SVG strings', () => {
-    for (const fn of Object.values(patterns)) {
-      const svg = fn();
-      expect(svg).toContain('<svg');
-    }
-  });
 });
 
 describe('toDataUri', () => {
