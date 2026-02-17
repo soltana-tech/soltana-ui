@@ -26,6 +26,7 @@ npm-debug.log*
 test-results/
 playwright-report/
 blob-report/
+tests/**/*-snapshots/
 
 # Audit drafts
 .claude/audit/draft-issues-*.md
