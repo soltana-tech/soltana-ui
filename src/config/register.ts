@@ -24,10 +24,12 @@ import { registerTierValue } from './validation';
 
 /**
  * All CSS custom properties a theme rule block defines. Source of truth for
- * the runtime derivation function and the future @soltana-ui/tokens compiler.
+ * the runtime derivation function and the SCSS ↔ TS sync test.
  * Icon tokens are included in the schema but not derived — they require
  * compile-time SVG template functions and must be provided via `tokens`
  * overrides if needed.
+ *
+ * @internal Consumed only by tests; not re-exported from the public barrel.
  */
 export const THEME_TOKEN_NAMES = [
   // Surface
@@ -107,12 +109,43 @@ export const THEME_TOKEN_NAMES = [
 // Theme Seed Derivation
 // ---------------------------------------------------------------------------
 
+interface SemanticFallbacks {
+  dark: [base: string, subtle: string, text: string];
+  light: [base: string, subtle: string, text: string];
+}
+
+type MixFn = (base: string, target: string, pct: number) => string;
+type MixSrgbFn = (base: string, pct: number) => string;
+
+/**
+ * Derive the three tokens (base, subtle, text) for a semantic color category.
+ */
+function deriveSemanticColor(
+  name: string,
+  seedColor: string | undefined,
+  isDark: boolean,
+  mix: MixFn,
+  mixSrgb: MixSrgbFn,
+  fallbacks: SemanticFallbacks
+): Record<string, string> {
+  const [fallbackBase, fallbackSubtle, fallbackText] = isDark ? fallbacks.dark : fallbacks.light;
+  return {
+    [`--color-${name}`]: seedColor ?? fallbackBase,
+    [`--color-${name}-subtle`]: seedColor ? mixSrgb(seedColor, isDark ? 12 : 8) : fallbackSubtle,
+    [`--color-${name}-text`]: seedColor
+      ? isDark
+        ? mix(seedColor, 'white', 25)
+        : mix(seedColor, 'black', 25)
+      : fallbackText,
+  };
+}
+
 /**
  * Derive a full theme token map from 3-5 seed colors.
  *
- * Pure function with no DOM dependency — usable by the @soltana-ui/tokens
- * compiler in Node.js. Token values use CSS `color-mix()` expressions that
- * the browser evaluates at paint time, keeping derived tokens reactive.
+ * Pure function with no DOM dependency. Token values use CSS `color-mix()`
+ * expressions that the browser evaluates at paint time, keeping derived
+ * tokens reactive.
  *
  * Icon tokens (`--icon-*`) are not derived; provide them via the `tokens`
  * override map in `RegisterThemeOptions` if needed.
@@ -171,58 +204,22 @@ export function deriveThemeTokens(seed: ThemeSeed): Record<string, string> {
     '--border-decorative-strong': mixSrgb(decorative, isDark ? 35 : 40),
 
     // --- Semantic colors ---
-    '--color-success': seed.colorSuccess ?? (isDark ? '#10b981' : '#0d6b4e'),
-    '--color-success-subtle': seed.colorSuccess
-      ? mixSrgb(seed.colorSuccess, isDark ? 12 : 8)
-      : isDark
-        ? 'rgb(16 185 129 / 12%)'
-        : 'rgb(13 107 78 / 8%)',
-    '--color-success-text': seed.colorSuccess
-      ? isDark
-        ? mix(seed.colorSuccess, 'white', 25)
-        : mix(seed.colorSuccess, 'black', 25)
-      : isDark
-        ? '#34d399'
-        : '#065f46',
-    '--color-warning': seed.colorWarning ?? (isDark ? '#fcd34d' : '#855c0a'),
-    '--color-warning-subtle': seed.colorWarning
-      ? mixSrgb(seed.colorWarning, isDark ? 12 : 8)
-      : isDark
-        ? 'rgb(252 211 77 / 12%)'
-        : 'rgb(133 92 10 / 8%)',
-    '--color-warning-text': seed.colorWarning
-      ? isDark
-        ? mix(seed.colorWarning, 'white', 25)
-        : mix(seed.colorWarning, 'black', 25)
-      : isDark
-        ? '#fde68a'
-        : '#6b4a08',
-    '--color-error': seed.colorError ?? (isDark ? '#ef4444' : '#991b1b'),
-    '--color-error-subtle': seed.colorError
-      ? mixSrgb(seed.colorError, isDark ? 12 : 8)
-      : isDark
-        ? 'rgb(239 68 68 / 12%)'
-        : 'rgb(153 27 27 / 8%)',
-    '--color-error-text': seed.colorError
-      ? isDark
-        ? mix(seed.colorError, 'white', 25)
-        : mix(seed.colorError, 'black', 25)
-      : isDark
-        ? '#f87171'
-        : '#7f1d1d',
-    '--color-info': seed.colorInfo ?? (isDark ? '#3b82f6' : '#1e40af'),
-    '--color-info-subtle': seed.colorInfo
-      ? mixSrgb(seed.colorInfo, isDark ? 12 : 8)
-      : isDark
-        ? 'rgb(59 130 246 / 12%)'
-        : 'rgb(30 64 175 / 8%)',
-    '--color-info-text': seed.colorInfo
-      ? isDark
-        ? mix(seed.colorInfo, 'white', 25)
-        : mix(seed.colorInfo, 'black', 25)
-      : isDark
-        ? '#60a5fa'
-        : '#1e3a8a',
+    ...deriveSemanticColor('success', seed.colorSuccess, isDark, mix, mixSrgb, {
+      dark: ['#10b981', 'rgb(16 185 129 / 12%)', '#34d399'],
+      light: ['#0d6b4e', 'rgb(13 107 78 / 8%)', '#065f46'],
+    }),
+    ...deriveSemanticColor('warning', seed.colorWarning, isDark, mix, mixSrgb, {
+      dark: ['#fcd34d', 'rgb(252 211 77 / 12%)', '#fde68a'],
+      light: ['#855c0a', 'rgb(133 92 10 / 8%)', '#6b4a08'],
+    }),
+    ...deriveSemanticColor('error', seed.colorError, isDark, mix, mixSrgb, {
+      dark: ['#ef4444', 'rgb(239 68 68 / 12%)', '#f87171'],
+      light: ['#991b1b', 'rgb(153 27 27 / 8%)', '#7f1d1d'],
+    }),
+    ...deriveSemanticColor('info', seed.colorInfo, isDark, mix, mixSrgb, {
+      dark: ['#3b82f6', 'rgb(59 130 246 / 12%)', '#60a5fa'],
+      light: ['#1e40af', 'rgb(30 64 175 / 8%)', '#1e3a8a'],
+    }),
 
     // --- Interactive states ---
     '--state-hover': mixSrgb(accent, isDark ? 8 : 6),
@@ -253,7 +250,7 @@ export function deriveThemeTokens(seed: ThemeSeed): Record<string, string> {
       : `color-mix(in srgb, white 78%, transparent)`,
     '--card-border': mixSrgb(text, isDark ? 6 : 10),
     '--badge-bg': mixSrgb(accent, isDark ? 10 : 8),
-    '--tooltip-bg': isDark ? bg : mix(text, bg, 0),
+    '--tooltip-bg': isDark ? bg : text,
     '--tooltip-text': isDark ? text : mix(bg, 'white', 50),
     '--scrollbar-thumb': mixSrgb(text, isDark ? 12 : 15),
     '--scrollbar-track': mixSrgb(text, isDark ? 3 : 3),

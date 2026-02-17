@@ -249,6 +249,12 @@ export function initSoltana(
     removeOverrides(keys: string[]): void {
       const root = document.documentElement;
       for (const key of keys) {
+        if (!key.startsWith('--')) {
+          console.warn(
+            `[soltana] Override key "${key}" is not a CSS custom property (must start with "--")`
+          );
+          continue;
+        }
         root.style.removeProperty(key);
       }
       if (state.overrides) {

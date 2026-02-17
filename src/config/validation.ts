@@ -13,18 +13,19 @@ const VALID_RELIEFS: Relief[] = [...BUILT_IN_RELIEFS];
 const VALID_FINISHES: Finish[] = [...BUILT_IN_FINISHES];
 const VALID_ORNAMENTS: Ornament[] = [...BUILT_IN_ORNAMENTS];
 
+const TIER_REGISTRY: Record<TierName, string[]> = {
+  theme: VALID_THEMES,
+  relief: VALID_RELIEFS,
+  finish: VALID_FINISHES,
+  ornament: VALID_ORNAMENTS,
+};
+
 /**
  * Register a custom tier value so `strict` mode does not warn for it.
  * Call before `initSoltana()` or at any point before the value is used.
  */
 export function registerTierValue(tier: TierName, value: string): void {
-  const registry: Record<TierName, string[]> = {
-    theme: VALID_THEMES,
-    relief: VALID_RELIEFS,
-    finish: VALID_FINISHES,
-    ornament: VALID_ORNAMENTS,
-  };
-  const arr = registry[tier];
+  const arr = TIER_REGISTRY[tier];
   if (!arr.includes(value)) {
     arr.push(value);
   }

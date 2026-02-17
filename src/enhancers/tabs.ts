@@ -1,8 +1,13 @@
 // ---------------------------------------------------------------------------
-// Tabs Enhancer
+// Tabs Enhancer (Singleton)
 // ---------------------------------------------------------------------------
 // Progressive enhancement for [data-sol-tabs] elements.
 // Handles tab switching, keyboard navigation, and ARIA attributes.
+//
+// Singleton lifecycle: module-level state (AbortController) ensures only one
+// enhancer instance is active at a time. Calling initTabs() aborts any
+// previous instance before attaching new listeners. This is enforced by
+// initSoltana's generation counter.
 // ---------------------------------------------------------------------------
 
 import type { EnhancerCleanup } from '../config/types';

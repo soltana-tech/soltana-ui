@@ -45,9 +45,12 @@ const NEGATED_ATTR_RE = /:not\([^)]*\[data-(theme|relief|finish|ornament)='[^']+
 function buildExcludeSet(options: SoltanaTreeshakeOptions): Map<string, Set<string>> {
   const excludes = new Map<string, Set<string>>();
 
-  for (const [pluralKey, tierConfig] of Object.entries(options) as [string, TierConfig][]) {
+  for (const [pluralKey, value] of Object.entries(options)) {
     const tier = TIER_KEY_MAP[pluralKey];
     if (!tier || !(tier in BUILT_IN)) continue;
+
+    const tierConfig = value as TierConfig | undefined;
+    if (!tierConfig) continue;
 
     const builtIn = BUILT_IN[tier];
 

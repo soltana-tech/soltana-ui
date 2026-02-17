@@ -1,8 +1,13 @@
 // ---------------------------------------------------------------------------
-// Modal Enhancer
+// Modal Enhancer (Singleton)
 // ---------------------------------------------------------------------------
 // Progressive enhancement for [data-sol-modal] elements.
 // Handles open/close triggers, focus trapping, Escape key, and backdrop click.
+//
+// Singleton lifecycle: module-level state (AbortController, open count)
+// ensures only one enhancer instance is active at a time. Calling
+// initModals() aborts any previous instance before attaching new listeners.
+// This is enforced by initSoltana's generation counter.
 // ---------------------------------------------------------------------------
 
 import type { EnhancerCleanup } from '../config/types';

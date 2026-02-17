@@ -1,8 +1,13 @@
 // ---------------------------------------------------------------------------
-// Tooltip Enhancer
+// Tooltip Enhancer (Singleton)
 // ---------------------------------------------------------------------------
 // Progressive enhancement for [data-sol-tooltip] elements.
 // Creates and positions tooltips on hover/focus.
+//
+// Singleton lifecycle: module-level state (AbortController, tooltip element,
+// active target) ensures only one enhancer instance is active at a time.
+// Calling initTooltips() aborts any previous instance before attaching new
+// listeners. This is enforced by initSoltana's generation counter.
 // ---------------------------------------------------------------------------
 
 import type { EnhancerCleanup } from '../config/types';

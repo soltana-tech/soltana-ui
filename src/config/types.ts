@@ -44,22 +44,49 @@ export interface SoltanaConfig {
   overrides?: Record<string, string>;
 }
 
+/**
+ * Public API surface returned by `initSoltana()`.
+ *
+ * All members are part of the public API and may be destructured from the
+ * returned instance.
+ */
 export interface SoltanaInstance {
+  /** Return a snapshot of the current tier configuration. */
   getState(): SoltanaConfig;
+
+  /** Set the active theme (applies `data-theme` on `<html>`). */
   setTheme(theme: Theme): void;
+  /** Set the active relief (applies `data-relief` on `<html>`). */
   setRelief(relief: Relief): void;
+  /** Set the active finish (applies `data-finish` on `<html>`). */
   setFinish(finish: Finish): void;
+  /** Set the active ornament (applies `data-ornament` on `<html>`). */
   setOrnament(ornament: Ornament): void;
+
+  /** Apply a named recipe, setting all four tiers at once. */
   applyRecipe(recipeName: RecipeName): void;
+  /** Register a custom recipe for later use with `applyRecipe()`. */
   registerRecipe(name: string, recipe: Recipe): void;
+
+  /** Set CSS custom property overrides on `<html>`. Keys must start with `--`. */
   setOverrides(overrides: Record<string, string>): void;
+  /** Remove previously set CSS custom property overrides. Keys must start with `--`. */
   removeOverrides(keys: string[]): void;
+
+  /** Register a custom theme by deriving tokens from a seed. */
   registerTheme(name: string, options: RegisterThemeOptions): TierRegistration;
+  /** Register a custom relief with a typed token map. */
   registerRelief(name: string, options: RegisterReliefOptions): TierRegistration;
+  /** Register a custom finish with a typed token map. */
   registerFinish(name: string, options: RegisterFinishOptions): TierRegistration;
+  /** Register a custom ornament with a partial token map. */
   registerOrnament(name: string, options: RegisterOrnamentOptions): TierRegistration;
+
+  /** Destroy and re-create enhancers (modals, tabs, tooltips). */
   reinit(): void;
+  /** Reset all tiers to defaults and remove overrides and registrations. */
   reset(): void;
+  /** Tear down the instance: remove all attributes, listeners, and registrations. */
   destroy(): void;
 }
 
