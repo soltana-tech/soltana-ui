@@ -32,17 +32,6 @@ test.describe('font loading', () => {
     expect(linkCount).toBe(3);
   });
 
-  test('fonts: true option in initSoltana injects font links', async ({ page }) => {
-    await setupSoltanaPage(page);
-
-    const linkCount = await page.evaluate(() => {
-      window.SoltanaUI.initSoltana({ fonts: true });
-      return document.head.querySelectorAll('link').length;
-    });
-
-    expect(linkCount).toBe(3);
-  });
-
   test('font stylesheet requests the expected font families', async ({ page }) => {
     const requestedUrls: string[] = [];
     await page.route('**/*fonts.googleapis.com/**', (route) => {

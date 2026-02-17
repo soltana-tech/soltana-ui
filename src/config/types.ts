@@ -31,7 +31,6 @@ export interface Recipe {
 }
 
 export interface SoltanaInitOptions {
-  fonts?: boolean;
   enhancers?: boolean;
   strict?: boolean;
 }
@@ -41,7 +40,7 @@ export interface SoltanaConfig {
   relief: Relief;
   finish: Finish;
   ornament: Ornament;
-  overrides?: Record<string, string>;
+  overrides: Record<string, string>;
 }
 
 /**
@@ -83,7 +82,7 @@ export interface SoltanaInstance {
   registerOrnament(name: string, options: RegisterOrnamentOptions): TierRegistration;
 
   /** Destroy and re-create enhancers (modals, tabs, tooltips). */
-  reinit(): void;
+  reinitEnhancers(): void;
   /** Reset all tiers to defaults and remove overrides and registrations. */
   reset(): void;
   /** Tear down the instance: remove all attributes, listeners, and registrations. */

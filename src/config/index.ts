@@ -6,7 +6,7 @@
 // ---------------------------------------------------------------------------
 
 import { VALID_THEMES, VALID_RELIEFS, VALID_FINISHES, VALID_ORNAMENTS } from './validation';
-export { registerTierValue } from './validation';
+export { registerTierValue, deregisterTierValue } from './validation';
 import type {
   SoltanaConfig,
   SoltanaInitOptions,
@@ -25,7 +25,6 @@ import type {
   TierRegistration,
 } from './types';
 import { initAll } from '../enhancers/index.js';
-import { loadSoltanaFonts } from '../fonts/index';
 import { RECIPES, registerRecipe as addRecipe } from './recipes';
 import {
   registerTheme as regTheme,
@@ -36,15 +35,15 @@ import {
 import { teardown as teardownStylesheet } from './stylesheet';
 
 const DEFAULT_STATE: SoltanaConfig = {
-  theme: 'dark',
+  theme: 'auto',
   relief: 'neu',
   finish: 'matte',
   ornament: 'none',
+  overrides: {},
 };
 
 const DEFAULT_INIT: Required<SoltanaInitOptions> = {
-  fonts: false,
-  enhancers: true,
+  enhancers: false,
   strict: false,
 };
 
@@ -72,7 +71,7 @@ function applyOverrides(overrides: Record<string, string>): void {
   const root = document.documentElement;
   for (const [key, value] of Object.entries(overrides)) {
     if (!key.startsWith('--')) {
-      console.warn(
+      console.error(
         `[soltana] Override key "${key}" is not a CSS custom property (must start with "--")`
       );
       continue;
@@ -89,9 +88,7 @@ function applyConfig(state: SoltanaConfig): void {
   root.setAttribute('data-finish', state.finish);
   applyOrnament(state.ornament);
 
-  if (state.overrides) {
-    applyOverrides(state.overrides);
-  }
+  applyOverrides(state.overrides);
 }
 
 function teardownAutoTheme(): void {
@@ -124,7 +121,7 @@ function setupAutoTheme(state: SoltanaConfig): void {
 
 function warnInvalid(name: string, value: string, valid: readonly string[], strict: boolean): void {
   if (strict && !valid.includes(value)) {
-    console.warn(`[soltana] Unknown ${name} "${value}". Built-in options: ${valid.join(', ')}`);
+    throw new Error(`[soltana] Unknown ${name} "${value}". Built-in options: ${valid.join(', ')}`);
   }
 }
 
@@ -155,10 +152,9 @@ export function initSoltana(
   _generation++;
   const myGen = _generation;
 
-  const { fonts, enhancers, strict, ...stateOverrides } = userConfig;
+  const { enhancers, strict, ...stateOverrides } = userConfig;
   const state: SoltanaConfig = { ...DEFAULT_STATE, ...stateOverrides };
   const initOpts: Required<SoltanaInitOptions> = {
-    fonts: fonts ?? DEFAULT_INIT.fonts,
     enhancers: enhancers ?? DEFAULT_INIT.enhancers,
     strict: strict ?? DEFAULT_INIT.strict,
   };
@@ -168,11 +164,6 @@ export function initSoltana(
   warnInvalid('relief', state.relief, VALID_RELIEFS, initOpts.strict);
   warnInvalid('finish', state.finish, VALID_FINISHES, initOpts.strict);
   warnInvalid('ornament', state.ornament, VALID_ORNAMENTS, initOpts.strict);
-
-  // Load Google Fonts when opted in
-  if (initOpts.fonts) {
-    loadSoltanaFonts();
-  }
 
   applyConfig(state);
   setupAutoTheme(state);
@@ -237,10 +228,28 @@ export function initSoltana(
     },
 
     registerRecipe(name: string, recipe: Recipe): void {
+      if (initOpts.strict) {
+        warnInvalid('theme', recipe.theme, VALID_THEMES, true);
+        warnInvalid('relief', recipe.relief, VALID_RELIEFS, true);
+        warnInvalid('finish', recipe.finish, VALID_FINISHES, true);
+        warnInvalid('ornament', recipe.ornament, VALID_ORNAMENTS, true);
+      }
       addRecipe(name, recipe);
     },
 
     setOverrides(overrides: Record<string, string>): void {
+      for (const key of Object.keys(overrides)) {
+        if (!key.startsWith('--')) {
+          if (initOpts.strict) {
+            throw new Error(
+              `[soltana] Override key "${key}" is not a CSS custom property (must start with "--")`
+            );
+          }
+          console.error(
+            `[soltana] Override key "${key}" is not a CSS custom property (must start with "--")`
+          );
+        }
+      }
       state.overrides = { ...state.overrides, ...overrides };
       applyOverrides(overrides);
       dispatchChange('overrides', overrides);
@@ -250,19 +259,22 @@ export function initSoltana(
       const root = document.documentElement;
       for (const key of keys) {
         if (!key.startsWith('--')) {
-          console.warn(
+          if (initOpts.strict) {
+            throw new Error(
+              `[soltana] Override key "${key}" is not a CSS custom property (must start with "--")`
+            );
+          }
+          console.error(
             `[soltana] Override key "${key}" is not a CSS custom property (must start with "--")`
           );
           continue;
         }
         root.style.removeProperty(key);
       }
-      if (state.overrides) {
-        const remaining = Object.fromEntries(
-          Object.entries(state.overrides).filter(([k]) => !keys.includes(k))
-        );
-        state.overrides = remaining;
-      }
+      const remaining = Object.fromEntries(
+        Object.entries(state.overrides).filter(([k]) => !keys.includes(k))
+      );
+      state.overrides = remaining;
       dispatchChange('overrides', null);
     },
 
@@ -290,12 +302,15 @@ export function initSoltana(
       return reg;
     },
 
-    reinit(): void {
+    reinitEnhancers(): void {
       resetEnhancers(initOpts.enhancers);
     },
 
     reset(): void {
       if (myGen !== _generation) {
+        if (initOpts.strict) {
+          throw new Error('[soltana] Stale instance — reset() called after re-initialization');
+        }
         console.warn('[soltana] Stale instance — reset() ignored');
         return;
       }
@@ -314,6 +329,9 @@ export function initSoltana(
 
     destroy(): void {
       if (myGen !== _generation) {
+        if (initOpts.strict) {
+          throw new Error('[soltana] Stale instance — destroy() called after re-initialization');
+        }
         console.warn('[soltana] Stale instance — destroy() ignored');
         return;
       }

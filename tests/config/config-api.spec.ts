@@ -1,6 +1,11 @@
 import { test, expect } from '@playwright/test';
 import { setupSoltanaPage } from '../fixtures/soltana-page';
-import { getTierAttributes, captureWarnings, getInlineStyleProperty } from '../fixtures/helpers';
+import {
+  getTierAttributes,
+  captureWarnings,
+  captureErrors,
+  getInlineStyleProperty,
+} from '../fixtures/helpers';
 
 const enhancerHTML = `
   <button data-modal-open="test-modal">Open</button>
@@ -22,17 +27,15 @@ const enhancerHTML = `
   <button data-sol-tooltip="Tip text" style="margin:100px;">Hover</button>`;
 
 test.describe('initSoltana', () => {
-  test('applies default config (dark/neu/matte/none)', async ({ page }) => {
+  test('applies default config (auto/neu/matte/none)', async ({ page }) => {
     await setupSoltanaPage(page);
     await page.evaluate(() => window.SoltanaUI.initSoltana());
 
     const attrs = await getTierAttributes(page);
-    expect(attrs).toEqual({
-      theme: 'dark',
-      relief: 'neu',
-      finish: 'matte',
-      ornament: 'none',
-    });
+    expect(['dark', 'light']).toContain(attrs.theme);
+    expect(attrs.relief).toBe('neu');
+    expect(attrs.finish).toBe('matte');
+    expect(attrs.ornament).toBe('none');
   });
 
   test('applies custom config (light/lifted/frosted/gilt)', async ({ page }) => {
@@ -123,12 +126,10 @@ test.describe('initSoltana', () => {
     });
 
     const attrs = await getTierAttributes(page);
-    expect(attrs).toEqual({
-      theme: 'dark',
-      relief: 'neu',
-      finish: 'matte',
-      ornament: 'none',
-    });
+    expect(['dark', 'light']).toContain(attrs.theme);
+    expect(attrs.relief).toBe('neu');
+    expect(attrs.finish).toBe('matte');
+    expect(attrs.ornament).toBe('none');
 
     const overrideValue = await getInlineStyleProperty(page, '--custom');
     expect(overrideValue).toBe('');
@@ -191,13 +192,19 @@ test.describe('initSoltana', () => {
     ['finish', { finish: 'satin', strict: true }],
     ['ornament', { ornament: 'gothic', strict: true }],
   ] as const) {
-    test(`warns on unknown ${tier} in strict mode`, async ({ page }) => {
+    test(`throws on unknown ${tier} in strict mode`, async ({ page }) => {
       await setupSoltanaPage(page);
-      const warnings = await captureWarnings(page, async () => {
-        await page.evaluate((cfg) => window.SoltanaUI.initSoltana(cfg), config);
-      });
+      const error = await page.evaluate((cfg) => {
+        try {
+          window.SoltanaUI.initSoltana(cfg);
+          return null;
+        } catch (e) {
+          return (e as Error).message;
+        }
+      }, config);
 
-      expect(warnings.some((w) => w.includes(`Unknown ${tier}`))).toBe(true);
+      expect(error).not.toBeNull();
+      expect(error).toContain(`Unknown ${tier}`);
     });
   }
 
@@ -283,19 +290,6 @@ test.describe('initSoltana', () => {
     expect(linkCount).toBe(0);
   });
 
-  test('fonts: true injects font links', async ({ page }) => {
-    await setupSoltanaPage(page);
-    await page.evaluate(() => window.SoltanaUI.initSoltana({ fonts: true }));
-
-    const links = await page.evaluate(() => {
-      const els = document.head.querySelectorAll('link');
-      return Array.from(els).map((l) => l.rel);
-    });
-    expect(links.length).toBe(3);
-    expect(links).toContain('preconnect');
-    expect(links).toContain('stylesheet');
-  });
-
   test('setTheme to auto installs matchMedia listener', async ({ page }) => {
     await setupSoltanaPage(page);
 
@@ -363,9 +357,21 @@ test.describe('initSoltana', () => {
 });
 
 test.describe('enhancer integration', () => {
-  test('auto-initializes enhancers by default', async ({ page }) => {
+  test('does not initialize enhancers by default', async ({ page }) => {
     await setupSoltanaPage(page, { bodyHTML: enhancerHTML });
     await page.evaluate(() => window.SoltanaUI.initSoltana());
+
+    // Modal: clicking open button should NOT add .active (enhancers off by default)
+    await page.click('[data-modal-open="test-modal"]');
+    const modalInactive = await page.evaluate(() =>
+      document.getElementById('test-modal')?.classList.contains('active')
+    );
+    expect(modalInactive).toBe(false);
+  });
+
+  test('initializes enhancers when opted in', async ({ page }) => {
+    await setupSoltanaPage(page, { bodyHTML: enhancerHTML });
+    await page.evaluate(() => window.SoltanaUI.initSoltana({ enhancers: true }));
 
     // Modal: clicking open button should add .active
     await page.click('[data-modal-open="test-modal"]');
@@ -412,7 +418,7 @@ test.describe('enhancer integration', () => {
   test('destroy cleans up enhancer listeners', async ({ page }) => {
     await setupSoltanaPage(page, { bodyHTML: enhancerHTML });
     await page.evaluate(() => {
-      const s = window.SoltanaUI.initSoltana();
+      const s = window.SoltanaUI.initSoltana({ enhancers: true });
       s.destroy();
     });
 
@@ -420,7 +426,7 @@ test.describe('enhancer integration', () => {
     // Re-set the page with attributes so the button is in a clean state
     await setupSoltanaPage(page, { bodyHTML: enhancerHTML });
     await page.evaluate(() => {
-      const s = window.SoltanaUI.initSoltana();
+      const s = window.SoltanaUI.initSoltana({ enhancers: true });
       s.destroy();
     });
 
@@ -439,14 +445,14 @@ test.describe('enhancer integration', () => {
     expect(panel1Visible).toBe(true);
   });
 
-  test('reinit re-initializes enhancers', async ({ page }) => {
+  test('reinitEnhancers re-initializes enhancers', async ({ page }) => {
     await setupSoltanaPage(page, { bodyHTML: enhancerHTML });
     await page.evaluate(() => {
-      const s = window.SoltanaUI.initSoltana();
+      const s = window.SoltanaUI.initSoltana({ enhancers: true });
       s.destroy();
       // Re-init by calling initSoltana again
-      const s2 = window.SoltanaUI.initSoltana();
-      s2.reinit();
+      const s2 = window.SoltanaUI.initSoltana({ enhancers: true });
+      s2.reinitEnhancers();
     });
 
     // After reinit, modal should respond again
@@ -460,7 +466,7 @@ test.describe('enhancer integration', () => {
   test('reset re-initializes enhancers', async ({ page }) => {
     await setupSoltanaPage(page, { bodyHTML: enhancerHTML });
     await page.evaluate(() => {
-      const s = window.SoltanaUI.initSoltana();
+      const s = window.SoltanaUI.initSoltana({ enhancers: true });
       s.reset();
     });
 
@@ -472,11 +478,11 @@ test.describe('enhancer integration', () => {
     expect(modalActive).toBe(true);
   });
 
-  test('reinit respects enhancers: false', async ({ page }) => {
+  test('reinitEnhancers respects enhancers: false', async ({ page }) => {
     await setupSoltanaPage(page, { bodyHTML: enhancerHTML });
     await page.evaluate(() => {
       const s = window.SoltanaUI.initSoltana({ enhancers: false });
-      s.reinit();
+      s.reinitEnhancers();
     });
 
     // With enhancers: false, reinit should not activate enhancers
@@ -490,8 +496,8 @@ test.describe('enhancer integration', () => {
   test('multiple initSoltana calls clean up previous enhancers', async ({ page }) => {
     await setupSoltanaPage(page, { bodyHTML: enhancerHTML });
     await page.evaluate(() => {
-      window.SoltanaUI.initSoltana();
-      window.SoltanaUI.initSoltana();
+      window.SoltanaUI.initSoltana({ enhancers: true });
+      window.SoltanaUI.initSoltana({ enhancers: true });
     });
 
     // The second init should still have working enhancers
@@ -586,16 +592,16 @@ test.describe('overrides via API', () => {
     expect(result.overrides).toEqual({ '--b': '2' });
   });
 
-  test('warns on non-custom-property override keys', async ({ page }) => {
+  test('errors on non-custom-property override keys', async ({ page }) => {
     await setupSoltanaPage(page);
-    const warnings = await captureWarnings(page, async () => {
+    const errors = await captureErrors(page, async () => {
       await page.evaluate(() => {
         const s = window.SoltanaUI.initSoltana();
         s.setOverrides({ color: 'red' });
       });
     });
 
-    expect(warnings.some((w) => w.includes('not a CSS custom property'))).toBe(true);
+    expect(errors.some((e) => e.includes('not a CSS custom property'))).toBe(true);
   });
 
   test('skips non-custom-property override keys', async ({ page }) => {

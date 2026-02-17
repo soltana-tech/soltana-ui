@@ -31,6 +31,17 @@ export function registerTierValue(tier: TierName, value: string): void {
   }
 }
 
+/**
+ * Remove a custom tier value from the registry (e.g. on unregister).
+ */
+export function deregisterTierValue(tier: TierName, value: string): void {
+  const arr = TIER_REGISTRY[tier];
+  const index = arr.indexOf(value);
+  if (index !== -1) {
+    arr.splice(index, 1);
+  }
+}
+
 export const VALID_THEMES: readonly string[] = _themes;
 export const VALID_RELIEFS: readonly string[] = _reliefs;
 export const VALID_FINISHES: readonly string[] = _finishes;

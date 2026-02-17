@@ -58,6 +58,21 @@ export async function captureWarnings(page: Page, action: () => Promise<void>): 
   return warnings;
 }
 
+/**
+ * Collect console.error messages emitted during an action.
+ */
+export async function captureErrors(page: Page, action: () => Promise<void>): Promise<string[]> {
+  const errors: string[] = [];
+  const handler = (msg: ConsoleMessage): void => {
+    if (msg.type() === 'error') errors.push(msg.text());
+  };
+  page.on('console', handler);
+  await action();
+  await page.evaluate(() => new Promise((r) => requestAnimationFrame(r)));
+  page.off('console', handler);
+  return errors;
+}
+
 export interface ChangeEventDetail {
   type: string;
   value: unknown;

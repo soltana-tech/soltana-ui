@@ -16,7 +16,7 @@ import type {
   TierRegistration,
 } from './types';
 import { insertRule, removeRules } from './stylesheet';
-import { registerTierValue } from './validation';
+import { registerTierValue, deregisterTierValue } from './validation';
 
 // ---------------------------------------------------------------------------
 // Theme Token Schema
@@ -270,14 +270,10 @@ interface OrnamentTemplate {
   cssText: string;
 }
 
-let cachedTemplates: OrnamentTemplate[] | null = null;
-
 const CONSUME_SELECTOR_RE =
   /^:where\(\[data-ornament\]:not\(\[data-ornament='none'\]\)\)\s+\.([a-zA-Z0-9_-]+)(:[a-zA-Z]+)?$/;
 
 function introspectOrnamentTemplates(): OrnamentTemplate[] {
-  if (cachedTemplates) return cachedTemplates;
-
   const templates: OrnamentTemplate[] = [];
 
   for (const sheet of document.styleSheets) {
@@ -303,13 +299,7 @@ function introspectOrnamentTemplates(): OrnamentTemplate[] {
     }
   }
 
-  cachedTemplates = templates;
   return templates;
-}
-
-/** Test-only: clear the introspection cache. */
-export function _resetIntrospectionCache(): void {
-  cachedTemplates = null;
 }
 
 // ---------------------------------------------------------------------------
@@ -340,6 +330,7 @@ export function registerTheme(name: string, options: RegisterThemeOptions): Tier
     tier: 'theme',
     unregister() {
       removeRules(rules);
+      deregisterTierValue('theme', name);
     },
   };
 }
@@ -358,6 +349,7 @@ function registerSimpleTier(
     tier,
     unregister() {
       removeRules(rules);
+      deregisterTierValue(tier, name);
     },
   };
 }
@@ -398,6 +390,7 @@ export function registerOrnament(name: string, options: RegisterOrnamentOptions)
     tier: 'ornament',
     unregister() {
       removeRules(rules);
+      deregisterTierValue('ornament', name);
     },
   };
 }

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { setupSoltanaPage } from '../fixtures/soltana-page';
-import { getTierAttributes, captureWarnings } from '../fixtures/helpers';
+import { getTierAttributes } from '../fixtures/helpers';
 
 const THEME_SEED = {
   surfaceBg: '#1a1a2e',
@@ -78,18 +78,20 @@ test.describe('runtime registration', () => {
     expect(attrs.ornament).toBe('art-deco');
   });
 
-  test('strict mode does not warn after registerTheme', async ({ page }) => {
+  test('strict mode does not throw after registerTheme', async ({ page }) => {
     await setupSoltanaPage(page);
-    const warnings = await captureWarnings(page, async () => {
-      await page.evaluate((seed) => {
+    const error = await page.evaluate((seed) => {
+      try {
         const s = window.SoltanaUI.initSoltana({ strict: true });
         s.registerTheme('brand', { seed });
         s.setTheme('brand');
-      }, THEME_SEED);
-    });
+        return null;
+      } catch (e) {
+        return (e as Error).message;
+      }
+    }, THEME_SEED);
 
-    const themeWarnings = warnings.filter((w) => w.includes('Unknown theme'));
-    expect(themeWarnings).toHaveLength(0);
+    expect(error).toBeNull();
   });
 
   test('destroy() cleans up all registrations and stylesheet', async ({ page }) => {
@@ -127,9 +129,9 @@ test.describe('runtime registration', () => {
       s.reset();
     }, THEME_SEED);
 
-    // After reset, should be back to defaults
+    // After reset, should be back to defaults (auto resolves at runtime)
     const attrs = await getTierAttributes(page);
-    expect(attrs.theme).toBe('dark');
+    expect(['dark', 'light']).toContain(attrs.theme);
 
     const hasCustomSheet = await page.evaluate(
       () => document.getElementById('soltana-custom') !== null

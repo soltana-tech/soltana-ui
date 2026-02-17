@@ -125,7 +125,7 @@ export function renderGettingStarted(): string {
     'soltana.config.js',
     `
     <p class="text-sm text-secondary mb-4">Create a configuration file in your project:</p>
-    ${codeExample("// soltana.config.js\nexport default {\n  // Base presets (required)\n  theme: 'dark',        // 'light' | 'dark' | 'sepia' | 'auto'\n  relief: 'neu',   // 'flat' | 'soft' | 'lifted' | 'neu' | 'sharp' | 'hewn'\n  finish: 'matte',  // 'matte' | 'translucent' | 'frosted' | 'tinted' | 'glossy'\n  ornament: 'none',     // 'none' | 'gilt' | 'baroque' | 'beveled' | 'faceted'\n  fonts: true,          // opt-in: injects Google Fonts <link> into <head>\n  \n  // Variable overrides (optional)\n  overrides: {\n    '--accent-primary': '#ff6b6b',\n    '--gold-400': '#e8c547',\n    '--surface-bg': '#0a0a12',\n  },\n};", 'javascript')}
+    ${codeExample("// soltana.config.js\nexport default {\n  // Base presets (required)\n  theme: 'dark',        // 'light' | 'dark' | 'sepia' | 'auto'\n  relief: 'neu',   // 'flat' | 'soft' | 'lifted' | 'neu' | 'sharp' | 'hewn'\n  finish: 'matte',  // 'matte' | 'translucent' | 'frosted' | 'tinted' | 'glossy'\n  ornament: 'none',     // 'none' | 'gilt' | 'baroque' | 'beveled' | 'faceted'\n  \n  // Variable overrides (optional)\n  overrides: {\n    '--accent-primary': '#ff6b6b',\n    '--gold-400': '#e8c547',\n    '--surface-bg': '#0a0a12',\n  },\n};", 'javascript')}
     <p class="text-sm text-secondary mt-4">Then initialize with your config:</p>
     ${codeExample("import config from './soltana.config.js';\nimport { initSoltana } from 'soltana-ui';\n\nconst soltana = initSoltana(config);", 'javascript')}
   `

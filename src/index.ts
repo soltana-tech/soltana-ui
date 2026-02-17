@@ -1,7 +1,7 @@
 import './styles/index.scss';
 
 // Configuration runtime
-export { initSoltana, registerTierValue } from './config/index.js';
+export { initSoltana, registerTierValue, deregisterTierValue } from './config/index.js';
 export {
   BUILT_IN_THEMES,
   BUILT_IN_RELIEFS,
