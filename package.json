@@ -24,8 +24,7 @@
   "files": [
     "dist",
     "src/styles",
-    "src/config",
-    "soltana.config.template.js"
+    "src/config"
   ],
   "main": "./dist/soltana-ui.umd.cjs",
   "module": "./dist/soltana-ui.js",

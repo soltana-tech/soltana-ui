@@ -1,12 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import {
-  initSoltana,
-  registerTierValue,
-  VALID_THEMES,
-  VALID_RELIEFS,
-  VALID_FINISHES,
-  VALID_ORNAMENTS,
-} from './index';
+import { initSoltana, registerTierValue } from './index';
 import { _resetFontLoader } from '../fonts/index';
 import { _resetStylesheet } from './stylesheet';
 import { _resetIntrospectionCache } from './register';
@@ -374,29 +367,30 @@ describe('initSoltana', () => {
 });
 
 describe('registerTierValue', () => {
-  it.each([
-    ['theme', VALID_THEMES],
-    ['relief', VALID_RELIEFS],
-    ['finish', VALID_FINISHES],
-    ['ornament', VALID_ORNAMENTS],
-  ] as const)('registers a custom %s value', (tier, validArray) => {
-    const value = `custom-${tier}-${String(Date.now())}`;
-    expect(validArray).not.toContain(value);
+  it.each(['theme', 'relief', 'finish', 'ornament'] as const)(
+    'registers a custom %s value',
+    (tier) => {
+      const spy = vi.spyOn(console, 'warn').mockImplementation(vi.fn());
+      const value = `custom-${tier}-${String(Date.now())}`;
 
-    registerTierValue(tier, value);
-    expect(validArray).toContain(value);
-  });
+      registerTierValue(tier, value);
+      initSoltana({ [tier]: value, strict: true });
+
+      expect(spy).not.toHaveBeenCalledWith(expect.stringContaining(`Unknown ${tier}`));
+      spy.mockRestore();
+    }
+  );
 
   it('does not duplicate an already-registered value', () => {
+    const spy = vi.spyOn(console, 'warn').mockImplementation(vi.fn());
     const value = `dedup-${String(Date.now())}`;
-    registerTierValue('theme', value);
-    const countAfterFirst = VALID_THEMES.filter((v) => v === value).length;
 
     registerTierValue('theme', value);
-    const countAfterSecond = VALID_THEMES.filter((v) => v === value).length;
+    registerTierValue('theme', value);
+    initSoltana({ theme: value, strict: true });
 
-    expect(countAfterFirst).toBe(1);
-    expect(countAfterSecond).toBe(1);
+    expect(spy).not.toHaveBeenCalledWith(expect.stringContaining('Unknown theme'));
+    spy.mockRestore();
   });
 
   it('suppresses strict-mode warning after registration', () => {

@@ -16,7 +16,7 @@ import type {
   TierRegistration,
 } from './types';
 import { insertRule, removeRules } from './stylesheet';
-import { registerTierValue } from './index';
+import { registerTierValue } from './validation';
 
 // ---------------------------------------------------------------------------
 // Theme Token Schema

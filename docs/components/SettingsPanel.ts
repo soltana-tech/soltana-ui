@@ -6,13 +6,13 @@ import type {
   Ornament,
   RecipeName,
 } from '../../src/config';
+import { RECIPES } from '../../src/config';
 import {
-  RECIPES,
   VALID_THEMES,
   VALID_RELIEFS,
   VALID_FINISHES,
   VALID_ORNAMENTS,
-} from '../../src/config';
+} from '../../src/config/validation';
 
 interface OptionConfig {
   value: string;

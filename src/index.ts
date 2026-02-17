@@ -38,6 +38,9 @@ export { RECIPES, getRecipeNames } from './config/recipes.js';
 // Theme derivation utilities (pure functions, no DOM dependency)
 export { THEME_TOKEN_NAMES, deriveThemeTokens } from './config/register.js';
 
+// Enhancer initializers
+export { initModals, initTabs, initTooltips, initAll } from './enhancers/index.js';
+
 // Font loading
 export { loadSoltanaFonts } from './fonts/index.js';
 

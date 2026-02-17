@@ -13,7 +13,3 @@ export interface SoltanaTreeshakeOptions {
   finishes?: TierConfig;
   ornaments?: TierConfig;
 }
-
-export interface SoltanaBuildConfig {
-  tiers?: SoltanaTreeshakeOptions;
-}

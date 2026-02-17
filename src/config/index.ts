@@ -5,7 +5,8 @@
 // blocks for the chosen theme, relief, finish, and ornament.
 // ---------------------------------------------------------------------------
 
-import { BUILT_IN_THEMES, BUILT_IN_RELIEFS, BUILT_IN_FINISHES, BUILT_IN_ORNAMENTS } from './types';
+import { VALID_THEMES, VALID_RELIEFS, VALID_FINISHES, VALID_ORNAMENTS } from './validation';
+export { registerTierValue } from './validation';
 import type {
   SoltanaConfig,
   SoltanaInstance,
@@ -16,7 +17,6 @@ import type {
   Ornament,
   RecipeName,
   Recipe,
-  TierName,
   RegisterThemeOptions,
   RegisterReliefOptions,
   RegisterFinishOptions,
@@ -43,28 +43,6 @@ const DEFAULT_CONFIG: SoltanaConfig = {
   enhancers: true,
   strict: false,
 };
-
-const VALID_THEMES: Theme[] = [...BUILT_IN_THEMES, 'auto'];
-const VALID_RELIEFS: Relief[] = [...BUILT_IN_RELIEFS];
-const VALID_FINISHES: Finish[] = [...BUILT_IN_FINISHES];
-const VALID_ORNAMENTS: Ornament[] = [...BUILT_IN_ORNAMENTS];
-
-/**
- * Register a custom tier value so `strict` mode does not warn for it.
- * Call before `initSoltana()` or at any point before the value is used.
- */
-export function registerTierValue(tier: TierName, value: string): void {
-  const registry: Record<TierName, string[]> = {
-    theme: VALID_THEMES,
-    relief: VALID_RELIEFS,
-    finish: VALID_FINISHES,
-    ornament: VALID_ORNAMENTS,
-  };
-  const arr = registry[tier];
-  if (!arr.includes(value)) {
-    arr.push(value);
-  }
-}
 
 // Module-level state for matchMedia listener cleanup
 let _mql: MediaQueryList | null = null;
@@ -349,4 +327,3 @@ export type {
   TierRegistration,
 } from './types';
 export { RECIPES, getRecipeNames } from './recipes';
-export { VALID_THEMES, VALID_RELIEFS, VALID_FINISHES, VALID_ORNAMENTS };
