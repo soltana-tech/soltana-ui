@@ -51,7 +51,7 @@ $std-ornament-border: 2px solid var(--ornament-color);
   --ornament-size-xl: 32px;
 
   // Shared bridge tokens — theme-agnostic defaults via var() indirection.
-  // Per-theme overrides (--ornament-surface-deep) live in theme files.
+  // Per-theme overrides (--surface-deep) live in theme files.
   --ornament-base: var(--accent-decorative);
   --ornament-base-hover: var(--accent-decorative-hover);
   --ornament-base-subtle: var(--accent-decorative-subtle);
@@ -68,6 +68,7 @@ $std-ornament-border: 2px solid var(--ornament-color);
   --ornament-shadow-inset: inset 0 2px 4px rgb(var(--shadow-color) / 14%);
   --ornament-surface-flat: var(--surface-1);
   --ornament-surface-raised: var(--surface-2);
+  --ornament-surface-deep: var(--surface-deep);
 }
 
 // ============================================================================
@@ -509,6 +510,21 @@ $std-ornament-border: 2px solid var(--ornament-color);
   --ornament-box-shadow:
     inset 3px 3px 6px rgb(var(--highlight-color) / 8%),
     inset -2px -2px 4px rgb(var(--shadow-color) / 5%);
+}
+
+// ============================================================================
+// ORNAMENT RESET — Standalone utility (not in $ornament-names)
+// ============================================================================
+
+.ornament-none {
+  --ornament-color: transparent;
+  --ornament-color-dark: transparent;
+  --ornament-gradient: none;
+  --ornament-opacity: 0;
+  --ornament-base: transparent;
+  --ornament-border: transparent;
+  --ornament-border-strong: transparent;
+  --ornament-box-shadow: 0 0 0 0 transparent;
 }
 
 // ============================================================================

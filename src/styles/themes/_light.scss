@@ -83,10 +83,9 @@
   // Shared defaults in _relief-system.scss and _ornamental.scss
   // =========================================================================
 
-  --relief-surface-deep: var(--surface-3);
-  --ornament-surface-deep: var(--surface-3);
-  --relief-neu-shadow: rgb(var(--shadow-color) / 35%);
-  --relief-neu-light: rgb(var(--highlight-color) / 88%);
+  --surface-deep: var(--surface-3);
+  --neu-shadow: rgb(var(--shadow-color) / 35%);
+  --neu-light: rgb(var(--highlight-color) / 88%);
 
   // =========================================================================
   // COMPONENT TOKENS

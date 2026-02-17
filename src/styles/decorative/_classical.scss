@@ -135,8 +135,8 @@ $golden-ratio: 1.618;
 // ---- Plinth — base section ----
 .plinth {
   padding: $golden-ratio * 1rem;
-  background: var(--relief-surface-raised);
-  border-top: 1px solid var(--relief-border-default);
+  background: var(--surface-2);
+  border-top: 1px solid var(--border-default);
   position: relative;
 
   &::before {

@@ -61,6 +61,14 @@
   }
 }
 
+// ---- Disabled State Mixin ----
+@mixin disabled-state {
+  background: var(--state-disabled-bg);
+  cursor: not-allowed;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
 // ---- Focus Styles ----
 // Consistent focus ring on all interactive elements via tokens.
 :focus-visible {
@@ -80,8 +88,8 @@
   }
 }
 
-// ---- Visually Hidden (shared by .sr-only, .sr-only-focusable, .aria-live-region) ----
-@mixin visually-hidden {
+// ---- Screen Reader Only ----
+.sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -93,15 +101,10 @@
   border-width: 0;
 }
 
-// ---- Screen Reader Only ----
-.sr-only {
-  @include visually-hidden;
-}
-
 // Focusable screen reader only — becomes visible on focus
 .sr-only-focusable {
   &:not(:focus, :focus-within) {
-    @include visually-hidden;
+    @extend .sr-only;
   }
 }
 
@@ -130,5 +133,5 @@
 
 // ---- Live Region ----
 .aria-live-region {
-  @include visually-hidden;
+  @extend .sr-only;
 }

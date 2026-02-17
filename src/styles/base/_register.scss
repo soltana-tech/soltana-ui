@@ -9,15 +9,6 @@
 // values from a single @content block.
 // ---------------------------------------------------------------------------
 
-// Theme: [data-theme] + .theme-* selectors.
-// Does NOT include :root — that is reserved for the default theme.
-@mixin register-theme($name) {
-  [data-theme='#{$name}'],
-  .theme-#{$name} {
-    @content;
-  }
-}
-
 // Relief: [data-relief] + .relief-* selectors.
 @mixin register-relief($name) {
   [data-relief='#{$name}'],
@@ -80,6 +71,11 @@
   background-color: color-mix(in srgb, #{$bg} calc(var(--finish-opacity, 1) * 100%), transparent);
   background-image: var(--finish-sheen, none), var(--finish-overlay, none);
   backdrop-filter: blur(var(--finish-blur)) saturate(var(--finish-saturation));
+}
+
+// Cross-tier composition: combines relief shadow with ornament box-shadow.
+.ornament {
+  box-shadow: var(--relief-shadow), var(--ornament-box-shadow, 0 0 0 0 transparent);
 }
 
 @mixin mask($image, $size: null, $repeat: null, $position: null) {

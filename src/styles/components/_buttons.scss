@@ -8,6 +8,7 @@
 @use 'sass:list';
 @use '../variables' as *;
 @use '../base/register' as *;
+@use '../base/accessibility' as *;
 @use '../base/transitions' as *;
 
 // ============================================================================
@@ -42,8 +43,7 @@
   }
 
   &:focus-visible {
-    outline: var(--focus-ring-width) solid var(--focus-ring-color);
-    outline-offset: var(--focus-ring-offset);
+    @include focus-ring-outline;
   }
 
   &:active {
@@ -53,12 +53,9 @@
 
   &:disabled,
   &.disabled {
-    background: var(--state-disabled-bg);
+    @include disabled-state;
     color: var(--state-disabled-text);
     border-color: var(--border-subtle);
-    cursor: not-allowed;
-    box-shadow: none;
-    backdrop-filter: none;
     transform: none;
 
     &:hover {

@@ -6,7 +6,6 @@
 // ---------------------------------------------------------------------------
 
 @use 'sass:list';
-@use 'sass:map';
 @use 'sass:string';
 
 // ---- Spacing scale (4px base) ----
@@ -217,19 +216,6 @@ $max-widths: (
   prose: 65ch,
 );
 
-// ---- Fluid font sizes (xl+) ----
-$fluid-font-sizes: (
-  xl: clamp(1.125rem, 1.05rem + 0.25vi, 1.25rem),
-  2xl: clamp(1.25rem, 1rem + 0.625vi, 1.5rem),
-  3xl: clamp(1.5rem, 1.125rem + 0.94vi, 1.875rem),
-  4xl: clamp(1.75rem, 1.25rem + 1.25vi, 2.25rem),
-  5xl: clamp(2rem, 1rem + 2.5vi, 3rem),
-  6xl: clamp(2.5rem, 1.25rem + 3.13vi, 3.75rem),
-  7xl: clamp(3rem, 1.5rem + 3.75vi, 4.5rem),
-  8xl: clamp(3.5rem, 1rem + 6.25vi, 6rem),
-  9xl: clamp(4.5rem, 1rem + 8.75vi, 8rem),
-);
-
 // ---- Icon data-URI generators ----
 // Each function embeds a single SVG shape with a parameterized fill/stroke color,
 // so theme files can call them with the appropriate contrast color.
@@ -286,11 +272,7 @@ $fluid-font-sizes: (
 
   // Font sizes
   @each $key, $pair in $font-sizes {
-    @if map.has-key($fluid-font-sizes, $key) {
-      --text-#{$key}: #{map.get($fluid-font-sizes, $key)};
-    } @else {
-      --text-#{$key}: #{list.nth($pair, 1)};
-    }
+    --text-#{$key}: #{list.nth($pair, 1)};
     --leading-#{$key}: #{list.nth($pair, 2)};
   }
 
