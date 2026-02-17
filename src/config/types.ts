@@ -54,6 +54,10 @@ export interface SoltanaInstance {
   registerRecipe(name: string, recipe: Recipe): void;
   setOverrides(overrides: Record<string, string>): void;
   removeOverrides(keys: string[]): void;
+  registerTheme(name: string, options: RegisterThemeOptions): TierRegistration;
+  registerRelief(name: string, options: RegisterReliefOptions): TierRegistration;
+  registerFinish(name: string, options: RegisterFinishOptions): TierRegistration;
+  registerOrnament(name: string, options: RegisterOrnamentOptions): TierRegistration;
   reinit(): void;
   reset(): void;
   destroy(): void;
@@ -64,3 +68,55 @@ export interface EnhancerCleanup {
 }
 
 export type TierName = 'theme' | 'relief' | 'finish' | 'ornament';
+
+// ---------------------------------------------------------------------------
+// Runtime Registration Types
+// ---------------------------------------------------------------------------
+
+export interface ThemeSeed {
+  surfaceBg: string;
+  textPrimary: string;
+  accentPrimary: string;
+  accentDecorative?: string;
+  colorScheme?: 'light' | 'dark';
+}
+
+export interface RegisterThemeOptions {
+  seed: ThemeSeed;
+  /** Override any derived token after seed derivation. */
+  tokens?: Record<string, string>;
+}
+
+export interface RegisterReliefOptions {
+  tokens: {
+    '--relief-bg': string;
+    '--relief-shadow-sm': string;
+    '--relief-shadow': string;
+    '--relief-shadow-lg': string;
+    '--relief-shadow-inset-sm': string;
+    '--relief-shadow-inset': string;
+    '--relief-shadow-inset-lg': string;
+    '--relief-border': string;
+  };
+}
+
+export interface RegisterFinishOptions {
+  tokens: {
+    '--finish-blur': string;
+    '--finish-saturation': string;
+    '--finish-opacity': string;
+    '--finish-overlay': string;
+    '--finish-sheen': string;
+  };
+}
+
+export interface RegisterOrnamentOptions {
+  /** Partial token map — unset tokens stay inert (inherit existing values). */
+  tokens: Record<string, string>;
+}
+
+export interface TierRegistration {
+  readonly name: string;
+  readonly tier: TierName;
+  unregister(): void;
+}

@@ -24,10 +24,19 @@ export type {
   BuiltInOrnament,
   BuiltInRecipeName,
   TierName,
+  ThemeSeed,
+  RegisterThemeOptions,
+  RegisterReliefOptions,
+  RegisterFinishOptions,
+  RegisterOrnamentOptions,
+  TierRegistration,
 } from './config/types.js';
 
 // Recipe presets
 export { RECIPES, getRecipeNames } from './config/recipes.js';
+
+// Theme derivation utilities (pure functions, no DOM dependency)
+export { THEME_TOKEN_NAMES, deriveThemeTokens } from './config/register.js';
 
 // Font loading
 export { loadSoltanaFonts } from './fonts/index.js';

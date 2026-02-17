@@ -8,6 +8,8 @@ import {
   VALID_ORNAMENTS,
 } from './index';
 import { _resetFontLoader } from '../fonts/index';
+import { _resetStylesheet } from './stylesheet';
+import { _resetIntrospectionCache } from './register';
 
 vi.mock('../enhancers/index.js');
 
@@ -27,6 +29,8 @@ describe('initSoltana', () => {
     document.documentElement.removeAttribute('data-ornament');
     document.head.innerHTML = '';
     _resetFontLoader();
+    _resetStylesheet();
+    _resetIntrospectionCache();
     mockInitAll.mockClear();
     mockDestroy.mockClear();
   });
@@ -404,5 +408,275 @@ describe('registerTierValue', () => {
 
     expect(spy).not.toHaveBeenCalledWith(expect.stringContaining(`Unknown relief`));
     spy.mockRestore();
+  });
+});
+
+describe('runtime registration (integration)', () => {
+  beforeEach(() => {
+    document.documentElement.removeAttribute('data-theme');
+    document.documentElement.removeAttribute('data-relief');
+    document.documentElement.removeAttribute('data-finish');
+    document.documentElement.removeAttribute('style');
+    document.documentElement.removeAttribute('data-ornament');
+    document.body.className = '';
+    document.head.innerHTML = '';
+    _resetFontLoader();
+    _resetStylesheet();
+    _resetIntrospectionCache();
+    mockInitAll.mockClear();
+    mockDestroy.mockClear();
+  });
+
+  it('registerTheme + setTheme applies data attribute', () => {
+    const soltana = initSoltana();
+    soltana.registerTheme('brand', {
+      seed: { surfaceBg: '#1a1a2e', textPrimary: '#e0e0e0', accentPrimary: '#e94560' },
+    });
+    soltana.setTheme('brand');
+    expect(document.documentElement.getAttribute('data-theme')).toBe('brand');
+  });
+
+  it('registerRelief + setRelief applies data attribute', () => {
+    const soltana = initSoltana();
+    soltana.registerRelief('paper', {
+      tokens: {
+        '--relief-bg': 'var(--surface-1)',
+        '--relief-shadow-sm': 'none',
+        '--relief-shadow': 'none',
+        '--relief-shadow-lg': 'none',
+        '--relief-shadow-inset-sm': 'none',
+        '--relief-shadow-inset': 'none',
+        '--relief-shadow-inset-lg': 'none',
+        '--relief-border': '1px solid var(--border-default)',
+      },
+    });
+    soltana.setRelief('paper');
+    expect(document.documentElement.getAttribute('data-relief')).toBe('paper');
+  });
+
+  it('registerFinish + setFinish applies data attribute', () => {
+    const soltana = initSoltana();
+    soltana.registerFinish('satin', {
+      tokens: {
+        '--finish-blur': '0px',
+        '--finish-saturation': '1',
+        '--finish-opacity': '1',
+        '--finish-overlay': 'none',
+        '--finish-sheen': 'none',
+      },
+    });
+    soltana.setFinish('satin');
+    expect(document.documentElement.getAttribute('data-finish')).toBe('satin');
+  });
+
+  it('registerOrnament + setOrnament applies data attribute', () => {
+    const soltana = initSoltana();
+    soltana.registerOrnament('art-deco', {
+      tokens: { '--ornament-color': 'gold' },
+    });
+    soltana.setOrnament('art-deco');
+    expect(document.documentElement.getAttribute('data-ornament')).toBe('art-deco');
+  });
+
+  it('strict mode does not warn after registerTheme', () => {
+    const spy = vi.spyOn(console, 'warn').mockImplementation(vi.fn());
+    const soltana = initSoltana({ strict: true });
+    soltana.registerTheme('brand', {
+      seed: { surfaceBg: '#111', textPrimary: '#eee', accentPrimary: '#f00' },
+    });
+    soltana.setTheme('brand');
+    expect(spy).not.toHaveBeenCalledWith(expect.stringContaining('Unknown theme'));
+    spy.mockRestore();
+  });
+
+  it('destroy() cleans up all registrations and stylesheet', () => {
+    const soltana = initSoltana();
+    soltana.registerTheme('brand', {
+      seed: { surfaceBg: '#111', textPrimary: '#eee', accentPrimary: '#f00' },
+    });
+    soltana.registerRelief('paper', {
+      tokens: {
+        '--relief-bg': 'a',
+        '--relief-shadow-sm': 'b',
+        '--relief-shadow': 'c',
+        '--relief-shadow-lg': 'd',
+        '--relief-shadow-inset-sm': 'e',
+        '--relief-shadow-inset': 'f',
+        '--relief-shadow-inset-lg': 'g',
+        '--relief-border': 'h',
+      },
+    });
+
+    soltana.destroy();
+
+    // Stylesheet element should be removed
+    expect(document.getElementById('soltana-custom')).toBeNull();
+  });
+
+  it('reset() cleans up registrations and stylesheet', () => {
+    const soltana = initSoltana();
+    soltana.registerTheme('brand', {
+      seed: { surfaceBg: '#111', textPrimary: '#eee', accentPrimary: '#f00' },
+    });
+    soltana.setTheme('brand');
+
+    soltana.reset();
+
+    expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
+    expect(document.getElementById('soltana-custom')).toBeNull();
+  });
+
+  it('registers all 4 tiers simultaneously without conflicts', () => {
+    const soltana = initSoltana();
+
+    soltana.registerTheme('brand', {
+      seed: { surfaceBg: '#111', textPrimary: '#eee', accentPrimary: '#f00' },
+    });
+    soltana.registerRelief('paper', {
+      tokens: {
+        '--relief-bg': 'a',
+        '--relief-shadow-sm': 'b',
+        '--relief-shadow': 'c',
+        '--relief-shadow-lg': 'd',
+        '--relief-shadow-inset-sm': 'e',
+        '--relief-shadow-inset': 'f',
+        '--relief-shadow-inset-lg': 'g',
+        '--relief-border': 'h',
+      },
+    });
+    soltana.registerFinish('satin', {
+      tokens: {
+        '--finish-blur': '0px',
+        '--finish-saturation': '1',
+        '--finish-opacity': '1',
+        '--finish-overlay': 'none',
+        '--finish-sheen': 'none',
+      },
+    });
+    soltana.registerOrnament('art-deco', {
+      tokens: { '--ornament-color': 'gold' },
+    });
+
+    soltana.setTheme('brand');
+    soltana.setRelief('paper');
+    soltana.setFinish('satin');
+    soltana.setOrnament('art-deco');
+
+    expect(document.documentElement.getAttribute('data-theme')).toBe('brand');
+    expect(document.documentElement.getAttribute('data-relief')).toBe('paper');
+    expect(document.documentElement.getAttribute('data-finish')).toBe('satin');
+    expect(document.documentElement.getAttribute('data-ornament')).toBe('art-deco');
+  });
+});
+
+interface ChangeDetail {
+  type: string;
+  value: unknown;
+}
+
+function eventDetail(handler: ReturnType<typeof vi.fn>): ChangeDetail {
+  return (handler.mock.calls[0][0] as CustomEvent<ChangeDetail>).detail;
+}
+
+describe('soltana:change event', () => {
+  beforeEach(() => {
+    document.documentElement.removeAttribute('data-theme');
+    document.documentElement.removeAttribute('data-relief');
+    document.documentElement.removeAttribute('data-finish');
+    document.documentElement.removeAttribute('style');
+    document.documentElement.removeAttribute('data-ornament');
+    document.body.className = '';
+    document.head.innerHTML = '';
+    _resetFontLoader();
+    _resetStylesheet();
+    _resetIntrospectionCache();
+    mockInitAll.mockClear();
+    mockDestroy.mockClear();
+  });
+
+  it('fires on setTheme', () => {
+    const soltana = initSoltana();
+    const handler = vi.fn();
+    document.documentElement.addEventListener('soltana:change', handler);
+
+    soltana.setTheme('light');
+    expect(handler).toHaveBeenCalledTimes(1);
+    expect(eventDetail(handler)).toEqual({ type: 'theme', value: 'light' });
+
+    document.documentElement.removeEventListener('soltana:change', handler);
+  });
+
+  it('fires on setRelief', () => {
+    const soltana = initSoltana();
+    const handler = vi.fn();
+    document.documentElement.addEventListener('soltana:change', handler);
+
+    soltana.setRelief('flat');
+    expect(handler).toHaveBeenCalledTimes(1);
+    expect(eventDetail(handler).type).toBe('relief');
+
+    document.documentElement.removeEventListener('soltana:change', handler);
+  });
+
+  it('fires on setFinish', () => {
+    const soltana = initSoltana();
+    const handler = vi.fn();
+    document.documentElement.addEventListener('soltana:change', handler);
+
+    soltana.setFinish('frosted');
+    expect(handler).toHaveBeenCalledTimes(1);
+    expect(eventDetail(handler).type).toBe('finish');
+
+    document.documentElement.removeEventListener('soltana:change', handler);
+  });
+
+  it('fires on setOrnament', () => {
+    const soltana = initSoltana();
+    const handler = vi.fn();
+    document.documentElement.addEventListener('soltana:change', handler);
+
+    soltana.setOrnament('gilt');
+    expect(handler).toHaveBeenCalledTimes(1);
+    expect(eventDetail(handler).type).toBe('ornament');
+
+    document.documentElement.removeEventListener('soltana:change', handler);
+  });
+
+  it('fires on setOverrides', () => {
+    const soltana = initSoltana();
+    const handler = vi.fn();
+    document.documentElement.addEventListener('soltana:change', handler);
+
+    soltana.setOverrides({ '--x': '1' });
+    expect(handler).toHaveBeenCalledTimes(1);
+    expect(eventDetail(handler).type).toBe('overrides');
+
+    document.documentElement.removeEventListener('soltana:change', handler);
+  });
+
+  it('fires on removeOverrides', () => {
+    const soltana = initSoltana();
+    soltana.setOverrides({ '--x': '1' });
+
+    const handler = vi.fn();
+    document.documentElement.addEventListener('soltana:change', handler);
+
+    soltana.removeOverrides(['--x']);
+    expect(handler).toHaveBeenCalledTimes(1);
+    expect(eventDetail(handler).type).toBe('overrides');
+
+    document.documentElement.removeEventListener('soltana:change', handler);
+  });
+
+  it('fires on reset', () => {
+    const soltana = initSoltana();
+    const handler = vi.fn();
+    document.documentElement.addEventListener('soltana:change', handler);
+
+    soltana.reset();
+    expect(handler).toHaveBeenCalledTimes(1);
+    expect(eventDetail(handler).type).toBe('reset');
+
+    document.documentElement.removeEventListener('soltana:change', handler);
   });
 });
