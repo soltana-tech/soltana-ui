@@ -1,6 +1,6 @@
 /** Gallery — Recipe showcase with live previews and sandbox links. */
 
-import { sectionHeading } from '../utils/helpers';
+import { sectionHeading } from '../../utils/helpers';
 import { RECIPES } from '@soltana/config';
 import type { RecipeName } from '@soltana/config';
 
@@ -15,10 +15,17 @@ function galleryCard(key: RecipeName): string {
     .filter(Boolean)
     .join(' ');
 
-  const sandboxUrl = `#/components/buttons?theme=${recipe.theme}&relief=${recipe.relief}&finish=${recipe.finish}&ornament=${recipe.ornament}`;
+  const sandboxUrl = `#/playground?component=buttons&theme=${recipe.theme}&relief=${recipe.relief}&finish=${recipe.finish}&ornament=${recipe.ornament}`;
+
+  const tierAttrs = [
+    `data-theme="${recipe.theme}"`,
+    `data-relief="${recipe.relief}"`,
+    `data-finish="${recipe.finish}"`,
+    `data-ornament="${recipe.ornament}"`,
+  ].join(' ');
 
   return `
-    <div class="gallery-card ${tierClasses}">
+    <div class="gallery-card ${tierClasses}" ${tierAttrs}>
       <div class="gallery-card__header">
         <h3 class="font-semibold text-lg">${recipe.name}</h3>
         <p class="text-sm text-secondary mt-1">${recipe.description}</p>

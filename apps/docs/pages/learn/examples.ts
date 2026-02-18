@@ -1,6 +1,6 @@
 /** Examples page — Full-page composition layouts demonstrating real-world usage. */
 
-import { sectionHeading, quickNavFromLabels } from '../utils/helpers';
+import { sectionHeading, quickNavFromLabels } from '../../utils/helpers';
 
 export function renderExamples(): string {
   return `
@@ -134,11 +134,6 @@ export function renderExamples(): string {
     <div class="card overflow-hidden">
       <div class="specimen__preview p-0">
         <div class="relative overflow-hidden" style="background: var(--surface-bg); min-height: 520px">
-          <!-- Atmospheric gradient blobs -->
-          <div class="absolute" style="width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, var(--color-info-subtle), transparent); top: -150px; right: -100px;"></div>
-          <div class="absolute" style="width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, var(--color-info-subtle), transparent); bottom: -120px; left: -80px;"></div>
-          <div class="absolute" style="width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, var(--color-success-subtle), transparent); top: 40%; left: 50%;"></div>
-
           <!-- Glass navbar -->
           <nav class="flex items-center justify-between px-8 py-4 relative z-10" style="backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-subtle)">
             <span class="font-serif text-xl font-semibold">Soltana</span>
@@ -157,8 +152,8 @@ export function renderExamples(): string {
           <!-- Hero content -->
           <div class="text-center px-8 pt-20 pb-24 relative z-10">
             <span class="overline mb-4 inline-block" style="color: var(--accent-secondary)">New Release v2.0</span>
-            <h1 class="font-serif mb-6" style="font-size: 4rem; line-height: 1.05; font-weight: 600;">Build beautiful<br/>interfaces <span style="background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">effortlessly</span></h1>
-            <p class="text-lg mb-10 mx-auto text-secondary" style="max-width: 520px; letter-spacing: 0.02em;">A complete design system with flat, soft, lifted, neumorphic, sharp, and hewn reliefs for prestigious web applications.</p>
+            <h1 class="font-serif mb-6" style="font-size: 4rem; line-height: 1.05; font-weight: 600;">Component<br/>Library Demo</h1>
+            <p class="text-lg mb-10 mx-auto text-secondary" style="max-width: 520px; letter-spacing: 0.02em;">A landing hero section using the active relief, finish, and ornament tiers. Change settings to see it adapt.</p>
             <div class="flex justify-center gap-4">
               <button class="btn btn-primary btn-lg">Start Building</button>
               <button class="btn btn-outline btn-lg">View Docs</button>
@@ -174,13 +169,8 @@ export function renderExamples(): string {
     <h3 class="text-xl font-semibold mb-4">Analytics Dashboard</h3>
     <div class="card overflow-hidden">
       <div class="specimen__preview p-0">
-        <div class="relative overflow-hidden p-6" style="background: var(--surface-bg); min-height: 420px;">
-          <!-- Decorative blobs -->
-          <div class="absolute" style="width: 250px; height: 250px; border-radius: 50%; background: var(--color-info-subtle); filter: blur(60px); top: -50px; left: 20%;"></div>
-          <div class="absolute" style="width: 200px; height: 200px; border-radius: 50%; background: var(--color-success-subtle); filter: blur(50px); bottom: -30px; right: 15%;"></div>
-          <div class="absolute" style="width: 150px; height: 150px; border-radius: 50%; background: var(--color-warning-subtle); filter: blur(40px); top: 40%; left: 60%;"></div>
-
-          <div class="relative z-10">
+        <div class="overflow-hidden p-6" style="background: var(--surface-bg); min-height: 420px;">
+          <div>
             <!-- Glass navbar -->
             <div class="card flex items-center justify-between mb-6 py-3 px-5" style="border-radius: var(--radius-xl)">
               <span class="font-serif font-semibold">Analytics</span>
@@ -413,19 +403,15 @@ export function renderExamples(): string {
     <p class="text-sm text-muted mb-4">A landing page with feature highlights and call-to-action sections.</p>
     <div class="card overflow-hidden">
       <div class="specimen__preview p-0">
-        <div class="relative overflow-hidden" style="background: var(--surface-bg); min-height: 600px">
-          <!-- Gold atmospheric glow -->
-          <div class="absolute" style="width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, var(--color-success-subtle), transparent 60%); top: -200px; right: -100px;"></div>
-          <div class="absolute" style="width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, var(--color-info-subtle), transparent 60%); bottom: -150px; left: -100px;"></div>
-
-          <div class="relative z-10 px-8 py-12">
+        <div class="overflow-hidden" style="background: var(--surface-bg); min-height: 600px">
+          <div class="px-8 py-12">
             <div class="text-center mb-16">
               <p class="overline mb-6" style="color: var(--accent-decorative)">Soltana Design System</p>
-              <h1 class="font-serif mb-6" style="font-size: 4.5rem; line-height: 1.05; font-weight: 700; letter-spacing: 0.08em; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                Prestige in<br/>Every Pixel
+              <h1 class="font-serif mb-6" style="font-size: 4.5rem; line-height: 1.05; font-weight: 700; letter-spacing: 0.08em;">
+                Marketing<br/>Landing
               </h1>
               <p class="text-lg mx-auto mb-10 text-secondary" style="max-width: 480px; letter-spacing: 0.02em;">
-                A refined design system merging classical elegance with modern depth.
+                A feature-highlight layout with headline, description, and card grid. Responds to all four tiers.
               </p>
               <div class="flex gap-4 justify-center">
                 <button class="btn btn-primary btn-lg">Explore</button>
@@ -438,18 +424,18 @@ export function renderExamples(): string {
             <div class="grid gap-6" style="grid-template-columns: repeat(3, 1fr); max-width: 900px; margin: 0 auto;">
               ${[
                 {
-                  title: 'Polished Stone',
-                  desc: 'Multi-layer shadows create tactile, three-dimensional surfaces.',
+                  title: 'Relief System',
+                  desc: 'Six shadow models — flat, soft, lifted, neumorphic, sharp, hewn — applied via a single attribute.',
                   icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/>',
                 },
                 {
-                  title: 'Crystal Glass',
-                  desc: 'Frosted translucency with tinted borders and warm inner glow.',
+                  title: 'Finish Layers',
+                  desc: 'Surface treatments — matte, translucent, frosted, tinted, glossy — that layer on top of the relief.',
                   icon: '<circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>',
                 },
                 {
-                  title: 'Classical Ornament',
-                  desc: 'Scrollwork and patterns inspired by estate architecture.',
+                  title: 'Ornament Decorations',
+                  desc: 'Structural accents — gilt, baroque, beveled, faceted — rendered via CSS custom properties and SVG patterns.',
                   icon: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
                 },
               ]
@@ -476,10 +462,8 @@ export function renderExamples(): string {
     <p class="text-sm text-muted mb-4">A dashboard with KPI cards and trend visualization.</p>
     <div class="card overflow-hidden">
       <div class="specimen__preview p-0">
-        <div class="relative overflow-hidden" style="background: var(--surface-bg); min-height: 500px">
-          <div class="absolute" style="width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, var(--color-success-subtle), transparent); top: -100px; left: 10%;"></div>
-
-          <div class="relative z-10 p-6">
+        <div class="overflow-hidden" style="background: var(--surface-bg); min-height: 500px">
+          <div class="p-6">
             <div class="card mb-6" style="padding: 1rem 1.5rem; border-radius: var(--radius-xl)">
               <div class="flex items-center justify-between">
                 <div>

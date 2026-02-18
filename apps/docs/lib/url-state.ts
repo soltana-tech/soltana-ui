@@ -3,7 +3,7 @@ import { serializeState, deserializeState } from './sandbox-state';
 
 /**
  * Read sandbox state from the current URL hash query params.
- * Hash format: `#/components/buttons?relief=lifted&finish=frosted`
+ * Hash format: `#/explore/buttons?relief=lifted&finish=frosted`
  */
 export function readStateFromUrl(): Partial<SandboxState> {
   const hash = location.hash.slice(1);

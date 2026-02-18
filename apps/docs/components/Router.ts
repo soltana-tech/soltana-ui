@@ -10,7 +10,7 @@ type AfterNavigateHook = (path: string) => void;
 /**
  * DOM-preserving hash router.
  *
- * Routes use path-based hashes (e.g. `#/components/buttons?relief=lifted`).
+ * Routes use path-based hashes (e.g. `#/explore/buttons?relief=lifted`).
  * Rendered elements are cached after first creation and toggled via display
  * rather than destroyed and recreated.
  */
@@ -20,7 +20,7 @@ export class Router {
   private cache = new Map<string, HTMLElement>();
   private activePath: string | null = null;
   private afterNavigateHooks: AfterNavigateHook[] = [];
-  private defaultPath = '/getting-started';
+  private defaultPath = '/learn/introduction';
 
   constructor(containerId: string) {
     const el = document.getElementById(containerId);

@@ -10,6 +10,7 @@ import { type SandboxState, createDefaultState, stateToClasses } from '../lib/sa
 import { VariantMatrix } from './VariantMatrix';
 import { A11yToolbar } from './A11yToolbar';
 import { ResponsiveFrame } from './ResponsiveFrame';
+import soltanaCSS from '@soltana/styles/index.scss?inline';
 
 export interface SandboxConfig {
   id: string;
@@ -40,34 +41,78 @@ function capitalize(s: string): string {
   return LABEL_OVERRIDES.get(s) ?? s.charAt(0).toUpperCase() + s.slice(1);
 }
 
+const TIERS = ['theme', 'relief', 'finish', 'ornament'] as const;
+
+/** A11y simulation CSS injected into the iframe `<head>`. */
+const A11Y_CSS = `
+.a11y-reduced-motion *,
+.a11y-reduced-motion *::before,
+.a11y-reduced-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+.a11y-focus-visible *:focus {
+  outline: 2px solid var(--accent-primary) !important;
+  outline-offset: 2px !important;
+}`;
+
+/** Base layout CSS for the iframe body. */
+const IFRAME_BODY_CSS = `
+body {
+  margin: 0;
+  padding: 1.5rem;
+  background: var(--surface-bg);
+  color: var(--text-primary);
+}`;
+
 /**
- * Per-component sandbox with scoped tier controls, preview, code panel, and toolbar.
+ * Per-component sandbox with scoped tier controls, preview iframe, code panel, and toolbar.
  *
- * Tier scoping works via the existing utility class system (`.relief-lifted`,
- * `.finish-frosted`, etc.) applied to the preview frame element. Components
- * inside inherit tier tokens through CSS cascade.
+ * The preview renders inside an `<iframe>` that loads only the Soltana design
+ * system CSS. Tier state is applied via `data-*` attributes on the iframe's own
+ * `<html>` element, giving full document-level isolation from the docs page theme.
  */
 export class Sandbox {
   private config: SandboxConfig;
   private state: SandboxState;
   private element: HTMLElement;
-  private previewFrame: HTMLElement;
+  private iframe: HTMLIFrameElement;
   private codePanel: HTMLElement;
   private playground = new PlaygroundControls();
+  private a11yToolbar!: A11yToolbar;
   private matrixContainer: HTMLElement | null = null;
   private matrixVisible = false;
+  private iframeReady = false;
   private onStateChangeHandlers: StateChangeHandler[] = [];
 
   constructor(config: SandboxConfig) {
     this.config = config;
     this.state = { ...createDefaultState(), ...config.initialState };
     this.element = this.build();
-    this.previewFrame = this.element.querySelector('.sandbox__preview-frame')!;
+    this.iframe = this.element.querySelector<HTMLIFrameElement>('.sandbox__preview-frame')!;
     this.codePanel = this.element.querySelector('.sandbox__code-panel')!;
+
     this.insertFrameToolbars();
     this.bindControls();
     this.bindToolbar();
-    this.renderPreview();
+    this.updateControlStates();
+
+    // Set initial srcdoc — content renders when iframe enters the DOM
+    const initialHtml = this.config.renderPreview(this.state);
+    this.iframe.srcdoc = this.buildSrcdoc(initialHtml);
+    this.updateCodePanel();
+
+    // Once the iframe content is parsed, bind interactive controls inside it
+    this.iframe.addEventListener('load', () => {
+      this.iframeReady = true;
+      const doc = this.iframe.contentDocument;
+      if (!doc) return;
+      this.a11yToolbar.setIframeDoc(doc);
+      // Sync tier state (may have changed between construction and load)
+      this.applyTierState();
+      this.playground.bindAll(doc);
+    });
   }
 
   /** Get the root DOM element for insertion. */
@@ -80,12 +125,19 @@ export class Sandbox {
     return { ...this.state };
   }
 
-  /** Update state externally (e.g. from URL params). */
+  /** Update state externally (e.g. from URL params or recipe presets). */
   setState(partial: Partial<SandboxState>): void {
     Object.assign(this.state, partial);
-    this.applyTierClasses();
-    this.renderPreview();
+    if (this.iframeReady) {
+      this.applyTierState();
+      this.renderPreview();
+    } else {
+      // Re-generate srcdoc with updated state
+      const html = this.config.renderPreview(this.state);
+      this.iframe.srcdoc = this.buildSrcdoc(html);
+    }
     this.updateControlStates();
+    this.updateCodePanel();
   }
 
   /** Register a callback for state changes. */
@@ -104,9 +156,7 @@ export class Sandbox {
       <div class="sandbox__controls">
         ${tiers.map((tier) => this.buildTierGroup(tier)).join('')}
       </div>
-      <div class="sandbox__preview-frame">
-        <div class="sandbox__preview"></div>
-      </div>
+      <iframe class="sandbox__preview-frame"></iframe>
       <div class="sandbox__code-panel">
         <pre class="text-sm rounded-lg p-4"><code></code></pre>
       </div>
@@ -134,11 +184,11 @@ export class Sandbox {
   }
 
   private insertFrameToolbars(): void {
-    const responsive = new ResponsiveFrame(this.previewFrame);
-    const a11y = new A11yToolbar(this.previewFrame);
+    const responsive = new ResponsiveFrame(this.iframe);
+    this.a11yToolbar = new A11yToolbar(this.iframe);
 
-    // Insert above the preview frame
-    this.previewFrame.before(responsive.getElement(), a11y.getElement());
+    // Insert above the iframe
+    this.iframe.before(responsive.getElement(), this.a11yToolbar.getElement());
   }
 
   private buildTierGroup(tier: TierName): string {
@@ -168,9 +218,12 @@ export class Sandbox {
         const tier = btn.dataset.tier as TierName;
         const value = btn.dataset.value ?? null;
         this.state[tier] = value;
-        this.applyTierClasses();
-        this.renderPreview();
+        if (this.iframeReady) {
+          this.applyTierState();
+          this.renderPreview();
+        }
         this.updateControlStates();
+        this.updateCodePanel();
         this.notifyStateChange();
       });
     });
@@ -236,34 +289,55 @@ export class Sandbox {
     }, 1500);
   }
 
-  private applyTierClasses(): void {
-    // Remove all existing tier utility classes
-    const prefixes = ['theme-', 'relief-', 'finish-', 'ornament-'];
-    const toRemove = [...this.previewFrame.classList].filter((cls) =>
-      prefixes.some((p) => cls.startsWith(p))
-    );
-    this.previewFrame.classList.remove(...toRemove);
+  /** Build a full HTML document string for the iframe's srcdoc. */
+  private buildSrcdoc(html: string): string {
+    const attrs = TIERS.map((tier) => {
+      const value = this.state[tier] ?? document.documentElement.getAttribute(`data-${tier}`);
+      return value ? `data-${tier}="${value}"` : '';
+    })
+      .filter(Boolean)
+      .join(' ');
 
-    // Apply current state classes
-    const classes = stateToClasses(this.state);
-    if (classes) {
-      this.previewFrame.classList.add(...classes.split(' '));
+    return [
+      '<!DOCTYPE html>',
+      `<html ${attrs}>`,
+      '<head>',
+      `<style>${soltanaCSS}</style>`,
+      `<style>${A11Y_CSS}</style>`,
+      `<style>${IFRAME_BODY_CSS}</style>`,
+      '</head>',
+      `<body><div class="sandbox__preview">${html}</div></body>`,
+      '</html>',
+    ].join('\n');
+  }
+
+  /** Set `data-*` attributes on the iframe's `<html>` for tier isolation. */
+  private applyTierState(): void {
+    const doc = this.iframe.contentDocument;
+    if (!doc) return;
+
+    for (const tier of TIERS) {
+      // "Inherit" (null) reads the page-level value so the iframe mirrors it
+      const value = this.state[tier] ?? document.documentElement.getAttribute(`data-${tier}`);
+      if (value) {
+        doc.documentElement.setAttribute(`data-${tier}`, value);
+      } else {
+        doc.documentElement.removeAttribute(`data-${tier}`);
+      }
     }
   }
 
+  /** Write preview HTML into the iframe and bind interactive controls. */
   private renderPreview(): void {
-    const preview = this.previewFrame.querySelector('.sandbox__preview');
+    const doc = this.iframe.contentDocument;
+    if (!doc) return;
+
+    const preview = doc.querySelector('.sandbox__preview');
     if (!preview) return;
 
-    const html = this.config.renderPreview(this.state);
-    preview.innerHTML = html;
-
-    // Bind any inner playground controls (variant selects, toggles, etc.)
-    this.playground.bindAll();
-
-    // Update code panel
-    const codeEl = this.codePanel.querySelector('code');
-    if (codeEl) codeEl.textContent = this.getCleanHtml();
+    preview.innerHTML = this.config.renderPreview(this.state);
+    this.playground.bindAll(doc);
+    this.updateCodePanel();
   }
 
   private updateControlStates(): void {
@@ -274,12 +348,26 @@ export class Sandbox {
     });
   }
 
+  /** Update the code panel with clean exported HTML. */
+  private updateCodePanel(): void {
+    const codeEl = this.codePanel.querySelector('code');
+    if (codeEl) codeEl.textContent = this.getCleanHtml();
+  }
+
   /** Generate clean HTML for export — strip internal data attributes. */
   private getCleanHtml(): string {
-    const preview = this.previewFrame.querySelector('.sandbox__preview');
-    if (!preview) return '';
+    // Use iframe's live DOM if available (captures interactive modifications)
+    const doc = this.iframe.contentDocument;
+    const livePreview = doc?.querySelector('.sandbox__preview');
 
-    const clone = preview.cloneNode(true) as HTMLElement;
+    let clone: HTMLElement;
+    if (livePreview) {
+      clone = livePreview.cloneNode(true) as HTMLElement;
+    } else {
+      // Before iframe loads, generate from the render function
+      clone = document.createElement('div');
+      clone.innerHTML = this.config.renderPreview(this.state);
+    }
 
     // Strip internal data attributes used by PlaygroundControls
     clone

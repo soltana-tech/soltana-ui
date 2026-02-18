@@ -51,5 +51,9 @@ export function renderTables(): string {
     </div>
   `
   )}
+
+  <div class="mt-10 pt-6" style="border-top: 1px solid var(--border-subtle)">
+    <a href="#/playground?component=tables" class="btn btn-primary">Open in Playground</a>
+  </div>
 </div>`;
 }

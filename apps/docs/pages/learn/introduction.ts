@@ -6,7 +6,7 @@ import {
   quickNav,
   sectionHeading,
   specimenBlock,
-} from '../utils/helpers';
+} from '../../utils/helpers';
 
 export function renderGettingStarted(): string {
   return `
@@ -15,30 +15,30 @@ export function renderGettingStarted(): string {
   <div class="hero">
     <h1 class="hero__title font-serif">Soltana UI</h1>
     <p class="hero__subtitle">
-      A CSS-first design system with a composable 4-tier architecture.
-      Theme, Relief, Finish, and Ornament combine orthogonally to produce
-      hundreds of unique visual configurations from a single codebase.
+      A CSS-first design system built on four independent tiers &mdash;
+      Theme, Relief, Finish, and Ornament &mdash; that compose orthogonally.
+      These docs cover installation, configuration, the token architecture,
+      and every shipped component.
     </p>
     <div class="hero__cta">
-      <a href="#/components/buttons" class="btn btn-primary">Try the Sandbox</a>
-      <a href="#/design-system" class="btn btn-secondary">Explore the Design System</a>
-      <a href="#/gallery" class="btn btn-secondary">Browse the Gallery</a>
+      <a href="#/playground" class="btn btn-primary">Try the Playground</a>
+      <a href="#/learn/overview" class="btn btn-secondary">Explore the Design System</a>
     </div>
     <div class="hero__mini-demos">
-      <div class="hero__demo relief-neu finish-glossy ornament-gilt">
-        <button class="btn btn-primary btn-sm">Luxury Dark</button>
+      <div class="hero__demo relief-neu finish-glossy ornament-gilt" data-theme="dark" data-relief="neu" data-finish="glossy" data-ornament="gilt">
+        <button class="btn btn-primary btn-sm">dark / neu / glossy / gilt</button>
         <span class="badge badge-primary">neu + glossy + gilt</span>
       </div>
-      <div class="hero__demo theme-light relief-flat finish-matte">
-        <button class="btn btn-primary btn-sm">Corporate Clean</button>
+      <div class="hero__demo theme-light relief-flat finish-matte" data-theme="light" data-relief="flat" data-finish="matte" data-ornament="none">
+        <button class="btn btn-primary btn-sm">light / flat / matte</button>
         <span class="badge badge-primary">flat + matte</span>
       </div>
-      <div class="hero__demo relief-lifted finish-frosted">
-        <button class="btn btn-primary btn-sm">Frosted Modern</button>
+      <div class="hero__demo relief-lifted finish-frosted" data-theme="dark" data-relief="lifted" data-finish="frosted" data-ornament="none">
+        <button class="btn btn-primary btn-sm">dark / lifted / frosted</button>
         <span class="badge badge-primary">lifted + frosted</span>
       </div>
-      <div class="hero__demo theme-sepia relief-soft ornament-beveled">
-        <button class="btn btn-primary btn-sm">Classic Warm</button>
+      <div class="hero__demo theme-sepia relief-soft ornament-beveled" data-theme="sepia" data-relief="soft" data-finish="matte" data-ornament="beveled">
+        <button class="btn btn-primary btn-sm">sepia / soft / beveled</button>
         <span class="badge badge-primary">soft + beveled</span>
       </div>
     </div>
@@ -140,7 +140,7 @@ export function renderGettingStarted(): string {
 
   ${ornamentDivider()}
 
-  ${sectionHeading('Quick Start', 'quick-start', 'Get up and running in minutes.')}
+  ${sectionHeading('Quick Start', 'quick-start', 'Get up and running.')}
 
   ${specimenBlock(
     'Basic HTML Template',
@@ -151,7 +151,7 @@ export function renderGettingStarted(): string {
 
   ${ornamentDivider()}
 
-  ${sectionHeading('Configuration', 'configuration', 'Customize Soltana to match your brand.')}
+  ${sectionHeading('Configuration', 'configuration', 'Set default tiers, override tokens, and apply presets.')}
 
   ${specimenBlock(
     'soltana.config.js',

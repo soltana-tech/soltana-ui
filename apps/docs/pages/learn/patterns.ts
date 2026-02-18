@@ -1,6 +1,6 @@
 /** Patterns page — Organism-level compositions. */
 
-import { sectionHeading, quickNavFromLabels } from '../utils/helpers';
+import { sectionHeading, quickNavFromLabels } from '../../utils/helpers';
 
 export function renderPatterns(): string {
   return `

@@ -6,7 +6,7 @@ export function renderReliefs(): string {
   return `
 <div class="page-reliefs">
 
-  ${sectionHeading('Reliefs', 'reliefs', 'Six reliefs that fundamentally transform how every component renders. Use the settings panel to preview globally.')}
+  ${sectionHeading('Reliefs', 'reliefs', 'Six reliefs that fundamentally transform how every component renders. Use the <a href="#/playground">Playground</a> to preview interactively.')}
 
   <div class="grid gap-6 mt-8" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))">
     <div class="relief-flat p-6 rounded-xl" style="min-height: 200px;">

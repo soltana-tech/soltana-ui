@@ -5,46 +5,46 @@ import { initAll } from '@soltana/enhancers/index';
 import { initSoltana } from '@soltana/init';
 import type { Theme } from '@soltana/config';
 import { PlaygroundControls } from './components/PlaygroundControls';
-import { SettingsPanel } from './components/SettingsPanel';
 import { Router, migrationShim } from './components/Router';
 import { Sidebar } from './components/Sidebar';
 import type { SidebarSection } from './components/Sidebar';
 import { Search } from './components/Search';
 
-// Pages — Getting Started, Patterns, Examples, Gallery
-import { renderGettingStarted } from './pages/getting-started';
-import { renderPatterns } from './pages/patterns';
-import { renderExamples } from './pages/examples';
-import { renderGallery } from './pages/gallery';
+// Side-effect: populate component registry before playground reads it
+import './lib/playground-entries';
 
-// Pages — Components (decomposed)
-import { renderComponentsIndex } from './pages/components/index';
-import { renderButtons } from './pages/components/buttons';
-import { renderInputs } from './pages/components/inputs';
-import { renderCards } from './pages/components/cards';
-import { renderBadges } from './pages/components/badges';
-import { renderAlerts } from './pages/components/alerts';
-import { renderAvatars } from './pages/components/avatars';
-import { renderProgress } from './pages/components/progress';
-import { renderToggles } from './pages/components/toggles';
-import { renderTooltips } from './pages/components/tooltips';
-import { renderTables } from './pages/components/tables';
-import { renderModals } from './pages/components/modals';
-import { renderSkeletons } from './pages/components/skeletons';
-import { renderReliefDemo } from './pages/components/relief-demo';
+// Pages — Learn
+import { renderGettingStarted } from './pages/learn/introduction';
+import { renderDesignSystemIndex } from './pages/learn/overview';
+import { renderRecipes } from './pages/learn/recipes';
+import { renderColors } from './pages/learn/colors';
+import { renderTypography } from './pages/learn/typography';
+import { renderReliefs } from './pages/learn/reliefs';
+import { renderFinishes } from './pages/learn/finishes';
+import { renderOrnaments } from './pages/learn/ornaments';
+import { renderComposition } from './pages/learn/composition';
+import { renderSpacing } from './pages/learn/spacing';
+import { renderPatterns } from './pages/learn/patterns';
+import { renderExamples } from './pages/learn/examples';
+import { renderGallery } from './pages/learn/gallery';
+import { renderReliefDemo } from './pages/learn/relief-demo';
 
-// Pages — Design System (decomposed)
-import { renderDesignSystemIndex } from './pages/design-system/index';
-import { renderRecipes } from './pages/design-system/recipes';
-import { renderColors } from './pages/design-system/colors';
-import { renderTypography } from './pages/design-system/typography';
-import { renderReliefs } from './pages/design-system/reliefs';
-import { renderFinishes } from './pages/design-system/finishes';
-import { renderOrnaments } from './pages/design-system/ornaments';
-import { renderComposition } from './pages/design-system/composition';
-import { renderSpacing } from './pages/design-system/spacing';
+// Pages — Explore
+import { renderComponentsIndex } from './pages/explore/index';
+import { renderButtons } from './pages/explore/buttons';
+import { renderInputs } from './pages/explore/inputs';
+import { renderCards } from './pages/explore/cards';
+import { renderBadges } from './pages/explore/badges';
+import { renderAlerts } from './pages/explore/alerts';
+import { renderAvatars } from './pages/explore/avatars';
+import { renderProgress } from './pages/explore/progress';
+import { renderToggles } from './pages/explore/toggles';
+import { renderTooltips } from './pages/explore/tooltips';
+import { renderTables } from './pages/explore/tables';
+import { renderModals } from './pages/explore/modals';
+import { renderSkeletons } from './pages/explore/skeletons';
 
-// Pages — API Reference (decomposed)
+// Pages — API Reference
 import { renderApiIndex } from './pages/api/index';
 import { renderApiInit } from './pages/api/init';
 import { renderApiState } from './pages/api/state';
@@ -55,14 +55,15 @@ import { renderApiSvgPatterns } from './pages/api/svg-patterns';
 import { renderApiFonts } from './pages/api/fonts';
 import { renderApiOverrides } from './pages/api/overrides';
 
+// Pages — Playground
+import { renderPlayground } from './pages/playground';
+
 const soltana = initSoltana({
   theme: 'dark',
   relief: 'neu',
   finish: 'matte',
   ornament: 'none',
 });
-
-new SettingsPanel(soltana);
 
 // ---- Theme switcher ----
 function bindThemeSwitcher(): void {
@@ -98,40 +99,40 @@ bindThemeSwitcher();
 const router = new Router('docs-content');
 const playground = new PlaygroundControls();
 
-// Top-level pages (migration shim wraps string → HTMLElement)
-router.register({ path: '/getting-started', render: migrationShim(renderGettingStarted) });
-router.register({ path: '/patterns', render: migrationShim(renderPatterns) });
-router.register({ path: '/examples', render: migrationShim(renderExamples) });
-router.register({ path: '/gallery', render: migrationShim(renderGallery) });
+router.setDefaultPath('/learn/introduction');
 
-// Components — index + individual pages
-router.register({ path: '/components', render: migrationShim(renderComponentsIndex) });
-router.register({ path: '/components/buttons', render: migrationShim(renderButtons) });
-router.register({ path: '/components/inputs', render: migrationShim(renderInputs) });
-router.register({ path: '/components/cards', render: migrationShim(renderCards) });
-router.register({ path: '/components/badges', render: migrationShim(renderBadges) });
-router.register({ path: '/components/alerts', render: migrationShim(renderAlerts) });
-router.register({ path: '/components/avatars', render: migrationShim(renderAvatars) });
-router.register({ path: '/components/progress', render: migrationShim(renderProgress) });
-router.register({ path: '/components/toggles', render: migrationShim(renderToggles) });
-router.register({ path: '/components/tooltips', render: migrationShim(renderTooltips) });
-router.register({ path: '/components/tables', render: migrationShim(renderTables) });
-router.register({ path: '/components/modals', render: migrationShim(renderModals) });
-router.register({ path: '/components/skeletons', render: migrationShim(renderSkeletons) });
-router.register({ path: '/components/relief-demo', render: migrationShim(renderReliefDemo) });
+// Learn
+router.register({ path: '/learn/introduction', render: migrationShim(renderGettingStarted) });
+router.register({ path: '/learn/overview', render: migrationShim(renderDesignSystemIndex) });
+router.register({ path: '/learn/recipes', render: migrationShim(renderRecipes) });
+router.register({ path: '/learn/colors', render: migrationShim(renderColors) });
+router.register({ path: '/learn/typography', render: migrationShim(renderTypography) });
+router.register({ path: '/learn/reliefs', render: migrationShim(renderReliefs) });
+router.register({ path: '/learn/finishes', render: migrationShim(renderFinishes) });
+router.register({ path: '/learn/ornaments', render: migrationShim(renderOrnaments) });
+router.register({ path: '/learn/composition', render: migrationShim(renderComposition) });
+router.register({ path: '/learn/spacing', render: migrationShim(renderSpacing) });
+router.register({ path: '/learn/patterns', render: migrationShim(renderPatterns) });
+router.register({ path: '/learn/examples', render: migrationShim(renderExamples) });
+router.register({ path: '/learn/gallery', render: migrationShim(renderGallery) });
+router.register({ path: '/learn/relief-demo', render: migrationShim(renderReliefDemo) });
 
-// Design System — index + individual pages
-router.register({ path: '/design-system', render: migrationShim(renderDesignSystemIndex) });
-router.register({ path: '/design-system/recipes', render: migrationShim(renderRecipes) });
-router.register({ path: '/design-system/colors', render: migrationShim(renderColors) });
-router.register({ path: '/design-system/typography', render: migrationShim(renderTypography) });
-router.register({ path: '/design-system/reliefs', render: migrationShim(renderReliefs) });
-router.register({ path: '/design-system/finishes', render: migrationShim(renderFinishes) });
-router.register({ path: '/design-system/ornaments', render: migrationShim(renderOrnaments) });
-router.register({ path: '/design-system/composition', render: migrationShim(renderComposition) });
-router.register({ path: '/design-system/spacing', render: migrationShim(renderSpacing) });
+// Explore
+router.register({ path: '/explore', render: migrationShim(renderComponentsIndex) });
+router.register({ path: '/explore/buttons', render: migrationShim(renderButtons) });
+router.register({ path: '/explore/inputs', render: migrationShim(renderInputs) });
+router.register({ path: '/explore/cards', render: migrationShim(renderCards) });
+router.register({ path: '/explore/badges', render: migrationShim(renderBadges) });
+router.register({ path: '/explore/alerts', render: migrationShim(renderAlerts) });
+router.register({ path: '/explore/avatars', render: migrationShim(renderAvatars) });
+router.register({ path: '/explore/progress', render: migrationShim(renderProgress) });
+router.register({ path: '/explore/toggles', render: migrationShim(renderToggles) });
+router.register({ path: '/explore/tooltips', render: migrationShim(renderTooltips) });
+router.register({ path: '/explore/tables', render: migrationShim(renderTables) });
+router.register({ path: '/explore/modals', render: migrationShim(renderModals) });
+router.register({ path: '/explore/skeletons', render: migrationShim(renderSkeletons) });
 
-// API Reference — index + individual pages
+// API Reference
 router.register({ path: '/api', render: migrationShim(renderApiIndex) });
 router.register({ path: '/api/init', render: migrationShim(renderApiInit) });
 router.register({ path: '/api/state', render: migrationShim(renderApiState) });
@@ -142,43 +143,46 @@ router.register({ path: '/api/svg-patterns', render: migrationShim(renderApiSvgP
 router.register({ path: '/api/fonts', render: migrationShim(renderApiFonts) });
 router.register({ path: '/api/overrides', render: migrationShim(renderApiOverrides) });
 
+// Playground (returns HTMLElement directly — no migrationShim)
+router.register({ path: '/playground', render: renderPlayground });
+
 // ---- Sidebar ----
 const sections: SidebarSection[] = [
   {
-    label: 'Getting Started',
-    items: [{ label: 'Introduction', path: '/getting-started' }],
-  },
-  {
-    label: 'Design System',
+    label: 'Learn',
     items: [
-      { label: 'Overview', path: '/design-system' },
-      { label: 'Recipes', path: '/design-system/recipes' },
-      { label: 'Colors', path: '/design-system/colors' },
-      { label: 'Typography', path: '/design-system/typography' },
-      { label: 'Reliefs', path: '/design-system/reliefs' },
-      { label: 'Finishes', path: '/design-system/finishes' },
-      { label: 'Ornaments', path: '/design-system/ornaments' },
-      { label: 'Composition', path: '/design-system/composition' },
-      { label: 'Spacing', path: '/design-system/spacing' },
+      { label: 'Introduction', path: '/learn/introduction' },
+      { label: 'Overview', path: '/learn/overview' },
+      { label: 'Recipes', path: '/learn/recipes' },
+      { label: 'Colors', path: '/learn/colors' },
+      { label: 'Typography', path: '/learn/typography' },
+      { label: 'Reliefs', path: '/learn/reliefs' },
+      { label: 'Finishes', path: '/learn/finishes' },
+      { label: 'Ornaments', path: '/learn/ornaments' },
+      { label: 'Composition', path: '/learn/composition' },
+      { label: 'Spacing', path: '/learn/spacing' },
+      { label: 'Patterns', path: '/learn/patterns' },
+      { label: 'Examples', path: '/learn/examples' },
+      { label: 'Gallery', path: '/learn/gallery' },
+      { label: 'Relief Demo', path: '/learn/relief-demo' },
     ],
   },
   {
-    label: 'Components',
+    label: 'Explore',
     items: [
-      { label: 'Overview', path: '/components' },
-      { label: 'Buttons', path: '/components/buttons' },
-      { label: 'Inputs', path: '/components/inputs' },
-      { label: 'Cards', path: '/components/cards' },
-      { label: 'Badges & Tags', path: '/components/badges' },
-      { label: 'Alerts', path: '/components/alerts' },
-      { label: 'Avatars', path: '/components/avatars' },
-      { label: 'Progress', path: '/components/progress' },
-      { label: 'Toggles', path: '/components/toggles' },
-      { label: 'Tooltips', path: '/components/tooltips' },
-      { label: 'Tables', path: '/components/tables' },
-      { label: 'Modals', path: '/components/modals' },
-      { label: 'Skeletons', path: '/components/skeletons' },
-      { label: 'Relief Demo', path: '/components/relief-demo' },
+      { label: 'Overview', path: '/explore' },
+      { label: 'Buttons', path: '/explore/buttons' },
+      { label: 'Inputs', path: '/explore/inputs' },
+      { label: 'Cards', path: '/explore/cards' },
+      { label: 'Badges & Tags', path: '/explore/badges' },
+      { label: 'Alerts', path: '/explore/alerts' },
+      { label: 'Avatars', path: '/explore/avatars' },
+      { label: 'Progress', path: '/explore/progress' },
+      { label: 'Toggles', path: '/explore/toggles' },
+      { label: 'Tooltips', path: '/explore/tooltips' },
+      { label: 'Tables', path: '/explore/tables' },
+      { label: 'Modals', path: '/explore/modals' },
+      { label: 'Skeletons', path: '/explore/skeletons' },
     ],
   },
   {
@@ -196,16 +200,8 @@ const sections: SidebarSection[] = [
     ],
   },
   {
-    label: 'Patterns',
-    items: [{ label: 'All Patterns', path: '/patterns' }],
-  },
-  {
-    label: 'Examples',
-    items: [{ label: 'All Examples', path: '/examples' }],
-  },
-  {
-    label: 'Gallery',
-    items: [{ label: 'Recipe Showcase', path: '/gallery' }],
+    label: 'Playground',
+    items: [{ label: 'Interactive Sandbox', path: '/playground' }],
   },
 ];
 

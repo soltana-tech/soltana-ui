@@ -3,34 +3,37 @@
  * Call `bindAll()` after page content is rendered.
  */
 export class PlaygroundControls {
-  /** Bind all interactive playground controls currently in the DOM. */
-  bindAll(): void {
-    this.bindClassToggles();
-    this.bindRangeSliders();
-    this.bindSelectControls();
-    this.bindCopyButtons();
-    this.bindModalTriggers();
-    this.bindToggles();
-    this.bindColorPickers();
+  /**
+   * Bind all interactive playground controls within the given root.
+   * Defaults to the page document when called outside an iframe context.
+   */
+  bindAll(root: Document | DocumentFragment = document): void {
+    this.bindClassToggles(root);
+    this.bindRangeSliders(root);
+    this.bindSelectControls(root);
+    this.bindCopyButtons(root);
+    this.bindModalTriggers(root);
+    this.bindToggles(root);
+    this.bindColorPickers(root);
   }
 
   /**
    * Buttons that toggle a CSS class on a target element.
    * Usage: <button data-toggle-class="neu-raised" data-target="#preview-el">
    */
-  private bindClassToggles(): void {
-    document.querySelectorAll<HTMLButtonElement>('[data-toggle-class]').forEach((btn) => {
+  private bindClassToggles(root: Document | DocumentFragment): void {
+    root.querySelectorAll<HTMLButtonElement>('[data-toggle-class]').forEach((btn) => {
       btn.addEventListener('click', () => {
         const cls = btn.dataset.toggleClass;
         const targetSel = btn.dataset.target;
         if (!cls || !targetSel) return;
-        const target = document.querySelector(targetSel);
+        const target = root.querySelector(targetSel);
         if (!target) return;
 
         // If part of a radio group, remove class from siblings first
         const group = btn.dataset.toggleGroup;
         if (group) {
-          document
+          root
             .querySelectorAll<HTMLButtonElement>(`[data-toggle-group="${group}"]`)
             .forEach((sibling) => {
               sibling.classList.remove('active');
@@ -49,14 +52,14 @@ export class PlaygroundControls {
    * Range sliders that update a CSS variable on a target element.
    * Usage: <input type="range" data-css-var="--blur" data-unit="px" data-target="#el">
    */
-  private bindRangeSliders(): void {
-    document.querySelectorAll<HTMLInputElement>('input[data-css-var]').forEach((input) => {
+  private bindRangeSliders(root: Document | DocumentFragment): void {
+    root.querySelectorAll<HTMLInputElement>('input[data-css-var]').forEach((input) => {
       const update = () => {
         const cssVar = input.dataset.cssVar;
         const unit = input.dataset.unit ?? '';
         const targetSel = input.dataset.target;
         if (!cssVar || !targetSel) return;
-        const target = document.querySelector<HTMLElement>(targetSel);
+        const target = root.querySelector<HTMLElement>(targetSel);
         if (!target) return;
         target.style.setProperty(cssVar, `${input.value}${unit}`);
 
@@ -74,15 +77,15 @@ export class PlaygroundControls {
    * Removes all option values from the target, then adds the selected one.
    * Usage: <select data-class-swap data-target="#el">
    */
-  private bindSelectControls(): void {
-    document.querySelectorAll<HTMLSelectElement>('select[data-class-swap]').forEach((select) => {
+  private bindSelectControls(root: Document | DocumentFragment): void {
+    root.querySelectorAll<HTMLSelectElement>('select[data-class-swap]').forEach((select) => {
       // Collect all possible class values from the options
       const optionClasses = [...select.options].map((o) => o.value).filter(Boolean);
 
       select.addEventListener('change', () => {
         const targetSel = select.dataset.target;
         if (!targetSel) return;
-        const target = document.querySelector(targetSel);
+        const target = root.querySelector(targetSel);
         if (!target) return;
 
         // Remove all option classes from the target
@@ -98,8 +101,8 @@ export class PlaygroundControls {
   }
 
   /** Copy-to-clipboard buttons. Usage: <button data-copy="text to copy"> */
-  private bindCopyButtons(): void {
-    document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
+  private bindCopyButtons(root: Document | DocumentFragment): void {
+    root.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
       btn.addEventListener('click', () => {
         const text = btn.dataset.copy ?? '';
         void navigator.clipboard.writeText(text).then(() => {
@@ -114,25 +117,25 @@ export class PlaygroundControls {
   }
 
   /** Modal open/close triggers. */
-  private bindModalTriggers(): void {
-    document.querySelectorAll<HTMLButtonElement>('[data-modal-open]').forEach((btn) => {
+  private bindModalTriggers(root: Document | DocumentFragment): void {
+    root.querySelectorAll<HTMLButtonElement>('[data-modal-open]').forEach((btn) => {
       btn.addEventListener('click', () => {
         const id = btn.dataset.modalOpen;
         if (!id) return;
-        document.getElementById(id)?.classList.add('active');
+        (root as Document).getElementById(id)?.classList.add('active');
       });
     });
 
-    document.querySelectorAll<HTMLButtonElement>('[data-modal-close]').forEach((btn) => {
+    root.querySelectorAll<HTMLButtonElement>('[data-modal-close]').forEach((btn) => {
       btn.addEventListener('click', () => {
         const id = btn.dataset.modalClose;
         if (!id) return;
-        document.getElementById(id)?.classList.remove('active');
+        (root as Document).getElementById(id)?.classList.remove('active');
       });
     });
 
     // Close modal on backdrop click
-    document.querySelectorAll('.modal-backdrop').forEach((backdrop) => {
+    root.querySelectorAll('.modal-backdrop').forEach((backdrop) => {
       backdrop.addEventListener('click', (e) => {
         if (e.target === backdrop) backdrop.classList.remove('active');
       });
@@ -140,8 +143,8 @@ export class PlaygroundControls {
   }
 
   /** Toggle buttons. */
-  private bindToggles(): void {
-    document.querySelectorAll('.toggle').forEach((toggle) => {
+  private bindToggles(root: Document | DocumentFragment): void {
+    root.querySelectorAll('.toggle').forEach((toggle) => {
       toggle.addEventListener('click', () => {
         toggle.classList.toggle('active');
         const isActive = toggle.classList.contains('active');
@@ -151,8 +154,8 @@ export class PlaygroundControls {
   }
 
   /** Color pickers that update a CSS variable. */
-  private bindColorPickers(): void {
-    document
+  private bindColorPickers(root: Document | DocumentFragment): void {
+    root
       .querySelectorAll<HTMLInputElement>('input[type="color"][data-css-var]')
       .forEach((input) => {
         const update = () => {
@@ -160,9 +163,9 @@ export class PlaygroundControls {
           const targetSel = input.dataset.target;
           if (!cssVar) return;
           const target = targetSel
-            ? document.querySelector<HTMLElement>(targetSel)
-            : document.documentElement;
-          target?.style.setProperty(cssVar, input.value);
+            ? root.querySelector<HTMLElement>(targetSel)
+            : (root as Document).documentElement;
+          target!.style.setProperty(cssVar, input.value);
         };
         input.addEventListener('input', update);
       });
