@@ -10,7 +10,9 @@
 // initSoltana's generation counter.
 // ---------------------------------------------------------------------------
 
-import type { EnhancerCleanup } from '../config/types';
+import type { EnhancerCleanup, EnhancerOptions } from '../config/types';
+
+export const TABS_SELECTOR = '[data-sol-tabs]';
 
 let _controller: AbortController | null = null;
 
@@ -41,26 +43,35 @@ function getActiveIndex(container: HTMLElement): number {
 }
 
 /**
- * Enhance all [data-sol-tabs] elements on the page.
- * Expected structure:
- *   <div data-sol-tabs>
- *     <div role="tablist">
- *       <button role="tab" aria-selected="true">Tab 1</button>
- *       <button role="tab">Tab 2</button>
- *     </div>
- *     <div role="tabpanel">Panel 1</div>
- *     <div role="tabpanel" hidden>Panel 2</div>
- *   </div>
+ * Enhance all `[data-sol-tabs]` elements with tab switching, keyboard
+ * navigation, and ARIA attributes.
  *
- * Returns a cleanup object. Calling destroy() removes all listeners.
- * Re-calling initTabs() automatically cleans up previous listeners.
+ * Expected structure:
+ * ```html
+ * <div data-sol-tabs>
+ *   <div role="tablist">
+ *     <button role="tab" aria-selected="true">Tab 1</button>
+ *     <button role="tab">Tab 2</button>
+ *   </div>
+ *   <div role="tabpanel">Panel 1</div>
+ *   <div role="tabpanel" hidden>Panel 2</div>
+ * </div>
+ * ```
+ *
+ * Mutates each tab container by setting `id`, `aria-controls`, and
+ * `aria-labelledby` attributes on tabs and panels.
+ *
+ * @param options - Optional scoping and selector overrides.
+ * @returns Cleanup handle — call `destroy()` to remove all listeners.
+ *          Re-calling `initTabs()` implicitly cleans up previous listeners.
  */
-export function initTabs(): EnhancerCleanup {
+export function initTabs(options?: EnhancerOptions): EnhancerCleanup {
   _controller?.abort();
   _controller = new AbortController();
   const { signal } = _controller;
 
-  document.querySelectorAll<HTMLElement>('[data-sol-tabs]').forEach((container) => {
+  const root = options?.root ?? document;
+  root.querySelectorAll<HTMLElement>(options?.selector ?? TABS_SELECTOR).forEach((container) => {
     const tabs = container.querySelectorAll<HTMLElement>('[role="tab"]');
     const count = tabs.length;
     if (count === 0) return;

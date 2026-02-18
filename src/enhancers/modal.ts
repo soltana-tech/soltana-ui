@@ -10,7 +10,10 @@
 // This is enforced by initSoltana's generation counter.
 // ---------------------------------------------------------------------------
 
-import type { EnhancerCleanup } from '../config/types';
+import type { EnhancerCleanup, EnhancerOptions } from '../config/types';
+
+export const MODAL_SELECTOR = '[data-sol-modal]';
+export const MODAL_OPEN_SELECTOR = '[data-modal-open]';
 
 const FOCUSABLE =
   'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), ' +
@@ -24,7 +27,7 @@ function openModal(modal: HTMLElement): void {
   modal.querySelector('.modal')?.classList.add('active');
   modal.setAttribute('aria-hidden', 'false');
   _openCount++;
-  document.body.style.overflow = 'hidden';
+  document.body.classList.add('sol-modal-open');
 
   // Focus the first focusable element inside the modal content
   requestAnimationFrame(() => {
@@ -40,7 +43,7 @@ function closeModal(modal: HTMLElement): void {
   modal.setAttribute('aria-hidden', 'true');
   _openCount = Math.max(0, _openCount - 1);
   if (_openCount === 0) {
-    document.body.style.overflow = '';
+    document.body.classList.remove('sol-modal-open');
   }
 }
 
@@ -70,38 +73,47 @@ function trapFocus(modal: HTMLElement, e: KeyboardEvent): void {
 }
 
 /**
- * Enhance all [data-sol-modal] elements on the page.
- * Open triggers: elements with [data-modal-open="<modal-id>"]
- * Close triggers: elements with [data-modal-close] inside the modal
+ * Enhance all `[data-sol-modal]` elements with open/close, focus trapping,
+ * Escape key, and backdrop click behavior.
  *
- * Returns a cleanup object. Calling destroy() removes all listeners.
- * Re-calling initModals() automatically cleans up previous listeners.
+ * Open triggers: elements with `[data-modal-open="<modal-id>"]`.
+ * Close triggers: elements with `[data-modal-close]` inside the modal.
+ * Adds the `.sol-modal-open` class to `document.body` while any modal is open
+ * to prevent background scrolling.
+ *
+ * @param options - Optional scoping and selector overrides.
+ * @returns Cleanup handle — call `destroy()` to remove all listeners.
+ *          Re-calling `initModals()` implicitly cleans up previous listeners.
  */
-export function initModals(): EnhancerCleanup {
+export function initModals(options?: EnhancerOptions): EnhancerCleanup {
   _controller?.abort();
   _controller = new AbortController();
   _openCount = 0;
-  document.body.style.overflow = '';
+  document.body.classList.remove('sol-modal-open');
   const { signal } = _controller;
 
+  const root = options?.root ?? document;
+
   // Open triggers
-  document.querySelectorAll<HTMLElement>('[data-modal-open]').forEach((trigger) => {
-    trigger.addEventListener(
-      'click',
-      () => {
-        const targetId = trigger.getAttribute('data-modal-open');
-        if (!targetId) return;
-        const modal = document.getElementById(targetId);
-        if (modal?.hasAttribute('data-sol-modal')) {
-          openModal(modal);
-        }
-      },
-      { signal }
-    );
-  });
+  root
+    .querySelectorAll<HTMLElement>(options?.selector ?? MODAL_OPEN_SELECTOR)
+    .forEach((trigger) => {
+      trigger.addEventListener(
+        'click',
+        () => {
+          const targetId = trigger.getAttribute('data-modal-open');
+          if (!targetId) return;
+          const modal = document.getElementById(targetId);
+          if (modal?.hasAttribute('data-sol-modal')) {
+            openModal(modal);
+          }
+        },
+        { signal }
+      );
+    });
 
   // Close triggers and keyboard handling per modal
-  document.querySelectorAll<HTMLElement>('[data-sol-modal]').forEach((modal) => {
+  root.querySelectorAll<HTMLElement>(MODAL_SELECTOR).forEach((modal) => {
     // Close buttons inside modal
     modal.querySelectorAll<HTMLElement>('[data-modal-close]').forEach((btn) => {
       btn.addEventListener(
@@ -146,7 +158,7 @@ export function initModals(): EnhancerCleanup {
       _controller?.abort();
       _controller = null;
       _openCount = 0;
-      document.body.style.overflow = '';
+      document.body.classList.remove('sol-modal-open');
     },
   };
 }

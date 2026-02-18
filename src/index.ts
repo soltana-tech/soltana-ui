@@ -13,6 +13,7 @@ export type {
   SoltanaInitOptions,
   SoltanaInstance,
   EnhancerCleanup,
+  EnhancerOptions,
   Theme,
   Relief,
   Finish,
@@ -37,10 +38,19 @@ export type {
 export { RECIPES } from './config/recipes.js';
 
 // Enhancer initializers
-export { initModals, initTabs, initTooltips, initAll } from './enhancers/index.js';
+export {
+  initModals,
+  initTabs,
+  initTooltips,
+  initAll,
+  MODAL_SELECTOR,
+  MODAL_OPEN_SELECTOR,
+  TABS_SELECTOR,
+  TOOLTIP_SELECTOR,
+} from './enhancers/index.js';
 
 // Font loading
-export { loadSoltanaFonts } from './fonts/index.js';
+export { loadSoltanaFonts, DEFAULT_FONT_URL } from './fonts/index.js';
 
 // SVG ornament pattern utilities
 export { patterns, toDataUri, toElement } from './ornaments/patterns.js';

@@ -1,7 +1,9 @@
 // ---------------------------------------------------------------------------
 // Utilities Index
 // ---------------------------------------------------------------------------
-// Aggregates all utility partials.
+// Optional general-purpose utility classes (layout, spacing, sizing, visual).
+// Not part of the 4-tier configuration model. Consumers using the SCSS source
+// can exclude this module by omitting `@use 'utilities'` from their entry point.
 // ---------------------------------------------------------------------------
 
 @forward 'layout';

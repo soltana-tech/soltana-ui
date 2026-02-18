@@ -73,4 +73,30 @@ test.describe('font loading', () => {
 
     expect(warnings.some((w) => w.includes('Failed to load fonts'))).toBe(true);
   });
+
+  test('custom URL skips preconnect links', async ({ page }) => {
+    await setupSoltanaPage(page);
+
+    const linkCount = await page.evaluate(() => {
+      window.SoltanaUI.loadSoltanaFonts('https://cdn.example.com/fonts.css');
+      return document.head.querySelectorAll('link').length;
+    });
+
+    // Only the stylesheet — no preconnect links
+    expect(linkCount).toBe(1);
+
+    const href = await page.evaluate(
+      () => (document.head.querySelector('link[rel="stylesheet"]') as HTMLLinkElement)?.href
+    );
+    expect(href).toContain('cdn.example.com/fonts.css');
+  });
+
+  test('DEFAULT_FONT_URL is exported and contains expected font families', async ({ page }) => {
+    await setupSoltanaPage(page);
+
+    const url = await page.evaluate(() => window.SoltanaUI.DEFAULT_FONT_URL);
+    expect(url).toContain('Cinzel');
+    expect(url).toContain('Raleway');
+    expect(url).toContain('JetBrains+Mono');
+  });
 });

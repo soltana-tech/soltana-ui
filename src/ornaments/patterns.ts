@@ -1,7 +1,10 @@
 // ---------------------------------------------------------------------------
 // SVG Ornament Pattern Templates
 // ---------------------------------------------------------------------------
-// Inline SVG template literals for classical ornamental patterns.
+// Programmatic SVG templates for classical ornamental patterns. These are
+// supplementary utilities for consumers needing dynamic SVG access (custom
+// positioning, color overrides, DOM injection). The CSS ornament tier embeds
+// its own SVG data URIs independently and does not consume these functions.
 // All patterns use currentColor for theme-awareness.
 // ---------------------------------------------------------------------------
 

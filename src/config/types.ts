@@ -93,6 +93,13 @@ export interface EnhancerCleanup {
   destroy(): void;
 }
 
+export interface EnhancerOptions {
+  /** Root element to scope queries. Defaults to `document`. */
+  root?: Element | Document;
+  /** Override the default CSS selector for target elements. */
+  selector?: string;
+}
+
 export type TierName = 'theme' | 'relief' | 'finish' | 'ornament';
 
 // ---------------------------------------------------------------------------

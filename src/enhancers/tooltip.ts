@@ -10,7 +10,9 @@
 // listeners. This is enforced by initSoltana's generation counter.
 // ---------------------------------------------------------------------------
 
-import type { EnhancerCleanup } from '../config/types';
+import type { EnhancerCleanup, EnhancerOptions } from '../config/types';
+
+export const TOOLTIP_SELECTOR = '[data-sol-tooltip]';
 
 let _controller: AbortController | null = null;
 let tooltipEl: HTMLElement | null = null;
@@ -21,12 +23,6 @@ function getOrCreateTooltip(): HTMLElement {
   tooltipEl = document.createElement('div');
   tooltipEl.className = 'tooltip';
   tooltipEl.setAttribute('role', 'tooltip');
-  tooltipEl.style.position = 'fixed';
-  tooltipEl.style.zIndex =
-    getComputedStyle(document.documentElement).getPropertyValue('--z-tooltip').trim() || '300';
-  tooltipEl.style.pointerEvents = 'none';
-  tooltipEl.style.opacity = '0';
-  tooltipEl.style.transition = 'opacity 0.15s ease';
   document.body.appendChild(tooltipEl);
   return tooltipEl;
 }
@@ -42,7 +38,7 @@ function showTooltip(target: HTMLElement): void {
 
   const tip = getOrCreateTooltip();
   tip.textContent = text;
-  tip.style.opacity = '1';
+  tip.classList.add('active');
   activeTarget = target;
 
   // Generate a stable ID for ARIA
@@ -59,7 +55,7 @@ function showTooltip(target: HTMLElement): void {
 
 function hideTooltip(): void {
   if (tooltipEl) {
-    tooltipEl.style.opacity = '0';
+    tooltipEl.classList.remove('active');
   }
   if (activeTarget) {
     activeTarget.removeAttribute('aria-describedby');
@@ -105,18 +101,24 @@ function positionTooltip(target: HTMLElement, tip: HTMLElement): void {
 }
 
 /**
- * Enhance all [data-sol-tooltip] elements on the page.
- * Shows a positioned tooltip on hover/focus, hides on blur/mouseleave/Escape.
+ * Enhance all `[data-sol-tooltip]` elements with positioned tooltips.
  *
- * Returns a cleanup object. Calling destroy() removes all listeners and the tooltip element.
- * Re-calling initTooltips() automatically cleans up previous listeners.
+ * Attaches mouseenter/focus listeners that show a tooltip, and
+ * mouseleave/blur/Escape listeners that hide it. Creates a single shared
+ * tooltip element appended to `document.body`.
+ *
+ * @param options - Optional scoping and selector overrides.
+ * @returns Cleanup handle — call `destroy()` to remove all listeners and the
+ *          tooltip element. Re-calling `initTooltips()` implicitly cleans up
+ *          previous listeners.
  */
-export function initTooltips(): EnhancerCleanup {
+export function initTooltips(options?: EnhancerOptions): EnhancerCleanup {
   _controller?.abort();
   _controller = new AbortController();
   const { signal } = _controller;
 
-  document.querySelectorAll<HTMLElement>('[data-sol-tooltip]').forEach((target) => {
+  const root = options?.root ?? document;
+  root.querySelectorAll<HTMLElement>(options?.selector ?? TOOLTIP_SELECTOR).forEach((target) => {
     target.addEventListener(
       'mouseenter',
       () => {

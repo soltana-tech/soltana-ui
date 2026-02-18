@@ -151,17 +151,18 @@ test.describe('initModals', () => {
     await page.locator('[data-modal-open="modal-a"]').click();
     await page.locator('[data-modal-open="modal-b"]').click();
 
-    const overflow = () => page.evaluate(() => document.body.style.overflow);
+    const hasScrollLock = () =>
+      page.evaluate(() => document.body.classList.contains('sol-modal-open'));
 
-    expect(await overflow()).toBe('hidden');
+    expect(await hasScrollLock()).toBe(true);
 
-    // Close first modal -- overflow stays hidden (one still open)
+    // Close first modal -- scroll lock stays (one still open)
     await page.locator('#modal-a [data-modal-close]').click();
-    expect(await overflow()).toBe('hidden');
+    expect(await hasScrollLock()).toBe(true);
 
-    // Close second modal -- overflow restored
+    // Close second modal -- scroll lock removed
     await page.locator('#modal-b [data-modal-close]').click();
-    expect(await overflow()).toBe('');
+    expect(await hasScrollLock()).toBe(false);
   });
 
   test('invalid modal ID does not throw', async ({ page }) => {
@@ -173,8 +174,10 @@ test.describe('initModals', () => {
     await page.evaluate(() => window.SoltanaUI.initModals());
     await page.locator('[data-modal-open="does-not-exist"]').click();
 
-    const overflow = await page.evaluate(() => document.body.style.overflow);
-    expect(overflow).toBe('');
+    const hasScrollLock = await page.evaluate(() =>
+      document.body.classList.contains('sol-modal-open')
+    );
+    expect(hasScrollLock).toBe(false);
   });
 
   test('modal with no focusable children does not throw', async ({ page }) => {
@@ -200,10 +203,12 @@ test.describe('initModals', () => {
       await closeBtn.click();
     }
 
-    // Modal should be closed and body overflow restored
+    // Modal should be closed and scroll lock removed
     await expect(page.locator('#test-modal')).not.toHaveClass(/active/);
-    const overflow = await page.evaluate(() => document.body.style.overflow);
-    expect(overflow).toBe('');
+    const hasScrollLock = await page.evaluate(() =>
+      document.body.classList.contains('sol-modal-open')
+    );
+    expect(hasScrollLock).toBe(false);
   });
 
   test('destroy removes all listeners', async ({ page }) => {

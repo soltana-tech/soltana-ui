@@ -1,11 +1,11 @@
 // ---------------------------------------------------------------------------
 // Font Loading
 // ---------------------------------------------------------------------------
-// Injects Google Fonts <link> and preconnect hints for Soltana's typefaces.
-// Idempotent: safe to call multiple times.
+// Injects a font stylesheet <link> and (for Google Fonts) preconnect hints
+// into <head>. Idempotent: safe to call multiple times.
 // ---------------------------------------------------------------------------
 
-const FONT_CSS_URL =
+export const DEFAULT_FONT_URL =
   'https://fonts.googleapis.com/css2?' +
   'family=Cinzel:wght@400;500;600;700;800;900' +
   '&family=Cinzel+Decorative:wght@400;700;900' +
@@ -16,29 +16,36 @@ const FONT_CSS_URL =
 let _loaded = false;
 
 /**
- * Inject Google Fonts stylesheet and preconnect hints into <head>.
- * Call once at application startup. Subsequent calls are no-ops.
+ * Inject a font stylesheet (and optional preconnect hints) into `<head>`.
+ *
+ * @param url - Font CSS URL. Defaults to the bundled Google Fonts URL
+ *              containing Cinzel, Raleway, and JetBrains Mono. When the URL
+ *              points to `fonts.googleapis.com`, preconnect links are also
+ *              injected automatically.
  */
-export function loadSoltanaFonts(): void {
+export function loadSoltanaFonts(url?: string): void {
   if (_loaded || typeof document === 'undefined') return;
   _loaded = true;
 
+  const fontUrl = url ?? DEFAULT_FONT_URL;
   const head = document.head;
 
-  const preconnect = document.createElement('link');
-  preconnect.rel = 'preconnect';
-  preconnect.href = 'https://fonts.googleapis.com';
-  head.appendChild(preconnect);
+  if (fontUrl.startsWith('https://fonts.googleapis.com')) {
+    const preconnect = document.createElement('link');
+    preconnect.rel = 'preconnect';
+    preconnect.href = 'https://fonts.googleapis.com';
+    head.appendChild(preconnect);
 
-  const preconnectStatic = document.createElement('link');
-  preconnectStatic.rel = 'preconnect';
-  preconnectStatic.href = 'https://fonts.gstatic.com';
-  preconnectStatic.crossOrigin = '';
-  head.appendChild(preconnectStatic);
+    const preconnectStatic = document.createElement('link');
+    preconnectStatic.rel = 'preconnect';
+    preconnectStatic.href = 'https://fonts.gstatic.com';
+    preconnectStatic.crossOrigin = '';
+    head.appendChild(preconnectStatic);
+  }
 
   const stylesheet = document.createElement('link');
   stylesheet.rel = 'stylesheet';
-  stylesheet.href = FONT_CSS_URL;
+  stylesheet.href = fontUrl;
   stylesheet.onerror = () => {
     console.warn('[soltana] Failed to load fonts from Google Fonts CDN');
   };
