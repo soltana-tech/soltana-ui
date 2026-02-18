@@ -37,9 +37,6 @@ jobs:
       - name: ESLint & Stylelint
         run: pnpm run lint
 
-      - name: TypeScript
-        run: pnpm run type-check
-
   build-test:
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -58,6 +55,9 @@ jobs:
 
       - name: Build
         run: pnpm run build
+
+      - name: TypeScript
+        run: pnpm run type-check
 
       - name: Unit tests
         run: pnpm run test
