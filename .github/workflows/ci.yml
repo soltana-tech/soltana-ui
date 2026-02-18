@@ -72,7 +72,11 @@ jobs:
   e2e:
     needs: build-test
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
 
     steps:
       - uses: actions/checkout@v4
@@ -93,16 +97,16 @@ jobs:
           path: packages/soltana-ui/dist/
 
       - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps
+        run: pnpm exec playwright install --with-deps ${{ matrix.browser }}
 
       - name: Run E2E tests
-        run: pnpm run test:e2e
+        run: pnpm run test:e2e -- --project=${{ matrix.browser }}
 
       - name: Upload test results
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.browser }}
           path: playwright-report/
           retention-days: 7
 

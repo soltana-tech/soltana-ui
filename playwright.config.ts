@@ -6,7 +6,10 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
-  reporter: 'html',
+  workers: process.env.CI ? 2 : undefined,
+  maxFailures: process.env.CI ? 10 : undefined,
+  timeout: process.env.CI ? 15000 : 30000,
+  reporter: process.env.CI ? [['github'], ['blob']] : 'html',
   globalSetup: './tests/global-setup.ts',
 
   expect: {
