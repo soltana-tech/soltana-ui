@@ -100,12 +100,15 @@ Issue body template:
 
 ```markdown
 ## Description
+
 <description>
 
 ## Proposed fix
+
 <proposed fix or "N/A">
 
 ## Dependencies
+
 <Depends on #N, #M or "None">
 ```
 

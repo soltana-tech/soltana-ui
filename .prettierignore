@@ -3,3 +3,5 @@ docs-dist/
 node_modules/
 pnpm-lock.yaml
 .turbo/
+.mypy_cache/
+.ruff_cache/

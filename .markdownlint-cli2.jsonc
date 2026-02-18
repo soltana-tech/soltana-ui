@@ -6,7 +6,7 @@
     "MD041": false,
     // Line length: disable for tables, keep default elsewhere
     "MD013": {
-      "tables": false
-    }
-  }
+      "tables": false,
+    },
+  },
 }

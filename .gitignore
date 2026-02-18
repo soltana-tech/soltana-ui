@@ -50,6 +50,8 @@ npm-debug.log*
 __pycache__/
 *.py[cod]
 *.egg-info/
+.mypy_cache/
+.ruff_cache/
 .venv/
 
 # =============================================================================
