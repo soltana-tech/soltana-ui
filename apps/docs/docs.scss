@@ -966,7 +966,7 @@ input[type='range'] {
     var(--text-primary)
   );
   background-clip: text;
-  -webkit-text-fill-color: transparent; /* stylelint-disable-line property-no-vendor-prefix -- needed for Safari gradient text */
+  color: transparent;
   line-height: 1.1;
 }
 

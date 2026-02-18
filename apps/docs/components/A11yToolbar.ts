@@ -46,10 +46,12 @@ export class A11yToolbar {
     // Toggle buttons
     this.element.querySelectorAll<HTMLButtonElement>('[data-a11y]').forEach((btn) => {
       btn.addEventListener('click', () => {
-        const mode = btn.dataset.a11y!;
-        const cls = `a11y-${mode}`;
-        const active = this.target.classList.toggle(cls);
-        btn.classList.toggle('a11y-toolbar__toggle--active', active);
+        const mode = btn.dataset.a11y;
+        if (mode) {
+          const cls = `a11y-${mode}`;
+          const active = this.target.classList.toggle(cls);
+          btn.classList.toggle('a11y-toolbar__toggle--active', active);
+        }
       });
     });
 

@@ -27,8 +27,8 @@ export class Search {
     this.router = router;
     this.entries = this.buildIndex(sections);
     this.overlay = this.buildOverlay();
-    this.input = this.overlay.querySelector<HTMLInputElement>('.search__input')!;
-    this.results = this.overlay.querySelector<HTMLElement>('.search__results')!;
+    this.input = this.overlay.querySelector('.search__input')!;
+    this.results = this.overlay.querySelector('.search__results')!;
     document.body.appendChild(this.overlay);
     this.bind();
   }

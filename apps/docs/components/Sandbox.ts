@@ -262,7 +262,8 @@ export class Sandbox {
     this.playground.bindAll();
 
     // Update code panel
-    this.codePanel.querySelector('code')!.textContent = this.getCleanHtml();
+    const codeEl = this.codePanel.querySelector('code');
+    if (codeEl) codeEl.textContent = this.getCleanHtml();
   }
 
   private updateControlStates(): void {
