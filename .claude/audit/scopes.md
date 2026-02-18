@@ -60,7 +60,7 @@ Project-specific audit configuration for Soltana UI. Sections matching global sc
 - Flag config options that do not surface in any visual or behavioral change
 - Verify default values are sensible and documented
 
-## structure
+## architecture
 
 ### File scope
 - `src/`
