@@ -64,16 +64,18 @@ $golden-ratio: 1.618;
 
 // ---- Classical Column Layout ----
 // Multi-column layout with elegant proportions
-.columns-classical {
-  column-count: 2;
+.columns-classical,
+.columns-classical-3 {
   column-gap: math.pow($golden-ratio, 2) * 1rem;
   column-rule: 1px solid var(--ornament-border);
 }
 
+.columns-classical {
+  column-count: 2;
+}
+
 .columns-classical-3 {
   column-count: 3;
-  column-gap: math.pow($golden-ratio, 2) * 1rem;
-  column-rule: 1px solid var(--ornament-border);
 }
 
 // ---- Pediment — triangular/arched top section ----

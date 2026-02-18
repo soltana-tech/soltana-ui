@@ -90,6 +90,7 @@
 
 .btn-secondary {
   background: var(--relief-bg);
+  backdrop-filter: none;
   border-color: var(--border-default);
   color: var(--text-primary);
 

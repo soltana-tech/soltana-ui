@@ -162,19 +162,23 @@ $progress-variants: (
   }
 }
 
-.skeleton {
+@mixin skeleton-base {
   background-color: var(--surface-3);
   border-radius: var(--radius-md);
-  animation: skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: skeleton-pulse 2s var(--easing-in-out-soft) infinite;
+}
+
+.skeleton {
+  @include skeleton-base;
 }
 
 .skeleton-text {
-  @extend .skeleton;
+  @include skeleton-base;
   height: 1rem;
   margin-bottom: 0.5rem;
 }
 
 .skeleton-circle {
-  @extend .skeleton;
+  @include skeleton-base;
   border-radius: var(--radius-full);
 }

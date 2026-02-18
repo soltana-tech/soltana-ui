@@ -242,68 +242,62 @@
 // ---- Tier token blocks ----
 
 @include register-ornament('gilt') {
-  --checkbox-ornament-border: 2px solid var(--ornament-color);
+  --input-ornament-border: 2px solid var(--ornament-color);
+  --checkbox-ornament-border: var(--input-ornament-border);
+  --radio-ornament-border: var(--input-ornament-border);
   --checkbox-ornament-checked-shadow: 0 0 8px
     color-mix(in srgb, var(--ornament-color), transparent 60%);
-  --radio-ornament-border: 2px solid var(--ornament-color);
   --radio-ornament-checked-shadow: 0 0 8px
     color-mix(in srgb, var(--ornament-color), transparent 60%);
 }
 
 @include register-ornament('baroque') {
-  --checkbox-ornament-border: 2px solid var(--ornament-base);
+  --input-ornament-border: 2px solid var(--ornament-base);
+  --input-ornament-checked-bg: linear-gradient(
+    145deg,
+    var(--ornament-base),
+    var(--ornament-base-hover)
+  );
+  --checkbox-ornament-border: var(--input-ornament-border);
   --checkbox-ornament-radius: var(--radius-sm);
-  --checkbox-ornament-checked-bg: linear-gradient(
-    145deg,
-    var(--ornament-base),
-    var(--ornament-base-hover)
-  );
+  --checkbox-ornament-checked-bg: var(--input-ornament-checked-bg);
   --checkbox-ornament-checked-border: var(--ornament-base-hover);
-  --radio-ornament-border: 2px solid var(--ornament-base);
+  --radio-ornament-border: var(--input-ornament-border);
   --radio-ornament-shadow: 0 0 0 2px var(--ornament-ring-bg), 0 0 0 3px var(--ornament-border);
-  --radio-ornament-checked-bg: linear-gradient(
-    145deg,
-    var(--ornament-base),
-    var(--ornament-base-hover)
-  );
+  --radio-ornament-checked-bg: var(--input-ornament-checked-bg);
   --radio-ornament-checked-shadow:
     0 0 0 2px var(--ornament-ring-bg), 0 0 0 4px var(--ornament-base),
     0 0 12px var(--ornament-border-strong);
 }
 
 @include register-ornament('beveled') {
-  --checkbox-ornament-border: 2px solid var(--ornament-bevel-border);
+  --input-ornament-border: 2px solid var(--ornament-bevel-border);
+  --input-ornament-checked-bg: linear-gradient(
+    175deg,
+    var(--ornament-surface-raised),
+    var(--ornament-surface-deep)
+  );
+  --checkbox-ornament-border: var(--input-ornament-border);
   --checkbox-ornament-shadow: inset 1px 1px 2px rgb(var(--shadow-color) / 15%);
-  --checkbox-ornament-checked-bg: linear-gradient(
-    175deg,
-    var(--ornament-surface-raised),
-    var(--ornament-surface-deep)
-  );
-  --radio-ornament-border: 2px solid var(--ornament-bevel-border);
+  --checkbox-ornament-checked-bg: var(--input-ornament-checked-bg);
+  --radio-ornament-border: var(--input-ornament-border);
   --radio-ornament-shadow: inset 1px 1px 2px rgb(var(--shadow-color) / 15%);
-  --radio-ornament-checked-bg: linear-gradient(
-    175deg,
-    var(--ornament-surface-raised),
-    var(--ornament-surface-deep)
-  );
+  --radio-ornament-checked-bg: var(--input-ornament-checked-bg);
 }
 
 @include register-ornament('faceted') {
-  --checkbox-ornament-border: 2px solid var(--ornament-color);
+  --input-ornament-border: 2px solid var(--ornament-color);
+  --input-ornament-checked-bg: linear-gradient(
+    135deg,
+    var(--ornament-surface-flat),
+    var(--ornament-surface-raised),
+    var(--ornament-surface-deep)
+  );
+  --checkbox-ornament-border: var(--input-ornament-border);
   --checkbox-ornament-radius: 0;
-  --checkbox-ornament-checked-bg: linear-gradient(
-    135deg,
-    var(--ornament-surface-flat),
-    var(--ornament-surface-raised),
-    var(--ornament-surface-deep)
-  );
-  --radio-ornament-border: 2px solid var(--ornament-color);
-  --radio-ornament-checked-bg: linear-gradient(
-    135deg,
-    var(--ornament-surface-flat),
-    var(--ornament-surface-raised),
-    var(--ornament-surface-deep)
-  );
+  --checkbox-ornament-checked-bg: var(--input-ornament-checked-bg);
+  --radio-ornament-border: var(--input-ornament-border);
+  --radio-ornament-checked-bg: var(--input-ornament-checked-bg);
 }
 
 // ============================================================================

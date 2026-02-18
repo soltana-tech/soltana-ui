@@ -89,7 +89,7 @@
 }
 
 // ---- Screen Reader Only ----
-.sr-only {
+@mixin sr-only-styles {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -101,10 +101,14 @@
   border-width: 0;
 }
 
+.sr-only {
+  @include sr-only-styles;
+}
+
 // Focusable screen reader only — becomes visible on focus
 .sr-only-focusable {
   &:not(:focus, :focus-within) {
-    @extend .sr-only;
+    @include sr-only-styles;
   }
 }
 
@@ -133,5 +137,5 @@
 
 // ---- Live Region ----
 .aria-live-region {
-  @extend .sr-only;
+  @include sr-only-styles;
 }
