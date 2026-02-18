@@ -100,7 +100,7 @@ jobs:
         run: pnpm exec playwright install --with-deps ${{ matrix.browser }}
 
       - name: Run E2E tests
-        run: pnpm run test:e2e -- --project=${{ matrix.browser }}
+        run: pnpm run test:e2e --project=${{ matrix.browser }}
 
       - name: Upload test results
         if: failure()
