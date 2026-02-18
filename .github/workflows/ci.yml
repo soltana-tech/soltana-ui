@@ -99,8 +99,31 @@ jobs:
       - name: Install Playwright browsers
         run: pnpm exec playwright install --with-deps ${{ matrix.browser }}
 
+      - name: Restore snapshots cache
+        id: cache-snapshots
+        uses: actions/cache/restore@v4
+        with:
+          path: tests/**/*-snapshots/
+          key: playwright-snapshots-${{ matrix.browser }}-v1
+          restore-keys: |
+            playwright-snapshots-${{ matrix.browser }}-v1
+
       - name: Run E2E tests
-        run: pnpm run test:e2e --project=${{ matrix.browser }}
+        run: |
+          if [ "${{ steps.cache-snapshots.outputs.cache-hit }}" != "true" ]; then
+            echo "No snapshot cache found, generating baseline snapshots..."
+            pnpm run test:e2e --project=${{ matrix.browser }} --update-snapshots
+          else
+            echo "Running tests against cached snapshots..."
+            pnpm run test:e2e --project=${{ matrix.browser }}
+          fi
+
+      - name: Save snapshots cache
+        if: steps.cache-snapshots.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: tests/**/*-snapshots/
+          key: playwright-snapshots-${{ matrix.browser }}-v1
 
       - name: Upload test results
         if: failure()
