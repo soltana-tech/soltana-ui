@@ -1,0 +1,38 @@
+{
+  "name": "@soltana-ui/plotly",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Plotly theme bridge for Soltana UI.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Soltana",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/soltana-tech/soltana-ui.git",
+    "directory": "packages/plotly"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/soltana-plotly.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc --noEmit && vite build",
+    "test": "vitest run",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@soltana-ui/tokens": "workspace:*",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "^3.2.4"
+  },
+  "peerDependencies": {
+    "soltana-ui": "workspace:*"
+  }
+}

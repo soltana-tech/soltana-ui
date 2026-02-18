@@ -1,0 +1,12 @@
+// ---------------------------------------------------------------------------
+// Spacing Utilities
+// ---------------------------------------------------------------------------
+// Margin, padding, and gap utilities.
+// ---------------------------------------------------------------------------
+
+@use 'mixins' as *;
+
+@include generate-gap;
+@include generate-padding;
+@include generate-margin;
+@include generate-auto-margins;

@@ -3,7 +3,7 @@ import path from 'node:path';
 import type { Page } from '@playwright/test';
 import type { TierCombination } from './combinations';
 
-const CSS_PATH = path.resolve('dist/soltana-ui.css');
+const CSS_PATH = path.resolve('packages/soltana-ui/dist/soltana-ui.css');
 
 let cssCache: string | null = null;
 

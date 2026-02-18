@@ -2,8 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import type { Page } from '@playwright/test';
 
-const CSS_PATH = path.resolve('dist/soltana-ui.css');
-const JS_PATH = path.resolve('dist/soltana-ui.umd.cjs');
+const CSS_PATH = path.resolve('packages/soltana-ui/dist/soltana-ui.css');
+const JS_PATH = path.resolve('packages/soltana-ui/dist/soltana-ui.umd.cjs');
 
 let cssCache: string | null = null;
 let jsCache: string | null = null;

@@ -1,0 +1,46 @@
+// ---------------------------------------------------------------------------
+// Responsive Utilities
+// ---------------------------------------------------------------------------
+// Breakpoint-prefixed layout utilities. Visual/tier classes are excluded —
+// responsive concerns are limited to the layout sphere.
+// ---------------------------------------------------------------------------
+
+@use 'sass:list';
+@use 'sass:string';
+@use '../variables' as *;
+@use 'mixins' as gen;
+
+// Escape leading digits for valid CSS class names (e.g. 2xl → \32 xl)
+@function escape-bp($name) {
+  $str: '#{$name}';
+  $first: string.slice($str, 1, 1);
+  $digits: ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
+  @if list.index($digits, $first) {
+    @return '\\3' + $first + ' ' + string.slice($str, 2);
+  }
+  @return $str;
+}
+
+@each $bp-name, $bp-value in $breakpoints {
+  $bp: escape-bp($bp-name);
+
+  @media (min-width: #{$bp-value}) {
+    @include gen.generate-display('#{$bp}\\:');
+    @include gen.generate-flex-direction('#{$bp}\\:');
+    @include gen.generate-flex-wrap('#{$bp}\\:');
+    @include gen.generate-flex-sizing('#{$bp}\\:');
+    @include gen.generate-alignment('#{$bp}\\:');
+    @include gen.generate-grid('#{$bp}\\:');
+    @include gen.generate-position('#{$bp}\\:');
+    @include gen.generate-overflow('#{$bp}\\:');
+    @include gen.generate-gap('#{$bp}\\:');
+    @include gen.generate-padding('#{$bp}\\:', $directions: false);
+    @include gen.generate-margin('#{$bp}\\:', $directions: false);
+    @include gen.generate-auto-margins('#{$bp}\\:');
+    @include gen.generate-width-fractions('#{$bp}\\:', $include-auto: true);
+    @include gen.generate-max-widths('#{$bp}\\:');
+    @include gen.generate-text-align('#{$bp}\\:');
+    @include gen.generate-visibility('#{$bp}\\:');
+    @include gen.generate-order('#{$bp}\\:');
+  }
+}

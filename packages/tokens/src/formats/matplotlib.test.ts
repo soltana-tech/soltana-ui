@@ -1,0 +1,101 @@
+import { describe, it, expect } from 'vitest';
+import { buildMplStyle } from './matplotlib.js';
+import type { ThemeTokens, FoundationTokens } from '../types.js';
+
+const darkTheme: ThemeTokens = {
+  colorScheme: 'dark',
+  surfaceBg: '#08091a',
+  surface1: '#0e1028',
+  surface2: '#151838',
+  surface3: '#1c2048',
+  surface4: '#252a5a',
+  textPrimary: '#f5f0e6',
+  textSecondary: '#c5b99b',
+  textTertiary: '#978b77',
+  textMuted: '#897d69',
+  textInverse: '#08091a',
+  borderDefault: 'rgb(255 255 255 / 6%)',
+  borderSubtle: 'rgb(255 255 255 / 3%)',
+  borderStrong: 'rgb(255 255 255 / 10%)',
+  accentPrimary: '#d4a843',
+  accentSecondary: '#a855f7',
+  colorSuccess: '#10b981',
+  colorWarning: '#fcd34d',
+  colorError: '#ef4444',
+  colorInfo: '#3b82f6',
+  tooltipBg: '#08091a',
+  tooltipText: '#f5f0e6',
+};
+
+const foundation: FoundationTokens = {
+  radius: {},
+  shadow: {},
+  transition: {},
+  easing: {},
+  z: {},
+  fontFamily: { sans: '"Raleway", ui-sans-serif, sans-serif' },
+  fontSize: {},
+  fontWeight: {},
+  letterSpacing: {},
+};
+
+describe('buildMplStyle', () => {
+  const result = buildMplStyle(darkTheme, foundation);
+  const lines = result.split('\n').filter(Boolean);
+
+  function getLine(key: string): string | undefined {
+    return lines.find((l) => l.startsWith(`${key}:`));
+  }
+
+  it('produces valid key: value format', () => {
+    for (const line of lines) {
+      expect(line).toMatch(/^[\w.-]+:\s*.+/);
+    }
+  });
+
+  it('sets figure.facecolor from surfaceBg', () => {
+    expect(getLine('figure.facecolor')).toBe('figure.facecolor: 08091a');
+  });
+
+  it('sets axes.facecolor from surface1', () => {
+    expect(getLine('axes.facecolor')).toBe('axes.facecolor: 0e1028');
+  });
+
+  it('sets text.color from textPrimary', () => {
+    expect(getLine('text.color')).toBe('text.color: f5f0e6');
+  });
+
+  it('sets axes.prop_cycle with cycler', () => {
+    const line = getLine('axes.prop_cycle');
+    expect(line).toContain("cycler('color'");
+    expect(line).toContain('d4a843');
+    expect(line).toContain('3b82f6');
+  });
+
+  it('sets font.family as sans-serif', () => {
+    expect(getLine('font.family')).toBe('font.family: sans-serif');
+  });
+
+  it('sets font.sans-serif from foundation', () => {
+    const line = getLine('font.sans-serif');
+    expect(line).toContain('Raleway');
+  });
+
+  it('converts rgb() color values to bare hex', () => {
+    // borderDefault is rgb(255 255 255 / 6%) → ffffff0f
+    const axesEdge = getLine('axes.edgecolor');
+    expect(axesEdge).toMatch(/^axes\.edgecolor: [0-9a-f]{8}$/);
+    expect(axesEdge).not.toContain('rgb(');
+    expect(axesEdge).not.toContain('#');
+
+    // borderSubtle is rgb(255 255 255 / 3%) → ffffff08
+    const gridColor = getLine('grid.color');
+    expect(gridColor).toMatch(/^grid\.color: [0-9a-f]{8}$/);
+    expect(gridColor).not.toContain('rgb(');
+    expect(gridColor).not.toContain('#');
+  });
+
+  it('ends with newline', () => {
+    expect(result.endsWith('\n')).toBe(true);
+  });
+});

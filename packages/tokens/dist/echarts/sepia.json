@@ -1,0 +1,75 @@
+{
+  "color": [
+    "#6a4518",
+    "#2a5098",
+    "#1a7854",
+    "#6a4518",
+    "#1a7854",
+    "#a02020"
+  ],
+  "backgroundColor": "#e8dcc0",
+  "textStyle": {
+    "color": "#1c1408",
+    "fontFamily": "\"Raleway\", ui-sans-serif, system-ui, -apple-system, sans-serif"
+  },
+  "title": {
+    "textStyle": {
+      "color": "#1c1408",
+      "fontFamily": "\"Raleway\", ui-sans-serif, system-ui, -apple-system, sans-serif"
+    },
+    "subtextStyle": {
+      "color": "#3a2c12"
+    }
+  },
+  "legend": {
+    "textStyle": {
+      "color": "#3a2c12"
+    }
+  },
+  "tooltip": {
+    "backgroundColor": "#1c1408",
+    "textStyle": {
+      "color": "#f2e8d2"
+    }
+  },
+  "categoryAxis": {
+    "axisLine": {
+      "lineStyle": {
+        "color": "rgb(94 63 27 / 18%)"
+      }
+    },
+    "axisTick": {
+      "lineStyle": {
+        "color": "rgb(94 63 27 / 18%)"
+      }
+    },
+    "axisLabel": {
+      "color": "#6f6045"
+    },
+    "splitLine": {
+      "lineStyle": {
+        "color": "rgb(94 63 27 / 10%)"
+      }
+    }
+  },
+  "valueAxis": {
+    "axisLine": {
+      "lineStyle": {
+        "color": "rgb(94 63 27 / 18%)"
+      }
+    },
+    "axisTick": {
+      "lineStyle": {
+        "color": "rgb(94 63 27 / 18%)"
+      }
+    },
+    "axisLabel": {
+      "color": "#6f6045"
+    },
+    "splitLine": {
+      "lineStyle": {
+        "color": "rgb(94 63 27 / 10%)"
+      }
+    }
+  }
+}

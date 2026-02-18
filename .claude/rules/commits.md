@@ -13,13 +13,15 @@ Every commit MUST include an issue reference when work pertains to an issue:
 ## Examples
 
 Closing an issue:
-```
+
+```text
 Fix config crash after reset
 
 Fixes #42
 ```
 
 Partial progress:
-```
+
+```text
 Add shadow scale to lifted relief (#15)
 ```

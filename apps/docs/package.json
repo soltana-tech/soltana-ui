@@ -1,0 +1,17 @@
+{
+  "name": "@soltana-ui/docs",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "soltana-ui": "workspace:*"
+  },
+  "devDependencies": {
+    "sass": "^1.97.3",
+    "vite": "^7.3.1"
+  }
+}

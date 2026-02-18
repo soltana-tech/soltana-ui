@@ -3,8 +3,8 @@ import {
   VALID_RELIEFS,
   VALID_FINISHES,
   VALID_ORNAMENTS,
-} from '../../src/config/validation';
-import { RECIPES } from '../../src/config/recipes';
+} from '../../packages/soltana-ui/src/config/validation';
+import { RECIPES } from '../../packages/soltana-ui/src/config/recipes';
 
 export interface TierCombination {
   theme: string;

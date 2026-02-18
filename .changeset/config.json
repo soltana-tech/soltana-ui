@@ -1,0 +1,11 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
+  "changelog": ["@changesets/changelog-github", { "repo": "soltana-tech/soltana-ui" }],
+  "commit": false,
+  "fixed": [["soltana-ui", "@soltana-ui/tokens"]],
+  "linked": [["@soltana-ui/echarts", "@soltana-ui/plotly"]],
+  "access": "public",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "ignore": ["@soltana-ui/docs"]
+}

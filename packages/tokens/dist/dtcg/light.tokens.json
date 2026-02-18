@@ -1,0 +1,102 @@
+{
+  "surface": {
+    "1": {
+      "$type": "color",
+      "$value": "#fff"
+    },
+    "2": {
+      "$type": "color",
+      "$value": "#eef0f5"
+    },
+    "3": {
+      "$type": "color",
+      "$value": "#e2e5ed"
+    },
+    "4": {
+      "$type": "color",
+      "$value": "#d5d9e4"
+    },
+    "bg": {
+      "$type": "color",
+      "$value": "#f6f7fa"
+    }
+  },
+  "text": {
+    "primary": {
+      "$type": "color",
+      "$value": "#1e2128"
+    },
+    "secondary": {
+      "$type": "color",
+      "$value": "#3a3f4c"
+    },
+    "tertiary": {
+      "$type": "color",
+      "$value": "#5c6375"
+    },
+    "muted": {
+      "$type": "color",
+      "$value": "#6b7280"
+    },
+    "inverse": {
+      "$type": "color",
+      "$value": "#eef0f5"
+    }
+  },
+  "border": {
+    "default": {
+      "$type": "color",
+      "$value": "rgb(85 97 120 / 12%)"
+    },
+    "subtle": {
+      "$type": "color",
+      "$value": "rgb(85 97 120 / 7%)"
+    },
+    "strong": {
+      "$type": "color",
+      "$value": "rgb(85 97 120 / 20%)"
+    }
+  },
+  "accent": {
+    "primary": {
+      "$type": "color",
+      "$value": "#576378"
+    },
+    "secondary": {
+      "$type": "color",
+      "$value": "#6b21a8"
+    }
+  },
+  "semantic": {
+    "success": {
+      "$type": "color",
+      "$value": "#0d6b4e"
+    },
+    "warning": {
+      "$type": "color",
+      "$value": "#855c0a"
+    },
+    "error": {
+      "$type": "color",
+      "$value": "#991b1b"
+    },
+    "info": {
+      "$type": "color",
+      "$value": "#1e40af"
+    }
+  },
+  "tooltip": {
+    "bg": {
+      "$type": "color",
+      "$value": "#1e2128"
+    },
+    "text": {
+      "$type": "color",
+      "$value": "#eef0f5"
+    }
+  },
+  "colorScheme": {
+    "$type": "string",
+    "$value": "light"
+  }
+}

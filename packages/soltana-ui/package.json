@@ -1,0 +1,97 @@
+{
+  "name": "soltana-ui",
+  "version": "1.0.0",
+  "description": "A CSS-first design system inspired by classical architecture and precious materials. Features neumorphic, glassmorphic, and hybrid relief systems with a 4-tier configuration model.",
+  "type": "module",
+  "private": false,
+  "license": "MIT",
+  "author": "Soltana",
+  "homepage": "https://github.com/soltana-tech/soltana-ui",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/soltana-tech/soltana-ui.git",
+    "directory": "packages/soltana-ui"
+  },
+  "keywords": [
+    "design-system",
+    "css",
+    "scss",
+    "neumorphic",
+    "glassmorphic",
+    "ui-library",
+    "design-tokens",
+    "theming"
+  ],
+  "files": [
+    "dist",
+    "src/styles"
+  ],
+  "main": "./dist/soltana-ui.umd.cjs",
+  "module": "./dist/soltana-ui.js",
+  "types": "./dist/index.d.ts",
+  "unpkg": "./dist/soltana-ui.umd.cjs",
+  "jsdelivr": "./dist/soltana-ui.umd.cjs",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/soltana-ui.js",
+      "require": "./dist/soltana-ui.umd.cjs"
+    },
+    "./css": "./dist/soltana-ui.css",
+    "./style.css": "./dist/soltana-ui.css",
+    "./scss": "./src/styles/index.scss",
+    "./scss/*": "./src/styles/*",
+    "./plugins": {
+      "types": "./dist/plugins/types.d.ts",
+      "import": "./dist/plugins/index.js"
+    },
+    "./postcss": {
+      "types": "./dist/plugins/postcss-soltana-treeshake.d.ts",
+      "import": "./dist/plugins/postcss-soltana-treeshake.js"
+    }
+  },
+  "sideEffects": [
+    "*.css",
+    "*.scss"
+  ],
+  "scripts": {
+    "build": "tsc --noEmit && vite build && tsc -p tsconfig.plugins.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "pnpm run lint:ts && pnpm run lint:style",
+    "lint:ts": "eslint .",
+    "lint:style": "stylelint \"src/**/*.{css,scss}\" --allow-empty-input",
+    "type-check": "tsc --noEmit",
+    "prepublishOnly": "pnpm run build"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/node": "^25.2.3",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "jsdom": "^26.1.0",
+    "postcss": "^8.5.6",
+    "sass": "^1.97.3",
+    "stylelint": "^17.2.0",
+    "stylelint-config-prettier-scss": "^1.0.0",
+    "stylelint-config-standard-scss": "^17.0.0",
+    "stylelint-prettier": "^5.0.3",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.55.0",
+    "vite": "^7.3.1",
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "^3.2.4"
+  },
+  "peerDependencies": {
+    "postcss": "^8.0.0",
+    "sass": "^1.50.0"
+  },
+  "peerDependenciesMeta": {
+    "postcss": {
+      "optional": true
+    },
+    "sass": {
+      "optional": true
+    }
+  }
+}

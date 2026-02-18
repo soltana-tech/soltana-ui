@@ -1,0 +1,44 @@
+{
+  "name": "@soltana-ui/echarts",
+  "version": "0.1.0",
+  "private": false,
+  "description": "ECharts theme bridge for Soltana UI.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Soltana",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/soltana-tech/soltana-ui.git",
+    "directory": "packages/echarts"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/soltana-echarts.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc --noEmit && vite build",
+    "test": "vitest run",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@soltana-ui/tokens": "workspace:*",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "^3.2.4"
+  },
+  "peerDependencies": {
+    "echarts": "^5.0.0",
+    "soltana-ui": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "echarts": {
+      "optional": true
+    }
+  }
+}

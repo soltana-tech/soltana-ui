@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@soltana/*": ["../../packages/soltana-ui/src/*"]
+    }
+  },
+  "include": ["."],
+  "exclude": ["node_modules"]
+}

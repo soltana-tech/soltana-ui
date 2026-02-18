@@ -1,0 +1,54 @@
+{
+  "layout": {
+    "paper_bgcolor": "#e8dcc0",
+    "plot_bgcolor": "#f2e8d2",
+    "colorway": [
+      "#6a4518",
+      "#2a5098",
+      "#1a7854",
+      "#6a4518",
+      "#1a7854",
+      "#a02020"
+    ],
+    "font": {
+      "color": "#1c1408",
+      "family": "\"Raleway\", ui-sans-serif, system-ui, -apple-system, sans-serif"
+    },
+    "title": {
+      "font": {
+        "color": "#1c1408"
+      }
+    },
+    "xaxis": {
+      "gridcolor": "rgb(94 63 27 / 10%)",
+      "linecolor": "rgb(94 63 27 / 18%)",
+      "tickfont": {
+        "color": "#6f6045"
+      },
+      "title": {
+        "font": {
+          "color": "#3a2c12"
+        }
+      },
+      "zerolinecolor": "rgb(94 63 27 / 18%)"
+    },
+    "yaxis": {
+      "gridcolor": "rgb(94 63 27 / 10%)",
+      "linecolor": "rgb(94 63 27 / 18%)",
+      "tickfont": {
+        "color": "#6f6045"
+      },
+      "title": {
+        "font": {
+          "color": "#3a2c12"
+        }
+      },
+      "zerolinecolor": "rgb(94 63 27 / 18%)"
+    },
+    "legend": {
+      "font": {
+        "color": "#3a2c12"
+      }
+    }
+  }
+}

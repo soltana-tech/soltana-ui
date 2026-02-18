@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { test, expect } from '@playwright/test';
 
-const CSS_PATH = path.resolve('dist/soltana-ui.css');
+const CSS_PATH = path.resolve('packages/soltana-ui/dist/soltana-ui.css');
 
 let cssCache: string | null = null;
 

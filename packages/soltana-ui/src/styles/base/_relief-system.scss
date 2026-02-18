@@ -1,0 +1,16 @@
+// ---------------------------------------------------------------------------
+// Relief Bridge Tokens
+// ---------------------------------------------------------------------------
+// Shared defaults via var() indirection — resolve per-element at substitution
+// time, so per-element .theme-* overrides work correctly.
+// Per-theme overrides (--surface-deep, --neu-shadow, --neu-light) live in
+// theme files.
+// ---------------------------------------------------------------------------
+
+:root {
+  --relief-surface-flat: var(--surface-1);
+  --relief-surface-raised: var(--surface-2);
+  --relief-surface-deep: var(--surface-deep);
+  --relief-border-default: var(--border-default);
+  --relief-border-subtle: var(--border-subtle);
+}

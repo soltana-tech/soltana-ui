@@ -3,10 +3,14 @@ node_modules/
 
 # Build output
 dist/
+!packages/tokens/dist/
 docs-dist/
 
 # Vite
 .vite/
+
+# Turbo
+.turbo/
 
 # IDE
 .idea/
@@ -33,6 +37,12 @@ a11y-matrix-results/
 
 # Audit drafts
 .claude/audit/draft-issues-*.md
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
 
 # Local environment
 .env

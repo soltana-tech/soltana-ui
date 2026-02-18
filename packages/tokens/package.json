@@ -1,0 +1,37 @@
+{
+  "name": "@soltana-ui/tokens",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Design token compiler for Soltana UI — outputs ECharts JSON, Plotly JSON, .mplstyle, and DTCG JSON.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Soltana",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/soltana-tech/soltana-ui.git",
+    "directory": "packages/tokens"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    "./echarts/*": "./dist/echarts/*",
+    "./plotly/*": "./dist/plotly/*",
+    "./matplotlib/*": "./dist/matplotlib/*",
+    "./dtcg/*": "./dist/dtcg/*"
+  },
+  "scripts": {
+    "build": "tsx src/build.ts",
+    "test": "vitest run",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "postcss": "^8.5.6",
+    "tsx": "^4.19.4",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  },
+  "peerDependencies": {
+    "soltana-ui": "workspace:*"
+  }
+}

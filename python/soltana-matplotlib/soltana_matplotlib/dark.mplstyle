@@ -1,0 +1,16 @@
+figure.facecolor: 08091a
+figure.edgecolor: 08091a
+savefig.facecolor: 08091a
+savefig.edgecolor: 08091a
+axes.facecolor: 0e1028
+axes.edgecolor: ffffff0f
+axes.labelcolor: c5b99b
+axes.prop_cycle: cycler('color', ['d4a843', '3b82f6', '10b981', 'fcd34d', 'a855f7', 'ef4444'])
+grid.color: ffffff08
+xtick.color: ffffff0f
+ytick.color: ffffff0f
+xtick.labelcolor: 897d69
+ytick.labelcolor: 897d69
+text.color: f5f0e6
+font.family: sans-serif
+font.sans-serif: Raleway, ui-sans-serif, system-ui, -apple-system, sans-serif

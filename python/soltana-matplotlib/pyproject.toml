@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "soltana-matplotlib"
+version = "0.1.0"
+description = "Matplotlib styles for the Soltana UI design system."
+readme = { text = "Pre-built `.mplstyle` themes (dark, light, sepia) from the Soltana UI 4-tier design system.", content-type = "text/plain" }
+license = "MIT"
+requires-python = ">=3.9"
+dependencies = ["matplotlib>=3.7"]
+keywords = ["matplotlib", "theme", "style", "design-system", "soltana"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Framework :: Matplotlib",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Visualization",
+    "Typing :: Typed",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=7.0"]
+
+[project.urls]
+Homepage = "https://github.com/soltana-tech/soltana-ui"
+Repository = "https://github.com/soltana-tech/soltana-ui/tree/main/python/soltana-matplotlib"
+
+[tool.setuptools.packages.find]
+include = ["soltana_matplotlib*"]
+
+[tool.setuptools.package-data]
+soltana_matplotlib = ["*.mplstyle", "py.typed"]
+
+[tool.mypy]
+python_version = "3.9"
+strict = true
+files = ["soltana_matplotlib"]
+
+[tool.vulture]
+paths = ["soltana_matplotlib", "tests"]
+min_confidence = 80
+
+[tool.interrogate]
+fail-under = 80
+ignore-init-module = true
+ignore-magic = true
+ignore-semiprivate = true
+ignore-private = true
+ignore-module = true
+verbose = 1

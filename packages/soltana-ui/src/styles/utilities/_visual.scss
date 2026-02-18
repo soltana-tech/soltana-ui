@@ -1,0 +1,406 @@
+// ---------------------------------------------------------------------------
+// Visual Utilities
+// ---------------------------------------------------------------------------
+// Colors, backgrounds, borders, shadows, opacity, transitions, transforms,
+// cursor, pointer events, user select, and visibility.
+// ---------------------------------------------------------------------------
+
+@use '../variables' as *;
+@use 'mixins' as gen;
+
+// ============================================================================
+// BORDER RADIUS
+// ============================================================================
+
+@each $key, $val in $radii {
+  @if $key == 'default' {
+    .rounded {
+      border-radius: $val;
+    }
+  } @else {
+    .rounded-#{$key} {
+      border-radius: $val;
+    }
+  }
+}
+
+// ============================================================================
+// BORDER
+// ============================================================================
+
+.border {
+  border: 1px solid var(--border-default);
+}
+
+.border-0 {
+  border: 0;
+}
+
+.border-2 {
+  border: 2px solid var(--border-default);
+}
+
+.border-t {
+  border-top: 1px solid var(--border-default);
+}
+
+.border-b {
+  border-bottom: 1px solid var(--border-default);
+}
+
+.border-l {
+  border-left: 1px solid var(--border-default);
+}
+
+.border-r {
+  border-right: 1px solid var(--border-default);
+}
+
+.border-subtle {
+  border-color: var(--border-subtle);
+}
+
+.border-strong {
+  border-color: var(--border-strong);
+}
+
+.border-accent {
+  border-color: var(--accent-primary);
+}
+
+// ============================================================================
+// BACKGROUND COLOR
+// ============================================================================
+
+// Semantic surface and state backgrounds
+$bg-semantic: (
+  surface: --surface-bg,
+  surface-1: --surface-1,
+  surface-2: --surface-2,
+  surface-3: --surface-3,
+  surface-4: --surface-4,
+  accent: --accent-primary,
+  accent-secondary: --accent-secondary,
+  success: --color-success,
+  success-subtle: --color-success-subtle,
+  warning: --color-warning,
+  warning-subtle: --color-warning-subtle,
+  error: --color-error,
+  error-subtle: --color-error-subtle,
+  info: --color-info,
+  info-subtle: --color-info-subtle,
+);
+
+@each $name, $var in $bg-semantic {
+  .bg-#{$name} {
+    background-color: var(#{$var});
+  }
+}
+
+// ============================================================================
+// GRADIENT BACKGROUNDS
+// ============================================================================
+
+.bg-gradient-accent {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+}
+
+.bg-fixed {
+  background-attachment: fixed;
+}
+
+// ============================================================================
+// OPACITY
+// ============================================================================
+
+$opacities: (0, 5, 10, 20, 25, 30, 40, 50, 60, 70, 75, 80, 90, 95, 100);
+
+@each $val in $opacities {
+  .opacity-#{$val} {
+    opacity: calc(#{$val} / 100);
+  }
+}
+
+// ============================================================================
+// SHADOWS
+// ============================================================================
+
+@each $key, $_ in $shadows {
+  @if $key == 'default' {
+    .shadow {
+      box-shadow: var(--shadow-#{$key});
+    }
+  } @else {
+    .shadow-#{$key} {
+      box-shadow: var(--shadow-#{$key});
+    }
+  }
+}
+
+// ============================================================================
+// TRANSITION
+// ============================================================================
+
+.transition {
+  transition-property:
+    color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow,
+    transform, filter, backdrop-filter;
+  transition-timing-function: var(--easing-in-out);
+  transition-duration: var(--transition-normal);
+}
+
+.transition-all {
+  transition-property: all;
+  transition-timing-function: var(--easing-in-out);
+  transition-duration: var(--transition-normal);
+}
+
+.transition-none {
+  transition-property: none;
+}
+
+.duration-fast {
+  transition-duration: var(--transition-fast);
+}
+
+.duration-normal {
+  transition-duration: var(--transition-normal);
+}
+
+.duration-slow {
+  transition-duration: var(--transition-slow);
+}
+
+.duration-slower {
+  transition-duration: var(--transition-slower);
+}
+
+.ease-in {
+  transition-timing-function: var(--easing-in);
+}
+
+.ease-out {
+  transition-timing-function: var(--easing-out);
+}
+
+.ease-in-out {
+  transition-timing-function: var(--easing-in-out);
+}
+
+// ============================================================================
+// TRANSFORMS
+// ============================================================================
+
+// --- Scale ---
+
+$scale-values: (0, 50, 75, 90, 95, 100, 105, 110, 125, 150);
+
+@each $val in $scale-values {
+  .scale-#{$val} {
+    transform: scale(calc(#{$val} / 100));
+  }
+}
+
+// --- Rotate ---
+
+$rotate-values: (0, 1, 2, 3, 6, 12, 45, 90, 180);
+
+@each $val in $rotate-values {
+  .rotate-#{$val} {
+    transform: rotate(#{$val}deg);
+  }
+
+  @if $val != 0 {
+    .-rotate-#{$val} {
+      transform: rotate(-#{$val}deg);
+    }
+  }
+}
+
+// --- Translate ---
+
+@each $step in $space-keys {
+  .translate-x-#{$step} {
+    transform: translateX(calc(#{$step} * 0.25rem));
+  }
+
+  .translate-y-#{$step} {
+    transform: translateY(calc(#{$step} * 0.25rem));
+  }
+
+  @if $step != 0 {
+    .-translate-x-#{$step} {
+      transform: translateX(calc(#{$step} * -0.25rem));
+    }
+
+    .-translate-y-#{$step} {
+      transform: translateY(calc(#{$step} * -0.25rem));
+    }
+  }
+}
+
+// Percentage-based translate
+.translate-x-1\/2 {
+  transform: translateX(50%);
+}
+
+.translate-y-1\/2 {
+  transform: translateY(50%);
+}
+
+.translate-x-full {
+  transform: translateX(100%);
+}
+
+.translate-y-full {
+  transform: translateY(100%);
+}
+
+.-translate-x-1\/2 {
+  transform: translateX(-50%);
+}
+
+.-translate-y-1\/2 {
+  transform: translateY(-50%);
+}
+
+.-translate-x-full {
+  transform: translateX(-100%);
+}
+
+.-translate-y-full {
+  transform: translateY(-100%);
+}
+
+// --- Skew ---
+
+$skew-values: (1, 2, 3, 6, 12);
+
+@each $val in $skew-values {
+  .skew-x-#{$val} {
+    transform: skewX(#{$val}deg);
+  }
+
+  .skew-y-#{$val} {
+    transform: skewY(#{$val}deg);
+  }
+
+  .-skew-x-#{$val} {
+    transform: skewX(-#{$val}deg);
+  }
+
+  .-skew-y-#{$val} {
+    transform: skewY(-#{$val}deg);
+  }
+}
+
+// ============================================================================
+// ANIMATIONS
+// ============================================================================
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ping {
+  75%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-ping {
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.animate-pulse {
+  animation: pulse 2s var(--easing-in-out-soft) infinite;
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+.animate-none {
+  animation: none;
+}
+
+// ============================================================================
+// CURSOR
+// ============================================================================
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-default {
+  cursor: default;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
+.cursor-grab {
+  cursor: grab;
+}
+
+// ============================================================================
+// POINTER EVENTS
+// ============================================================================
+
+.pointer-events-none {
+  pointer-events: none;
+}
+
+.pointer-events-auto {
+  pointer-events: auto;
+}
+
+// ============================================================================
+// USER SELECT
+// ============================================================================
+
+.select-none {
+  user-select: none;
+}
+
+.select-text {
+  user-select: text;
+}
+
+.select-all {
+  user-select: all;
+}
+
+// ============================================================================
+// VISIBILITY
+// ============================================================================
+
+@include gen.generate-visibility;

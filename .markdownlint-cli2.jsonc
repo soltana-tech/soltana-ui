@@ -1,0 +1,12 @@
+{
+  "config": {
+    // Allow HTML elements in Markdown
+    "MD033": false,
+    // First line does not need to be a top-level heading
+    "MD041": false,
+    // Line length: disable for tables, keep default elsewhere
+    "MD013": {
+      "tables": false
+    }
+  }
+}

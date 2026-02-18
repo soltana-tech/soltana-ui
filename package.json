@@ -1,66 +1,12 @@
 {
-  "name": "soltana-ui",
-  "version": "1.0.0",
-  "description": "A CSS-first design system inspired by classical architecture and precious materials. Features neumorphic, glassmorphic, and hybrid relief systems with a 4-tier configuration model.",
+  "name": "soltana-ui-monorepo",
+  "private": true,
   "type": "module",
-  "private": false,
-  "license": "MIT",
-  "author": "Soltana",
-  "homepage": "https://github.com/soltana/soltana-ui",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/soltana/soltana-ui.git"
-  },
-  "keywords": [
-    "design-system",
-    "css",
-    "scss",
-    "neumorphic",
-    "glassmorphic",
-    "ui-library",
-    "design-tokens",
-    "theming"
-  ],
-  "files": [
-    "dist",
-    "src/styles",
-    "src/config"
-  ],
-  "main": "./dist/soltana-ui.umd.cjs",
-  "module": "./dist/soltana-ui.js",
-  "types": "./dist/index.d.ts",
-  "unpkg": "./dist/soltana-ui.umd.cjs",
-  "jsdelivr": "./dist/soltana-ui.umd.cjs",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/soltana-ui.js",
-      "require": "./dist/soltana-ui.umd.cjs"
-    },
-    "./css": "./dist/soltana-ui.css",
-    "./style.css": "./dist/soltana-ui.css",
-    "./scss": "./src/styles/index.scss",
-    "./scss/*": "./src/styles/*",
-    "./plugins": {
-      "types": "./dist/plugins/types.d.ts",
-      "import": "./dist/plugins/index.js"
-    },
-    "./postcss": {
-      "types": "./dist/plugins/postcss-soltana-treeshake.d.ts",
-      "import": "./dist/plugins/postcss-soltana-treeshake.js"
-    }
-  },
-  "sideEffects": [
-    "*.css",
-    "*.scss"
-  ],
+  "packageManager": "pnpm@10.30.0",
   "scripts": {
-    "dev": "npm run docs:dev",
-    "build": "tsc --noEmit && vite build && tsc -p tsconfig.plugins.json",
-    "docs:dev": "DOCS=true vite --config vite.config.ts",
-    "docs:build": "DOCS=true vite build --config vite.config.ts",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "test": "turbo run test",
     "test:e2e": "playwright test",
     "test:e2e:update": "playwright test --update-snapshots",
     "test:e2e:visual": "playwright test tests/visual-regression.spec.ts",
@@ -69,44 +15,42 @@
     "test:e2e:enhancers": "playwright test tests/enhancers/",
     "test:e2e:full": "FULL_MATRIX=1 playwright test tests/visual-regression.spec.ts",
     "test:a11y-matrix": "playwright test --config playwright.a11y-matrix.config.ts",
-    "test:all": "vitest run && playwright test",
-    "lint": "npm run lint:ts && npm run lint:style",
-    "lint:ts": "eslint .",
-    "lint:style": "stylelint \"**/*.{css,scss}\" --allow-empty-input",
+    "test:all": "turbo run test && playwright test",
+    "lint": "turbo run lint",
+    "lint:ts": "turbo run lint:ts",
+    "lint:style": "turbo run lint:style",
+    "type-check": "turbo run type-check",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "type-check": "tsc --noEmit",
-    "prepublishOnly": "npm run build",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset publish",
+    "sync:mplstyle": "cp packages/tokens/dist/matplotlib/*.mplstyle python/soltana-matplotlib/soltana_matplotlib/",
     "prepare": "command -v pre-commit >/dev/null 2>&1 && pre-commit install || echo 'pre-commit not installed, skipping hook installation'"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.1",
+    "@changesets/changelog-github": "^0.5.2",
+    "@changesets/cli": "^2.29.8",
     "@eslint/js": "^9.39.2",
     "@playwright/test": "^1.58.2",
     "@types/node": "^25.2.3",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
-    "jsdom": "^26.1.0",
-    "postcss": "^8.5.6",
     "prettier": "^3.8.1",
     "prettier-plugin-organize-imports": "^4.3.0",
-    "sass": "^1.97.3",
     "stylelint": "^17.2.0",
     "stylelint-config-prettier-scss": "^1.0.0",
     "stylelint-config-standard-scss": "^17.0.0",
     "stylelint-prettier": "^5.0.3",
+    "turbo": "^2.5.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.55.0",
-    "vite": "^7.3.1",
-    "vite-plugin-dts": "^4.5.4",
-    "vitest": "^3.2.4"
+    "typescript-eslint": "^8.55.0"
   },
-  "peerDependencies": {
-    "sass": "^1.50.0"
-  },
-  "peerDependenciesMeta": {
-    "sass": {
-      "optional": true
-    }
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "esbuild"
+    ]
   }
 }

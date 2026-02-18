@@ -1,0 +1,462 @@
+import type { SoltanaInstance, Theme, Relief, Finish, Ornament, RecipeName } from '@soltana/config';
+import { RECIPES } from '@soltana/config';
+import {
+  VALID_THEMES,
+  VALID_RELIEFS,
+  VALID_FINISHES,
+  VALID_ORNAMENTS,
+} from '@soltana/config/validation';
+
+interface OptionConfig {
+  value: string;
+  label: string;
+  icon?: string;
+}
+
+const THEME_ICONS = new Map<string, string>([
+  [
+    'light',
+    '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><line x1="8" y1="1" x2="8" y2="3"/><line x1="8" y1="13" x2="8" y2="15"/><line x1="1" y1="8" x2="3" y2="8"/><line x1="13" y1="8" x2="15" y2="8"/><line x1="3.05" y1="3.05" x2="4.46" y2="4.46"/><line x1="11.54" y1="11.54" x2="12.95" y2="12.95"/><line x1="3.05" y1="12.95" x2="4.46" y2="11.54"/><line x1="11.54" y1="4.46" x2="12.95" y2="3.05"/></svg>',
+  ],
+  [
+    'dark',
+    '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M14 9.5A6.5 6.5 0 0 1 6.5 2 6.5 6.5 0 1 0 14 9.5z"/></svg>',
+  ],
+  [
+    'sepia',
+    '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/><line x1="6" y1="4" x2="10" y2="4"/><line x1="6" y1="7" x2="10" y2="7"/><line x1="6" y1="10" x2="8" y2="10"/></svg>',
+  ],
+  [
+    'auto',
+    '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="5"/><path d="M8 3v10"/><path d="M8 3a5 5 0 0 1 0 10"/></svg>',
+  ],
+]);
+
+/** Custom display labels for tier values that differ from simple capitalization. */
+const LABEL_OVERRIDES = new Map<string, string>([['neu', 'Neumorphic']]);
+
+function toOptions(values: readonly string[], icons?: Map<string, string>): OptionConfig[] {
+  return values.map((v) => ({
+    value: v,
+    label: LABEL_OVERRIDES.get(v) ?? v.charAt(0).toUpperCase() + v.slice(1),
+    ...(icons?.get(v) ? { icon: icons.get(v) } : {}),
+  }));
+}
+
+const THEME_OPTIONS: OptionConfig[] = toOptions(VALID_THEMES, THEME_ICONS);
+const RELIEF_OPTIONS: OptionConfig[] = toOptions(VALID_RELIEFS);
+const FINISH_OPTIONS: OptionConfig[] = toOptions(VALID_FINISHES);
+const ORNAMENT_OPTIONS: OptionConfig[] = toOptions(VALID_ORNAMENTS);
+
+const RECIPE_OPTIONS: OptionConfig[] = Object.entries(RECIPES).map(([key, recipe]) => ({
+  value: key,
+  label: recipe.name,
+}));
+
+/**
+ * Settings panel for the 4-tier design system.
+ * Uses the initSoltana() API to control theme, relief, finish, and ornament.
+ */
+export class SettingsPanel {
+  private container: HTMLElement | null = null;
+  private isOpen = false;
+  private soltana: SoltanaInstance;
+
+  constructor(soltana: SoltanaInstance) {
+    this.soltana = soltana;
+    this.injectStyles();
+    this.render();
+    this.bind();
+  }
+
+  private injectStyles(): void {
+    if (document.getElementById('settings-panel-styles')) return;
+
+    const style = document.createElement('style');
+    style.id = 'settings-panel-styles';
+    style.textContent = `
+      .settings-panel {
+        position: fixed;
+        top: 60px;
+        right: 16px;
+        width: 320px;
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
+        background: var(--relief-bg, var(--surface-2));
+        backdrop-filter: blur(var(--finish-blur, 16px)) saturate(var(--finish-saturation, 140%));
+        border: 1px solid var(--relief-border, var(--border-default));
+        border-radius: var(--radius-xl);
+        box-shadow: var(--relief-shadow);
+        z-index: 1000;
+        transform: translateX(calc(100% + 20px));
+        opacity: 0;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        pointer-events: none;
+      }
+
+      .settings-panel.open {
+        transform: translateX(0);
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .settings-panel__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      .settings-panel__title {
+        font-family: var(--font-serif);
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin: 0;
+      }
+
+      .settings-panel__close {
+        background: transparent;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        padding: 0.25rem;
+        border-radius: var(--radius-sm);
+        transition: color 0.2s, background 0.2s;
+      }
+
+      .settings-panel__close:hover {
+        color: var(--text-primary);
+        background: var(--state-hover);
+      }
+
+      .settings-panel__body {
+        padding: 1rem 1.25rem;
+      }
+
+      .settings-section {
+        margin-bottom: 1.5rem;
+      }
+
+      .settings-section:last-child {
+        margin-bottom: 0;
+      }
+
+      .settings-section__label {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-tertiary);
+        margin-bottom: 0.5rem;
+      }
+
+      .settings-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .settings-option {
+        flex: 1 1 auto;
+        min-width: 80px;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.8rem;
+        font-weight: 500;
+        text-align: center;
+        background: var(--surface-3);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-md);
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .settings-option:hover {
+        background: var(--state-hover);
+        border-color: var(--border-default);
+        color: var(--text-primary);
+      }
+
+      .settings-option.active {
+        background: var(--accent-primary);
+        border-color: var(--accent-primary);
+        color: var(--text-inverse);
+        box-shadow: 0 2px 8px color-mix(in srgb, var(--accent-primary) 30%, transparent);
+      }
+
+      .settings-panel__footer {
+        padding: 0.75rem 1.25rem;
+        border-top: 1px solid var(--border-subtle);
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .settings-reset {
+        font-size: 0.75rem;
+        color: var(--text-tertiary);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0.25rem 0.5rem;
+        border-radius: var(--radius-sm);
+        transition: color 0.2s, background 0.2s;
+      }
+
+      .settings-reset:hover {
+        color: var(--text-primary);
+        background: var(--state-hover);
+      }
+
+      .settings-trigger {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        background: var(--surface-3);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-md);
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .settings-trigger:hover {
+        background: var(--state-hover);
+        color: var(--text-primary);
+        border-color: var(--border-default);
+      }
+
+      .settings-trigger.active {
+        background: var(--accent-primary);
+        border-color: var(--accent-primary);
+        color: var(--text-inverse);
+      }
+
+      .settings-trigger svg {
+        width: 18px;
+        height: 18px;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  private render(): void {
+    // Create trigger button in header
+    const headerActions = document.querySelector('.docs-header__actions');
+    if (headerActions && !document.getElementById('settings-trigger')) {
+      const trigger = document.createElement('button');
+      trigger.id = 'settings-trigger';
+      trigger.className = 'settings-trigger';
+      trigger.setAttribute('aria-label', 'Design System Settings');
+      trigger.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+      `;
+      headerActions.appendChild(trigger);
+    }
+
+    // Create panel
+    if (!document.getElementById('settings-panel')) {
+      const panel = document.createElement('div');
+      panel.id = 'settings-panel';
+      panel.className = 'settings-panel';
+      panel.innerHTML = this.buildPanelHTML();
+      document.body.appendChild(panel);
+      this.container = panel;
+    }
+
+    this.updateActiveStates();
+  }
+
+  private buildPanelHTML(): string {
+    return `
+      <div class="settings-panel__header">
+        <h3 class="settings-panel__title">Design System</h3>
+        <button class="settings-panel__close" aria-label="Close settings">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="settings-panel__body">
+        ${this.buildRecipeSection()}
+        ${this.buildSection('Color Mode', 'theme', THEME_OPTIONS)}
+        ${this.buildSection('Relief', 'relief', RELIEF_OPTIONS)}
+        ${this.buildSection('Finish', 'finish', FINISH_OPTIONS)}
+        ${this.buildSection('Ornament', 'ornament', ORNAMENT_OPTIONS)}
+      </div>
+      <div class="settings-panel__footer">
+        <button class="settings-reset" data-action="reset">Reset to Defaults</button>
+      </div>
+    `;
+  }
+
+  private buildRecipeSection(): string {
+    const optionsHTML = RECIPE_OPTIONS.map(
+      (opt) => `
+        <button class="settings-option settings-recipe" data-recipe="${opt.value}">
+          ${opt.label}
+        </button>
+      `
+    ).join('');
+
+    return `
+      <div class="settings-section">
+        <span class="settings-section__label">Recipes</span>
+        <div class="settings-options">${optionsHTML}</div>
+      </div>
+    `;
+  }
+
+  private buildSection(label: string, tier: string, options: OptionConfig[]): string {
+    const optionsHTML = options
+      .map(
+        (opt) => `
+        <button class="settings-option" data-tier="${tier}" data-value="${opt.value}">
+          ${opt.icon ? `<span>${opt.icon}</span> ` : ''}${opt.label}
+        </button>
+      `
+      )
+      .join('');
+
+    return `
+      <div class="settings-section">
+        <span class="settings-section__label">${label}</span>
+        <div class="settings-options">${optionsHTML}</div>
+      </div>
+    `;
+  }
+
+  private bind(): void {
+    // Trigger button
+    const trigger = document.getElementById('settings-trigger');
+    trigger?.addEventListener('click', () => {
+      this.toggle();
+    });
+
+    // Close button
+    this.container?.querySelector('.settings-panel__close')?.addEventListener('click', () => {
+      this.close();
+    });
+
+    // Option buttons
+    this.container?.querySelectorAll('.settings-option').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const target = e.currentTarget as HTMLElement;
+        const tier = target.dataset.tier;
+        const value = target.dataset.value;
+        if (tier && value) {
+          this.handleOptionClick(tier, value);
+        }
+      });
+    });
+
+    // Recipe buttons
+    this.container?.querySelectorAll('.settings-recipe').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const target = e.currentTarget as HTMLElement;
+        const recipeName = target.dataset.recipe;
+        if (recipeName) {
+          this.soltana.applyRecipe(recipeName as RecipeName);
+          this.updateActiveStates();
+        }
+      });
+    });
+
+    // Reset button
+    this.container?.querySelector('[data-action="reset"]')?.addEventListener('click', () => {
+      this.soltana.reset();
+      this.updateActiveStates();
+    });
+
+    // Close on escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.isOpen) {
+        this.close();
+      }
+    });
+
+    // Close on click outside
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      if (
+        this.isOpen &&
+        !this.container?.contains(target) &&
+        !target.closest('#settings-trigger')
+      ) {
+        this.close();
+      }
+    });
+  }
+
+  private handleOptionClick(tier: string, value: string): void {
+    switch (tier) {
+      case 'theme':
+        this.soltana.setTheme(value as Theme);
+        break;
+      case 'relief':
+        this.soltana.setRelief(value as Relief);
+        break;
+      case 'finish':
+        this.soltana.setFinish(value as Finish);
+        break;
+      case 'ornament':
+        this.soltana.setOrnament(value as Ornament);
+        break;
+    }
+    this.updateActiveStates();
+  }
+
+  private updateActiveStates(): void {
+    const state = this.soltana.getState();
+
+    // Tier option buttons
+    this.container?.querySelectorAll('.settings-option:not(.settings-recipe)').forEach((btn) => {
+      const el = btn as HTMLElement;
+      const tier = el.dataset.tier as keyof typeof state;
+      const value = el.dataset.value;
+      el.classList.toggle('active', state[tier] === value);
+    });
+
+    // Recipe buttons — active when all 4 tiers match
+    this.container?.querySelectorAll('.settings-recipe').forEach((btn) => {
+      const el = btn as HTMLElement;
+      const recipeName = el.dataset.recipe as RecipeName;
+      const recipe = RECIPES[recipeName] as (typeof RECIPES)[RecipeName] | undefined;
+      if (!recipe) return;
+      const matches =
+        state.theme === recipe.theme &&
+        state.relief === recipe.relief &&
+        state.finish === recipe.finish &&
+        state.ornament === recipe.ornament;
+      el.classList.toggle('active', matches);
+    });
+  }
+
+  toggle(): void {
+    if (this.isOpen) {
+      this.close();
+    } else {
+      this.open();
+    }
+  }
+
+  open(): void {
+    this.isOpen = true;
+    this.container?.classList.add('open');
+    document.getElementById('settings-trigger')?.classList.add('active');
+  }
+
+  close(): void {
+    this.isOpen = false;
+    this.container?.classList.remove('open');
+    document.getElementById('settings-trigger')?.classList.remove('active');
+  }
+}
