@@ -95,29 +95,16 @@
       </div>
     </header>
 
-    <!-- Tab navigation -->
-    <nav class="docs-tabs" id="docs-tabs" role="tablist" aria-label="Documentation sections">
-      <div class="docs-tabs__inner">
-        <button class="tab active" data-tab="getting-started" role="tab" aria-selected="true">
-          Getting Started
-        </button>
-        <button class="tab" data-tab="design-system" role="tab" aria-selected="false">
-          Design System
-        </button>
-        <button class="tab" data-tab="components" role="tab" aria-selected="false">
-          Components
-        </button>
-        <button class="tab" data-tab="patterns" role="tab" aria-selected="false">Patterns</button>
-        <button class="tab" data-tab="examples" role="tab" aria-selected="false">Examples</button>
-      </div>
-    </nav>
+    <!-- Layout: sidebar + main content -->
+    <div class="docs-layout" id="docs-layout">
+      <!-- Sidebar is injected here by Sidebar.ts -->
 
-    <!-- Main content area -->
-    <main class="docs-main" id="docs-main" role="main">
-      <div class="docs-content" id="docs-content">
-        <!-- Pages are rendered here by JS -->
-      </div>
-    </main>
+      <main class="docs-main" id="docs-main" role="main">
+        <div class="docs-content" id="docs-content">
+          <!-- Pages are rendered here by Router -->
+        </div>
+      </main>
+    </div>
 
     <script type="module" src="./main.ts"></script>
   </body>

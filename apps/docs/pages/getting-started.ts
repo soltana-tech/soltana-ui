@@ -12,6 +12,38 @@ export function renderGettingStarted(): string {
   return `
 <div class="page-getting-started">
 
+  <div class="hero">
+    <h1 class="hero__title font-serif">Soltana UI</h1>
+    <p class="hero__subtitle">
+      A CSS-first design system with a composable 4-tier architecture.
+      Theme, Relief, Finish, and Ornament combine orthogonally to produce
+      hundreds of unique visual configurations from a single codebase.
+    </p>
+    <div class="hero__cta">
+      <a href="#/components/buttons" class="btn btn-primary">Try the Sandbox</a>
+      <a href="#/design-system" class="btn btn-secondary">Explore the Design System</a>
+      <a href="#/gallery" class="btn btn-secondary">Browse the Gallery</a>
+    </div>
+    <div class="hero__mini-demos">
+      <div class="hero__demo relief-neu finish-glossy ornament-gilt">
+        <button class="btn btn-primary btn-sm">Luxury Dark</button>
+        <span class="badge badge-primary">neu + glossy + gilt</span>
+      </div>
+      <div class="hero__demo theme-light relief-flat finish-matte">
+        <button class="btn btn-primary btn-sm">Corporate Clean</button>
+        <span class="badge badge-primary">flat + matte</span>
+      </div>
+      <div class="hero__demo relief-lifted finish-frosted">
+        <button class="btn btn-primary btn-sm">Frosted Modern</button>
+        <span class="badge badge-primary">lifted + frosted</span>
+      </div>
+      <div class="hero__demo theme-sepia relief-soft ornament-beveled">
+        <button class="btn btn-primary btn-sm">Classic Warm</button>
+        <span class="badge badge-primary">soft + beveled</span>
+      </div>
+    </div>
+  </div>
+
   ${sectionHeading('The 4-Tier System', 'four-tier', 'Soltana layers four independent dimensions of visual design. Each tier can be changed independently, creating hundreds of unique combinations.')}
 
   ${quickNav([
