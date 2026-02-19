@@ -1,0 +1,218 @@
+// ---------------------------------------------------------------------------
+// Table Components
+// ---------------------------------------------------------------------------
+// Data tables with striping, hover, modifiers, and relief-aware styling.
+// Uses --relief-* variables for automatic relief switching.
+// ---------------------------------------------------------------------------
+
+@use '../variables' as *;
+@use '../base/register' as *;
+@use '../base/transitions' as *;
+
+// ============================================================================
+// BASE TABLE
+// ============================================================================
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-refined);
+  transition:
+    background var(--transition-slow) var(--easing-in-out),
+    box-shadow var(--transition-slow) var(--easing-in-out);
+
+  th,
+  td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-default);
+  }
+
+  th {
+    font-weight: var(--font-semibold);
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-display);
+    background-color: var(--relief-surface-raised);
+    border-bottom: 2px solid var(--border-strong);
+  }
+
+  tbody tr {
+    transition:
+      background-color var(--transition-normal) var(--easing-in-out),
+      box-shadow var(--transition-normal) var(--easing-in-out);
+
+    &:nth-child(even) {
+      background-color: var(--relief-surface-raised);
+    }
+
+    @include hover-state;
+  }
+
+  caption {
+    caption-side: bottom;
+    padding: 0.75rem 0;
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    text-align: left;
+  }
+}
+
+// ============================================================================
+// MODIFIERS
+// ============================================================================
+
+.table-bordered {
+  th,
+  td {
+    border: 1px solid var(--border-default);
+  }
+
+  th {
+    border-bottom-width: 2px;
+    border-bottom-color: var(--border-strong);
+  }
+}
+
+.table-compact {
+  th,
+  td {
+    padding: 0.375rem 0.625rem;
+  }
+}
+
+.table-relaxed {
+  th,
+  td {
+    padding: 1rem 1.25rem;
+  }
+}
+
+.table-fixed {
+  table-layout: fixed;
+}
+
+// ============================================================================
+// ACTIVE ROW
+// ============================================================================
+
+.table tbody tr.active {
+  background-color: var(--state-active);
+  box-shadow: inset 4px 0 0 var(--accent-primary);
+}
+
+// ============================================================================
+// RESPONSIVE WRAPPER
+// ============================================================================
+
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+// ============================================================================
+// INLAY VARIANT
+// ============================================================================
+
+.table-inlay {
+  border-collapse: separate;
+  border-spacing: 0 4px;
+
+  th {
+    background: linear-gradient(145deg, var(--accent-decorative), var(--accent-decorative-hover));
+    color: var(--text-inverse);
+  }
+
+  tbody tr {
+    background: var(--relief-bg);
+    box-shadow: var(--relief-shadow);
+
+    td:first-child {
+      border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+    }
+
+    td:last-child {
+      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    }
+  }
+}
+
+// ============================================================================
+// NEUMORPHIC RELIEF OVERRIDE
+// ============================================================================
+
+@include register-relief('neumorphic') {
+  .table {
+    border-collapse: separate;
+    border-spacing: 0 0.75rem;
+
+    th,
+    td {
+      border-bottom: none;
+    }
+
+    // Header row
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background-color: var(--relief-surface-deep);
+      backdrop-filter: blur(8px);
+
+      &:first-child {
+        border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+      }
+
+      &:last-child {
+        border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+      }
+    }
+
+    // Body rows — gapped inset style
+    tbody tr {
+      background: linear-gradient(
+        145deg,
+        rgb(var(--shadow-color) / 12%),
+        rgb(var(--shadow-color) / 5%)
+      );
+      box-shadow:
+        var(--relief-shadow-inset-lg),
+        inset 0 0.5px 0 rgb(var(--highlight-color) / 10%),
+        inset 0 -0.5px 0 rgb(var(--shadow-color) / 8%);
+
+      td:first-child {
+        border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+      }
+
+      td:last-child {
+        border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+      }
+
+      &:nth-child(even) {
+        background: linear-gradient(
+          145deg,
+          rgb(var(--shadow-color) / 8%),
+          rgb(var(--shadow-color) / 3%)
+        );
+      }
+
+      &:hover:not(:disabled) {
+        background: linear-gradient(
+          145deg,
+          rgb(var(--shadow-color) / 16%),
+          rgb(var(--shadow-color) / 8%)
+        );
+      }
+
+      &.active {
+        box-shadow:
+          var(--relief-shadow-inset-lg),
+          inset 4px 0 0 var(--accent-primary),
+          inset 0 0.5px 0 rgb(var(--highlight-color) / 10%),
+          inset 0 -0.5px 0 rgb(var(--shadow-color) / 8%);
+      }
+    }
+  }
+}
