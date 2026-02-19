@@ -2,7 +2,12 @@
 
 import { CentralPlayground } from '../components/CentralPlayground';
 
-export function renderPlayground(): HTMLElement {
+export interface PlaygroundPage {
+  element: HTMLElement;
+  playground: CentralPlayground;
+}
+
+export function renderPlayground(): PlaygroundPage {
   const page = document.createElement('div');
   page.className = 'page-playground';
 
@@ -22,5 +27,5 @@ export function renderPlayground(): HTMLElement {
   const playground = new CentralPlayground();
   page.appendChild(playground.getElement());
 
-  return page;
+  return { element: page, playground };
 }

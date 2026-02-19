@@ -2,7 +2,7 @@ figure.facecolor: 08091a
 figure.edgecolor: 08091a
 savefig.facecolor: 08091a
 savefig.edgecolor: 08091a
-axes.facecolor: 0e1028
+axes.facecolor: 101330
 axes.edgecolor: ffffff0f
 axes.labelcolor: c5b99b
 axes.prop_cycle: cycler('color', ['d4a843', '3b82f6', '10b981', 'fcd34d', 'a855f7', 'ef4444'])

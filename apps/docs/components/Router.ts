@@ -127,9 +127,15 @@ export class Router {
 
   private bind(): void {
     window.addEventListener('hashchange', () => {
-      const { path } = this.parseHash();
-      if (this.routes.has(path) && path !== this.activePath) {
-        this.navigate(path);
+      const { path, params } = this.parseHash();
+      if (!this.routes.has(path)) return;
+
+      if (path !== this.activePath) {
+        this.navigate(path, params);
+      } else {
+        // Same path, different params — re-activate without full navigation
+        const config = this.routes.get(path);
+        config?.onActivate?.(params);
       }
     });
   }

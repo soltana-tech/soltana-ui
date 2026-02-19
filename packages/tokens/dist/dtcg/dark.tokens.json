@@ -2,19 +2,19 @@
   "surface": {
     "1": {
       "$type": "color",
-      "$value": "#0e1028"
+      "$value": "#101330"
     },
     "2": {
       "$type": "color",
-      "$value": "#151838"
+      "$value": "#1a1e48"
     },
     "3": {
       "$type": "color",
-      "$value": "#1c2048"
+      "$value": "#262d5c"
     },
     "4": {
       "$type": "color",
-      "$value": "#252a5a"
+      "$value": "#333c72"
     },
     "bg": {
       "$type": "color",

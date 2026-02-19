@@ -13,15 +13,14 @@ export function escapeHtml(str: string): string {
 }
 
 /**
- * Renders a section heading with optional description and divider.
+ * Renders a section heading with optional description.
  */
 export function sectionHeading(title: string, id: string, description?: string): string {
   return `
-    <div class="section-heading" id="${id}">
+    <div class="pt-2 mb-8" id="${id}">
       <h2 class="text-3xl font-bold">${title}</h2>
       ${description ? `<p class="text-secondary mt-2">${description}</p>` : ''}
-    </div>
-    <div class="section-divider"></div>`;
+    </div>`;
 }
 
 /**
@@ -48,46 +47,45 @@ export function quickNavFromLabels(labels: string[], hrefPrefix: string): string
 }
 
 /**
- * Renders a specimen block container (design-system style, no card wrapper).
+ * Renders a specimen block container.
  */
 export function specimenBlock(title: string, content: string, className = ''): string {
   return `
-    <div class="specimen-block mt-8 ${className}">
-      <h3 class="text-lg font-semibold mb-4 font-serif">${title}</h3>
+    <div class="card p-6 rounded-xl mt-8 ${className}">
+      <h3 class="text-lg font-semibold mb-4">${title}</h3>
       ${content}
     </div>`;
 }
 
 /**
- * Renders a specimen card with optional code footer (components page style).
+ * Renders a specimen card with optional code footer.
  */
 export function specimen(title: string, id: string, content: string, code?: string): string {
   return `
-    <div class="specimen mt-10" id="${id}">
-      <h3 class="text-xl font-semibold mb-4 font-serif">${title}</h3>
-      <div class="card">
-        <div class="card-body specimen__preview">
+    <div class="mt-10" id="${id}">
+      <h3 class="text-xl font-semibold mb-4">${title}</h3>
+      <div class="card rounded-xl overflow-hidden">
+        <div class="p-6">
           ${content}
         </div>
-        ${code ? `<div class="card-footer"><pre><code>${escapeHtml(code)}</code></pre></div>` : ''}
+        ${code ? `<div class="border-t border-subtle p-4"><pre class="text-sm overflow-x-auto"><code>${escapeHtml(code)}</code></pre></div>` : ''}
       </div>
     </div>`;
 }
 
 /**
- * Renders a code example block. In neumorphic mode, the pre element
- * is automatically styled with inset shadows via the material system.
+ * Renders a code example block.
  */
 export function codeExample(code: string, language = 'html'): string {
   return `
-    <div class="code-block">
-      <pre class="text-sm rounded-lg p-4"><code class="language-${language}">${escapeHtml(code)}</code></pre>
+    <div class="mt-3">
+      <pre class="text-sm rounded-lg overflow-x-auto"><code class="language-${language}">${escapeHtml(code)}</code></pre>
     </div>`;
 }
 
 /**
- * Renders an ornamental divider.
+ * Renders a decorative divider.
  */
 export function ornamentDivider(): string {
-  return '<div class="ornament-divider mt-12 mb-12"></div>';
+  return '<hr class="border-t border-subtle my-12 opacity-30" />';
 }

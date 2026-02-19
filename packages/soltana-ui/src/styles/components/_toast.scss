@@ -1,0 +1,111 @@
+// ---------------------------------------------------------------------------
+// Toast Notifications
+// ---------------------------------------------------------------------------
+// Fixed-position notification component with semantic variants.
+// Uses --relief-* and --finish-* variables for tier integration.
+// ---------------------------------------------------------------------------
+
+@use '../base/register' as *;
+@use '../base/transitions' as *;
+
+// ============================================================================
+// TOAST CONTAINER
+// ============================================================================
+
+.toast-container {
+  position: fixed;
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  pointer-events: none;
+  max-width: 24rem;
+}
+
+.toast-container-top-right {
+  top: 0;
+  right: 0;
+}
+
+.toast-container-top-left {
+  top: 0;
+  left: 0;
+}
+
+.toast-container-top-center {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.toast-container-bottom-right {
+  bottom: 0;
+  right: 0;
+}
+
+.toast-container-bottom-left {
+  bottom: 0;
+  left: 0;
+}
+
+.toast-container-bottom-center {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+// ============================================================================
+// TOAST
+// ============================================================================
+
+.toast {
+  pointer-events: auto;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--relief-shadow-lg);
+  @include finish-surface(var(--toast-bg));
+  color: var(--toast-text);
+  opacity: 0;
+  transform: translateY(-0.5rem);
+  transition:
+    opacity var(--transition-slow) var(--easing-in-out),
+    transform var(--transition-slow) var(--easing-in-out);
+
+  &.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.toast-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-elegant);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.toast-body {
+  padding: 0.75rem 1rem;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+// ============================================================================
+// SEMANTIC VARIANTS
+// ============================================================================
+
+@each $type in (success, warning, error, info) {
+  .toast-#{$type} {
+    border-left: 3px solid var(--color-#{$type});
+
+    .toast-header {
+      color: var(--color-#{$type}-text);
+    }
+  }
+}

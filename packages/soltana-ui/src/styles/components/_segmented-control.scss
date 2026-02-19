@@ -1,0 +1,64 @@
+// ---------------------------------------------------------------------------
+// Segmented Control Component
+// ---------------------------------------------------------------------------
+// Tier-aware segmented toggle consuming --relief-*, --finish-*, and --accent-*
+// tokens. Inline group of mutually exclusive options.
+//   <div class="segmented-control">
+//     <button class="segmented-control__option active">Option A</button>
+//     <button class="segmented-control__option">Option B</button>
+//   </div>
+// ---------------------------------------------------------------------------
+
+@use '../base/register' as *;
+@use '../base/accessibility' as *;
+@use '../base/transitions' as *;
+
+.segmented-control {
+  display: inline-flex;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--relief-shadow-inset);
+  @include finish-surface;
+  overflow: hidden;
+}
+
+.segmented-control__option {
+  padding: 0.5rem 1rem;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  @include transition-interactive;
+
+  & + & {
+    border-left: 1px solid var(--border-default);
+  }
+
+  &:hover:not(.active) {
+    color: var(--text-primary);
+    background: var(--state-hover);
+  }
+
+  &.active {
+    color: var(--text-inverse);
+    background: var(--accent-primary);
+    box-shadow: var(--relief-shadow-sm);
+  }
+
+  &:focus-visible {
+    @include focus-ring-outline($inset: true);
+  }
+}
+
+// Size variants
+.segmented-control-sm .segmented-control__option {
+  padding: 0.25rem 0.75rem;
+  font-size: var(--text-xs);
+}
+
+.segmented-control-lg .segmented-control__option {
+  padding: 0.75rem 1.5rem;
+  font-size: var(--text-base);
+}

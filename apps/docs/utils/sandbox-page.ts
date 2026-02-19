@@ -41,7 +41,7 @@ export function buildSandboxPage(options: SandboxPageOptions): HTMLElement {
     wrapper.className = 'mt-8';
 
     const sectionHeader = document.createElement('h3');
-    sectionHeader.className = 'text-xl font-semibold mb-4 font-serif';
+    sectionHeader.className = 'text-xl font-semibold mb-4';
     sectionHeader.id = section.id;
     sectionHeader.textContent = section.label;
     wrapper.appendChild(sectionHeader);

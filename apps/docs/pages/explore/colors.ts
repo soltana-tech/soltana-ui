@@ -1,14 +1,14 @@
-/** Design System — Color Palette page. */
+/** Color palette reference page. */
 
 import { sectionHeading } from '../../utils/helpers';
 
 function swatchCard(name: string, variable: string, hex: string): string {
   return `
-    <div class="swatch" data-copy="var(${variable})" title="Click to copy">
+    <div class="card card-hover flex items-center gap-3 p-2 rounded-xl border border-subtle cursor-pointer" data-copy="var(${variable})" title="Click to copy">
       <div class="swatch__color" style="background: ${hex}; box-shadow: 0 2px 8px ${hex}44;"></div>
-      <div class="swatch__info">
-        <span class="swatch__name">${name}</span>
-        <code class="swatch__var">${variable}</code>
+      <div class="flex flex-col min-w-0">
+        <span class="text-sm font-medium">${name}</span>
+        <code class="text-xs text-muted">${variable}</code>
       </div>
     </div>`;
 }
@@ -19,7 +19,7 @@ export function renderColors(): string {
 
   ${sectionHeading('Color Palette', 'colors', 'The signature estate palette. Click any item to copy its CSS variable.')}
 
-  <h3 class="text-xl font-semibold mt-6 mb-4 font-serif">Gold Scale</h3>
+  <h3 class="text-xl font-semibold mt-6 mb-4">Gold Scale</h3>
   <p class="text-sm text-secondary mb-4">The primary accent palette, from light cream to deep brown.</p>
   <div class="swatch-grid">
     ${swatchCard('Gold 50', '--gold-50', '#fefce8')}

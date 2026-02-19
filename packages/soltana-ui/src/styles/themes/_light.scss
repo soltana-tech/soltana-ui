@@ -102,7 +102,14 @@
     $card-border: rgb(85 97 120 / 10%),
     $badge-bg: color-mix(in srgb, var(--accent-primary) 8%, transparent),
     $scrollbar-thumb: rgb(85 97 120 / 15%),
-    $scrollbar-track: rgb(85 97 120 / 3%)
+    $scrollbar-track: rgb(85 97 120 / 3%),
+    $toast-bg: #fff,
+    $toast-text: #1e2128,
+    $drawer-bg: #fff,
+    $popover-bg: #fff,
+    $popover-border: rgb(85 97 120 / 14%),
+    $kbd-bg: #eef0f5,
+    $kbd-border: rgb(85 97 120 / 20%)
   );
 
   // Icon data URIs — colors chosen for contrast against accent-primary bg

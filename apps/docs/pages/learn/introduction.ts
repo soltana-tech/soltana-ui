@@ -7,37 +7,39 @@ import {
   sectionHeading,
   specimenBlock,
 } from '../../utils/helpers';
+import { RECIPES } from '@soltana/config';
+import type { RecipeName } from '@soltana/config';
 
 export function renderGettingStarted(): string {
   return `
 <div class="page-getting-started">
 
-  <div class="hero">
-    <h1 class="hero__title font-serif">Soltana UI</h1>
-    <p class="hero__subtitle">
+  <div class="text-center py-8 mb-8">
+    <h1 class="font-serif font-extrabold mb-4" style="font-size: clamp(2.5rem, 5vw, 4rem); background: linear-gradient(135deg, var(--accent-decorative), var(--accent-primary), var(--text-primary)); background-clip: text; color: transparent;">Soltana UI</h1>
+    <p class="text-lg text-secondary max-w-2xl mx-auto mb-8" style="line-height: 1.6;">
       A CSS-first design system built on four independent tiers &mdash;
       Theme, Relief, Finish, and Ornament &mdash; that compose orthogonally.
       These docs cover installation, configuration, the token architecture,
       and every shipped component.
     </p>
-    <div class="hero__cta">
+    <div class="flex flex-wrap justify-center gap-3 mb-10">
       <a href="#/playground" class="btn btn-primary">Try the Playground</a>
       <a href="#/learn/overview" class="btn btn-secondary">Explore the Design System</a>
     </div>
-    <div class="hero__mini-demos">
-      <div class="hero__demo relief-neu finish-glossy ornament-gilt" data-theme="dark" data-relief="neu" data-finish="glossy" data-ornament="gilt">
+    <div class="grid gap-6 mt-10 max-w-5xl mx-auto" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+      <div class="card p-6 flex flex-col items-center gap-2 rounded-xl border border-subtle relief-neu finish-glossy ornament-gilt" data-theme="dark" data-relief="neu" data-finish="glossy" data-ornament="gilt" style="min-height: 140px; justify-content: center;">
         <button class="btn btn-primary btn-sm">dark / neu / glossy / gilt</button>
         <span class="badge badge-primary">neu + glossy + gilt</span>
       </div>
-      <div class="hero__demo theme-light relief-flat finish-matte" data-theme="light" data-relief="flat" data-finish="matte" data-ornament="none">
+      <div class="card p-6 flex flex-col items-center gap-2 rounded-xl border border-subtle theme-light relief-flat finish-matte" data-theme="light" data-relief="flat" data-finish="matte" data-ornament="none" style="min-height: 140px; justify-content: center;">
         <button class="btn btn-primary btn-sm">light / flat / matte</button>
         <span class="badge badge-primary">flat + matte</span>
       </div>
-      <div class="hero__demo relief-lifted finish-frosted" data-theme="dark" data-relief="lifted" data-finish="frosted" data-ornament="none">
+      <div class="card p-6 flex flex-col items-center gap-2 rounded-xl border border-subtle relief-lifted finish-frosted" data-theme="dark" data-relief="lifted" data-finish="frosted" data-ornament="none" style="min-height: 140px; justify-content: center;">
         <button class="btn btn-primary btn-sm">dark / lifted / frosted</button>
         <span class="badge badge-primary">lifted + frosted</span>
       </div>
-      <div class="hero__demo theme-sepia relief-soft ornament-beveled" data-theme="sepia" data-relief="soft" data-finish="matte" data-ornament="beveled">
+      <div class="card p-6 flex flex-col items-center gap-2 rounded-xl border border-subtle theme-sepia relief-soft ornament-beveled" data-theme="sepia" data-relief="soft" data-finish="matte" data-ornament="beveled" style="min-height: 140px; justify-content: center;">
         <button class="btn btn-primary btn-sm">sepia / soft / beveled</button>
         <span class="badge badge-primary">soft + beveled</span>
       </div>
@@ -54,8 +56,8 @@ export function renderGettingStarted(): string {
   ])}
 
   <div class="grid gap-6 mt-8" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr))">
-    <div class="tier-demo" style="border-left: 4px solid var(--accent-primary);">
-      <span class="tier-number" style="color: var(--accent-primary);">1</span>
+    <div class="card p-5 rounded-xl flex flex-col gap-2" style="border-left: 4px solid var(--accent-primary);">
+      <span class="text-3xl font-black" style="color: var(--accent-primary); line-height: 1;">1</span>
       <h4 class="font-semibold text-lg">Theme</h4>
       <p class="text-sm text-secondary">The foundational color palette and tone.</p>
       <div class="flex flex-wrap gap-2 mt-2">
@@ -66,8 +68,8 @@ export function renderGettingStarted(): string {
       </div>
       ${codeExample("soltana.setTheme('dark')", 'javascript')}
     </div>
-    <div class="tier-demo" style="border-left: 4px solid var(--accent-primary);">
-      <span class="tier-number" style="color: var(--accent-primary);">2</span>
+    <div class="card p-5 rounded-xl flex flex-col gap-2" style="border-left: 4px solid var(--accent-primary);">
+      <span class="text-3xl font-black" style="color: var(--accent-primary); line-height: 1;">2</span>
       <h4 class="font-semibold text-lg">Relief</h4>
       <p class="text-sm text-secondary">Transforms how every component renders: shadows, blur, transparency.</p>
       <div class="flex flex-wrap gap-2 mt-2">
@@ -80,8 +82,8 @@ export function renderGettingStarted(): string {
       </div>
       ${codeExample("soltana.setRelief('neu')", 'javascript')}
     </div>
-    <div class="tier-demo" style="border-left: 4px solid var(--accent-primary);">
-      <span class="tier-number" style="color: var(--accent-primary);">3</span>
+    <div class="card p-5 rounded-xl flex flex-col gap-2" style="border-left: 4px solid var(--accent-primary);">
+      <span class="text-3xl font-black" style="color: var(--accent-primary); line-height: 1;">3</span>
       <h4 class="font-semibold text-lg">Finish</h4>
       <p class="text-sm text-secondary">Texture and finish applied on top of the relief.</p>
       <div class="flex flex-wrap gap-2 mt-2">
@@ -93,8 +95,8 @@ export function renderGettingStarted(): string {
       </div>
       ${codeExample("soltana.setFinish('matte')", 'javascript')}
     </div>
-    <div class="tier-demo" style="border-left: 4px solid var(--accent-primary);">
-      <span class="tier-number" style="color: var(--accent-primary);">4</span>
+    <div class="card p-5 rounded-xl flex flex-col gap-2" style="border-left: 4px solid var(--accent-primary);">
+      <span class="text-3xl font-black" style="color: var(--accent-primary); line-height: 1;">4</span>
       <h4 class="font-semibold text-lg">Ornament</h4>
       <p class="text-sm text-secondary">Decorative structural accents layered onto elements.</p>
       <div class="flex flex-wrap gap-2 mt-2">
@@ -176,6 +178,54 @@ export function renderGettingStarted(): string {
     `
     <p class="text-sm text-secondary mb-4">Override any design token using CSS custom properties:</p>
     ${codeExample(':root {\n  --accent-primary: #your-brand-color;\n  --accent-decorative: #your-gold-tone;\n  --font-serif: "Your Serif Font", serif;\n  --font-sans: "Your Sans Font", sans-serif;\n}', 'css')}
+  `
+  )}
+
+  ${ornamentDivider()}
+
+  ${sectionHeading('Recipes', 'recipes', 'Named presets of proven tier combinations. Apply a recipe as a starting point, then customize individual tiers.')}
+
+  ${specimenBlock(
+    'Blessed Combinations',
+    `
+    <p class="text-sm text-secondary mb-4">Recipes are curated tier combinations that work well together. Each recipe sets all four tiers at once.</p>
+    <div class="grid gap-6 mt-6" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))">
+      ${(Object.keys(RECIPES) as RecipeName[])
+        .map((key) => {
+          const recipe = RECIPES[key];
+          const tierClasses = [
+            `theme-${recipe.theme}`,
+            `relief-${recipe.relief}`,
+            `finish-${recipe.finish}`,
+            recipe.ornament !== 'none' ? `ornament-${recipe.ornament}` : '',
+          ]
+            .filter(Boolean)
+            .join(' ');
+          return `
+            <div class="${tierClasses} card p-6 rounded-xl" style="display: flex; flex-direction: column; min-height: 200px;">
+              <span class="tag mb-2">${recipe.name}</span>
+              <p class="text-sm text-secondary mt-2 flex-1">${recipe.description}</p>
+              <div class="flex flex-wrap gap-2 mt-3">
+                <button class="btn btn-primary btn-sm">Primary</button>
+                <button class="btn btn-secondary btn-sm">Secondary</button>
+                <span class="badge badge-primary">Badge</span>
+              </div>
+              <div class="text-xs text-tertiary mt-3">
+                ${recipe.theme} / ${recipe.relief} / ${recipe.finish} / ${recipe.ornament}
+              </div>
+            </div>`;
+        })
+        .join('')}
+    </div>
+  `
+  )}
+
+  ${specimenBlock(
+    'Using Recipes',
+    `
+    <p class="text-sm text-secondary mb-4">Recipes set all four tiers at once via the <code>applyRecipe()</code> API. They are starting points — individual tiers can be changed afterward.</p>
+    ${codeExample("import { initSoltana } from 'soltana-ui';\n\nconst soltana = initSoltana();\n\n// Apply a recipe\nsoltana.applyRecipe('luxury-dark');\n\n// Customize individual tiers afterward\nsoltana.setFinish('frosted');", 'javascript')}
+    ${codeExample("import { RECIPES } from 'soltana-ui';\n\n// Inspect available recipes\nfor (const [key, recipe] of Object.entries(RECIPES)) {\n  console.log(key, recipe.name, recipe.description);\n}", 'javascript')}
   `
   )}
 

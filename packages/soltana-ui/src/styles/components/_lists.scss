@@ -1,0 +1,142 @@
+// ---------------------------------------------------------------------------
+// List & Accordion Components
+// ---------------------------------------------------------------------------
+// Styled lists and collapsible accordion panels.
+// Uses --relief-* variables for automatic relief switching.
+// ---------------------------------------------------------------------------
+
+@use '../variables' as *;
+@use '../base/transitions' as *;
+
+// ============================================================================
+// ACCORDION
+// ============================================================================
+
+.accordion {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.accordion-item {
+  border-bottom: 1px solid var(--border-default);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+.accordion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-refined);
+  color: var(--text-primary);
+  background-color: var(--surface-2);
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  @include transition-interactive(var(--transition-normal));
+
+  &:hover {
+    background-color: var(--state-hover);
+  }
+
+  &::after {
+    content: '';
+    display: inline-block;
+    width: 0.625rem;
+    height: 0.625rem;
+    border-right: 2px solid currentcolor;
+    border-bottom: 2px solid currentcolor;
+    transform: rotate(45deg);
+    transition: transform var(--transition-normal) var(--easing-in-out);
+    flex-shrink: 0;
+    margin-left: 0.75rem;
+  }
+}
+
+.accordion-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--transition-slow) var(--easing-in-out);
+  padding: 0 1.25rem;
+
+  > :first-child {
+    margin-top: 0.875rem;
+  }
+
+  > :last-child {
+    margin-bottom: 0.875rem;
+  }
+}
+
+// Expanded state
+.accordion-item.active {
+  .accordion-header::after {
+    transform: rotate(-135deg);
+  }
+
+  .accordion-body {
+    max-height: 100vh;
+  }
+}
+
+// Flush variant (no outer border)
+.accordion-flush {
+  border: 0;
+  border-radius: 0;
+
+  .accordion-item {
+    border-left: 0;
+    border-right: 0;
+  }
+}
+
+// ============================================================================
+// STYLED LISTS
+// ============================================================================
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-item {
+  padding: 0.625rem 1rem;
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+}
+
+.list-bordered .list-item {
+  border-bottom: 1px solid var(--border-default);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+.list-hover .list-item {
+  @include transition-interactive(var(--transition-normal));
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--state-hover);
+  }
+}
+
+.list-flush {
+  .list-item:first-child {
+    padding-top: 0;
+  }
+
+  .list-item:last-child {
+    padding-bottom: 0;
+  }
+}

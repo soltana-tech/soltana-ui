@@ -16,12 +16,12 @@
   // SEMANTIC TOKENS
   // =========================================================================
 
-  // Surface colors — deep midnight navy
+  // Surface colors — deep midnight navy (7→13→18→26→34% L)
   --surface-bg: #08091a;
-  --surface-1: #0e1028;
-  --surface-2: #151838;
-  --surface-3: #1c2048;
-  --surface-4: #252a5a;
+  --surface-1: #101330;
+  --surface-2: #1a1e48;
+  --surface-3: #262d5c;
+  --surface-4: #333c72;
 
   // Text colors — warm ivory hierarchy
   --text-primary: #f5f0e6;
@@ -68,7 +68,7 @@
   --state-hover: color-mix(in srgb, var(--accent-primary) 8%, transparent);
   --state-active: color-mix(in srgb, var(--accent-primary) 14%, transparent);
   --state-focus-ring: color-mix(in srgb, var(--accent-primary) 40%, transparent);
-  --state-disabled-bg: #151838;
+  --state-disabled-bg: #1a1e48;
   --state-disabled-text: #897d69;
 
   // =========================================================================
@@ -94,15 +94,22 @@
 
   @include component-tokens(
     $input-bg: rgb(255 255 255 / 4%),
-    $card-bg: rgb(14 16 40 / 60%),
+    $card-bg: rgb(16 19 48 / 60%),
     $tooltip-bg: #08091a,
     $tooltip-text: #f5f0e6,
-    $code-bg: rgb(0 0 0 / 35%),
+    $code-bg: #262d5c,
     $input-border: rgb(255 255 255 / 8%),
     $input-placeholder: #897d69,
     $card-border: rgb(255 255 255 / 6%),
     $scrollbar-thumb: rgb(255 255 255 / 12%),
-    $scrollbar-track: rgb(255 255 255 / 3%)
+    $scrollbar-track: rgb(255 255 255 / 3%),
+    $toast-bg: #101330,
+    $toast-text: #f5f0e6,
+    $drawer-bg: #101330,
+    $popover-bg: #101330,
+    $popover-border: rgb(255 255 255 / 8%),
+    $kbd-bg: #1a1e48,
+    $kbd-border: rgb(255 255 255 / 12%)
   );
 
   // Icon data URIs — colors chosen for contrast against accent-primary bg

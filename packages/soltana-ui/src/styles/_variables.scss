@@ -136,7 +136,10 @@ $z-indices: (
   40: 40,
   50: 50,
   dropdown: 100,
+  popover: 150,
+  drawer: 200,
   modal: 200,
+  toast: 250,
   tooltip: 300,
   skip-link: 9999,
   auto: auto,
@@ -243,7 +246,14 @@ $max-widths: (
   $card-border: var(--border-default),
   $badge-bg: color-mix(in srgb, var(--accent-primary) 10%, transparent),
   $scrollbar-thumb: color-mix(in srgb, var(--text-primary) 12%, transparent),
-  $scrollbar-track: color-mix(in srgb, var(--text-primary) 3%, transparent)
+  $scrollbar-track: color-mix(in srgb, var(--text-primary) 3%, transparent),
+  $toast-bg: var(--surface-1),
+  $toast-text: var(--text-primary),
+  $drawer-bg: var(--surface-1),
+  $popover-bg: var(--surface-1),
+  $popover-border: var(--border-default),
+  $kbd-bg: var(--surface-2),
+  $kbd-border: var(--border-strong)
 ) {
   --input-bg: #{$input-bg};
   --input-border: #{$input-border};
@@ -257,6 +267,13 @@ $max-widths: (
   --scrollbar-thumb: #{$scrollbar-thumb};
   --scrollbar-track: #{$scrollbar-track};
   --code-bg: #{$code-bg};
+  --toast-bg: #{$toast-bg};
+  --toast-text: #{$toast-text};
+  --drawer-bg: #{$drawer-bg};
+  --popover-bg: #{$popover-bg};
+  --popover-border: #{$popover-border};
+  --kbd-bg: #{$kbd-bg};
+  --kbd-border: #{$kbd-border};
 }
 
 // ---- CSS custom properties ----

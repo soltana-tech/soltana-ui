@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------
 // Overlay Components
 // ---------------------------------------------------------------------------
-// Modals and backdrop styles.
+// Modals, drawers, and backdrop styles.
 // Uses --relief-* variables for automatic relief switching.
 // ---------------------------------------------------------------------------
 
@@ -71,7 +71,6 @@
   justify-content: space-between;
   padding: 1.25rem 1.5rem;
   border-bottom: 1px solid var(--border-default);
-  font-family: var(--font-serif);
   font-weight: var(--font-bold);
   font-size: var(--text-lg);
   letter-spacing: var(--tracking-elegant);
@@ -220,4 +219,142 @@
 @include register-ornament('faceted') {
   --modal-ornament-border: 2px solid var(--ornament-color);
   --modal-ornament-corner-display: block;
+}
+
+// ============================================================================
+// DRAWER BACKDROP
+// ============================================================================
+
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgb(var(--shadow-color) / 60%);
+  backdrop-filter: blur(var(--finish-blur, 8px));
+  z-index: var(--z-drawer);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-slow) var(--easing-in-out);
+
+  &.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+// ============================================================================
+// DRAWER
+// ============================================================================
+
+.drawer {
+  position: fixed;
+  z-index: var(--z-drawer);
+  @include finish-surface(var(--drawer-bg));
+  box-shadow: var(--relief-shadow-lg);
+  overflow-y: auto;
+  transition: transform var(--transition-slow) var(--easing-in-out);
+}
+
+// ---- Slide directions ----
+
+.drawer-start {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 20rem;
+  max-width: 85vw;
+  transform: translateX(-100%);
+
+  &.active {
+    transform: translateX(0);
+  }
+}
+
+.drawer-end {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 20rem;
+  max-width: 85vw;
+  transform: translateX(100%);
+
+  &.active {
+    transform: translateX(0);
+  }
+}
+
+.drawer-top {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20rem;
+  max-height: 85vh;
+  transform: translateY(-100%);
+
+  &.active {
+    transform: translateY(0);
+  }
+}
+
+.drawer-bottom {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20rem;
+  max-height: 85vh;
+  transform: translateY(100%);
+
+  &.active {
+    transform: translateY(0);
+  }
+}
+
+// ---- Size variants ----
+
+.drawer-sm {
+  &.drawer-start,
+  &.drawer-end {
+    width: 16rem;
+  }
+
+  &.drawer-top,
+  &.drawer-bottom {
+    height: 14rem;
+  }
+}
+
+.drawer-lg {
+  &.drawer-start,
+  &.drawer-end {
+    width: 28rem;
+  }
+
+  &.drawer-top,
+  &.drawer-bottom {
+    height: 28rem;
+  }
+}
+
+// ---- Drawer sections ----
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-default);
+  font-weight: var(--font-bold);
+  font-size: var(--text-lg);
+  letter-spacing: var(--tracking-elegant);
+}
+
+.drawer-body {
+  padding: 1.5rem;
+}
+
+.drawer-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border-default);
 }

@@ -135,3 +135,51 @@ $avatar-sizes: (
   border-top: 1px solid var(--border-default);
   margin: 1rem 0;
 }
+
+.separator-vertical {
+  border: none;
+  border-left: 1px solid var(--border-default);
+  margin: 0 1rem;
+  align-self: stretch;
+}
+
+.separator-thick {
+  border-top-width: 2px;
+}
+
+.separator-label {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border: none;
+  margin: 1rem 0;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  letter-spacing: var(--tracking-elegant);
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    border-top: 1px solid var(--border-default);
+  }
+}
+
+// ============================================================================
+// AVATAR GROUP
+// ============================================================================
+
+.avatar-group {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+
+  .avatar {
+    margin-left: -0.5rem;
+    box-shadow: 0 0 0 2px var(--surface-bg);
+
+    &:last-child {
+      margin-left: 0;
+    }
+  }
+}

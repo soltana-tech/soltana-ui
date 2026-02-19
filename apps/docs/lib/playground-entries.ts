@@ -290,3 +290,409 @@ registerComponent({
       </div>
     </div>`,
 });
+
+registerComponent({
+  id: 'dropdowns',
+  name: 'Dropdowns',
+  description: 'Toggle menus with items, dividers, and headers.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="dropdown" style="position: relative;">
+      <button class="btn btn-outline dropdown-toggle">Options</button>
+      <div class="dropdown-menu" style="position: static; display: block; opacity: 1; pointer-events: auto;">
+        <div class="dropdown-header">Actions</div>
+        <a class="dropdown-item" href="#">Edit</a>
+        <a class="dropdown-item" href="#">Duplicate</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Delete</a>
+      </div>
+    </div>`,
+});
+
+registerComponent({
+  id: 'popovers',
+  name: 'Popovers',
+  description: 'Rich contextual overlays with header and body.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="flex flex-col gap-4 items-start">
+      <div class="popover" style="position: static; display: block; opacity: 1; pointer-events: auto;">
+        <div class="popover-header">Popover Title</div>
+        <div class="popover-body">
+          <p class="text-sm text-secondary">This is a popover with rich content including a header and body section.</p>
+        </div>
+      </div>
+    </div>`,
+});
+
+registerComponent({
+  id: 'accordions',
+  name: 'Accordions',
+  description: 'Collapsible content sections.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="accordion" style="width: 100%;">
+      <div class="accordion-item active">
+        <div class="accordion-header">Getting Started</div>
+        <div class="accordion-body">
+          <p class="text-sm text-secondary">Install the package and import the styles into your project entry point.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">Configuration</div>
+        <div class="accordion-body">
+          <p class="text-sm text-secondary">Set data attributes on the root element to configure theme, relief, finish, and ornament.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">Customization</div>
+        <div class="accordion-body">
+          <p class="text-sm text-secondary">Override Sass variables or CSS custom properties to match your brand.</p>
+        </div>
+      </div>
+    </div>`,
+});
+
+registerComponent({
+  id: 'lists',
+  name: 'Lists',
+  description: 'Bordered and hoverable item lists.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="list list-bordered list-hover" style="width: 100%;">
+      <div class="list-item">
+        <div class="flex items-center gap-3">
+          <div class="avatar avatar-sm">AC</div>
+          <div>
+            <div class="font-medium">Alice Chen</div>
+            <div class="text-sm text-secondary">alice@example.com</div>
+          </div>
+        </div>
+      </div>
+      <div class="list-item">
+        <div class="flex items-center gap-3">
+          <div class="avatar avatar-sm">BM</div>
+          <div>
+            <div class="font-medium">Bob Martin</div>
+            <div class="text-sm text-secondary">bob@example.com</div>
+          </div>
+        </div>
+      </div>
+      <div class="list-item">
+        <div class="flex items-center gap-3">
+          <div class="avatar avatar-sm">CD</div>
+          <div>
+            <div class="font-medium">Carol Davis</div>
+            <div class="text-sm text-secondary">carol@example.com</div>
+          </div>
+        </div>
+      </div>
+    </div>`,
+});
+
+registerComponent({
+  id: 'tabs',
+  name: 'Tabs',
+  description: 'Horizontal navigation tabs.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="tabs">
+      <button class="tab active">Overview</button>
+      <button class="tab">Features</button>
+      <button class="tab">Pricing</button>
+      <button class="tab" disabled>Disabled</button>
+    </div>`,
+});
+
+registerComponent({
+  id: 'breadcrumbs',
+  name: 'Breadcrumbs',
+  description: 'Hierarchical page navigation.',
+  renderPreview: (_state: SandboxState) => `
+    <nav class="breadcrumb">
+      <a class="breadcrumb-item" href="#">Home</a>
+      <a class="breadcrumb-item" href="#">Products</a>
+      <a class="breadcrumb-item" href="#">Category</a>
+      <span class="breadcrumb-item active">Current Page</span>
+    </nav>`,
+});
+
+registerComponent({
+  id: 'pagination',
+  name: 'Pagination',
+  description: 'Page navigation controls.',
+  renderPreview: (_state: SandboxState) => `
+    <nav class="pagination">
+      <span class="page-item disabled"><span class="page-link">&laquo;</span></span>
+      <span class="page-item"><a class="page-link" href="#">1</a></span>
+      <span class="page-item active"><a class="page-link" href="#">2</a></span>
+      <span class="page-item"><a class="page-link" href="#">3</a></span>
+      <span class="page-item"><a class="page-link" href="#">4</a></span>
+      <span class="page-item"><a class="page-link" href="#">5</a></span>
+      <span class="page-item"><a class="page-link" href="#">&raquo;</a></span>
+    </nav>`,
+});
+
+registerComponent({
+  id: 'drawers',
+  name: 'Drawers',
+  description: 'Slide-in panel overlays.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="card" style="width: 100%; max-width: 320px;">
+      <div class="drawer-header">
+        <h4 class="font-semibold">Drawer Title</h4>
+        <button class="close close-sm"></button>
+      </div>
+      <div class="drawer-body">
+        <p class="text-sm text-secondary mb-3">Drawer content goes here. In production, drawers slide in from the edge of the viewport.</p>
+        <div class="list list-bordered">
+          <div class="list-item text-sm">Navigation Item 1</div>
+          <div class="list-item text-sm">Navigation Item 2</div>
+          <div class="list-item text-sm">Navigation Item 3</div>
+        </div>
+      </div>
+      <div class="drawer-footer">
+        <button class="btn btn-ghost btn-sm">Cancel</button>
+        <button class="btn btn-primary btn-sm">Apply</button>
+      </div>
+    </div>`,
+});
+
+registerComponent({
+  id: 'toasts',
+  name: 'Toasts',
+  description: 'Transient notification messages.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="flex flex-col gap-3" style="width: 100%; max-width: 360px;">
+      <div class="toast toast-success active" style="position: static; opacity: 1;">
+        <div class="toast-header">
+          <strong class="text-sm">Success</strong>
+          <button class="close close-sm"></button>
+        </div>
+        <div class="toast-body text-sm">Changes saved successfully.</div>
+      </div>
+      <div class="toast toast-error active" style="position: static; opacity: 1;">
+        <div class="toast-header">
+          <strong class="text-sm">Error</strong>
+          <button class="close close-sm"></button>
+        </div>
+        <div class="toast-body text-sm">Something went wrong.</div>
+      </div>
+      <div class="toast toast-info active" style="position: static; opacity: 1;">
+        <div class="toast-header">
+          <strong class="text-sm">Info</strong>
+          <button class="close close-sm"></button>
+        </div>
+        <div class="toast-body text-sm">New update available.</div>
+      </div>
+    </div>`,
+});
+
+registerComponent({
+  id: 'steppers',
+  name: 'Steppers',
+  description: 'Multi-step progress indicators.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="stepper" style="width: 100%;">
+      <div class="step completed">
+        <div class="step-indicator">1</div>
+        <div class="step-content">Account</div>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step active">
+        <div class="step-indicator">2</div>
+        <div class="step-content">Profile</div>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step">
+        <div class="step-indicator">3</div>
+        <div class="step-content">Review</div>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step">
+        <div class="step-indicator">4</div>
+        <div class="step-content">Confirm</div>
+      </div>
+    </div>`,
+});
+
+registerComponent({
+  id: 'timelines',
+  name: 'Timelines',
+  description: 'Chronological event sequences.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="timeline" style="width: 100%;">
+      <div class="timeline-item">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <div class="font-medium text-sm">Project created</div>
+          <div class="text-xs text-secondary">Jan 15, 2026</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <div class="font-medium text-sm">Design review completed</div>
+          <div class="text-xs text-secondary">Jan 22, 2026</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <div class="font-medium text-sm">Beta release</div>
+          <div class="text-xs text-secondary">Feb 10, 2026</div>
+        </div>
+      </div>
+    </div>`,
+});
+
+registerComponent({
+  id: 'stats',
+  name: 'Stats',
+  description: 'Key metric displays with labels and deltas.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="stat-group" style="width: 100%;">
+      <div class="stat">
+        <div class="stat-label">Revenue</div>
+        <div class="stat-value">$45.2k</div>
+        <div class="stat-delta positive">+12.5%</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Users</div>
+        <div class="stat-value">2,340</div>
+        <div class="stat-delta positive">+8.1%</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Bounce Rate</div>
+        <div class="stat-value">24.3%</div>
+        <div class="stat-delta negative">-3.2%</div>
+      </div>
+    </div>`,
+});
+
+registerComponent({
+  id: 'ratings',
+  name: 'Ratings',
+  description: 'Star-based rating displays.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="flex flex-col gap-4">
+      <div>
+        <div class="text-sm mb-1">5 Stars</div>
+        <div class="rating rating-lg">
+          <span class="rating-star filled"></span>
+          <span class="rating-star filled"></span>
+          <span class="rating-star filled"></span>
+          <span class="rating-star filled"></span>
+          <span class="rating-star filled"></span>
+        </div>
+      </div>
+      <div>
+        <div class="text-sm mb-1">3.5 Stars</div>
+        <div class="rating">
+          <span class="rating-star filled"></span>
+          <span class="rating-star filled"></span>
+          <span class="rating-star filled"></span>
+          <span class="rating-star half"></span>
+          <span class="rating-star"></span>
+        </div>
+      </div>
+      <div>
+        <div class="text-sm mb-1">Small</div>
+        <div class="rating rating-sm">
+          <span class="rating-star filled"></span>
+          <span class="rating-star filled"></span>
+          <span class="rating-star filled"></span>
+          <span class="rating-star filled"></span>
+          <span class="rating-star"></span>
+        </div>
+      </div>
+    </div>`,
+});
+
+registerComponent({
+  id: 'checkboxes',
+  name: 'Checkboxes',
+  description: 'Checked, unchecked, and disabled checkbox states.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="flex flex-col gap-4">
+      <label class="flex items-center gap-2">
+        <input type="checkbox" class="checkbox" checked />
+        <span class="text-sm">Checked</span>
+      </label>
+      <label class="flex items-center gap-2">
+        <input type="checkbox" class="checkbox" />
+        <span class="text-sm">Unchecked</span>
+      </label>
+      <label class="flex items-center gap-2">
+        <input type="checkbox" class="checkbox" disabled checked />
+        <span class="text-sm">Disabled checked</span>
+      </label>
+      <label class="flex items-center gap-2">
+        <input type="checkbox" class="checkbox" disabled />
+        <span class="text-sm">Disabled unchecked</span>
+      </label>
+    </div>`,
+});
+
+registerComponent({
+  id: 'radios',
+  name: 'Radio Buttons',
+  description: 'Selected, unselected, and disabled radio states.',
+  renderPreview: (_state: SandboxState) => `
+    <fieldset class="flex flex-col gap-4" style="border: none; padding: 0;">
+      <legend class="text-sm font-medium mb-2">Select an option</legend>
+      <label class="flex items-center gap-2">
+        <input type="radio" class="radio" name="playground-radio" checked />
+        <span class="text-sm">Selected</span>
+      </label>
+      <label class="flex items-center gap-2">
+        <input type="radio" class="radio" name="playground-radio" />
+        <span class="text-sm">Unselected</span>
+      </label>
+      <label class="flex items-center gap-2">
+        <input type="radio" class="radio" name="playground-radio-disabled" disabled checked />
+        <span class="text-sm">Disabled selected</span>
+      </label>
+      <label class="flex items-center gap-2">
+        <input type="radio" class="radio" name="playground-radio-disabled" disabled />
+        <span class="text-sm">Disabled unselected</span>
+      </label>
+    </fieldset>`,
+});
+
+registerComponent({
+  id: 'range',
+  name: 'Range Sliders',
+  description: 'Default, small, and large range inputs.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="flex flex-col gap-6" style="max-width: 320px;">
+      <div class="input-group">
+        <label class="input-label">Default</label>
+        <input type="range" class="range" min="0" max="100" value="50" />
+      </div>
+      <div class="input-group">
+        <label class="input-label">Small</label>
+        <input type="range" class="range range-sm" min="0" max="100" value="30" />
+      </div>
+      <div class="input-group">
+        <label class="input-label">Large</label>
+        <input type="range" class="range range-lg" min="0" max="100" value="70" />
+      </div>
+    </div>`,
+});
+
+registerComponent({
+  id: 'file-input',
+  name: 'File Input',
+  description: 'Default, small, and large file inputs.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="flex flex-col gap-6" style="max-width: 320px;">
+      <div class="input-group">
+        <label class="input-label">Default</label>
+        <input type="file" class="file-input" />
+      </div>
+      <div class="input-group">
+        <label class="input-label">Small</label>
+        <input type="file" class="file-input file-input-sm" />
+      </div>
+      <div class="input-group">
+        <label class="input-label">Large</label>
+        <input type="file" class="file-input file-input-lg" />
+      </div>
+    </div>`,
+});

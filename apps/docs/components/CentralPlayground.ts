@@ -107,7 +107,7 @@ export class CentralPlayground {
     });
   }
 
-  private loadFromUrl(): void {
+  loadFromUrl(): void {
     const urlState = readStateFromUrl();
     const hash = location.hash.slice(1);
     const qIdx = hash.indexOf('?');

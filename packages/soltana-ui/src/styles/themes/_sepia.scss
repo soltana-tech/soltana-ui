@@ -100,7 +100,14 @@
     $input-placeholder: #6f6045,
     $card-border: rgb(94 63 27 / 12%),
     $scrollbar-thumb: rgb(94 63 27 / 22%),
-    $scrollbar-track: rgb(94 63 27 / 5%)
+    $scrollbar-track: rgb(94 63 27 / 5%),
+    $toast-bg: #f2e8d2,
+    $toast-text: #1c1408,
+    $drawer-bg: #f2e8d2,
+    $popover-bg: #f2e8d2,
+    $popover-border: rgb(94 63 27 / 18%),
+    $kbd-bg: #ddd0b0,
+    $kbd-border: rgb(94 63 27 / 28%)
   );
 
   // Icon data URIs — colors chosen for contrast against accent-primary bg

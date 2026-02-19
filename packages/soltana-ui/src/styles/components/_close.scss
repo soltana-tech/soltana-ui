@@ -1,0 +1,63 @@
+// ---------------------------------------------------------------------------
+// Close Button
+// ---------------------------------------------------------------------------
+// Reusable dismiss trigger for alerts, toasts, drawers, and modals.
+// X rendered via ::before/::after rotated lines (no icon dependency).
+// ---------------------------------------------------------------------------
+
+@use '../base/accessibility' as *;
+@use '../base/transitions' as *;
+
+.close {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  flex-shrink: 0;
+  @include transition-interactive(var(--transition-normal));
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 2px;
+    background-color: currentcolor;
+    border-radius: 1px;
+  }
+
+  &::before {
+    transform: rotate(45deg);
+  }
+
+  &::after {
+    transform: rotate(-45deg);
+  }
+
+  &:hover {
+    color: var(--text-primary);
+    background-color: var(--state-hover);
+  }
+
+  &:focus-visible {
+    @include focus-ring-outline;
+  }
+}
+
+.close-sm {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.close-lg {
+  width: 2.5rem;
+  height: 2.5rem;
+}

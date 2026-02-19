@@ -55,7 +55,7 @@ export function renderComposition(): string {
   `
   )}
 
-  <h3 class="text-xl font-semibold mt-8 mb-4 font-serif">Composition in Action</h3>
+  <h3 class="text-xl font-semibold mt-8 mb-4">Composition in Action</h3>
   <p class="text-sm text-secondary mb-6">Each card below overrides multiple tiers independently, regardless of the global config.</p>
 
   <div class="grid gap-6" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))">

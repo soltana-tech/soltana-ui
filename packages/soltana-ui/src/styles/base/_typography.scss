@@ -37,13 +37,11 @@ body {
 }
 
 // ---- Heading defaults ----
-// H1-H3: Cinzel serif for classical inscriptional grandeur.
-// H4-H6: Raleway sans-serif for functional UI hierarchy.
 h1,
 h2,
 h3 {
   margin: 0;
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-weight: var(--font-bold);
   line-height: 1.15;
   letter-spacing: var(--tracking-elegant);
@@ -109,6 +107,7 @@ code {
   padding: 0.125em 0.375em;
   border-radius: var(--radius-md);
   background: var(--code-bg);
+  border: 1px solid var(--border-default);
 }
 
 pre {
@@ -116,10 +115,12 @@ pre {
   padding: 1rem;
   border-radius: var(--radius-lg);
   background: var(--code-bg);
+  border: 1px solid var(--border-default);
 
   code {
     padding: 0;
     background: none;
+    border: none;
   }
 }
 

@@ -1,0 +1,119 @@
+// ---------------------------------------------------------------------------
+// Layout Components
+// ---------------------------------------------------------------------------
+// Reusable application layout primitives: sidebar, header, footer, and
+// grid shell. Consumed by the docs site and available to all consumers.
+// ---------------------------------------------------------------------------
+
+@use '../base/register' as *;
+@use '../base/transitions' as *;
+
+// App shell — two-column grid with configurable sidebar width
+.app-layout {
+  display: grid;
+  grid-template-columns: var(--sidebar-width, 260px) 1fr;
+  min-height: 100vh;
+}
+
+// Sticky page header
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--surface-1);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+// Sidebar shell
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 1rem 0;
+  background: var(--surface-1);
+  border-right: 1px solid var(--border-subtle);
+}
+
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+}
+
+// Section header — collapsible toggle
+.sidebar__section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.5rem 1.25rem;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-elegant);
+  color: var(--text-tertiary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  @include transition-interactive;
+
+  &:hover {
+    color: var(--text-primary);
+  }
+}
+
+// Chevron rotation on expanded sections
+.sidebar__chevron {
+  @include transition-property(transform);
+}
+
+.sidebar__section--expanded > .sidebar__section-header > .sidebar__chevron {
+  transform: rotate(180deg);
+}
+
+// Collapsible list
+.sidebar__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease;
+
+  .sidebar__section--expanded > & {
+    max-height: 60rem;
+  }
+}
+
+// Navigation link
+.sidebar__link {
+  display: block;
+  padding: 0.5rem 1.25rem 0.5rem 1.75rem;
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  border-left: 2px solid transparent;
+  text-decoration: none;
+  @include transition-interactive;
+
+  &:hover {
+    color: var(--text-primary);
+    background: var(--state-hover);
+  }
+
+  &--active {
+    color: var(--text-primary);
+    border-left-color: var(--accent-primary);
+    background: color-mix(in srgb, var(--accent-primary) 8%, transparent);
+  }
+}
+
+// Page footer
+.page-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-subtle);
+}

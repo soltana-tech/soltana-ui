@@ -33,6 +33,17 @@
   }
 }
 
+.alert-dismissible {
+  position: relative;
+  padding-right: 3rem;
+
+  .close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+  }
+}
+
 // ============================================================================
 // TOOLTIP
 // ============================================================================
@@ -64,6 +75,29 @@
   &:hover::after {
     opacity: 1;
   }
+}
+
+// ---- Tooltip position variants ----
+// Default (.tooltip) positions above. These variants override placement.
+
+.tooltip-bottom::after {
+  bottom: auto;
+  top: calc(100% + 8px);
+}
+
+.tooltip-left::after {
+  bottom: auto;
+  top: 50%;
+  left: auto;
+  right: calc(100% + 8px);
+  transform: translateY(-50%);
+}
+
+.tooltip-right::after {
+  bottom: auto;
+  top: 50%;
+  left: calc(100% + 8px);
+  transform: translateY(-50%);
 }
 
 // JS-enhanced tooltips created by initTooltips(). Distinguished from CSS-only
@@ -181,4 +215,142 @@ $progress-variants: (
 .skeleton-circle {
   @include skeleton-base;
   border-radius: var(--radius-full);
+}
+
+// ============================================================================
+// SPINNER
+// ============================================================================
+
+@keyframes spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid var(--border-default);
+  border-top-color: var(--accent-primary);
+  border-radius: var(--radius-full);
+  animation: spinner-rotate 0.6s linear infinite;
+}
+
+.spinner-sm {
+  width: 1rem;
+  height: 1rem;
+  border-width: 1.5px;
+}
+
+.spinner-lg {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-width: 3px;
+}
+
+// Dots variant
+@keyframes spinner-dots-pulse {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.spinner-dots {
+  display: inline-flex;
+  gap: 0.25rem;
+  align-items: center;
+
+  &::before,
+  &::after,
+  span {
+    content: '';
+    display: block;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: var(--radius-full);
+    background-color: var(--accent-primary);
+    animation: spinner-dots-pulse 1.4s var(--easing-in-out) infinite both;
+  }
+
+  &::before {
+    animation-delay: -0.32s;
+  }
+
+  span {
+    animation-delay: -0.16s;
+  }
+}
+
+// ============================================================================
+// RADIAL PROGRESS
+// ============================================================================
+
+.radial-progress {
+  --progress: 0;
+  --size: 4rem;
+  --track-width: 4px;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size);
+  height: var(--size);
+  border-radius: var(--radius-full);
+  background: conic-gradient(
+    var(--accent-primary) calc(var(--progress) * 1%),
+    var(--surface-3) calc(var(--progress) * 1%)
+  );
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: var(--track-width);
+    border-radius: var(--radius-full);
+    background-color: var(--surface-bg);
+  }
+
+  // Content (percentage text) sits above the mask
+  > * {
+    position: relative;
+    font-size: var(--text-xs);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+  }
+}
+
+.radial-progress-sm {
+  --size: 2.5rem;
+  --track-width: 3px;
+
+  > * {
+    font-size: 0.625rem;
+  }
+}
+
+.radial-progress-lg {
+  --size: 6rem;
+  --track-width: 6px;
+
+  > * {
+    font-size: var(--text-sm);
+  }
+}
+
+@each $type in (success, warning, error, info) {
+  .radial-progress-#{$type} {
+    background: conic-gradient(
+      var(--color-#{$type}) calc(var(--progress) * 1%),
+      var(--surface-3) calc(var(--progress) * 1%)
+    );
+  }
 }

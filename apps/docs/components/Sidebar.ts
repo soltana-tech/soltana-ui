@@ -13,10 +13,6 @@ export interface SidebarItem {
 
 const CHEVRON_SVG = `<svg class="sidebar__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>`;
 
-const HAMBURGER_SVG = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>`;
-
-const CLOSE_SVG = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
-
 /**
  * Collapsible sidebar navigation for the documentation site.
  * Renders section groups with expandable item lists and highlights the active route.
@@ -25,17 +21,12 @@ export class Sidebar {
   private router: Router;
   private sections: SidebarSection[];
   private container: HTMLElement;
-  private overlay: HTMLElement;
-  private hamburger: HTMLButtonElement;
-  private isOpen = false;
 
   constructor(router: Router, sections: SidebarSection[]) {
     this.router = router;
     this.sections = sections;
 
     this.container = this.buildSidebar();
-    this.overlay = this.buildOverlay();
-    this.hamburger = this.buildHamburger();
 
     this.mount();
     this.bind();
@@ -111,34 +102,11 @@ export class Sidebar {
     return el;
   }
 
-  private buildOverlay(): HTMLElement {
-    const overlay = document.createElement('div');
-    overlay.className = 'sidebar-overlay';
-    return overlay;
-  }
-
-  private buildHamburger(): HTMLButtonElement {
-    const btn = document.createElement('button');
-    btn.className = 'sidebar-hamburger';
-    btn.setAttribute('aria-label', 'Toggle navigation');
-    btn.innerHTML = HAMBURGER_SVG;
-    return btn;
-  }
-
   private mount(): void {
-    // Insert hamburger into header actions (before settings trigger)
-    const headerActions = document.querySelector('.docs-header__actions');
-    if (headerActions) {
-      headerActions.insertBefore(this.hamburger, headerActions.firstChild);
-    }
-
-    // Insert sidebar and overlay into the layout wrapper
     const layoutWrapper = document.getElementById('docs-layout');
     if (layoutWrapper) {
       layoutWrapper.insertBefore(this.container, layoutWrapper.firstChild);
     }
-
-    document.body.appendChild(this.overlay);
   }
 
   private bind(): void {
@@ -159,50 +127,8 @@ export class Sidebar {
         const path = (link as HTMLElement).dataset.path;
         if (path) {
           this.router.navigate(path);
-          this.closeMobile();
         }
       });
     });
-
-    // Hamburger
-    this.hamburger.addEventListener('click', () => {
-      this.toggleMobile();
-    });
-
-    // Overlay click closes sidebar
-    this.overlay.addEventListener('click', () => {
-      this.closeMobile();
-    });
-
-    // Escape key closes mobile sidebar
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && this.isOpen) {
-        this.closeMobile();
-      }
-    });
-  }
-
-  private toggleMobile(): void {
-    if (this.isOpen) {
-      this.closeMobile();
-    } else {
-      this.openMobile();
-    }
-  }
-
-  private openMobile(): void {
-    this.isOpen = true;
-    this.container.classList.add('sidebar--open');
-    this.overlay.classList.add('sidebar-overlay--visible');
-    this.hamburger.innerHTML = CLOSE_SVG;
-    this.hamburger.setAttribute('aria-expanded', 'true');
-  }
-
-  private closeMobile(): void {
-    this.isOpen = false;
-    this.container.classList.remove('sidebar--open');
-    this.overlay.classList.remove('sidebar-overlay--visible');
-    this.hamburger.innerHTML = HAMBURGER_SVG;
-    this.hamburger.setAttribute('aria-expanded', 'false');
   }
 }

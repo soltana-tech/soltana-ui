@@ -8,7 +8,7 @@ export function renderFinishes(): string {
 
   ${sectionHeading('Finish Treatments', 'finishes', 'Five texture and finish variations applied on top of reliefs. Finishes adapt to the active relief.')}
 
-  <h3 class="text-xl font-semibold mt-6 mb-4 font-serif">Finish Comparison Matrix</h3>
+  <h3 class="text-xl font-semibold mt-6 mb-4">Finish Comparison Matrix</h3>
   <p class="text-sm text-secondary mb-6">Each finish renders differently depending on the active relief. Finishes control blur, opacity, overlays, and sheen — orthogonal to the relief's shadow structure.</p>
 
   <!-- Neu + Finishes -->

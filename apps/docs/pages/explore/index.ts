@@ -1,64 +1,35 @@
-/** Components index page — overview with links to individual component pages. */
+/** Dynamic components gallery — renders all registered components as live previews. */
 
 import { sectionHeading } from '../../utils/helpers';
+import { getAllComponents } from '../../lib/component-registry';
+import { createDefaultState } from '../../lib/sandbox-state';
 
 export function renderComponentsIndex(): string {
+  const components = getAllComponents();
+  const defaultState = createDefaultState();
+
+  const componentsHtml = components
+    .map((entry) => {
+      const previewHtml = entry.renderPreview(defaultState);
+      return `
+        <div class="card card-hover rounded-xl border overflow-hidden" style="display: flex; flex-direction: column;">
+          <h3 class="p-5 border-b border-subtle text-lg font-semibold">${entry.name}</h3>
+          <div class="flex items-center justify-center p-8 bg-surface" style="min-height: 280px; flex: 1;">
+            ${previewHtml}
+          </div>
+          <a href="#/playground?component=${entry.id}" class="block p-3 text-center text-sm font-medium border-t border-subtle hover:bg-surface-1 transition-colors">
+            Open in Playground →
+          </a>
+        </div>
+      `;
+    })
+    .join('');
+
   return `
 <div class="page-components-index">
-  ${sectionHeading('Components', 'components', 'Atoms and molecules for composing interfaces.')}
-  <div class="grid gap-4 mt-6" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))">
-    <a href="#/explore/buttons" class="card card-hover p-4">
-      <h3 class="font-semibold">Buttons</h3>
-      <p class="text-sm text-secondary mt-1">Variants, sizes, states, groups</p>
-    </a>
-    <a href="#/explore/inputs" class="card card-hover p-4">
-      <h3 class="font-semibold">Inputs</h3>
-      <p class="text-sm text-secondary mt-1">Text fields, selects, checkboxes</p>
-    </a>
-    <a href="#/explore/cards" class="card card-hover p-4">
-      <h3 class="font-semibold">Cards</h3>
-      <p class="text-sm text-secondary mt-1">Layouts, image cards, ornamental variants</p>
-    </a>
-    <a href="#/explore/badges" class="card card-hover p-4">
-      <h3 class="font-semibold">Badges & Tags</h3>
-      <p class="text-sm text-secondary mt-1">Status badges, pills, content tags</p>
-    </a>
-    <a href="#/explore/alerts" class="card card-hover p-4">
-      <h3 class="font-semibold">Alerts</h3>
-      <p class="text-sm text-secondary mt-1">Success, warning, error, info</p>
-    </a>
-    <a href="#/explore/avatars" class="card card-hover p-4">
-      <h3 class="font-semibold">Avatars</h3>
-      <p class="text-sm text-secondary mt-1">Sizes and accent colors</p>
-    </a>
-    <a href="#/explore/progress" class="card card-hover p-4">
-      <h3 class="font-semibold">Progress Bars</h3>
-      <p class="text-sm text-secondary mt-1">Determinate indicators, color variants</p>
-    </a>
-    <a href="#/explore/toggles" class="card card-hover p-4">
-      <h3 class="font-semibold">Toggles</h3>
-      <p class="text-sm text-secondary mt-1">Switch-style boolean controls</p>
-    </a>
-    <a href="#/explore/tooltips" class="card card-hover p-4">
-      <h3 class="font-semibold">Tooltips</h3>
-      <p class="text-sm text-secondary mt-1">Hover-triggered contextual hints</p>
-    </a>
-    <a href="#/explore/tables" class="card card-hover p-4">
-      <h3 class="font-semibold">Tables</h3>
-      <p class="text-sm text-secondary mt-1">Striped data tables with actions</p>
-    </a>
-    <a href="#/explore/modals" class="card card-hover p-4">
-      <h3 class="font-semibold">Modals</h3>
-      <p class="text-sm text-secondary mt-1">Dialog overlays with triggers</p>
-    </a>
-    <a href="#/explore/skeletons" class="card card-hover p-4">
-      <h3 class="font-semibold">Skeletons</h3>
-      <p class="text-sm text-secondary mt-1">Animated loading placeholders</p>
-    </a>
-    <a href="#/learn/relief-demo" class="card card-hover p-4">
-      <h3 class="font-semibold">Relief Demo</h3>
-      <p class="text-sm text-secondary mt-1">Per-relief context and hewn components</p>
-    </a>
+  ${sectionHeading('Components', 'components', 'Live component gallery. Click any component to open it in the interactive playground.')}
+  <div class="grid gap-8 mt-8" style="grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));">
+    ${componentsHtml}
   </div>
 </div>`;
 }
