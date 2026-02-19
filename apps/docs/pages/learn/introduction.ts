@@ -1,8 +1,6 @@
-/** Getting Started page — hero, 3-tier overview, installation, recipes. */
+/** Getting Started page — hero, 3-tier overview, and installation. */
 
 import { codeExample, sectionDivider, sectionHeading, specimenBlock } from '../../utils/helpers';
-import { RECIPES } from '@soltana/config';
-import type { RecipeName } from '@soltana/config';
 
 export function renderGettingStarted(): HTMLElement {
   const page = document.createElement('div');
@@ -101,38 +99,8 @@ export function renderGettingStarted(): HTMLElement {
     </div>
     <div class="card p-5 rounded-xl">
       <h4 class="font-semibold text-lg mb-2">Runtime API</h4>
-      <p class="text-sm text-secondary">Switch tiers at runtime with <code>setTheme()</code>, <code>setRelief()</code>, <code>setFinish()</code>, <code>setOverrides()</code>, <code>applyRecipe()</code>, <code>reset()</code>, and <a href="#/api/core" style="color: var(--accent-primary);">more</a>.</p>
+      <p class="text-sm text-secondary">Switch tiers at runtime with <code>setTheme()</code>, <code>setRelief()</code>, <code>setFinish()</code>, <code>setOverrides()</code>, <code>reset()</code>, and <a href="#/api/core" style="color: var(--accent-primary);">more</a>.</p>
     </div>
-  </div>
-
-  ${sectionDivider()}
-
-  ${sectionHeading('Recipes', 'recipes', 'Curated tier combinations as named presets.')}
-
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-    ${(Object.keys(RECIPES) as RecipeName[])
-      .map((key) => {
-        const recipe = RECIPES[key];
-        const tierClasses = [
-          `theme-${recipe.theme}`,
-          `relief-${recipe.relief}`,
-          `finish-${recipe.finish}`,
-        ].join(' ');
-        return `
-          <div class="${tierClasses} card p-6 rounded-xl" style="display: flex; flex-direction: column; min-height: 200px;">
-            <span class="tag mb-2">${recipe.name}</span>
-            <p class="text-sm text-secondary mt-2 flex-1">${recipe.description}</p>
-            <div class="flex flex-wrap gap-2 mt-3">
-              <button class="btn btn-primary btn-sm">Primary</button>
-              <button class="btn btn-secondary btn-sm">Secondary</button>
-              <span class="badge badge-primary">Badge</span>
-            </div>
-            <div class="text-xs text-tertiary mt-3">
-              ${recipe.theme} / ${recipe.relief} / ${recipe.finish}
-            </div>
-          </div>`;
-      })
-      .join('')}
   </div>
 
   ${sectionDivider()}

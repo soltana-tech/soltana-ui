@@ -57,38 +57,6 @@ test.describe('cross-tier interaction', () => {
     expect(attrs.finish).toBe('glossy');
   });
 
-  test('applyRecipe then override one tier preserves other recipe tiers', async ({ page }) => {
-    await setupSoltanaPage(page);
-
-    await page.evaluate(() => {
-      const sol = window.SoltanaUI.initSoltana();
-      sol.applyRecipe('luxury-dark');
-      sol.setRelief('flat');
-    });
-
-    const attrs = await getTierAttributes(page);
-    // luxury-dark: dark/neu/glossy — relief was overridden to flat
-    expect(attrs.theme).toBe('dark');
-    expect(attrs.relief).toBe('flat');
-    expect(attrs.finish).toBe('glossy');
-  });
-
-  test('reset after recipe + override restores defaults', async ({ page }) => {
-    await setupSoltanaPage(page);
-
-    await page.evaluate(() => {
-      const sol = window.SoltanaUI.initSoltana();
-      sol.applyRecipe('frosted-modern');
-      sol.setTheme('sepia');
-      sol.reset();
-    });
-
-    const attrs = await getTierAttributes(page);
-    expect(['dark', 'light']).toContain(attrs.theme);
-    expect(attrs.relief).toBe('neumorphic');
-    expect(attrs.finish).toBe('matte');
-  });
-
   test('sequential tier changes accumulate correctly', async ({ page }) => {
     await setupSoltanaPage(page);
 
@@ -105,22 +73,6 @@ test.describe('cross-tier interaction', () => {
     expect(attrs.theme).toBe('sepia');
     expect(attrs.relief).toBe('neumorphic');
     expect(attrs.finish).toBe('glossy');
-  });
-
-  test('getState reflects all cross-tier changes', async ({ page }) => {
-    await setupSoltanaPage(page);
-
-    const state = await page.evaluate(() => {
-      const sol = window.SoltanaUI.initSoltana();
-      sol.applyRecipe('classic-warm');
-      sol.setFinish('frosted');
-      return sol.getState();
-    });
-
-    // classic-warm: sepia/skeuomorphic/matte — finish overridden to frosted
-    expect(state.theme).toBe('sepia');
-    expect(state.relief).toBe('skeuomorphic');
-    expect(state.finish).toBe('frosted');
   });
 
   test('computed CSS properties reflect the active tier combination', async ({ page }) => {

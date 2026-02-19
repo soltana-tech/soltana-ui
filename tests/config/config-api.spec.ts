@@ -240,24 +240,6 @@ test.describe('initSoltana', () => {
     expect(result.state).toBe('neon');
   });
 
-  test('registerRecipe adds a recipe that applyRecipe can use', async ({ page }) => {
-    await setupSoltanaPage(page);
-    await page.evaluate(() => {
-      const s = window.SoltanaUI.initSoltana();
-      s.registerRecipe('my-preset', {
-        name: 'My Preset',
-        description: 'Custom recipe for testing.',
-        theme: 'dark',
-        relief: 'flat',
-        finish: 'matte',
-      });
-      s.applyRecipe('my-preset');
-    });
-
-    const attrs = await getTierAttributes(page);
-    expect(attrs.relief).toBe('flat');
-  });
-
   test('default config does not inject font links', async ({ page }) => {
     await setupSoltanaPage(page);
     await page.evaluate(() => window.SoltanaUI.initSoltana());

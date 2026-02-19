@@ -3,7 +3,7 @@ import './styles/index.scss';
 // Orchestrator
 export { initSoltana, DEFAULT_STATE } from './init.js';
 
-// Config: types, constants, validation, recipes
+// Config: types, constants, validation
 export { registerTierValue } from './config/index.js';
 export { BUILT_IN_THEMES, BUILT_IN_RELIEFS, BUILT_IN_FINISHES } from './config/index.js';
 export type {
@@ -15,12 +15,9 @@ export type {
   Theme,
   Relief,
   Finish,
-  RecipeName,
-  Recipe,
   BuiltInTheme,
   BuiltInRelief,
   BuiltInFinish,
-  BuiltInRecipeName,
   TierName,
   ThemeSeed,
   RegisterThemeOptions,
@@ -28,7 +25,6 @@ export type {
   RegisterFinishOptions,
   TierRegistration,
 } from './config/index.js';
-export { RECIPES } from './config/index.js';
 
 // Enhancer initializers
 export {

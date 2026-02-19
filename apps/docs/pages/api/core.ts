@@ -216,7 +216,7 @@ soltana.setFinish('frosted');`,
     `
     <p class="text-secondary mb-4">
       Resets all tiers to library defaults, clears overrides, removes runtime
-      recipe and tier registrations, and tears down the managed stylesheet.
+      tier registrations, and tears down the managed stylesheet.
       DOM attributes are re-applied from the default state.
     </p>
     ${codeExample(`soltana.reset();`, 'typescript')}

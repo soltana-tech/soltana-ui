@@ -36,8 +36,6 @@ function createMockInstance(overrides?: Partial<ReturnType<typeof mockGetState>>
     setTheme: vi.fn(),
     setRelief: vi.fn(),
     setFinish: vi.fn(),
-    applyRecipe: vi.fn(),
-    registerRecipe: vi.fn(),
     setOverrides: vi.fn(),
     removeOverrides: vi.fn(),
     registerTheme: vi.fn(),

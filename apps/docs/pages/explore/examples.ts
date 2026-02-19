@@ -214,6 +214,7 @@ export function renderExamples(): HTMLElement {
     label.textContent = tpl.label;
 
     const preview = document.createElement('sol-preview') as SolPreview;
+    preview.setAttribute('auto-height', '');
     if (state.theme) preview.setAttribute('theme', state.theme);
     if (state.relief) preview.setAttribute('relief', state.relief);
     if (state.finish) preview.setAttribute('finish', state.finish);

@@ -43,9 +43,6 @@ ability to compose them.
 - **Accessibility foundation** — `prefers-reduced-motion`,
   `prefers-contrast`, `.sr-only`, `.skip-link`, focus rings.
   Solid base layer.
-- **Recipe system** — Named presets (`corporate-clean`,
-  `luxury-dark`, etc.) as curated starting points. Demonstrates
-  the tier model without hardcoding combinations.
 - **Decorative typography** — `--font-display` maps to
   Cinzel Decorative for ornamental headings and branding
   elements, complementing the primary `--font-serif` (Cinzel)

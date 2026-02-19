@@ -34,7 +34,6 @@ export class SolPreview extends HTMLElement {
     this._iframe = document.createElement('iframe');
     this._iframe.style.border = 'none';
     this._iframe.style.width = '100%';
-    this._iframe.setAttribute('scrolling', 'no');
   }
 
   get frame(): HTMLIFrameElement {
@@ -66,8 +65,9 @@ export class SolPreview extends HTMLElement {
     }
   }
 
-  /** Sync iframe height to its content. */
+  /** Sync iframe height to its content (only when `auto-height` is set). */
   syncHeight(): void {
+    if (!this.hasAttribute('auto-height')) return;
     const doc = this._iframe.contentDocument;
     if (!doc) return;
     const height = doc.documentElement.scrollHeight;
@@ -77,6 +77,9 @@ export class SolPreview extends HTMLElement {
   }
 
   connectedCallback(): void {
+    if (this.hasAttribute('auto-height')) {
+      this._iframe.setAttribute('scrolling', 'no');
+    }
     this.appendChild(this._iframe);
     this._iframe.srcdoc = this.buildSrcdoc();
 

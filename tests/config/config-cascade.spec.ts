@@ -1,11 +1,11 @@
 import { test, expect } from '@playwright/test';
 import { setupSoltanaPage } from '../fixtures/soltana-page';
 import { getComputedCSSProperty } from '../fixtures/helpers';
-import { recipes } from '../fixtures/combinations';
+import { singleAxis } from '../fixtures/combinations';
 
 test.describe('multi-tier cascade integration', () => {
-  for (const recipe of recipes()) {
-    test(`recipe ${recipe.theme}/${recipe.relief}/${recipe.finish} resolves key tokens`, async ({
+  for (const combo of singleAxis()) {
+    test(`combo ${combo.theme}/${combo.relief}/${combo.finish} resolves key tokens`, async ({
       page,
     }) => {
       await setupSoltanaPage(page);
@@ -14,7 +14,7 @@ test.describe('multi-tier cascade integration', () => {
         s.setTheme(cfg.theme);
         s.setRelief(cfg.relief);
         s.setFinish(cfg.finish);
-      }, recipe);
+      }, combo);
 
       // Relief tokens should resolve to non-empty values
       const reliefShadow = await getComputedCSSProperty(page, '--relief-shadow');

@@ -10,22 +10,10 @@ export const BUILT_IN_FINISHES = ['matte', 'frosted', 'tinted', 'glossy'] as con
 export type BuiltInTheme = (typeof BUILT_IN_THEMES)[number];
 export type BuiltInRelief = (typeof BUILT_IN_RELIEFS)[number];
 export type BuiltInFinish = (typeof BUILT_IN_FINISHES)[number];
-import type { BuiltInRecipeName } from './recipes.js';
-export type { BuiltInRecipeName };
 
 export type Theme = BuiltInTheme | 'auto' | (string & {});
 export type Relief = BuiltInRelief | (string & {});
 export type Finish = BuiltInFinish | (string & {});
-export type RecipeName = BuiltInRecipeName | (string & {});
-
-export interface Recipe {
-  /** Human-readable display label, distinct from the recipe registry key. */
-  name: string;
-  description: string;
-  theme: Theme;
-  relief: Relief;
-  finish: Finish;
-}
 
 export interface SoltanaInitOptions {
   enhancers?: boolean;
@@ -55,11 +43,6 @@ export interface SoltanaInstance {
   setRelief(relief: Relief): void;
   /** Set the active finish (applies `data-finish` on `<html>`). */
   setFinish(finish: Finish): void;
-
-  /** Apply a named recipe, setting all three tiers at once. */
-  applyRecipe(recipeName: RecipeName): void;
-  /** Register a custom recipe for later use with `applyRecipe()`. */
-  registerRecipe(name: string, recipe: Recipe): void;
 
   /** Set CSS custom property overrides on `<html>`. Keys must start with `--`. */
   setOverrides(overrides: Record<string, string>): void;

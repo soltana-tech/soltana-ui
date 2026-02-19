@@ -3,7 +3,6 @@ import {
   VALID_RELIEFS,
   VALID_FINISHES,
 } from '../../packages/soltana-ui/src/config/validation';
-import { RECIPES } from '../../packages/soltana-ui/src/config/recipes';
 
 export interface TierCombination {
   theme: string;
@@ -34,15 +33,6 @@ function deduplicate(combos: TierCombination[]): TierCombination[] {
 /** Visual themes only — excludes 'auto' (runtime resolver, not a static token set). */
 const visualThemes = VALID_THEMES.filter((t) => t !== 'auto');
 
-/** Recipe presets as tier combinations. */
-export function recipes(): TierCombination[] {
-  return Object.values(RECIPES).map((r) => ({
-    theme: r.theme === 'auto' ? 'dark' : r.theme,
-    relief: r.relief,
-    finish: r.finish,
-  }));
-}
-
 /** Vary one tier at a time from the base combination, covering every built-in value. */
 export function singleAxis(): TierCombination[] {
   const combos: TierCombination[] = [];
@@ -60,9 +50,9 @@ export function singleAxis(): TierCombination[] {
   return deduplicate(combos);
 }
 
-/** Recipes + single-axis variation, deduplicated. Default test strategy. */
+/** Single-axis variation, deduplicated. Default test strategy. */
 export function defaultCombinations(): TierCombination[] {
-  return deduplicate([...recipes(), ...singleAxis()]);
+  return singleAxis();
 }
 
 /** Full cartesian product of all tier values. Opt-in via FULL_MATRIX=1. */

@@ -85,12 +85,10 @@ sol-preview {
 }
 
 .sandbox__preview-frame {
-  min-height: 30rem;
-
   iframe {
     border: none;
     width: 100%;
-    min-height: inherit;
+    height: 100%;
   }
 
   &.a11y-high-contrast iframe {
@@ -98,16 +96,27 @@ sol-preview {
   }
 }
 
-.central-playground .sandbox__preview-frame {
-  min-height: 42rem;
-}
-
 // Sandbox two-column layout (preview left, controls right)
 .sandbox__layout {
   display: grid;
   grid-template-columns: 3fr 2fr;
   gap: 1.5rem;
-  align-items: start;
+  height: 70vh;
+}
+
+.sandbox__preview-col {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.sandbox__preview-col sol-preview {
+  flex: 1 1 0%;
+}
+
+.sandbox__controls-col {
+  overflow-y: auto;
+  min-height: 0;
 }
 
 // Tab bar — hidden on desktop, shown on mobile
@@ -231,6 +240,7 @@ sol-preview {
 
   .sandbox__layout {
     grid-template-columns: 1fr;
+    height: auto;
   }
 
   .sandbox[data-active-tab='controls'] .sandbox__preview-col {

@@ -17,12 +17,9 @@ export type {
   Theme,
   Relief,
   Finish,
-  RecipeName,
-  Recipe,
   BuiltInTheme,
   BuiltInRelief,
   BuiltInFinish,
-  BuiltInRecipeName,
   TierName,
   ThemeSeed,
   RegisterThemeOptions,
@@ -30,5 +27,3 @@ export type {
   RegisterFinishOptions,
   TierRegistration,
 } from './types.js';
-
-export { RECIPES, BUILT_IN_RECIPE_NAMES, registerRecipe } from './recipes.js';

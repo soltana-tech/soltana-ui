@@ -100,6 +100,7 @@ export function renderThemes(): HTMLElement {
     desc.textContent = theme.description;
 
     const preview = document.createElement('sol-preview') as SolPreview;
+    preview.setAttribute('auto-height', '');
     preview.setAttribute('theme', theme.className);
     preview.content = themePreviewContent();
 

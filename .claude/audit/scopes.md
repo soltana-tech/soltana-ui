@@ -18,8 +18,6 @@ checks. Sections with new names define project-specific scopes.
 - Verify enhancer DOM testing: `initModals`, `initTabs`,
   `initTooltips`, `initAll` are tested against real DOM
   structures, not just mocked calls
-- Verify recipe preset tests validate that named presets
-  produce the expected combination of data attributes
 - Verify tests cover per-element overrides via `.theme-*`,
   `.relief-*`, `.finish-*` utility classes
 
@@ -91,8 +89,6 @@ checks. Sections with new names define project-specific scopes.
 - Verify `SoltanaConfig` type alignment: all fields in the
   config type correspond to implemented behavior and vice
   versa
-- Verify recipe presets (`corporate-clean`, `luxury-dark`,
-  etc.) only reference valid tier combinations
 - Flag config options that do not surface in any visual or
   behavioral change
 - Verify default values are sensible and documented
@@ -133,8 +129,6 @@ checks. Sections with new names define project-specific scopes.
   implementation should depend on another tier's state
 - Flag any functionality that falls outside the CSS design
   system purpose
-- Verify recipe system serves as curated starting points
-  without hardcoding combinations
 
 ## styles
 
