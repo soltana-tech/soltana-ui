@@ -43,7 +43,7 @@ import type { CentralPlayground } from './components/CentralPlayground';
 
 const soltana = initSoltana({
   theme: 'dark',
-  relief: 'neu',
+  relief: 'neumorphic',
   finish: 'matte',
   ornament: 'none',
 });

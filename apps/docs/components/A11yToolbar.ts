@@ -31,24 +31,20 @@ export class A11yToolbar {
 
   private build(): HTMLElement {
     const el = document.createElement('div');
-    el.className = 'a11y-toolbar';
+    el.className = 'sandbox__tier-group';
     el.innerHTML = `
-      <span class="a11y-toolbar__label">Accessibility</span>
-      <div class="a11y-toolbar__controls">
-        <button class="a11y-toolbar__toggle" data-a11y="high-contrast" title="Simulate high contrast">
-          High Contrast
-        </button>
-        <button class="a11y-toolbar__toggle" data-a11y="reduced-motion" title="Simulate reduced motion">
-          Reduced Motion
-        </button>
-        <button class="a11y-toolbar__toggle" data-a11y="focus-visible" title="Force focus indicators">
-          Focus Visible
-        </button>
-        <label class="a11y-toolbar__range">
-          <span class="text-xs">Font Size</span>
-          <input type="range" min="75" max="200" value="100" data-a11y-scale />
-          <span class="a11y-toolbar__range-value">100%</span>
-        </label>
+      <span class="sandbox__tier-label">Accessibility</span>
+      <div class="flex flex-wrap items-center gap-2">
+        <div class="segmented-control segmented-control-sm">
+          <button class="segmented-control__option" data-a11y="high-contrast">High Contrast</button>
+          <button class="segmented-control__option" data-a11y="reduced-motion">Reduced Motion</button>
+          <button class="segmented-control__option" data-a11y="focus-visible">Focus Visible</button>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-secondary">Font Size</span>
+          <input type="range" class="range range-sm" min="75" max="200" value="100" data-a11y-scale style="width: 6rem;" />
+          <span class="text-xs text-secondary" data-a11y-scale-value>100%</span>
+        </div>
       </div>
     `;
     return el;
@@ -63,28 +59,30 @@ export class A11yToolbar {
         const cls = `a11y-${mode}`;
 
         if (mode === 'high-contrast') {
-          // Filter applies to the outer iframe element
           const active = this.target.classList.toggle(cls);
-          btn.classList.toggle('a11y-toolbar__toggle--active', active);
+          btn.classList.toggle('active', active);
         } else if (this.iframeDoc) {
-          // reduced-motion / focus-visible toggle inside iframe <html>
           const active = this.iframeDoc.documentElement.classList.toggle(cls);
-          btn.classList.toggle('a11y-toolbar__toggle--active', active);
+          btn.classList.toggle('active', active);
         } else {
-          // Fallback: toggle on outer target (non-iframe context)
           const active = this.target.classList.toggle(cls);
-          btn.classList.toggle('a11y-toolbar__toggle--active', active);
+          btn.classList.toggle('active', active);
         }
       });
     });
 
-    // Font size slider — always targets the outer iframe element
     const slider = this.element.querySelector<HTMLInputElement>('[data-a11y-scale]');
-    const valueDisplay = this.element.querySelector('.a11y-toolbar__range-value');
+    const valueDisplay = this.element.querySelector('[data-a11y-scale-value]');
     slider?.addEventListener('input', () => {
-      const scale = Number(slider.value) / 100;
-      this.target.style.fontSize = `${String(scale)}em`;
-      if (valueDisplay) valueDisplay.textContent = `${slider.value}%`;
+      const pct = Number(slider.value);
+      const pctStr = String(pct);
+      // Apply to iframe body if available, otherwise to target
+      if (this.iframeDoc) {
+        this.iframeDoc.documentElement.style.fontSize = `${pctStr}%`;
+      } else {
+        this.target.style.fontSize = `${String(pct / 100)}em`;
+      }
+      if (valueDisplay) valueDisplay.textContent = `${pctStr}%`;
     });
   }
 }

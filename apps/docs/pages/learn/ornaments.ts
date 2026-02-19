@@ -47,16 +47,16 @@ export function renderOrnaments(): string {
     `
     <p class="text-sm text-secondary mb-4">Ornaments compose with any relief for unique combinations:</p>
     <div class="grid gap-6" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))">
-      <div class="relief-lifted p-5 rounded-xl">
+      <div class="relief-skeuomorphic p-5 rounded-xl">
         <div class="ornament-gilt card p-4 rounded-lg">
           <span class="tag">.ornament-gilt</span>
-          <p class="text-sm text-secondary mt-2">Lifted + Gold leaf border</p>
+          <p class="text-sm text-secondary mt-2">Skeuomorphic + Gold leaf border</p>
         </div>
       </div>
-      <div class="relief-neu p-5 rounded-xl">
+      <div class="relief-neumorphic p-5 rounded-xl">
         <div class="ornament-beveled card p-4 rounded-lg">
           <span class="tag">.ornament-beveled</span>
-          <p class="text-sm text-secondary mt-2">Neu + Beveled frame</p>
+          <p class="text-sm text-secondary mt-2">Neumorphic + Beveled frame</p>
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ export interface ComponentEntry {
   id: string;
   name: string;
   description: string;
+  category?: string;
   renderPreview: (state: SandboxState) => string;
   hasPlayground?: boolean;
 }

@@ -15,6 +15,7 @@ export class PlaygroundControls {
     this.bindModalTriggers(root);
     this.bindToggles(root);
     this.bindColorPickers(root);
+    this.bindNavActiveToggle(root);
   }
 
   /**
@@ -169,5 +170,28 @@ export class PlaygroundControls {
         };
         input.addEventListener('input', update);
       });
+  }
+
+  /** Toggle active state on sibling nav-items, tabs, and breadcrumb links. */
+  private bindNavActiveToggle(root: Document | DocumentFragment): void {
+    const selectors = [
+      { container: '.navbar-nav', item: '.nav-item' },
+      { container: '.tabs', item: '.tab' },
+      { container: '.breadcrumb', item: '.breadcrumb-item' },
+    ];
+
+    for (const { container, item } of selectors) {
+      root.querySelectorAll(container).forEach((group) => {
+        group.querySelectorAll<HTMLElement>(item).forEach((el) => {
+          el.addEventListener('click', (e) => {
+            e.preventDefault();
+            group.querySelectorAll(item).forEach((sib) => {
+              sib.classList.remove('active');
+            });
+            el.classList.add('active');
+          });
+        });
+      });
+    }
   }
 }

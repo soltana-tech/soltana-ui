@@ -41,7 +41,7 @@ import { teardown as teardownStylesheet } from './config/stylesheet.js';
 
 const DEFAULT_STATE: SoltanaConfig = {
   theme: 'auto',
-  relief: 'neu',
+  relief: 'neumorphic',
   finish: 'matte',
   ornament: 'none',
   overrides: {},

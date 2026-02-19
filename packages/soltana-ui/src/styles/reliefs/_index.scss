@@ -8,19 +8,6 @@
 
 @use '../base/register' as *;
 
-@include register-relief('neu') {
-  --relief-bg: var(--relief-surface-deep);
-  --relief-shadow-sm: 2px 2px 5px var(--neu-shadow), -2px -2px 5px var(--neu-light);
-  --relief-shadow: 3px 3px 8px var(--neu-shadow), -3px -3px 8px var(--neu-light);
-  --relief-shadow-lg: 6px 6px 16px var(--neu-shadow), -5px -5px 14px var(--neu-light);
-  --relief-shadow-inset-sm:
-    inset 1px 1px 3px var(--neu-shadow), inset -1px -1px 3px var(--neu-light);
-  --relief-shadow-inset: inset 2px 2px 5px var(--neu-shadow), inset -2px -2px 5px var(--neu-light);
-  --relief-shadow-inset-lg:
-    inset 4px 4px 10px var(--neu-shadow), inset -4px -4px 10px var(--neu-light);
-  --relief-border: var(--relief-border-default);
-}
-
 @include register-relief('flat') {
   --relief-bg: var(--relief-surface-flat);
   --relief-shadow-sm: none;
@@ -32,57 +19,46 @@
   --relief-border: 1px solid var(--relief-border-default);
 }
 
-@include register-relief('soft') {
-  --relief-bg: var(--relief-surface-flat);
-  --relief-shadow-sm: 0 1px 2px rgb(var(--shadow-color) / 5%);
-  --relief-shadow: 0 1px 3px rgb(var(--shadow-color) / 8%), 0 1px 2px rgb(var(--shadow-color) / 6%);
+@include register-relief('glassmorphic') {
+  --relief-bg: var(--relief-surface-raised);
+  --relief-shadow-sm: 0 2px 8px rgb(var(--shadow-color) / 8%);
+  --relief-shadow:
+    0 4px 16px rgb(var(--shadow-color) / 10%), 0 1px 4px rgb(var(--shadow-color) / 6%);
   --relief-shadow-lg:
-    0 4px 8px rgb(var(--shadow-color) / 10%), 0 2px 4px rgb(var(--shadow-color) / 6%);
-  --relief-shadow-inset-sm: inset 0 1px 0 rgb(var(--highlight-color) / 3%);
-  --relief-shadow-inset: inset 0 1px 0 rgb(var(--highlight-color) / 4%);
+    0 8px 32px rgb(var(--shadow-color) / 12%), 0 2px 8px rgb(var(--shadow-color) / 6%);
+  --relief-shadow-inset-sm: inset 0 0.5px 0 rgb(var(--highlight-color) / 10%);
+  --relief-shadow-inset: inset 0 1px 0 rgb(var(--highlight-color) / 12%);
   --relief-shadow-inset-lg:
-    inset 0 2px 0 rgb(var(--highlight-color) / 5%), inset 0 -1px 0 rgb(var(--shadow-color) / 5%);
-  --relief-border: 1px solid var(--relief-border-subtle);
+    inset 0 1px 0 rgb(var(--highlight-color) / 15%), inset 0 -0.5px 0 rgb(var(--shadow-color) / 4%);
+  --relief-border: 1px solid rgb(var(--highlight-color) / 12%);
 }
 
-@include register-relief('lifted') {
+@include register-relief('skeuomorphic') {
   --relief-bg: var(--relief-surface-raised);
   --relief-shadow-sm:
-    0 1px 3px rgb(var(--shadow-color) / 12%), 0 1px 2px rgb(var(--shadow-color) / 24%);
+    0 1px 3px rgb(var(--shadow-color) / 14%), 0 1px 2px rgb(var(--shadow-color) / 24%);
   --relief-shadow:
-    0 3px 6px rgb(var(--shadow-color) / 16%), 0 3px 6px rgb(var(--shadow-color) / 23%);
+    0 3px 6px rgb(var(--shadow-color) / 18%), 0 3px 6px rgb(var(--shadow-color) / 24%);
   --relief-shadow-lg:
-    0 10px 20px rgb(var(--shadow-color) / 19%), 0 6px 6px rgb(var(--shadow-color) / 23%);
-  --relief-shadow-inset-sm: inset 0 1px 2px rgb(var(--shadow-color) / 10%);
-  --relief-shadow-inset: inset 0 2px 4px rgb(var(--shadow-color) / 14%);
-  --relief-shadow-inset-lg: inset 0 4px 8px rgb(var(--shadow-color) / 18%);
-  --relief-border: 1px solid rgb(var(--shadow-color) / 6%);
+    0 10px 20px rgb(var(--shadow-color) / 22%), 0 6px 6px rgb(var(--shadow-color) / 24%);
+  --relief-shadow-inset-sm:
+    inset 0 1px 0 rgb(var(--highlight-color) / 12%), inset 0 -1px 2px rgb(var(--shadow-color) / 10%);
+  --relief-shadow-inset:
+    inset 0 1px 0 rgb(var(--highlight-color) / 15%), inset 0 -2px 4px rgb(var(--shadow-color) / 14%);
+  --relief-shadow-inset-lg:
+    inset 0 2px 0 rgb(var(--highlight-color) / 18%), inset 0 -4px 8px rgb(var(--shadow-color) / 18%);
+  --relief-border: 1px solid rgb(var(--shadow-color) / 8%);
 }
 
-@include register-relief('sharp') {
-  --relief-bg: var(--relief-surface-raised);
-  --relief-shadow-sm: 2px 2px 0 rgb(var(--shadow-color) / 20%);
-  --relief-shadow: 4px 4px 0 rgb(var(--shadow-color) / 25%);
-  --relief-shadow-lg: 8px 8px 0 rgb(var(--shadow-color) / 30%);
-  --relief-shadow-inset-sm: inset 2px 2px 0 rgb(var(--shadow-color) / 15%);
-  --relief-shadow-inset: inset 3px 3px 0 rgb(var(--shadow-color) / 20%);
-  --relief-shadow-inset-lg: inset 5px 5px 0 rgb(var(--shadow-color) / 25%);
-  --relief-border: 1px solid rgb(var(--shadow-color) / 15%);
-}
-
-@include register-relief('hewn') {
-  --relief-bg: var(--relief-surface-raised);
-  --relief-shadow-sm:
-    inset 2px 2px 4px rgb(var(--shadow-color) / 18%),
-    inset -1px -1px 3px rgb(var(--highlight-color) / 5%);
-  --relief-shadow:
-    inset 3px 3px 6px rgb(var(--shadow-color) / 22%),
-    inset -2px -2px 4px rgb(var(--highlight-color) / 6%);
-  --relief-shadow-lg:
-    inset 5px 5px 10px rgb(var(--shadow-color) / 28%),
-    inset -3px -3px 6px rgb(var(--highlight-color) / 7%);
-  --relief-shadow-inset-sm: inset 1px 1px 3px rgb(var(--shadow-color) / 15%);
-  --relief-shadow-inset: inset 2px 2px 5px rgb(var(--shadow-color) / 20%);
-  --relief-shadow-inset-lg: inset 4px 4px 8px rgb(var(--shadow-color) / 25%);
-  --relief-border: 1px solid rgb(var(--shadow-color) / 10%);
+@include register-relief('neumorphic') {
+  --relief-bg: var(--relief-surface-deep);
+  --relief-shadow-sm: 2px 2px 5px var(--neu-shadow), -2px -2px 5px var(--neu-light);
+  --relief-shadow: 3px 3px 8px var(--neu-shadow), -3px -3px 8px var(--neu-light);
+  --relief-shadow-lg: 6px 6px 16px var(--neu-shadow), -5px -5px 14px var(--neu-light);
+  --relief-shadow-inset-sm:
+    inset 1px 1px 3px var(--neu-shadow), inset -1px -1px 3px var(--neu-light);
+  --relief-shadow-inset: inset 2px 2px 5px var(--neu-shadow), inset -2px -2px 5px var(--neu-light);
+  --relief-shadow-inset-lg:
+    inset 4px 4px 10px var(--neu-shadow), inset -4px -4px 10px var(--neu-light);
+  --relief-border: var(--relief-border-default);
 }

@@ -16,14 +16,6 @@
   --finish-sheen: none;
 }
 
-@include register-finish('translucent') {
-  --finish-blur: 0px;
-  --finish-saturation: 100%;
-  --finish-opacity: 0.65;
-  --finish-overlay: none;
-  --finish-sheen: none;
-}
-
 @include register-finish('frosted') {
   --finish-blur: 24px;
   --finish-saturation: 80%;

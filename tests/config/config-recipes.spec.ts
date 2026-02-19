@@ -9,8 +9,18 @@ test.describe('applyRecipe', () => {
   > = {
     'corporate-clean': { theme: 'light', relief: 'flat', finish: 'matte', ornament: 'none' },
     'luxury-dark': { theme: 'dark', relief: 'neu', finish: 'glossy', ornament: 'gilt' },
-    'frosted-modern': { theme: 'dark', relief: 'lifted', finish: 'frosted', ornament: 'none' },
-    'classic-warm': { theme: 'sepia', relief: 'soft', finish: 'matte', ornament: 'beveled' },
+    'frosted-modern': {
+      theme: 'dark',
+      relief: 'glassmorphic',
+      finish: 'frosted',
+      ornament: 'none',
+    },
+    'classic-warm': {
+      theme: 'sepia',
+      relief: 'skeuomorphic',
+      finish: 'matte',
+      ornament: 'beveled',
+    },
   };
 
   for (const [recipeName, expected] of Object.entries(expectedRecipes)) {
@@ -41,7 +51,7 @@ test.describe('applyRecipe', () => {
     await page.evaluate(() => {
       (window as any).__soltanaInstance = window.SoltanaUI.initSoltana({
         theme: 'sepia',
-        relief: 'sharp',
+        relief: 'glassmorphic',
       });
     });
 
@@ -53,7 +63,7 @@ test.describe('applyRecipe', () => {
 
     const state = await page.evaluate(() => (window as any).__soltanaInstance.getState());
     expect(state.theme).toBe('sepia');
-    expect(state.relief).toBe('sharp');
+    expect(state.relief).toBe('glassmorphic');
   });
 
   test('individual setters can override tiers after recipe application', async ({ page }) => {

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="dark" data-relief="neu" data-finish="matte">
+<html lang="en" data-theme="dark" data-relief="neumorphic" data-finish="matte">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -37,6 +37,27 @@
             <span class="docs-header__subtitle">Design System</span>
           </span>
         </div>
+        <button
+          class="docs-sidebar-toggle"
+          id="sidebar-toggle"
+          type="button"
+          aria-label="Toggle navigation"
+          aria-expanded="false"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
         <div class="docs-header__actions">
           <div class="segmented-control segmented-control-sm" id="theme-switcher">
             <button
@@ -64,6 +85,9 @@
         </div>
       </div>
     </header>
+
+    <!-- Backdrop for mobile sidebar -->
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
 
     <!-- Layout: sidebar + main content -->
     <div class="app-layout" id="docs-layout">

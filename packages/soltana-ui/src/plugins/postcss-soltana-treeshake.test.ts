@@ -42,17 +42,17 @@ describe('postcss-soltana-treeshake', () => {
   describe('relief stripping', () => {
     it('strips excluded relief values', async () => {
       const input = `
-[data-relief='lifted'], .relief-lifted { box-shadow: 0 4px 8px; }
-[data-relief='neu'], .relief-neu { box-shadow: inset 0 2px 4px; }
-[data-relief='hewn'], .relief-hewn { box-shadow: none; }
+[data-relief='skeuomorphic'], .relief-skeuomorphic { box-shadow: 0 4px 8px; }
+[data-relief='neumorphic'], .relief-neumorphic { box-shadow: inset 0 2px 4px; }
+[data-relief='glassmorphic'], .relief-glassmorphic { box-shadow: none; }
       `.trim();
 
-      const output = await run(input, { reliefs: { include: ['neu'] } });
+      const output = await run(input, { reliefs: { include: ['neumorphic'] } });
 
-      expect(output).not.toContain('lifted');
-      expect(output).not.toContain('hewn');
-      expect(output).toContain("[data-relief='neu']");
-      expect(output).toContain('.relief-neu');
+      expect(output).not.toContain('skeuomorphic');
+      expect(output).not.toContain('glassmorphic');
+      expect(output).toContain("[data-relief='neumorphic']");
+      expect(output).toContain('.relief-neumorphic');
     });
   });
 
@@ -172,11 +172,11 @@ describe('postcss-soltana-treeshake', () => {
     });
 
     it('no-ops when no tier config is provided', async () => {
-      const input = `[data-relief='hewn'] { box-shadow: none; }`;
+      const input = `[data-relief='glassmorphic'] { box-shadow: none; }`;
       const output = await run(input, { themes: { include: ['dark'] } });
 
       // Relief not configured → nothing stripped
-      expect(output).toContain('hewn');
+      expect(output).toContain('glassmorphic');
     });
 
     it('handles @keyframes without touching them', async () => {
@@ -196,23 +196,23 @@ describe('postcss-soltana-treeshake', () => {
       const input = `
 [data-theme='sepia'], .theme-sepia { color: brown; }
 [data-theme='dark'], .theme-dark { color: white; }
-[data-relief='hewn'], .relief-hewn { box-shadow: none; }
-[data-relief='neu'], .relief-neu { box-shadow: inset 0 2px 4px; }
+[data-relief='glassmorphic'], .relief-glassmorphic { box-shadow: none; }
+[data-relief='neumorphic'], .relief-neumorphic { box-shadow: inset 0 2px 4px; }
 [data-finish='glossy'], .finish-glossy { backdrop-filter: blur(0); }
 [data-ornament='baroque'] { --ornament-color: gold; }
       `.trim();
 
       const output = await run(input, {
         themes: { include: ['dark'] },
-        reliefs: { include: ['neu', 'flat'] },
+        reliefs: { include: ['neumorphic', 'flat'] },
         finishes: { exclude: ['glossy'] },
         ornaments: { include: ['none', 'gilt'] },
       });
 
       expect(output).not.toContain('sepia');
       expect(output).toContain('dark');
-      expect(output).not.toContain('hewn');
-      expect(output).toContain('neu');
+      expect(output).not.toContain('glassmorphic');
+      expect(output).toContain('neumorphic');
       expect(output).not.toContain('glossy');
       expect(output).not.toContain('baroque');
     });

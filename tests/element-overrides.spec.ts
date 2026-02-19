@@ -36,7 +36,7 @@ const scenarios: OverrideScenario[] = [
   {
     name: 'theme',
     theme: 'dark',
-    relief: 'neu',
+    relief: 'neumorphic',
     finish: 'matte',
     ornament: 'none',
     overrideClasses: 'theme-light',
@@ -44,7 +44,7 @@ const scenarios: OverrideScenario[] = [
   {
     name: 'relief',
     theme: 'dark',
-    relief: 'neu',
+    relief: 'neumorphic',
     finish: 'matte',
     ornament: 'none',
     overrideClasses: 'relief-flat',
@@ -52,7 +52,7 @@ const scenarios: OverrideScenario[] = [
   {
     name: 'finish',
     theme: 'dark',
-    relief: 'neu',
+    relief: 'neumorphic',
     finish: 'matte',
     ornament: 'none',
     overrideClasses: 'finish-frosted',
@@ -60,7 +60,7 @@ const scenarios: OverrideScenario[] = [
   {
     name: 'ornament',
     theme: 'dark',
-    relief: 'neu',
+    relief: 'neumorphic',
     finish: 'matte',
     ornament: 'gilt',
     overrideClasses: 'ornament-baroque',
@@ -68,10 +68,10 @@ const scenarios: OverrideScenario[] = [
   {
     name: 'multi',
     theme: 'dark',
-    relief: 'neu',
+    relief: 'neumorphic',
     finish: 'matte',
     ornament: 'none',
-    overrideClasses: 'theme-sepia relief-lifted finish-glossy',
+    overrideClasses: 'theme-sepia relief-skeuomorphic finish-glossy',
   },
 ];
 

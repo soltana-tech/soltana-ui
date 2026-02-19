@@ -38,16 +38,16 @@ test.describe('cross-tier interaction', () => {
     await page.evaluate(() => {
       const sol = window.SoltanaUI.initSoltana({
         theme: 'sepia',
-        relief: 'soft',
+        relief: 'skeuomorphic',
         finish: 'tinted',
         ornament: 'baroque',
       });
-      sol.setRelief('sharp');
+      sol.setRelief('glassmorphic');
     });
 
     const attrs = await getTierAttributes(page);
     expect(attrs.theme).toBe('sepia');
-    expect(attrs.relief).toBe('sharp');
+    expect(attrs.relief).toBe('glassmorphic');
     expect(attrs.finish).toBe('tinted');
     expect(attrs.ornament).toBe('baroque');
   });
@@ -58,7 +58,7 @@ test.describe('cross-tier interaction', () => {
     await page.evaluate(() => {
       const sol = window.SoltanaUI.initSoltana({
         theme: 'light',
-        relief: 'lifted',
+        relief: 'skeuomorphic',
         finish: 'matte',
         ornament: 'beveled',
       });
@@ -67,7 +67,7 @@ test.describe('cross-tier interaction', () => {
 
     const attrs = await getTierAttributes(page);
     expect(attrs.theme).toBe('light');
-    expect(attrs.relief).toBe('lifted');
+    expect(attrs.relief).toBe('skeuomorphic');
     expect(attrs.finish).toBe('glossy');
     expect(attrs.ornament).toBe('beveled');
   });
@@ -79,7 +79,7 @@ test.describe('cross-tier interaction', () => {
       const sol = window.SoltanaUI.initSoltana({
         theme: 'dark',
         relief: 'neu',
-        finish: 'translucent',
+        finish: 'frosted',
         ornament: 'none',
       });
       sol.setOrnament('faceted');
@@ -88,7 +88,7 @@ test.describe('cross-tier interaction', () => {
     const attrs = await getTierAttributes(page);
     expect(attrs.theme).toBe('dark');
     expect(attrs.relief).toBe('neu');
-    expect(attrs.finish).toBe('translucent');
+    expect(attrs.finish).toBe('frosted');
     expect(attrs.ornament).toBe('faceted');
   });
 
@@ -132,16 +132,16 @@ test.describe('cross-tier interaction', () => {
     await page.evaluate(() => {
       const sol = window.SoltanaUI.initSoltana();
       sol.setTheme('light');
-      sol.setRelief('lifted');
+      sol.setRelief('skeuomorphic');
       sol.setFinish('glossy');
       sol.setOrnament('gilt');
       sol.setTheme('sepia');
-      sol.setRelief('hewn');
+      sol.setRelief('neumorphic');
     });
 
     const attrs = await getTierAttributes(page);
     expect(attrs.theme).toBe('sepia');
-    expect(attrs.relief).toBe('hewn');
+    expect(attrs.relief).toBe('neumorphic');
     expect(attrs.finish).toBe('glossy');
     expect(attrs.ornament).toBe('gilt');
   });
@@ -158,7 +158,7 @@ test.describe('cross-tier interaction', () => {
 
     // classic-warm: sepia/soft/matte/beveled — finish overridden to frosted
     expect(state.theme).toBe('sepia');
-    expect(state.relief).toBe('soft');
+    expect(state.relief).toBe('skeuomorphic');
     expect(state.finish).toBe('frosted');
     expect(state.ornament).toBe('beveled');
   });

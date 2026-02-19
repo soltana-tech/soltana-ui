@@ -30,16 +30,16 @@ export class ResponsiveFrame {
 
   private build(): HTMLElement {
     const el = document.createElement('div');
-    el.className = 'responsive-frame';
+    el.className = 'sandbox__tier-group';
 
     const buttons = PRESETS.map(
       (p) =>
-        `<button class="responsive-frame__btn${p.width === null ? ' responsive-frame__btn--active' : ''}" data-viewport="${p.width ?? ''}">${p.label}</button>`
+        `<button class="segmented-control__option${p.width === null ? ' active' : ''}" data-viewport="${p.width ?? ''}">${p.label}</button>`
     ).join('');
 
     el.innerHTML = `
-      <span class="responsive-frame__label">Viewport</span>
-      <div class="responsive-frame__options">${buttons}</div>
+      <span class="sandbox__tier-label">Viewport</span>
+      <div class="segmented-control segmented-control-sm">${buttons}</div>
     `;
 
     return el;
@@ -51,9 +51,8 @@ export class ResponsiveFrame {
         const width = btn.dataset.viewport ?? null;
         this.target.style.maxWidth = width ?? '';
 
-        // Update active states
-        this.element.querySelectorAll('.responsive-frame__btn').forEach((b) => {
-          b.classList.toggle('responsive-frame__btn--active', b === btn);
+        this.element.querySelectorAll('.segmented-control__option').forEach((b) => {
+          b.classList.toggle('active', b === btn);
         });
       });
     });

@@ -107,7 +107,7 @@ soltana.removeOverrides(['--card-bg']);`,
     ${codeExample(
       `const soltana = initSoltana({
   theme: 'dark',
-  relief: 'neu',
+  relief: 'neumorphic',
   overrides: {
     '--accent-primary': '#8b5cf6',
     '--accent-decorative': '#fbbf24',

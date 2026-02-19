@@ -14,7 +14,7 @@ export function createDefaultState(): SandboxState {
 
 /**
  * Convert sandbox state to a space-separated string of utility classes.
- * Only non-null tiers produce classes (e.g. `"relief-lifted finish-frosted"`).
+ * Only non-null tiers produce classes (e.g. `"relief-skeuomorphic finish-frosted"`).
  */
 export function stateToClasses(state: SandboxState): string {
   const parts: string[] = [];

@@ -35,7 +35,7 @@ const TIER_LABELS: Record<TierName, string> = {
   ornament: 'Ornament',
 };
 
-const LABEL_OVERRIDES = new Map<string, string>([['neu', 'Neumorphic']]);
+const LABEL_OVERRIDES = new Map<string, string>();
 
 function capitalize(s: string): string {
   return LABEL_OVERRIDES.get(s) ?? s.charAt(0).toUpperCase() + s.slice(1);
@@ -88,7 +88,15 @@ export class Sandbox {
 
   constructor(config: SandboxConfig) {
     this.config = config;
-    this.state = { ...createDefaultState(), ...config.initialState };
+    // Default each tier to the page-level data-attribute value
+    const root = document.documentElement;
+    const pageState: SandboxState = {
+      theme: root.getAttribute('data-theme'),
+      relief: root.getAttribute('data-relief'),
+      finish: root.getAttribute('data-finish'),
+      ornament: root.getAttribute('data-ornament'),
+    };
+    this.state = { ...pageState, ...config.initialState };
     this.element = this.build();
     this.iframe = this.element.querySelector<HTMLIFrameElement>('.sandbox__preview-frame')!;
     this.codePanel = this.element.querySelector('.sandbox__code-panel')!;
@@ -160,20 +168,20 @@ export class Sandbox {
       <div class="sandbox__code-panel">
         <pre class="text-sm rounded-lg p-4"><code></code></pre>
       </div>
-      <div class="sandbox__toolbar">
-        <button class="sandbox__tool" data-action="copy-html" title="Copy HTML">
+      <div class="sandbox__toolbar flex flex-wrap gap-2">
+        <button class="btn btn-ghost btn-sm" data-action="copy-html" title="Copy HTML">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
           <span>Copy HTML</span>
         </button>
-        <button class="sandbox__tool" data-action="copy-classes" title="Copy CSS classes">
+        <button class="btn btn-ghost btn-sm" data-action="copy-classes" title="Copy CSS classes">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 7h10v10H7z"/><path d="M3 3h10v10H3z" opacity="0.5"/></svg>
           <span>Copy Classes</span>
         </button>
-        <button class="sandbox__tool" data-action="share" title="Copy shareable URL">
+        <button class="btn btn-ghost btn-sm" data-action="share" title="Copy shareable URL">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
           <span>Share</span>
         </button>
-        <button class="sandbox__tool" data-action="matrix" title="Toggle variant matrix">
+        <button class="btn btn-ghost btn-sm" data-action="matrix" title="Toggle variant matrix">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
           <span>Matrix</span>
         </button>
@@ -195,17 +203,13 @@ export class Sandbox {
     const values = TIER_VALUES[tier];
     const buttons = values.map((value) => {
       const label = capitalize(value);
-      return `<button class="sandbox__tier-btn" data-tier="${tier}" data-value="${value}">${label}</button>`;
+      return `<button class="segmented-control__option sandbox__tier-btn" data-tier="${tier}" data-value="${value}">${label}</button>`;
     });
-
-    // Add "Inherit" option to reset to global
-    const inheritBtn = `<button class="sandbox__tier-btn sandbox__tier-btn--inherit" data-tier="${tier}" data-value="">Inherit</button>`;
 
     return `
       <div class="sandbox__tier-group" data-tier-group="${tier}">
         <span class="sandbox__tier-label">${TIER_LABELS[tier]}</span>
-        <div class="sandbox__tier-options">
-          ${inheritBtn}
+        <div class="segmented-control segmented-control-sm sandbox__tier-options">
           ${buttons.join('')}
         </div>
       </div>
@@ -280,12 +284,12 @@ export class Sandbox {
   }
 
   private flashToolButton(action: string, message: string): void {
-    const btn = this.element.querySelector(`[data-action="${action}"] span`);
-    if (!btn) return;
-    const orig = btn.textContent;
-    btn.textContent = message;
+    const span = this.element.querySelector(`[data-action="${action}"] span`);
+    if (!span) return;
+    const orig = span.textContent;
+    span.textContent = message;
     setTimeout(() => {
-      btn.textContent = orig;
+      span.textContent = orig;
     }, 1500);
   }
 
@@ -344,7 +348,7 @@ export class Sandbox {
     this.element.querySelectorAll<HTMLButtonElement>('.sandbox__tier-btn').forEach((btn) => {
       const tier = btn.dataset.tier as TierName;
       const value = btn.dataset.value ?? null;
-      btn.classList.toggle('sandbox__tier-btn--active', this.state[tier] === value);
+      btn.classList.toggle('active', this.state[tier] === value);
     });
   }
 

@@ -16,6 +16,7 @@ const CHEVRON_SVG = `<svg class="sidebar__chevron" width="14" height="14" viewBo
 /**
  * Collapsible sidebar navigation for the documentation site.
  * Renders section groups with expandable item lists and highlights the active route.
+ * On mobile (<= 768px), behaves as a slide-in drawer toggled by a hamburger button.
  */
 export class Sidebar {
   private router: Router;
@@ -30,6 +31,7 @@ export class Sidebar {
 
     this.mount();
     this.bind();
+    this.bindMobileDrawer();
   }
 
   /** Return the sidebar element for insertion into the DOM. */
@@ -127,8 +129,31 @@ export class Sidebar {
         const path = (link as HTMLElement).dataset.path;
         if (path) {
           this.router.navigate(path);
+          this.closeDrawer();
         }
       });
     });
+  }
+
+  private bindMobileDrawer(): void {
+    const toggle = document.getElementById('sidebar-toggle');
+    const backdrop = document.getElementById('sidebar-backdrop');
+
+    toggle?.addEventListener('click', () => {
+      const isOpen = this.container.classList.toggle('sidebar--open');
+      toggle.setAttribute('aria-expanded', String(isOpen));
+      backdrop?.classList.toggle('active', isOpen);
+    });
+
+    backdrop?.addEventListener('click', () => {
+      this.closeDrawer();
+    });
+  }
+
+  private closeDrawer(): void {
+    this.container.classList.remove('sidebar--open');
+    const toggle = document.getElementById('sidebar-toggle');
+    toggle?.setAttribute('aria-expanded', 'false');
+    document.getElementById('sidebar-backdrop')?.classList.remove('active');
   }
 }

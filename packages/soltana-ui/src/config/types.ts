@@ -4,8 +4,8 @@
 
 // Canonical built-in tier values (CSS-emitted values only; 'auto' is runtime)
 export const BUILT_IN_THEMES = ['dark', 'light', 'sepia'] as const;
-export const BUILT_IN_RELIEFS = ['flat', 'soft', 'lifted', 'neu', 'sharp', 'hewn'] as const;
-export const BUILT_IN_FINISHES = ['matte', 'translucent', 'frosted', 'tinted', 'glossy'] as const;
+export const BUILT_IN_RELIEFS = ['flat', 'glassmorphic', 'skeuomorphic', 'neumorphic'] as const;
+export const BUILT_IN_FINISHES = ['matte', 'frosted', 'tinted', 'glossy'] as const;
 export const BUILT_IN_ORNAMENTS = ['none', 'gilt', 'baroque', 'beveled', 'faceted'] as const;
 
 export type BuiltInTheme = (typeof BUILT_IN_THEMES)[number];

@@ -22,7 +22,7 @@ export function renderApiState(): string {
     ${codeExample(
       `const state = soltana.getState();
 console.log(state.theme);  // 'dark'
-console.log(state.relief); // 'neu'`,
+console.log(state.relief); // 'neumorphic'`,
       'typescript'
     )}
   `
@@ -54,8 +54,8 @@ setOrnament(ornament: Ornament): void`,
         </thead>
         <tbody>
           <tr><td><code>setTheme()</code></td><td><code>'dark'</code>, <code>'light'</code>, <code>'sepia'</code>, <code>'auto'</code>, or any registered custom theme</td></tr>
-          <tr><td><code>setRelief()</code></td><td><code>'flat'</code>, <code>'soft'</code>, <code>'lifted'</code>, <code>'neu'</code>, <code>'sharp'</code>, <code>'hewn'</code>, or custom</td></tr>
-          <tr><td><code>setFinish()</code></td><td><code>'matte'</code>, <code>'translucent'</code>, <code>'frosted'</code>, <code>'tinted'</code>, <code>'glossy'</code>, or custom</td></tr>
+          <tr><td><code>setRelief()</code></td><td><code>'flat'</code>, <code>'glassmorphic'</code>, <code>'skeuomorphic'</code>, <code>'neumorphic'</code>, or custom</td></tr>
+          <tr><td><code>setFinish()</code></td><td><code>'matte'</code>, <code>'frosted'</code>, <code>'tinted'</code>, <code>'glossy'</code>, or custom</td></tr>
           <tr><td><code>setOrnament()</code></td><td><code>'none'</code>, <code>'gilt'</code>, <code>'baroque'</code>, <code>'beveled'</code>, <code>'faceted'</code>, or custom</td></tr>
         </tbody>
       </table>
@@ -64,7 +64,7 @@ setOrnament(ornament: Ornament): void`,
     <h4 class="font-semibold mt-6 mb-2">Example</h4>
     ${codeExample(
       `soltana.setTheme('light');
-soltana.setRelief('lifted');
+soltana.setRelief('skeuomorphic');
 soltana.setFinish('frosted');
 soltana.setOrnament('gilt');`,
       'typescript'

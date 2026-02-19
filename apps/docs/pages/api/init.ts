@@ -31,7 +31,7 @@ export function renderApiInit(): string {
         </thead>
         <tbody>
           <tr><td><code>theme</code></td><td><code>Theme</code></td><td><code>'auto'</code></td><td>Color scheme. <code>'auto'</code> resolves via <code>prefers-color-scheme</code>.</td></tr>
-          <tr><td><code>relief</code></td><td><code>Relief</code></td><td><code>'neu'</code></td><td>Shadow model applied globally.</td></tr>
+          <tr><td><code>relief</code></td><td><code>Relief</code></td><td><code>'neumorphic'</code></td><td>Shadow model applied globally.</td></tr>
           <tr><td><code>finish</code></td><td><code>Finish</code></td><td><code>'matte'</code></td><td>Surface treatment.</td></tr>
           <tr><td><code>ornament</code></td><td><code>Ornament</code></td><td><code>'none'</code></td><td>Decorative embellishment style.</td></tr>
           <tr><td><code>overrides</code></td><td><code>Record&lt;string, string&gt;</code></td><td><code>{}</code></td><td>CSS custom property overrides applied to <code>:root</code>.</td></tr>
@@ -62,7 +62,7 @@ const soltana = initSoltana();
 // Fully configured
 const soltana = initSoltana({
   theme: 'dark',
-  relief: 'lifted',
+  relief: 'skeuomorphic',
   finish: 'frosted',
   ornament: 'gilt',
   enhancers: true,
@@ -83,8 +83,8 @@ const soltana = initSoltana({
     ${codeExample(
       `interface SoltanaConfig {
   theme: Theme;       // 'dark' | 'light' | 'sepia' | 'auto' | string
-  relief: Relief;     // 'flat' | 'soft' | 'lifted' | 'neu' | 'sharp' | 'hewn' | string
-  finish: Finish;     // 'matte' | 'translucent' | 'frosted' | 'tinted' | 'glossy' | string
+  relief: Relief;     // 'flat' | 'glassmorphic' | 'skeuomorphic' | 'neumorphic' | string
+  finish: Finish;     // 'matte' | 'frosted' | 'tinted' | 'glossy' | string
   ornament: Ornament; // 'none' | 'gilt' | 'baroque' | 'beveled' | 'faceted' | string
   overrides: Record<string, string>;
 }`,

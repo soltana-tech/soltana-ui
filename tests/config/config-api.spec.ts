@@ -43,7 +43,7 @@ test.describe('initSoltana', () => {
     await page.evaluate(() =>
       window.SoltanaUI.initSoltana({
         theme: 'light',
-        relief: 'lifted',
+        relief: 'skeuomorphic',
         finish: 'frosted',
         ornament: 'gilt',
       })
@@ -52,7 +52,7 @@ test.describe('initSoltana', () => {
     const attrs = await getTierAttributes(page);
     expect(attrs).toEqual({
       theme: 'light',
-      relief: 'lifted',
+      relief: 'skeuomorphic',
       finish: 'frosted',
       ornament: 'gilt',
     });
@@ -73,11 +73,11 @@ test.describe('initSoltana', () => {
     await setupSoltanaPage(page);
     await page.evaluate(() => {
       const s = window.SoltanaUI.initSoltana();
-      s.setRelief('sharp');
+      s.setRelief('glassmorphic');
     });
 
     const attrs = await getTierAttributes(page);
-    expect(attrs.relief).toBe('sharp');
+    expect(attrs.relief).toBe('glassmorphic');
   });
 
   test('setFinish updates data-finish', async ({ page }) => {
@@ -118,7 +118,7 @@ test.describe('initSoltana', () => {
     await page.evaluate(() => {
       const s = window.SoltanaUI.initSoltana({
         theme: 'sepia',
-        relief: 'lifted',
+        relief: 'skeuomorphic',
         ornament: 'gilt',
       });
       s.setOverrides({ '--custom': 'value' });
@@ -138,12 +138,12 @@ test.describe('initSoltana', () => {
   test('getState returns current config', async ({ page }) => {
     await setupSoltanaPage(page);
     const state = await page.evaluate(() => {
-      const s = window.SoltanaUI.initSoltana({ theme: 'light', relief: 'sharp' });
+      const s = window.SoltanaUI.initSoltana({ theme: 'light', relief: 'glassmorphic' });
       return s.getState();
     });
 
     expect(state.theme).toBe('light');
-    expect(state.relief).toBe('sharp');
+    expect(state.relief).toBe('glassmorphic');
     expect(state.finish).toBe('matte');
     expect(state.ornament).toBe('none');
   });
@@ -167,7 +167,7 @@ test.describe('initSoltana', () => {
     await page.evaluate(() => {
       const s = window.SoltanaUI.initSoltana({
         theme: 'sepia',
-        relief: 'lifted',
+        relief: 'skeuomorphic',
         finish: 'frosted',
         ornament: 'baroque',
       });

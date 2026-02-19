@@ -39,18 +39,18 @@ export function renderApiRecipes(): string {
           </tr>
           <tr>
             <td><code>'luxury-dark'</code></td>
-            <td>dark</td><td>neu</td><td>glossy</td><td>gilt</td>
+            <td>dark</td><td>neumorphic</td><td>glossy</td><td>gilt</td>
             <td>Rich neumorphic depth with glossy sheen and gold accents.</td>
           </tr>
           <tr>
             <td><code>'frosted-modern'</code></td>
-            <td>dark</td><td>lifted</td><td>frosted</td><td>none</td>
-            <td>Elevated frosted glass panels on a dark backdrop.</td>
+            <td>dark</td><td>glassmorphic</td><td>frosted</td><td>none</td>
+            <td>Glassmorphic frosted panels on a dark backdrop.</td>
           </tr>
           <tr>
             <td><code>'classic-warm'</code></td>
-            <td>sepia</td><td>soft</td><td>matte</td><td>beveled</td>
-            <td>Warm parchment tones with soft shadows and beveled edges.</td>
+            <td>sepia</td><td>skeuomorphic</td><td>matte</td><td>beveled</td>
+            <td>Warm parchment tones with skeuomorphic depth and beveled edges.</td>
           </tr>
         </tbody>
       </table>
@@ -86,9 +86,9 @@ export function renderApiRecipes(): string {
     ${codeExample(
       `soltana.registerRecipe('midnight-frost', {
   name: 'Midnight Frost',
-  description: 'Sharp shadows with frosted glass on dark.',
+  description: 'Glassmorphic frost on dark with faceted accents.',
   theme: 'dark',
-  relief: 'sharp',
+  relief: 'glassmorphic',
   finish: 'frosted',
   ornament: 'faceted',
 });
