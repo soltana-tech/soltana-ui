@@ -15,7 +15,7 @@
 %overlay-backdrop {
   position: fixed;
   inset: 0;
-  background: rgb(var(--shadow-color) / 60%);
+  background: var(--overlay-backdrop-bg);
   backdrop-filter: blur(var(--finish-blur, 8px));
   opacity: 0;
   pointer-events: none;

@@ -1,8 +1,8 @@
 {
   "name": "@soltana-ui/react",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": false,
-  "description": "React bindings for Soltana UI — useSoltana() hook and SoltanaProvider.",
+  "description": "React bindings for Soltana UI — useSoltana() hook and SoltanaProvider. ESM-only.",
   "type": "module",
   "license": "MIT",
   "author": "Soltana",
@@ -26,6 +26,7 @@
   "scripts": {
     "build": "tsc --noEmit && vite build",
     "test": "vitest run",
+    "lint": "pnpm run lint:ts",
     "lint:ts": "eslint src/",
     "type-check": "tsc --noEmit"
   },

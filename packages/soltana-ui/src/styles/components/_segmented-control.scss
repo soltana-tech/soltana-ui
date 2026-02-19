@@ -7,6 +7,8 @@
 //     <button class="segmented-control__option active">Option A</button>
 //     <button class="segmented-control__option">Option B</button>
 //   </div>
+// Uses BEM naming (__option) for the child elements — intentional for
+// multi-element structures where parent/child coupling must be explicit.
 // ---------------------------------------------------------------------------
 
 @use '../base/register' as *;

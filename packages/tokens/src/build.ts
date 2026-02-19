@@ -32,42 +32,46 @@ function writeJson(path: string, data: unknown): void {
 // Main
 // ---------------------------------------------------------------------------
 
-const css = readFileSync(CSS_PATH, 'utf-8');
-const foundation = extractFoundation(css);
-const themes = extractThemes(css);
+function main(): void {
+  const css = readFileSync(CSS_PATH, 'utf-8');
+  const foundation = extractFoundation(css);
+  const themes = extractThemes(css);
 
-const themeNames = Object.keys(themes);
-let fileCount = 0;
+  const themeNames = Object.keys(themes);
+  let fileCount = 0;
 
-for (const name of themeNames) {
-  const theme = themes[name];
+  for (const name of themeNames) {
+    const theme = themes[name];
 
-  // ECharts
-  ensureDir(resolve(DIST, 'echarts'));
-  writeJson(resolve(DIST, `echarts/${name}.json`), buildEChartsTheme(theme, foundation));
-  fileCount++;
+    // ECharts
+    ensureDir(resolve(DIST, 'echarts'));
+    writeJson(resolve(DIST, `echarts/${name}.json`), buildEChartsTheme(theme, foundation));
+    fileCount++;
 
-  // Plotly
-  ensureDir(resolve(DIST, 'plotly'));
-  writeJson(resolve(DIST, `plotly/${name}.json`), buildPlotlyTemplate(theme, foundation));
-  fileCount++;
+    // Plotly
+    ensureDir(resolve(DIST, 'plotly'));
+    writeJson(resolve(DIST, `plotly/${name}.json`), buildPlotlyTemplate(theme, foundation));
+    fileCount++;
 
-  // matplotlib
-  ensureDir(resolve(DIST, 'matplotlib'));
-  writeFileSync(resolve(DIST, `matplotlib/${name}.mplstyle`), buildMplStyle(theme, foundation));
-  fileCount++;
+    // matplotlib
+    ensureDir(resolve(DIST, 'matplotlib'));
+    writeFileSync(resolve(DIST, `matplotlib/${name}.mplstyle`), buildMplStyle(theme, foundation));
+    fileCount++;
 
-  // DTCG
+    // DTCG
+    ensureDir(resolve(DIST, 'dtcg'));
+    writeJson(resolve(DIST, `dtcg/${name}.tokens.json`), buildDtcgTheme(theme));
+    fileCount++;
+  }
+
+  // Foundation (DTCG only)
   ensureDir(resolve(DIST, 'dtcg'));
-  writeJson(resolve(DIST, `dtcg/${name}.tokens.json`), buildDtcgTheme(theme));
+  writeJson(resolve(DIST, 'dtcg/foundation.tokens.json'), buildDtcgFoundation(foundation));
   fileCount++;
+
+  console.log(
+    `@soltana-ui/tokens: wrote ${String(fileCount)} files for ${String(themeNames.length)} themes (${themeNames.join(', ')})`
+  );
 }
 
-// Foundation (DTCG only)
-ensureDir(resolve(DIST, 'dtcg'));
-writeJson(resolve(DIST, 'dtcg/foundation.tokens.json'), buildDtcgFoundation(foundation));
-fileCount++;
-
-console.log(
-  `@soltana-ui/tokens: wrote ${String(fileCount)} files for ${String(themeNames.length)} themes (${themeNames.join(', ')})`
-);
+main();

@@ -37,7 +37,7 @@ const THEME_PROP_MAP: Partial<Record<string, keyof ThemeTokens>> = {
   '--tooltip-text': 'tooltipText',
 };
 
-const THEME_SELECTOR_RE = /\[data-theme=(\w+)\]/;
+const THEME_SELECTOR_RE = /\[data-theme=['"]?([\w-]+)['"]?\]/;
 
 const FONT_WEIGHT_NAMES = new Set([
   'light',
@@ -87,6 +87,9 @@ export function extractThemes(css: string): Record<string, ThemeTokens> {
     });
   });
 
+  // Cast is intentional: derived values containing var() are skipped during
+  // extraction, so theme objects may be incomplete. Format builders handle
+  // missing fields with fallback defaults.
   return result as Record<string, ThemeTokens>;
 }
 

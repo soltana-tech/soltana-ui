@@ -7,6 +7,6 @@
     "declaration": true,
     "noEmit": false
   },
-  "include": ["src/plugins/**/*.ts", "src/config/types.ts", "src/config/recipes.ts"],
+  "include": ["src/plugins/**/*.ts"],
   "exclude": ["src/plugins/*.test.ts"]
 }

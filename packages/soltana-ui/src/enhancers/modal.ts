@@ -125,8 +125,11 @@ export function initModals(options?: EnhancerOptions): EnhancerCleanup {
       );
     });
 
-    // Backdrop click
-    const backdrop = modal.querySelector<HTMLElement>('.modal-backdrop');
+    // Backdrop click — the [data-sol-modal] element is typically the backdrop
+    // itself, but fall back to a child query for nested structures.
+    const backdrop = modal.matches('.modal-backdrop')
+      ? modal
+      : modal.querySelector<HTMLElement>('.modal-backdrop');
     backdrop?.addEventListener(
       'click',
       (e) => {

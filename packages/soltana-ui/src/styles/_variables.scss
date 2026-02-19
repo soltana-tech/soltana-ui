@@ -256,7 +256,8 @@ $max-widths: (
   $popover-border: var(--border-default),
   $kbd-bg: var(--surface-2),
   $kbd-border: var(--border-strong),
-  $modal-bg: var(--surface-1)
+  $modal-bg: var(--surface-1),
+  $overlay-backdrop-bg: rgb(var(--shadow-color) / 60%)
 ) {
   --input-bg: #{$input-bg};
   --input-border: #{$input-border};
@@ -278,6 +279,7 @@ $max-widths: (
   --kbd-bg: #{$kbd-bg};
   --kbd-border: #{$kbd-border};
   --modal-bg: #{$modal-bg};
+  --overlay-backdrop-bg: #{$overlay-backdrop-bg};
 }
 
 // ---- CSS custom properties ----

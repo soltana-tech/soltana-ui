@@ -1,6 +1,6 @@
 {
   "name": "@soltana-ui/echarts",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": false,
   "description": "ECharts theme bridge for Soltana UI.",
   "type": "module",
@@ -26,6 +26,7 @@
   "scripts": {
     "build": "tsc --noEmit && vite build",
     "test": "vitest run",
+    "lint": "pnpm run lint:ts",
     "lint:ts": "eslint src/",
     "type-check": "tsc --noEmit"
   },
@@ -41,6 +42,9 @@
   },
   "peerDependenciesMeta": {
     "echarts": {
+      "optional": true
+    },
+    "soltana-ui": {
       "optional": true
     }
   }

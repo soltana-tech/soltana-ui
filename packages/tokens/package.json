@@ -1,6 +1,6 @@
 {
   "name": "@soltana-ui/tokens",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": false,
   "description": "Design token compiler for Soltana UI — outputs ECharts JSON, Plotly JSON, .mplstyle, and DTCG JSON.",
   "type": "module",
@@ -24,8 +24,9 @@
     "./dtcg/*": "./dist/dtcg/*"
   },
   "scripts": {
-    "build": "tsx src/build.ts",
+    "build": "tsx src/build.ts && tsc -p tsconfig.build.json",
     "test": "vitest run",
+    "lint": "pnpm run lint:ts",
     "lint:ts": "eslint src/",
     "type-check": "tsc --noEmit"
   },

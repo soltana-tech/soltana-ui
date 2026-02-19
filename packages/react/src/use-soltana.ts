@@ -10,6 +10,13 @@ import { initSoltana, DEFAULT_STATE } from 'soltana-ui';
 import type { SoltanaConfig, SoltanaInitOptions, SoltanaInstance } from 'soltana-ui';
 import type { SoltanaContextValue } from './types.js';
 
+/**
+ * Initialize and manage the Soltana design system within a React component.
+ *
+ * @param config - Initial tier configuration and init options. Read once on
+ *   mount — subsequent changes to the object reference are not observed.
+ *   To change tiers after init, use the returned `instance` methods.
+ */
 export function useSoltana(
   config?: Partial<SoltanaConfig & SoltanaInitOptions>
 ): SoltanaContextValue {

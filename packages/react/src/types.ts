@@ -13,6 +13,11 @@ export interface SoltanaContextValue {
 }
 
 export interface SoltanaProviderProps {
+  /**
+   * Initial tier configuration and init options. Read once on mount —
+   * subsequent changes to the object reference are not observed. To change
+   * tiers after init, use the `instance` methods from context.
+   */
   config?: Partial<SoltanaConfig & SoltanaInitOptions>;
   children: ReactNode;
 }

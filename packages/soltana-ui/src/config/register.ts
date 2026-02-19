@@ -107,6 +107,7 @@ export const THEME_TOKEN_NAMES = [
   '--kbd-bg',
   '--kbd-border',
   '--modal-bg',
+  '--overlay-backdrop-bg',
   // Icon data URIs (not derived — provide via tokens overrides)
   '--icon-select-chevron',
 ] as const;
@@ -166,6 +167,9 @@ export function deriveThemeTokens(seed: ThemeSeed): Record<string, string> {
   const text = seed.textPrimary;
   const accent = seed.accentPrimary;
   const decorative = seed.accentDecorative ?? accent;
+  // Defaults to 'dark' — dark-mode derivation produces lighter hover states
+  // and higher-contrast borders, which degrade more gracefully when the
+  // actual palette luminance is ambiguous.
   const scheme = seed.colorScheme ?? 'dark';
   const isDark = scheme === 'dark';
 
@@ -294,6 +298,7 @@ export function deriveThemeTokens(seed: ThemeSeed): Record<string, string> {
     '--kbd-bg': 'var(--surface-2)',
     '--kbd-border': 'var(--border-strong)',
     '--modal-bg': 'var(--surface-1)',
+    '--overlay-backdrop-bg': 'rgb(var(--shadow-color) / 60%)',
   };
 
   return tokens;

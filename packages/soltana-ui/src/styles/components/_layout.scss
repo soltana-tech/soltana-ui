@@ -3,6 +3,8 @@
 // ---------------------------------------------------------------------------
 // Reusable application layout primitives: sidebar, header, footer, and
 // grid shell. Consumed by the docs site and available to all consumers.
+// Uses BEM naming (__nav, __link, etc.) for sidebar children — intentional
+// for multi-element structures where parent/child coupling must be explicit.
 // ---------------------------------------------------------------------------
 
 @use '../base/register' as *;

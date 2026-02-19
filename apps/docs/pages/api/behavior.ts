@@ -163,6 +163,28 @@ export function renderApiBehavior(): HTMLElement {
       ${codeExample(`<button data-sol-tooltip="Tooltip text here">
   Hover me
 </button>`)}
+
+      <h4 class="text-lg font-semibold mt-6 mb-2">Positioning</h4>
+      <p class="text-secondary mb-4">
+        Use <code>data-tooltip-position</code> to control placement.
+        Defaults to <code>top</code>.
+      </p>
+      ${codeExample(`<button data-sol-tooltip="Help" data-tooltip-position="bottom">
+  Bottom tooltip
+</button>`)}
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr><th>Value</th><th>Placement</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>top</code></td><td>Above the element (default)</td></tr>
+            <tr><td><code>bottom</code></td><td>Below the element</td></tr>
+            <tr><td><code>left</code></td><td>Left of the element</td></tr>
+            <tr><td><code>right</code></td><td>Right of the element</td></tr>
+          </tbody>
+        </table>
+      </div>
     `
     )}
 

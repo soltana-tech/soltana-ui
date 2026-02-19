@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { normalizeColor, hexToRgb, buildPalette } from './resolve.js';
-import type { ThemeTokens } from './types.js';
+import { darkTheme } from './__fixtures__/tokens.js';
 
 describe('normalizeColor', () => {
   it('passes hex values through unchanged', () => {
@@ -41,43 +41,18 @@ describe('hexToRgb', () => {
 });
 
 describe('buildPalette', () => {
-  const mockTokens: ThemeTokens = {
-    colorScheme: 'dark',
-    surfaceBg: '#08091a',
-    surface1: '#0e1028',
-    surface2: '#151838',
-    surface3: '#1c2048',
-    surface4: '#252a5a',
-    textPrimary: '#f5f0e6',
-    textSecondary: '#c5b99b',
-    textTertiary: '#978b77',
-    textMuted: '#897d69',
-    textInverse: '#08091a',
-    borderDefault: 'rgb(255 255 255 / 6%)',
-    borderSubtle: 'rgb(255 255 255 / 3%)',
-    borderStrong: 'rgb(255 255 255 / 10%)',
-    accentPrimary: '#d4a843',
-    accentSecondary: '#a855f7',
-    colorSuccess: '#10b981',
-    colorWarning: '#fcd34d',
-    colorError: '#ef4444',
-    colorInfo: '#3b82f6',
-    tooltipBg: '#08091a',
-    tooltipText: '#f5f0e6',
-  };
-
   it('returns 6-color palette', () => {
-    const palette = buildPalette(mockTokens);
+    const palette = buildPalette(darkTheme);
     expect(palette).toHaveLength(6);
   });
 
   it('places accent primary first', () => {
-    const palette = buildPalette(mockTokens);
+    const palette = buildPalette(darkTheme);
     expect(palette[0]).toBe('#d4a843');
   });
 
   it('orders for maximum hue separation', () => {
-    const palette = buildPalette(mockTokens);
+    const palette = buildPalette(darkTheme);
     expect(palette).toEqual([
       '#d4a843', // accentPrimary (gold)
       '#3b82f6', // colorInfo (blue)

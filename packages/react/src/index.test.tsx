@@ -1,3 +1,5 @@
+// Unit tests for the React bindings. Integration tests that exercise the
+// provider + context wiring with simulated DOM events live in integration.test.tsx.
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, act } from '@testing-library/react';
 import { SoltanaProvider, useSoltana, useSoltanaContext } from './index.js';

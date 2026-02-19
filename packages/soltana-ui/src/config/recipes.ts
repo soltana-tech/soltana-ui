@@ -3,7 +3,6 @@
 // ---------------------------------------------------------------------------
 
 import type { Recipe } from './types.js';
-import { VALID_THEMES, VALID_RELIEFS, VALID_FINISHES } from './validation.js';
 
 const BUILT_IN_RECIPES = {
   'corporate-clean': {
@@ -47,15 +46,17 @@ const recipes: Record<string, Recipe> = { ...BUILT_IN_RECIPES };
  */
 export const RECIPES: Readonly<Record<string, Recipe>> = recipes;
 
+export const BUILT_IN_RECIPE_NAMES = new Set(Object.keys(BUILT_IN_RECIPES));
+
 export function registerRecipe(name: string, recipe: Recipe): void {
-  if (!VALID_THEMES.includes(recipe.theme)) {
-    console.warn(`[soltana] Recipe "${name}" uses unknown theme "${recipe.theme}"`);
-  }
-  if (!VALID_RELIEFS.includes(recipe.relief)) {
-    console.warn(`[soltana] Recipe "${name}" uses unknown relief "${recipe.relief}"`);
-  }
-  if (!VALID_FINISHES.includes(recipe.finish)) {
-    console.warn(`[soltana] Recipe "${name}" uses unknown finish "${recipe.finish}"`);
-  }
   recipes[name] = recipe;
+}
+
+export function resetRecipes(): void {
+  for (const key of Object.keys(recipes)) {
+    if (!(key in BUILT_IN_RECIPES)) {
+      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete -- clearing user-registered entries from a string-keyed registry
+      delete recipes[key];
+    }
+  }
 }

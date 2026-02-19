@@ -302,6 +302,44 @@ reg.unregister();`,
     )}
 
     ${specimenBlock(
+      'registerTierValue()',
+      `
+      <p class="text-secondary mb-4">
+        Low-level function to register a custom tier value so strict mode
+        does not warn for it. Normally called internally by
+        <code>registerTheme()</code> / <code>registerRelief()</code> /
+        <code>registerFinish()</code>, but exposed for advanced use cases
+        (e.g., pre-registering values before init).
+      </p>
+
+      <h4 class="text-lg font-semibold mt-6 mb-2">Signature</h4>
+      ${codeExample('registerTierValue(tier: TierName, value: string): void', 'typescript')}
+    `
+    )}
+
+    ${specimenBlock(
+      'Built-in Constants',
+      `
+      <p class="text-secondary mb-4">
+        These constants are available as named exports for type-safe enumeration:
+      </p>
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr><th>Export</th><th>Values</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>BUILT_IN_THEMES</code></td><td><code>'dark'</code>, <code>'light'</code>, <code>'sepia'</code></td></tr>
+            <tr><td><code>BUILT_IN_RELIEFS</code></td><td><code>'flat'</code>, <code>'glassmorphic'</code>, <code>'skeuomorphic'</code>, <code>'neumorphic'</code></td></tr>
+            <tr><td><code>BUILT_IN_FINISHES</code></td><td><code>'matte'</code>, <code>'frosted'</code>, <code>'tinted'</code>, <code>'glossy'</code></td></tr>
+            <tr><td><code>BUILT_IN_RECIPE_NAMES</code></td><td>Set of built-in recipe keys</td></tr>
+          </tbody>
+        </table>
+      </div>
+    `
+    )}
+
+    ${specimenBlock(
       'Error Handling',
       `
       <p class="text-secondary mb-4">Registration behavior depends on the <code>strict</code> mode set during <code>initSoltana()</code>:</p>

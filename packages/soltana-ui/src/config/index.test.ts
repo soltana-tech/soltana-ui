@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import { registerTierValue, deregisterTierValue } from './index.js';
+import { registerTierValue } from './index.js';
+import { deregisterTierValue } from './validation.js';
 import { VALID_THEMES, VALID_RELIEFS, VALID_FINISHES } from './validation.js';
 
 describe('registerTierValue', () => {
@@ -23,6 +24,8 @@ describe('registerTierValue', () => {
       registerTierValue(tier, value);
       expect(arr.filter((v) => v === value)).toHaveLength(1);
       expect(arr.length).toBe(lengthBefore + 1);
+
+      deregisterTierValue(tier, value);
     }
   );
 
@@ -37,7 +40,7 @@ describe('registerTierValue', () => {
     expect(arr).not.toContain(value);
   });
 
-  it('registered value suppresses strict-mode warning', () => {
+  it('registered value appears in VALID_RELIEFS', () => {
     const spy = vi.spyOn(console, 'warn').mockImplementation(vi.fn());
     const value = `registered-${String(Date.now())}`;
 
@@ -47,6 +50,7 @@ describe('registerTierValue', () => {
     // verify the value is in the validation array (which is what warnInvalid checks)
     expect(VALID_RELIEFS).toContain(value);
 
+    deregisterTierValue('relief', value);
     spy.mockRestore();
   });
 });

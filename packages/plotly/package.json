@@ -1,6 +1,6 @@
 {
   "name": "@soltana-ui/plotly",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": false,
   "description": "Plotly theme bridge for Soltana UI.",
   "type": "module",
@@ -26,6 +26,7 @@
   "scripts": {
     "build": "tsc --noEmit && vite build",
     "test": "vitest run",
+    "lint": "pnpm run lint:ts",
     "lint:ts": "eslint src/",
     "type-check": "tsc --noEmit"
   },
@@ -37,5 +38,10 @@
   },
   "peerDependencies": {
     "soltana-ui": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "soltana-ui": {
+      "optional": true
+    }
   }
 }

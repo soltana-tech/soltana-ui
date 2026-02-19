@@ -34,7 +34,8 @@
     @include transition-interactive;
   }
 
-  &.active {
+  &.active,
+  &[aria-checked='true'] {
     background: var(--accent-primary);
     border-color: transparent;
 

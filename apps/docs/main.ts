@@ -33,6 +33,7 @@ import { renderExamples } from './pages/explore/examples';
 import { renderApiCore } from './pages/api/core';
 import { renderApiConfig } from './pages/api/config';
 import { renderApiBehavior } from './pages/api/behavior';
+import { renderApiPlugins } from './pages/api/plugins';
 
 // Pages — Playground
 import { renderPlayground } from './pages/playground';
@@ -98,6 +99,7 @@ router.register({ path: '/explore/examples', render: renderExamples });
 router.register({ path: '/api/core', render: renderApiCore });
 router.register({ path: '/api/config', render: renderApiConfig });
 router.register({ path: '/api/behavior', render: renderApiBehavior });
+router.register({ path: '/api/plugins', render: renderApiPlugins });
 
 // Playground
 let playgroundInstance: CentralPlayground | null = null;

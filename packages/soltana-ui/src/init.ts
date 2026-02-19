@@ -23,7 +23,12 @@ import type {
   TierRegistration,
 } from './config/types.js';
 import { initAll } from './enhancers/index.js';
-import { RECIPES, registerRecipe as addRecipe } from './config/recipes.js';
+import {
+  RECIPES,
+  BUILT_IN_RECIPE_NAMES,
+  registerRecipe as addRecipe,
+  resetRecipes,
+} from './config/recipes.js';
 import {
   registerTheme as regTheme,
   registerRelief as regRelief,
@@ -200,7 +205,7 @@ export function initSoltana(
 
   return {
     getState(): SoltanaConfig {
-      return { ...state };
+      return { ...state, overrides: { ...state.overrides } };
     },
 
     setTheme,
@@ -221,6 +226,18 @@ export function initSoltana(
     },
 
     registerRecipe(name: string, recipe: Recipe): void {
+      if (!name.trim()) {
+        const msg = '[soltana] Recipe name must be a non-empty string';
+        if (initOpts.strict) throw new Error(msg);
+        console.warn(msg);
+        return;
+      }
+      if (BUILT_IN_RECIPE_NAMES.has(name)) {
+        const msg = `[soltana] Cannot overwrite built-in recipe "${name}"`;
+        if (initOpts.strict) throw new Error(msg);
+        console.warn(msg);
+        return;
+      }
       warnInvalid('theme', recipe.theme, VALID_THEMES, initOpts.strict);
       warnInvalid('relief', recipe.relief, VALID_RELIEFS, initOpts.strict);
       warnInvalid('finish', recipe.finish, VALID_FINISHES, initOpts.strict);
@@ -285,7 +302,10 @@ export function initSoltana(
         reg.unregister();
       }
       teardownStylesheet();
-      Object.assign(state, DEFAULT_STATE);
+      resetRecipes();
+      state.theme = DEFAULT_STATE.theme;
+      state.relief = DEFAULT_STATE.relief;
+      state.finish = DEFAULT_STATE.finish;
       state.overrides = {};
       teardownAutoTheme();
       document.documentElement.removeAttribute('style');

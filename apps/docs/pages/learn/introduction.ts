@@ -101,7 +101,7 @@ export function renderGettingStarted(): HTMLElement {
     </div>
     <div class="card p-5 rounded-xl">
       <h4 class="font-semibold text-lg mb-2">Runtime API</h4>
-      <p class="text-sm text-secondary">Switch tiers at runtime with <code>setTheme()</code>, <code>setRelief()</code>, <code>setFinish()</code>. Instant, no page reload.</p>
+      <p class="text-sm text-secondary">Switch tiers at runtime with <code>setTheme()</code>, <code>setRelief()</code>, <code>setFinish()</code>, <code>setOverrides()</code>, <code>applyRecipe()</code>, <code>reset()</code>, and <a href="#/api/core" style="color: var(--accent-primary);">more</a>.</p>
     </div>
   </div>
 

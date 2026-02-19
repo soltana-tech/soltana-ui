@@ -6,6 +6,8 @@
 // @soltana-ui/tokens but resolves at runtime for the active tier config.
 // ---------------------------------------------------------------------------
 
+// Shared palette order — must stay in sync with PALETTE_PROPS in
+// @soltana-ui/plotly (packages/plotly/src/build-template.ts).
 const PALETTE_PROPS = [
   '--accent-primary',
   '--color-info',

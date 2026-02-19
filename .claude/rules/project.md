@@ -34,7 +34,9 @@ ability to compose them.
   variable layers cascade independently. Components consume
   semantic tokens and auto-switch on data attribute change.
   Tier count is additive (t + r + f rulesets), not
-  multiplicative.
+  multiplicative. Channel tokens (`--shadow-color`,
+  `--highlight-color`) are a valid low-level API for
+  composing contextual shadows in `rgb()` expressions.
 - **Per-element composition** — `.theme-*`, `.relief-*`,
   `.finish-*` utility classes override global config at any
   element. Enables mixed-tier layouts without custom CSS.
@@ -44,6 +46,10 @@ ability to compose them.
 - **Recipe system** — Named presets (`corporate-clean`,
   `luxury-dark`, etc.) as curated starting points. Demonstrates
   the tier model without hardcoding combinations.
+- **Decorative typography** — `--font-display` maps to
+  Cinzel Decorative for ornamental headings and branding
+  elements, complementing the primary `--font-serif` (Cinzel)
+  and `--font-sans` (Raleway) stacks.
 - **Utility classes** — General-purpose layout, spacing, and
   visual utilities (`src/styles/utilities/`) shipped as a
   convenience layer. Not part of the 3-tier model, but
@@ -61,7 +67,7 @@ packages that extend the core design system:
 | `@soltana-ui/tokens`  | Token compiler -- outputs ECharts, Plotly, mplstyle, DTCG JSON |
 | `@soltana-ui/echarts` | ECharts theme bridge (runtime + static JSON)                   |
 | `@soltana-ui/plotly`  | Plotly template bridge (runtime + static JSON)                 |
-| `@soltana-ui/react`   | React bindings -- `useSoltana()` hook                          |
+| `@soltana-ui/react`   | React bindings -- `useSoltana()` hook + `SoltanaProvider`      |
 | `soltana-matplotlib`  | Python package -- pre-built `.mplstyle` themes                 |
 
 These are intentional scope extensions. The charting bridges

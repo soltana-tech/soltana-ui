@@ -262,16 +262,42 @@
 }
 
 // ============================================================================
-// EMPTY STATE
+// SHARED STATE LAYOUT PLACEHOLDERS
 // ============================================================================
 
-.empty-state {
+%centered-state-layout {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   padding: 3rem 1.5rem;
+}
+
+%state-heading {
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+%state-description {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  max-width: 24rem;
+  margin-bottom: 1.5rem;
+}
+
+%state-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+// ============================================================================
+// EMPTY STATE
+// ============================================================================
+
+.empty-state {
+  @extend %centered-state-layout;
 }
 
 .empty-state-icon {
@@ -282,22 +308,16 @@
 }
 
 .empty-state-heading {
+  @extend %state-heading;
   font-size: var(--text-lg);
-  font-weight: var(--font-semibold);
-  color: var(--text-primary);
-  margin-bottom: 0.5rem;
 }
 
 .empty-state-description {
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
-  max-width: 24rem;
-  margin-bottom: 1.5rem;
+  @extend %state-description;
 }
 
 .empty-state-action {
-  display: flex;
-  gap: 0.75rem;
+  @extend %state-actions;
 }
 
 // ============================================================================
@@ -305,12 +325,7 @@
 // ============================================================================
 
 .result {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 3rem 1.5rem;
+  @extend %centered-state-layout;
 }
 
 .result-icon {
@@ -324,22 +339,16 @@
 }
 
 .result-title {
+  @extend %state-heading;
   font-size: var(--text-xl);
-  font-weight: var(--font-semibold);
-  color: var(--text-primary);
-  margin-bottom: 0.5rem;
 }
 
 .result-subtitle {
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
-  max-width: 24rem;
-  margin-bottom: 1.5rem;
+  @extend %state-description;
 }
 
 .result-actions {
-  display: flex;
-  gap: 0.75rem;
+  @extend %state-actions;
 }
 
 @each $type in (success, warning, error, info) {

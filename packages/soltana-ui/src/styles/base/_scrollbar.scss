@@ -1,0 +1,32 @@
+// ---------------------------------------------------------------------------
+// Scrollbar Styling
+// ---------------------------------------------------------------------------
+// Themed scrollbars consuming --scrollbar-thumb and --scrollbar-track tokens
+// from the component-tokens mixin. Uses the standard scrollbar-color
+// property with a WebKit fallback for broader engine coverage.
+// ---------------------------------------------------------------------------
+
+// Standard (Firefox, Chrome 121+)
+* {
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  scrollbar-width: thin;
+}
+
+// WebKit fallback (older Chrome/Safari/Edge)
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+
+  &:hover {
+    background: color-mix(in srgb, var(--text-primary) 20%, transparent);
+  }
+}

@@ -72,6 +72,8 @@
 
   // =========================================================================
   // CHANNEL TOKENS — consumed by _relief-system.scss to derive primitives
+  // These are a valid low-level API: components and reliefs use
+  // rgb(var(--shadow-color) / <alpha>) to build contextual shadows.
   // =========================================================================
 
   --shadow-color: 0 0 0;

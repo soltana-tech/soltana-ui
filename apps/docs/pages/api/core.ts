@@ -215,9 +215,9 @@ soltana.setFinish('frosted');`,
     'reset()',
     `
     <p class="text-secondary mb-4">
-      Restores the instance to its initial configuration (the values passed to
-      <code>initSoltana()</code>). All tiers, overrides, and DOM attributes are
-      reverted.
+      Resets all tiers to library defaults, clears overrides, removes runtime
+      recipe and tier registrations, and tears down the managed stylesheet.
+      DOM attributes are re-applied from the default state.
     </p>
     ${codeExample(`soltana.reset();`, 'typescript')}
   `
@@ -231,7 +231,26 @@ soltana.setFinish('frosted');`,
       <code>&lt;html&gt;</code>, clears overrides, and destroys active enhancers.
       The instance should not be used after calling <code>destroy()</code>.
     </p>
+    <p class="text-secondary mb-4">
+      <strong>Stale instance detection:</strong> if <code>initSoltana()</code> has been
+      called again since this instance was created, <code>destroy()</code> will warn
+      (or throw in strict mode) and no-op to avoid tearing down the newer instance.
+    </p>
     ${codeExample(`soltana.destroy();`, 'typescript')}
+  `
+  )}
+
+  ${specimenBlock(
+    'version',
+    `
+    <p class="text-secondary mb-4">
+      The <code>version</code> export contains the package version string,
+      useful for runtime diagnostics.
+    </p>
+    ${codeExample(
+      "import { version } from 'soltana-ui';\nconsole.log(version); // '1.0.0'",
+      'typescript'
+    )}
   `
   )}
 
