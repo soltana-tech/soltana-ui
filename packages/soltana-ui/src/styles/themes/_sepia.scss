@@ -37,7 +37,7 @@
   --accent-primary: #6a4518;
   --accent-primary-hover: color-mix(in oklch, var(--accent-primary), black 15%);
   --accent-primary-active: color-mix(in oklch, var(--accent-primary), black 25%);
-  --accent-secondary: #1a7854;
+  --accent-secondary: #6b21a8;
   --accent-secondary-hover: color-mix(in oklch, var(--accent-secondary), black 15%);
   --accent-secondary-active: color-mix(in oklch, var(--accent-secondary), black 25%);
 
@@ -76,12 +76,18 @@
   --shadow-color: 0 0 0;
   --highlight-color: 242 232 210;
   --accent-glow: color-mix(in srgb, var(--accent-primary) 12%, transparent);
+  --finish-sheen-color: 0 0 0;
+  --finish-tint-color: 106 69 24;
 
   // =========================================================================
   // BRIDGE TOKENS — per-theme overrides
   // Shared defaults in _relief-system.scss
   // =========================================================================
 
+  --glass-opacity: 0.35;
+  --mesh-color-1: var(--color-error);
+  --mesh-color-2: var(--color-info);
+  --mesh-color-3: color-mix(in oklch, var(--color-error), var(--color-info));
   --surface-deep: var(--surface-3);
   --neu-shadow: rgb(var(--shadow-color) / 45%);
   --neu-light: rgb(var(--highlight-color) / 82%);

@@ -17,9 +17,9 @@
 }
 
 @include register-finish('frosted') {
-  --finish-blur: 24px;
+  --finish-blur: 32px;
   --finish-saturation: 80%;
-  --finish-opacity: 0.7;
+  --finish-opacity: 0.45;
   --finish-overlay: none;
   --finish-sheen: none;
 }
@@ -30,9 +30,9 @@
   --finish-opacity: 1;
   --finish-overlay: linear-gradient(
     135deg,
-    color-mix(in srgb, var(--accent-glow) 8%, transparent) 0%,
+    rgb(var(--finish-tint-color) / 22%) 0%,
     transparent 50%,
-    rgb(var(--shadow-color) / 6%) 100%
+    rgb(var(--shadow-color) / 14%) 100%
   );
   --finish-sheen: none;
 }
@@ -44,8 +44,8 @@
   --finish-overlay: none;
   --finish-sheen: linear-gradient(
     135deg,
-    rgb(var(--highlight-color) / 12%) 0%,
-    transparent 40%,
-    rgb(var(--highlight-color) / 4%) 100%
+    rgb(var(--finish-sheen-color) / 40%) 0%,
+    rgb(var(--finish-sheen-color) / 6%) 50%,
+    rgb(var(--finish-sheen-color) / 18%) 100%
   );
 }

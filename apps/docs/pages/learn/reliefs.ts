@@ -23,17 +23,19 @@ export function renderReliefs(): HTMLElement {
         <span class="tag">Tag</span>
       </div>
     </div>
-    <div class="relief-glassmorphic p-6 rounded-xl" style="min-height: 200px;">
-      <span class="tag mb-3">.relief-glassmorphic</span>
-      <p class="text-sm text-secondary mb-4 mt-3">Soft diffused shadows with luminous borders. Transparent, layered glass-panel aesthetic.</p>
-      <div class="flex flex-wrap gap-2">
-        <button class="btn btn-primary btn-sm">Primary</button>
-        <button class="btn btn-secondary btn-sm">Secondary</button>
-        <button class="btn btn-ghost btn-sm">Ghost</button>
-      </div>
-      <div class="flex gap-2 mt-3">
-        <span class="badge badge-primary">Badge</span>
-        <span class="tag">Tag</span>
+    <div class="bg-mesh rounded-xl">
+      <div class="relief-glassmorphic p-6 rounded-xl" style="min-height: 200px;">
+        <span class="tag mb-3">.relief-glassmorphic</span>
+        <p class="text-sm text-secondary mb-4 mt-3">Soft diffused shadows with luminous borders. Transparent, layered glass-panel aesthetic.</p>
+        <div class="flex flex-wrap gap-2">
+          <button class="btn btn-primary btn-sm">Primary</button>
+          <button class="btn btn-secondary btn-sm">Secondary</button>
+          <button class="btn btn-ghost btn-sm">Ghost</button>
+        </div>
+        <div class="flex gap-2 mt-3">
+          <span class="badge badge-primary">Badge</span>
+          <span class="tag">Tag</span>
+        </div>
       </div>
     </div>
     <div class="relief-skeuomorphic p-6 rounded-xl" style="min-height: 200px;">

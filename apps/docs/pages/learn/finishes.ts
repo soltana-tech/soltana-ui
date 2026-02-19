@@ -56,22 +56,24 @@ export function renderFinishes(): HTMLElement {
 
   <!-- Glassmorphic + Finishes -->
   <h4 class="text-lg font-semibold mt-8 mb-3 text-secondary">Glassmorphic Relief</h4>
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-    <div class="relief-glassmorphic finish-matte card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag mb-2">matte</span>
-      <p class="text-sm text-secondary mt-2">Solid glass panel.</p>
-    </div>
-    <div class="relief-glassmorphic finish-frosted card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag mb-2">frosted</span>
-      <p class="text-sm text-secondary mt-2">Frosted glass with luminous borders.</p>
-    </div>
-    <div class="relief-glassmorphic finish-tinted card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag mb-2">tinted</span>
-      <p class="text-sm text-secondary mt-2">Color-washed glass panel.</p>
-    </div>
-    <div class="relief-glassmorphic finish-glossy card p-5 rounded-xl text-center" style="min-height: 140px;">
-      <span class="tag mb-2">glossy</span>
-      <p class="text-sm text-secondary mt-2">Polished glass surface.</p>
+  <div class="bg-mesh rounded-xl p-4 mb-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="relief-glassmorphic finish-matte card p-5 rounded-xl text-center" style="min-height: 140px;">
+        <span class="tag mb-2">matte</span>
+        <p class="text-sm text-secondary mt-2">Solid glass panel.</p>
+      </div>
+      <div class="relief-glassmorphic finish-frosted card p-5 rounded-xl text-center" style="min-height: 140px;">
+        <span class="tag mb-2">frosted</span>
+        <p class="text-sm text-secondary mt-2">Frosted glass with luminous borders.</p>
+      </div>
+      <div class="relief-glassmorphic finish-tinted card p-5 rounded-xl text-center" style="min-height: 140px;">
+        <span class="tag mb-2">tinted</span>
+        <p class="text-sm text-secondary mt-2">Color-washed glass panel.</p>
+      </div>
+      <div class="relief-glassmorphic finish-glossy card p-5 rounded-xl text-center" style="min-height: 140px;">
+        <span class="tag mb-2">glossy</span>
+        <p class="text-sm text-secondary mt-2">Polished glass surface.</p>
+      </div>
     </div>
   </div>
 

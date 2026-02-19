@@ -6,6 +6,18 @@ body {
   padding: 1.5rem;
   background: var(--surface-bg);
   color: var(--text-primary);
+}
+html[data-relief="glassmorphic"] body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(at 20% 25%, color-mix(in srgb, var(--mesh-color-1) 50%, transparent) 0%, transparent 55%),
+    radial-gradient(at 80% 75%, color-mix(in srgb, var(--mesh-color-2) 40%, transparent) 0%, transparent 55%),
+    radial-gradient(at 75% 20%, color-mix(in srgb, var(--mesh-color-3) 35%, transparent) 0%, transparent 45%),
+    radial-gradient(at 40% 60%, color-mix(in srgb, var(--mesh-color-2) 28%, transparent) 0%, transparent 65%);
 }`;
 
 const TIERS = ['theme', 'relief', 'finish'] as const;

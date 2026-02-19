@@ -82,6 +82,8 @@ export const THEME_TOKEN_NAMES = [
   '--shadow-color',
   '--highlight-color',
   '--accent-glow',
+  '--finish-sheen-color',
+  '--finish-tint-color',
   // Bridge tokens
   '--surface-deep',
   '--neu-shadow',
@@ -267,6 +269,8 @@ export function deriveThemeTokens(seed: ThemeSeed): Record<string, string> {
     '--shadow-color': '0 0 0',
     '--highlight-color': '255 255 255',
     '--accent-glow': mixSrgb(accent, isDark ? 15 : 10),
+    '--finish-sheen-color': isDark ? '255 255 255' : '0 0 0',
+    '--finish-tint-color': hexToRgbChannels(accent),
 
     // --- Bridge tokens ---
     '--surface-deep': 'var(--surface-2)',
@@ -307,6 +311,14 @@ export function deriveThemeTokens(seed: ThemeSeed): Record<string, string> {
 // ---------------------------------------------------------------------------
 // Registration Functions
 // ---------------------------------------------------------------------------
+
+function hexToRgbChannels(hex: string): string {
+  const h = hex.replace('#', '');
+  const r = String(parseInt(h.slice(0, 2), 16));
+  const g = String(parseInt(h.slice(2, 4), 16));
+  const b = String(parseInt(h.slice(4, 6), 16));
+  return `${r} ${g} ${b}`;
+}
 
 const CSS_IDENT_RE = /^[a-zA-Z][a-zA-Z0-9_-]*$/;
 

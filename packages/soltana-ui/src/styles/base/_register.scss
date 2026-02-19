@@ -47,7 +47,11 @@
 }
 
 @mixin finish-surface($bg: var(--relief-bg), $gradient: null) {
-  background-color: color-mix(in srgb, #{$bg} calc(var(--finish-opacity, 1) * 100%), transparent);
+  background-color: color-mix(
+    in srgb,
+    #{$bg} calc(var(--relief-opacity, 1) * var(--finish-opacity, 1) * 100%),
+    transparent
+  );
   @if $gradient {
     background-image:
       var(--finish-sheen, none),

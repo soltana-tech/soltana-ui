@@ -58,10 +58,12 @@ export function renderComposition(): HTMLElement {
       <p class="text-sm text-secondary mt-2">Warm parchment theme with neumorphic depth.</p>
       <button class="btn btn-sm mt-3">Button</button>
     </div>
-    <div class="theme-dark relief-glassmorphic finish-glossy card p-5 rounded-xl">
-      <span class="tag mb-2">Dark + Glassmorphic + Glossy</span>
-      <p class="text-sm text-secondary mt-2">All three tiers overridden on a single element.</p>
-      <button class="btn btn-sm mt-3">Button</button>
+    <div class="theme-dark bg-mesh rounded-xl">
+      <div class="relief-glassmorphic finish-glossy card p-5 rounded-xl">
+        <span class="tag mb-2">Dark + Glassmorphic + Glossy</span>
+        <p class="text-sm text-secondary mt-2">All three tiers overridden on a single element.</p>
+        <button class="btn btn-sm mt-3">Button</button>
+      </div>
     </div>
   </div>
 

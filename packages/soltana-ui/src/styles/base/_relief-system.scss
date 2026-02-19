@@ -12,4 +12,15 @@
   --relief-surface-raised: var(--surface-2);
   --relief-surface-deep: var(--surface-deep);
   --relief-border-default: var(--border-default);
+  --relief-opacity: 1;
+  --glass-opacity: 0.5;
+
+  // Mesh gradient colors — overridden per-theme for contrast against surfaces
+  --mesh-color-1: var(--accent-primary);
+  --mesh-color-2: var(--accent-secondary);
+  --mesh-color-3: var(--accent-decorative);
+
+  // Finish channel tokens — tuned per-theme for visibility against surface colors
+  --finish-sheen-color: var(--highlight-color);
+  --finish-tint-color: var(--shadow-color);
 }

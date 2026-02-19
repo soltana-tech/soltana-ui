@@ -77,12 +77,18 @@
   --shadow-color: 0 0 0;
   --highlight-color: 255 255 255;
   --accent-glow: color-mix(in srgb, var(--accent-primary) 10%, transparent);
+  --finish-sheen-color: 0 0 0;
+  --finish-tint-color: 87 99 120;
 
   // =========================================================================
   // BRIDGE TOKENS — per-theme overrides
   // Shared defaults in _relief-system.scss
   // =========================================================================
 
+  --glass-opacity: 0.35;
+  --mesh-color-1: var(--accent-secondary);
+  --mesh-color-2: var(--color-info);
+  --mesh-color-3: var(--color-success);
   --surface-deep: var(--surface-3);
   --neu-shadow: rgb(var(--shadow-color) / 35%);
   --neu-light: rgb(var(--highlight-color) / 88%);

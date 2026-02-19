@@ -22,6 +22,7 @@
 
 @include register-relief('glassmorphic') {
   --relief-bg: var(--relief-surface-raised);
+  --relief-opacity: var(--glass-opacity);
   --relief-shadow-sm: 0 2px 8px rgb(var(--shadow-color) / 8%);
   --relief-shadow:
     0 4px 16px rgb(var(--shadow-color) / 10%), 0 1px 4px rgb(var(--shadow-color) / 6%);
@@ -31,7 +32,7 @@
   --relief-shadow-inset: inset 0 1px 0 rgb(var(--highlight-color) / 12%);
   --relief-shadow-inset-lg:
     inset 0 1px 0 rgb(var(--highlight-color) / 15%), inset 0 -0.5px 0 rgb(var(--shadow-color) / 4%);
-  --relief-border: rgb(var(--highlight-color) / 12%);
+  --relief-border: var(--border-strong);
 }
 
 @include register-relief('skeuomorphic') {
