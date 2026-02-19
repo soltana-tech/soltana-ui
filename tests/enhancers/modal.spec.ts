@@ -53,11 +53,8 @@ test.describe('initModals', () => {
     await expect(page.locator('#test-modal')).toHaveClass(/active/);
 
     // The backdrop click handler checks e.target === backdrop.
-    // Dispatch click directly to avoid the modal dialog covering the click target.
-    await page.evaluate(() => {
-      const backdrop = document.querySelector('#test-modal .modal-backdrop');
-      backdrop?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-    });
+    // Dispatch click directly on the backdrop to avoid hit-testing through the modal overlay.
+    await page.locator('#test-modal .modal-backdrop').dispatchEvent('click');
 
     await expect(page.locator('#test-modal')).not.toHaveClass(/active/);
   });

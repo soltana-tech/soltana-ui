@@ -163,8 +163,8 @@ test.describe('initSoltana', () => {
     expect(attrs.finish).toBeNull();
 
     const styleAttr = await page.evaluate(() => document.documentElement.getAttribute('style'));
-    // Real browsers may return "" instead of null after style manipulation
-    expect(styleAttr === null || styleAttr === '').toBe(true);
+    // After individual property removal, some browsers return null, others return ""
+    expect(styleAttr ?? '').toBe('');
   });
 
   for (const [tier, config] of [

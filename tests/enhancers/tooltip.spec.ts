@@ -188,15 +188,9 @@ test.describe('initTooltips', () => {
 
     await page.locator('button').hover();
 
-    // showTooltip bails early if text is empty, so tooltip stays at opacity 0
-    // or is never shown. The tooltip element may exist from getOrCreateTooltip
-    // but should not be visible.
-    const tooltipVisible = await page.evaluate(() => {
-      const tip = document.querySelector('.tooltip');
-      return tip ? getComputedStyle(tip).opacity : null;
-    });
-    // Either no tooltip element, or opacity is 0
-    expect(tooltipVisible === null || tooltipVisible === '0').toBe(true);
+    // showTooltip bails early if text is empty — the tooltip element is never created.
+    const tooltipCount = await page.locator('.tooltip').count();
+    expect(tooltipCount).toBe(0);
   });
 
   test('double init does not create duplicate tooltips', async ({ page }) => {

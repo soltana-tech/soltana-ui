@@ -27,10 +27,6 @@ export function renderApiIndex(): string {
       <h3 class="font-semibold">Enhancers</h3>
       <p class="text-sm text-secondary mt-1"><code>initAll()</code>, modals, tabs, tooltips</p>
     </a>
-    <a href="#/api/svg-patterns" class="card card-hover p-4">
-      <h3 class="font-semibold">SVG Patterns</h3>
-      <p class="text-sm text-secondary mt-1"><code>patterns</code>, <code>toDataUri()</code>, <code>toElement()</code></p>
-    </a>
     <a href="#/api/fonts" class="card card-hover p-4">
       <h3 class="font-semibold">Font Loading</h3>
       <p class="text-sm text-secondary mt-1"><code>loadSoltanaFonts()</code></p>

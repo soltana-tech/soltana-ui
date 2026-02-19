@@ -104,6 +104,12 @@ describe('registerSoltanaTheme', () => {
         backgroundColor: '#1a1a2e',
       })
     );
+
+    const theme = echarts.registerTheme.mock.calls[0][1] as Record<string, unknown>;
+    expect(theme.color).toEqual(['#6c63ff', '#3b82f6', '#22c55e', '#f59e0b', '#ec4899', '#ef4444']);
+    expect(theme.backgroundColor).toBe('#1a1a2e');
+    expect(theme.textStyle).toEqual({ color: '#e0e0e0', fontFamily: 'Inter, sans-serif' });
+    expect(theme.tooltip).toEqual({ backgroundColor: '#252540', textStyle: { color: '#ffffff' } });
   });
 
   it('uses a custom theme name', () => {
@@ -141,6 +147,11 @@ describe('autoSync', () => {
     );
 
     expect(echarts.registerTheme).toHaveBeenCalledTimes(2);
+
+    const reTheme = echarts.registerTheme.mock.calls[1][1] as Record<string, unknown>;
+    expect(reTheme).toHaveProperty('color');
+    expect(reTheme).toHaveProperty('backgroundColor');
+    expect(reTheme).toHaveProperty('textStyle');
 
     sync.destroy();
   });

@@ -13,7 +13,7 @@ checks. Sections with new names define project-specific scopes.
 ### Tests checks
 
 - Verify tier interaction testing: tests that combine multiple
-  tier settings (theme + relief + finish + ornament) and assert
+  tier settings (theme + relief + finish) and assert
   correct cascade behavior
 - Verify enhancer DOM testing: `initModals`, `initTabs`,
   `initTooltips`, `initAll` are tested against real DOM
@@ -21,7 +21,7 @@ checks. Sections with new names define project-specific scopes.
 - Verify recipe preset tests validate that named presets
   produce the expected combination of data attributes
 - Verify tests cover per-element overrides via `.theme-*`,
-  `.relief-*`, `.finish-*`, `.ornament-*` utility classes
+  `.relief-*`, `.finish-*` utility classes
 
 ## logic
 
@@ -29,15 +29,14 @@ checks. Sections with new names define project-specific scopes.
 
 - `src/config/`
 - `src/enhancers/`
-- `src/ornaments/`
 - `src/plugins/`
 
 ### Logic checks
 
 - Verify public API surface is minimal: only `initSoltana`,
-  `setTheme`, `setRelief`, `setFinish`, `setOrnament`,
-  `setOverrides`, `getState`, `reset`, and enhancer
-  initializers should be exported
+  `setTheme`, `setRelief`, `setFinish`, `setOverrides`,
+  `getState`, `reset`, and enhancer initializers should be
+  exported
 - Verify enhancer pattern consistency: all enhancers follow
   the same initialization, cleanup, and event-binding pattern
 - Verify tier option enums are single-source-of-truth
@@ -55,15 +54,13 @@ checks. Sections with new names define project-specific scopes.
 
 - Verify all public API functions are documented:
   `initSoltana`, `setTheme`, `setRelief`, `setFinish`,
-  `setOrnament`, `setOverrides`, `getState`, `reset`
+  `setOverrides`, `getState`, `reset`
 - Verify all config types are documented: `Theme`, `Relief`,
-  `Finish`, `Ornament`, `SoltanaConfig`
-- Verify all relief options are documented: `flat`, `soft`,
-  `lifted`, `neu`, `sharp`, `hewn`
+  `Finish`, `SoltanaConfig`
+- Verify all relief options are documented: `flat`,
+  `glassmorphic`, `skeuomorphic`, `neumorphic`
 - Verify all finish options are documented: `matte`,
-  `translucent`, `frosted`, `tinted`, `glossy`
-- Verify all ornament options are documented: `none`, `gilt`,
-  `baroque`, `beveled`, `faceted`
+  `frosted`, `tinted`, `glossy`
 - Verify all theme options are documented: `dark`, `light`,
   `sepia`, `auto`
 - Verify all enhancers are documented: `initModals`,
@@ -72,8 +69,7 @@ checks. Sections with new names define project-specific scopes.
   cards, inputs, badges, alerts, avatars, progress, switches,
   tooltips, tables, modals, skeletons
 - Verify all utility classes are documented: relief overrides,
-  finish overrides, neumorphic utilities, ornamental
-  frames/dividers/corners
+  finish overrides, neumorphic utilities
 - Flag features/classes in code that lack documentation
 - Flag documented features/classes that do not exist in code
 - Verify examples in docs work with current API
@@ -89,9 +85,9 @@ checks. Sections with new names define project-specific scopes.
 
 ### Config checks
 
-- Assess the 4-tier parameter surface: count user-facing
-  options across theme, relief, finish, and ornament tiers
-  and evaluate whether each earns its existence
+- Assess the 3-tier parameter surface: count user-facing
+  options across theme, relief, and finish tiers and evaluate
+  whether each earns its existence
 - Verify `SoltanaConfig` type alignment: all fields in the
   config type correspond to implemented behavior and vice
   versa
@@ -110,8 +106,8 @@ checks. Sections with new names define project-specific scopes.
 
 ### Architecture checks
 
-- Verify module separation: styles, config, enhancers,
-  ornaments, and plugins are cleanly separated
+- Verify module separation: styles, config, enhancers, and
+  plugins are cleanly separated
 - Verify dist/exports alignment: published package exports
   match the intended public API
 - Verify no build artifacts or generated files are committed
@@ -133,7 +129,7 @@ checks. Sections with new names define project-specific scopes.
 - Verify CSS-first adherence: JavaScript should only handle
   runtime config and DOM attribute toggling, not visual
   styling
-- Verify the 4-tier model remains orthogonal: no tier
+- Verify the 3-tier model remains orthogonal: no tier
   implementation should depend on another tier's state
 - Flag any functionality that falls outside the CSS design
   system purpose
@@ -155,10 +151,10 @@ checks. Sections with new names define project-specific scopes.
   semantic tokens (not raw values), enabling auto-switch on
   data attribute change
 - Verify utility class alignment: `.theme-*`, `.relief-*`,
-  `.finish-*`, `.ornament-*` classes correctly override global
-  config at the element level
+  `.finish-*` classes correctly override global config at the
+  element level
 - Verify additive rulesets: tier count is additive
-  (t + r + f + o rulesets), not multiplicative — no
+  (t + r + f rulesets), not multiplicative — no
   combinatorial explosion of selectors
 - Verify theme token parity: all themes (dark, light, sepia)
   define the same set of custom properties with no gaps

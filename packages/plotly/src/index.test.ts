@@ -104,6 +104,18 @@ describe('autoSync', () => {
       })
     );
 
+    const template = cb.mock.calls[0][0] as { layout: Record<string, unknown> };
+    expect(template.layout.colorway).toEqual([
+      '#6c63ff',
+      '#3b82f6',
+      '#22c55e',
+      '#f59e0b',
+      '#ec4899',
+      '#ef4444',
+    ]);
+    expect(template.layout.font).toEqual({ color: '#e0e0e0', family: 'Inter, sans-serif' });
+    expect(template.layout.plot_bgcolor).toBe('#222244');
+
     sync.destroy();
   });
 
@@ -118,6 +130,11 @@ describe('autoSync', () => {
     );
 
     expect(cb).toHaveBeenCalledTimes(2);
+
+    const reTemplate = cb.mock.calls[1][0] as { layout: Record<string, unknown> };
+    expect(reTemplate.layout).toHaveProperty('colorway');
+    expect(reTemplate.layout).toHaveProperty('paper_bgcolor');
+    expect(reTemplate.layout).toHaveProperty('font');
 
     sync.destroy();
   });
