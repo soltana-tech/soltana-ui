@@ -11,7 +11,6 @@ const TIER_VALUES: Record<string, readonly string[]> = {
   theme: ['dark', 'light', 'sepia'],
   relief: VALID_RELIEFS,
   finish: VALID_FINISHES,
-  ornament: ['none', 'gilt', 'baroque', 'beveled', 'faceted'],
 };
 
 /**

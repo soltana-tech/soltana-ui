@@ -1,9 +1,4 @@
-import {
-  VALID_THEMES,
-  VALID_RELIEFS,
-  VALID_FINISHES,
-  VALID_ORNAMENTS,
-} from '@soltana/config/validation';
+import { VALID_THEMES, VALID_RELIEFS, VALID_FINISHES } from '@soltana/config/validation';
 import type { TierName } from '@soltana/config';
 import { PlaygroundControls } from './PlaygroundControls';
 import { type SandboxState, createDefaultState, stateToClasses } from '../lib/sandbox-state';
@@ -25,14 +20,12 @@ const TIER_VALUES: Record<TierName, readonly string[]> = {
   theme: VALID_THEMES,
   relief: VALID_RELIEFS,
   finish: VALID_FINISHES,
-  ornament: VALID_ORNAMENTS,
 };
 
 const TIER_LABELS: Record<TierName, string> = {
   theme: 'Theme',
   relief: 'Relief',
   finish: 'Finish',
-  ornament: 'Ornament',
 };
 
 const LABEL_OVERRIDES = new Map<string, string>();
@@ -41,7 +34,7 @@ function capitalize(s: string): string {
   return LABEL_OVERRIDES.get(s) ?? s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-const TIERS = ['theme', 'relief', 'finish', 'ornament'] as const;
+const TIERS = ['theme', 'relief', 'finish'] as const;
 
 /** A11y simulation CSS injected into the iframe `<head>`. */
 const A11Y_CSS = `
@@ -94,7 +87,6 @@ export class Sandbox {
       theme: root.getAttribute('data-theme'),
       relief: root.getAttribute('data-relief'),
       finish: root.getAttribute('data-finish'),
-      ornament: root.getAttribute('data-ornament'),
     };
     this.state = { ...pageState, ...config.initialState };
     this.element = this.build();
@@ -158,7 +150,7 @@ export class Sandbox {
     el.className = 'sandbox';
     el.id = `sandbox-${this.config.id}`;
 
-    const tiers = this.config.tiers ?? ['theme', 'relief', 'finish', 'ornament'];
+    const tiers = this.config.tiers ?? ['theme', 'relief', 'finish'];
 
     el.innerHTML = `
       <div class="sandbox__controls">

@@ -3,8 +3,7 @@
 // ---------------------------------------------------------------------------
 // Per-tier registration functions that inject CSS rule blocks via the managed
 // stylesheet. Theme seeds are derived into full token palettes. Relief and
-// finish accept typed token maps. Ornament introspects compiled CSS to
-// replicate consume selectors for per-element overrides.
+// finish accept typed token maps.
 // ---------------------------------------------------------------------------
 
 import type {
@@ -12,7 +11,6 @@ import type {
   RegisterThemeOptions,
   RegisterReliefOptions,
   RegisterFinishOptions,
-  RegisterOrnamentOptions,
   TierRegistration,
 } from './types.js';
 import { insertRule, removeRules } from './stylesheet.js';
@@ -286,48 +284,6 @@ export function deriveThemeTokens(seed: ThemeSeed): Record<string, string> {
 }
 
 // ---------------------------------------------------------------------------
-// Ornament Introspection
-// ---------------------------------------------------------------------------
-
-interface OrnamentTemplate {
-  className: string;
-  pseudoState: string;
-  cssText: string;
-}
-
-const CONSUME_SELECTOR_RE =
-  /^:where\(\[data-ornament\]:not\(\[data-ornament='none'\]\)\)\s+\.([a-zA-Z0-9_-]+)(:[a-zA-Z]+)?$/;
-
-function introspectOrnamentTemplates(): OrnamentTemplate[] {
-  const templates: OrnamentTemplate[] = [];
-
-  for (const sheet of document.styleSheets) {
-    let rules: CSSRuleList;
-    try {
-      rules = sheet.cssRules;
-    } catch {
-      // Cross-origin sheet — skip silently
-      continue;
-    }
-
-    for (const rule of rules) {
-      if (!(rule instanceof CSSStyleRule)) continue;
-
-      const match = CONSUME_SELECTOR_RE.exec(rule.selectorText);
-      if (!match) continue;
-
-      templates.push({
-        className: match[1],
-        pseudoState: match[2] || '',
-        cssText: rule.style.cssText,
-      });
-    }
-  }
-
-  return templates;
-}
-
-// ---------------------------------------------------------------------------
 // Registration Functions
 // ---------------------------------------------------------------------------
 
@@ -385,39 +341,4 @@ export function registerRelief(name: string, options: RegisterReliefOptions): Ti
 
 export function registerFinish(name: string, options: RegisterFinishOptions): TierRegistration {
   return registerSimpleTier('finish', name, options.tokens);
-}
-
-export function registerOrnament(name: string, options: RegisterOrnamentOptions): TierRegistration {
-  const decls = buildDeclarations(options.tokens);
-  const rules: CSSRule[] = [];
-
-  // Part 1: Token blocks
-  rules.push(insertRule(`:where([data-ornament='${name}']) { ${decls} }`));
-  rules.push(insertRule(`.ornament-${name} { ${decls} }`));
-
-  // Part 2: Consume selectors — replicate compiled per-element overrides
-  const templates = introspectOrnamentTemplates();
-  if (templates.length === 0) {
-    const msg =
-      '[soltana] Ornament introspection found 0 consume-selector templates. ' +
-      'Per-element .ornament-* overrides will not work for custom ornaments. ' +
-      'Ensure Soltana CSS is loaded before registering custom ornaments.';
-    if (options.strict) throw new Error(msg);
-    console.warn(msg);
-  }
-  for (const t of templates) {
-    const sel = `.ornament-${name} .${t.className}${t.pseudoState}, .${t.className}.ornament-${name}${t.pseudoState}`;
-    rules.push(insertRule(`${sel} { ${t.cssText} }`));
-  }
-
-  registerTierValue('ornament', name);
-
-  return {
-    name,
-    tier: 'ornament',
-    unregister() {
-      removeRules(rules);
-      deregisterTierValue('ornament', name);
-    },
-  };
 }

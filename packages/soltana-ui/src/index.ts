@@ -5,12 +5,7 @@ export { initSoltana, DEFAULT_STATE } from './init.js';
 
 // Config: types, constants, validation, recipes
 export { registerTierValue, deregisterTierValue } from './config/index.js';
-export {
-  BUILT_IN_THEMES,
-  BUILT_IN_RELIEFS,
-  BUILT_IN_FINISHES,
-  BUILT_IN_ORNAMENTS,
-} from './config/index.js';
+export { BUILT_IN_THEMES, BUILT_IN_RELIEFS, BUILT_IN_FINISHES } from './config/index.js';
 export type {
   SoltanaConfig,
   SoltanaInitOptions,
@@ -20,20 +15,17 @@ export type {
   Theme,
   Relief,
   Finish,
-  Ornament,
   RecipeName,
   Recipe,
   BuiltInTheme,
   BuiltInRelief,
   BuiltInFinish,
-  BuiltInOrnament,
   BuiltInRecipeName,
   TierName,
   ThemeSeed,
   RegisterThemeOptions,
   RegisterReliefOptions,
   RegisterFinishOptions,
-  RegisterOrnamentOptions,
   TierRegistration,
 } from './config/index.js';
 export { RECIPES } from './config/index.js';
@@ -52,10 +44,6 @@ export {
 
 // Font loading
 export { loadSoltanaFonts, DEFAULT_FONT_URL } from './fonts/index.js';
-
-// SVG ornament pattern utilities
-export { patterns, toDataUri, toElement } from './ornaments/index.js';
-export type { PatternName } from './ornaments/index.js';
 
 declare const __SOLTANA_VERSION__: string;
 export const version: string =

@@ -17,7 +17,6 @@ function createMockInstance(overrides?: Partial<ReturnType<typeof mockGetState>>
     theme: 'dark',
     relief: 'neumorphic',
     finish: 'matte',
-    ornament: 'none',
     overrides: {},
     ...overrides,
   };
@@ -29,7 +28,6 @@ function createMockInstance(overrides?: Partial<ReturnType<typeof mockGetState>>
     setTheme: vi.fn(),
     setRelief: vi.fn(),
     setFinish: vi.fn(),
-    setOrnament: vi.fn(),
     applyRecipe: vi.fn(),
     registerRecipe: vi.fn(),
     setOverrides: vi.fn(),
@@ -37,7 +35,6 @@ function createMockInstance(overrides?: Partial<ReturnType<typeof mockGetState>>
     registerTheme: vi.fn(),
     registerRelief: vi.fn(),
     registerFinish: vi.fn(),
-    registerOrnament: vi.fn(),
     reinitEnhancers: vi.fn(),
     reset: vi.fn(),
   });
@@ -74,7 +71,6 @@ describe('useSoltana', () => {
       theme: 'dark',
       relief: 'neumorphic',
       finish: 'matte',
-      ornament: 'none',
       overrides: {},
     });
   });
@@ -97,7 +93,6 @@ describe('useSoltana', () => {
       theme: 'light',
       relief: 'flat',
       finish: 'frosted',
-      ornament: 'gilt',
       overrides: {},
     });
 
@@ -174,7 +169,6 @@ describe('SoltanaProvider + useSoltanaContext', () => {
       theme: 'sepia',
       relief: 'glassmorphic',
       finish: 'glossy',
-      ornament: 'baroque',
       overrides: {},
     });
 

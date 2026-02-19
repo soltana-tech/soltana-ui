@@ -11,5 +11,4 @@ export interface SoltanaTreeshakeOptions {
   themes?: TierConfig;
   reliefs?: TierConfig;
   finishes?: TierConfig;
-  ornaments?: TierConfig;
 }

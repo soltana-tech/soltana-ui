@@ -17,7 +17,6 @@ import './lib/playground-entries';
 import { renderGettingStarted } from './pages/learn/introduction';
 import { renderReliefs } from './pages/learn/reliefs';
 import { renderFinishes } from './pages/learn/finishes';
-import { renderOrnaments } from './pages/learn/ornaments';
 import { renderComposition } from './pages/learn/composition';
 
 // Pages — Explore
@@ -33,7 +32,6 @@ import { renderApiState } from './pages/api/state';
 import { renderApiRecipes } from './pages/api/recipes';
 import { renderApiRegistration } from './pages/api/registration';
 import { renderApiEnhancers } from './pages/api/enhancers';
-import { renderApiSvgPatterns } from './pages/api/svg-patterns';
 import { renderApiFonts } from './pages/api/fonts';
 import { renderApiOverrides } from './pages/api/overrides';
 
@@ -45,7 +43,6 @@ const soltana = initSoltana({
   theme: 'dark',
   relief: 'neumorphic',
   finish: 'matte',
-  ornament: 'none',
 });
 
 // ---- Theme switcher ----
@@ -88,7 +85,6 @@ router.setDefaultPath('/learn/introduction');
 router.register({ path: '/learn/introduction', render: migrationShim(renderGettingStarted) });
 router.register({ path: '/learn/reliefs', render: migrationShim(renderReliefs) });
 router.register({ path: '/learn/finishes', render: migrationShim(renderFinishes) });
-router.register({ path: '/learn/ornaments', render: migrationShim(renderOrnaments) });
 router.register({ path: '/learn/composition', render: migrationShim(renderComposition) });
 
 // Explore
@@ -104,7 +100,6 @@ router.register({ path: '/api/state', render: migrationShim(renderApiState) });
 router.register({ path: '/api/recipes', render: migrationShim(renderApiRecipes) });
 router.register({ path: '/api/registration', render: migrationShim(renderApiRegistration) });
 router.register({ path: '/api/enhancers', render: migrationShim(renderApiEnhancers) });
-router.register({ path: '/api/svg-patterns', render: migrationShim(renderApiSvgPatterns) });
 router.register({ path: '/api/fonts', render: migrationShim(renderApiFonts) });
 router.register({ path: '/api/overrides', render: migrationShim(renderApiOverrides) });
 
@@ -130,7 +125,6 @@ const sections: SidebarSection[] = [
       { label: 'Introduction', path: '/learn/introduction' },
       { label: 'Reliefs', path: '/learn/reliefs' },
       { label: 'Finishes', path: '/learn/finishes' },
-      { label: 'Ornaments', path: '/learn/ornaments' },
       { label: 'Composition', path: '/learn/composition' },
     ],
   },
@@ -154,7 +148,6 @@ const sections: SidebarSection[] = [
       { label: 'Recipes', path: '/api/recipes' },
       { label: 'Tier Registration', path: '/api/registration' },
       { label: 'Enhancers', path: '/api/enhancers' },
-      { label: 'SVG Patterns', path: '/api/svg-patterns' },
       { label: 'Font Loading', path: '/api/fonts' },
       { label: 'Overrides', path: '/api/overrides' },
     ],

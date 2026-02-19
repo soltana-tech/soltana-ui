@@ -70,7 +70,7 @@ $golden-ratio: 1.618;
 .columns-classical,
 .columns-classical-3 {
   column-gap: math.pow($golden-ratio, 2) * 1rem;
-  column-rule: 1px solid var(--ornament-border);
+  column-rule: 1px solid var(--border-decorative);
 }
 
 .columns-classical {
@@ -98,9 +98,9 @@ $golden-ratio: 1.618;
     background: linear-gradient(
       90deg,
       transparent,
-      var(--ornament-color) 20%,
-      color-mix(in srgb, var(--ornament-color), white 40%) 50%,
-      var(--ornament-color) 80%,
+      var(--accent-decorative) 20%,
+      color-mix(in srgb, var(--accent-decorative), white 40%) 50%,
+      var(--accent-decorative) 80%,
       transparent
     );
     border-radius: 2px;
@@ -114,7 +114,7 @@ $golden-ratio: 1.618;
     transform: translateX(-50%) rotate(45deg);
     width: 12px;
     height: 12px;
-    background: var(--ornament-color);
+    background: var(--accent-decorative);
     border-radius: 2px;
   }
 }
@@ -123,8 +123,8 @@ $golden-ratio: 1.618;
 .entablature {
   position: relative;
   padding: 1rem $golden-ratio * 1rem;
-  border-top: 2px solid var(--ornament-border-strong);
-  border-bottom: 1px solid var(--ornament-border);
+  border-top: 2px solid var(--border-decorative-strong);
+  border-bottom: 1px solid var(--border-decorative);
 
   &::before {
     content: '';
@@ -133,7 +133,7 @@ $golden-ratio: 1.618;
     left: 0;
     right: 0;
     height: 1px;
-    background: var(--ornament-border);
+    background: var(--border-decorative);
   }
 }
 
@@ -154,8 +154,8 @@ $golden-ratio: 1.618;
     background: linear-gradient(
       90deg,
       transparent,
-      var(--ornament-color) 30%,
-      var(--ornament-color) 70%,
+      var(--accent-decorative) 30%,
+      var(--accent-decorative) 70%,
       transparent
     );
     opacity: 0.3;
@@ -175,7 +175,7 @@ $golden-ratio: 1.618;
     left: 10%;
     right: 10%;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--ornament-color), transparent);
+    background: linear-gradient(90deg, transparent, var(--accent-decorative), transparent);
     opacity: 0.3;
   }
 
@@ -186,7 +186,7 @@ $golden-ratio: 1.618;
     left: 10%;
     right: 10%;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--ornament-color), transparent);
+    background: linear-gradient(90deg, transparent, var(--accent-decorative), transparent);
     opacity: 0.2;
   }
 }

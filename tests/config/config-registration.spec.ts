@@ -64,20 +64,6 @@ test.describe('runtime registration', () => {
     expect(attrs.finish).toBe('satin');
   });
 
-  test('registerOrnament + setOrnament applies data attribute', async ({ page }) => {
-    await setupSoltanaPage(page);
-    await page.evaluate(() => {
-      const s = window.SoltanaUI.initSoltana();
-      s.registerOrnament('art-deco', {
-        tokens: { '--ornament-color': 'gold' },
-      });
-      s.setOrnament('art-deco');
-    });
-
-    const attrs = await getTierAttributes(page);
-    expect(attrs.ornament).toBe('art-deco');
-  });
-
   test('strict mode does not throw after registerTheme', async ({ page }) => {
     await setupSoltanaPage(page);
     const error = await page.evaluate((seed) => {
@@ -147,13 +133,9 @@ test.describe('runtime registration', () => {
         s.registerTheme('brand', { seed });
         s.registerRelief('paper', { tokens: reliefTokens });
         s.registerFinish('satin', { tokens: finishTokens });
-        s.registerOrnament('art-deco', {
-          tokens: { '--ornament-color': 'gold' },
-        });
         s.setTheme('brand');
         s.setRelief('paper');
         s.setFinish('satin');
-        s.setOrnament('art-deco');
       },
       { seed: THEME_SEED, reliefTokens: RELIEF_TOKENS, finishTokens: FINISH_TOKENS }
     );
@@ -163,7 +145,6 @@ test.describe('runtime registration', () => {
       theme: 'brand',
       relief: 'paper',
       finish: 'satin',
-      ornament: 'art-deco',
     });
   });
 });

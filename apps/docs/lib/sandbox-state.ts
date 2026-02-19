@@ -1,15 +1,14 @@
-import type { TierName } from '@soltana/config';
+type TierName = 'theme' | 'relief' | 'finish';
 
 /** Per-sandbox tier state. null = inherit from global (document-level) setting. */
 export interface SandboxState {
   theme: string | null;
   relief: string | null;
   finish: string | null;
-  ornament: string | null;
 }
 
 export function createDefaultState(): SandboxState {
-  return { theme: null, relief: null, finish: null, ornament: null };
+  return { theme: null, relief: null, finish: null };
 }
 
 /**
@@ -21,14 +20,13 @@ export function stateToClasses(state: SandboxState): string {
   if (state.theme) parts.push(`theme-${state.theme}`);
   if (state.relief) parts.push(`relief-${state.relief}`);
   if (state.finish) parts.push(`finish-${state.finish}`);
-  if (state.ornament) parts.push(`ornament-${state.ornament}`);
   return parts.join(' ');
 }
 
 /** Serialize non-null tier values into URLSearchParams. */
 export function serializeState(state: SandboxState): URLSearchParams {
   const params = new URLSearchParams();
-  const tiers: TierName[] = ['theme', 'relief', 'finish', 'ornament'];
+  const tiers: TierName[] = ['theme', 'relief', 'finish'];
   for (const tier of tiers) {
     const value = state[tier];
     if (value) params.set(tier, value);
@@ -39,7 +37,7 @@ export function serializeState(state: SandboxState): URLSearchParams {
 /** Deserialize URLSearchParams into a SandboxState. */
 export function deserializeState(params: URLSearchParams): Partial<SandboxState> {
   const state: Partial<SandboxState> = {};
-  const tiers: TierName[] = ['theme', 'relief', 'finish', 'ornament'];
+  const tiers: TierName[] = ['theme', 'relief', 'finish'];
   for (const tier of tiers) {
     const value = params.get(tier);
     if (value) state[tier] = value;

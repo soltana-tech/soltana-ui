@@ -6,19 +6,16 @@
 export const BUILT_IN_THEMES = ['dark', 'light', 'sepia'] as const;
 export const BUILT_IN_RELIEFS = ['flat', 'glassmorphic', 'skeuomorphic', 'neumorphic'] as const;
 export const BUILT_IN_FINISHES = ['matte', 'frosted', 'tinted', 'glossy'] as const;
-export const BUILT_IN_ORNAMENTS = ['none', 'gilt', 'baroque', 'beveled', 'faceted'] as const;
 
 export type BuiltInTheme = (typeof BUILT_IN_THEMES)[number];
 export type BuiltInRelief = (typeof BUILT_IN_RELIEFS)[number];
 export type BuiltInFinish = (typeof BUILT_IN_FINISHES)[number];
-export type BuiltInOrnament = (typeof BUILT_IN_ORNAMENTS)[number];
 import type { BuiltInRecipeName } from './recipes.js';
 export type { BuiltInRecipeName };
 
 export type Theme = BuiltInTheme | 'auto' | (string & {});
 export type Relief = BuiltInRelief | (string & {});
 export type Finish = BuiltInFinish | (string & {});
-export type Ornament = BuiltInOrnament | (string & {});
 export type RecipeName = BuiltInRecipeName | (string & {});
 
 export interface Recipe {
@@ -28,7 +25,6 @@ export interface Recipe {
   theme: Theme;
   relief: Relief;
   finish: Finish;
-  ornament: Ornament;
 }
 
 export interface SoltanaInitOptions {
@@ -40,7 +36,6 @@ export interface SoltanaConfig {
   theme: Theme;
   relief: Relief;
   finish: Finish;
-  ornament: Ornament;
   overrides: Record<string, string>;
 }
 
@@ -60,10 +55,8 @@ export interface SoltanaInstance {
   setRelief(relief: Relief): void;
   /** Set the active finish (applies `data-finish` on `<html>`). */
   setFinish(finish: Finish): void;
-  /** Set the active ornament (applies `data-ornament` on `<html>`). */
-  setOrnament(ornament: Ornament): void;
 
-  /** Apply a named recipe, setting all four tiers at once. */
+  /** Apply a named recipe, setting all three tiers at once. */
   applyRecipe(recipeName: RecipeName): void;
   /** Register a custom recipe for later use with `applyRecipe()`. */
   registerRecipe(name: string, recipe: Recipe): void;
@@ -79,8 +72,6 @@ export interface SoltanaInstance {
   registerRelief(name: string, options: RegisterReliefOptions): TierRegistration;
   /** Register a custom finish with a typed token map. */
   registerFinish(name: string, options: RegisterFinishOptions): TierRegistration;
-  /** Register a custom ornament with a partial token map. */
-  registerOrnament(name: string, options: RegisterOrnamentOptions): TierRegistration;
 
   /** Destroy and re-create enhancers (modals, tabs, tooltips). */
   reinitEnhancers(): void;
@@ -101,7 +92,7 @@ export interface EnhancerOptions {
   selector?: string;
 }
 
-export type TierName = 'theme' | 'relief' | 'finish' | 'ornament';
+export type TierName = 'theme' | 'relief' | 'finish';
 
 // ---------------------------------------------------------------------------
 // Runtime Registration Types
@@ -119,7 +110,7 @@ export interface ThemeSeed {
   textPrimary: string;
   /** Primary accent / brand color. */
   accentPrimary: string;
-  /** Decorative accent for ornament borders and highlights. Defaults to `accentPrimary`. */
+  /** Decorative accent for borders and highlights. Defaults to `accentPrimary`. */
   accentDecorative?: string;
   /** Light or dark scheme hint for derived token generation. Defaults to `'dark'`. */
   colorScheme?: 'light' | 'dark';
@@ -160,13 +151,6 @@ export interface RegisterFinishOptions {
     '--finish-overlay': string;
     '--finish-sheen': string;
   };
-}
-
-export interface RegisterOrnamentOptions {
-  /** Partial token map — unset tokens stay inert (inherit existing values). */
-  tokens: Record<string, string>;
-  /** When true, throw if ornament introspection finds no templates. */
-  strict?: boolean;
 }
 
 export interface TierRegistration {

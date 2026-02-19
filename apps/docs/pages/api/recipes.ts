@@ -11,7 +11,7 @@ export function renderApiRecipes(): string {
     'applyRecipe()',
     `
     <p class="text-secondary mb-4">
-      Applies a named recipe, setting all four tiers atomically. The instance
+      Applies a named recipe, setting all three tiers atomically. The instance
       state and DOM attributes update in a single pass.
     </p>
 
@@ -29,28 +29,28 @@ export function renderApiRecipes(): string {
     <div class="table-container">
       <table class="table table-striped">
         <thead>
-          <tr><th>Name</th><th>Theme</th><th>Relief</th><th>Finish</th><th>Ornament</th><th>Description</th></tr>
+          <tr><th>Name</th><th>Theme</th><th>Relief</th><th>Finish</th><th>Description</th></tr>
         </thead>
         <tbody>
           <tr>
             <td><code>'corporate-clean'</code></td>
-            <td>light</td><td>flat</td><td>matte</td><td>none</td>
-            <td>Minimal and professional with zero ornamentation.</td>
+            <td>light</td><td>flat</td><td>matte</td>
+            <td>Minimal and professional.</td>
           </tr>
           <tr>
             <td><code>'luxury-dark'</code></td>
-            <td>dark</td><td>neumorphic</td><td>glossy</td><td>gilt</td>
-            <td>Rich neumorphic depth with glossy sheen and gold accents.</td>
+            <td>dark</td><td>neumorphic</td><td>glossy</td>
+            <td>Rich neumorphic depth with glossy sheen.</td>
           </tr>
           <tr>
             <td><code>'frosted-modern'</code></td>
-            <td>dark</td><td>glassmorphic</td><td>frosted</td><td>none</td>
+            <td>dark</td><td>glassmorphic</td><td>frosted</td>
             <td>Glassmorphic frosted panels on a dark backdrop.</td>
           </tr>
           <tr>
             <td><code>'classic-warm'</code></td>
-            <td>sepia</td><td>skeuomorphic</td><td>matte</td><td>beveled</td>
-            <td>Warm parchment tones with skeuomorphic depth and beveled edges.</td>
+            <td>sepia</td><td>skeuomorphic</td><td>matte</td>
+            <td>Warm parchment tones with skeuomorphic depth.</td>
           </tr>
         </tbody>
       </table>
@@ -77,7 +77,6 @@ export function renderApiRecipes(): string {
   theme: Theme;
   relief: Relief;
   finish: Finish;
-  ornament: Ornament;
 }`,
       'typescript'
     )}
@@ -86,11 +85,10 @@ export function renderApiRecipes(): string {
     ${codeExample(
       `soltana.registerRecipe('midnight-frost', {
   name: 'Midnight Frost',
-  description: 'Glassmorphic frost on dark with faceted accents.',
+  description: 'Glassmorphic frost on dark.',
   theme: 'dark',
   relief: 'glassmorphic',
   finish: 'frosted',
-  ornament: 'faceted',
 });
 
 soltana.applyRecipe('midnight-frost');`,

@@ -14,7 +14,6 @@ const DEFAULT_CONFIG: SoltanaConfig = {
   theme: 'auto',
   relief: 'neumorphic',
   finish: 'matte',
-  ornament: 'none',
   overrides: {},
 };
 

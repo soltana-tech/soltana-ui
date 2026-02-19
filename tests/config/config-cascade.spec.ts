@@ -5,7 +5,7 @@ import { recipes } from '../fixtures/combinations';
 
 test.describe('multi-tier cascade integration', () => {
   for (const recipe of recipes()) {
-    test(`recipe ${recipe.theme}/${recipe.relief}/${recipe.finish}/${recipe.ornament} resolves key tokens`, async ({
+    test(`recipe ${recipe.theme}/${recipe.relief}/${recipe.finish} resolves key tokens`, async ({
       page,
     }) => {
       await setupSoltanaPage(page);
@@ -14,7 +14,6 @@ test.describe('multi-tier cascade integration', () => {
         s.setTheme(cfg.theme);
         s.setRelief(cfg.relief);
         s.setFinish(cfg.finish);
-        s.setOrnament(cfg.ornament);
       }, recipe);
 
       // Relief tokens should resolve to non-empty values
@@ -40,7 +39,6 @@ test.describe('multi-tier cascade integration', () => {
         theme: 'dark',
         relief: 'skeuomorphic',
         finish: 'frosted',
-        ornament: 'gilt',
       });
     });
 
@@ -62,7 +60,6 @@ test.describe('multi-tier cascade integration', () => {
         theme: 'dark',
         relief: 'skeuomorphic',
         finish: 'frosted',
-        ornament: 'none',
       });
     });
 
@@ -75,7 +72,6 @@ test.describe('multi-tier cascade integration', () => {
         theme: 'dark',
         relief: 'skeuomorphic',
         finish: 'frosted',
-        ornament: 'none',
       });
       s.setTheme('light');
     });

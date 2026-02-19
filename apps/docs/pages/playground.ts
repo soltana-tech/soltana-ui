@@ -17,7 +17,7 @@ export function renderPlayground(): PlaygroundPage {
       <h2 class="text-3xl font-bold">Playground</h2>
       <p class="text-secondary mt-2">
         Interactive sandbox with full tier controls. Select a component, tweak theme,
-        relief, finish, and ornament, then copy the generated HTML or share the URL.
+        relief, and finish, then copy the generated HTML or share the URL.
       </p>
     </div>
     <div class="section-divider"></div>

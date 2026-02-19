@@ -101,7 +101,6 @@ export class CentralPlayground {
         theme: recipe.theme,
         relief: recipe.relief,
         finish: recipe.finish,
-        ornament: recipe.ornament,
       });
       this.updateUrl();
     });
@@ -165,7 +164,6 @@ export class CentralPlayground {
     if (state.theme) params.set('theme', state.theme);
     if (state.relief) params.set('relief', state.relief);
     if (state.finish) params.set('finish', state.finish);
-    if (state.ornament) params.set('ornament', state.ornament);
     const newHash = `#${path}?${params.toString()}`;
     if (location.hash !== newHash) {
       history.replaceState(null, '', newHash);

@@ -44,20 +44,6 @@ test.describe('soltana:change event', () => {
     expect(detail.value).toBe('frosted');
   });
 
-  test('fires on setOrnament', async ({ page }) => {
-    await setupSoltanaPage(page);
-    await page.evaluate(() => {
-      (window as any).__soltanaInstance = window.SoltanaUI.initSoltana();
-    });
-
-    const detail = await captureChangeEvent(page, async () => {
-      await page.evaluate(() => (window as any).__soltanaInstance.setOrnament('gilt'));
-    });
-
-    expect(detail.type).toBe('ornament');
-    expect(detail.value).toBe('gilt');
-  });
-
   test('fires on setOverrides', async ({ page }) => {
     await setupSoltanaPage(page);
     await page.evaluate(() => {

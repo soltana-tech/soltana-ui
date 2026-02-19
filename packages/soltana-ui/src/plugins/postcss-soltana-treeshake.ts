@@ -8,18 +8,12 @@
 
 import type { Plugin, Rule } from 'postcss';
 import type { SoltanaTreeshakeOptions, TierConfig } from './types.js';
-import {
-  BUILT_IN_THEMES,
-  BUILT_IN_RELIEFS,
-  BUILT_IN_FINISHES,
-  BUILT_IN_ORNAMENTS,
-} from '../config/types.js';
+import { BUILT_IN_THEMES, BUILT_IN_RELIEFS, BUILT_IN_FINISHES } from '../config/types.js';
 
 const BUILT_IN: Record<string, readonly string[]> = {
   theme: BUILT_IN_THEMES,
   relief: BUILT_IN_RELIEFS,
   finish: BUILT_IN_FINISHES,
-  ornament: BUILT_IN_ORNAMENTS,
 };
 
 // Maps plural config keys to singular tier names used in selectors
@@ -27,17 +21,16 @@ const TIER_KEY_MAP: Record<string, string> = {
   themes: 'theme',
   reliefs: 'relief',
   finishes: 'finish',
-  ornaments: 'ornament',
 };
 
 // Matches [data-tier='value'] in a selector fragment (global for all occurrences)
-const DATA_ATTR_RE = /\[data-(theme|relief|finish|ornament)='([^']+)'\]/g;
+const DATA_ATTR_RE = /\[data-(theme|relief|finish)='([^']+)'\]/g;
 
 // Matches .tier-value in a selector fragment
-const CLASS_RE = /\.(theme|relief|finish|ornament)-([\w-]+)/;
+const CLASS_RE = /\.(theme|relief|finish)-([\w-]+)/;
 
 // Matches [data-tier='value'] that appears inside :not()
-const NEGATED_ATTR_RE = /:not\([^)]*\[data-(theme|relief|finish|ornament)='[^']+'\][^)]*\)/g;
+const NEGATED_ATTR_RE = /:not\([^)]*\[data-(theme|relief|finish)='[^']+'\][^)]*\)/g;
 
 /**
  * Compute the set of tier values to exclude from output.

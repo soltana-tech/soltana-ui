@@ -33,7 +33,6 @@ export function renderApiInit(): string {
           <tr><td><code>theme</code></td><td><code>Theme</code></td><td><code>'auto'</code></td><td>Color scheme. <code>'auto'</code> resolves via <code>prefers-color-scheme</code>.</td></tr>
           <tr><td><code>relief</code></td><td><code>Relief</code></td><td><code>'neumorphic'</code></td><td>Shadow model applied globally.</td></tr>
           <tr><td><code>finish</code></td><td><code>Finish</code></td><td><code>'matte'</code></td><td>Surface treatment.</td></tr>
-          <tr><td><code>ornament</code></td><td><code>Ornament</code></td><td><code>'none'</code></td><td>Decorative embellishment style.</td></tr>
           <tr><td><code>overrides</code></td><td><code>Record&lt;string, string&gt;</code></td><td><code>{}</code></td><td>CSS custom property overrides applied to <code>:root</code>.</td></tr>
           <tr><td><code>enhancers</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Auto-initialize modal, tab, and tooltip enhancers. Defaults to <code>false</code> so CSS-only consumers avoid JS enhancer overhead — interactive apps should pass <code>true</code>.</td></tr>
           <tr><td><code>strict</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Throw on invalid tier values instead of logging warnings.</td></tr>
@@ -64,7 +63,6 @@ const soltana = initSoltana({
   theme: 'dark',
   relief: 'skeuomorphic',
   finish: 'frosted',
-  ornament: 'gilt',
   enhancers: true,
   strict: true,
 });`,
@@ -85,7 +83,6 @@ const soltana = initSoltana({
   theme: Theme;       // 'dark' | 'light' | 'sepia' | 'auto' | string
   relief: Relief;     // 'flat' | 'glassmorphic' | 'skeuomorphic' | 'neumorphic' | string
   finish: Finish;     // 'matte' | 'frosted' | 'tinted' | 'glossy' | string
-  ornament: Ornament; // 'none' | 'gilt' | 'baroque' | 'beveled' | 'faceted' | string
   overrides: Record<string, string>;
 }`,
       'typescript'

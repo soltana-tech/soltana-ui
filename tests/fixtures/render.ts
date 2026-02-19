@@ -97,8 +97,7 @@ export async function renderCombination(page: Page, combo: TierCombination): Pro
 <html lang="en"
   data-theme="${combo.theme}"
   data-relief="${combo.relief}"
-  data-finish="${combo.finish}"
-  data-ornament="${combo.ornament}">
+  data-finish="${combo.finish}">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -114,5 +113,5 @@ export async function renderCombination(page: Page, combo: TierCombination): Pro
 }
 
 export function combinationLabel(combo: TierCombination): string {
-  return `${combo.theme}-${combo.relief}-${combo.finish}-${combo.ornament}`;
+  return `${combo.theme}-${combo.relief}-${combo.finish}`;
 }

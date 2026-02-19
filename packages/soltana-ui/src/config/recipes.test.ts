@@ -1,12 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { RECIPES } from './recipes.js';
 import type { RecipeName } from './types.js';
-import {
-  BUILT_IN_THEMES,
-  BUILT_IN_RELIEFS,
-  BUILT_IN_FINISHES,
-  BUILT_IN_ORNAMENTS,
-} from './types.js';
+import { BUILT_IN_THEMES, BUILT_IN_RELIEFS, BUILT_IN_FINISHES } from './types.js';
 
 describe('RECIPES data integrity', () => {
   const expectedKeys: RecipeName[] = [
@@ -27,7 +22,6 @@ describe('RECIPES data integrity', () => {
     expect(recipe).toHaveProperty('theme');
     expect(recipe).toHaveProperty('relief');
     expect(recipe).toHaveProperty('finish');
-    expect(recipe).toHaveProperty('ornament');
     expect(typeof recipe.name).toBe('string');
     expect(typeof recipe.description).toBe('string');
   });
@@ -36,6 +30,5 @@ describe('RECIPES data integrity', () => {
     expect([...BUILT_IN_THEMES, 'auto']).toContain(recipe.theme);
     expect([...BUILT_IN_RELIEFS]).toContain(recipe.relief);
     expect([...BUILT_IN_FINISHES]).toContain(recipe.finish);
-    expect([...BUILT_IN_ORNAMENTS]).toContain(recipe.ornament);
   });
 });

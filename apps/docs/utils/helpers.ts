@@ -86,6 +86,6 @@ export function codeExample(code: string, language = 'html'): string {
 /**
  * Renders a decorative divider.
  */
-export function ornamentDivider(): string {
+export function sectionDivider(): string {
   return '<hr class="border-t border-subtle my-12 opacity-30" />';
 }

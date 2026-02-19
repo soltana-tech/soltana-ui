@@ -2,16 +2,11 @@
 // Soltana Design System — Orchestrator
 // ---------------------------------------------------------------------------
 // initSoltana() sets data attributes on <html> to activate SCSS selector
-// blocks for the chosen theme, relief, finish, and ornament. Coordinates
-// config, validation, registration, enhancers, and the managed stylesheet.
+// blocks for the chosen theme, relief, and finish. Coordinates config,
+// validation, registration, enhancers, and the managed stylesheet.
 // ---------------------------------------------------------------------------
 
-import {
-  VALID_THEMES,
-  VALID_RELIEFS,
-  VALID_FINISHES,
-  VALID_ORNAMENTS,
-} from './config/validation.js';
+import { VALID_THEMES, VALID_RELIEFS, VALID_FINISHES } from './config/validation.js';
 import type {
   SoltanaConfig,
   SoltanaInitOptions,
@@ -20,13 +15,11 @@ import type {
   Theme,
   Relief,
   Finish,
-  Ornament,
   RecipeName,
   Recipe,
   RegisterThemeOptions,
   RegisterReliefOptions,
   RegisterFinishOptions,
-  RegisterOrnamentOptions,
   TierRegistration,
 } from './config/types.js';
 import { initAll } from './enhancers/index.js';
@@ -35,7 +28,6 @@ import {
   registerTheme as regTheme,
   registerRelief as regRelief,
   registerFinish as regFinish,
-  registerOrnament as regOrnament,
 } from './config/register.js';
 import { teardown as teardownStylesheet } from './config/stylesheet.js';
 
@@ -44,7 +36,6 @@ export const DEFAULT_STATE: Readonly<SoltanaConfig> = Object.freeze({
   theme: 'auto',
   relief: 'neumorphic',
   finish: 'matte',
-  ornament: 'none',
   overrides: {},
 });
 
@@ -69,10 +60,6 @@ function resolveTheme(theme: Theme): string {
   return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
 }
 
-function applyOrnament(ornament: Ornament): void {
-  document.documentElement.setAttribute('data-ornament', ornament);
-}
-
 function applyOverrides(overrides: Record<string, string>): void {
   const root = document.documentElement;
   for (const [key, value] of Object.entries(overrides)) {
@@ -92,7 +79,6 @@ function applyConfig(state: SoltanaConfig): void {
   root.setAttribute('data-theme', resolveTheme(state.theme));
   root.setAttribute('data-relief', state.relief);
   root.setAttribute('data-finish', state.finish);
-  applyOrnament(state.ornament);
 
   applyOverrides(state.overrides);
 }
@@ -154,8 +140,7 @@ function dispatchChange(type: string, value: unknown): void {
 
 /**
  * Initialize the Soltana design system.
- * Sets data attributes on <html> to activate SCSS theme/relief/finish/
- * ornament selectors.
+ * Sets data attributes on <html> to activate SCSS theme/relief/finish selectors.
  */
 export function initSoltana(
   userConfig: Partial<SoltanaConfig & SoltanaInitOptions> = {}
@@ -185,7 +170,6 @@ export function initSoltana(
   warnInvalid('theme', state.theme, VALID_THEMES, initOpts.strict);
   warnInvalid('relief', state.relief, VALID_RELIEFS, initOpts.strict);
   warnInvalid('finish', state.finish, VALID_FINISHES, initOpts.strict);
-  warnInvalid('ornament', state.ornament, VALID_ORNAMENTS, initOpts.strict);
 
   applyConfig(state);
   setupAutoTheme(state);
@@ -218,13 +202,6 @@ export function initSoltana(
     dispatchChange('finish', finish);
   }
 
-  function setOrnament(ornament: Ornament): void {
-    warnInvalid('ornament', ornament, VALID_ORNAMENTS, initOpts.strict);
-    state.ornament = ornament;
-    applyOrnament(ornament);
-    dispatchChange('ornament', ornament);
-  }
-
   return {
     getState(): SoltanaConfig {
       return { ...state };
@@ -233,7 +210,6 @@ export function initSoltana(
     setTheme,
     setRelief,
     setFinish,
-    setOrnament,
 
     applyRecipe(recipeName: RecipeName): void {
       if (!(recipeName in RECIPES)) {
@@ -246,14 +222,12 @@ export function initSoltana(
       setTheme(recipe.theme);
       setRelief(recipe.relief);
       setFinish(recipe.finish);
-      setOrnament(recipe.ornament);
     },
 
     registerRecipe(name: string, recipe: Recipe): void {
       warnInvalid('theme', recipe.theme, VALID_THEMES, initOpts.strict);
       warnInvalid('relief', recipe.relief, VALID_RELIEFS, initOpts.strict);
       warnInvalid('finish', recipe.finish, VALID_FINISHES, initOpts.strict);
-      warnInvalid('ornament', recipe.ornament, VALID_ORNAMENTS, initOpts.strict);
       addRecipe(name, recipe);
     },
 
@@ -319,12 +293,6 @@ export function initSoltana(
       return reg;
     },
 
-    registerOrnament(name: string, options: RegisterOrnamentOptions): TierRegistration {
-      const reg = regOrnament(name, { ...options, strict: options.strict ?? initOpts.strict });
-      registrations.push(reg);
-      return reg;
-    },
-
     reinitEnhancers(): void {
       resetEnhancers(initOpts.enhancers);
     },
@@ -375,7 +343,6 @@ export function initSoltana(
       root.removeAttribute('data-relief');
       root.removeAttribute('data-finish');
       root.removeAttribute('style');
-      root.removeAttribute('data-ornament');
     },
   };
 }

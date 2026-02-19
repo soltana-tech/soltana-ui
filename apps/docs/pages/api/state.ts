@@ -41,8 +41,7 @@ console.log(state.relief); // 'neumorphic'`,
     ${codeExample(
       `setTheme(theme: Theme): void
 setRelief(relief: Relief): void
-setFinish(finish: Finish): void
-setOrnament(ornament: Ornament): void`,
+setFinish(finish: Finish): void`,
       'typescript'
     )}
 
@@ -56,7 +55,6 @@ setOrnament(ornament: Ornament): void`,
           <tr><td><code>setTheme()</code></td><td><code>'dark'</code>, <code>'light'</code>, <code>'sepia'</code>, <code>'auto'</code>, or any registered custom theme</td></tr>
           <tr><td><code>setRelief()</code></td><td><code>'flat'</code>, <code>'glassmorphic'</code>, <code>'skeuomorphic'</code>, <code>'neumorphic'</code>, or custom</td></tr>
           <tr><td><code>setFinish()</code></td><td><code>'matte'</code>, <code>'frosted'</code>, <code>'tinted'</code>, <code>'glossy'</code>, or custom</td></tr>
-          <tr><td><code>setOrnament()</code></td><td><code>'none'</code>, <code>'gilt'</code>, <code>'baroque'</code>, <code>'beveled'</code>, <code>'faceted'</code>, or custom</td></tr>
         </tbody>
       </table>
     </div>
@@ -65,8 +63,7 @@ setOrnament(ornament: Ornament): void`,
     ${codeExample(
       `soltana.setTheme('light');
 soltana.setRelief('skeuomorphic');
-soltana.setFinish('frosted');
-soltana.setOrnament('gilt');`,
+soltana.setFinish('frosted');`,
       'typescript'
     )}
   `

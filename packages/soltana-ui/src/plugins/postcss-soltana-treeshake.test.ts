@@ -70,35 +70,6 @@ describe('postcss-soltana-treeshake', () => {
     });
   });
 
-  describe('ornament stripping', () => {
-    it('strips excluded ornament :where() selectors', async () => {
-      const input = `
-:where([data-ornament='baroque']) { --ornament-color: gold; }
-.ornament-baroque { --ornament-color: gold; }
-:where([data-ornament='gilt']) { --ornament-color: #d4a843; }
-.ornament-gilt { --ornament-color: #d4a843; }
-      `.trim();
-
-      const output = await run(input, { ornaments: { include: ['gilt'] } });
-
-      expect(output).not.toContain('baroque');
-      expect(output).toContain('gilt');
-    });
-
-    it('preserves consuming selectors without specific tier values', async () => {
-      const input = `
-:where([data-ornament]:not([data-ornament='none'])) .btn-ornament { display: block; }
-:where([data-ornament='baroque']) { --ornament-color: gold; }
-      `.trim();
-
-      const output = await run(input, { ornaments: { include: ['gilt'] } });
-
-      // Consuming selector has no specific value → kept
-      expect(output).toContain('.btn-ornament');
-      expect(output).not.toContain('baroque');
-    });
-  });
-
   describe('exclude mode', () => {
     it('supports explicit exclude lists', async () => {
       const input = `
@@ -199,14 +170,12 @@ describe('postcss-soltana-treeshake', () => {
 [data-relief='glassmorphic'], .relief-glassmorphic { box-shadow: none; }
 [data-relief='neumorphic'], .relief-neumorphic { box-shadow: inset 0 2px 4px; }
 [data-finish='glossy'], .finish-glossy { backdrop-filter: blur(0); }
-[data-ornament='baroque'] { --ornament-color: gold; }
       `.trim();
 
       const output = await run(input, {
         themes: { include: ['dark'] },
         reliefs: { include: ['neumorphic', 'flat'] },
         finishes: { exclude: ['glossy'] },
-        ornaments: { include: ['none', 'gilt'] },
       });
 
       expect(output).not.toContain('sepia');
@@ -214,24 +183,6 @@ describe('postcss-soltana-treeshake', () => {
       expect(output).not.toContain('glassmorphic');
       expect(output).toContain('neumorphic');
       expect(output).not.toContain('glossy');
-      expect(output).not.toContain('baroque');
-    });
-
-    it('preserves ornament modifier classes', async () => {
-      const input = `
-.ornament-subtle { opacity: 0.5; }
-.ornament-strong { --ornament-opacity: 0.7; }
-.ornament-sm { font-size: 0.875rem; }
-:where([data-ornament='baroque']) { --ornament-color: gold; }
-      `.trim();
-
-      const output = await run(input, { ornaments: { include: ['gilt'] } });
-
-      // Modifier classes are not built-in tier values → never stripped
-      expect(output).toContain('.ornament-subtle');
-      expect(output).toContain('.ornament-strong');
-      expect(output).toContain('.ornament-sm');
-      expect(output).not.toContain('baroque');
     });
 
     it('handles include with all built-in values (no stripping)', async () => {

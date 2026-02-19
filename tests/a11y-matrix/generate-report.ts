@@ -9,7 +9,6 @@ interface Combination {
   theme: string;
   relief: string;
   finish: string;
-  ornament: string;
 }
 
 interface Violation {
@@ -71,7 +70,7 @@ function severityScore(violations: Violation[]): number {
 // Tier health computation
 // ---------------------------------------------------------------------------
 
-type TierName = 'theme' | 'relief' | 'finish' | 'ornament';
+type TierName = 'theme' | 'relief' | 'finish';
 
 function computeTierHealth(results: RawResult[], tier: TierName): TierValueStats[] {
   const buckets = new Map<
@@ -172,13 +171,12 @@ function generateMarkdown(
     theme: 'Theme',
     relief: 'Relief',
     finish: 'Finish',
-    ornament: 'Ornament',
   };
 
   ln('## Tier Health');
   ln();
 
-  for (const tier of ['theme', 'relief', 'finish', 'ornament'] as TierName[]) {
+  for (const tier of ['theme', 'relief', 'finish'] as TierName[]) {
     const stats = tierHealth[tier];
     ln(`### ${tierLabels[tier]}`);
     ln();
@@ -200,11 +198,11 @@ function generateMarkdown(
   } else {
     ln(`${blessed.length} combination(s) with zero violations:`);
     ln();
-    ln('| Theme | Relief | Finish | Ornament |');
-    ln('| --- | --- | --- | --- |');
+    ln('| Theme | Relief | Finish |');
+    ln('| --- | --- | --- |');
     for (const b of blessed) {
       const c = b.combination;
-      ln(`| ${c.theme} | ${c.relief} | ${c.finish} | ${c.ornament} |`);
+      ln(`| ${c.theme} | ${c.relief} | ${c.finish} |`);
     }
   }
   ln();
@@ -244,7 +242,7 @@ function generateMarkdown(
   ln();
 
   const flagged: { tier: string; value: string; passRate: number }[] = [];
-  for (const tier of ['theme', 'relief', 'finish', 'ornament'] as TierName[]) {
+  for (const tier of ['theme', 'relief', 'finish'] as TierName[]) {
     for (const s of tierHealth[tier]) {
       if (s.passRate < 0.9) {
         flagged.push({ tier: tierLabels[tier], value: s.value, passRate: s.passRate });
@@ -299,7 +297,6 @@ export default function generateReport() {
     theme: computeTierHealth(results, 'theme'),
     relief: computeTierHealth(results, 'relief'),
     finish: computeTierHealth(results, 'finish'),
-    ornament: computeTierHealth(results, 'ornament'),
   };
 
   const comboSummaries: ComboSummary[] = results.map((r) => ({

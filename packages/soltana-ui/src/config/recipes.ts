@@ -7,19 +7,17 @@ import type { Recipe } from './types.js';
 const BUILT_IN_RECIPES = {
   'corporate-clean': {
     name: 'Corporate Clean',
-    description: 'Minimal and professional with zero ornamentation.',
+    description: 'Minimal and professional.',
     theme: 'light',
     relief: 'flat',
     finish: 'matte',
-    ornament: 'none',
   },
   'luxury-dark': {
     name: 'Luxury Dark',
-    description: 'Rich neumorphic depth with glossy sheen and gold accents.',
+    description: 'Rich neumorphic depth with glossy sheen.',
     theme: 'dark',
     relief: 'neumorphic',
     finish: 'glossy',
-    ornament: 'gilt',
   },
   'frosted-modern': {
     name: 'Frosted Modern',
@@ -27,15 +25,13 @@ const BUILT_IN_RECIPES = {
     theme: 'dark',
     relief: 'glassmorphic',
     finish: 'frosted',
-    ornament: 'none',
   },
   'classic-warm': {
     name: 'Classic Warm',
-    description: 'Warm parchment tones with skeuomorphic depth and beveled edges.',
+    description: 'Warm parchment tones with skeuomorphic depth.',
     theme: 'sepia',
     relief: 'skeuomorphic',
     finish: 'matte',
-    ornament: 'beveled',
   },
 } as const satisfies Record<string, Recipe>;
 

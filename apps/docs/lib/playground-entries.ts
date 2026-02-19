@@ -404,7 +404,7 @@ registerComponent({
       <div class="accordion-item">
         <div class="accordion-header">Configuration</div>
         <div class="accordion-body">
-          <p class="text-sm text-secondary">Set data attributes on the root element to configure theme, relief, finish, and ornament.</p>
+          <p class="text-sm text-secondary">Set data attributes on the root element to configure theme, relief, and finish.</p>
         </div>
       </div>
       <div class="accordion-item">
@@ -466,7 +466,7 @@ registerComponent({
   id: 'cards',
   name: 'Cards',
   category: 'Data Display',
-  description: 'Layouts, image cards, and ornamental variants.',
+  description: 'Layouts and image cards.',
   renderPreview: (_state: SandboxState) => `
     <div class="grid gap-6" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr))">
       <div class="card card-hover">

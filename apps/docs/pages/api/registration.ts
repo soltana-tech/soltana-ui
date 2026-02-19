@@ -1,11 +1,11 @@
-/** API Reference — Runtime tier registration (themes, reliefs, finishes, ornaments). */
+/** API Reference — Runtime tier registration (themes, reliefs, finishes). */
 
 import { sectionHeading, codeExample, specimenBlock } from '../../utils/helpers';
 
 export function renderApiRegistration(): string {
   return `
 <div class="page-api-registration">
-  ${sectionHeading('Tier Registration', 'api-registration', 'Register custom themes, reliefs, finishes, and ornaments at runtime.')}
+  ${sectionHeading('Tier Registration', 'api-registration', 'Register custom themes, reliefs, and finishes at runtime.')}
 
   <p class="text-secondary mt-4 mb-6">
     All registration methods return a <code>TierRegistration</code> handle with
@@ -50,7 +50,6 @@ export function renderApiRegistration(): string {
           <tr><td><code>surfaceBg</code></td><td><code>string</code></td><td>Yes</td><td>Base surface background color.</td></tr>
           <tr><td><code>textPrimary</code></td><td><code>string</code></td><td>Yes</td><td>Primary text color.</td></tr>
           <tr><td><code>accentPrimary</code></td><td><code>string</code></td><td>Yes</td><td>Primary accent / brand color.</td></tr>
-          <tr><td><code>accentDecorative</code></td><td><code>string</code></td><td>No</td><td>Decorative accent for ornament borders and highlights.</td></tr>
           <tr><td><code>colorScheme</code></td><td><code>'light' | 'dark'</code></td><td>No</td><td>Hint for derived token generation. Auto-detected if omitted.</td></tr>
           <tr><td><code>colorSuccess</code></td><td><code>string</code></td><td>No</td><td>Semantic success color.</td></tr>
           <tr><td><code>colorWarning</code></td><td><code>string</code></td><td>No</td><td>Semantic warning color.</td></tr>
@@ -67,7 +66,6 @@ export function renderApiRegistration(): string {
     surfaceBg: '#0a1628',
     textPrimary: '#c8d6e5',
     accentPrimary: '#0984e3',
-    accentDecorative: '#00cec9',
     colorScheme: 'dark',
   },
 });
@@ -172,28 +170,6 @@ reg.unregister();`,
   )}
 
   ${specimenBlock(
-    'registerOrnament()',
-    `
-    <h4 class="font-semibold mt-6 mb-2">Signature</h4>
-    ${codeExample(
-      `registerOrnament(
-  name: string,
-  options: RegisterOrnamentOptions
-): TierRegistration`,
-      'typescript'
-    )}
-
-    <h4 class="font-semibold mt-6 mb-2">Options</h4>
-    ${codeExample(
-      `interface RegisterOrnamentOptions {
-  tokens: Record<string, string>; // Free-form ornament token map
-}`,
-      'typescript'
-    )}
-  `
-  )}
-
-  ${specimenBlock(
     'Error Handling',
     `
     <p class="text-secondary mb-4">Registration behavior depends on the <code>strict</code> mode set during <code>initSoltana()</code>:</p>
@@ -204,7 +180,6 @@ reg.unregister();`,
         </thead>
         <tbody>
           <tr><td>Invalid tier value in recipe</td><td>Throws <code>Error</code></td><td>Logs warning to console</td></tr>
-          <tr><td>Ornament introspection finds no templates</td><td>Throws <code>Error</code></td><td>Logs warning to console</td></tr>
           <tr><td>Duplicate registration (same name)</td><td colspan="2">Overwrites silently — previous CSS rules remain unless <code>unregister()</code> was called</td></tr>
         </tbody>
       </table>

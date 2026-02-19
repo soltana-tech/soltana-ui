@@ -5,14 +5,9 @@
 // ---------------------------------------------------------------------------
 
 export { registerTierValue, deregisterTierValue } from './validation.js';
-export { VALID_THEMES, VALID_RELIEFS, VALID_FINISHES, VALID_ORNAMENTS } from './validation.js';
+export { VALID_THEMES, VALID_RELIEFS, VALID_FINISHES } from './validation.js';
 
-export {
-  BUILT_IN_THEMES,
-  BUILT_IN_RELIEFS,
-  BUILT_IN_FINISHES,
-  BUILT_IN_ORNAMENTS,
-} from './types.js';
+export { BUILT_IN_THEMES, BUILT_IN_RELIEFS, BUILT_IN_FINISHES } from './types.js';
 export type {
   SoltanaConfig,
   SoltanaInitOptions,
@@ -22,25 +17,22 @@ export type {
   Theme,
   Relief,
   Finish,
-  Ornament,
   RecipeName,
   Recipe,
   BuiltInTheme,
   BuiltInRelief,
   BuiltInFinish,
-  BuiltInOrnament,
   BuiltInRecipeName,
   TierName,
   ThemeSeed,
   RegisterThemeOptions,
   RegisterReliefOptions,
   RegisterFinishOptions,
-  RegisterOrnamentOptions,
   TierRegistration,
 } from './types.js';
 
 export { RECIPES, registerRecipe } from './recipes.js';
 
-export { registerTheme, registerRelief, registerFinish, registerOrnament } from './register.js';
+export { registerTheme, registerRelief, registerFinish } from './register.js';
 
 export { insertRule, removeRules, teardown } from './stylesheet.js';

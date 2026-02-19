@@ -3,7 +3,7 @@ import { setupSoltanaPage } from '../fixtures/soltana-page';
 import { getTierAttributes, getComputedCSSProperty } from '../fixtures/helpers';
 
 test.describe('cross-tier interaction', () => {
-  test('changing theme preserves relief, finish, and ornament', async ({ page }) => {
+  test('changing theme preserves relief and finish', async ({ page }) => {
     await setupSoltanaPage(page);
 
     await page.evaluate(() => {
@@ -11,7 +11,6 @@ test.describe('cross-tier interaction', () => {
         theme: 'dark',
         relief: 'flat',
         finish: 'frosted',
-        ornament: 'gilt',
       });
     });
 
@@ -20,7 +19,6 @@ test.describe('cross-tier interaction', () => {
         theme: 'dark',
         relief: 'flat',
         finish: 'frosted',
-        ornament: 'gilt',
       });
       sol.setTheme('light');
     });
@@ -29,10 +27,9 @@ test.describe('cross-tier interaction', () => {
     expect(attrs.theme).toBe('light');
     expect(attrs.relief).toBe('flat');
     expect(attrs.finish).toBe('frosted');
-    expect(attrs.ornament).toBe('gilt');
   });
 
-  test('changing relief preserves theme, finish, and ornament', async ({ page }) => {
+  test('changing relief preserves theme and finish', async ({ page }) => {
     await setupSoltanaPage(page);
 
     await page.evaluate(() => {
@@ -40,7 +37,6 @@ test.describe('cross-tier interaction', () => {
         theme: 'sepia',
         relief: 'skeuomorphic',
         finish: 'tinted',
-        ornament: 'baroque',
       });
       sol.setRelief('glassmorphic');
     });
@@ -49,10 +45,9 @@ test.describe('cross-tier interaction', () => {
     expect(attrs.theme).toBe('sepia');
     expect(attrs.relief).toBe('glassmorphic');
     expect(attrs.finish).toBe('tinted');
-    expect(attrs.ornament).toBe('baroque');
   });
 
-  test('changing finish preserves theme, relief, and ornament', async ({ page }) => {
+  test('changing finish preserves theme and relief', async ({ page }) => {
     await setupSoltanaPage(page);
 
     await page.evaluate(() => {
@@ -60,7 +55,6 @@ test.describe('cross-tier interaction', () => {
         theme: 'light',
         relief: 'skeuomorphic',
         finish: 'matte',
-        ornament: 'beveled',
       });
       sol.setFinish('glossy');
     });
@@ -69,27 +63,6 @@ test.describe('cross-tier interaction', () => {
     expect(attrs.theme).toBe('light');
     expect(attrs.relief).toBe('skeuomorphic');
     expect(attrs.finish).toBe('glossy');
-    expect(attrs.ornament).toBe('beveled');
-  });
-
-  test('changing ornament preserves theme, relief, and finish', async ({ page }) => {
-    await setupSoltanaPage(page);
-
-    await page.evaluate(() => {
-      const sol = window.SoltanaUI.initSoltana({
-        theme: 'dark',
-        relief: 'neumorphic',
-        finish: 'frosted',
-        ornament: 'none',
-      });
-      sol.setOrnament('faceted');
-    });
-
-    const attrs = await getTierAttributes(page);
-    expect(attrs.theme).toBe('dark');
-    expect(attrs.relief).toBe('neumorphic');
-    expect(attrs.finish).toBe('frosted');
-    expect(attrs.ornament).toBe('faceted');
   });
 
   test('applyRecipe then override one tier preserves other recipe tiers', async ({ page }) => {
@@ -102,11 +75,10 @@ test.describe('cross-tier interaction', () => {
     });
 
     const attrs = await getTierAttributes(page);
-    // luxury-dark: dark/neu/glossy/gilt — relief was overridden to flat
+    // luxury-dark: dark/neu/glossy — relief was overridden to flat
     expect(attrs.theme).toBe('dark');
     expect(attrs.relief).toBe('flat');
     expect(attrs.finish).toBe('glossy');
-    expect(attrs.ornament).toBe('gilt');
   });
 
   test('reset after recipe + override restores defaults', async ({ page }) => {
@@ -123,7 +95,6 @@ test.describe('cross-tier interaction', () => {
     expect(['dark', 'light']).toContain(attrs.theme);
     expect(attrs.relief).toBe('neumorphic');
     expect(attrs.finish).toBe('matte');
-    expect(attrs.ornament).toBe('none');
   });
 
   test('sequential tier changes accumulate correctly', async ({ page }) => {
@@ -134,7 +105,6 @@ test.describe('cross-tier interaction', () => {
       sol.setTheme('light');
       sol.setRelief('skeuomorphic');
       sol.setFinish('glossy');
-      sol.setOrnament('gilt');
       sol.setTheme('sepia');
       sol.setRelief('neumorphic');
     });
@@ -143,7 +113,6 @@ test.describe('cross-tier interaction', () => {
     expect(attrs.theme).toBe('sepia');
     expect(attrs.relief).toBe('neumorphic');
     expect(attrs.finish).toBe('glossy');
-    expect(attrs.ornament).toBe('gilt');
   });
 
   test('getState reflects all cross-tier changes', async ({ page }) => {
@@ -156,11 +125,10 @@ test.describe('cross-tier interaction', () => {
       return sol.getState();
     });
 
-    // classic-warm: sepia/soft/matte/beveled — finish overridden to frosted
+    // classic-warm: sepia/skeuomorphic/matte — finish overridden to frosted
     expect(state.theme).toBe('sepia');
     expect(state.relief).toBe('skeuomorphic');
     expect(state.finish).toBe('frosted');
-    expect(state.ornament).toBe('beveled');
   });
 
   test('computed CSS properties reflect the active tier combination', async ({ page }) => {
@@ -171,7 +139,6 @@ test.describe('cross-tier interaction', () => {
         theme: 'dark',
         relief: 'flat',
         finish: 'frosted',
-        ornament: 'none',
       });
     });
 
@@ -187,7 +154,6 @@ test.describe('cross-tier interaction', () => {
         theme: 'dark',
         relief: 'flat',
         finish: 'frosted',
-        ornament: 'none',
       });
       s.setRelief('skeuomorphic');
     });

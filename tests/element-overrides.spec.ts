@@ -28,7 +28,6 @@ interface OverrideScenario {
   theme: string;
   relief: string;
   finish: string;
-  ornament: string;
   overrideClasses: string;
 }
 
@@ -38,7 +37,6 @@ const scenarios: OverrideScenario[] = [
     theme: 'dark',
     relief: 'neumorphic',
     finish: 'matte',
-    ornament: 'none',
     overrideClasses: 'theme-light',
   },
   {
@@ -46,7 +44,6 @@ const scenarios: OverrideScenario[] = [
     theme: 'dark',
     relief: 'neumorphic',
     finish: 'matte',
-    ornament: 'none',
     overrideClasses: 'relief-flat',
   },
   {
@@ -54,23 +51,13 @@ const scenarios: OverrideScenario[] = [
     theme: 'dark',
     relief: 'neumorphic',
     finish: 'matte',
-    ornament: 'none',
     overrideClasses: 'finish-frosted',
-  },
-  {
-    name: 'ornament',
-    theme: 'dark',
-    relief: 'neumorphic',
-    finish: 'matte',
-    ornament: 'gilt',
-    overrideClasses: 'ornament-baroque',
   },
   {
     name: 'multi',
     theme: 'dark',
     relief: 'neumorphic',
     finish: 'matte',
-    ornament: 'none',
     overrideClasses: 'theme-sepia relief-skeuomorphic finish-glossy',
   },
 ];
@@ -83,8 +70,7 @@ for (const scenario of scenarios) {
 <html lang="en"
   data-theme="${scenario.theme}"
   data-relief="${scenario.relief}"
-  data-finish="${scenario.finish}"
-  data-ornament="${scenario.ornament}">
+  data-finish="${scenario.finish}">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />

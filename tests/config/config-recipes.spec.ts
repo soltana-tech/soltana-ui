@@ -6,17 +6,13 @@ import { RECIPES } from '../../packages/soltana-ui/src/config/recipes';
 test.describe('applyRecipe', () => {
   // Derive expected values from the RECIPES map so new recipes are
   // automatically covered without updating test data.
-  const expectedRecipes: Record<
-    string,
-    { theme: string; relief: string; finish: string; ornament: string }
-  > = {};
+  const expectedRecipes: Record<string, { theme: string; relief: string; finish: string }> = {};
 
   for (const [name, recipe] of Object.entries(RECIPES)) {
     expectedRecipes[name] = {
       theme: recipe.theme,
       relief: recipe.relief,
       finish: recipe.finish,
-      ornament: recipe.ornament,
     };
   }
 
@@ -34,12 +30,10 @@ test.describe('applyRecipe', () => {
       expect(attrs.theme).toBe(expected.theme);
       expect(attrs.relief).toBe(expected.relief);
       expect(attrs.finish).toBe(expected.finish);
-      expect(attrs.ornament).toBe(expected.ornament);
 
       expect(state.theme).toBe(expected.theme);
       expect(state.relief).toBe(expected.relief);
       expect(state.finish).toBe(expected.finish);
-      expect(state.ornament).toBe(expected.ornament);
 
       // Verify computed CSS properties resolve to non-empty values
       const surfaceBg = await getComputedCSSProperty(page, '--surface-bg');
@@ -83,8 +77,7 @@ test.describe('applyRecipe', () => {
 
     expect(state.theme).toBe('light');
     expect(state.relief).toBe('flat');
-    // Finish and ornament should remain from the recipe
+    // Finish should remain from the recipe
     expect(state.finish).toBe('glossy');
-    expect(state.ornament).toBe('gilt');
   });
 });

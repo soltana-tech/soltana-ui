@@ -4,10 +4,9 @@ export interface TierAttributes {
   theme: string | null;
   relief: string | null;
   finish: string | null;
-  ornament: string | null;
 }
 
-/** Read all four data-* tier attributes from <html>. */
+/** Read all three data-* tier attributes from <html>. */
 export async function getTierAttributes(page: Page): Promise<TierAttributes> {
   return page.evaluate(() => {
     const root = document.documentElement;
@@ -15,7 +14,6 @@ export async function getTierAttributes(page: Page): Promise<TierAttributes> {
       theme: root.getAttribute('data-theme'),
       relief: root.getAttribute('data-relief'),
       finish: root.getAttribute('data-finish'),
-      ornament: root.getAttribute('data-ornament'),
     };
   });
 }

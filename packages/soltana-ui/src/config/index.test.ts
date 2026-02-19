@@ -1,16 +1,15 @@
 import { describe, it, expect, vi } from 'vitest';
 import { registerTierValue } from './index.js';
-import { VALID_THEMES, VALID_RELIEFS, VALID_FINISHES, VALID_ORNAMENTS } from './validation.js';
+import { VALID_THEMES, VALID_RELIEFS, VALID_FINISHES } from './validation.js';
 
 describe('registerTierValue', () => {
   const tierArrays = {
     theme: VALID_THEMES,
     relief: VALID_RELIEFS,
     finish: VALID_FINISHES,
-    ornament: VALID_ORNAMENTS,
   } as const;
 
-  it.each(['theme', 'relief', 'finish', 'ornament'] as const)(
+  it.each(['theme', 'relief', 'finish'] as const)(
     'registers a custom %s value and prevents duplication',
     (tier) => {
       const value = `custom-${tier}-${String(Date.now())}`;

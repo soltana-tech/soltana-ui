@@ -2,7 +2,6 @@ import {
   VALID_THEMES,
   VALID_RELIEFS,
   VALID_FINISHES,
-  VALID_ORNAMENTS,
 } from '../../packages/soltana-ui/src/config/validation';
 import { RECIPES } from '../../packages/soltana-ui/src/config/recipes';
 
@@ -10,18 +9,16 @@ export interface TierCombination {
   theme: string;
   relief: string;
   finish: string;
-  ornament: string;
 }
 
 const BASE: TierCombination = {
   theme: 'dark',
   relief: 'neumorphic',
   finish: 'matte',
-  ornament: 'none',
 };
 
 function key(c: TierCombination): string {
-  return `${c.theme}|${c.relief}|${c.finish}|${c.ornament}`;
+  return `${c.theme}|${c.relief}|${c.finish}`;
 }
 
 function deduplicate(combos: TierCombination[]): TierCombination[] {
@@ -43,7 +40,6 @@ export function recipes(): TierCombination[] {
     theme: r.theme === 'auto' ? 'dark' : r.theme,
     relief: r.relief,
     finish: r.finish,
-    ornament: r.ornament,
   }));
 }
 
@@ -59,9 +55,6 @@ export function singleAxis(): TierCombination[] {
   }
   for (const finish of VALID_FINISHES) {
     combos.push({ ...BASE, finish });
-  }
-  for (const ornament of VALID_ORNAMENTS) {
-    combos.push({ ...BASE, ornament });
   }
 
   return deduplicate(combos);
@@ -79,9 +72,7 @@ export function cartesian(): TierCombination[] {
   for (const theme of visualThemes) {
     for (const relief of VALID_RELIEFS) {
       for (const finish of VALID_FINISHES) {
-        for (const ornament of VALID_ORNAMENTS) {
-          combos.push({ theme, relief, finish, ornament });
-        }
+        combos.push({ theme, relief, finish });
       }
     }
   }

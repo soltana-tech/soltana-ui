@@ -71,40 +71,4 @@ test.describe('per-element utility class overrides', () => {
     expect(childBlur).not.toBe('');
     expect(parentBlur).not.toBe(childBlur);
   });
-
-  test('.ornament-* class applies ornament tokens to a child element', async ({ page }) => {
-    const html = `
-      <div id="parent-card" class="card" style="width: 280px;">
-        <div class="card-body">Parent (none)</div>
-      </div>
-      <div id="child-card" class="ornament-gilt card" style="width: 280px;">
-        <div class="card-body">Child (gilt)</div>
-      </div>`;
-
-    await setupSoltanaPage(page, { bodyHTML: html });
-    await page.evaluate(() => window.SoltanaUI.initSoltana({ theme: 'dark', ornament: 'none' }));
-
-    const childHasClass = await page.evaluate(() =>
-      document.getElementById('child-card')?.classList.contains('ornament-gilt')
-    );
-    expect(childHasClass).toBe(true);
-
-    // Ornament tiers define --ornament-* tokens, not --accent-* tokens.
-    // .ornament-gilt sets --ornament-frame-inner-display: block;
-    // .ornament-none does not set it, so parent inherits no value.
-    const parentVal = await getComputedCSSProperty(
-      page,
-      '--ornament-frame-inner-display',
-      '#parent-card'
-    );
-    const childVal = await getComputedCSSProperty(
-      page,
-      '--ornament-frame-inner-display',
-      '#child-card'
-    );
-
-    // The child with .ornament-gilt should have 'block'; parent should not
-    expect(childVal.trim()).toBe('block');
-    expect(parentVal.trim()).not.toBe('block');
-  });
 });

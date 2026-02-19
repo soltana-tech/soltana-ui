@@ -2,14 +2,13 @@
 
 ## What Soltana UI Is
 
-A CSS-first design system built around a 4-tier configuration model:
+A CSS-first design system built around a 3-tier configuration model:
 
-| Tier     | Options                                        | Mechanism                     |
-| -------- | ---------------------------------------------- | ----------------------------- |
-| Theme    | dark, light, sepia, auto\*                     | `[data-theme]` on `<html>`    |
-| Relief   | flat, glassmorphic, skeuomorphic, neumorphic   | `[data-relief]` on `<html>`   |
-| Finish   | matte, frosted, tinted, glossy                 | `[data-finish]` on `<html>`   |
-| Ornament | none, gilt, baroque, beveled, faceted          | `[data-ornament]` on `<html>` |
+| Tier   | Options                                        | Mechanism                   |
+| ------ | ---------------------------------------------- | --------------------------- |
+| Theme  | dark, light, sepia, auto\*                     | `[data-theme]` on `<html>`  |
+| Relief | flat, glassmorphic, skeuomorphic, neumorphic   | `[data-relief]` on `<html>` |
+| Finish | matte, frosted, tinted, glossy                 | `[data-finish]` on `<html>` |
 
 \* `auto` resolves to dark or light via
 `prefers-color-scheme`. It is a runtime resolver, not a static
@@ -19,10 +18,10 @@ token set — there is no `.theme-auto` utility class.
 
 No existing CSS design system offers a composable, orthogonal
 tier architecture where shadow model (relief), surface treatment
-(finish), decoration (ornament), and color scheme (theme) are
-composable per-element. The niche is real and unoccupied. The
-unique value is the 4-axis configuration model — not any single
-visual style, but the ability to compose them.
+(finish), and color scheme (theme) are composable per-element.
+The niche is real and unoccupied. The unique value is the 3-axis
+configuration model — not any single visual style, but the
+ability to compose them.
 
 ## Strengths to Preserve
 
@@ -34,12 +33,11 @@ visual style, but the ability to compose them.
 - **Orthogonal tier model** — `--relief-*` and `--finish-*`
   variable layers cascade independently. Components consume
   semantic tokens and auto-switch on data attribute change.
-  Tier count is additive (t + r + f + o rulesets), not
+  Tier count is additive (t + r + f rulesets), not
   multiplicative.
 - **Per-element composition** — `.theme-*`, `.relief-*`,
-  `.finish-*`, `.ornament-*` utility classes override global
-  config at any element. Enables mixed-tier layouts without
-  custom CSS.
+  `.finish-*` utility classes override global config at any
+  element. Enables mixed-tier layouts without custom CSS.
 - **Accessibility foundation** — `prefers-reduced-motion`,
   `prefers-contrast`, `.sr-only`, `.skip-link`, focus rings.
   Solid base layer.
@@ -48,14 +46,10 @@ visual style, but the ability to compose them.
   the tier model without hardcoding combinations.
 - **Utility classes** — General-purpose layout, spacing, and
   visual utilities (`src/styles/utilities/`) shipped as a
-  convenience layer. Not part of the 4-tier model, but
+  convenience layer. Not part of the 3-tier model, but
   complementary. Consumers using the SCSS source can exclude
   this module by omitting `@use 'utilities'` from their entry
   point.
-- **SVG ornament patterns** — Programmatic SVG templates
-  (`patterns`, `toDataUri`, `toElement`) for consumers needing
-  dynamic ornament access. The CSS ornament tier operates
-  independently with embedded SVGs.
 
 ## Issue Tracking
 

@@ -27,7 +27,7 @@ const enhancerHTML = `
   <button data-sol-tooltip="Tip text" style="margin:100px;">Hover</button>`;
 
 test.describe('initSoltana', () => {
-  test('applies default config (auto/neumorphic/matte/none)', async ({ page }) => {
+  test('applies default config (auto/neumorphic/matte)', async ({ page }) => {
     await setupSoltanaPage(page);
     await page.evaluate(() => window.SoltanaUI.initSoltana());
 
@@ -35,17 +35,15 @@ test.describe('initSoltana', () => {
     expect(['dark', 'light']).toContain(attrs.theme);
     expect(attrs.relief).toBe('neumorphic');
     expect(attrs.finish).toBe('matte');
-    expect(attrs.ornament).toBe('none');
   });
 
-  test('applies custom config (light/lifted/frosted/gilt)', async ({ page }) => {
+  test('applies custom config (light/skeuomorphic/frosted)', async ({ page }) => {
     await setupSoltanaPage(page);
     await page.evaluate(() =>
       window.SoltanaUI.initSoltana({
         theme: 'light',
         relief: 'skeuomorphic',
         finish: 'frosted',
-        ornament: 'gilt',
       })
     );
 
@@ -54,7 +52,6 @@ test.describe('initSoltana', () => {
       theme: 'light',
       relief: 'skeuomorphic',
       finish: 'frosted',
-      ornament: 'gilt',
     });
   });
 
@@ -91,17 +88,6 @@ test.describe('initSoltana', () => {
     expect(attrs.finish).toBe('tinted');
   });
 
-  test('setOrnament updates data-ornament', async ({ page }) => {
-    await setupSoltanaPage(page);
-    await page.evaluate(() => {
-      const s = window.SoltanaUI.initSoltana();
-      s.setOrnament('baroque');
-    });
-
-    const attrs = await getTierAttributes(page);
-    expect(attrs.ornament).toBe('baroque');
-  });
-
   test('setOverrides applies inline CSS variables', async ({ page }) => {
     await setupSoltanaPage(page);
     await page.evaluate(() => {
@@ -119,7 +105,6 @@ test.describe('initSoltana', () => {
       const s = window.SoltanaUI.initSoltana({
         theme: 'sepia',
         relief: 'skeuomorphic',
-        ornament: 'gilt',
       });
       s.setOverrides({ '--custom': 'value' });
       s.reset();
@@ -129,7 +114,6 @@ test.describe('initSoltana', () => {
     expect(['dark', 'light']).toContain(attrs.theme);
     expect(attrs.relief).toBe('neumorphic');
     expect(attrs.finish).toBe('matte');
-    expect(attrs.ornament).toBe('none');
 
     const overrideValue = await getInlineStyleProperty(page, '--custom');
     expect(overrideValue).toBe('');
@@ -145,7 +129,6 @@ test.describe('initSoltana', () => {
     expect(state.theme).toBe('light');
     expect(state.relief).toBe('glassmorphic');
     expect(state.finish).toBe('matte');
-    expect(state.ornament).toBe('none');
   });
 
   test('auto theme resolves to dark or light', async ({ page }) => {
@@ -169,7 +152,6 @@ test.describe('initSoltana', () => {
         theme: 'sepia',
         relief: 'skeuomorphic',
         finish: 'frosted',
-        ornament: 'baroque',
       });
       s.setOverrides({ '--x': '10' });
       s.destroy();
@@ -179,7 +161,6 @@ test.describe('initSoltana', () => {
     expect(attrs.theme).toBeNull();
     expect(attrs.relief).toBeNull();
     expect(attrs.finish).toBeNull();
-    expect(attrs.ornament).toBeNull();
 
     const styleAttr = await page.evaluate(() => document.documentElement.getAttribute('style'));
     // Real browsers may return "" instead of null after style manipulation
@@ -190,7 +171,6 @@ test.describe('initSoltana', () => {
     ['theme', { theme: 'neon', strict: true }],
     ['relief', { relief: 'paper', strict: true }],
     ['finish', { finish: 'satin', strict: true }],
-    ['ornament', { ornament: 'gothic', strict: true }],
   ] as const) {
     test(`throws on unknown ${tier} in strict mode`, async ({ page }) => {
       await setupSoltanaPage(page);
@@ -216,12 +196,11 @@ test.describe('initSoltana', () => {
           theme: 'neon',
           relief: 'paper',
           finish: 'satin',
-          ornament: 'gothic',
         })
       );
     });
 
-    expect(warnings.length).toBe(4);
+    expect(warnings.length).toBe(3);
     expect(warnings.every((w) => w.includes('Unknown'))).toBe(true);
   });
 
@@ -232,7 +211,6 @@ test.describe('initSoltana', () => {
         theme: 'neon',
         relief: 'glass',
         finish: 'satin',
-        ornament: 'celtic',
       });
       return s.getState();
     });
@@ -242,7 +220,6 @@ test.describe('initSoltana', () => {
       theme: 'neon',
       relief: 'glass',
       finish: 'satin',
-      ornament: 'celtic',
     });
     expect(state.theme).toBe('neon');
     expect(state.relief).toBe('glass');
@@ -273,13 +250,11 @@ test.describe('initSoltana', () => {
         theme: 'dark',
         relief: 'flat',
         finish: 'matte',
-        ornament: 'gilt',
       });
       s.applyRecipe('my-preset');
     });
 
     const attrs = await getTierAttributes(page);
-    expect(attrs.ornament).toBe('gilt');
     expect(attrs.relief).toBe('flat');
   });
 

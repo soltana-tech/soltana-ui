@@ -21,7 +21,7 @@ export function renderApiIndex(): string {
     </a>
     <a href="#/api/registration" class="card card-hover p-4">
       <h3 class="font-semibold">Tier Registration</h3>
-      <p class="text-sm text-secondary mt-1">Runtime theme, relief, finish, ornament registration</p>
+      <p class="text-sm text-secondary mt-1">Runtime theme, relief, finish registration</p>
     </a>
     <a href="#/api/enhancers" class="card card-hover p-4">
       <h3 class="font-semibold">Enhancers</h3>

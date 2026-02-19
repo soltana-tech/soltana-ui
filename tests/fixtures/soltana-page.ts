@@ -24,7 +24,6 @@ export interface SoltanaPageOptions {
     theme?: string;
     relief?: string;
     finish?: string;
-    ornament?: string;
   };
 }
 
