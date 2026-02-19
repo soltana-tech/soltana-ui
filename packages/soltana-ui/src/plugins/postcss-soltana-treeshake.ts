@@ -75,37 +75,39 @@ function buildExcludeSet(options: SoltanaTreeshakeOptions): Map<string, Set<stri
 }
 
 /**
- * Extract tier + value from a single selector fragment, if present.
- * Returns null for neutral selectors (no tier reference).
+ * Extract all tier + value pairs from a single selector fragment.
+ * Returns an empty array for neutral selectors (no tier reference).
  * Ignores tier references inside :not() — those are negations, not positive matches.
  */
-function extractTierRef(fragment: string): { tier: string; value: string } | null {
-  // Strip :not() contents so negated tier refs are ignored
+function extractTierRefs(fragment: string): { tier: string; value: string }[] {
   const stripped = fragment.replace(NEGATED_ATTR_RE, '');
+  const refs: { tier: string; value: string }[] = [];
 
   DATA_ATTR_RE.lastIndex = 0;
-  const dataMatch = DATA_ATTR_RE.exec(stripped);
-  if (dataMatch) {
-    return { tier: dataMatch[1], value: dataMatch[2] };
+  let match: RegExpExecArray | null;
+  while ((match = DATA_ATTR_RE.exec(stripped)) !== null) {
+    refs.push({ tier: match[1], value: match[2] });
   }
 
   const classMatch = CLASS_RE.exec(stripped);
   if (classMatch) {
-    return { tier: classMatch[1], value: classMatch[2] };
+    refs.push({ tier: classMatch[1], value: classMatch[2] });
   }
 
-  return null;
+  return refs;
 }
 
 /**
  * Determine whether a selector fragment should be excluded.
+ * A fragment is excluded if any of its tier references targets an excluded value.
  */
 function isExcluded(fragment: string, excludes: Map<string, Set<string>>): boolean {
-  const ref = extractTierRef(fragment);
-  if (!ref) return false; // Neutral selector — never excluded
-  const tierExcludes = excludes.get(ref.tier);
-  if (!tierExcludes) return false;
-  return tierExcludes.has(ref.value);
+  const refs = extractTierRefs(fragment);
+  if (refs.length === 0) return false; // Neutral selector — never excluded
+  return refs.some((ref) => {
+    const tierExcludes = excludes.get(ref.tier);
+    return tierExcludes?.has(ref.value) ?? false;
+  });
 }
 
 /**

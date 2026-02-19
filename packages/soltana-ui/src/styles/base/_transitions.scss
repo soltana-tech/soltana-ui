@@ -29,10 +29,17 @@
   transition: $prop $duration var(--easing-in-out);
 }
 
-@mixin hover-state {
-  &:hover:not(:disabled) {
-    background-color: var(--state-hover);
-    @content;
+@mixin hover-state($guard: true) {
+  @if $guard {
+    &:hover:not(:disabled) {
+      background-color: var(--state-hover);
+      @content;
+    }
+  } @else {
+    &:hover {
+      background-color: var(--state-hover);
+      @content;
+    }
   }
 }
 

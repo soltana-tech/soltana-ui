@@ -78,8 +78,9 @@ test.describe('cross-tier interaction', () => {
   test('computed CSS properties reflect the active tier combination', async ({ page }) => {
     await setupSoltanaPage(page);
 
+    // Initialize once and store the instance for reuse
     await page.evaluate(() => {
-      window.SoltanaUI.initSoltana({
+      (window as any).__sol = window.SoltanaUI.initSoltana({
         theme: 'dark',
         relief: 'flat',
         finish: 'frosted',
@@ -92,14 +93,9 @@ test.describe('cross-tier interaction', () => {
     expect(surfaceBg).not.toBe('');
     expect(reliefShadow).not.toBe('');
 
-    // Switch relief and verify the relief token changes
+    // Switch relief on the same instance (no re-init)
     await page.evaluate(() => {
-      const s = window.SoltanaUI.initSoltana({
-        theme: 'dark',
-        relief: 'flat',
-        finish: 'frosted',
-      });
-      s.setRelief('skeuomorphic');
+      (window as any).__sol.setRelief('skeuomorphic');
     });
 
     const reliefShadowAfter = await getComputedCSSProperty(page, '--relief-shadow');

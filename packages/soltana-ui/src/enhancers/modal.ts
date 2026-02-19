@@ -23,6 +23,7 @@ let _controller: AbortController | null = null;
 let _openCount = 0;
 
 function openModal(modal: HTMLElement): void {
+  if (modal.classList.contains('active')) return;
   modal.classList.add('active');
   modal.querySelector('.modal')?.classList.add('active');
   modal.setAttribute('aria-hidden', 'false');

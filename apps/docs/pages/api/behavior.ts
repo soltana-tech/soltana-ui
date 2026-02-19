@@ -293,7 +293,7 @@ loadSoltanaFonts('https://fonts.example.com/custom.css');`,
           <tbody>
             <tr>
               <td><strong>Cinzel</strong></td>
-              <td>400–900</td>
+              <td>400, 500, 600, 700, 800, 900</td>
               <td>Display / heading serif</td>
             </tr>
             <tr>
@@ -317,8 +317,10 @@ loadSoltanaFonts('https://fonts.example.com/custom.css');`,
 
       <h4 class="text-lg font-semibold mt-6 mb-2">CSS Token</h4>
       <p class="text-secondary">
-        Soltana respects the <code>--font-display</code> custom property for
-        controlling <code>font-display</code> behavior when self-hosting fonts.
+        The <code>--font-display</code> custom property maps to Cinzel Decorative
+        for ornamental display text (e.g. <code>.display-ornate</code>).
+        <code>loadSoltanaFonts()</code> uses <code>display=swap</code> via the
+        Google Fonts URL to control font-loading behavior.
       </p>
     `
     )}

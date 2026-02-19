@@ -21,6 +21,7 @@ export type {
   BuiltInRelief,
   BuiltInFinish,
   TierName,
+  SoltanaChangeType,
   ThemeSeed,
   RegisterThemeOptions,
   RegisterReliefOptions,

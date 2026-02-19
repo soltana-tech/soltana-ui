@@ -5,7 +5,6 @@
 // Uses --relief-* variables for automatic relief switching.
 // ---------------------------------------------------------------------------
 
-@use '../variables' as *;
 @use '../base/register' as *;
 @use '../base/transitions' as *;
 
@@ -48,7 +47,7 @@
       background-color: var(--relief-surface-raised);
     }
 
-    @include hover-state;
+    @include hover-state($guard: false);
   }
 
   caption {

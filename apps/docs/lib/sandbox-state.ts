@@ -1,4 +1,4 @@
-type TierName = 'theme' | 'relief' | 'finish';
+import type { TierName } from 'soltana-ui';
 
 /** Per-sandbox tier state. null = inherit from global (document-level) setting. */
 export interface SandboxState {

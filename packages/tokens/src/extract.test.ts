@@ -1,5 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import { extractFoundation, extractThemes } from './extract.js';
+import { buildEChartsTheme } from './formats/echarts.js';
+import { buildPlotlyTemplate } from './formats/plotly.js';
+import { buildMplStyle } from './formats/matplotlib.js';
+import { buildDtcgTheme, buildDtcgFoundation } from './formats/dtcg.js';
 
 const MOCK_CSS = `
 :root {
@@ -164,5 +168,39 @@ describe('extractThemes', () => {
     expect(dark.accentPrimaryHover).toBeUndefined();
     expect(dark.surfaceDeep).toBeUndefined();
     expect(dark.badgeBg).toBeUndefined();
+  });
+});
+
+describe('end-to-end token pipeline', () => {
+  const foundation = extractFoundation(MOCK_CSS);
+  const themes = extractThemes(MOCK_CSS);
+
+  it('pipes dark theme through all format builders without errors', () => {
+    const dark = themes.dark;
+
+    const echarts = buildEChartsTheme(dark, foundation);
+    expect(echarts).toHaveProperty('color');
+    expect(echarts).toHaveProperty('backgroundColor');
+    expect(Array.isArray(echarts.color)).toBe(true);
+    expect((echarts.color as string[]).length).toBeGreaterThan(0);
+
+    const plotly = buildPlotlyTemplate(dark, foundation);
+    expect(plotly).toHaveProperty('layout');
+    expect(plotly.layout).toHaveProperty('paper_bgcolor');
+    expect(plotly.layout).toHaveProperty('colorway');
+
+    const mpl = buildMplStyle(dark, foundation);
+    expect(typeof mpl).toBe('string');
+    expect(mpl.length).toBeGreaterThan(0);
+    expect(mpl).toContain('figure.facecolor');
+    expect(mpl).toContain('axes.facecolor');
+
+    const dtcg = buildDtcgTheme(dark);
+    expect(dtcg).toHaveProperty('surface');
+    expect(dtcg).toHaveProperty('text');
+
+    const dtcgFoundation = buildDtcgFoundation(foundation);
+    expect(dtcgFoundation).toHaveProperty('radius');
+    expect(dtcgFoundation).toHaveProperty('shadow');
   });
 });

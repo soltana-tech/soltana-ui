@@ -8,6 +8,7 @@ export default defineConfig({
       include: ['src/**/*.ts'],
       exclude: ['src/**/*.test.ts'],
       entryRoot: 'src',
+      rollupTypes: true,
     }),
   ],
   build: {

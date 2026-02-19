@@ -4,7 +4,6 @@
 // Left-bordered content boxes for documentation, tips, warnings, and quotes.
 // ---------------------------------------------------------------------------
 
-@use '../variables' as *;
 @use '../base/register' as *;
 @use '../base/transitions' as *;
 
@@ -44,9 +43,9 @@
   line-height: 1.6;
 }
 
-// Semantic variants
+// Semantic variants — placeholder selectors enable zero-duplication aliases
 @each $type in (info, warning, success, error) {
-  .callout-#{$type} {
+  %callout-#{$type} {
     border-left-color: var(--color-#{$type});
     background-color: var(--color-#{$type}-subtle);
 
@@ -54,19 +53,22 @@
       color: var(--color-#{$type}-text);
     }
   }
+  .callout-#{$type} {
+    @extend %callout-#{$type};
+  }
 }
 
 // Doc-friendly aliases
 .callout-note {
-  @extend .callout-info;
+  @extend %callout-info;
 }
 
 .callout-tip {
-  @extend .callout-success;
+  @extend %callout-success;
 }
 
 .callout-important {
-  @extend .callout-warning;
+  @extend %callout-warning;
 }
 
 // ============================================================================

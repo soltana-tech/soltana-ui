@@ -3,7 +3,7 @@
   "changelog": ["@changesets/changelog-github", { "repo": "soltana-tech/soltana-ui" }],
   "commit": false,
   "fixed": [["soltana-ui", "@soltana-ui/tokens"]],
-  "linked": [["@soltana-ui/echarts", "@soltana-ui/plotly"]],
+  "linked": [["@soltana-ui/echarts", "@soltana-ui/plotly", "@soltana-ui/react"]],
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",

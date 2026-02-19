@@ -4,7 +4,6 @@ import './styles/index.scss';
 export { initSoltana, DEFAULT_STATE } from './init.js';
 
 // Config: types, constants, validation
-export { registerTierValue } from './config/index.js';
 export { BUILT_IN_THEMES, BUILT_IN_RELIEFS, BUILT_IN_FINISHES } from './config/index.js';
 export type {
   SoltanaConfig,
@@ -19,6 +18,7 @@ export type {
   BuiltInRelief,
   BuiltInFinish,
   TierName,
+  SoltanaChangeType,
   ThemeSeed,
   RegisterThemeOptions,
   RegisterReliefOptions,

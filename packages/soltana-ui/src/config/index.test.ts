@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { registerTierValue } from './index.js';
 import { deregisterTierValue } from './validation.js';
 import { VALID_THEMES, VALID_RELIEFS, VALID_FINISHES } from './validation.js';
@@ -41,16 +41,13 @@ describe('registerTierValue', () => {
   });
 
   it('registered value appears in VALID_RELIEFS', () => {
-    const spy = vi.spyOn(console, 'warn').mockImplementation(vi.fn());
     const value = `registered-${String(Date.now())}`;
 
     registerTierValue('relief', value);
 
-    // Importing initSoltana here would pull in enhancers/DOM — instead,
-    // verify the value is in the validation array (which is what warnInvalid checks)
+    // Verify the value is in the validation array (which is what warnInvalid checks)
     expect(VALID_RELIEFS).toContain(value);
 
     deregisterTierValue('relief', value);
-    spy.mockRestore();
   });
 });

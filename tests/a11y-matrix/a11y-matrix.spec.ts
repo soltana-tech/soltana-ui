@@ -6,7 +6,10 @@ import { cartesian } from '../fixtures/combinations';
 import { renderCombination, combinationLabel } from '../fixtures/render';
 
 const RESULTS_DIR = path.resolve('a11y-matrix-results/raw');
-fs.mkdirSync(RESULTS_DIR, { recursive: true });
+
+test.beforeAll(() => {
+  fs.mkdirSync(RESULTS_DIR, { recursive: true });
+});
 
 const combinations = cartesian();
 

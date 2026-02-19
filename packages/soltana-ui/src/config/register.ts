@@ -163,6 +163,8 @@ function deriveSemanticColor(
  *
  * Icon tokens (`--icon-*`) are not derived; provide them via the `tokens`
  * override map in `RegisterThemeOptions` if needed.
+ *
+ * @internal Consumed by `registerTheme()` and tests; not re-exported from the public barrel.
  */
 export function deriveThemeTokens(seed: ThemeSeed): Record<string, string> {
   const bg = seed.surfaceBg;
@@ -267,7 +269,7 @@ export function deriveThemeTokens(seed: ThemeSeed): Record<string, string> {
 
     // --- Channel tokens ---
     '--shadow-color': '0 0 0',
-    '--highlight-color': '255 255 255',
+    '--highlight-color': seed.highlightColor ?? '255 255 255',
     '--accent-glow': mixSrgb(accent, isDark ? 15 : 10),
     '--finish-sheen-color': isDark ? '255 255 255' : '0 0 0',
     '--finish-tint-color': hexToRgbChannels(accent),
@@ -276,7 +278,7 @@ export function deriveThemeTokens(seed: ThemeSeed): Record<string, string> {
     '--surface-deep': 'var(--surface-2)',
     '--neu-shadow': isDark ? 'rgb(var(--shadow-color) / 65%)' : 'rgb(var(--shadow-color) / 35%)',
     '--neu-light': isDark
-      ? 'rgb(var(--highlight-color) / 5%)'
+      ? 'rgb(var(--highlight-color) / 12%)'
       : 'rgb(var(--highlight-color) / 88%)',
 
     // --- Component tokens ---
@@ -312,8 +314,18 @@ export function deriveThemeTokens(seed: ThemeSeed): Record<string, string> {
 // Registration Functions
 // ---------------------------------------------------------------------------
 
+const HEX_RE = /^#?[0-9a-fA-F]{3}([0-9a-fA-F]{3})?$/;
+
 function hexToRgbChannels(hex: string): string {
-  const h = hex.replace('#', '');
+  if (!HEX_RE.test(hex)) {
+    throw new Error(
+      `[soltana] Invalid hex color "${hex}". Expected 3- or 6-digit hex (e.g. "#abc" or "#aabbcc").`
+    );
+  }
+  let h = hex.replace('#', '');
+  if (h.length === 3) {
+    h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+  }
   const r = String(parseInt(h.slice(0, 2), 16));
   const g = String(parseInt(h.slice(2, 4), 16));
   const b = String(parseInt(h.slice(4, 6), 16));

@@ -58,7 +58,7 @@ export function renderGettingStarted(): HTMLElement {
   </div>
 
   <p class="text-base text-secondary mt-6">
-    3 themes &times; 4 reliefs &times; 4 finishes = <strong>48 unique combinations</strong>, all from one CSS file.
+    3 themes &times; 4 reliefs &times; 4 finishes = <strong>48 unique combinations</strong> (auto resolves to dark or light), all from one CSS file.
     <a href="#/explore/examples" class="font-medium" style="color: var(--accent-primary);">See them in action &rarr;</a>
   </p>
 
@@ -80,7 +80,7 @@ export function renderGettingStarted(): HTMLElement {
   ${specimenBlock(
     'Initialize',
     `
-    ${codeExample("import 'soltana-ui/css';\nimport { initSoltana } from 'soltana-ui';\n\nconst soltana = initSoltana({\n  theme: 'dark',\n  relief: 'neumorphic',\n  finish: 'matte',\n});", 'javascript')}
+    ${codeExample("import 'soltana-ui/css';\nimport { initSoltana, loadSoltanaFonts } from 'soltana-ui';\n\nloadSoltanaFonts();\n\nconst soltana = initSoltana({\n  theme: 'dark',\n  relief: 'neumorphic',\n  finish: 'matte',\n});", 'javascript')}
   `
   )}
 

@@ -81,6 +81,11 @@ export function renderTypography(): HTMLElement {
       <p class="text-3xl font-mono mt-3">JetBrains Mono</p>
       <p class="text-sm text-secondary mt-2">Code, technical content</p>
     </div>
+    <div class="card p-5 rounded-xl">
+      <span class="tag mb-2">--font-display</span>
+      <p class="text-3xl mt-3" style="font-family: var(--font-display)">Cinzel Decorative</p>
+      <p class="text-sm text-secondary mt-2">Ornamental display text via <code>.display-sm</code>, <code>.display-md</code>, <code>.display-lg</code>, <code>.display-ornate</code></p>
+    </div>
   </div>
 
   <h3 class="text-2xl font-semibold mt-12 mb-4">Letter Spacing</h3>

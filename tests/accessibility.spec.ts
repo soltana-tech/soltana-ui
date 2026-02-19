@@ -15,13 +15,6 @@ for (const combo of combinations) {
       .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
       .analyze();
 
-    for (const violation of results.violations) {
-      console.log(
-        `[${violation.id}] ${violation.help} (${violation.impact})\n` +
-          violation.nodes.map((n) => `  ${n.html}`).join('\n')
-      );
-    }
-
     expect(results.violations).toHaveLength(0);
   });
 }

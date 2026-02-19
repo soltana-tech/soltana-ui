@@ -11,6 +11,7 @@ import type {
   SoltanaConfig,
   SoltanaInitOptions,
   SoltanaInstance,
+  SoltanaChangeType,
   EnhancerCleanup,
   Theme,
   Relief,
@@ -27,6 +28,7 @@ import {
   registerFinish as regFinish,
 } from './config/register.js';
 import { teardown as teardownStylesheet } from './config/stylesheet.js';
+import { _resetFontLoader } from './fonts/index.js';
 
 /** Default tier configuration used when no overrides are provided. */
 export const DEFAULT_STATE: Readonly<SoltanaConfig> = Object.freeze({
@@ -131,7 +133,7 @@ function resetEnhancers(enhancers: boolean): void {
   }
 }
 
-function dispatchChange(type: string, value: unknown): void {
+function dispatchChange(type: SoltanaChangeType, value: unknown): void {
   document.documentElement.dispatchEvent(
     new CustomEvent('soltana:change', { detail: { type, value } })
   );
@@ -159,7 +161,7 @@ export function initSoltana(
     Object.entries(state.overrides).filter(([key]) => validateOverrideKey(key, initOpts.strict))
   );
 
-  // Validate config values (only in strict mode)
+  // Validate config values (throws in strict mode, warns otherwise)
   warnInvalid('theme', state.theme, VALID_THEMES, initOpts.strict);
   warnInvalid('relief', state.relief, VALID_RELIEFS, initOpts.strict);
   warnInvalid('finish', state.finish, VALID_FINISHES, initOpts.strict);
@@ -195,6 +197,10 @@ export function initSoltana(
     dispatchChange('finish', finish);
   }
 
+  // Stale-instance detection: only reset() and destroy() check the generation
+  // counter and no-op (or throw in strict mode) when called on a superseded
+  // instance. Mutation methods (setTheme, setRelief, etc.) use last-write-wins
+  // semantics — the most recent call wins regardless of which instance issued it.
   return {
     getState(): SoltanaConfig {
       return { ...state, overrides: { ...state.overrides } };
@@ -216,15 +222,14 @@ export function initSoltana(
     },
 
     removeOverrides(keys: string[]): void {
+      const validKeys = keys.filter((key) => validateOverrideKey(key, initOpts.strict));
       const root = document.documentElement;
-      for (const key of keys) {
-        if (!validateOverrideKey(key, initOpts.strict)) continue;
+      for (const key of validKeys) {
         root.style.removeProperty(key);
       }
-      const remaining = Object.fromEntries(
-        Object.entries(state.overrides).filter(([k]) => !keys.includes(k))
+      state.overrides = Object.fromEntries(
+        Object.entries(state.overrides).filter(([k]) => !validKeys.includes(k))
       );
-      state.overrides = remaining;
       dispatchChange('overrides', null);
     },
 
@@ -269,6 +274,7 @@ export function initSoltana(
       teardownAutoTheme();
       document.documentElement.removeAttribute('style');
       applyConfig(state);
+      setupAutoTheme(state);
       resetEnhancers(initOpts.enhancers);
       dispatchChange('reset', null);
     },
@@ -287,6 +293,7 @@ export function initSoltana(
       teardownStylesheet();
       teardownAutoTheme();
       resetEnhancers(false);
+      _resetFontLoader();
       const root = document.documentElement;
       root.removeAttribute('data-theme');
       root.removeAttribute('data-relief');

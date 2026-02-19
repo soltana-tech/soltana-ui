@@ -61,7 +61,7 @@ export function renderApiCore(): HTMLElement {
     <h4 class="text-lg font-semibold mt-6 mb-2">Returns</h4>
     <p class="text-secondary">
       A <code>SoltanaInstance</code> object with methods for state access, tier setters,
-      recipe management, overrides, runtime registration, and lifecycle control.
+      overrides, runtime registration, and lifecycle control.
       See <a href="#api-state">State</a> for the full instance API.
     </p>
   `
@@ -283,8 +283,10 @@ console.log(DEFAULT_STATE);
 
     <h4 class="text-lg font-semibold mt-6 mb-2">Event Detail</h4>
     ${codeExample(
-      `interface SoltanaChangeDetail {
-  type: string;   // 'theme' | 'relief' | 'finish' | 'overrides' | 'reset'
+      `type SoltanaChangeType = 'theme' | 'relief' | 'finish' | 'overrides' | 'reset';
+
+interface SoltanaChangeDetail {
+  type: SoltanaChangeType;
   value: unknown;  // The new value (or null for reset/override removal)
 }`,
       'typescript'
@@ -369,11 +371,14 @@ soltana.removeOverrides(['--accent-primary', '--surface-bg']);`,
     'Override Precedence',
     `
     <p class="text-secondary mb-4">
-      CSS specificity order (highest wins):
+      <code>setOverrides()</code> sets inherited CSS custom properties on <code>&lt;html&gt;</code>.
+      Per-element utility classes (<code>.theme-*</code>, <code>.relief-*</code>, <code>.finish-*</code>)
+      set tokens directly on the element and take precedence over inherited overrides.
     </p>
+    <p class="text-secondary mb-4">Effective precedence (highest wins):</p>
     <ol class="text-secondary" style="padding-left: 1.5rem;">
-      <li><code>setOverrides()</code> — inline style on <code>:root</code></li>
-      <li>Per-element utility classes (<code>.theme-*</code>, <code>.relief-*</code>, etc.)</li>
+      <li>Per-element utility classes (<code>.theme-*</code>, <code>.relief-*</code>, etc.) — set on the element</li>
+      <li><code>setOverrides()</code> — inline style on <code>&lt;html&gt;</code>, inherited</li>
       <li>Global tier tokens from <code>[data-theme]</code>, <code>[data-relief]</code>, etc.</li>
       <li>Built-in defaults</li>
     </ol>

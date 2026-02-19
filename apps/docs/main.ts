@@ -145,6 +145,7 @@ const sections: SidebarSection[] = [
       { label: 'Core API', path: '/api/core', icon: I['/api/core'] },
       { label: 'Configuration', path: '/api/config', icon: I['/api/config'] },
       { label: 'Behavior', path: '/api/behavior', icon: I['/api/behavior'] },
+      { label: 'Plugins', path: '/api/plugins', icon: I['/api/plugins'] },
     ],
   },
 ];

@@ -42,7 +42,7 @@
     "./scss": "./src/styles/index.scss",
     "./scss/*": "./src/styles/*",
     "./plugins": {
-      "types": "./dist/plugins/types.d.ts",
+      "types": "./dist/plugins/index.d.ts",
       "import": "./dist/plugins/index.js"
     },
     "./postcss": {

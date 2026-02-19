@@ -38,7 +38,7 @@
   },
   "peerDependencies": {
     "echarts": "^5.0.0",
-    "soltana-ui": "workspace:*"
+    "soltana-ui": "workspace:^"
   },
   "peerDependenciesMeta": {
     "echarts": {

@@ -18,6 +18,10 @@ let _loaded = false;
 /**
  * Inject a font stylesheet (and optional preconnect hints) into `<head>`.
  *
+ * Idempotent: only the first call injects elements; subsequent calls are
+ * no-ops. The internal loaded flag is reset when `destroy()` is called on
+ * the Soltana instance, allowing re-initialization.
+ *
  * @param url - Font CSS URL. Defaults to the bundled Google Fonts URL
  *              containing Cinzel, Raleway, and JetBrains Mono. When the URL
  *              points to `fonts.googleapis.com`, preconnect links are also
@@ -52,7 +56,7 @@ export function loadSoltanaFonts(url?: string): void {
   head.appendChild(stylesheet);
 }
 
-/** Reset internal loaded flag — for test isolation only. */
+/** Reset internal loaded flag — called by destroy() and used for test isolation. */
 export function _resetFontLoader(): void {
   _loaded = false;
 }

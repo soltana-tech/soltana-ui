@@ -5,6 +5,11 @@
 // time, so per-element .theme-* overrides work correctly.
 // Per-theme overrides (--surface-deep, --neu-shadow, --neu-light) live in
 // theme files.
+// Bridge tokens defined here:
+//   --relief-surface-flat, --relief-surface-raised, --relief-surface-deep,
+//   --relief-border-default, --relief-opacity, --glass-opacity, --relief-accent,
+//   --mesh-color-1, --mesh-color-2, --mesh-color-3,
+//   --finish-sheen-color, --finish-tint-color
 // ---------------------------------------------------------------------------
 
 :root {
@@ -19,6 +24,9 @@
   --mesh-color-1: var(--accent-primary);
   --mesh-color-2: var(--accent-secondary);
   --mesh-color-3: var(--accent-decorative);
+
+  // Relief accent — allows relief-scoped components to reference the active accent
+  --relief-accent: var(--accent-primary);
 
   // Finish channel tokens — tuned per-theme for visibility against surface colors
   --finish-sheen-color: var(--highlight-color);

@@ -73,7 +73,7 @@
       &.active {
         box-shadow:
           var(--relief-shadow-inset-lg),
-          inset 4px 0 0 var(--accent-primary),
+          inset 4px 0 0 var(--relief-accent),
           inset 0 0.5px 0 rgb(var(--highlight-color) / 10%),
           inset 0 -0.5px 0 rgb(var(--shadow-color) / 8%);
       }

@@ -80,6 +80,8 @@ export interface EnhancerOptions {
 
 export type TierName = 'theme' | 'relief' | 'finish';
 
+export type SoltanaChangeType = 'theme' | 'relief' | 'finish' | 'overrides' | 'reset';
+
 // ---------------------------------------------------------------------------
 // Runtime Registration Types
 // ---------------------------------------------------------------------------
@@ -108,6 +110,8 @@ export interface ThemeSeed {
   colorError?: string;
   /** Semantic info color. Defaults to blue (#3b82f6 dark / #1e40af light). */
   colorInfo?: string;
+  /** Highlight channel (R G B space-separated). Defaults to '255 255 255'. */
+  highlightColor?: string;
 }
 
 export interface RegisterThemeOptions {
@@ -126,6 +130,7 @@ export interface RegisterReliefOptions {
     '--relief-shadow-inset': string;
     '--relief-shadow-inset-lg': string;
     '--relief-border': string;
+    '--relief-opacity'?: string;
   };
 }
 

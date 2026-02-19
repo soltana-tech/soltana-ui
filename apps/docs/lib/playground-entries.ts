@@ -1112,7 +1112,8 @@ registerComponent({
   id: 'tooltips',
   name: 'Tooltips',
   category: 'Overlays',
-  description: 'Hover-triggered contextual hints.',
+  description:
+    'CSS-only hover-triggered hints (.tooltip + data-tooltip). For JS-enhanced tooltips, use data-sol-tooltip with initTooltips().',
   renderPreview: (_state: SandboxState) => `
     <div class="flex flex-wrap gap-4 items-center">
       <button class="btn btn-outline tooltip" data-tooltip="Tooltip on button">Hover me</button>

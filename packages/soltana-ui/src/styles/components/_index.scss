@@ -2,6 +2,10 @@
 // Components Index
 // ---------------------------------------------------------------------------
 // Aggregates all component partials.
+// Naming: most components use flat class names (e.g. .card, .card-header).
+// _layout.scss and _segmented-control.scss use BEM notation (e.g.
+// .page-layout__sidebar, .segmented-control__option) for tightly-coupled
+// parent/child structures where the child has no standalone meaning.
 // ---------------------------------------------------------------------------
 
 @forward 'buttons';

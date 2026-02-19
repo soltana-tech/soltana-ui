@@ -5,7 +5,6 @@
 // Uses --relief-* variables for automatic relief switching.
 // ---------------------------------------------------------------------------
 
-@use '../variables' as *;
 @use '../base/register' as *;
 @use '../base/accessibility' as *;
 @use '../base/transitions' as *;
@@ -71,13 +70,15 @@
 // INPUT STATES
 // ============================================================================
 
-.input-error {
-  border-color: var(--color-error);
+@each $type in (error, success, warning) {
+  .input-#{$type} {
+    border-color: var(--color-#{$type});
 
-  &:focus-visible {
-    box-shadow:
-      var(--relief-shadow-inset),
-      0 0 0 3px var(--color-error-subtle);
+    &:focus-visible {
+      box-shadow:
+        var(--relief-shadow-inset),
+        0 0 0 3px var(--color-#{$type}-subtle);
+    }
   }
 }
 
@@ -188,43 +189,15 @@
   color: var(--text-muted);
 }
 
-.input-error-text {
-  font-size: var(--text-xs);
-  color: var(--color-error-text);
-}
-
 // ============================================================================
-// ADDITIONAL VALIDATION STATES
+// VALIDATION STATE TEXT
 // ============================================================================
 
-.input-success {
-  border-color: var(--color-success);
-
-  &:focus-visible {
-    box-shadow:
-      var(--relief-shadow-inset),
-      0 0 0 3px var(--color-success-subtle);
+@each $type in (error, success, warning) {
+  .input-#{$type}-text {
+    font-size: var(--text-xs);
+    color: var(--color-#{$type}-text);
   }
-}
-
-.input-warning {
-  border-color: var(--color-warning);
-
-  &:focus-visible {
-    box-shadow:
-      var(--relief-shadow-inset),
-      0 0 0 3px var(--color-warning-subtle);
-  }
-}
-
-.input-success-text {
-  font-size: var(--text-xs);
-  color: var(--color-success-text);
-}
-
-.input-warning-text {
-  font-size: var(--text-xs);
-  color: var(--color-warning-text);
 }
 
 // Parent-level auto-validation via :valid/:invalid

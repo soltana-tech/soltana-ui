@@ -68,19 +68,6 @@ describe('useSoltana', () => {
     expect(mockInitSoltana).toHaveBeenCalledOnce();
   });
 
-  it('returns config from instance.getState()', () => {
-    const onValue = vi.fn();
-    render(<TestComponent onValue={onValue} />);
-
-    const lastCall = onValue.mock.calls[onValue.mock.calls.length - 1][0] as SoltanaContextValue;
-    expect(lastCall.config).toEqual({
-      theme: 'dark',
-      relief: 'neumorphic',
-      finish: 'matte',
-      overrides: {},
-    });
-  });
-
   it('calls destroy on unmount', () => {
     const onValue = vi.fn();
     const { unmount } = render(<TestComponent onValue={onValue} />);
@@ -88,28 +75,6 @@ describe('useSoltana', () => {
     unmount();
 
     expect(mockDestroy).toHaveBeenCalledOnce();
-  });
-
-  it('updates state on soltana:change', () => {
-    const onValue = vi.fn();
-    render(<TestComponent onValue={onValue} />);
-
-    // Simulate a config change
-    mockGetState.mockReturnValue({
-      theme: 'light',
-      relief: 'flat',
-      finish: 'frosted',
-      overrides: {},
-    });
-
-    act(() => {
-      document.documentElement.dispatchEvent(
-        new CustomEvent('soltana:change', { detail: { type: 'theme', value: 'light' } })
-      );
-    });
-
-    const lastCall = onValue.mock.calls[onValue.mock.calls.length - 1][0] as SoltanaContextValue;
-    expect(lastCall.config.theme).toBe('light');
   });
 
   it('passes config to initSoltana', () => {

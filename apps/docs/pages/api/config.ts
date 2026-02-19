@@ -185,18 +185,28 @@ reg.unregister();`,
     )}
 
     ${specimenBlock(
-      'registerTierValue()',
+      'registerTierValue() (internal)',
       `
       <p class="text-secondary mb-4">
-        Low-level function to register a custom tier value so strict mode
-        does not warn for it. Normally called internally by
+        <strong>Internal / advanced.</strong> Low-level function to register a
+        tier value in the validation registry. Called internally by
         <code>registerTheme()</code> / <code>registerRelief()</code> /
-        <code>registerFinish()</code>, but exposed for advanced use cases
-        (e.g., pre-registering values before init).
+        <code>registerFinish()</code>. Not exported from the public
+        <code>soltana-ui</code> barrel — use the instance-scoped APIs instead,
+        which provide <code>unregister()</code> handles for cleanup.
       </p>
 
-      <h4 class="text-lg font-semibold mt-6 mb-2">Signature</h4>
-      ${codeExample('registerTierValue(tier: TierName, value: string): void', 'typescript')}
+      <h4 class="text-lg font-semibold mt-6 mb-2">Recommended: Instance API</h4>
+      ${codeExample(
+        `const reg = soltana.registerTheme('ocean', {
+  seed: { surfaceBg: '#0a1628', textPrimary: '#c8d6e5', accentPrimary: '#0984e3' },
+});
+soltana.setTheme('ocean');
+
+// Clean up when done
+reg.unregister();`,
+        'typescript'
+      )}
     `
     )}
 
@@ -212,7 +222,7 @@ reg.unregister();`,
             <tr><th>Export</th><th>Values</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>BUILT_IN_THEMES</code></td><td><code>'dark'</code>, <code>'light'</code>, <code>'sepia'</code></td></tr>
+            <tr><td><code>BUILT_IN_THEMES</code></td><td><code>'dark'</code>, <code>'light'</code>, <code>'sepia'</code> (<code>'auto'</code> is always valid but not listed here — it is a runtime resolver, not a static token set)</td></tr>
             <tr><td><code>BUILT_IN_RELIEFS</code></td><td><code>'flat'</code>, <code>'glassmorphic'</code>, <code>'skeuomorphic'</code>, <code>'neumorphic'</code></td></tr>
             <tr><td><code>BUILT_IN_FINISHES</code></td><td><code>'matte'</code>, <code>'frosted'</code>, <code>'tinted'</code>, <code>'glossy'</code></td></tr>
           </tbody>
@@ -231,7 +241,7 @@ reg.unregister();`,
             <tr><th>Scenario</th><th>Strict mode</th><th>Non-strict mode</th></tr>
           </thead>
           <tbody>
-            <tr><td>Invalid tier value in recipe</td><td>Throws <code>Error</code></td><td>Logs warning to console</td></tr>
+            <tr><td>Invalid tier value</td><td>Throws <code>Error</code></td><td>Logs warning to console</td></tr>
             <tr><td>Duplicate registration (same name)</td><td colspan="2">Overwrites silently — previous CSS rules remain unless <code>unregister()</code> was called</td></tr>
           </tbody>
         </table>

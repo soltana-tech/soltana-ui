@@ -84,7 +84,9 @@
 
   // =========================================================================
   // BRIDGE TOKENS — per-theme overrides
-  // Shared defaults in _relief-system.scss
+  // Shared defaults in _relief-system.scss; tokens like --glass-opacity and
+  // --mesh-color-* use var() indirection in :root and resolve correctly for
+  // all themes without per-theme declarations.
   // =========================================================================
 
   --surface-deep: var(--surface-2);

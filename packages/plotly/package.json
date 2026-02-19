@@ -37,7 +37,7 @@
     "vitest": "^3.2.4"
   },
   "peerDependencies": {
-    "soltana-ui": "workspace:*"
+    "soltana-ui": "workspace:^"
   },
   "peerDependenciesMeta": {
     "soltana-ui": {

@@ -74,6 +74,18 @@ for (const scenario of scenarios) {
 </html>`;
 
     await page.setContent(html, { waitUntil: 'load' });
+
+    // Verify the override card has different computed tokens than the base card
+    const [baseBg, overrideBg] = await page.evaluate(() => {
+      const cards = document.querySelectorAll('.card');
+      const base = getComputedStyle(cards[0]).getPropertyValue('--surface-bg');
+      const override = getComputedStyle(cards[1]).getPropertyValue('--surface-bg');
+      return [base, override];
+    });
+    if (scenario.overrideClasses.includes('theme-')) {
+      expect(overrideBg).not.toBe(baseBg);
+    }
+
     await expect(page).toHaveScreenshot(`override-${scenario.name}.png`);
   });
 }
