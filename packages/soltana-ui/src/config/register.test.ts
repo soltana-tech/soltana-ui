@@ -77,19 +77,13 @@ describe('SCSS ↔ TS token sync', () => {
 // --- deriveThemeTokens pure function tests ---
 
 describe('deriveThemeTokens', () => {
-  it('maps seed surfaceBg to --surface-bg', () => {
+  it.each([
+    ['surfaceBg', '--surface-bg', '#08091a'],
+    ['textPrimary', '--text-primary', '#f5f0e6'],
+    ['accentPrimary', '--accent-primary', '#d4a843'],
+  ])('maps seed %s to %s', (_seedKey, token, expected) => {
     const result = deriveThemeTokens(DARK_SEED);
-    expect(result['--surface-bg']).toBe('#08091a');
-  });
-
-  it('maps seed textPrimary to --text-primary', () => {
-    const result = deriveThemeTokens(DARK_SEED);
-    expect(result['--text-primary']).toBe('#f5f0e6');
-  });
-
-  it('maps seed accentPrimary to --accent-primary', () => {
-    const result = deriveThemeTokens(DARK_SEED);
-    expect(result['--accent-primary']).toBe('#d4a843');
+    expect(result[token]).toBe(expected);
   });
 
   it('derives surface scale with color-mix expressions', () => {
@@ -145,7 +139,7 @@ describe('deriveThemeTokens', () => {
 
   it('light colorScheme produces light-appropriate tokens', () => {
     const result = deriveThemeTokens(LIGHT_SEED);
-    expect(result['--shadow-color']).toBe('140 150 170');
+    expect(result['--shadow-color']).toBe('0 0 0');
     expect(result['--neu-shadow']).toContain('35%');
     expect(result['--neu-light']).toContain('88%');
   });
@@ -173,28 +167,22 @@ describe('deriveThemeTokens', () => {
     expect(result['--input-border-focus']).toBe('var(--accent-primary)');
   });
 
-  it('uses provided colorSuccess seed', () => {
-    const result = deriveThemeTokens({ ...DARK_SEED, colorSuccess: '#00cc66' });
-    expect(result['--color-success']).toBe('#00cc66');
-    expect(result['--color-success-subtle']).toContain('#00cc66');
-    expect(result['--color-success-text']).toContain('#00cc66');
-  });
-
-  it('uses provided colorError seed', () => {
-    const result = deriveThemeTokens({ ...DARK_SEED, colorError: '#ff2222' });
-    expect(result['--color-error']).toBe('#ff2222');
-    expect(result['--color-error-subtle']).toContain('#ff2222');
-    expect(result['--color-error-text']).toContain('#ff2222');
-  });
-
-  it('uses provided colorWarning seed', () => {
-    const result = deriveThemeTokens({ ...DARK_SEED, colorWarning: '#ffaa00' });
-    expect(result['--color-warning']).toBe('#ffaa00');
-  });
-
-  it('uses provided colorInfo seed', () => {
-    const result = deriveThemeTokens({ ...DARK_SEED, colorInfo: '#0066ff' });
-    expect(result['--color-info']).toBe('#0066ff');
+  it.each([
+    [
+      'colorSuccess',
+      '#00cc66',
+      '--color-success',
+      '--color-success-subtle',
+      '--color-success-text',
+    ],
+    ['colorError', '#ff2222', '--color-error', '--color-error-subtle', '--color-error-text'],
+    ['colorWarning', '#ffaa00', '--color-warning', undefined, undefined],
+    ['colorInfo', '#0066ff', '--color-info', undefined, undefined],
+  ])('uses provided %s seed', (seedKey, seedValue, baseToken, subtleToken, textToken) => {
+    const result = deriveThemeTokens({ ...DARK_SEED, [seedKey]: seedValue });
+    expect(result[baseToken]).toBe(seedValue);
+    if (subtleToken) expect(result[subtleToken]).toContain(seedValue);
+    if (textToken) expect(result[textToken]).toContain(seedValue);
   });
 
   it('falls back to defaults when semantic color seeds are omitted', () => {

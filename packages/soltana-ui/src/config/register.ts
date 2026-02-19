@@ -259,7 +259,7 @@ export function deriveThemeTokens(seed: ThemeSeed): Record<string, string> {
     '--state-disabled-text': mix(text, bg, 55),
 
     // --- Channel tokens ---
-    '--shadow-color': isDark ? '0 0 0' : '140 150 170',
+    '--shadow-color': '0 0 0',
     '--highlight-color': '255 255 255',
     '--accent-glow': mixSrgb(accent, isDark ? 15 : 10),
 

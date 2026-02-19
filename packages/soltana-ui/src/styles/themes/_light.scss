@@ -74,7 +74,7 @@
   // CHANNEL TOKENS — consumed by _relief-system.scss to derive primitives
   // =========================================================================
 
-  --shadow-color: 140 150 170;
+  --shadow-color: 0 0 0;
   --highlight-color: 255 255 255;
   --accent-glow: color-mix(in srgb, var(--accent-primary) 10%, transparent);
 
