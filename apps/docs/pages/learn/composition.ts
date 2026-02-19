@@ -13,7 +13,7 @@ export function renderComposition(): HTMLElement {
     'Tier Override Classes',
     `
     <p class="text-sm text-secondary mb-4">Each tier provides utility classes that override the global config on a per-element basis. CSS custom properties set directly on an element always override inherited values from ancestors.</p>
-    <div class="grid gap-4" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr))">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
       <div class="card p-4">
         <span class="tag mb-2">Theme</span>
         <div class="space-y-1 mt-2">
@@ -47,7 +47,7 @@ export function renderComposition(): HTMLElement {
   <h3 class="text-xl font-semibold mt-8 mb-4">Composition in Action</h3>
   <p class="text-sm text-secondary mb-6">Each card below overrides multiple tiers independently, regardless of the global config.</p>
 
-  <div class="grid gap-6" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
     <div class="theme-light relief-skeuomorphic finish-frosted card p-5 rounded-xl">
       <span class="tag mb-2">Light + Skeuomorphic + Frosted</span>
       <p class="text-sm text-secondary mt-2">Overrides theme to light, relief to skeuomorphic, and finish to frosted — independent of global config.</p>

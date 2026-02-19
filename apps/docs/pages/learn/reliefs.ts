@@ -9,7 +9,7 @@ export function renderReliefs(): HTMLElement {
 
   ${sectionHeading('Reliefs', 'reliefs', 'Four design paradigms that fundamentally transform how every component renders. Use the <a href="#/playground">Playground</a> to preview interactively.')}
 
-  <div class="grid gap-6 mt-8" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))">
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
     <div class="relief-flat p-6 rounded-xl" style="min-height: 200px;">
       <span class="tag mb-3">.relief-flat</span>
       <p class="text-sm text-secondary mb-4 mt-3">Zero depth, clean, modern. No shadows — just borders. The minimalist baseline.</p>

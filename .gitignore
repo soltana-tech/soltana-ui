@@ -60,5 +60,4 @@ __pycache__/
 test-results/
 playwright-report/
 blob-report/
-tests/**/*-snapshots/
 a11y-matrix-results/

@@ -23,7 +23,7 @@ export function renderGettingStarted(): HTMLElement {
 
   ${sectionHeading('The 3-Tier System', 'three-tier', 'Three independent axes of visual design. Change any tier without affecting the others.')}
 
-  <div class="grid gap-6 mt-8" style="grid-template-columns: repeat(3, 1fr)">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
     <div class="card p-5 rounded-xl flex flex-col gap-2" style="border-left: 4px solid var(--accent-primary);">
       <span class="text-3xl font-black" style="color: var(--accent-primary); line-height: 1;">1</span>
       <h4 class="font-semibold text-lg">Theme</h4>
@@ -68,7 +68,7 @@ export function renderGettingStarted(): HTMLElement {
 
   ${sectionHeading('Installation', 'installation', 'Add Soltana to your project.')}
 
-  <div class="grid gap-6 mt-6" style="grid-template-columns: repeat(auto-fill, minmax(320px, 1fr))">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
     ${specimenBlock('npm / pnpm / yarn', codeExample('npm install soltana-ui', 'bash'))}
     ${specimenBlock(
       'CDN',
@@ -90,7 +90,7 @@ export function renderGettingStarted(): HTMLElement {
 
   ${sectionHeading('How It Works', 'how-it-works', 'Components consume semantic tokens that switch automatically when tiers change.')}
 
-  <div class="grid gap-6 mt-6" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
     <div class="card p-5 rounded-xl">
       <h4 class="font-semibold text-lg mb-2">Global Config</h4>
       <p class="text-sm text-secondary">Set tiers once. All components inherit automatically via CSS custom properties on <code>&lt;html&gt;</code>.</p>
@@ -109,7 +109,7 @@ export function renderGettingStarted(): HTMLElement {
 
   ${sectionHeading('Recipes', 'recipes', 'Curated tier combinations as named presets.')}
 
-  <div class="grid gap-6 mt-6" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
     ${(Object.keys(RECIPES) as RecipeName[])
       .map((key) => {
         const recipe = RECIPES[key];
@@ -139,7 +139,7 @@ export function renderGettingStarted(): HTMLElement {
 
   ${sectionHeading('Next Steps', 'next-steps')}
 
-  <div class="grid gap-4 mt-6" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr))">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
     <a href="#/learn/themes" class="card card-hover p-5 rounded-xl" style="text-decoration: none;">
       <h4 class="font-semibold text-lg">Themes</h4>
       <p class="text-sm text-secondary mt-1">Deep dive into color schemes</p>

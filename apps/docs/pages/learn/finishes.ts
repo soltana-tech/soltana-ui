@@ -14,7 +14,7 @@ export function renderFinishes(): HTMLElement {
 
   <!-- Neumorphic + Finishes -->
   <h4 class="text-lg font-semibold mt-8 mb-3 text-secondary">Neumorphic Relief</h4>
-  <div class="grid gap-4 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr))">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
     <div class="relief-neumorphic finish-matte card p-5 rounded-xl text-center" style="min-height: 140px;">
       <span class="tag mb-2">matte</span>
       <p class="text-sm text-secondary mt-2">Clean, solid surface. Default look.</p>
@@ -35,7 +35,7 @@ export function renderFinishes(): HTMLElement {
 
   <!-- Skeuomorphic + Finishes -->
   <h4 class="text-lg font-semibold mt-8 mb-3 text-secondary">Skeuomorphic Relief</h4>
-  <div class="grid gap-4 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr))">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
     <div class="relief-skeuomorphic finish-matte card p-5 rounded-xl text-center" style="min-height: 140px;">
       <span class="tag mb-2">matte</span>
       <p class="text-sm text-secondary mt-2">Clean elevated surface.</p>
@@ -56,7 +56,7 @@ export function renderFinishes(): HTMLElement {
 
   <!-- Glassmorphic + Finishes -->
   <h4 class="text-lg font-semibold mt-8 mb-3 text-secondary">Glassmorphic Relief</h4>
-  <div class="grid gap-4 mb-8" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr))">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
     <div class="relief-glassmorphic finish-matte card p-5 rounded-xl text-center" style="min-height: 140px;">
       <span class="tag mb-2">matte</span>
       <p class="text-sm text-secondary mt-2">Solid glass panel.</p>

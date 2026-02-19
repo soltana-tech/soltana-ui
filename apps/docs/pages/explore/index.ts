@@ -8,31 +8,25 @@ export function renderComponentsIndex(): HTMLElement {
   const groups = getComponentsByCategory();
   const defaultState = createDefaultState();
 
-  const sectionsHtml = groups
+  const galleryItems = groups
     .map(({ category, entries }) => {
-      const cardsHtml = entries
+      const heading = `<h2 class="gallery-grid__heading col-span-full text-2xl font-semibold" id="cat-${category.toLowerCase().replace(/\s+/g, '-')}">${category}</h2>`;
+      const cards = entries
         .map((entry) => {
           const previewHtml = entry.renderPreview(defaultState);
           return `
-            <div class="card card-hover rounded-xl border overflow-hidden" style="display: flex; flex-direction: column; height: 420px;">
-              <h3 class="p-5 border-b border-subtle text-lg font-semibold" style="flex-shrink: 0;">${entry.name}</h3>
-              <div class="flex items-center justify-center p-8 bg-surface" style="flex: 1; overflow: hidden;">
+            <div class="gallery-card card card-hover rounded-xl border overflow-hidden">
+              <h3 class="gallery-card__header p-5 border-b border-subtle text-lg font-semibold">${entry.name}</h3>
+              <div class="gallery-card__preview bg-surface">
                 ${previewHtml}
               </div>
-              <a href="#/playground?component=${entry.id}" class="block p-3 text-center text-sm font-medium border-t border-subtle hover:bg-surface-1 transition-colors">
+              <a href="#/playground?component=${entry.id}" class="gallery-card__footer block p-3 text-center text-sm font-medium border-t border-subtle hover:bg-surface-1 transition-colors">
                 Open in Playground →
               </a>
-            </div>
-          `;
+            </div>`;
         })
         .join('');
-
-      return `
-        <h2 class="text-2xl font-semibold mt-12 mb-6" id="cat-${category.toLowerCase().replace(/\s+/g, '-')}">${category}</h2>
-        <div class="grid gap-8" style="grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));">
-          ${cardsHtml}
-        </div>
-      `;
+      return heading + cards;
     })
     .join('');
 
@@ -40,7 +34,9 @@ export function renderComponentsIndex(): HTMLElement {
   page.innerHTML = `
 <div class="page-components-index">
   ${sectionHeading('Components', 'components', 'Live component gallery. Click any component to open it in the interactive playground.')}
-  ${sectionsHtml}
+  <div class="gallery-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+    ${galleryItems}
+  </div>
 </div>`;
   return page;
 }
