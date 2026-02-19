@@ -106,6 +106,7 @@ export const THEME_TOKEN_NAMES = [
   '--popover-border',
   '--kbd-bg',
   '--kbd-border',
+  '--modal-bg',
   // Icon data URIs (not derived — provide via tokens overrides)
   '--icon-select-chevron',
 ] as const;
@@ -292,6 +293,7 @@ export function deriveThemeTokens(seed: ThemeSeed): Record<string, string> {
     '--popover-border': 'var(--border-default)',
     '--kbd-bg': 'var(--surface-2)',
     '--kbd-border': 'var(--border-strong)',
+    '--modal-bg': 'var(--surface-1)',
   };
 
   return tokens;
@@ -301,6 +303,16 @@ export function deriveThemeTokens(seed: ThemeSeed): Record<string, string> {
 // Registration Functions
 // ---------------------------------------------------------------------------
 
+const CSS_IDENT_RE = /^[a-zA-Z][a-zA-Z0-9_-]*$/;
+
+function validateCssIdent(name: string): void {
+  if (!name || !CSS_IDENT_RE.test(name)) {
+    throw new Error(
+      `[soltana] Invalid tier name "${name}". Must be a non-empty CSS identifier (letters, digits, hyphens, underscores; starting with a letter).`
+    );
+  }
+}
+
 function buildDeclarations(tokens: Record<string, string>): string {
   return Object.entries(tokens)
     .map(([k, v]) => `${k}: ${v}`)
@@ -308,6 +320,7 @@ function buildDeclarations(tokens: Record<string, string>): string {
 }
 
 export function registerTheme(name: string, options: RegisterThemeOptions): TierRegistration {
+  validateCssIdent(name);
   const derived = deriveThemeTokens(options.seed);
   const merged = options.tokens ? { ...derived, ...options.tokens } : derived;
   const decls = buildDeclarations(merged);
@@ -335,6 +348,7 @@ function registerSimpleTier(
   name: string,
   tokens: Record<string, string>
 ): TierRegistration {
+  validateCssIdent(name);
   const decls = buildDeclarations(tokens);
   const rules: CSSRule[] = [];
   rules.push(insertRule(`[data-${tier}='${name}'], .${tier}-${name} { ${decls} }`));

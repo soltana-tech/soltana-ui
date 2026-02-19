@@ -9,6 +9,7 @@ export interface SidebarSection {
 export interface SidebarItem {
   label: string;
   path: string;
+  icon?: string;
 }
 
 const CHEVRON_SVG = `<svg class="sidebar__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>`;
@@ -94,7 +95,11 @@ export class Sidebar {
       link.className = 'sidebar__link';
       link.href = `#${item.path}`;
       link.dataset.path = item.path;
-      link.textContent = item.label;
+      if (item.icon) {
+        link.innerHTML = `${item.icon}<span>${item.label}</span>`;
+      } else {
+        link.textContent = item.label;
+      }
       li.appendChild(link);
       list.appendChild(li);
     }

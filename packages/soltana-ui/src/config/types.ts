@@ -73,7 +73,10 @@ export interface SoltanaInstance {
   /** Register a custom finish with a typed token map. */
   registerFinish(name: string, options: RegisterFinishOptions): TierRegistration;
 
-  /** Destroy and re-create enhancers (modals, tabs, tooltips). */
+  /**
+   * Destroy and re-create enhancers (modals, tabs, tooltips).
+   * Only effective when `enhancers: true` was passed to `initSoltana()`.
+   */
   reinitEnhancers(): void;
   /** Reset all tiers to defaults and remove overrides and registrations. */
   reset(): void;

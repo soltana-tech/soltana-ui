@@ -34,9 +34,8 @@
   background: none;
   font-family: var(--font-sans);
 
-  &:hover {
+  @include hover-state {
     color: var(--text-primary);
-    background-color: var(--state-hover);
   }
 
   &.active {
@@ -84,9 +83,8 @@
     transition: background-color var(--transition-normal) var(--easing-in-out);
   }
 
-  &:hover {
+  @include hover-state {
     color: var(--text-primary);
-    background-color: var(--state-hover);
   }
 
   &.active {
@@ -317,13 +315,7 @@
 }
 
 .page-item {
-  &:first-child .page-link {
-    border-radius: var(--radius-lg) 0 0 var(--radius-lg);
-  }
-
-  &:last-child .page-link {
-    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-  }
+  @include edge-radius($child: '.page-link');
 
   &.active .page-link {
     background-color: var(--accent-primary);
@@ -355,9 +347,8 @@
   text-decoration: none;
   @include transition-interactive(var(--transition-normal));
 
-  &:hover {
+  @include hover-state {
     color: var(--accent-primary);
-    background-color: var(--state-hover);
   }
 }
 

@@ -6,7 +6,7 @@
 
 @mixin transition-interactive($duration: var(--transition-slow)) {
   transition:
-    background $duration var(--easing-in-out),
+    background-color $duration var(--easing-in-out),
     color $duration var(--easing-in-out),
     border-color $duration var(--easing-in-out),
     box-shadow $duration var(--easing-in-out),
@@ -21,7 +21,7 @@
 
 @mixin transition-feedback($duration: var(--transition-slow)) {
   transition:
-    background $duration var(--easing-in-out),
+    background-color $duration var(--easing-in-out),
     box-shadow $duration var(--easing-in-out);
 }
 
@@ -32,5 +32,25 @@
 @mixin hover-state {
   &:hover:not(:disabled) {
     background-color: var(--state-hover);
+    @content;
+  }
+}
+
+@mixin edge-radius($radius: var(--radius-lg), $child: null) {
+  @if $child {
+    &:first-child #{$child} {
+      border-radius: #{$radius} 0 0 #{$radius};
+    }
+    &:last-child #{$child} {
+      border-radius: 0 #{$radius} #{$radius} 0;
+    }
+  } @else {
+    &:first-child {
+      border-radius: #{$radius} 0 0 #{$radius};
+    }
+
+    &:last-child {
+      border-radius: 0 #{$radius} #{$radius} 0;
+    }
   }
 }

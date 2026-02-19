@@ -1,7 +1,7 @@
 {
   "name": "soltana-ui",
   "version": "1.0.0",
-  "description": "A CSS-first design system inspired by classical architecture and precious materials. Features neumorphic, glassmorphic, and hybrid relief systems with a 4-tier configuration model.",
+  "description": "A CSS-first design system inspired by classical architecture and precious materials. Features neumorphic, glassmorphic, and hybrid relief systems with a 3-tier configuration model.",
   "type": "module",
   "private": false,
   "license": "MIT",
@@ -65,19 +65,10 @@
     "prepublishOnly": "pnpm run build"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.2",
     "@types/node": "^25.2.3",
-    "eslint": "^9.39.2",
-    "eslint-config-prettier": "^10.1.8",
     "jsdom": "^26.1.0",
     "postcss": "^8.5.6",
     "sass": "^1.97.3",
-    "stylelint": "^17.2.0",
-    "stylelint-config-prettier-scss": "^1.0.0",
-    "stylelint-config-standard-scss": "^17.0.0",
-    "stylelint-prettier": "^5.0.3",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.55.0",
     "vite": "^7.3.1",
     "vite-plugin-dts": "^4.5.4",
     "vitest": "^3.2.4"

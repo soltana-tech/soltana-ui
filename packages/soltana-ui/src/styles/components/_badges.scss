@@ -65,9 +65,8 @@
   font-weight: var(--font-medium);
   letter-spacing: var(--tracking-elegant);
   border-radius: var(--radius-full);
-  border: 1px solid var(--relief-border);
+  @include relief-container;
   color: var(--text-secondary);
-  box-shadow: var(--relief-shadow);
   @include finish-surface;
   @include transition-interactive(var(--transition-normal));
 

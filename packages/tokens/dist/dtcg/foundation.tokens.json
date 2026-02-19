@@ -251,7 +251,7 @@
     },
     "modal": {
       "$type": "number",
-      "$value": 200
+      "$value": 210
     },
     "toast": {
       "$type": "number",
@@ -336,6 +336,16 @@
     }
   },
   "fontSize": {
+    "2xs": {
+      "size": {
+        "$type": "dimension",
+        "$value": ".625rem"
+      },
+      "lineHeight": {
+        "$type": "dimension",
+        "$value": ".875rem"
+      }
+    },
     "xs": {
       "size": {
         "$type": "dimension",

@@ -10,6 +10,12 @@ const mockInitSoltana = vi.fn();
 
 vi.mock('soltana-ui', () => ({
   initSoltana: (...args: unknown[]) => mockInitSoltana(...args) as unknown,
+  DEFAULT_STATE: Object.freeze({
+    theme: 'auto',
+    relief: 'neumorphic',
+    finish: 'matte',
+    overrides: {},
+  }),
 }));
 
 function createMockInstance(overrides?: Partial<ReturnType<typeof mockGetState>>) {

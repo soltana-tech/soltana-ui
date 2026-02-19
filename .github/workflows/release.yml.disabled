@@ -36,6 +36,12 @@ jobs:
       - name: Build
         run: pnpm run build
 
+      - name: Type-check
+        run: pnpm run type-check
+
+      - name: Unit tests
+        run: pnpm run test
+
       - name: Create release PR or publish
         id: changesets
         uses: changesets/action@v1

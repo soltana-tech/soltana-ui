@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------------------
 
 import type { Recipe } from './types.js';
+import { VALID_THEMES, VALID_RELIEFS, VALID_FINISHES } from './validation.js';
 
 const BUILT_IN_RECIPES = {
   'corporate-clean': {
@@ -47,5 +48,14 @@ const recipes: Record<string, Recipe> = { ...BUILT_IN_RECIPES };
 export const RECIPES: Readonly<Record<string, Recipe>> = recipes;
 
 export function registerRecipe(name: string, recipe: Recipe): void {
+  if (!VALID_THEMES.includes(recipe.theme)) {
+    console.warn(`[soltana] Recipe "${name}" uses unknown theme "${recipe.theme}"`);
+  }
+  if (!VALID_RELIEFS.includes(recipe.relief)) {
+    console.warn(`[soltana] Recipe "${name}" uses unknown relief "${recipe.relief}"`);
+  }
+  if (!VALID_FINISHES.includes(recipe.finish)) {
+    console.warn(`[soltana] Recipe "${name}" uses unknown finish "${recipe.finish}"`);
+  }
   recipes[name] = recipe;
 }

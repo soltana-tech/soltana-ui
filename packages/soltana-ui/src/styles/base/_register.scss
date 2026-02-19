@@ -5,6 +5,22 @@
 // values from a single @content block.
 // ---------------------------------------------------------------------------
 
+// Theme: [data-theme] + .theme-* selectors (and optionally :root).
+@mixin register-theme($name, $include-root: false) {
+  @if $include-root {
+    :root,
+    [data-theme='#{$name}'],
+    .theme-#{$name} {
+      @content;
+    }
+  } @else {
+    [data-theme='#{$name}'],
+    .theme-#{$name} {
+      @content;
+    }
+  }
+}
+
 // Relief: [data-relief] + .relief-* selectors.
 @mixin register-relief($name) {
   [data-relief='#{$name}'],
@@ -24,6 +40,11 @@
 // ---------------------------------------------------------------------------
 // Shared Property Mixins
 // ---------------------------------------------------------------------------
+
+@mixin relief-container($shadow: var(--relief-shadow)) {
+  border: 1px solid var(--relief-border);
+  box-shadow: $shadow;
+}
 
 @mixin finish-surface($bg: var(--relief-bg), $gradient: null) {
   background-color: color-mix(in srgb, #{$bg} calc(var(--finish-opacity, 1) * 100%), transparent);

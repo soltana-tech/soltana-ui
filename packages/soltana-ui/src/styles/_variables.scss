@@ -49,6 +49,10 @@ $spacing-steps: (
 
 // ---- Font size scale ----
 $font-sizes: (
+  2xs: (
+    0.625rem,
+    0.875rem,
+  ),
   xs: (
     0.75rem,
     1rem,
@@ -138,7 +142,7 @@ $z-indices: (
   dropdown: 100,
   popover: 150,
   drawer: 200,
-  modal: 200,
+  modal: 210,
   toast: 250,
   tooltip: 300,
   skip-link: 9999,
@@ -251,7 +255,8 @@ $max-widths: (
   $popover-bg: var(--surface-1),
   $popover-border: var(--border-default),
   $kbd-bg: var(--surface-2),
-  $kbd-border: var(--border-strong)
+  $kbd-border: var(--border-strong),
+  $modal-bg: var(--surface-1)
 ) {
   --input-bg: #{$input-bg};
   --input-border: #{$input-border};
@@ -272,6 +277,7 @@ $max-widths: (
   --popover-border: #{$popover-border};
   --kbd-bg: #{$kbd-bg};
   --kbd-border: #{$kbd-border};
+  --modal-bg: #{$modal-bg};
 }
 
 // ---- CSS custom properties ----

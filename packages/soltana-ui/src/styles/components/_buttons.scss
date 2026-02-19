@@ -28,11 +28,10 @@
   letter-spacing: var(--tracking-elegant);
   line-height: 1.5;
   text-transform: uppercase;
-  border: 1px solid var(--relief-border);
+  @include relief-container;
   border-radius: var(--radius-lg);
   color: var(--text-primary);
   cursor: pointer;
-  box-shadow: var(--relief-shadow);
   @include finish-surface;
   @include transition-interactive;
   user-select: none;
@@ -94,8 +93,7 @@
   border-color: var(--border-default);
   color: var(--text-primary);
 
-  &:hover {
-    background: var(--state-hover);
+  @include hover-state {
     border-color: var(--border-strong);
   }
 }
@@ -108,8 +106,7 @@
   box-shadow: none;
   backdrop-filter: none;
 
-  &:hover {
-    background-color: var(--state-hover);
+  @include hover-state {
     box-shadow: var(--relief-shadow);
   }
 
@@ -126,8 +123,7 @@
   box-shadow: none;
   backdrop-filter: none;
 
-  &:hover {
-    background-color: var(--state-hover);
+  @include hover-state {
     border-color: var(--accent-primary-hover);
     box-shadow: var(--relief-shadow);
   }
@@ -220,14 +216,7 @@ $btn-sizes: (
 
   .btn {
     border-radius: 0;
-
-    &:first-child {
-      border-radius: var(--radius-lg) 0 0 var(--radius-lg);
-    }
-
-    &:last-child {
-      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-    }
+    @include edge-radius;
 
     + .btn {
       margin-left: -1px;

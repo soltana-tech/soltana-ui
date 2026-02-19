@@ -1,20 +1,23 @@
 import '@soltana/styles/index.scss';
 import './docs.scss';
+import './components/SolPreview';
 
 import { initAll } from '@soltana/enhancers/index';
 import { initSoltana } from '@soltana/init';
 import type { Theme } from '@soltana/config';
 import { PlaygroundControls } from './components/PlaygroundControls';
-import { Router, migrationShim } from './components/Router';
+import { Router } from './components/Router';
 import { Sidebar } from './components/Sidebar';
 import type { SidebarSection } from './components/Sidebar';
 import { Search } from './components/Search';
 
 // Side-effect: populate component registry before playground reads it
 import './lib/playground-entries';
+import { SIDEBAR_ICONS } from './lib/sidebar-icons';
 
 // Pages — Learn
 import { renderGettingStarted } from './pages/learn/introduction';
+import { renderThemes } from './pages/learn/themes';
 import { renderReliefs } from './pages/learn/reliefs';
 import { renderFinishes } from './pages/learn/finishes';
 import { renderComposition } from './pages/learn/composition';
@@ -24,16 +27,12 @@ import { renderComponentsIndex } from './pages/explore/index';
 import { renderLayout } from './pages/explore/layout';
 import { renderTypography } from './pages/explore/typography';
 import { renderColors } from './pages/explore/colors';
+import { renderExamples } from './pages/explore/examples';
 
 // Pages — API Reference
-import { renderApiIndex } from './pages/api/index';
-import { renderApiInit } from './pages/api/init';
-import { renderApiState } from './pages/api/state';
-import { renderApiRecipes } from './pages/api/recipes';
-import { renderApiRegistration } from './pages/api/registration';
-import { renderApiEnhancers } from './pages/api/enhancers';
-import { renderApiFonts } from './pages/api/fonts';
-import { renderApiOverrides } from './pages/api/overrides';
+import { renderApiCore } from './pages/api/core';
+import { renderApiConfig } from './pages/api/config';
+import { renderApiBehavior } from './pages/api/behavior';
 
 // Pages — Playground
 import { renderPlayground } from './pages/playground';
@@ -82,28 +81,25 @@ const playground = new PlaygroundControls();
 router.setDefaultPath('/learn/introduction');
 
 // Learn
-router.register({ path: '/learn/introduction', render: migrationShim(renderGettingStarted) });
-router.register({ path: '/learn/reliefs', render: migrationShim(renderReliefs) });
-router.register({ path: '/learn/finishes', render: migrationShim(renderFinishes) });
-router.register({ path: '/learn/composition', render: migrationShim(renderComposition) });
+router.register({ path: '/learn/introduction', render: renderGettingStarted });
+router.register({ path: '/learn/themes', render: renderThemes });
+router.register({ path: '/learn/reliefs', render: renderReliefs });
+router.register({ path: '/learn/finishes', render: renderFinishes });
+router.register({ path: '/learn/composition', render: renderComposition });
 
 // Explore
-router.register({ path: '/explore', render: migrationShim(renderComponentsIndex) });
-router.register({ path: '/explore/layout', render: migrationShim(renderLayout) });
-router.register({ path: '/explore/typography', render: migrationShim(renderTypography) });
-router.register({ path: '/explore/colors', render: migrationShim(renderColors) });
+router.register({ path: '/explore', render: renderComponentsIndex });
+router.register({ path: '/explore/layout', render: renderLayout });
+router.register({ path: '/explore/typography', render: renderTypography });
+router.register({ path: '/explore/colors', render: renderColors });
+router.register({ path: '/explore/examples', render: renderExamples });
 
 // API Reference
-router.register({ path: '/api', render: migrationShim(renderApiIndex) });
-router.register({ path: '/api/init', render: migrationShim(renderApiInit) });
-router.register({ path: '/api/state', render: migrationShim(renderApiState) });
-router.register({ path: '/api/recipes', render: migrationShim(renderApiRecipes) });
-router.register({ path: '/api/registration', render: migrationShim(renderApiRegistration) });
-router.register({ path: '/api/enhancers', render: migrationShim(renderApiEnhancers) });
-router.register({ path: '/api/fonts', render: migrationShim(renderApiFonts) });
-router.register({ path: '/api/overrides', render: migrationShim(renderApiOverrides) });
+router.register({ path: '/api/core', render: renderApiCore });
+router.register({ path: '/api/config', render: renderApiConfig });
+router.register({ path: '/api/behavior', render: renderApiBehavior });
 
-// Playground (returns HTMLElement directly — no migrationShim)
+// Playground
 let playgroundInstance: CentralPlayground | null = null;
 router.register({
   path: '/playground',
@@ -118,38 +114,35 @@ router.register({
 });
 
 // ---- Sidebar ----
+const I = SIDEBAR_ICONS;
 const sections: SidebarSection[] = [
   {
     label: 'Learn',
     items: [
-      { label: 'Introduction', path: '/learn/introduction' },
-      { label: 'Reliefs', path: '/learn/reliefs' },
-      { label: 'Finishes', path: '/learn/finishes' },
-      { label: 'Composition', path: '/learn/composition' },
+      { label: 'Introduction', path: '/learn/introduction', icon: I['/learn/introduction'] },
+      { label: 'Themes', path: '/learn/themes', icon: I['/learn/themes'] },
+      { label: 'Reliefs', path: '/learn/reliefs', icon: I['/learn/reliefs'] },
+      { label: 'Finishes', path: '/learn/finishes', icon: I['/learn/finishes'] },
+      { label: 'Composition', path: '/learn/composition', icon: I['/learn/composition'] },
     ],
   },
   {
     label: 'Explore',
     items: [
-      { label: 'Components', path: '/explore' },
-      { label: 'Playground', path: '/playground' },
-      { label: 'Layout', path: '/explore/layout' },
-      { label: 'Typography', path: '/explore/typography' },
-      { label: 'Colors', path: '/explore/colors' },
+      { label: 'Components', path: '/explore', icon: I['/explore'] },
+      { label: 'Playground', path: '/playground', icon: I['/playground'] },
+      { label: 'Layout', path: '/explore/layout', icon: I['/explore/layout'] },
+      { label: 'Typography', path: '/explore/typography', icon: I['/explore/typography'] },
+      { label: 'Colors', path: '/explore/colors', icon: I['/explore/colors'] },
+      { label: 'Examples', path: '/explore/examples', icon: I['/explore/examples'] },
     ],
   },
   {
     label: 'API Reference',
-    collapsed: true,
     items: [
-      { label: 'Overview', path: '/api' },
-      { label: 'Initialization', path: '/api/init' },
-      { label: 'State', path: '/api/state' },
-      { label: 'Recipes', path: '/api/recipes' },
-      { label: 'Tier Registration', path: '/api/registration' },
-      { label: 'Enhancers', path: '/api/enhancers' },
-      { label: 'Font Loading', path: '/api/fonts' },
-      { label: 'Overrides', path: '/api/overrides' },
+      { label: 'Core API', path: '/api/core', icon: I['/api/core'] },
+      { label: 'Configuration', path: '/api/config', icon: I['/api/config'] },
+      { label: 'Behavior', path: '/api/behavior', icon: I['/api/behavior'] },
     ],
   },
 ];

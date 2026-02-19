@@ -15,9 +15,8 @@
 
 .card {
   position: relative;
-  border: 1px solid var(--relief-border);
+  @include relief-container;
   border-radius: var(--radius-2xl);
-  box-shadow: var(--relief-shadow);
   @include finish-surface;
   @include transition-depth;
 }

@@ -6,9 +6,9 @@
 // ---------------------------------------------------------------------------
 
 @use '../variables' as *;
+@use '../base/register' as *;
 
-[data-theme='light'],
-.theme-light {
+@include register-theme('light') {
   color-scheme: light;
 
   // =========================================================================

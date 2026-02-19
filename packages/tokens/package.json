@@ -15,6 +15,9 @@
     "dist"
   ],
   "exports": {
+    ".": {
+      "types": "./dist/types.d.ts"
+    },
     "./echarts/*": "./dist/echarts/*",
     "./plotly/*": "./dist/plotly/*",
     "./matplotlib/*": "./dist/matplotlib/*",
@@ -23,13 +26,13 @@
   "scripts": {
     "build": "tsx src/build.ts",
     "test": "vitest run",
+    "lint:ts": "eslint src/",
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
     "postcss": "^8.5.6",
     "soltana-ui": "workspace:*",
     "tsx": "^4.19.4",
-    "typescript": "^5.9.3",
     "vitest": "^3.2.4"
   }
 }

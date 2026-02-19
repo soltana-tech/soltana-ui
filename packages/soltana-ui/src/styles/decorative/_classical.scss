@@ -1,4 +1,5 @@
 @use 'sass:math';
+@use '../base/register' as *;
 
 // ---------------------------------------------------------------------------
 // Classical Layout Utilities
@@ -140,7 +141,7 @@ $golden-ratio: 1.618;
 // ---- Plinth — base section ----
 .plinth {
   padding: $golden-ratio * 1rem;
-  background: var(--relief-surface-raised);
+  @include finish-surface(var(--relief-surface-raised));
   border-top: 1px solid var(--border-default);
   position: relative;
 

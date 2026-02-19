@@ -54,6 +54,14 @@ let _enhancerCleanup: EnhancerCleanup | null = null;
 // Generation counter for stale-instance detection
 let _generation = 0;
 
+function validateOverrideKey(key: string, strict: boolean): boolean {
+  if (key.startsWith('--')) return true;
+  const msg = `[soltana] Override key "${key}" is not a CSS custom property (must start with "--")`;
+  if (strict) throw new Error(msg);
+  console.error(msg);
+  return false;
+}
+
 function resolveTheme(theme: Theme): string {
   if (theme !== 'auto') return theme;
   if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return 'dark';
@@ -63,12 +71,6 @@ function resolveTheme(theme: Theme): string {
 function applyOverrides(overrides: Record<string, string>): void {
   const root = document.documentElement;
   for (const [key, value] of Object.entries(overrides)) {
-    if (!key.startsWith('--')) {
-      console.error(
-        `[soltana] Override key "${key}" is not a CSS custom property (must start with "--")`
-      );
-      continue;
-    }
     root.style.setProperty(key, value);
   }
 }
@@ -157,13 +159,7 @@ export function initSoltana(
 
   // Filter invalid override keys from initial config
   state.overrides = Object.fromEntries(
-    Object.entries(state.overrides).filter(([key]) => {
-      if (key.startsWith('--')) return true;
-      console.error(
-        `[soltana] Override key "${key}" is not a CSS custom property (must start with "--")`
-      );
-      return false;
-    })
+    Object.entries(state.overrides).filter(([key]) => validateOverrideKey(key, initOpts.strict))
   );
 
   // Validate config values (only in strict mode)
@@ -234,17 +230,7 @@ export function initSoltana(
     setOverrides(overrides: Record<string, string>): void {
       const validOverrides: Record<string, string> = {};
       for (const [key, value] of Object.entries(overrides)) {
-        if (!key.startsWith('--')) {
-          if (initOpts.strict) {
-            throw new Error(
-              `[soltana] Override key "${key}" is not a CSS custom property (must start with "--")`
-            );
-          }
-          console.error(
-            `[soltana] Override key "${key}" is not a CSS custom property (must start with "--")`
-          );
-          continue;
-        }
+        if (!validateOverrideKey(key, initOpts.strict)) continue;
         validOverrides[key] = value;
       }
       state.overrides = { ...state.overrides, ...validOverrides };
@@ -255,17 +241,7 @@ export function initSoltana(
     removeOverrides(keys: string[]): void {
       const root = document.documentElement;
       for (const key of keys) {
-        if (!key.startsWith('--')) {
-          if (initOpts.strict) {
-            throw new Error(
-              `[soltana] Override key "${key}" is not a CSS custom property (must start with "--")`
-            );
-          }
-          console.error(
-            `[soltana] Override key "${key}" is not a CSS custom property (must start with "--")`
-          );
-          continue;
-        }
+        if (!validateOverrideKey(key, initOpts.strict)) continue;
         root.style.removeProperty(key);
       }
       const remaining = Object.fromEntries(
@@ -331,13 +307,7 @@ export function initSoltana(
       }
       teardownStylesheet();
       teardownAutoTheme();
-      if (_enhancerCleanup) {
-        try {
-          _enhancerCleanup.destroy();
-        } finally {
-          _enhancerCleanup = null;
-        }
-      }
+      resetEnhancers(false);
       const root = document.documentElement;
       root.removeAttribute('data-theme');
       root.removeAttribute('data-relief');

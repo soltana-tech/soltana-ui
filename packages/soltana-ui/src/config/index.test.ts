@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { registerTierValue } from './index.js';
+import { registerTierValue, deregisterTierValue } from './index.js';
 import { VALID_THEMES, VALID_RELIEFS, VALID_FINISHES } from './validation.js';
 
 describe('registerTierValue', () => {
@@ -25,6 +25,17 @@ describe('registerTierValue', () => {
       expect(arr.length).toBe(lengthBefore + 1);
     }
   );
+
+  it.each(['theme', 'relief', 'finish'] as const)('deregisters a custom %s value', (tier) => {
+    const value = `deregister-${tier}-${String(Date.now())}`;
+    const arr = tierArrays[tier];
+
+    registerTierValue(tier, value);
+    expect(arr).toContain(value);
+
+    deregisterTierValue(tier, value);
+    expect(arr).not.toContain(value);
+  });
 
   it('registered value suppresses strict-mode warning', () => {
     const spy = vi.spyOn(console, 'warn').mockImplementation(vi.fn());

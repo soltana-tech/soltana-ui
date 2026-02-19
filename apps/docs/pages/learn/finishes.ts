@@ -2,8 +2,9 @@
 
 import { sectionHeading, specimenBlock, codeExample } from '../../utils/helpers';
 
-export function renderFinishes(): string {
-  return `
+export function renderFinishes(): HTMLElement {
+  const page = document.createElement('div');
+  page.innerHTML = `
 <div class="page-finishes">
 
   ${sectionHeading('Finish Treatments', 'finishes', 'Four texture and finish variations applied on top of reliefs. Finishes adapt to the active relief.')}
@@ -84,4 +85,5 @@ export function renderFinishes(): string {
   )}
 
 </div>`;
+  return page;
 }

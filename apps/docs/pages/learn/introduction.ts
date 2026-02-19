@@ -1,17 +1,12 @@
-/** Getting Started page — 3-tier system overview, installation, configuration. */
+/** Getting Started page — hero, 3-tier overview, installation, recipes. */
 
-import {
-  codeExample,
-  sectionDivider,
-  quickNav,
-  sectionHeading,
-  specimenBlock,
-} from '../../utils/helpers';
+import { codeExample, sectionDivider, sectionHeading, specimenBlock } from '../../utils/helpers';
 import { RECIPES } from '@soltana/config';
 import type { RecipeName } from '@soltana/config';
 
-export function renderGettingStarted(): string {
-  return `
+export function renderGettingStarted(): HTMLElement {
+  const page = document.createElement('div');
+  page.innerHTML = `
 <div class="page-getting-started">
 
   <div class="text-center py-8 mb-8">
@@ -19,8 +14,6 @@ export function renderGettingStarted(): string {
     <p class="text-lg text-secondary max-w-2xl mx-auto mb-8" style="line-height: 1.6;">
       A CSS-first design system built on three independent tiers &mdash;
       Theme, Relief, and Finish &mdash; that compose orthogonally.
-      These docs cover installation, configuration, the token architecture,
-      and every shipped component.
     </p>
     <div class="flex flex-wrap justify-center gap-3 mb-10">
       <a href="#/playground" class="btn btn-primary">Try the Playground</a>
@@ -28,214 +21,144 @@ export function renderGettingStarted(): string {
     </div>
   </div>
 
-  ${sectionHeading('The 3-Tier System', 'three-tier', 'Soltana layers three independent dimensions of visual design. Each tier can be changed independently, creating dozens of unique combinations.')}
-
-  ${quickNav([
-    { label: '3-Tier System', href: '#three-tier' },
-    { label: 'Installation', href: '#installation' },
-    { label: 'Quick Start', href: '#quick-start' },
-    { label: 'Configuration', href: '#configuration' },
-  ])}
+  ${sectionHeading('The 3-Tier System', 'three-tier', 'Three independent axes of visual design. Change any tier without affecting the others.')}
 
   <div class="grid gap-6 mt-8" style="grid-template-columns: repeat(3, 1fr)">
     <div class="card p-5 rounded-xl flex flex-col gap-2" style="border-left: 4px solid var(--accent-primary);">
       <span class="text-3xl font-black" style="color: var(--accent-primary); line-height: 1;">1</span>
       <h4 class="font-semibold text-lg">Theme</h4>
-      <p class="text-sm text-secondary">The foundational color palette and tone.</p>
+      <p class="text-sm text-secondary">Color palette and tone for every surface, text, and accent token.</p>
       <div class="flex flex-wrap gap-2 mt-2">
         <span class="tag">dark</span>
         <span class="tag">light</span>
         <span class="tag">sepia</span>
         <span class="tag">auto</span>
       </div>
-      ${codeExample("soltana.setTheme('dark')", 'javascript')}
     </div>
     <div class="card p-5 rounded-xl flex flex-col gap-2" style="border-left: 4px solid var(--accent-primary);">
       <span class="text-3xl font-black" style="color: var(--accent-primary); line-height: 1;">2</span>
       <h4 class="font-semibold text-lg">Relief</h4>
-      <p class="text-sm text-secondary">Transforms how every component renders: shadows, blur, transparency.</p>
+      <p class="text-sm text-secondary">Shadow model controlling depth, blur, and border treatment.</p>
       <div class="flex flex-wrap gap-2 mt-2">
         <span class="tag">flat</span>
         <span class="tag">glassmorphic</span>
         <span class="tag">skeuomorphic</span>
         <span class="tag">neumorphic</span>
       </div>
-      ${codeExample("soltana.setRelief('neumorphic')", 'javascript')}
     </div>
     <div class="card p-5 rounded-xl flex flex-col gap-2" style="border-left: 4px solid var(--accent-primary);">
       <span class="text-3xl font-black" style="color: var(--accent-primary); line-height: 1;">3</span>
       <h4 class="font-semibold text-lg">Finish</h4>
-      <p class="text-sm text-secondary">Texture and finish applied on top of the relief.</p>
+      <p class="text-sm text-secondary">Surface treatment layered on top: backdrop blur, sheen, and overlays.</p>
       <div class="flex flex-wrap gap-2 mt-2">
         <span class="tag">matte</span>
         <span class="tag">frosted</span>
         <span class="tag">tinted</span>
         <span class="tag">glossy</span>
       </div>
-      ${codeExample("soltana.setFinish('matte')", 'javascript')}
     </div>
   </div>
 
+  <p class="text-base text-secondary mt-6">
+    3 themes &times; 4 reliefs &times; 4 finishes = <strong>48 unique combinations</strong>, all from one CSS file.
+    <a href="#/explore/examples" class="font-medium" style="color: var(--accent-primary);">See them in action &rarr;</a>
+  </p>
+
+  ${sectionDivider()}
+
+  ${sectionHeading('Installation', 'installation', 'Add Soltana to your project.')}
+
+  <div class="grid gap-6 mt-6" style="grid-template-columns: repeat(auto-fill, minmax(320px, 1fr))">
+    ${specimenBlock('npm / pnpm / yarn', codeExample('npm install soltana-ui', 'bash'))}
+    ${specimenBlock(
+      'CDN',
+      codeExample(
+        '<link rel="stylesheet" href="https://unpkg.com/soltana-ui/dist/soltana-ui.css">',
+        'html'
+      )
+    )}
+  </div>
+
   ${specimenBlock(
-    'Config is the Single Source of Truth',
+    'Initialize',
     `
-    <p class="text-sm text-secondary mb-4">Define defaults once in your config. All components automatically inherit them. Use override classes only for per-element exceptions:</p>
-    ${codeExample("// Initialize with your defaults\nconst soltana = initSoltana({\n  theme: 'dark',\n  relief: 'neumorphic',\n  finish: 'matte',\n});\n\n// All components now use these defaults\n// No data attributes needed!", 'javascript')}
-    ${codeExample('<!-- Components use global config -->\n<button class="btn btn-primary">Uses Global Relief</button>\n<div class="card p-6">Uses Global Relief</div>\n\n<!-- Override specific elements when needed -->\n<button class="btn relief-skeuomorphic">Skeuomorphic Override</button>\n<div class="card finish-frosted p-6">Frosted Override</div>', 'html')}
+    ${codeExample("import 'soltana-ui/css';\nimport { initSoltana } from 'soltana-ui';\n\nconst soltana = initSoltana({\n  theme: 'dark',\n  relief: 'neumorphic',\n  finish: 'matte',\n});", 'javascript')}
   `
   )}
 
   ${sectionDivider()}
 
-  ${sectionHeading('Installation', 'installation', 'Add Soltana to your project via npm or CDN.')}
+  ${sectionHeading('How It Works', 'how-it-works', 'Components consume semantic tokens that switch automatically when tiers change.')}
 
-  ${specimenBlock(
-    'npm / yarn',
-    `
-    ${codeExample('# npm\nnpm install soltana-ui\n\n# yarn\nyarn add soltana-ui\n\n# pnpm\npnpm add soltana-ui', 'bash')}
-    <p class="text-sm text-secondary mt-4">Then import in your JavaScript/TypeScript:</p>
-    ${codeExample("// Import styles\nimport 'soltana-ui/css';\n\n// Import and initialize\nimport { initSoltana } from 'soltana-ui';\n\nconst soltana = initSoltana({\n  theme: 'dark',\n  relief: 'neumorphic',\n  finish: 'matte',\n});", 'javascript')}
-  `
-  )}
-
-  ${specimenBlock(
-    'CDN',
-    `
-    <p class="text-sm text-secondary mb-4">For quick prototyping or static sites:</p>
-    ${codeExample('<!-- CSS only -->\n<link rel="stylesheet" href="https://unpkg.com/soltana-ui/dist/soltana-ui.css">\n\n<!-- With JavaScript -->\n<script type="module">\n  import { initSoltana } from "https://unpkg.com/soltana-ui";\n  const soltana = initSoltana({ theme: "dark", relief: "neumorphic" });\n</script>', 'html')}
-  `
-  )}
-
-  ${sectionDivider()}
-
-  ${sectionHeading('Quick Start', 'quick-start', 'Get up and running.')}
-
-  ${specimenBlock(
-    'Basic HTML Template',
-    `
-    ${codeExample('<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <title>My Soltana App</title>\n  <link rel="stylesheet" href="https://unpkg.com/soltana-ui/dist/soltana-ui.css">\n</head>\n<body>\n  <div class="container mx-auto p-8">\n    <h1 class="text-4xl font-serif mb-4">Welcome</h1>\n    <p class="text-secondary mb-6">Your elegant application starts here.</p>\n    <div class="flex gap-3">\n      <button class="btn btn-primary">Get Started</button>\n      <button class="btn btn-secondary">Learn More</button>\n    </div>\n  </div>\n\n  <script type="module">\n    import { initSoltana } from "https://unpkg.com/soltana-ui";\n    const soltana = initSoltana({\n      theme: "dark",\n      relief: "neumorphic",\n      finish: "matte",\n    });\n  </script>\n</body>\n</html>', 'html')}
-  `
-  )}
-
-  ${sectionDivider()}
-
-  ${sectionHeading('Configuration', 'configuration', 'Set default tiers, override tokens, and apply presets.')}
-
-  ${specimenBlock(
-    'soltana.config.js',
-    `
-    <p class="text-sm text-secondary mb-4">Create a configuration file in your project:</p>
-    ${codeExample("// soltana.config.js\nexport default {\n  // Base presets (required)\n  theme: 'dark',        // 'light' | 'dark' | 'sepia' | 'auto'\n  relief: 'neumorphic',   // 'flat' | 'glassmorphic' | 'skeuomorphic' | 'neumorphic'\n  finish: 'matte',  // 'matte' | 'frosted' | 'tinted' | 'glossy'\n  \n  // Variable overrides (optional)\n  overrides: {\n    '--accent-primary': '#ff6b6b',\n    '--gold-400': '#e8c547',\n    '--surface-bg': '#0a0a12',\n  },\n};", 'javascript')}
-    <p class="text-sm text-secondary mt-4">Then initialize with your config:</p>
-    ${codeExample("import config from './soltana.config.js';\nimport { initSoltana } from 'soltana-ui';\n\nconst soltana = initSoltana(config);", 'javascript')}
-  `
-  )}
-
-  ${specimenBlock(
-    'Runtime API',
-    `
-    <p class="text-sm text-secondary mb-4">Change tiers at runtime for user preferences or dynamic theming:</p>
-    ${codeExample("// Get current state\nconsole.log(soltana.getState());\n// { theme: 'dark', relief: 'neumorphic', finish: 'matte' }\n\n// Change individual tiers\nsoltana.setTheme('light');\nsoltana.setRelief('skeuomorphic');\nsoltana.setFinish('frosted');\n\n// Apply custom variable overrides\nsoltana.setOverrides({\n  '--accent-primary': '#your-brand-color',\n});\n\n// Reset to defaults\nsoltana.reset();", 'javascript')}
-  `
-  )}
-
-  ${specimenBlock(
-    'CSS Custom Properties',
-    `
-    <p class="text-sm text-secondary mb-4">Override any design token using CSS custom properties:</p>
-    ${codeExample(':root {\n  --accent-primary: #your-brand-color;\n  --accent-decorative: #your-gold-tone;\n  --font-serif: "Your Serif Font", serif;\n  --font-sans: "Your Sans Font", sans-serif;\n}', 'css')}
-  `
-  )}
-
-  ${sectionDivider()}
-
-  ${sectionHeading('Recipes', 'recipes', 'Named presets of proven tier combinations. Apply a recipe as a starting point, then customize individual tiers.')}
-
-  ${specimenBlock(
-    'Blessed Combinations',
-    `
-    <p class="text-sm text-secondary mb-4">Recipes are curated tier combinations that work well together. Each recipe sets all three tiers at once.</p>
-    <div class="grid gap-6 mt-6" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))">
-      ${(Object.keys(RECIPES) as RecipeName[])
-        .map((key) => {
-          const recipe = RECIPES[key];
-          const tierClasses = [
-            `theme-${recipe.theme}`,
-            `relief-${recipe.relief}`,
-            `finish-${recipe.finish}`,
-          ].join(' ');
-          return `
-            <div class="${tierClasses} card p-6 rounded-xl" style="display: flex; flex-direction: column; min-height: 200px;">
-              <span class="tag mb-2">${recipe.name}</span>
-              <p class="text-sm text-secondary mt-2 flex-1">${recipe.description}</p>
-              <div class="flex flex-wrap gap-2 mt-3">
-                <button class="btn btn-primary btn-sm">Primary</button>
-                <button class="btn btn-secondary btn-sm">Secondary</button>
-                <span class="badge badge-primary">Badge</span>
-              </div>
-              <div class="text-xs text-tertiary mt-3">
-                ${recipe.theme} / ${recipe.relief} / ${recipe.finish}
-              </div>
-            </div>`;
-        })
-        .join('')}
+  <div class="grid gap-6 mt-6" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))">
+    <div class="card p-5 rounded-xl">
+      <h4 class="font-semibold text-lg mb-2">Global Config</h4>
+      <p class="text-sm text-secondary">Set tiers once. All components inherit automatically via CSS custom properties on <code>&lt;html&gt;</code>.</p>
     </div>
-  `
-  )}
-
-  ${specimenBlock(
-    'Using Recipes',
-    `
-    <p class="text-sm text-secondary mb-4">Recipes set all three tiers at once via the <code>applyRecipe()</code> API. They are starting points — individual tiers can be changed afterward.</p>
-    ${codeExample("import { initSoltana } from 'soltana-ui';\n\nconst soltana = initSoltana();\n\n// Apply a recipe\nsoltana.applyRecipe('luxury-dark');\n\n// Customize individual tiers afterward\nsoltana.setFinish('frosted');", 'javascript')}
-    ${codeExample("import { RECIPES } from 'soltana-ui';\n\n// Inspect available recipes\nfor (const [key, recipe] of Object.entries(RECIPES)) {\n  console.log(key, recipe.name, recipe.description);\n}", 'javascript')}
-  `
-  )}
+    <div class="card p-5 rounded-xl">
+      <h4 class="font-semibold text-lg mb-2">Per-Element Overrides</h4>
+      <p class="text-sm text-secondary">Use utility classes like <code>.relief-flat</code> or <code>.theme-light</code> to override any element without affecting the rest of the page.</p>
+    </div>
+    <div class="card p-5 rounded-xl">
+      <h4 class="font-semibold text-lg mb-2">Runtime API</h4>
+      <p class="text-sm text-secondary">Switch tiers at runtime with <code>setTheme()</code>, <code>setRelief()</code>, <code>setFinish()</code>. Instant, no page reload.</p>
+    </div>
+  </div>
 
   ${sectionDivider()}
 
-  ${sectionHeading('Custom Tiers', 'custom-tiers', 'Define your own themes, reliefs, and finishes by implementing the CSS token contract for each tier.')}
+  ${sectionHeading('Recipes', 'recipes', 'Curated tier combinations as named presets.')}
 
-  ${specimenBlock(
-    'How It Works',
-    `
-    <p class="text-sm text-secondary mb-4">Each tier is driven by CSS custom properties set on <code>[data-{tier}]</code> attribute selectors. To add a custom option, define the required tokens in your CSS and pass the name to the config or setter methods. TypeScript provides autocomplete for built-in values while accepting any string.</p>
-    ${codeExample("// Custom values work alongside built-in ones\nconst soltana = initSoltana({\n  theme: 'midnight',  // your custom theme\n  relief: 'neumorphic',      // built-in\n  finish: 'brushed',  // your custom finish\n});\n\n// Setters accept custom values too\nsoltana.setTheme('neon');", 'javascript')}
-  `
-  )}
+  <div class="grid gap-6 mt-6" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))">
+    ${(Object.keys(RECIPES) as RecipeName[])
+      .map((key) => {
+        const recipe = RECIPES[key];
+        const tierClasses = [
+          `theme-${recipe.theme}`,
+          `relief-${recipe.relief}`,
+          `finish-${recipe.finish}`,
+        ].join(' ');
+        return `
+          <div class="${tierClasses} card p-6 rounded-xl" style="display: flex; flex-direction: column; min-height: 200px;">
+            <span class="tag mb-2">${recipe.name}</span>
+            <p class="text-sm text-secondary mt-2 flex-1">${recipe.description}</p>
+            <div class="flex flex-wrap gap-2 mt-3">
+              <button class="btn btn-primary btn-sm">Primary</button>
+              <button class="btn btn-secondary btn-sm">Secondary</button>
+              <span class="badge badge-primary">Badge</span>
+            </div>
+            <div class="text-xs text-tertiary mt-3">
+              ${recipe.theme} / ${recipe.relief} / ${recipe.finish}
+            </div>
+          </div>`;
+      })
+      .join('')}
+  </div>
 
-  ${specimenBlock(
-    'Custom Theme',
-    `
-    <p class="text-sm text-secondary mb-4">Themes require ~47 tokens across surface, text, border, accent, semantic, state, channel, and component groups. Start from an existing theme file and override the values.</p>
-    ${codeExample('[data-theme="midnight"] {\n  /* Surface */\n  --surface-bg: #0a0a1a;\n  --surface-1: #12122a;\n  --surface-2: #1a1a3a;\n  --surface-3: #22224a;\n  --surface-4: #2a2a5a;\n  /* Text */\n  --text-primary: #e8e8ff;\n  --text-secondary: #b0b0d0;\n  --text-tertiary: #8080a0;\n  --text-muted: #606080;\n  --text-inverse: #0a0a1a;\n\n  /* Accent, border, state, channel, component tokens... */\n  /* See src/styles/themes/_dark.scss for the full list */\n}', 'css')}
-  `
-  )}
+  ${sectionDivider()}
 
-  ${specimenBlock(
-    'Custom Relief',
-    `
-    <p class="text-sm text-secondary mb-4">Reliefs set 8 tokens controlling depth, shadows, and borders. These consume channel tokens (<code>--shadow-color</code>, <code>--highlight-color</code>) from the active theme.</p>
-    ${codeExample('[data-relief="glass"] {\n  --relief-bg: rgb(255 255 255 / 5%);\n  --relief-shadow-sm: 0 1px 2px rgb(var(--shadow-color) / 8%);\n  --relief-shadow: 0 4px 12px rgb(var(--shadow-color) / 12%);\n  --relief-shadow-lg: 0 8px 32px rgb(var(--shadow-color) / 18%);\n  --relief-shadow-inset-sm: inset 0 1px 1px rgb(var(--highlight-color) / 6%);\n  --relief-shadow-inset: inset 0 2px 4px rgb(var(--highlight-color) / 10%);\n  --relief-shadow-inset-lg: inset 0 4px 8px rgb(var(--highlight-color) / 14%);\n  --relief-border: 1px solid rgb(255 255 255 / 8%);\n}', 'css')}
-  `
-  )}
+  ${sectionHeading('Next Steps', 'next-steps')}
 
-  ${specimenBlock(
-    'Custom Finish',
-    `
-    <p class="text-sm text-secondary mb-4">Finishes control 5 tokens for backdrop filters, overlays, and sheen effects.</p>
-    ${codeExample('[data-finish="brushed"] {\n  --finish-blur: 0px;\n  --finish-saturation: 100%;\n  --finish-opacity: 1;\n  --finish-overlay: linear-gradient(135deg, transparent 40%, rgb(255 255 255 / 3%) 100%);\n  --finish-sheen: none;\n}', 'css')}
-  `
-  )}
-
-  ${specimenBlock(
-    'Custom Recipes',
-    `
-    <p class="text-sm text-secondary mb-4">Register named presets that combine your custom tiers with built-in ones.</p>
-    ${codeExample("soltana.registerRecipe('my-brand', {\n  name: 'My Brand',\n  description: 'Dark midnight theme with glass relief.',\n  theme: 'midnight',\n  relief: 'glass',\n  finish: 'brushed',\n});\n\nsoltana.applyRecipe('my-brand');", 'javascript')}
-  `
-  )}
+  <div class="grid gap-4 mt-6" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr))">
+    <a href="#/learn/themes" class="card card-hover p-5 rounded-xl" style="text-decoration: none;">
+      <h4 class="font-semibold text-lg">Themes</h4>
+      <p class="text-sm text-secondary mt-1">Deep dive into color schemes</p>
+    </a>
+    <a href="#/learn/reliefs" class="card card-hover p-5 rounded-xl" style="text-decoration: none;">
+      <h4 class="font-semibold text-lg">Reliefs</h4>
+      <p class="text-sm text-secondary mt-1">Shadow models explained</p>
+    </a>
+    <a href="#/learn/finishes" class="card card-hover p-5 rounded-xl" style="text-decoration: none;">
+      <h4 class="font-semibold text-lg">Finishes</h4>
+      <p class="text-sm text-secondary mt-1">Surface treatments guide</p>
+    </a>
+    <a href="#/api/core" class="card card-hover p-5 rounded-xl" style="text-decoration: none;">
+      <h4 class="font-semibold text-lg">API Reference</h4>
+      <p class="text-sm text-secondary mt-1">Full JavaScript API docs</p>
+    </a>
+  </div>
 
 </div>
 `;
+  return page;
 }

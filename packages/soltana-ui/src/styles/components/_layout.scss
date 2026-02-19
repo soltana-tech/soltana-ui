@@ -19,7 +19,7 @@
 .app-header {
   position: sticky;
   top: 0;
-  z-index: 40;
+  z-index: var(--z-40);
   background: var(--surface-1);
   border-bottom: 1px solid var(--border-subtle);
 }
@@ -47,7 +47,7 @@
   justify-content: space-between;
   width: 100%;
   padding: 0.5rem 1.25rem;
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: var(--tracking-elegant);
@@ -78,7 +78,7 @@
   margin: 0;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.25s ease;
+  transition: max-height var(--transition-slow) var(--easing-in-out);
 
   .sidebar__section--expanded > & {
     max-height: 60rem;
@@ -87,23 +87,41 @@
 
 // Navigation link
 .sidebar__link {
-  display: block;
-  padding: 0.5rem 1.25rem 0.5rem 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.625rem 1.25rem 0.625rem 1.5rem;
   font-size: var(--text-base);
   color: var(--text-secondary);
   border-left: 2px solid transparent;
   text-decoration: none;
   @include transition-interactive;
 
+  svg {
+    flex-shrink: 0;
+    width: 1.125rem;
+    height: 1.125rem;
+    opacity: 0.6;
+    transition: opacity var(--transition-normal) var(--easing-in-out);
+  }
+
   &:hover {
     color: var(--text-primary);
     background: var(--state-hover);
+
+    svg {
+      opacity: 1;
+    }
   }
 
   &--active {
     color: var(--text-primary);
     border-left-color: var(--accent-primary);
     background: color-mix(in srgb, var(--accent-primary) 8%, transparent);
+
+    svg {
+      opacity: 1;
+    }
   }
 }
 

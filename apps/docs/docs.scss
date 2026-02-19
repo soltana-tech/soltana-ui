@@ -5,8 +5,8 @@
   top: 0;
   z-index: 40;
   background: var(--surface-1);
-  border-bottom: 2px solid rgb(212 168 67 / 15%);
-  box-shadow: 0 2px 16px rgb(0 0 0 / 12%);
+  border-bottom: 2px solid color-mix(in srgb, var(--accent-decorative) 15%, transparent);
+  box-shadow: 0 2px 16px rgb(var(--shadow-color) / 12%);
 }
 
 .docs-header__inner {
@@ -20,7 +20,7 @@
 }
 
 .docs-logo {
-  filter: drop-shadow(0 2px 8px rgb(212 168 67 / 30%));
+  filter: drop-shadow(0 2px 8px color-mix(in srgb, var(--accent-decorative) 30%, transparent));
 }
 
 .app-layout {
@@ -53,8 +53,8 @@
   color: var(--text-secondary);
   cursor: pointer;
   transition:
-    color 0.15s ease,
-    background-color 0.15s ease;
+    color var(--transition-normal) var(--easing-in-out),
+    background-color var(--transition-normal) var(--easing-in-out);
 
   &:hover {
     color: var(--text-primary);
@@ -67,12 +67,12 @@
   position: fixed;
   inset: 0;
   z-index: 49;
-  background: rgb(0 0 0 / 50%);
+  background: rgb(var(--shadow-color) / 50%);
   opacity: 0;
   visibility: hidden;
   transition:
-    opacity 0.25s ease,
-    visibility 0.25s ease;
+    opacity var(--transition-slow) var(--easing-in-out),
+    visibility var(--transition-slow) var(--easing-in-out);
 
   &.active {
     opacity: 1;
@@ -80,18 +80,62 @@
   }
 }
 
+sol-preview {
+  display: block;
+}
+
 .sandbox__preview-frame {
-  border: none;
-  width: 100%;
   min-height: 20rem;
 
-  &.a11y-high-contrast {
+  iframe {
+    border: none;
+    width: 100%;
+    min-height: inherit;
+  }
+
+  &.a11y-high-contrast iframe {
     filter: contrast(1.5);
   }
 }
 
 .central-playground .sandbox__preview-frame {
-  min-height: 24rem;
+  min-height: 28rem;
+}
+
+// Sandbox two-column layout (preview left, controls right)
+.sandbox__layout {
+  display: grid;
+  grid-template-columns: 1fr 20rem;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+// Custom select dropdown (replaces native <select> for full styling)
+.custom-select {
+  position: relative;
+}
+
+.custom-select__trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.custom-select__menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: var(--z-dropdown);
+  max-height: 24rem;
+  overflow-y: auto;
+  margin-top: 0.25rem;
+
+  .dropdown-item {
+    padding-left: 1.5rem;
+  }
 }
 
 .search {
@@ -120,6 +164,11 @@
   background: rgb(0 0 0 / 50%);
 }
 
+// Table wrapper for horizontal scroll on narrow viewports
+.table-container {
+  overflow-x: auto;
+}
+
 // Swatch-specific (color palette display)
 
 .swatch-grid {
@@ -137,6 +186,10 @@
 }
 
 @media (width <= 768px) {
+  .sandbox__layout {
+    grid-template-columns: 1fr;
+  }
+
   .swatch-grid {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   }

@@ -1,8 +1,22 @@
 name: Accessibility Matrix
 
 on:
-  schedule:
-    - cron: '0 6 * * 1' # Monday 06:00 UTC
+  push:
+    branches: [main]
+    paths:
+      - 'packages/soltana-ui/src/styles/**'
+      - 'tests/a11y-matrix/**'
+      - 'tests/fixtures/render.ts'
+      - 'tests/fixtures/combinations.ts'
+      - 'tests/fixtures/assets.ts'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'packages/soltana-ui/src/styles/**'
+      - 'tests/a11y-matrix/**'
+      - 'tests/fixtures/render.ts'
+      - 'tests/fixtures/combinations.ts'
+      - 'tests/fixtures/assets.ts'
   workflow_dispatch:
 
 env:
@@ -25,6 +39,9 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm run build
 
       - name: Install Chromium
         run: pnpm exec playwright install --with-deps chromium

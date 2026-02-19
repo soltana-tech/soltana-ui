@@ -5,8 +5,8 @@
 // without DOM access (SSR, build-time bundling).
 // ---------------------------------------------------------------------------
 
-import dark from '../../tokens/dist/echarts/dark.json';
-import light from '../../tokens/dist/echarts/light.json';
-import sepia from '../../tokens/dist/echarts/sepia.json';
+import dark from '@soltana-ui/tokens/echarts/dark.json';
+import light from '@soltana-ui/tokens/echarts/light.json';
+import sepia from '@soltana-ui/tokens/echarts/sepia.json';
 
 export { dark, light, sepia };

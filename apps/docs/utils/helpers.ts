@@ -18,8 +18,8 @@ export function escapeHtml(str: string): string {
 export function sectionHeading(title: string, id: string, description?: string): string {
   return `
     <div class="pt-2 mb-8" id="${id}">
-      <h2 class="text-3xl font-bold">${title}</h2>
-      ${description ? `<p class="text-secondary mt-2">${description}</p>` : ''}
+      <h2 class="text-4xl font-bold">${title}</h2>
+      ${description ? `<p class="text-lg text-secondary mt-3">${description}</p>` : ''}
     </div>`;
 }
 
@@ -52,7 +52,7 @@ export function quickNavFromLabels(labels: string[], hrefPrefix: string): string
 export function specimenBlock(title: string, content: string, className = ''): string {
   return `
     <div class="card p-6 rounded-xl mt-8 ${className}">
-      <h3 class="text-lg font-semibold mb-4">${title}</h3>
+      <h3 class="text-xl font-semibold mb-4">${title}</h3>
       ${content}
     </div>`;
 }
@@ -63,7 +63,7 @@ export function specimenBlock(title: string, content: string, className = ''): s
 export function specimen(title: string, id: string, content: string, code?: string): string {
   return `
     <div class="mt-10" id="${id}">
-      <h3 class="text-xl font-semibold mb-4">${title}</h3>
+      <h3 class="text-2xl font-semibold mb-4">${title}</h3>
       <div class="card rounded-xl overflow-hidden">
         <div class="p-6">
           ${content}

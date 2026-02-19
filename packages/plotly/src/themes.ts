@@ -5,8 +5,8 @@
 // without DOM access (SSR, build-time bundling).
 // ---------------------------------------------------------------------------
 
-import dark from '../../tokens/dist/plotly/dark.json';
-import light from '../../tokens/dist/plotly/light.json';
-import sepia from '../../tokens/dist/plotly/sepia.json';
+import dark from '@soltana-ui/tokens/plotly/dark.json';
+import light from '@soltana-ui/tokens/plotly/light.json';
+import sepia from '@soltana-ui/tokens/plotly/sepia.json';
 
 export { dark, light, sepia };

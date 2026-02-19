@@ -1,17 +1,5 @@
-import fs from 'node:fs';
-import path from 'node:path';
 import { test, expect } from '@playwright/test';
-
-const CSS_PATH = path.resolve('packages/soltana-ui/dist/soltana-ui.css');
-
-let cssCache: string | null = null;
-
-function getCSS(): string {
-  if (!cssCache) {
-    cssCache = fs.readFileSync(CSS_PATH, 'utf-8');
-  }
-  return cssCache;
-}
+import { getCSS } from './fixtures/assets';
 
 function cardHTML(extraClasses: string = ''): string {
   const cls = extraClasses ? ` ${extraClasses}` : '';

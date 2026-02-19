@@ -3,41 +3,53 @@
  * Each returns a self-contained HTML fragment suitable for setupSoltanaPage({ bodyHTML }).
  */
 
-export function modalHTML(id = 'test-modal'): string {
+interface ModalOptions {
+  id: string;
+  triggerLabel?: string;
+  closeLabel?: string;
+  bodyContent?: string;
+}
+
+function buildModalHTML(options: ModalOptions): string {
+  const { id, triggerLabel = 'Open Modal', closeLabel, bodyContent = '' } = options;
+  const closeBtn = closeLabel ? `<button data-modal-close>${closeLabel}</button>` : '';
   return `
-    <button data-modal-open="${id}">Open Modal</button>
+    <button data-modal-open="${id}">${triggerLabel}</button>
     <div id="${id}" data-sol-modal aria-hidden="true">
       <div class="modal-backdrop"></div>
       <div class="modal" role="dialog" aria-modal="true">
-        <button data-modal-close>Close</button>
-        <input type="text" placeholder="Focus target" />
-        <button>Another button</button>
+        ${closeBtn}
+        ${bodyContent}
       </div>
     </div>`;
+}
+
+export function modalHTML(id = 'test-modal'): string {
+  return buildModalHTML({
+    id,
+    closeLabel: 'Close',
+    bodyContent:
+      '<input type="text" placeholder="Focus target" />\n        <button>Another button</button>',
+  });
 }
 
 export function multiModalHTML(): string {
   return `
     ${modalHTML('modal-a')}
-    <button data-modal-open="modal-b">Open Modal B</button>
-    <div id="modal-b" data-sol-modal aria-hidden="true">
-      <div class="modal-backdrop"></div>
-      <div class="modal" role="dialog" aria-modal="true">
-        <button data-modal-close>Close B</button>
-        <a href="#">Link in B</a>
-      </div>
-    </div>`;
+    ${buildModalHTML({
+      id: 'modal-b',
+      triggerLabel: 'Open Modal B',
+      closeLabel: 'Close B',
+      bodyContent: '<a href="#">Link in B</a>',
+    })}`;
 }
 
 export function modalNoFocusableHTML(id = 'no-focus-modal'): string {
-  return `
-    <button data-modal-open="${id}">Open</button>
-    <div id="${id}" data-sol-modal aria-hidden="true">
-      <div class="modal-backdrop"></div>
-      <div class="modal" role="dialog" aria-modal="true">
-        <p>No focusable elements here.</p>
-      </div>
-    </div>`;
+  return buildModalHTML({
+    id,
+    triggerLabel: 'Open',
+    bodyContent: '<p>No focusable elements here.</p>',
+  });
 }
 
 export function tabsHTML(tabCount = 3): string {

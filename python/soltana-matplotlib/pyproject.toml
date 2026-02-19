@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "soltana-matplotlib"
 version = "0.1.0"
 description = "Matplotlib styles for the Soltana UI design system."
-readme = { text = "Pre-built `.mplstyle` themes (dark, light, sepia) from the Soltana UI 4-tier design system.", content-type = "text/plain" }
+readme = { text = "Pre-built `.mplstyle` themes (dark, light, sepia) from the Soltana UI 3-tier design system.", content-type = "text/plain" }
 license = "MIT"
 requires-python = ">=3.9"
 dependencies = ["matplotlib>=3.7"]

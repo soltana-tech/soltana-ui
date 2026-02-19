@@ -28,7 +28,10 @@ function ensureSheet(): CSSStyleSheet {
     styleElement = document.createElement('style');
     styleElement.id = 'soltana-custom';
     document.head.appendChild(styleElement);
-    sheet = styleElement.sheet!;
+    if (!styleElement.sheet) {
+      throw new Error('[soltana] Failed to create stylesheet — styleElement.sheet is null');
+    }
+    sheet = styleElement.sheet;
   }
 
   return sheet;
@@ -72,9 +75,4 @@ export function teardown(): void {
   }
   sheet = null;
   styleElement = null;
-}
-
-/** Test-only: reset module state for isolation between tests. */
-export function _resetStylesheet(): void {
-  teardown();
 }

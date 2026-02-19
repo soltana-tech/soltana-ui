@@ -149,14 +149,7 @@
     position: absolute;
     inset: 0;
     background-color: var(--text-inverse);
-    -webkit-mask-image: var(--icon-checkbox-mask);
-    mask-image: var(--icon-checkbox-mask);
-    -webkit-mask-size: 0.75rem;
-    mask-size: 0.75rem;
-    -webkit-mask-position: center;
-    mask-position: center;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
+    @include mask(var(--icon-checkbox-mask), 0.75rem, no-repeat, center);
   }
 }
 
@@ -169,14 +162,7 @@
     position: absolute;
     inset: 0;
     background-color: var(--text-inverse);
-    -webkit-mask-image: var(--icon-radio-mask);
-    mask-image: var(--icon-radio-mask);
-    -webkit-mask-size: 1rem;
-    mask-size: 1rem;
-    -webkit-mask-position: center;
-    mask-position: center;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
+    @include mask(var(--icon-radio-mask), 1rem, no-repeat, center);
   }
 }
 

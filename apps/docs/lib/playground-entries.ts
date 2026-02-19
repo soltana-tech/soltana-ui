@@ -807,11 +807,11 @@ registerComponent({
   renderPreview: (_state: SandboxState) => `
     <div>
       <button class="btn btn-primary" data-modal-open="playground-modal">Open Modal</button>
-      <div class="modal-backdrop" id="playground-modal">
+      <div class="modal-backdrop" id="playground-modal" data-sol-modal>
         <div class="modal">
           <div class="modal-header">
             <h4 class="font-semibold">Confirm Action</h4>
-            <button class="modal-close" data-modal-close="playground-modal">&times;</button>
+            <button class="close" data-modal-close="playground-modal">&times;</button>
           </div>
           <div class="modal-body">
             <p class="text-secondary text-sm">Are you sure you want to proceed?</p>
@@ -838,15 +838,15 @@ registerComponent({
       </div>
       <div>
         <div class="flex justify-between mb-1"><span class="text-sm">Success</span><span class="text-sm text-muted">80%</span></div>
-        <div class="progress"><div class="progress-bar progress-success" style="width: 80%"></div></div>
+        <div class="progress progress-success"><div class="progress-bar" style="width: 80%"></div></div>
       </div>
       <div>
         <div class="flex justify-between mb-1"><span class="text-sm">Warning</span><span class="text-sm text-muted">45%</span></div>
-        <div class="progress"><div class="progress-bar progress-warning" style="width: 45%"></div></div>
+        <div class="progress progress-warning"><div class="progress-bar" style="width: 45%"></div></div>
       </div>
       <div>
         <div class="flex justify-between mb-1"><span class="text-sm">Error</span><span class="text-sm text-muted">20%</span></div>
-        <div class="progress"><div class="progress-bar progress-error" style="width: 20%"></div></div>
+        <div class="progress progress-error"><div class="progress-bar" style="width: 20%"></div></div>
       </div>
     </div>`,
 });

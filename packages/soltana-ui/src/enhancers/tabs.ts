@@ -108,31 +108,30 @@ export function initTabs(options?: EnhancerOptions): EnhancerCleanup {
     });
 
     // Keyboard navigation on the tablist
-    const tablist = container.querySelector('[role="tablist"]');
+    const tablist = container.querySelector<HTMLElement>('[role="tablist"]');
     tablist?.addEventListener(
       'keydown',
-      (e: Event) => {
-        const ke = e as KeyboardEvent;
+      (e: KeyboardEvent) => {
         const current = getActiveIndex(container);
         let next = current;
 
-        switch (ke.key) {
+        switch (e.key) {
           case 'ArrowRight':
           case 'ArrowDown':
-            ke.preventDefault();
+            e.preventDefault();
             next = (current + 1) % count;
             break;
           case 'ArrowLeft':
           case 'ArrowUp':
-            ke.preventDefault();
+            e.preventDefault();
             next = (current - 1 + count) % count;
             break;
           case 'Home':
-            ke.preventDefault();
+            e.preventDefault();
             next = 0;
             break;
           case 'End':
-            ke.preventDefault();
+            e.preventDefault();
             next = count - 1;
             break;
           default:

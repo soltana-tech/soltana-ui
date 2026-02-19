@@ -140,15 +140,3 @@ export class Router {
     });
   }
 }
-
-/**
- * Wraps a string-returning page renderer into an HTMLElement factory.
- * Provides backward compatibility during migration from TabRouter.
- */
-export function migrationShim(renderer: () => string): () => HTMLElement {
-  return () => {
-    const wrapper = document.createElement('div');
-    wrapper.innerHTML = renderer();
-    return wrapper;
-  };
-}

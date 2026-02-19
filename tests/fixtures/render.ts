@@ -1,22 +1,11 @@
-import fs from 'node:fs';
-import path from 'node:path';
 import type { Page } from '@playwright/test';
 import type { TierCombination } from './combinations';
-
-const CSS_PATH = path.resolve('packages/soltana-ui/dist/soltana-ui.css');
-
-let cssCache: string | null = null;
-
-function getCSS(): string {
-  if (!cssCache) {
-    cssCache = fs.readFileSync(CSS_PATH, 'utf-8');
-  }
-  return cssCache;
-}
+import { buildTestDocument } from './assets';
 
 function componentHTML(): string {
   return `
     <main style="padding: 2rem; display: flex; flex-direction: column; gap: 1.5rem;">
+      <h1 class="sr-only">Soltana UI Component Test</h1>
 
       <!-- Buttons -->
       <section>
@@ -91,23 +80,12 @@ function componentHTML(): string {
 }
 
 export async function renderCombination(page: Page, combo: TierCombination): Promise<void> {
-  const css = getCSS();
-
-  const html = `<!DOCTYPE html>
-<html lang="en"
-  data-theme="${combo.theme}"
-  data-relief="${combo.relief}"
-  data-finish="${combo.finish}">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Soltana UI Test</title>
-  <style>${css}</style>
-</head>
-<body>
-  ${componentHTML()}
-</body>
-</html>`;
+  const html = buildTestDocument({
+    theme: combo.theme,
+    relief: combo.relief,
+    finish: combo.finish,
+    bodyHTML: componentHTML(),
+  });
 
   await page.setContent(html, { waitUntil: 'domcontentloaded' });
 }

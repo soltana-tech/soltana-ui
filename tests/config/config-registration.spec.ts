@@ -1,31 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { setupSoltanaPage } from '../fixtures/soltana-page';
 import { getTierAttributes } from '../fixtures/helpers';
-
-const THEME_SEED = {
-  surfaceBg: '#1a1a2e',
-  textPrimary: '#e0e0e0',
-  accentPrimary: '#e94560',
-};
-
-const RELIEF_TOKENS = {
-  '--relief-bg': 'var(--surface-1)',
-  '--relief-shadow-sm': 'none',
-  '--relief-shadow': 'none',
-  '--relief-shadow-lg': 'none',
-  '--relief-shadow-inset-sm': 'none',
-  '--relief-shadow-inset': 'none',
-  '--relief-shadow-inset-lg': 'none',
-  '--relief-border': '1px solid var(--border-default)',
-};
-
-const FINISH_TOKENS = {
-  '--finish-blur': '0px',
-  '--finish-saturation': '1',
-  '--finish-opacity': '1',
-  '--finish-overlay': 'none',
-  '--finish-sheen': 'none',
-};
+import { THEME_SEED, RELIEF_TOKENS, FINISH_TOKENS } from '../fixtures/registration-seeds';
 
 test.describe('runtime registration', () => {
   test('registerTheme + setTheme applies data attribute', async ({ page }) => {

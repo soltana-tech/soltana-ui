@@ -2,8 +2,9 @@
 
 import { sectionHeading, specimenBlock, codeExample } from '../../utils/helpers';
 
-export function renderReliefs(): string {
-  return `
+export function renderReliefs(): HTMLElement {
+  const page = document.createElement('div');
+  page.innerHTML = `
 <div class="page-reliefs">
 
   ${sectionHeading('Reliefs', 'reliefs', 'Four design paradigms that fundamentally transform how every component renders. Use the <a href="#/playground">Playground</a> to preview interactively.')}
@@ -72,4 +73,5 @@ export function renderReliefs(): string {
   )}
 
 </div>`;
+  return page;
 }

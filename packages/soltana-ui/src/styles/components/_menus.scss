@@ -156,8 +156,7 @@
   white-space: nowrap;
   @include transition-interactive(var(--transition-normal));
 
-  &:hover {
-    background-color: var(--state-hover);
+  @include hover-state {
     color: var(--accent-primary);
   }
 

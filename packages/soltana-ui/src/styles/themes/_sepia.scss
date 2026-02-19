@@ -5,9 +5,9 @@
 // ---------------------------------------------------------------------------
 
 @use '../variables' as *;
+@use '../base/register' as *;
 
-[data-theme='sepia'],
-.theme-sepia {
+@include register-theme('sepia') {
   color-scheme: light;
 
   // =========================================================================

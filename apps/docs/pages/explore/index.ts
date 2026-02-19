@@ -6,7 +6,7 @@ import { createDefaultState } from '../../lib/sandbox-state';
 
 const CATEGORY_ORDER = ['General', 'Navigation', 'Data Entry', 'Data Display', 'Feedback'];
 
-export function renderComponentsIndex(): string {
+export function renderComponentsIndex(): HTMLElement {
   const components = getAllComponents();
   const defaultState = createDefaultState();
 
@@ -51,9 +51,11 @@ export function renderComponentsIndex(): string {
     })
     .join('');
 
-  return `
+  const page = document.createElement('div');
+  page.innerHTML = `
 <div class="page-components-index">
   ${sectionHeading('Components', 'components', 'Live component gallery. Click any component to open it in the interactive playground.')}
   ${sectionsHtml}
 </div>`;
+  return page;
 }

@@ -6,10 +6,9 @@
 // ---------------------------------------------------------------------------
 
 @use '../variables' as *;
+@use '../base/register' as *;
 
-:root,
-[data-theme='dark'],
-.theme-dark {
+@include register-theme('dark', $include-root: true) {
   color-scheme: dark;
 
   // =========================================================================

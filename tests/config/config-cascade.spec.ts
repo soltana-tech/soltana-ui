@@ -30,7 +30,7 @@ test.describe('multi-tier cascade integration', () => {
     });
   }
 
-  test('all four tiers contribute independently to computed styles', async ({ page }) => {
+  test('all three tiers contribute independently to computed styles', async ({ page }) => {
     await setupSoltanaPage(page);
 
     // Apply a known combination where all tiers produce distinct tokens

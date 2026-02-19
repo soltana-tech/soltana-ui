@@ -7,14 +7,6 @@ test.describe('cross-tier interaction', () => {
     await setupSoltanaPage(page);
 
     await page.evaluate(() => {
-      window.SoltanaUI.initSoltana({
-        theme: 'dark',
-        relief: 'flat',
-        finish: 'frosted',
-      });
-    });
-
-    await page.evaluate(() => {
       const sol = window.SoltanaUI.initSoltana({
         theme: 'dark',
         relief: 'flat',

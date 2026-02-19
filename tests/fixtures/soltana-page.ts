@@ -1,22 +1,5 @@
-import fs from 'node:fs';
-import path from 'node:path';
 import type { Page } from '@playwright/test';
-
-const CSS_PATH = path.resolve('packages/soltana-ui/dist/soltana-ui.css');
-const JS_PATH = path.resolve('packages/soltana-ui/dist/soltana-ui.umd.cjs');
-
-let cssCache: string | null = null;
-let jsCache: string | null = null;
-
-function getCSS(): string {
-  if (!cssCache) cssCache = fs.readFileSync(CSS_PATH, 'utf-8');
-  return cssCache;
-}
-
-function getJS(): string {
-  if (!jsCache) jsCache = fs.readFileSync(JS_PATH, 'utf-8');
-  return jsCache;
-}
+import { buildTestDocument } from './assets';
 
 export interface SoltanaPageOptions {
   bodyHTML?: string;
@@ -35,27 +18,15 @@ export async function setupSoltanaPage(
   page: Page,
   options: SoltanaPageOptions = {}
 ): Promise<void> {
-  const css = getCSS();
-  const js = getJS();
-
   const attrs = options.initialAttrs ?? {};
-  const attrStr = Object.entries(attrs)
-    .map(([k, v]) => `data-${k}="${v}"`)
-    .join(' ');
 
-  const html = `<!DOCTYPE html>
-<html lang="en" ${attrStr}>
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Soltana Test</title>
-  <style>${css}</style>
-</head>
-<body>
-  ${options.bodyHTML ?? ''}
-  <script>${js}</script>
-</body>
-</html>`;
+  const html = buildTestDocument({
+    theme: attrs.theme,
+    relief: attrs.relief,
+    finish: attrs.finish,
+    bodyHTML: options.bodyHTML,
+    includeJS: true,
+  });
 
   await page.setContent(html, { waitUntil: 'domcontentloaded' });
 }

@@ -40,6 +40,20 @@ export function deregisterTierValue(tier: TierName, value: string): void {
   }
 }
 
+/**
+ * Live registry of valid theme values. Includes built-in themes, 'auto', and
+ * any values added at runtime via `registerTierValue()` or `registerTheme()`.
+ */
 export const VALID_THEMES: readonly string[] = _themes;
+
+/**
+ * Live registry of valid relief values. Includes built-in reliefs and any
+ * values added at runtime via `registerTierValue()` or `registerRelief()`.
+ */
 export const VALID_RELIEFS: readonly string[] = _reliefs;
+
+/**
+ * Live registry of valid finish values. Includes built-in finishes and any
+ * values added at runtime via `registerTierValue()` or `registerFinish()`.
+ */
 export const VALID_FINISHES: readonly string[] = _finishes;

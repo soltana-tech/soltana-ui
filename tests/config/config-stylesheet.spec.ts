@@ -1,30 +1,11 @@
 import { test, expect } from '@playwright/test';
 import { setupSoltanaPage } from '../fixtures/soltana-page';
 import { getComputedCSSProperty } from '../fixtures/helpers';
-
-const THEME_SEED = {
-  surfaceBg: '#1a1a2e',
-  textPrimary: '#e0e0e0',
-  accentPrimary: '#e94560',
-};
-
-const SECOND_SEED = {
-  surfaceBg: '#f6f7fa',
-  textPrimary: '#1e2128',
-  accentPrimary: '#576378',
-  colorScheme: 'light' as const,
-};
-
-const RELIEF_TOKENS = {
-  '--relief-bg': 'var(--surface-1)',
-  '--relief-shadow-sm': 'none',
-  '--relief-shadow': 'none',
-  '--relief-shadow-lg': 'none',
-  '--relief-shadow-inset-sm': 'none',
-  '--relief-shadow-inset': 'none',
-  '--relief-shadow-inset-lg': 'none',
-  '--relief-border': '1px solid var(--border-default)',
-};
+import {
+  THEME_SEED,
+  SECOND_THEME_SEED as SECOND_SEED,
+  RELIEF_TOKENS,
+} from '../fixtures/registration-seeds';
 
 test.describe('stylesheet behavior via public API', () => {
   test('registerTheme + setTheme reflects registered token values in computed styles', async ({

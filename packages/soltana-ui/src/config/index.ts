@@ -32,7 +32,3 @@ export type {
 } from './types.js';
 
 export { RECIPES, registerRecipe } from './recipes.js';
-
-export { registerTheme, registerRelief, registerFinish } from './register.js';
-
-export { insertRule, removeRules, teardown } from './stylesheet.js';

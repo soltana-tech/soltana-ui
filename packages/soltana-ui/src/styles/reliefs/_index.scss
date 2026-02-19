@@ -16,7 +16,7 @@
   --relief-shadow-inset-sm: none;
   --relief-shadow-inset: none;
   --relief-shadow-inset-lg: none;
-  --relief-border: 1px solid var(--relief-border-default);
+  --relief-border: var(--relief-border-default);
 }
 
 @include register-relief('glassmorphic') {
@@ -30,7 +30,7 @@
   --relief-shadow-inset: inset 0 1px 0 rgb(var(--highlight-color) / 12%);
   --relief-shadow-inset-lg:
     inset 0 1px 0 rgb(var(--highlight-color) / 15%), inset 0 -0.5px 0 rgb(var(--shadow-color) / 4%);
-  --relief-border: 1px solid rgb(var(--highlight-color) / 12%);
+  --relief-border: rgb(var(--highlight-color) / 12%);
 }
 
 @include register-relief('skeuomorphic') {
@@ -47,7 +47,7 @@
     inset 0 1px 0 rgb(var(--highlight-color) / 15%), inset 0 -2px 4px rgb(var(--shadow-color) / 14%);
   --relief-shadow-inset-lg:
     inset 0 2px 0 rgb(var(--highlight-color) / 18%), inset 0 -4px 8px rgb(var(--shadow-color) / 18%);
-  --relief-border: 1px solid rgb(var(--shadow-color) / 8%);
+  --relief-border: rgb(var(--shadow-color) / 8%);
 }
 
 @include register-relief('neumorphic') {

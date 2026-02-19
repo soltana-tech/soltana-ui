@@ -16,10 +16,10 @@ token set — there is no `.theme-auto` utility class.
 
 ## Competitive Positioning
 
-No existing CSS design system offers a composable, orthogonal
-tier architecture where shadow model (relief), surface treatment
-(finish), and color scheme (theme) are composable per-element.
-The niche is real and unoccupied. The unique value is the 3-axis
+We are not aware of any existing CSS design system that offers
+a composable, orthogonal tier architecture where shadow model
+(relief), surface treatment (finish), and color scheme (theme)
+are composable per-element. The unique value is the 3-axis
 configuration model — not any single visual style, but the
 ability to compose them.
 
@@ -50,6 +50,24 @@ ability to compose them.
   complementary. Consumers using the SCSS source can exclude
   this module by omitting `@use 'utilities'` from their entry
   point.
+
+## Ecosystem Packages
+
+The monorepo includes charting and framework integration
+packages that extend the core design system:
+
+| Package                | Purpose                                                          |
+| ---------------------- | ---------------------------------------------------------------- |
+| `@soltana-ui/tokens`   | Token compiler -- outputs ECharts, Plotly, mplstyle, DTCG JSON   |
+| `@soltana-ui/echarts`  | ECharts theme bridge (runtime + static JSON)                     |
+| `@soltana-ui/plotly`   | Plotly template bridge (runtime + static JSON)                   |
+| `@soltana-ui/react`    | React bindings -- `useSoltana()` hook                            |
+| `soltana-matplotlib`   | Python package -- pre-built `.mplstyle` themes                   |
+
+These are intentional scope extensions. The charting bridges
+read live CSS custom properties at runtime and map them to
+library-specific theme objects, keeping visualizations in sync
+with the active tier configuration.
 
 ## Issue Tracking
 

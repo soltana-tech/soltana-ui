@@ -2,8 +2,9 @@
 
 import { sectionHeading, specimenBlock, codeExample } from '../../utils/helpers';
 
-export function renderComposition(): string {
-  return `
+export function renderComposition(): HTMLElement {
+  const page = document.createElement('div');
+  page.innerHTML = `
 <div class="page-composition">
 
   ${sectionHeading('Per-Element Composition', 'composition', 'All three tiers — theme, relief, finish — can be independently overridden on any element via utility classes.')}
@@ -91,4 +92,5 @@ export function renderComposition(): string {
   )}
 
 </div>`;
+  return page;
 }

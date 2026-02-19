@@ -10,12 +10,14 @@ import { createDefaultState } from '../lib/sandbox-state';
 import type { SandboxState } from '../lib/sandbox-state';
 import { RECIPES } from '@soltana/config';
 import type { RecipeName } from '@soltana/config';
+import { CustomSelect } from './CustomSelect';
+import type { SelectGroup } from './CustomSelect';
 
 export class CentralPlayground {
   private element: HTMLElement;
   private sandboxMount: HTMLElement;
-  private componentSelect: HTMLSelectElement;
-  private recipeSelect: HTMLSelectElement;
+  private componentSelect: CustomSelect;
+  private recipeSelect: CustomSelect;
   private sandbox: Sandbox | null = null;
   private activeComponentId: string | null = null;
 
@@ -28,24 +30,46 @@ export class CentralPlayground {
     header.className = 'central-playground__header';
 
     // Component selector
-    this.componentSelect = document.createElement('select');
-    this.componentSelect.className = 'select';
-    this.componentSelect.setAttribute('aria-label', 'Select component');
-    this.populateComponentOptions();
+    const componentGroups = this.buildComponentGroups();
+    const firstComponent = componentGroups[0]?.items[0]?.value ?? '';
 
-    const componentLabel = document.createElement('label');
-    componentLabel.innerHTML = '<span>Component</span>';
-    componentLabel.appendChild(this.componentSelect);
+    this.componentSelect = new CustomSelect(
+      componentGroups,
+      firstComponent,
+      (value) => {
+        this.selectComponent(value);
+      },
+      'Select component'
+    );
+
+    const componentLabel = document.createElement('div');
+    componentLabel.className = 'flex flex-col gap-1';
+    componentLabel.innerHTML = '<span class="text-sm font-medium text-secondary">Component</span>';
+    componentLabel.appendChild(this.componentSelect.getElement());
 
     // Recipe presets
-    this.recipeSelect = document.createElement('select');
-    this.recipeSelect.className = 'select';
-    this.recipeSelect.setAttribute('aria-label', 'Apply recipe preset');
-    this.populateRecipeOptions();
+    const recipeGroups = this.buildRecipeGroups();
+    this.recipeSelect = new CustomSelect(
+      recipeGroups,
+      '',
+      (value) => {
+        const recipeName = value as RecipeName;
+        if (!recipeName || !this.sandbox) return;
+        const recipe = RECIPES[recipeName];
+        this.sandbox.setState({
+          theme: recipe.theme,
+          relief: recipe.relief,
+          finish: recipe.finish,
+        });
+        this.updateUrl();
+      },
+      'Apply recipe preset'
+    );
 
-    const recipeLabel = document.createElement('label');
-    recipeLabel.innerHTML = '<span>Recipe</span>';
-    recipeLabel.appendChild(this.recipeSelect);
+    const recipeLabel = document.createElement('div');
+    recipeLabel.className = 'flex flex-col gap-1';
+    recipeLabel.innerHTML = '<span class="text-sm font-medium text-secondary">Recipe</span>';
+    recipeLabel.appendChild(this.recipeSelect.getElement());
 
     header.appendChild(componentLabel);
     header.appendChild(recipeLabel);
@@ -56,7 +80,6 @@ export class CentralPlayground {
     this.sandboxMount.className = 'central-playground__sandbox';
     this.element.appendChild(this.sandboxMount);
 
-    this.bind();
     this.loadFromUrl();
   }
 
@@ -64,46 +87,38 @@ export class CentralPlayground {
     return this.element;
   }
 
-  private populateComponentOptions(): void {
+  private buildComponentGroups(): SelectGroup[] {
     const components = getAllComponents();
+    const groups = new Map<string, typeof components>();
+
     for (const entry of components) {
-      const opt = document.createElement('option');
-      opt.value = entry.id;
-      opt.textContent = entry.name;
-      this.componentSelect.appendChild(opt);
+      const cat = entry.category ?? 'Other';
+      if (!groups.has(cat)) groups.set(cat, []);
+      groups.get(cat)!.push(entry);
     }
+
+    return [...groups.keys()].sort().map((cat) => ({
+      label: cat,
+      items: groups
+        .get(cat)!
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map((entry) => ({ value: entry.id, label: entry.name })),
+    }));
   }
 
-  private populateRecipeOptions(): void {
-    const none = document.createElement('option');
-    none.value = '';
-    none.textContent = '— None —';
-    this.recipeSelect.appendChild(none);
-
-    for (const [key, recipe] of Object.entries(RECIPES)) {
-      const opt = document.createElement('option');
-      opt.value = key;
-      opt.textContent = recipe.name;
-      this.recipeSelect.appendChild(opt);
-    }
-  }
-
-  private bind(): void {
-    this.componentSelect.addEventListener('change', () => {
-      this.selectComponent(this.componentSelect.value);
-    });
-
-    this.recipeSelect.addEventListener('change', () => {
-      const recipeName = this.recipeSelect.value as RecipeName;
-      if (!recipeName || !this.sandbox) return;
-      const recipe = RECIPES[recipeName];
-      this.sandbox.setState({
-        theme: recipe.theme,
-        relief: recipe.relief,
-        finish: recipe.finish,
-      });
-      this.updateUrl();
-    });
+  private buildRecipeGroups(): SelectGroup[] {
+    return [
+      {
+        label: 'Recipes',
+        items: [
+          { value: '', label: '— None —' },
+          ...Object.entries(RECIPES).map(([key, recipe]) => ({
+            value: key,
+            label: recipe.name,
+          })),
+        ],
+      },
+    ];
   }
 
   loadFromUrl(): void {
@@ -118,7 +133,7 @@ export class CentralPlayground {
       componentId && getComponent(componentId) ? componentId : (components[0]?.id ?? null);
 
     if (target) {
-      this.componentSelect.value = target;
+      this.componentSelect.setValue(target);
       this.selectComponent(target, urlState);
     }
   }

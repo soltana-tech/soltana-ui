@@ -159,10 +159,10 @@ describe('extractThemes', () => {
   });
 
   it('skips derived tokens containing var() or color-mix()', () => {
-    // accent-primary-hover uses color-mix — should not appear in THEME_PROP_MAP
-    // surface-deep uses var() — should not appear
-    // badge-bg uses color-mix — should not appear
-    // These are not in the ThemeTokens interface, so they're excluded by design
-    expect(themes.dark.surfaceBg).toBeDefined();
+    // Tokens with var() or color-mix() values are excluded from extraction
+    const dark = themes.dark as unknown as Record<string, unknown>;
+    expect(dark.accentPrimaryHover).toBeUndefined();
+    expect(dark.surfaceDeep).toBeUndefined();
+    expect(dark.badgeBg).toBeUndefined();
   });
 });

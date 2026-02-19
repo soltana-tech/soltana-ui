@@ -15,9 +15,8 @@
   position: relative;
   width: 3.5rem;
   height: 2rem;
-  border: 1px solid var(--relief-border);
+  @include relief-container(var(--relief-shadow-inset-lg));
   border-radius: var(--radius-full);
-  box-shadow: var(--relief-shadow-inset-lg);
   @include finish-surface;
   cursor: pointer;
   @include transition-interactive;

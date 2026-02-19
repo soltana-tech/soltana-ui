@@ -39,36 +39,28 @@ export async function getInlineStyleProperty(page: Page, property: string): Prom
   return page.evaluate((prop) => document.documentElement.style.getPropertyValue(prop), property);
 }
 
-/**
- * Collect console.warn messages emitted during an action.
- * The action callback receives the page for use with page.evaluate().
- */
-export async function captureWarnings(page: Page, action: () => Promise<void>): Promise<string[]> {
-  const warnings: string[] = [];
+async function captureConsole(
+  page: Page,
+  type: string,
+  action: () => Promise<void>
+): Promise<string[]> {
+  const messages: string[] = [];
   const handler = (msg: ConsoleMessage): void => {
-    if (msg.type() === 'warning') warnings.push(msg.text());
+    if (msg.type() === type) messages.push(msg.text());
   };
   page.on('console', handler);
   await action();
-  // Yield to the browser event loop so pending console messages flush
   await page.evaluate(() => new Promise((r) => requestAnimationFrame(r)));
   page.off('console', handler);
-  return warnings;
+  return messages;
 }
 
-/**
- * Collect console.error messages emitted during an action.
- */
-export async function captureErrors(page: Page, action: () => Promise<void>): Promise<string[]> {
-  const errors: string[] = [];
-  const handler = (msg: ConsoleMessage): void => {
-    if (msg.type() === 'error') errors.push(msg.text());
-  };
-  page.on('console', handler);
-  await action();
-  await page.evaluate(() => new Promise((r) => requestAnimationFrame(r)));
-  page.off('console', handler);
-  return errors;
+export function captureWarnings(page: Page, action: () => Promise<void>): Promise<string[]> {
+  return captureConsole(page, 'warning', action);
+}
+
+export function captureErrors(page: Page, action: () => Promise<void>): Promise<string[]> {
+  return captureConsole(page, 'error', action);
 }
 
 export interface ChangeEventDetail {

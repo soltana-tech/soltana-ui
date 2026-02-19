@@ -6,23 +6,16 @@
 // ---------------------------------------------------------------------------
 
 import { useState, useEffect, useRef } from 'react';
-import { initSoltana } from 'soltana-ui';
+import { initSoltana, DEFAULT_STATE } from 'soltana-ui';
 import type { SoltanaConfig, SoltanaInitOptions, SoltanaInstance } from 'soltana-ui';
 import type { SoltanaContextValue } from './types.js';
-
-const DEFAULT_CONFIG: SoltanaConfig = {
-  theme: 'auto',
-  relief: 'neumorphic',
-  finish: 'matte',
-  overrides: {},
-};
 
 export function useSoltana(
   config?: Partial<SoltanaConfig & SoltanaInitOptions>
 ): SoltanaContextValue {
   const configRef = useRef(config);
   const instanceRef = useRef<SoltanaInstance | null>(null);
-  const [state, setState] = useState<SoltanaConfig>(DEFAULT_CONFIG);
+  const [state, setState] = useState<SoltanaConfig>({ ...DEFAULT_STATE });
 
   useEffect(() => {
     const instance = initSoltana(configRef.current);
