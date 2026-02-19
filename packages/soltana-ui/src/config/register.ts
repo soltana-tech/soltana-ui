@@ -99,6 +99,13 @@ export const THEME_TOKEN_NAMES = [
   '--scrollbar-thumb',
   '--scrollbar-track',
   '--code-bg',
+  '--toast-bg',
+  '--toast-text',
+  '--drawer-bg',
+  '--popover-bg',
+  '--popover-border',
+  '--kbd-bg',
+  '--kbd-border',
   // Icon data URIs (not derived — provide via tokens overrides)
   '--icon-select-chevron',
 ] as const;
@@ -278,6 +285,13 @@ export function deriveThemeTokens(seed: ThemeSeed): Record<string, string> {
     '--scrollbar-thumb': mixSrgb(text, isDark ? 12 : 15),
     '--scrollbar-track': mixSrgb(text, isDark ? 3 : 3),
     '--code-bg': isDark ? 'rgb(0 0 0 / 35%)' : mix(bg, 'black', 5),
+    '--toast-bg': 'var(--surface-1)',
+    '--toast-text': 'var(--text-primary)',
+    '--drawer-bg': 'var(--surface-1)',
+    '--popover-bg': 'var(--surface-1)',
+    '--popover-border': 'var(--border-default)',
+    '--kbd-bg': 'var(--surface-2)',
+    '--kbd-border': 'var(--border-strong)',
   };
 
   return tokens;

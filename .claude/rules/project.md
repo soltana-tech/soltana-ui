@@ -4,11 +4,11 @@
 
 A CSS-first design system built around a 3-tier configuration model:
 
-| Tier   | Options                                        | Mechanism                   |
-| ------ | ---------------------------------------------- | --------------------------- |
-| Theme  | dark, light, sepia, auto\*                     | `[data-theme]` on `<html>`  |
-| Relief | flat, glassmorphic, skeuomorphic, neumorphic   | `[data-relief]` on `<html>` |
-| Finish | matte, frosted, tinted, glossy                 | `[data-finish]` on `<html>` |
+| Tier   | Options                                      | Mechanism                   |
+| ------ | -------------------------------------------- | --------------------------- |
+| Theme  | dark, light, sepia, auto\*                   | `[data-theme]` on `<html>`  |
+| Relief | flat, glassmorphic, skeuomorphic, neumorphic | `[data-relief]` on `<html>` |
+| Finish | matte, frosted, tinted, glossy               | `[data-finish]` on `<html>` |
 
 \* `auto` resolves to dark or light via
 `prefers-color-scheme`. It is a runtime resolver, not a static
