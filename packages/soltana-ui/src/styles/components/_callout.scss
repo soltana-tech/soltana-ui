@@ -1,0 +1,97 @@
+// ---------------------------------------------------------------------------
+// Callout & Blockquote Components
+// ---------------------------------------------------------------------------
+// Left-bordered content boxes for documentation, tips, warnings, and quotes.
+// ---------------------------------------------------------------------------
+
+@use '../variables' as *;
+@use '../base/register' as *;
+@use '../base/transitions' as *;
+
+// ============================================================================
+// CALLOUT
+// ============================================================================
+
+.callout {
+  position: relative;
+  padding: 1rem 1.25rem;
+  border-left: 4px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  @include relief-container;
+  @include finish-surface;
+  @include transition-interactive(var(--transition-normal));
+}
+
+.callout-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+
+  svg {
+    flex-shrink: 0;
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+}
+
+.callout-content {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+// Semantic variants
+@each $type in (info, warning, success, error) {
+  .callout-#{$type} {
+    border-left-color: var(--color-#{$type});
+    background-color: var(--color-#{$type}-subtle);
+
+    .callout-title {
+      color: var(--color-#{$type}-text);
+    }
+  }
+}
+
+// Doc-friendly aliases
+.callout-note {
+  @extend .callout-info;
+}
+
+.callout-tip {
+  @extend .callout-success;
+}
+
+.callout-important {
+  @extend .callout-warning;
+}
+
+// ============================================================================
+// BLOCKQUOTE
+// ============================================================================
+
+.blockquote {
+  position: relative;
+  margin: 0;
+  padding: 1rem 1.5rem;
+  border-left: 4px solid var(--accent-decorative);
+  font-size: var(--text-base);
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.blockquote-footer {
+  display: block;
+  margin-top: 0.75rem;
+  font-size: var(--text-sm);
+  font-style: normal;
+  color: var(--text-muted);
+
+  &::before {
+    content: '\2014\00A0';
+  }
+}

@@ -4,7 +4,7 @@
  */
 
 import { Sandbox } from './Sandbox';
-import { getAllComponents, getComponent } from '../lib/component-registry';
+import { getAllComponents, getComponent, getComponentsByCategory } from '../lib/component-registry';
 import { readStateFromUrl } from '../lib/url-state';
 import { createDefaultState } from '../lib/sandbox-state';
 import type { SandboxState } from '../lib/sandbox-state';
@@ -88,21 +88,9 @@ export class CentralPlayground {
   }
 
   private buildComponentGroups(): SelectGroup[] {
-    const components = getAllComponents();
-    const groups = new Map<string, typeof components>();
-
-    for (const entry of components) {
-      const cat = entry.category ?? 'Other';
-      if (!groups.has(cat)) groups.set(cat, []);
-      groups.get(cat)!.push(entry);
-    }
-
-    return [...groups.keys()].sort().map((cat) => ({
-      label: cat,
-      items: groups
-        .get(cat)!
-        .sort((a, b) => a.name.localeCompare(b.name))
-        .map((entry) => ({ value: entry.id, label: entry.name })),
+    return getComponentsByCategory().map(({ category, entries }) => ({
+      label: category,
+      items: entries.map((entry) => ({ value: entry.id, label: entry.name })),
     }));
   }
 

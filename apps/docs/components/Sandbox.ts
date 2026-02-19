@@ -1,9 +1,7 @@
 import type { TierName } from '@soltana/config';
 import { PlaygroundControls } from './PlaygroundControls';
-import { type SandboxState, createDefaultState, stateToClasses } from '../lib/sandbox-state';
-import { VariantMatrix } from './VariantMatrix';
+import { type SandboxState, stateToClasses } from '../lib/sandbox-state';
 import { A11yToolbar } from './A11yToolbar';
-import { ResponsiveFrame } from './ResponsiveFrame';
 import { TierControls } from './TierControls';
 import type { SolPreview } from './SolPreview';
 
@@ -48,8 +46,6 @@ export class Sandbox {
   private tierControls: TierControls;
   private playground = new PlaygroundControls();
   private a11yToolbar!: A11yToolbar;
-  private matrixContainer: HTMLElement | null = null;
-  private matrixVisible = false;
   private iframeReady = false;
   private onStateChangeHandlers: StateChangeHandler[] = [];
 
@@ -86,6 +82,7 @@ export class Sandbox {
 
     this.insertFrameToolbars();
     this.bindToolbar();
+    this.bindTabs();
 
     // Set initial content and tier attributes
     this.syncPreviewTiers();
@@ -137,11 +134,15 @@ export class Sandbox {
     el.id = `sandbox-${this.config.id}`;
 
     el.innerHTML = `
+      <div class="sandbox__tabs">
+        <button class="btn btn-ghost btn-sm active" data-tab="preview">Preview</button>
+        <button class="btn btn-ghost btn-sm" data-tab="controls">Controls</button>
+      </div>
       <div class="sandbox__layout">
         <div class="sandbox__preview-col">
           <sol-preview class="sandbox__preview-frame"></sol-preview>
         </div>
-        <div class="flex flex-col gap-4">
+        <div class="sandbox__controls-col">
           <div class="sandbox__controls"></div>
           <div class="sandbox__code-panel">
             <pre class="text-sm rounded-lg p-4"><code></code></pre>
@@ -161,10 +162,6 @@ export class Sandbox {
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
           <span>Share</span>
         </button>
-        <button class="btn btn-ghost btn-sm" data-action="matrix" title="Toggle variant matrix">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-          <span>Matrix</span>
-        </button>
       </div>
     `;
 
@@ -172,14 +169,11 @@ export class Sandbox {
   }
 
   private insertFrameToolbars(): void {
-    const responsive = new ResponsiveFrame(this.preview.frame);
     this.a11yToolbar = new A11yToolbar(this.preview.frame);
 
-    // Insert inside the preview column, above the sol-preview element
     const previewCol = this.element.querySelector('.sandbox__preview-col');
     if (previewCol) {
       previewCol.insertBefore(this.a11yToolbar.getElement(), this.preview);
-      previewCol.insertBefore(responsive.getElement(), this.a11yToolbar.getElement());
     }
   }
 
@@ -203,34 +197,21 @@ export class Sandbox {
         this.flashToolButton('share', 'Copied!');
       });
     });
-
-    this.element.querySelector('[data-action="matrix"]')?.addEventListener('click', () => {
-      this.toggleMatrix();
-    });
   }
 
-  private toggleMatrix(): void {
-    if (this.matrixVisible && this.matrixContainer) {
-      this.matrixContainer.remove();
-      this.matrixContainer = null;
-      this.matrixVisible = false;
-      return;
-    }
+  private bindTabs(): void {
+    this.element.setAttribute('data-active-tab', 'preview');
 
-    const matrix = new VariantMatrix({
-      renderCell: () => this.config.renderPreview(createDefaultState()),
-      rowAxis: 'relief',
-      colAxis: 'finish',
+    this.element.querySelectorAll<HTMLButtonElement>('[data-tab]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const tab = btn.dataset.tab!;
+        this.element.setAttribute('data-active-tab', tab);
+
+        this.element.querySelectorAll('[data-tab]').forEach((b) => {
+          b.classList.toggle('active', b === btn);
+        });
+      });
     });
-
-    // Override cells to use per-element utility classes directly
-    this.matrixContainer = document.createElement('div');
-    this.matrixContainer.className = 'sandbox__matrix';
-    this.matrixContainer.appendChild(matrix.getElement());
-
-    // Insert before code panel
-    this.codePanel.before(this.matrixContainer);
-    this.matrixVisible = true;
   }
 
   private flashToolButton(action: string, message: string): void {

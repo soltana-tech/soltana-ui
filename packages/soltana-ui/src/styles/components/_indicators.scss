@@ -301,6 +301,54 @@
 }
 
 // ============================================================================
+// RESULT / OUTCOME
+// ============================================================================
+
+.result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 1.5rem;
+}
+
+.result-icon {
+  font-size: var(--text-4xl);
+  margin-bottom: 1rem;
+
+  svg {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+.result-title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.result-subtitle {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  max-width: 24rem;
+  margin-bottom: 1.5rem;
+}
+
+.result-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+@each $type in (success, warning, error, info) {
+  .result-#{$type} .result-icon {
+    color: var(--color-#{$type}-text);
+  }
+}
+
+// ============================================================================
 // RATING
 // ============================================================================
 

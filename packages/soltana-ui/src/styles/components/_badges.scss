@@ -77,6 +77,45 @@
 }
 
 // ============================================================================
+// CHIPS (Dismissible Tags)
+// ============================================================================
+
+.chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  letter-spacing: var(--tracking-elegant);
+  border-radius: var(--radius-full);
+  @include relief-container;
+  color: var(--text-primary);
+  @include finish-surface;
+  @include transition-interactive(var(--transition-normal));
+
+  &:hover {
+    transform: translateY(-1px);
+    border-color: var(--border-strong);
+  }
+
+  .close {
+    width: 1.125rem;
+    height: 1.125rem;
+    margin-right: -0.25rem;
+  }
+}
+
+@each $type in (success, warning, error, info) {
+  .chip-#{$type} {
+    background-color: var(--color-#{$type}-subtle);
+    color: var(--color-#{$type}-text);
+    border-color: color-mix(in srgb, var(--color-#{$type}) 25%, transparent);
+  }
+}
+
+// ============================================================================
 // AVATAR
 // ============================================================================
 

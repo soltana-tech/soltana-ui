@@ -1,0 +1,52 @@
+// ---------------------------------------------------------------------------
+// Figure Components
+// ---------------------------------------------------------------------------
+// Responsive image containers with captions and card-style variant.
+// ---------------------------------------------------------------------------
+
+@use '../base/register' as *;
+@use '../base/transitions' as *;
+
+// ============================================================================
+// FIGURE
+// ============================================================================
+
+.figure {
+  display: inline-block;
+  margin: 0;
+}
+
+.figure-img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+}
+
+.figure-caption {
+  margin-top: 0.5rem;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.figure-caption-center {
+  text-align: center;
+}
+
+// Card-style figure with relief/finish integration
+.figure-card {
+  padding: 0.75rem;
+  border-radius: var(--radius-lg);
+  @include relief-container;
+  @include finish-surface;
+  @include transition-interactive(var(--transition-normal));
+
+  .figure-img {
+    border-radius: var(--radius-md);
+  }
+
+  .figure-caption {
+    padding: 0.25rem 0.25rem 0;
+  }
+}

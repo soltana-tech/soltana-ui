@@ -85,7 +85,7 @@ sol-preview {
 }
 
 .sandbox__preview-frame {
-  min-height: 20rem;
+  min-height: 30rem;
 
   iframe {
     border: none;
@@ -99,15 +99,20 @@ sol-preview {
 }
 
 .central-playground .sandbox__preview-frame {
-  min-height: 28rem;
+  min-height: 42rem;
 }
 
 // Sandbox two-column layout (preview left, controls right)
 .sandbox__layout {
   display: grid;
-  grid-template-columns: 1fr 20rem;
+  grid-template-columns: 3fr 2fr;
   gap: 1.5rem;
   align-items: start;
+}
+
+// Tab bar — hidden on desktop, shown on mobile
+.sandbox__tabs {
+  display: none;
 }
 
 // Custom select dropdown (replaces native <select> for full styling)
@@ -186,8 +191,22 @@ sol-preview {
 }
 
 @media (width <= 768px) {
+  .sandbox__tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
   .sandbox__layout {
     grid-template-columns: 1fr;
+  }
+
+  .sandbox[data-active-tab='controls'] .sandbox__preview-col {
+    display: none;
+  }
+
+  .sandbox[data-active-tab='preview'] .sandbox__controls-col {
+    display: none;
   }
 
   .swatch-grid {

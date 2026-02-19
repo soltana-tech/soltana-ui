@@ -174,8 +174,8 @@
     tbody tr {
       background: linear-gradient(
         145deg,
-        rgb(var(--shadow-color) / 12%),
-        rgb(var(--shadow-color) / 5%)
+        rgb(var(--highlight-color) / 4%),
+        rgb(var(--shadow-color) / 8%)
       );
       box-shadow:
         var(--relief-shadow-inset-lg),
@@ -193,16 +193,16 @@
       &:nth-child(even) {
         background: linear-gradient(
           145deg,
-          rgb(var(--shadow-color) / 8%),
-          rgb(var(--shadow-color) / 3%)
+          rgb(var(--highlight-color) / 3%),
+          rgb(var(--shadow-color) / 5%)
         );
       }
 
       &:hover:not(:disabled) {
         background: linear-gradient(
           145deg,
-          rgb(var(--shadow-color) / 16%),
-          rgb(var(--shadow-color) / 8%)
+          rgb(var(--highlight-color) / 6%),
+          rgb(var(--shadow-color) / 10%)
         );
       }
 
