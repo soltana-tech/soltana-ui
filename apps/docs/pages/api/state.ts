@@ -81,6 +81,16 @@ soltana.setOrnament('gilt');`,
       cleaned up automatically.
     </p>
     ${codeExample(`soltana.reinitEnhancers();`, 'typescript')}
+
+    <h4 class="font-semibold mt-6 mb-2">Use Case: Dynamic DOM Injection</h4>
+    <p class="text-secondary mb-4">
+      After injecting new HTML containing modal, tab, or tooltip elements,
+      call <code>reinitEnhancers()</code> so the new elements receive behavior:
+    </p>
+    ${codeExample(
+      "// Inject dynamic content\nconst section = document.getElementById('dynamic-content');\nsection.innerHTML = await fetchPartial('/components/settings');\n\n// Re-initialize enhancers to pick up new elements\nsoltana.reinitEnhancers();",
+      'typescript'
+    )}
   `
   )}
 

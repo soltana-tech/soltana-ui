@@ -5,6 +5,9 @@
 // ---------------------------------------------------------------------------
 // Golden ratio spacing, column-inspired layouts, and architectural
 // section elements (pediment, entablature, plinth).
+// These are thematic layout utilities (.space-golden-*, .columns-classical,
+// .pediment, .plinth, etc.) intended for consumer application templates.
+// They are not consumed by the core component library.
 // ---------------------------------------------------------------------------
 
 // ---- Golden Ratio Spacing ----
@@ -137,7 +140,7 @@ $golden-ratio: 1.618;
 // ---- Plinth — base section ----
 .plinth {
   padding: $golden-ratio * 1rem;
-  background: var(--surface-2);
+  background: var(--relief-surface-raised);
   border-top: 1px solid var(--border-default);
   position: relative;
 

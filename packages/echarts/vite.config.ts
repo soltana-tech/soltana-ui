@@ -16,7 +16,7 @@ export default defineConfig({
       fileName: () => 'soltana-echarts.js',
     },
     rollupOptions: {
-      external: ['echarts'],
+      external: ['echarts', 'soltana-ui'],
     },
     minify: 'esbuild',
     sourcemap: false,

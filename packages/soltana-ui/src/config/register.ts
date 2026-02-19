@@ -117,17 +117,22 @@ interface SemanticFallbacks {
 type MixFn = (base: string, target: string, pct: number) => string;
 type MixSrgbFn = (base: string, pct: number) => string;
 
+interface DeriveSemanticOpts {
+  isDark: boolean;
+  mix: MixFn;
+  mixSrgb: MixSrgbFn;
+  fallbacks: SemanticFallbacks;
+}
+
 /**
  * Derive the three tokens (base, subtle, text) for a semantic color category.
  */
 function deriveSemanticColor(
   name: string,
   seedColor: string | undefined,
-  isDark: boolean,
-  mix: MixFn,
-  mixSrgb: MixSrgbFn,
-  fallbacks: SemanticFallbacks
+  opts: DeriveSemanticOpts
 ): Record<string, string> {
+  const { isDark, mix, mixSrgb, fallbacks } = opts;
   const [fallbackBase, fallbackSubtle, fallbackText] = isDark ? fallbacks.dark : fallbacks.light;
   return {
     [`--color-${name}`]: seedColor ?? fallbackBase,
@@ -204,21 +209,41 @@ export function deriveThemeTokens(seed: ThemeSeed): Record<string, string> {
     '--border-decorative-strong': mixSrgb(decorative, isDark ? 35 : 40),
 
     // --- Semantic colors ---
-    ...deriveSemanticColor('success', seed.colorSuccess, isDark, mix, mixSrgb, {
-      dark: ['#10b981', 'rgb(16 185 129 / 12%)', '#34d399'],
-      light: ['#0d6b4e', 'rgb(13 107 78 / 8%)', '#065f46'],
+    ...deriveSemanticColor('success', seed.colorSuccess, {
+      isDark,
+      mix,
+      mixSrgb,
+      fallbacks: {
+        dark: ['#10b981', 'rgb(16 185 129 / 12%)', '#34d399'],
+        light: ['#0d6b4e', 'rgb(13 107 78 / 8%)', '#065f46'],
+      },
     }),
-    ...deriveSemanticColor('warning', seed.colorWarning, isDark, mix, mixSrgb, {
-      dark: ['#fcd34d', 'rgb(252 211 77 / 12%)', '#fde68a'],
-      light: ['#855c0a', 'rgb(133 92 10 / 8%)', '#6b4a08'],
+    ...deriveSemanticColor('warning', seed.colorWarning, {
+      isDark,
+      mix,
+      mixSrgb,
+      fallbacks: {
+        dark: ['#fcd34d', 'rgb(252 211 77 / 12%)', '#fde68a'],
+        light: ['#855c0a', 'rgb(133 92 10 / 8%)', '#6b4a08'],
+      },
     }),
-    ...deriveSemanticColor('error', seed.colorError, isDark, mix, mixSrgb, {
-      dark: ['#ef4444', 'rgb(239 68 68 / 12%)', '#f87171'],
-      light: ['#991b1b', 'rgb(153 27 27 / 8%)', '#7f1d1d'],
+    ...deriveSemanticColor('error', seed.colorError, {
+      isDark,
+      mix,
+      mixSrgb,
+      fallbacks: {
+        dark: ['#ef4444', 'rgb(239 68 68 / 12%)', '#f87171'],
+        light: ['#991b1b', 'rgb(153 27 27 / 8%)', '#7f1d1d'],
+      },
     }),
-    ...deriveSemanticColor('info', seed.colorInfo, isDark, mix, mixSrgb, {
-      dark: ['#3b82f6', 'rgb(59 130 246 / 12%)', '#60a5fa'],
-      light: ['#1e40af', 'rgb(30 64 175 / 8%)', '#1e3a8a'],
+    ...deriveSemanticColor('info', seed.colorInfo, {
+      isDark,
+      mix,
+      mixSrgb,
+      fallbacks: {
+        dark: ['#3b82f6', 'rgb(59 130 246 / 12%)', '#60a5fa'],
+        light: ['#1e40af', 'rgb(30 64 175 / 8%)', '#1e3a8a'],
+      },
     }),
 
     // --- Interactive states ---
@@ -373,10 +398,12 @@ export function registerOrnament(name: string, options: RegisterOrnamentOptions)
   // Part 2: Consume selectors — replicate compiled per-element overrides
   const templates = introspectOrnamentTemplates();
   if (templates.length === 0) {
-    console.warn(
+    const msg =
       '[soltana] Ornament introspection found 0 consume-selector templates. ' +
-        'Per-element .ornament-* overrides will not work for custom ornaments.'
-    );
+      'Per-element .ornament-* overrides will not work for custom ornaments. ' +
+      'Ensure Soltana CSS is loaded before registering custom ornaments.';
+    if (options.strict) throw new Error(msg);
+    console.warn(msg);
   }
   for (const t of templates) {
     const sel = `.ornament-${name} .${t.className}${t.pseudoState}, .${t.className}.ornament-${name}${t.pseudoState}`;

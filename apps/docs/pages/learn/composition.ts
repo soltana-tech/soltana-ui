@@ -82,6 +82,15 @@ export function renderComposition(): string {
   )}
 
   ${specimenBlock(
+    'Custom Tier Registration',
+    `
+    <p class="text-sm text-secondary mb-4">When you register a custom tier at runtime, Soltana auto-generates both a <code>data-*</code> attribute selector and a utility class. For example:</p>
+    ${codeExample("// Register a custom relief\nsoltana.registerRelief('dramatic', { tokens: { ... } });\n\n// Both selectors are now active:\n//   [data-relief='dramatic']  — for global config\n//   .relief-dramatic          — for per-element overrides", 'typescript')}
+    <p class="text-sm text-secondary mt-4">The same applies to all tiers: <code>registerTheme('ocean', ...)</code> generates <code>.theme-ocean</code>, <code>registerFinish('neon', ...)</code> generates <code>.finish-neon</code>, and <code>registerOrnament('art-deco', ...)</code> generates <code>.ornament-art-deco</code>.</p>
+  `
+  )}
+
+  ${specimenBlock(
     'How It Works',
     `
     <p class="text-sm text-secondary mb-4">CSS custom properties set directly on an element always override values inherited from ancestors. The innermost class wins:</p>

@@ -1,7 +1,7 @@
 import './styles/index.scss';
 
 // Orchestrator
-export { initSoltana } from './init.js';
+export { initSoltana, DEFAULT_STATE } from './init.js';
 
 // Config: types, constants, validation, recipes
 export { registerTierValue, deregisterTierValue } from './config/index.js';

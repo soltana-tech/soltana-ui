@@ -77,7 +77,7 @@
   } @else {
     background-image: var(--finish-sheen, none), var(--finish-overlay, none);
   }
-  backdrop-filter: blur(var(--finish-blur)) saturate(var(--finish-saturation));
+  backdrop-filter: blur(var(--finish-blur, 0)) saturate(var(--finish-saturation, 100%));
 }
 
 // Cross-tier composition: combines relief shadow with ornament box-shadow.

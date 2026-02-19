@@ -170,6 +170,31 @@ test.describe('stylesheet behavior via public API', () => {
     expect(reliefBorder).not.toBe('');
   });
 
+  test('registered theme rules override base rules via selector specificity', async ({ page }) => {
+    await setupSoltanaPage(page);
+    const result = await page.evaluate((seed) => {
+      const s = window.SoltanaUI.initSoltana({ theme: 'dark' });
+      const baseBg = getComputedStyle(document.documentElement)
+        .getPropertyValue('--surface-bg')
+        .trim();
+
+      // Register and activate a custom theme
+      s.registerTheme('custom', { seed });
+      s.setTheme('custom');
+      const customBg = getComputedStyle(document.documentElement)
+        .getPropertyValue('--surface-bg')
+        .trim();
+
+      return { baseBg, customBg };
+    }, THEME_SEED);
+
+    // The custom theme's surface-bg should override the built-in dark theme
+    expect(result.baseBg).not.toBe('');
+    expect(result.customBg).not.toBe('');
+    expect(result.customBg).not.toBe(result.baseBg);
+    expect(result.customBg).toContain('1a1a2e');
+  });
+
   test('multiple registrations do not conflict', async ({ page }) => {
     await setupSoltanaPage(page);
     const result = await page.evaluate(

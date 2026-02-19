@@ -15,7 +15,7 @@ vi.mock('soltana-ui', () => ({
 function createMockInstance(overrides?: Partial<ReturnType<typeof mockGetState>>) {
   const state = {
     theme: 'dark',
-    relief: 'neu',
+    relief: 'neumorphic',
     finish: 'matte',
     ornament: 'none',
     overrides: {},
@@ -72,7 +72,7 @@ describe('useSoltana', () => {
     const lastCall = onValue.mock.calls[onValue.mock.calls.length - 1][0] as SoltanaContextValue;
     expect(lastCall.config).toEqual({
       theme: 'dark',
-      relief: 'neu',
+      relief: 'neumorphic',
       finish: 'matte',
       ornament: 'none',
       overrides: {},
@@ -159,5 +159,54 @@ describe('SoltanaProvider + useSoltanaContext', () => {
     );
 
     spy.mockRestore();
+  });
+
+  it('propagates soltana:change events through context', () => {
+    const onValue = vi.fn();
+    render(
+      <SoltanaProvider>
+        <Consumer onValue={onValue} />
+      </SoltanaProvider>
+    );
+
+    // Simulate a config change via the event
+    mockGetState.mockReturnValue({
+      theme: 'sepia',
+      relief: 'glassmorphic',
+      finish: 'glossy',
+      ornament: 'baroque',
+      overrides: {},
+    });
+
+    act(() => {
+      document.documentElement.dispatchEvent(
+        new CustomEvent('soltana:change', { detail: { type: 'theme', value: 'sepia' } })
+      );
+    });
+
+    const lastCall = onValue.mock.calls[onValue.mock.calls.length - 1][0] as SoltanaContextValue;
+    expect(lastCall.config.theme).toBe('sepia');
+    expect(lastCall.config.relief).toBe('glassmorphic');
+  });
+
+  it('cleans up event listener and destroys instance on provider unmount', () => {
+    const onValue = vi.fn();
+    const { unmount } = render(
+      <SoltanaProvider>
+        <Consumer onValue={onValue} />
+      </SoltanaProvider>
+    );
+
+    unmount();
+    expect(mockDestroy).toHaveBeenCalledOnce();
+
+    // After unmount, dispatching events should not cause errors or updates
+    const callCount = onValue.mock.calls.length;
+    act(() => {
+      document.documentElement.dispatchEvent(
+        new CustomEvent('soltana:change', { detail: { type: 'theme', value: 'light' } })
+      );
+    });
+    expect(onValue.mock.calls.length).toBe(callCount);
   });
 });

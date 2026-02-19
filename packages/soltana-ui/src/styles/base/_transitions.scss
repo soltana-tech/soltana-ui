@@ -28,3 +28,9 @@
 @mixin transition-property($prop, $duration: var(--transition-normal)) {
   transition: $prop $duration var(--easing-in-out);
 }
+
+@mixin hover-state {
+  &:hover:not(:disabled) {
+    background-color: var(--state-hover);
+  }
+}

@@ -67,6 +67,9 @@ function parseShadow(raw: string): unknown {
   const shadows = raw.split(/,\s*(?=\d|inset)/).map((s) => {
     const inset = s.startsWith('inset');
     const parts = s.replace('inset', '').trim().split(/\s+/);
+    if (parts.length < 2) {
+      return { offsetX: '0', offsetY: '0', blur: '0', spread: '0', color: 'transparent' };
+    }
     // CSS shadow: offsetX offsetY blur spread color...
     return {
       ...(inset ? { inset: true } : {}),
@@ -89,6 +92,7 @@ function parseCubicBezier(raw: string): [number, number, number, number] {
   const match = /cubic-bezier\(([^)]+)\)/.exec(raw);
   if (!match) return [0, 0, 1, 1];
   const parts = match[1].split(',').map((s) => parseFloat(s.trim()));
+  if (parts.length !== 4 || parts.some(isNaN)) return [0, 0, 1, 1];
   return [parts[0], parts[1], parts[2], parts[3]];
 }
 

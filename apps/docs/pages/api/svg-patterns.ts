@@ -54,6 +54,15 @@ export function renderApiSvgPatterns(): string {
       </table>
     </div>
 
+    <h4 class="font-semibold mt-6 mb-2">Color Parameter</h4>
+    <p class="text-secondary mb-4">
+      Each factory accepts an optional CSS color string. All standard CSS color
+      formats are supported: hex (<code>#c9a84c</code>), <code>rgb()</code>,
+      <code>hsl()</code>, <code>oklch()</code>, named colors, and
+      <code>currentColor</code>. When omitted, patterns default to
+      <code>currentColor</code>, inheriting from the element's computed color.
+    </p>
+
     <h4 class="font-semibold mt-6 mb-2">Example</h4>
     ${codeExample(
       `import { patterns } from '@soltana/ornaments';
@@ -62,7 +71,7 @@ const svg = patterns['greek-key']('#c9a84c');
 // Returns raw SVG string: '<svg ...>...</svg>'
 
 const defaultSvg = patterns['scrollwork']();
-// Uses pattern's default color`,
+// Uses currentColor (inherits from parent element)`,
       'typescript'
     )}
   `

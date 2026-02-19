@@ -137,6 +137,26 @@ describe('autoSync', () => {
   });
 });
 
+describe('CSS token structure', () => {
+  it('reads all expected CSS custom properties from the DOM', () => {
+    setCssProps(CSS_PROPS);
+    const tmpl = buildTemplate();
+    // Verify the colorway palette maps from CSS properties
+    expect(tmpl.layout.colorway).toHaveLength(6);
+    for (const c of tmpl.layout.colorway as string[]) {
+      expect(c).toMatch(/^#[0-9a-f]{6}$/i);
+    }
+    clearCssProps();
+  });
+
+  it('returns fallback values when CSS properties are missing', () => {
+    clearCssProps();
+    const tmpl = buildTemplate();
+    // Without CSS properties, values should be empty strings or graceful defaults
+    expect(tmpl.layout.paper_bgcolor).toBe('');
+  });
+});
+
 describe('static JSON exports', () => {
   it('exports dark theme with expected structure', () => {
     expect(dark).toHaveProperty('layout');

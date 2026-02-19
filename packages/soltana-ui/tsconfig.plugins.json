@@ -1,4 +1,5 @@
 {
+  "$comment": "Separate tsc pass for PostCSS plugins — vite-plugin-dts does not emit standalone .d.ts at dist/plugins/",
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "dist",

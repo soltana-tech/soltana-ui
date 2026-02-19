@@ -12,7 +12,7 @@ import type { SoltanaContextValue } from './types.js';
 
 const DEFAULT_CONFIG: SoltanaConfig = {
   theme: 'auto',
-  relief: 'neu',
+  relief: 'neumorphic',
   finish: 'matte',
   ornament: 'none',
   overrides: {},

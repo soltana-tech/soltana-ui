@@ -194,6 +194,29 @@ reg.unregister();`,
   )}
 
   ${specimenBlock(
+    'Error Handling',
+    `
+    <p class="text-secondary mb-4">Registration behavior depends on the <code>strict</code> mode set during <code>initSoltana()</code>:</p>
+    <div class="table-container">
+      <table class="table table-striped">
+        <thead>
+          <tr><th>Scenario</th><th>Strict mode</th><th>Non-strict mode</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Invalid tier value in recipe</td><td>Throws <code>Error</code></td><td>Logs warning to console</td></tr>
+          <tr><td>Ornament introspection finds no templates</td><td>Throws <code>Error</code></td><td>Logs warning to console</td></tr>
+          <tr><td>Duplicate registration (same name)</td><td colspan="2">Overwrites silently — previous CSS rules remain unless <code>unregister()</code> was called</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-secondary mt-4">
+      Call <code>unregister()</code> on the returned <code>TierRegistration</code> to remove
+      injected CSS rules and deregister the tier value from validation.
+    </p>
+  `
+  )}
+
+  ${specimenBlock(
     'TierRegistration',
     `
     <p class="text-secondary mb-4">

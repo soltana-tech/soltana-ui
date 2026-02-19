@@ -160,6 +160,26 @@ describe('autoSync', () => {
   });
 });
 
+describe('CSS token structure', () => {
+  it('reads all expected CSS custom properties from the DOM', () => {
+    setCssProps(CSS_PROPS);
+    const theme = buildTheme();
+    // Verify every color in the palette maps from a CSS property
+    expect(theme.color).toHaveLength(6);
+    for (const c of theme.color as string[]) {
+      expect(c).toMatch(/^#[0-9a-f]{6}$/i);
+    }
+    clearCssProps();
+  });
+
+  it('returns fallback values when CSS properties are missing', () => {
+    clearCssProps();
+    const theme = buildTheme();
+    // Without CSS properties, values should be empty strings or graceful defaults
+    expect(theme.backgroundColor).toBe('');
+  });
+});
+
 describe('static JSON exports', () => {
   it('exports dark theme with expected structure', () => {
     expect(dark).toHaveProperty('color');

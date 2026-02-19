@@ -15,6 +15,9 @@ export default defineConfig({
       formats: ['es'],
       fileName: () => 'soltana-plotly.js',
     },
+    rollupOptions: {
+      external: ['soltana-ui'],
+    },
     minify: 'esbuild',
     sourcemap: false,
   },

@@ -27,6 +27,9 @@ export default tseslint.config(
     },
   },
   {
+    // Config files are excluded because they use Vite/Playwright/Turbo APIs
+    // that conflict with the project's strict TypeScript ESLint rules
+    // (e.g., untyped default exports, __dirname usage).
     ignores: [
       '**/dist/',
       '**/docs-dist/',

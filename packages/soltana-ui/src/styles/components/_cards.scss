@@ -40,7 +40,7 @@
   position: relative;
   border-radius: var(--radius-lg);
   border: 3px solid var(--border-strong);
-  @include finish-surface(var(--surface-2));
+  @include finish-surface(var(--relief-surface-raised));
   box-shadow: var(--relief-shadow), var(--relief-shadow-inset);
   overflow: visible;
 

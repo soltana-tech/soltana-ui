@@ -27,13 +27,13 @@ const enhancerHTML = `
   <button data-sol-tooltip="Tip text" style="margin:100px;">Hover</button>`;
 
 test.describe('initSoltana', () => {
-  test('applies default config (auto/neu/matte/none)', async ({ page }) => {
+  test('applies default config (auto/neumorphic/matte/none)', async ({ page }) => {
     await setupSoltanaPage(page);
     await page.evaluate(() => window.SoltanaUI.initSoltana());
 
     const attrs = await getTierAttributes(page);
     expect(['dark', 'light']).toContain(attrs.theme);
-    expect(attrs.relief).toBe('neu');
+    expect(attrs.relief).toBe('neumorphic');
     expect(attrs.finish).toBe('matte');
     expect(attrs.ornament).toBe('none');
   });
@@ -127,7 +127,7 @@ test.describe('initSoltana', () => {
 
     const attrs = await getTierAttributes(page);
     expect(['dark', 'light']).toContain(attrs.theme);
-    expect(attrs.relief).toBe('neu');
+    expect(attrs.relief).toBe('neumorphic');
     expect(attrs.finish).toBe('matte');
     expect(attrs.ornament).toBe('none');
 
@@ -208,7 +208,7 @@ test.describe('initSoltana', () => {
     });
   }
 
-  test('does not warn on custom tier values by default', async ({ page }) => {
+  test('warns on custom tier values in non-strict mode', async ({ page }) => {
     await setupSoltanaPage(page);
     const warnings = await captureWarnings(page, async () => {
       await page.evaluate(() =>
@@ -221,7 +221,8 @@ test.describe('initSoltana', () => {
       );
     });
 
-    expect(warnings).toHaveLength(0);
+    expect(warnings.length).toBe(4);
+    expect(warnings.every((w) => w.includes('Unknown'))).toBe(true);
   });
 
   test('custom tier values set data attributes', async ({ page }) => {
@@ -350,6 +351,63 @@ test.describe('initSoltana', () => {
 
     // Switch to light and verify only one update (attribute should be 'light')
     await page.emulateMedia({ colorScheme: 'light' });
+    await page.waitForFunction(
+      () => document.documentElement.getAttribute('data-theme') === 'light'
+    );
+  });
+
+  test('switching from auto to fixed and back preserves listener behavior', async ({ page }) => {
+    await setupSoltanaPage(page);
+    await page.emulateMedia({ colorScheme: 'dark' });
+
+    await page.evaluate(() => {
+      const s = window.SoltanaUI.initSoltana({ theme: 'auto' });
+      // Switch to fixed
+      s.setTheme('light');
+      // Switch back to auto
+      s.setTheme('auto');
+    });
+
+    // Should respond to system changes again
+    await page.emulateMedia({ colorScheme: 'light' });
+    await page.waitForFunction(
+      () => document.documentElement.getAttribute('data-theme') === 'light'
+    );
+
+    await page.emulateMedia({ colorScheme: 'dark' });
+    await page.waitForFunction(
+      () => document.documentElement.getAttribute('data-theme') === 'dark'
+    );
+  });
+
+  test('rapid theme changes settle correctly', async ({ page }) => {
+    await setupSoltanaPage(page);
+
+    const finalTheme = await page.evaluate(() => {
+      const s = window.SoltanaUI.initSoltana({ theme: 'dark' });
+      s.setTheme('light');
+      s.setTheme('sepia');
+      s.setTheme('dark');
+      s.setTheme('auto');
+      s.setTheme('light');
+      return document.documentElement.getAttribute('data-theme');
+    });
+
+    expect(finalTheme).toBe('light');
+  });
+
+  test('rapid system color scheme changes resolve correctly', async ({ page }) => {
+    await setupSoltanaPage(page);
+
+    await page.evaluate(() => {
+      window.SoltanaUI.initSoltana({ theme: 'auto' });
+    });
+
+    // Rapid system scheme changes
+    await page.emulateMedia({ colorScheme: 'light' });
+    await page.emulateMedia({ colorScheme: 'dark' });
+    await page.emulateMedia({ colorScheme: 'light' });
+
     await page.waitForFunction(
       () => document.documentElement.getAttribute('data-theme') === 'light'
     );
@@ -523,7 +581,7 @@ test.describe('stale instance', () => {
     // Data attributes should remain (set by the second instance)
     const attrs = await getTierAttributes(page);
     expect(attrs.theme).toBe('light');
-    expect(attrs.relief).toBe('neu');
+    expect(attrs.relief).toBe('neumorphic');
     expect(warnings.some((w) => w.includes('Stale instance'))).toBe(true);
   });
 

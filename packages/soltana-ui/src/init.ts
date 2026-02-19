@@ -39,13 +39,14 @@ import {
 } from './config/register.js';
 import { teardown as teardownStylesheet } from './config/stylesheet.js';
 
-const DEFAULT_STATE: SoltanaConfig = {
+/** Default tier configuration used when no overrides are provided. */
+export const DEFAULT_STATE: Readonly<SoltanaConfig> = Object.freeze({
   theme: 'auto',
   relief: 'neumorphic',
   finish: 'matte',
   ornament: 'none',
   overrides: {},
-};
+});
 
 const DEFAULT_INIT: Required<SoltanaInitOptions> = {
   enhancers: false,
@@ -125,15 +126,20 @@ function setupAutoTheme(state: SoltanaConfig): void {
 }
 
 function warnInvalid(name: string, value: string, valid: readonly string[], strict: boolean): void {
-  if (strict && !valid.includes(value)) {
-    throw new Error(`[soltana] Unknown ${name} "${value}". Built-in options: ${valid.join(', ')}`);
+  if (!valid.includes(value)) {
+    const msg = `[soltana] Unknown ${name} "${value}". Built-in options: ${valid.join(', ')}`;
+    if (strict) throw new Error(msg);
+    console.warn(msg);
   }
 }
 
 function resetEnhancers(enhancers: boolean): void {
   if (_enhancerCleanup) {
-    _enhancerCleanup.destroy();
-    _enhancerCleanup = null;
+    try {
+      _enhancerCleanup.destroy();
+    } finally {
+      _enhancerCleanup = null;
+    }
   }
   if (enhancers) {
     _enhancerCleanup = initAll();
@@ -163,6 +169,17 @@ export function initSoltana(
     enhancers: enhancers ?? DEFAULT_INIT.enhancers,
     strict: strict ?? DEFAULT_INIT.strict,
   };
+
+  // Filter invalid override keys from initial config
+  state.overrides = Object.fromEntries(
+    Object.entries(state.overrides).filter(([key]) => {
+      if (key.startsWith('--')) return true;
+      console.error(
+        `[soltana] Override key "${key}" is not a CSS custom property (must start with "--")`
+      );
+      return false;
+    })
+  );
 
   // Validate config values (only in strict mode)
   warnInvalid('theme', state.theme, VALID_THEMES, initOpts.strict);
@@ -233,17 +250,16 @@ export function initSoltana(
     },
 
     registerRecipe(name: string, recipe: Recipe): void {
-      if (initOpts.strict) {
-        warnInvalid('theme', recipe.theme, VALID_THEMES, true);
-        warnInvalid('relief', recipe.relief, VALID_RELIEFS, true);
-        warnInvalid('finish', recipe.finish, VALID_FINISHES, true);
-        warnInvalid('ornament', recipe.ornament, VALID_ORNAMENTS, true);
-      }
+      warnInvalid('theme', recipe.theme, VALID_THEMES, initOpts.strict);
+      warnInvalid('relief', recipe.relief, VALID_RELIEFS, initOpts.strict);
+      warnInvalid('finish', recipe.finish, VALID_FINISHES, initOpts.strict);
+      warnInvalid('ornament', recipe.ornament, VALID_ORNAMENTS, initOpts.strict);
       addRecipe(name, recipe);
     },
 
     setOverrides(overrides: Record<string, string>): void {
-      for (const key of Object.keys(overrides)) {
+      const validOverrides: Record<string, string> = {};
+      for (const [key, value] of Object.entries(overrides)) {
         if (!key.startsWith('--')) {
           if (initOpts.strict) {
             throw new Error(
@@ -253,11 +269,13 @@ export function initSoltana(
           console.error(
             `[soltana] Override key "${key}" is not a CSS custom property (must start with "--")`
           );
+          continue;
         }
+        validOverrides[key] = value;
       }
-      state.overrides = { ...state.overrides, ...overrides };
-      applyOverrides(overrides);
-      dispatchChange('overrides', overrides);
+      state.overrides = { ...state.overrides, ...validOverrides };
+      applyOverrides(validOverrides);
+      dispatchChange('overrides', validOverrides);
     },
 
     removeOverrides(keys: string[]): void {
@@ -302,7 +320,7 @@ export function initSoltana(
     },
 
     registerOrnament(name: string, options: RegisterOrnamentOptions): TierRegistration {
-      const reg = regOrnament(name, options);
+      const reg = regOrnament(name, { ...options, strict: options.strict ?? initOpts.strict });
       registrations.push(reg);
       return reg;
     },
@@ -346,8 +364,11 @@ export function initSoltana(
       teardownStylesheet();
       teardownAutoTheme();
       if (_enhancerCleanup) {
-        _enhancerCleanup.destroy();
-        _enhancerCleanup = null;
+        try {
+          _enhancerCleanup.destroy();
+        } finally {
+          _enhancerCleanup = null;
+        }
       }
       const root = document.documentElement;
       root.removeAttribute('data-theme');

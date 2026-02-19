@@ -1,27 +1,24 @@
 import { test, expect } from '@playwright/test';
 import { setupSoltanaPage } from '../fixtures/soltana-page';
-import { getTierAttributes, captureWarnings } from '../fixtures/helpers';
+import { getTierAttributes, captureWarnings, getComputedCSSProperty } from '../fixtures/helpers';
+import { RECIPES } from '../../packages/soltana-ui/src/config/recipes';
 
 test.describe('applyRecipe', () => {
+  // Derive expected values from the RECIPES map so new recipes are
+  // automatically covered without updating test data.
   const expectedRecipes: Record<
     string,
     { theme: string; relief: string; finish: string; ornament: string }
-  > = {
-    'corporate-clean': { theme: 'light', relief: 'flat', finish: 'matte', ornament: 'none' },
-    'luxury-dark': { theme: 'dark', relief: 'neu', finish: 'glossy', ornament: 'gilt' },
-    'frosted-modern': {
-      theme: 'dark',
-      relief: 'glassmorphic',
-      finish: 'frosted',
-      ornament: 'none',
-    },
-    'classic-warm': {
-      theme: 'sepia',
-      relief: 'skeuomorphic',
-      finish: 'matte',
-      ornament: 'beveled',
-    },
-  };
+  > = {};
+
+  for (const [name, recipe] of Object.entries(RECIPES)) {
+    expectedRecipes[name] = {
+      theme: recipe.theme,
+      relief: recipe.relief,
+      finish: recipe.finish,
+      ornament: recipe.ornament,
+    };
+  }
 
   for (const [recipeName, expected] of Object.entries(expectedRecipes)) {
     test(`${recipeName} applies tier values matching RECIPES definition`, async ({ page }) => {
@@ -43,6 +40,14 @@ test.describe('applyRecipe', () => {
       expect(state.relief).toBe(expected.relief);
       expect(state.finish).toBe(expected.finish);
       expect(state.ornament).toBe(expected.ornament);
+
+      // Verify computed CSS properties resolve to non-empty values
+      const surfaceBg = await getComputedCSSProperty(page, '--surface-bg');
+      const reliefShadow = await getComputedCSSProperty(page, '--relief-shadow');
+      const finishBlur = await getComputedCSSProperty(page, '--finish-blur');
+      expect(surfaceBg).not.toBe('');
+      expect(reliefShadow).not.toBe('');
+      expect(finishBlur).not.toBe('');
     });
   }
 

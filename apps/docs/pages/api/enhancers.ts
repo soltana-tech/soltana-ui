@@ -156,6 +156,23 @@ const cleanup = initAll({ root: section });
 cleanup.destroy();`,
       'typescript'
     )}
+
+    <h4 class="font-semibold mt-6 mb-2">Per-Enhancer Scoping</h4>
+    <p class="text-secondary mb-4">
+      Individual enhancers can also be scoped independently:
+    </p>
+    ${codeExample(
+      `import { initModals, initTooltips } from 'soltana-ui';
+
+// Only re-init modals in a specific section
+const section = document.getElementById('settings-panel');
+const modalCleanup = initModals({ root: section });
+
+// Tooltips scoped to a different area
+const sidebar = document.getElementById('sidebar');
+const tooltipCleanup = initTooltips({ root: sidebar });`,
+      'typescript'
+    )}
   `
   )}
 </div>`;

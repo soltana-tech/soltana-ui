@@ -22,6 +22,10 @@ test.describe('per-element utility class overrides', () => {
     expect(parentBg).not.toBe('');
     expect(childBg).not.toBe('');
     expect(parentBg).not.toBe(childBg);
+
+    // The light theme child's surface-bg should match the built-in light theme value
+    const lightThemeBg = await getComputedCSSProperty(page, '--surface-bg', '.theme-light');
+    expect(lightThemeBg).toBe(childBg);
   });
 
   test('.relief-* class applies relief tokens to a child element', async ({ page }) => {
@@ -34,7 +38,9 @@ test.describe('per-element utility class overrides', () => {
       </div>`;
 
     await setupSoltanaPage(page, { bodyHTML: html });
-    await page.evaluate(() => window.SoltanaUI.initSoltana({ theme: 'dark', relief: 'neu' }));
+    await page.evaluate(() =>
+      window.SoltanaUI.initSoltana({ theme: 'dark', relief: 'neumorphic' })
+    );
 
     const parentShadow = await getComputedCSSProperty(page, '--relief-shadow', '#parent-card');
     const childShadow = await getComputedCSSProperty(page, '--relief-shadow', '#child-card');

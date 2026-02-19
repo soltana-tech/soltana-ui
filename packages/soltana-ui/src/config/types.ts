@@ -22,6 +22,7 @@ export type Ornament = BuiltInOrnament | (string & {});
 export type RecipeName = BuiltInRecipeName | (string & {});
 
 export interface Recipe {
+  /** Human-readable display label, distinct from the recipe registry key. */
   name: string;
   description: string;
   theme: Theme;
@@ -106,15 +107,29 @@ export type TierName = 'theme' | 'relief' | 'finish' | 'ornament';
 // Runtime Registration Types
 // ---------------------------------------------------------------------------
 
+/**
+ * Seed colors used to derive a full theme token palette via `registerTheme()`.
+ * Only the three required fields are needed; optional fields fall back to
+ * curated defaults appropriate for the chosen `colorScheme`.
+ */
 export interface ThemeSeed {
+  /** Base surface/background color for the theme. */
   surfaceBg: string;
+  /** Primary text color. */
   textPrimary: string;
+  /** Primary accent / brand color. */
   accentPrimary: string;
+  /** Decorative accent for ornament borders and highlights. Defaults to `accentPrimary`. */
   accentDecorative?: string;
+  /** Light or dark scheme hint for derived token generation. Defaults to `'dark'`. */
   colorScheme?: 'light' | 'dark';
+  /** Semantic success color. Defaults to green (#10b981 dark / #0d6b4e light). */
   colorSuccess?: string;
+  /** Semantic warning color. Defaults to amber (#fcd34d dark / #855c0a light). */
   colorWarning?: string;
+  /** Semantic error color. Defaults to red (#ef4444 dark / #991b1b light). */
   colorError?: string;
+  /** Semantic info color. Defaults to blue (#3b82f6 dark / #1e40af light). */
   colorInfo?: string;
 }
 
@@ -150,6 +165,8 @@ export interface RegisterFinishOptions {
 export interface RegisterOrnamentOptions {
   /** Partial token map — unset tokens stay inert (inherit existing values). */
   tokens: Record<string, string>;
+  /** When true, throw if ornament introspection finds no templates. */
+  strict?: boolean;
 }
 
 export interface TierRegistration {

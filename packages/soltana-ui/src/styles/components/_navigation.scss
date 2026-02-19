@@ -147,7 +147,7 @@
     text-transform: uppercase;
     font-size: var(--text-xs);
     letter-spacing: var(--tracking-display);
-    background-color: var(--surface-2);
+    background-color: var(--relief-surface-raised);
     border-bottom: 2px solid var(--border-strong);
   }
 
@@ -157,12 +157,9 @@
       box-shadow var(--transition-normal) var(--easing-in-out);
 
     &:nth-child(even) {
-      background-color: var(--surface-2);
+      background-color: var(--relief-surface-raised);
     }
-
-    &:hover {
-      background-color: var(--state-hover);
-    }
+    @include hover-state;
   }
 }
 

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { setupSoltanaPage } from '../fixtures/soltana-page';
-import { getTierAttributes } from '../fixtures/helpers';
+import { getTierAttributes, getComputedCSSProperty } from '../fixtures/helpers';
 
 test.describe('cross-tier interaction', () => {
   test('changing theme preserves relief, finish, and ornament', async ({ page }) => {
@@ -78,7 +78,7 @@ test.describe('cross-tier interaction', () => {
     await page.evaluate(() => {
       const sol = window.SoltanaUI.initSoltana({
         theme: 'dark',
-        relief: 'neu',
+        relief: 'neumorphic',
         finish: 'frosted',
         ornament: 'none',
       });
@@ -87,7 +87,7 @@ test.describe('cross-tier interaction', () => {
 
     const attrs = await getTierAttributes(page);
     expect(attrs.theme).toBe('dark');
-    expect(attrs.relief).toBe('neu');
+    expect(attrs.relief).toBe('neumorphic');
     expect(attrs.finish).toBe('frosted');
     expect(attrs.ornament).toBe('faceted');
   });
@@ -121,7 +121,7 @@ test.describe('cross-tier interaction', () => {
 
     const attrs = await getTierAttributes(page);
     expect(['dark', 'light']).toContain(attrs.theme);
-    expect(attrs.relief).toBe('neu');
+    expect(attrs.relief).toBe('neumorphic');
     expect(attrs.finish).toBe('matte');
     expect(attrs.ornament).toBe('none');
   });
@@ -161,5 +161,39 @@ test.describe('cross-tier interaction', () => {
     expect(state.relief).toBe('skeuomorphic');
     expect(state.finish).toBe('frosted');
     expect(state.ornament).toBe('beveled');
+  });
+
+  test('computed CSS properties reflect the active tier combination', async ({ page }) => {
+    await setupSoltanaPage(page);
+
+    await page.evaluate(() => {
+      window.SoltanaUI.initSoltana({
+        theme: 'dark',
+        relief: 'flat',
+        finish: 'frosted',
+        ornament: 'none',
+      });
+    });
+
+    const surfaceBg = await getComputedCSSProperty(page, '--surface-bg');
+    const reliefShadow = await getComputedCSSProperty(page, '--relief-shadow');
+
+    expect(surfaceBg).not.toBe('');
+    expect(reliefShadow).not.toBe('');
+
+    // Switch relief and verify the relief token changes
+    await page.evaluate(() => {
+      const s = window.SoltanaUI.initSoltana({
+        theme: 'dark',
+        relief: 'flat',
+        finish: 'frosted',
+        ornament: 'none',
+      });
+      s.setRelief('skeuomorphic');
+    });
+
+    const reliefShadowAfter = await getComputedCSSProperty(page, '--relief-shadow');
+    expect(reliefShadowAfter).not.toBe('');
+    expect(reliefShadowAfter).not.toBe(reliefShadow);
   });
 });
