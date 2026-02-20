@@ -110,7 +110,9 @@ export function initDropdowns(options?: EnhancerOptions): EnhancerCleanup {
         if (e.key === 'Escape' && isOpen) {
           e.preventDefault();
           closeDropdown(toggle, menu);
-          toggle.focus();
+          requestAnimationFrame(() => {
+            toggle.focus();
+          });
           return;
         }
 

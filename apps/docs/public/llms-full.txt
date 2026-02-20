@@ -1,0 +1,858 @@
+# Soltana UI — Full Reference
+
+CSS-first design system with a composable 3-tier architecture: **Theme** x **Relief** x **Finish**.
+Each tier activates independently via `[data-*]` attributes on `<html>` or per-element utility classes.
+
+---
+
+## Tier System
+
+| Tier | Options | Attribute | Per-element classes |
+|------|---------|-----------|-------------------|
+| Theme | dark, light, sepia, auto | `data-theme` | `.theme-dark`, `.theme-light`, `.theme-sepia` |
+| Relief | flat, glassmorphic, skeuomorphic, neumorphic | `data-relief` | `.relief-flat`, `.relief-glassmorphic`, `.relief-skeuomorphic`, `.relief-neumorphic` |
+| Finish | matte, frosted, tinted, glossy | `data-finish` | `.finish-matte`, `.finish-frosted`, `.finish-tinted`, `.finish-glossy` |
+
+### Bridge Tokens
+
+Relief and finish tiers compose via shared channel tokens:
+`--shadow-color`, `--highlight-color`, `--accent-glow`, `--channel-sheen-color`, `--channel-tint-color`, `--glass-opacity`, `--relief-opacity`, `--finish-opacity`
+
+### Breakpoints
+
+| Token | Value |
+|-------|-------|
+| sm | 640px |
+| md | 768px |
+| lg | 1024px |
+| xl | 1280px |
+| 2xl | 1536px |
+
+---
+
+## Foundation Tokens
+
+### Border Radius
+
+- `--radius-none`: 0
+- `--radius-sm`: .25rem
+- `--radius-md`: .5rem
+- `--radius-default`: .625rem
+- `--radius-lg`: .875rem
+- `--radius-xl`: 1.125rem
+- `--radius-2xl`: 1.25rem
+- `--radius-3xl`: 1.5rem
+- `--radius-full`: 9999px
+
+### Shadows
+
+- `--shadow-sm`: `0 1px 2px 0 rgb(0 0 0 / 8%)`
+- `--shadow-default`: `0 1px 3px 0 rgb(0 0 0 / 12%), 0 1px 2px -1px rgb(0 0 0 / 8%)`
+- `--shadow-md`: `0 4px 6px -1px rgb(0 0 0 / 12%), 0 2px 4px -2px rgb(0 0 0 / 8%)`
+- `--shadow-lg`: `0 10px 15px -3px rgb(0 0 0 / 12%), 0 4px 6px -4px rgb(0 0 0 / 8%)`
+- `--shadow-xl`: `0 20px 25px -5px rgb(0 0 0 / 14%), 0 8px 10px -6px rgb(0 0 0 / 10%)`
+- `--shadow-2xl`: `0 25px 50px -12px rgb(0 0 0 / 30%)`
+- `--shadow-inner`: `inset 0 2px 4px 0 rgb(0 0 0 / 6%)`
+- `--shadow-none`: `none`
+
+### Typography
+
+- `--font-sans`: "Raleway", ui-sans-serif, system-ui, -apple-system, sans-serif
+- `--font-serif`: "Cinzel", "Georgia", "Times New Roman", serif
+- `--font-display`: "Cinzel Decorative", "Cinzel", serif
+- `--font-mono`: "JetBrains Mono", ui-monospace, "Cascadia Code", "Fira Code", monospace
+
+### Font Sizes
+
+- `--text-2xs`: .625rem / .875rem
+- `--text-xs`: .75rem / 1rem
+- `--text-sm`: .875rem / 1.25rem
+- `--text-base`: 1rem / 1.65
+- `--text-lg`: 1.125rem / 1.75rem
+- `--text-xl`: 1.25rem / 1.75rem
+- `--text-2xl`: 1.5rem / 2rem
+- `--text-3xl`: 1.875rem / 2.25rem
+- `--text-4xl`: 2.25rem / 2.5rem
+- `--text-5xl`: 3rem / 1.15
+- `--text-6xl`: 3.75rem / 1.1
+- `--text-7xl`: 4.5rem / 1.05
+- `--text-8xl`: 6rem / 1
+- `--text-9xl`: 8rem / 1
+
+### Font Weights
+
+- `--weight-light`: 300
+- `--weight-regular`: 400
+- `--weight-medium`: 500
+- `--weight-semibold`: 600
+- `--weight-bold`: 700
+- `--weight-extrabold`: 800
+- `--weight-black`: 900
+
+---
+
+## Themes
+
+### dark
+
+- Color scheme: dark
+- Surface: #08091a
+- Text primary: #f5f0e6
+- Accent primary: #d4a843
+- Accent secondary: #a855f7
+- Success: #10b981
+- Warning: #fcd34d
+- Error: #ef4444
+- Info: #3b82f6
+
+### light
+
+- Color scheme: light
+- Surface: #f6f7fa
+- Text primary: #1e2128
+- Accent primary: #576378
+- Accent secondary: #6b21a8
+- Success: #0d6b4e
+- Warning: #855c0a
+- Error: #991b1b
+- Info: #1e40af
+
+### sepia
+
+- Color scheme: light
+- Surface: #e8dcc0
+- Text primary: #1c1408
+- Accent primary: #6a4518
+- Accent secondary: #6b21a8
+- Success: #1a7854
+- Warning: #8b5e14
+- Error: #a02020
+- Info: #2a5098
+
+---
+
+## Components
+
+### Alert Dialog Component
+
+Base class: `.alert-dialog`
+Description: Constrained-width modal variant for confirmations and destructive actions. Reuses the existing modal backdrop/overlay patterns.
+Tier-aware: yes
+Variants: `alert-dialog-icon-danger`, `alert-dialog-icon-info`, `alert-dialog-icon-warning`
+Children: `alert-dialog-actions`, `alert-dialog-body`, `alert-dialog-icon`, `alert-dialog-title`
+
+```html
+<div class="alert-dialog">
+  <div class="alert-dialog-actions">…</div>
+  <div class="alert-dialog-body">…</div>
+  <div class="alert-dialog-icon">…</div>
+</div>
+```
+
+### Badge, Pill, and Tag Components
+
+Base class: `.avatar`
+Description: Badge, Pill, and Tag Components
+Tier-aware: yes
+Variants: `avatar-`, `avatar-cameo`, `avatar-group`, `badge`, `badge-`, `badge-pill`, `badge-primary`, `chip`, `chip-`, `close`, `separator`, `separator-label`, `separator-thick`, `separator-vertical`, `tag`
+
+```html
+<span class="badge badge-primary">New</span>
+```
+
+### Button Components
+
+Base class: `.btn`
+Description: Base button uses --relief-* variables for automatic relief switching. Semantic variants (primary, danger, success) override as needed.
+Tier-aware: yes
+Variants: `btn-`, `btn-danger`, `btn-ghost`, `btn-group`, `btn-outline`, `btn-primary`, `btn-secondary`, `btn-success`, `fab`, `fab-bottom-left`, `fab-bottom-right`, `fab-lg`, `fab-sm`
+Children: `btn-icon`
+
+```html
+<button class="btn btn-primary">Label</button>
+```
+
+### Callout & Blockquote Components
+
+Base class: `.callout`
+Description: Left-bordered content boxes for documentation, tips, warnings, and quotes.
+Tier-aware: yes
+Variants: `blockquote`, `blockquote-footer`, `callout-`, `callout-important`, `callout-note`, `callout-tip`
+Children: `callout-content`, `callout-title`
+
+```html
+<div class="callout">
+  <div class="callout-content">…</div>
+  <div class="callout-title">…</div>
+</div>
+```
+
+### Card Components
+
+Base class: `.card`
+Description: Base cards use --relief-* variables for automatic relief switching. Beveled variant overrides as needed.
+Tier-aware: yes
+Variants: `card-beveled`, `card-flat`, `card-hover`, `card-image`
+Children: `card-body`, `card-footer`, `card-header`
+
+```html
+<div class="card">
+  <div class="card-header">Title</div>
+  <div class="card-body">Content</div>
+</div>
+```
+
+### Carousel Component
+
+Base class: `.carousel`
+Description: Horizontal slide container with navigation buttons and indicator dots.
+Tier-aware: yes
+Variants: `carousel-next`, `carousel-prev`
+Children: `carousel-dot`, `carousel-dots`, `carousel-slide`, `carousel-track`
+
+```html
+<div data-sol-carousel class="carousel"
+     data-carousel-autoplay data-carousel-interval="5000" data-carousel-loop>
+  <div class="carousel-track">
+    <div class="carousel-slide">Slide 1</div>
+    <div class="carousel-slide">Slide 2</div>
+  </div>
+  <button class="carousel-prev" aria-label="Previous slide">&lsaquo;</button>
+  <button class="carousel-next" aria-label="Next slide">&rsaquo;</button>
+  <div class="carousel-dots"></div>
+</div>
+```
+
+### Close Button
+
+Base class: `.close`
+Description: Reusable dismiss trigger for alerts, toasts, drawers, and modals. X rendered via ::before/::after rotated lines (no icon dependency).
+Sizes: `close-lg`, `close-sm`
+
+```html
+<div class="close">…</div>
+```
+
+### Code Components
+
+Base class: `.code`
+Description: Styled inline code spans and preformatted code blocks. Complements the base `code` and `pre` element styles in _typography.scss.
+Tier-aware: yes
+Variants: `code-block`, `code-block-numbered`, `code-block-sm`, `code-line`
+
+```html
+<div class="code">…</div>
+```
+
+### Collapsible Component
+
+Base class: `.collapsible`
+Description: Single-panel expand/collapse. Simpler than accordion — no item grouping.
+Tier-aware: yes
+Variants: `collapsible-bordered`
+Children: `collapsible-content`, `collapsible-trigger`
+
+```html
+<div data-sol-collapsible class="collapsible">
+  <button class="collapsible-trigger">Toggle</button>
+  <div class="collapsible-content">Content</div>
+</div>
+```
+
+### Color Picker Component
+
+Base class: `.color-picker`
+Description: HSV color selection with 2D area, hue slider, optional alpha, and swatches.
+Tier-aware: yes
+Variants: `color-picker-area-thumb`, `color-picker-slider-thumb`, `color-picker-swatch`
+Children: `color-picker-alpha`, `color-picker-area`, `color-picker-hue`, `color-picker-input`, `color-picker-popup`, `color-picker-preview`, `color-picker-swatches`, `color-picker-trigger`
+
+```html
+<div data-sol-color-picker class="color-picker">
+  <button class="color-picker-trigger" style="background: #d4a843;"></button>
+  <div class="color-picker-popup">
+    <div class="color-picker-area"></div>
+    <div class="color-picker-hue"></div>
+    <input class="color-picker-input input" value="#d4a843" />
+    <div class="color-picker-swatches" data-swatches='["#d4a843","#a855f7"]'></div>
+  </div>
+</div>
+```
+
+### Combobox / Autocomplete Component
+
+Base class: `.combobox`
+Description: Text input with filterable dropdown list. Tier-aware surfaces for the dropdown popup.
+Tier-aware: yes
+Children: `combobox-empty`, `combobox-input`, `combobox-listbox`, `combobox-option`
+
+```html
+<div data-sol-combobox class="combobox">
+  <input class="combobox-input input" role="combobox" />
+  <ul class="combobox-listbox" role="listbox">
+    <li class="combobox-option" role="option">Option 1</li>
+  </ul>
+</div>
+```
+
+### Context Menu Component
+
+Base class: `.context-menu`
+Description: Right-click triggered menu, reusing dropdown-menu visual patterns.
+Tier-aware: yes
+Children: `context-menu-divider`, `context-menu-header`, `context-menu-item`
+
+```html
+<div data-sol-context-menu>
+  <div class="context-menu" role="menu">
+    <button class="context-menu-item" role="menuitem">Cut</button>
+    <button class="context-menu-item" role="menuitem">Copy</button>
+  </div>
+  <!-- Trigger area content -->
+  <p>Right-click here</p>
+</div>
+```
+
+### Date Picker Component
+
+Base class: `.date-picker`
+Description: Calendar-based date selection with input and popup.
+Tier-aware: yes
+Variants: `date-picker-cell-other`
+Children: `date-picker-cell`, `date-picker-grid`, `date-picker-header`, `date-picker-input`, `date-picker-nav`, `date-picker-popup`, `date-picker-title`, `date-picker-weekday`
+
+```html
+<div class="date-picker">
+  <div class="date-picker-cell">…</div>
+  <div class="date-picker-grid">…</div>
+  <div class="date-picker-header">…</div>
+</div>
+```
+
+### Feedback Components
+
+Base class: `.alert`
+Description: Alerts, tooltips, progress bars, and skeleton loaders.
+Tier-aware: yes
+Variants: `alert-`, `close`, `progress`, `progress-`, `progress-bar`, `radial-progress`, `radial-progress-`, `radial-progress-lg`, `radial-progress-sm`, `skeleton`, `skeleton-circle`, `skeleton-text`, `spinner`, `spinner-dots`, `spinner-lg`, `spinner-sm`, `tooltip`, `tooltip-bottom`, `tooltip-left`, `tooltip-right`
+Children: `alert-dismissible`
+
+```html
+<div class="alert alert-success">Operation complete.</div>
+```
+
+### Figure Components
+
+Base class: `.figure`
+Description: Responsive image containers with captions and card-style variant.
+Tier-aware: yes
+Variants: `figure-caption-center`, `figure-card`
+Children: `figure-caption`, `figure-img`
+
+```html
+<div class="figure">
+  <div class="figure-caption">…</div>
+  <div class="figure-img">…</div>
+</div>
+```
+
+### Hero Components
+
+Base class: `.hero`
+Description: Full-width or contained hero sections with title, subtitle, and actions.
+Tier-aware: yes
+Variants: `hero-full`
+Sizes: `hero-lg`, `hero-sm`
+Children: `hero-actions`, `hero-subtitle`, `hero-title`
+
+```html
+<div class="hero">
+  <div class="hero-actions">…</div>
+  <div class="hero-subtitle">…</div>
+  <div class="hero-title">…</div>
+</div>
+```
+
+### Hover Card Component
+
+Base class: `.hover-card`
+Description: Rich tooltip-like card triggered by hover. Uses positioned floating surface with tier-aware relief and finish.
+Tier-aware: yes
+Sizes: `hover-card-lg`, `hover-card-sm`
+Children: `hover-card-content`, `hover-card-trigger`
+
+```html
+<div data-sol-hover-card class="hover-card">
+  <span class="hover-card-trigger">Hover me</span>
+  <div class="hover-card-content">Rich content</div>
+</div>
+```
+
+### Image Components
+
+Base class: `.aspect-ratio`
+Description: Responsive images, rounded variants, thumbnail treatment, and aspect-ratio containers.
+Tier-aware: yes
+Variants: `aspect-ratio-photo`, `aspect-ratio-square`, `aspect-ratio-video`, `img`, `img-circle`, `img-rounded`, `img-thumbnail`
+
+```html
+<div class="aspect-ratio">…</div>
+```
+
+### Indicator Components
+
+Base class: `.stepper`
+Description: Steppers, timelines, keyboard keys, stats, description lists, empty states, and ratings.
+Tier-aware: yes
+Variants: `dl`, `dl-horizontal`, `dl-stacked`, `empty-state`, `empty-state-action`, `empty-state-description`, `empty-state-heading`, `empty-state-icon`, `kbd`, `kbd-lg`, `kbd-sm`, `rating`, `rating-lg`, `rating-sm`, `rating-star`, `result`, `result-`, `result-actions`, `result-icon`, `result-subtitle`, `result-title`, `stat`, `stat-delta`, `stat-group`, `stat-label`, `stat-value`, `step`, `step-connector`, `step-content`, `step-indicator`, `stepper-vertical`, `timeline`, `timeline-content`, `timeline-item`, `timeline-marker`
+
+```html
+<div class="stepper">…</div>
+```
+
+### Form Input Components
+
+Base class: `.input`
+Description: Text inputs, selects, textareas, checkboxes, radios, and input groups.
+Tier-aware: yes
+Variants: `checkbox`, `file-input`, `file-input-lg`, `file-input-sm`, `form-validated`, `input-`, `input-group`, `input-help`, `input-number`, `input-number-step`, `radio`, `range`, `range-lg`, `range-sm`, `select`, `textarea`
+Sizes: `input-lg`, `input-sm`
+Children: `input-label`
+
+```html
+<input class="input" type="text" placeholder="Enter text" />
+```
+
+### Layout Components
+
+Base class: `.app-layout`
+Description: Reusable application layout primitives: sidebar, header, footer, and grid shell. Consumed by the docs site and available to all consumers. Uses BEM naming (__nav, __link, etc.) for sidebar children — intentional for multi-element structures where parent/child coupling must be explicit.
+Variants: `app-header`, `page-footer`, `sidebar`
+Children: `sidebar__chevron`, `sidebar__link`, `sidebar__list`, `sidebar__nav`, `sidebar__section--expanded`, `sidebar__section-header`
+
+```html
+<div class="app-layout">
+  <div class="sidebar__chevron">…</div>
+  <div class="sidebar__link">…</div>
+  <div class="sidebar__list">…</div>
+</div>
+```
+
+### List & Accordion Components
+
+Base class: `.accordion`
+Description: Styled lists and collapsible accordion panels.
+Tier-aware: yes
+Variants: `accordion-flush`, `list`, `list-bordered`, `list-flush`, `list-hover`, `list-item`
+Children: `accordion-body`, `accordion-header`, `accordion-item`
+
+```html
+<div data-sol-accordion>
+  <div class="accordion-item active">
+    <div class="accordion-header">Title</div>
+    <div class="accordion-body">Content</div>
+  </div>
+</div>
+```
+
+### Menu Components
+
+Base class: `.popover`
+Description: Popovers and dropdown menus.
+Tier-aware: yes
+Variants: `dropdown`, `dropdown-divider`, `dropdown-end`, `dropdown-header`, `dropdown-item`, `dropdown-menu`, `dropdown-toggle`, `popover-bottom`, `popover-left`, `popover-right`, `popover-top`
+Sizes: `popover-lg`, `popover-sm`
+Children: `popover-body`, `popover-header`
+
+```html
+<div class="popover popover-bottom">
+  <div class="popover-body">Content</div>
+</div>
+```
+
+### Navigation Components
+
+Base class: `.nav`
+Description: Nav items, tabs, navbar, breadcrumbs, and pagination styles.
+Tier-aware: yes
+Variants: `breadcrumb`, `breadcrumb-item`, `navbar`, `navbar-brand`, `navbar-collapse`, `navbar-fixed`, `navbar-nav`, `navbar-sticky`, `navbar-toggler`, `page-item`, `page-link`, `pagination`, `pagination-lg`, `pagination-sm`, `tab`, `tabs`, `tabs-beveled`
+Children: `nav-item`
+
+```html
+<nav class="nav">
+  <a class="nav-item active" href="#">Home</a>
+  <a class="nav-item" href="#">About</a>
+</nav>
+```
+
+### Overlay Components
+
+Base class: `.modal`
+Description: Modals, drawers, and backdrop styles.
+Tier-aware: yes
+Variants: `drawer`, `drawer-backdrop`, `drawer-body`, `drawer-bottom`, `drawer-end`, `drawer-footer`, `drawer-header`, `drawer-lg`, `drawer-sm`, `drawer-start`, `drawer-top`
+Sizes: `modal-lg`, `modal-sm`
+Children: `modal-backdrop`, `modal-body`, `modal-footer`, `modal-header`
+
+```html
+<div class="modal" data-sol-modal>
+  <div class="modal-backdrop"></div>
+  <div class="modal-center">…</div>
+</div>
+```
+
+### Scroll Area Component
+
+Base class: `.scroll-area`
+Description: Custom scrollbar container with tier-aware thumb colors. Extends the base scrollbar styling for component-level opt-in.
+Variants: `scroll-area-hidden`
+Sizes: `scroll-area-sm`
+
+```html
+<div data-sol-scroll-area class="scroll-area" style="max-height: 20rem;">
+  <!-- Scrollable content -->
+</div>
+```
+
+### Segmented Control Component
+
+Base class: `.segmented-control`
+Description: Tier-aware segmented toggle consuming --relief-*, --finish-*, and --accent-* tokens. Inline group of mutually exclusive options. <div class="segmented-control"> <button class="segmented-control__option active">Option A</button> <button class="segmented-control__option">Option B</button> </div> Uses BEM naming (__option) for the child elements — intentional for multi-element structures where parent/child coupling must be explicit.
+Tier-aware: yes
+Sizes: `segmented-control-lg`, `segmented-control-sm`
+Children: `segmented-control-icon`, `segmented-control__option`
+
+```html
+<div class="segmented-control">
+  <div class="segmented-control-icon">…</div>
+  <div class="segmented-control__option">…</div>
+</div>
+```
+
+### Table Components
+
+Base class: `.table`
+Description: Data tables with striping, hover, modifiers, and relief-aware styling.
+Tier-aware: yes
+Variants: `table-bordered`, `table-compact`, `table-fixed`, `table-inlay`, `table-relaxed`, `table-responsive`
+
+```html
+<table class="table">
+  <thead><tr><th>Name</th></tr></thead>
+  <tbody><tr><td>Value</td></tr></tbody>
+</table>
+```
+
+### Toast Notifications
+
+Base class: `.toast`
+Description: Fixed-position notification component with semantic variants.
+Tier-aware: yes
+Variants: `toast-`, `toast-container-bottom-center`, `toast-container-bottom-left`, `toast-container-bottom-right`, `toast-container-top-center`, `toast-container-top-left`, `toast-container-top-right`
+Children: `toast-body`, `toast-container`, `toast-header`
+
+```html
+<div class="toast">
+  <div class="toast-body">…</div>
+  <div class="toast-container">…</div>
+  <div class="toast-header">…</div>
+</div>
+```
+
+### Toggle Component
+
+Base class: `.toggle`
+Description: Tier-aware toggle switch consuming --relief-*, --finish-*, and --state-* tokens. Renders as a track with a sliding thumb pseudo-element. ARIA: use role="switch" with aria-checked and tabindex="0". <div class="toggle" role="switch" aria-checked="false" tabindex="0">
+Tier-aware: yes
+
+```html
+<button class="toggle" role="switch" aria-checked="false">Off</button>
+```
+
+### Tree View Component
+
+Base class: `.tree`
+Description: Hierarchical tree structure with expandable branches and selectable nodes.
+Tier-aware: yes
+Variants: `tree-branch`, `tree-indent`, `tree-leaf`, `tree-node-content`
+Children: `tree-node`, `tree-toggle`
+
+```html
+<div data-sol-tree class="tree" role="tree">
+  <div class="tree-branch tree-node" role="treeitem">
+    <div class="tree-node-content">
+      <button class="tree-toggle"></button>
+      Folder
+    </div>
+    <div class="tree-children">
+      <div class="tree-leaf tree-node" role="treeitem">
+        <div class="tree-node-content">File</div>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+---
+
+## Utilities
+
+### layout
+Display, flexbox, grid, and positioning (responsive)
+- **display**: block, contents, flex, grid, hidden, inline, inline-block, inline-flex, inline-grid
+- **flex**: flex-1, flex-auto, flex-col, flex-col-reverse, flex-initial, flex-none, flex-nowrap, flex-row, flex-row-reverse, flex-wrap, grow, grow-0, shrink, shrink-0
+- **grid**: cols: grid-cols-{1-12}, span: col-span-{1-12}, rows: grid-rows-{1-6}, row_span: row-span-{1-6}, special: col-span-full
+- **position**: absolute, bottom-0, fixed, inset-0, left-0, relative, right-0, static, sticky, top-0
+- **alignment**: items-baseline, items-center, items-end, items-start, items-stretch, justify-around, justify-between, justify-center, justify-end, justify-evenly, justify-start, self-auto, self-center, self-end, self-start, self-stretch
+- **text_align**: text-center, text-justify, text-left, text-right
+- **aspect**: aspect-auto, aspect-photo, aspect-portrait, aspect-ratio, aspect-ratio-photo, aspect-ratio-square, aspect-ratio-video, aspect-ratio>iframe, aspect-ratio>img, aspect-ratio>video, aspect-square, aspect-video, aspect-wide
+- **z_index**: z-0, z-10, z-20, z-30, z-40, z-50, z-auto, z-drawer, z-dropdown, z-modal, z-popover, z-skip-link, z-toast, z-tooltip
+- **order**: order-first, order-last, order-none
+- **misc**: container, invisible, visible
+
+### sizing
+Width, height, and max-width (responsive)
+- **width_fractions**: w-fit, w-full, w-max, w-min, w-px, w-screen
+- **width_fixed**: pattern: w-{step}, range: 0–96
+- **height_fractions**: h-fit, h-full, h-max, h-min, h-px, h-screen
+- **height_fixed**: pattern: h-{step}, range: 0–96
+- **min_height**: min-h-0, min-h-full, min-h-screen
+- **max_width**: max-w-2xl, max-w-3xl, max-w-4xl, max-w-5xl, max-w-6xl, max-w-7xl, max-w-full, max-w-lg, max-w-md, max-w-prose, max-w-sm, max-w-xl, max-w-xs
+
+### spacing
+Padding, margin, and gap utilities (responsive)
+- **padding**: pattern: p-{step}, axes: px,py, dirs: pt,pr,pb,pl, range: 0–64
+- **margin**: pattern: m-{step}, axes: mx,my, dirs: mt,mr,mb,ml, range: 0–64
+- **gap**: pattern: gap-{step}, axes: gap-x,gap-y, range: 0–24
+- **auto**: ml-auto, mr-auto, mx-auto
+
+### typography
+Font size, weight, tracking, and text utilities
+- **sizes**: text-2xl, text-2xs, text-3xl, text-4xl, text-5xl, text-base, text-lg, text-sm, text-xl, text-xs
+- **weights**: font-black, font-bold, font-extrabold, font-light, font-medium, font-regular, font-semibold
+- **families**: font-display, font-mono, font-sans, font-serif
+- **letter_spacing**: tracking-display, tracking-elegant, tracking-inscriptional, tracking-normal, tracking-refined, tracking-tight, tracking-tighter, tracking-wide, tracking-wider, tracking-widest
+- **line_height**: leading-loose, leading-none, leading-normal, leading-relaxed, leading-snug, leading-tight
+
+### visual
+Borders, backgrounds, shadows, opacity, transitions, transforms, animations
+- **backgrounds**: bg-accent, bg-accent-secondary, bg-error, bg-error-subtle, bg-fixed, bg-gradient-accent, bg-info, bg-info-subtle, bg-mesh, bg-success, bg-success-subtle, bg-surface, bg-surface-1, bg-surface-2, bg-surface-3, bg-surface-4, bg-warning, bg-warning-subtle
+- **borders**: border, border-0, border-2, border-accent, border-b, border-l, border-r, border-strong, border-subtle, border-t
+- **border_radius**: rounded, rounded-2xl, rounded-3xl, rounded-full, rounded-lg, rounded-md, rounded-none, rounded-sm, rounded-xl
+- **shadows**: shadow, shadow-2xl, shadow-inner, shadow-lg, shadow-md, shadow-none, shadow-sm, shadow-xl
+- **opacity**: pattern: opacity-{0-100}, values: opacity-0,opacity-10,opacity-100,opacity-20,opacity-25,opacity-30,opacity-40,opacity-5,opacity-50,opacity-60,opacity-70,opacity-75,opacity-80,opacity-90,opacity-95
+- **transitions**: duration-fast, duration-normal, duration-slow, duration-slower, ease-in, ease-in-out, ease-out, transition, transition-all, transition-none
+- **transforms**: -rotate-1, -rotate-12, -rotate-180, -rotate-2, -rotate-3, -rotate-45, -rotate-6, -rotate-90, -skew-x-1, -skew-x-12, -skew-x-2, -skew-x-3, -skew-x-6, -skew-y-1, -skew-y-12, -skew-y-2, -skew-y-3, -skew-y-6, -translate-x-1, -translate-x-10, -translate-x-12, -translate-x-16, -translate-x-1\/2, -translate-x-2, -translate-x-20, -translate-x-24, -translate-x-3, -translate-x-32, -translate-x-4, -translate-x-40, -translate-x-48, -translate-x-5, -translate-x-6, -translate-x-64, -translate-x-8, -translate-x-full, -translate-y-1, -translate-y-10, -translate-y-12, -translate-y-16, -translate-y-1\/2, -translate-y-2, -translate-y-20, -translate-y-24, -translate-y-3, -translate-y-32, -translate-y-4, -translate-y-40, -translate-y-48, -translate-y-5, -translate-y-6, -translate-y-64, -translate-y-8, -translate-y-full, rotate-0, rotate-1, rotate-12, rotate-180, rotate-2, rotate-3, rotate-45, rotate-6, rotate-90, scale-0, scale-100, scale-105, scale-110, scale-125, scale-150, scale-50, scale-75, scale-90, scale-95, skew-x-1, skew-x-12, skew-x-2, skew-x-3, skew-x-6, skew-y-1, skew-y-12, skew-y-2, skew-y-3, skew-y-6, translate-x-0, translate-x-1, translate-x-10, translate-x-12, translate-x-16, translate-x-1\/2, translate-x-2, translate-x-20, translate-x-24, translate-x-3, translate-x-32, translate-x-4, translate-x-40, translate-x-48, translate-x-5, translate-x-6, translate-x-64, translate-x-8, translate-x-full, translate-y-0, translate-y-1, translate-y-10, translate-y-12, translate-y-16, translate-y-1\/2, translate-y-2, translate-y-20, translate-y-24, translate-y-3, translate-y-32, translate-y-4, translate-y-40, translate-y-48, translate-y-5, translate-y-6, translate-y-64, translate-y-8, translate-y-full
+- **animations**: animate-bounce, animate-none, animate-ping, animate-pulse, animate-spin
+
+### Responsive
+Breakpoint prefix before class: `md:flex-col`
+Covered: display, flex, grid, gap, padding, margin, sizing, text-align
+
+---
+
+## JavaScript API
+
+### Initialization
+
+```js
+import { initSoltana } from "soltana-ui";
+const sol = initSoltana({ theme: "dark", relief: "glassmorphic", finish: "frosted" });
+```
+
+### Instance Methods
+
+- `getState()` → SoltanaConfig
+- `setTheme(name)` — Switch active theme
+- `setRelief(name)` — Switch active relief
+- `setFinish(name)` — Switch active finish
+- `setOverrides(record)` — Inject CSS custom properties
+- `removeOverrides(keys)` — Remove CSS custom property overrides
+- `registerTheme(name, options)` — Runtime theme from seed colors
+- `registerRelief(name, options)` — Runtime relief from token map
+- `registerFinish(name, options)` — Runtime finish from token map
+- `reinitEnhancers()` — Destroy and re-create JS enhancers
+- `reset()` — Reset all tiers to defaults
+- `destroy()` — Tear down instance and remove all attributes
+
+### Enhancers
+
+- `initAccordions` — [data-sol-accordion] — Enhance all [data-sol-accordion] elements with expand/collapse behavior,
+- `initCarousels` — [data-sol-carousel] — Enhance all [data-sol-carousel] elements with slide navigation,
+- `initCollapsibles` — [data-sol-collapsible] — Enhance all [data-sol-collapsible] elements with expand/collapse behavior.
+- `initColorPickers` — [data-sol-color-picker] — Enhance all [data-sol-color-picker] elements with interactive
+- `initComboboxes` — [data-sol-combobox] — Enhance all [data-sol-combobox] elements with filtering, keyboard
+- `initContextMenus` — [data-sol-context-menu] — Enhance all [data-sol-context-menu] elements with right-click
+- `initDatePickers` — [data-sol-date-picker] — Enhance all [data-sol-date-picker] elements with calendar popup behavior.
+- `initDrawers` — [data-sol-drawer] — Enhance all [data-sol-drawer] elements with open/close, focus trapping,
+- `initDropdowns` — [data-sol-dropdown] — Enhance all [data-sol-dropdown] elements with toggle, click-away,
+- `initHoverCards` — [data-sol-hover-card] — Enhance all [data-sol-hover-card] elements with hover-triggered
+- `initModals` — [data-sol-modal] — Enhance all [data-sol-modal] elements with open/close, focus trapping,
+- `initScrollAreas` — [data-sol-scroll-area] — Enhance all [data-sol-scroll-area] elements with auto-hiding
+- `initTabs` — [data-sol-tabs] — Enhance all [data-sol-tabs] elements with tab switching, keyboard
+- `initToasts` — [data-sol-toast-container] — Enhance all [data-sol-toast-container] elements with ARIA attributes
+- `initTooltips` — [data-sol-tooltip] — Enhance all [data-sol-tooltip] elements with positioned tooltips.
+- `initTrees` — [data-sol-tree] — Enhance all [data-sol-tree] elements with expand/collapse and
+
+### Imperative APIs
+
+- `showToast` — Programmatically show a toast notification.
+- `dismissToast` — Dismiss a specific toast element.
+
+### Events
+
+Event: `soltana:change` on `document.documentElement`
+Detail types: theme, relief, finish, overrides, reset, destroy
+
+### PostCSS Plugin
+
+`soltanaTreeshake({ themes, reliefs, finishes })` — strips unused tier rulesets.
+
+### Font Loading
+
+`loadSoltanaFonts(url?)` — injects Google Fonts link for Cinzel, Cinzel Decorative, Raleway, JetBrains Mono.
+
+---
+
+## Integrations
+
+### @soltana-ui/echarts
+
+ECharts theme bridge for Soltana UI.
+
+| Export | Kind | Description |
+|--------|------|-------------|
+| `buildTheme` | function | ECharts theme object built from live CSS custom properties. */ |
+| `EChartsThemeObject` | type | ECharts theme object built from live CSS custom properties. */ |
+| `registerSoltanaTheme` | function | * Register a Soltana theme with ECharts using dependency injection. |
+| `autoSync` | function | * Register a Soltana theme with ECharts using dependency injection. |
+
+Static themes: dark, light, sepia
+
+### @soltana-ui/plotly
+
+Plotly theme bridge for Soltana UI.
+
+| Export | Kind | Description |
+|--------|------|-------------|
+| `buildTemplate` | function | Plotly template object built from live CSS custom properties. */ |
+| `PlotlyTemplate` | type | Plotly template object built from live CSS custom properties. */ |
+| `autoSync` | function | * Auto-sync: calls `callback` with a fresh Plotly template immediately, |
+
+Static themes: dark, light, sepia
+
+### @soltana-ui/mermaid
+
+Mermaid theme bridge for Soltana UI.
+
+| Export | Kind | Description |
+|--------|------|-------------|
+| `buildConfig` | function | Mermaid theme config passed to `mermaid.initialize()`. */ |
+| `MermaidConfig` | type | Mermaid theme config passed to `mermaid.initialize()`. */ |
+| `initSoltanaMermaid` | function | Minimal Mermaid API surface accepted via dependency injection. */ |
+| `autoSync` | function | Minimal Mermaid API surface accepted via dependency injection. */ |
+| `MermaidLike` | type | Minimal Mermaid API surface accepted via dependency injection. */ |
+
+Static themes: dark, light, sepia
+
+### @soltana-ui/react
+
+React bindings for Soltana UI — useSoltana() hook and SoltanaProvider. ESM-only.
+
+| Export | Kind | Description |
+|--------|------|-------------|
+| `useSoltana` | function | * Initialize and manage the Soltana design system within a React component. |
+| `useSoltanaContext` | function | * Consume the Soltana context. Throws if used outside a `<SoltanaProvider>`. |
+| `SoltanaProvider` | component |  |
+| `SoltanaContextValue` | type |  |
+| `SoltanaProviderProps` | type |  |
+| `useAccordions` | function |  |
+| `useDropdowns` | function |  |
+| `useDrawers` | function |  |
+| `useToasts` | function |  |
+| `useCollapsibles` | function |  |
+| `useComboboxes` | function |  |
+| `useHoverCards` | function |  |
+| `useContextMenus` | function |  |
+| `useCarousels` | function |  |
+| `useScrollAreas` | function |  |
+| `useDatePickers` | function |  |
+| `useColorPickers` | function |  |
+| `useTrees` | function |  |
+| `showToast` | function |  |
+| `dismissToast` | function |  |
+| `ToastOptions` | type |  |
+| `ToastType` | type |  |
+| `ToastPosition` | type |  |
+
+### soltana-matplotlib
+
+Matplotlib styles for the Soltana UI design system.
+
+```
+pip install soltana-matplotlib
+```
+
+| Export | Kind | Description |
+|--------|------|-------------|
+| `soltana_matplotlib.styles` | constant | Pre-built .mplstyle file paths for use with matplotlib.style.use() |
+
+Static themes: dark, light, sepia
+
+---
+
+## Patterns
+
+### Tier Compositions
+
+| Theme | Relief | Finish | Use case |
+|-------|--------|--------|----------|
+| dark | glassmorphic | frosted | Modern overlay panels |
+| sepia | skeuomorphic | matte | Vintage document UIs |
+| light | neumorphic | matte | Soft minimal dashboards |
+| dark | flat | glossy | High-contrast data displays |
+
+### Responsive Layouts
+
+- Mobile-first stack: `flex flex-col md:flex-row gap-4`
+- Card grid: `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6`
+- Centered: `flex items-center justify-center min-h-screen`
+
+### Common HTML
+
+```html
+<!-- Card grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div class="card card-hover"><div class="card-body">…</div></div>
+</div>
+
+<!-- Form -->
+<form class="flex flex-col gap-4 max-w-md">
+  <input class="input" type="text" placeholder="Name" />
+  <button class="btn btn-primary">Submit</button>
+</form>
+
+<!-- App shell -->
+<div class="app-layout">
+  <header class="app-header">…</header>
+  <aside class="sidebar">…</aside>
+  <main class="main"><div class="main__content">…</div></main>
+</div>
+```
+
+---
+
+## Accessibility
+
+### Utility Classes
+
+- `.sr-only` — Visually hidden, accessible to screen readers
+- `.skip-link` — Skip navigation link
+- `.focus-ring` — Visible focus indicator
+
+### Features
+
+- `prefers-reduced-motion`: disables animations
+- `prefers-contrast`: increases border contrast
+- All interactive components have visible focus states
+- Enhancers add ARIA attributes and keyboard navigation

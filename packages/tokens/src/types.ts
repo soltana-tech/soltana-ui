@@ -82,10 +82,41 @@ export interface ComponentData {
   example: string;
 }
 
+/** An enhancer module extracted from TypeScript source files. */
+export interface EnhancerData {
+  fileName: string;
+  initFunction: string;
+  selector: string;
+  selectorConst: string;
+  description: string;
+  htmlExample: string;
+}
+
+/** A single export extracted from an integration package. */
+export interface IntegrationExport {
+  name: string;
+  kind: 'function' | 'component' | 'type' | 'constant';
+  signature?: string;
+  description: string;
+  returns?: string;
+}
+
+/** An integration package extracted from the monorepo. */
+export interface IntegrationData {
+  package: string;
+  description: string;
+  language: 'typescript' | 'python';
+  install?: string;
+  exports: IntegrationExport[];
+  staticThemes: string[];
+}
+
 /** Input for the agent documentation YAML builder. */
 export interface AgentDocsInput {
   foundation: FoundationTokens;
   themes: Record<string, ThemeTokens>;
   utilities: UtilityGroup[];
   components: ComponentData[];
+  enhancers: EnhancerData[];
+  integrations: IntegrationData[];
 }

@@ -2,7 +2,8 @@
 // Token Compiler — Build Entry Point
 // ---------------------------------------------------------------------------
 // Reads the compiled CSS from soltana-ui, extracts tokens, and writes
-// themed output files for ECharts, Plotly, matplotlib, DTCG, and agent docs.
+// themed output files for ECharts, Plotly, matplotlib, DTCG, agent docs,
+// and llms.txt references.
 // ---------------------------------------------------------------------------
 
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
@@ -13,12 +14,16 @@ import { fileURLToPath } from 'node:url';
 import { extractFoundation, extractThemes } from './extract.js';
 import { extractUtilities } from './extract-utilities.js';
 import { extractComponents } from './extract-components.js';
+import { extractEnhancers } from './extract-enhancers.js';
+import { extractIntegrations } from './extract-integrations.js';
 import { buildEChartsTheme } from './formats/echarts.js';
 import { buildPlotlyTemplate } from './formats/plotly.js';
 import { buildMplStyle } from './formats/matplotlib.js';
 import { buildMermaidConfig } from './formats/mermaid.js';
 import { buildDtcgTheme, buildDtcgFoundation } from './formats/dtcg.js';
 import { buildAgentDocs } from './formats/agent-docs.js';
+import { buildLlmsTxt } from './formats/llms-txt.js';
+import { buildLlmsFullTxt } from './formats/llms-full-txt.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
@@ -80,20 +85,45 @@ function main(): void {
   writeJson(resolve(DIST, 'dtcg/foundation.tokens.json'), buildDtcgFoundation(foundation));
   fileCount++;
 
+  // Enhancers + integrations (dynamic extraction)
+  const monorepoRoot = resolve(__dirname, '../../..');
+  const enhancersDir = resolve(dirname(CSS_PATH), '../src/enhancers');
+  const { enhancers, imperatives } = extractEnhancers(enhancersDir);
+
+  const integrations = extractIntegrations({
+    packages: [
+      resolve(monorepoRoot, 'packages/echarts'),
+      resolve(monorepoRoot, 'packages/plotly'),
+      resolve(monorepoRoot, 'packages/mermaid'),
+      resolve(monorepoRoot, 'packages/react'),
+    ],
+    python: [resolve(monorepoRoot, 'python/soltana-matplotlib')],
+  });
+
   // Agent documentation (YAML)
   const componentsDir = resolve(dirname(CSS_PATH), '../src/styles/components');
   const utilities = extractUtilities(css);
-  const components = extractComponents(componentsDir);
-  const agentYaml = buildAgentDocs({ foundation, themes, utilities, components });
+  const components = extractComponents(componentsDir, enhancers);
+  const agentInput = { foundation, themes, utilities, components, enhancers, integrations };
+  const agentYaml = buildAgentDocs(agentInput, { imperatives });
 
   ensureDir(resolve(DIST, 'agents'));
   writeFileSync(resolve(DIST, 'agents/reference.yaml'), agentYaml);
   fileCount++;
 
-  const monorepoRoot = resolve(__dirname, '../../..');
   ensureDir(resolve(monorepoRoot, '.claude/agents'));
   writeFileSync(resolve(monorepoRoot, '.claude/agents/reference.yaml'), agentYaml);
   fileCount++;
+
+  // llms.txt / llms-full.txt
+  const llmsTxt = buildLlmsTxt({ themeNames, integrations });
+  const llmsFullTxt = buildLlmsFullTxt(agentInput, { imperatives });
+
+  const docsPublicDir = resolve(monorepoRoot, 'apps/docs/public');
+  ensureDir(docsPublicDir);
+  writeFileSync(resolve(docsPublicDir, 'llms.txt'), llmsTxt);
+  writeFileSync(resolve(docsPublicDir, 'llms-full.txt'), llmsFullTxt);
+  fileCount += 2;
 
   console.log(
     `@soltana-ui/tokens: wrote ${String(fileCount)} files for ${String(themeNames.length)} themes (${themeNames.join(', ')})`

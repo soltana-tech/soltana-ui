@@ -1,0 +1,23 @@
+# Soltana UI
+
+> CSS-first design system with a composable 3-tier architecture.
+
+## Tiers
+- **Theme**: dark, light, sepia, auto
+- **Relief**: flat, glassmorphic, skeuomorphic, neumorphic
+- **Finish**: matte, frosted, tinted, glossy
+
+## Activation
+- Global: `<html data-theme="dark" data-relief="glassmorphic" data-finish="frosted">`
+- Per-element: `<div class="theme-dark relief-glassmorphic finish-frosted">`
+
+## Packages
+- `soltana-ui` — Core CSS + JS enhancers
+- `@soltana-ui/echarts` — ECharts theme bridge for Soltana UI.
+- `@soltana-ui/plotly` — Plotly theme bridge for Soltana UI.
+- `@soltana-ui/mermaid` — Mermaid theme bridge for Soltana UI.
+- `@soltana-ui/react` — React bindings for Soltana UI — useSoltana() hook and SoltanaProvider. ESM-only.
+- `soltana-matplotlib` — Matplotlib styles for the Soltana UI design system.
+
+## Links
+- [Full Reference](/llms-full.txt)

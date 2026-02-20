@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import yaml from 'js-yaml';
 import { buildAgentDocs } from './agent-docs.js';
 import { darkTheme, foundationStandard as foundation } from '../__fixtures__/tokens.js';
-import type { UtilityGroup, ComponentData } from '../types.js';
+import type { UtilityGroup, ComponentData, EnhancerData, IntegrationData } from '../types.js';
 
 const mockUtilities: UtilityGroup[] = [
   {
@@ -42,13 +42,69 @@ const mockComponents: ComponentData[] = [
   },
 ];
 
+const mockEnhancers: EnhancerData[] = [
+  {
+    fileName: 'accordion',
+    initFunction: 'initAccordions',
+    selector: '[data-sol-accordion]',
+    selectorConst: 'ACCORDION_SELECTOR',
+    description: 'Enhance all [data-sol-accordion] elements',
+    htmlExample: '<div data-sol-accordion>…</div>',
+  },
+  {
+    fileName: 'tabs',
+    initFunction: 'initTabs',
+    selector: '[data-sol-tabs]',
+    selectorConst: 'TABS_SELECTOR',
+    description: 'Enhance all [data-sol-tabs] elements',
+    htmlExample: '<div data-sol-tabs>…</div>',
+  },
+  {
+    fileName: 'tooltip',
+    initFunction: 'initTooltips',
+    selector: '[data-sol-tooltip]',
+    selectorConst: 'TOOLTIP_SELECTOR',
+    description: 'Enhance all [data-sol-tooltip] elements',
+    htmlExample: '',
+  },
+];
+
+const mockIntegrations: IntegrationData[] = [
+  {
+    package: '@soltana-ui/echarts',
+    description: 'ECharts theme bridge for Soltana UI.',
+    language: 'typescript',
+    exports: [
+      { name: 'buildTheme', kind: 'function', description: 'Build ECharts theme from CSS vars' },
+    ],
+    staticThemes: ['dark', 'light', 'sepia'],
+  },
+  {
+    package: 'soltana-matplotlib',
+    description: 'Matplotlib styles for the Soltana UI design system.',
+    language: 'python',
+    install: 'pip install soltana-matplotlib',
+    exports: [],
+    staticThemes: ['dark', 'light', 'sepia'],
+  },
+];
+
 describe('buildAgentDocs', () => {
-  const yamlStr = buildAgentDocs({
-    foundation,
-    themes: { dark: darkTheme },
-    utilities: mockUtilities,
-    components: mockComponents,
-  });
+  const yamlStr = buildAgentDocs(
+    {
+      foundation,
+      themes: { dark: darkTheme },
+      utilities: mockUtilities,
+      components: mockComponents,
+      enhancers: mockEnhancers,
+      integrations: mockIntegrations,
+    },
+    {
+      imperatives: [
+        { name: 'showToast', description: 'Programmatically show a toast notification.' },
+      ],
+    }
+  );
 
   it('returns valid YAML that round-trips', () => {
     const parsed = yaml.load(yamlStr);
@@ -66,6 +122,7 @@ describe('buildAgentDocs', () => {
       'utilities',
       'components',
       'javascript_api',
+      'integrations',
       'patterns',
       'accessibility',
     ];
@@ -127,6 +184,32 @@ describe('buildAgentDocs', () => {
     expect(api).toHaveProperty('events');
     expect(api).toHaveProperty('postcss_plugin');
     expect(api).toHaveProperty('fonts');
+  });
+
+  it('has dynamic enhancers from input', () => {
+    const doc = yaml.load(yamlStr) as Record<string, Record<string, unknown>>;
+    const enhancers = doc.javascript_api.enhancers as Record<string, string>[];
+    expect(enhancers.length).toBe(3);
+    const fns = enhancers.map((e) => e.function);
+    expect(fns).toContain('initAccordions');
+    expect(fns).toContain('initTabs');
+    expect(fns).toContain('initTooltips');
+  });
+
+  it('includes imperative API section', () => {
+    const doc = yaml.load(yamlStr) as Record<string, Record<string, unknown>>;
+    const imperative = doc.javascript_api.imperative as Record<string, string>[];
+    expect(imperative.length).toBe(1);
+    expect(imperative[0].function).toBe('showToast');
+  });
+
+  it('includes integrations section', () => {
+    const doc = yaml.load(yamlStr) as Record<string, unknown>;
+    const integrations = doc.integrations as Record<string, unknown>[];
+    expect(integrations.length).toBe(2);
+    const packages = integrations.map((i) => i.package);
+    expect(packages).toContain('@soltana-ui/echarts');
+    expect(packages).toContain('soltana-matplotlib');
   });
 
   it('includes patterns section', () => {

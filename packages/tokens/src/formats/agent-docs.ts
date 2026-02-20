@@ -2,8 +2,9 @@
 // Agent Documentation Builder (YAML)
 // ---------------------------------------------------------------------------
 // Assembles a structured YAML reference from extracted tokens, utilities,
-// components, and a static JavaScript API definition. Output is optimized
-// for AI agent consumption — compact, hierarchical, and comprehensive.
+// components, enhancers, integrations, and a static JavaScript API definition.
+// Output is optimized for AI agent consumption — compact, hierarchical, and
+// comprehensive.
 // ---------------------------------------------------------------------------
 
 import yaml from 'js-yaml';
@@ -13,13 +14,20 @@ import type {
   ThemeTokens,
   UtilityGroup,
   ComponentData,
+  EnhancerData,
+  IntegrationData,
 } from '../types.js';
+import type { ImperativeExport } from '../extract-enhancers.js';
 
 // ---------------------------------------------------------------------------
 // Public API
 // ---------------------------------------------------------------------------
 
-export function buildAgentDocs(input: AgentDocsInput): string {
+export interface AgentDocsOptions {
+  imperatives?: ImperativeExport[];
+}
+
+export function buildAgentDocs(input: AgentDocsInput, options?: AgentDocsOptions): string {
   const doc = {
     _meta: buildMeta(),
     tier_system: buildTierSystem(),
@@ -27,7 +35,8 @@ export function buildAgentDocs(input: AgentDocsInput): string {
     themes: buildThemes(input.themes),
     utilities: buildUtilities(input.utilities),
     components: buildComponents(input.components),
-    javascript_api: buildJavaScriptApi(),
+    javascript_api: buildJavaScriptApi(input.enhancers, options?.imperatives),
+    integrations: buildIntegrations(input.integrations),
     patterns: buildPatterns(),
     accessibility: buildAccessibility(),
   };
@@ -172,8 +181,11 @@ function buildComponents(components: ComponentData[]): Record<string, unknown> {
   return result;
 }
 
-function buildJavaScriptApi(): Record<string, unknown> {
-  return {
+function buildJavaScriptApi(
+  enhancers: EnhancerData[],
+  imperatives?: ImperativeExport[]
+): Record<string, unknown> {
+  const api: Record<string, unknown> = {
     init: {
       function: 'initSoltana(config?)',
       returns: 'SoltanaInstance',
@@ -225,11 +237,11 @@ function buildJavaScriptApi(): Record<string, unknown> {
         '--finish-sheen',
       ],
     },
-    enhancers: [
-      { function: 'initModals', selector: '[data-sol-modal]' },
-      { function: 'initTabs', selector: '[data-sol-tabs]' },
-      { function: 'initTooltips', selector: '[data-sol-tooltip]' },
-    ],
+    enhancers: enhancers.map((e) => ({
+      function: e.initFunction,
+      selector: e.selector,
+      description: e.description,
+    })),
     events: {
       name: 'soltana:change',
       detail: {
@@ -250,6 +262,46 @@ function buildJavaScriptApi(): Record<string, unknown> {
       default_families: ['Cinzel', 'Cinzel Decorative', 'Raleway', 'JetBrains Mono'],
     },
   };
+
+  if (imperatives && imperatives.length > 0) {
+    api.imperative = imperatives.map((imp) => ({
+      function: imp.name,
+      description: imp.description,
+    }));
+  }
+
+  return api;
+}
+
+function buildIntegrations(integrations: IntegrationData[]): Record<string, unknown>[] {
+  return integrations.map((pkg) => {
+    const entry: Record<string, unknown> = {
+      package: pkg.package,
+      description: pkg.description,
+      language: pkg.language,
+    };
+
+    if (pkg.install) entry.install = pkg.install;
+
+    if (pkg.exports.length > 0) {
+      entry.exports = pkg.exports.map((exp) => {
+        const e: Record<string, string> = {
+          name: exp.name,
+          kind: exp.kind,
+          description: exp.description,
+        };
+        if (exp.signature) e.signature = exp.signature;
+        if (exp.returns) e.returns = exp.returns;
+        return e;
+      });
+    }
+
+    if (pkg.staticThemes.length > 0) {
+      entry.static_themes = pkg.staticThemes;
+    }
+
+    return entry;
+  });
 }
 
 function buildPatterns(): Record<string, unknown> {
