@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+import fc from 'fast-check';
 import { handleKeyboardNav } from '../keyboard-nav.js';
 
 function createList(count: number): HTMLElement {
@@ -152,5 +153,30 @@ describe('handleKeyboardNav', () => {
     );
 
     expect(handled).toBe(false);
+  });
+});
+
+describe('handleKeyboardNav property-based', () => {
+  it('focus stays within items', () => {
+    fc.assert(
+      fc.property(
+        fc.integer({ min: 1, max: 20 }),
+        fc.constantFrom('ArrowDown', 'ArrowUp', 'Home', 'End'),
+        (count: number, key: string) => {
+          document.body.innerHTML = '';
+          const container = createList(count);
+          const items = Array.from(container.querySelectorAll<HTMLElement>('.item'));
+
+          items[0].focus();
+          handleKeyboardNav(
+            { container, itemSelector: '.item', orientation: 'vertical' },
+            keyEvent(key)
+          );
+
+          const active = document.activeElement as HTMLElement;
+          expect(items).toContain(active);
+        }
+      )
+    );
   });
 });

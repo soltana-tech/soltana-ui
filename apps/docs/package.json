@@ -8,6 +8,7 @@
     "build": "vite build",
     "lint:ts": "eslint .",
     "lint:style": "stylelint '**/*.scss'",
+    "type-check": "tsc --noEmit",
     "lint": "pnpm run lint:ts && pnpm run lint:style"
   },
   "dependencies": {

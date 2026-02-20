@@ -16,6 +16,7 @@ import { trapFocus, FOCUSABLE } from './utils/focus-trap.js';
 export const MODAL_SELECTOR = '[data-sol-modal]';
 export const MODAL_OPEN_SELECTOR = '[data-modal-open]';
 
+/** Singleton guard — aborted and replaced on each `init*()` call. */
 let _controller: AbortController | null = null;
 let _openCount = 0;
 

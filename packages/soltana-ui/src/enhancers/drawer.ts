@@ -14,6 +14,7 @@ import { trapFocus, FOCUSABLE } from './utils/focus-trap.js';
 export const DRAWER_SELECTOR = '[data-sol-drawer]';
 export const DRAWER_OPEN_SELECTOR = '[data-drawer-open]';
 
+/** Singleton guard — aborted and replaced on each `init*()` call. */
 let _controller: AbortController | null = null;
 let _openCount = 0;
 

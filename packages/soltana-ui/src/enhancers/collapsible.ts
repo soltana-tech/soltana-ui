@@ -9,6 +9,7 @@ import type { EnhancerCleanup, EnhancerOptions } from '../config/types.js';
 
 export const COLLAPSIBLE_SELECTOR = '[data-sol-collapsible]';
 
+/** Singleton guard — aborted and replaced on each `init*()` call. */
 let _controller: AbortController | null = null;
 
 /**
@@ -39,14 +40,11 @@ export function initCollapsibles(options?: EnhancerOptions): EnhancerCleanup {
       const isOpen = wrapper.hasAttribute('data-collapsible-open');
       trigger.setAttribute('aria-expanded', String(isOpen));
       content.setAttribute('aria-hidden', String(!isOpen));
-      content.style.overflow = 'hidden';
-      content.style.transition =
-        'max-height var(--transition-slow, 0.3s) var(--easing-in-out, ease-in-out)';
 
       if (!isOpen) {
-        content.style.maxHeight = '0';
+        content.style.setProperty('--collapsible-height', '0');
       } else {
-        content.style.maxHeight = `${String(content.scrollHeight)}px`;
+        content.style.setProperty('--collapsible-height', `${String(content.scrollHeight)}px`);
       }
 
       // ARIA ids
@@ -65,10 +63,10 @@ export function initCollapsibles(options?: EnhancerOptions): EnhancerCleanup {
           content.setAttribute('aria-hidden', String(!willOpen));
 
           if (willOpen) {
-            content.style.maxHeight = `${String(content.scrollHeight)}px`;
+            content.style.setProperty('--collapsible-height', `${String(content.scrollHeight)}px`);
             wrapper.setAttribute('data-collapsible-open', '');
           } else {
-            content.style.maxHeight = '0';
+            content.style.setProperty('--collapsible-height', '0');
             wrapper.removeAttribute('data-collapsible-open');
           }
         },

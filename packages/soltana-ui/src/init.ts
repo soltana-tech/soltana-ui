@@ -31,7 +31,15 @@ import {
 import { teardown as teardownStylesheet } from './config/stylesheet.js';
 import { _resetFontLoader } from './fonts/index.js';
 
-/** Default tier configuration used when no overrides are provided. */
+/**
+ * Default tier configuration used when no overrides are provided.
+ *
+ * - `theme: 'auto'` resolves to `'dark'` or `'light'` via `prefers-color-scheme`.
+ * - `relief: 'neumorphic'` provides the most visually distinctive shadow model.
+ * - `finish: 'matte'` is the zero-effect baseline (no blur, sheen, or tint).
+ *
+ * All 4 × 4 × 4 tier combinations (plus `auto`) are valid configurations.
+ */
 export const DEFAULT_STATE: Readonly<SoltanaConfig> = Object.freeze({
   theme: 'auto',
   relief: 'neumorphic',
@@ -59,9 +67,11 @@ let _generation = 0;
 // during reset()/destroy() instead of blanket removeAttribute('style').
 const _managedProps = new Set<string>();
 
+const CUSTOM_PROP_RE = /^--[a-zA-Z][-_a-zA-Z0-9]*$/;
+
 function validateOverrideKey(key: string, strict: boolean): boolean {
-  if (key.startsWith('--')) return true;
-  const msg = `[soltana] Override key "${key}" is not a CSS custom property (must start with "--")`;
+  if (CUSTOM_PROP_RE.test(key)) return true;
+  const msg = `[soltana] Override key "${key}" is not a valid CSS custom property (must match --<ident>)`;
   if (strict) throw new Error(msg);
   console.error(msg);
   return false;

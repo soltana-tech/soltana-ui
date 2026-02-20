@@ -222,4 +222,31 @@ test.describe('initModals', () => {
     await expect(page.locator('#test-modal')).not.toHaveClass(/active/);
     await expect(page.locator('#test-modal')).toHaveAttribute('aria-hidden', 'true');
   });
+
+  test('destroy prevents future interactions', async ({ page }) => {
+    await setupSoltanaPage(page, { bodyHTML: modalHTML() });
+
+    // Verify modal works before destroy
+    await page.evaluate(() => window.SoltanaUI.initModals());
+    await page.locator('[data-modal-open="test-modal"]').click();
+    await expect(page.locator('#test-modal')).toHaveClass(/active/);
+    await page.locator('[data-modal-close]').click();
+    await expect(page.locator('#test-modal')).not.toHaveClass(/active/);
+
+    // Destroy and verify no further interactions work
+    await page.evaluate(() => {
+      const cleanup = window.SoltanaUI.initModals();
+      cleanup.destroy();
+    });
+
+    await page.locator('[data-modal-open="test-modal"]').click();
+    await expect(page.locator('#test-modal')).not.toHaveClass(/active/);
+    await expect(page.locator('#test-modal')).toHaveAttribute('aria-hidden', 'true');
+
+    // Body scroll lock should not be set
+    const hasScrollLock = await page.evaluate(() =>
+      document.body.classList.contains('sol-modal-open')
+    );
+    expect(hasScrollLock).toBe(false);
+  });
 });

@@ -9,6 +9,7 @@ import type { EnhancerCleanup, EnhancerOptions } from '../config/types.js';
 
 export const CAROUSEL_SELECTOR = '[data-sol-carousel]';
 
+/** Singleton guard — aborted and replaced on each `init*()` call. */
 let _controller: AbortController | null = null;
 
 /**
@@ -79,7 +80,7 @@ export function initCarousels(options?: EnhancerOptions): EnhancerCleanup {
         current = Math.max(0, Math.min(index, slides.length - 1));
       }
 
-      track.style.transform = `translateX(-${String(current * 100)}%)`;
+      track.style.setProperty('--carousel-offset', `-${String(current * 100)}%`);
 
       // Update dots
       dots.forEach((dot, i) => dot.classList.toggle('active', i === current));

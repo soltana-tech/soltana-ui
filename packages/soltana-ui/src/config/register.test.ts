@@ -53,13 +53,13 @@ function extractMixinBody(source: string, mixinName: string): string {
 }
 
 describe('SCSS ↔ TS token sync', () => {
-  it('dark theme SCSS tokens match THEME_TOKEN_NAMES', () => {
+  it.each(['dark', 'light', 'sepia'])('%s theme SCSS tokens match THEME_TOKEN_NAMES', (theme) => {
     const stylesDir = resolve(__dirname, '../styles');
 
-    const darkScss = readFileSync(resolve(stylesDir, 'themes/_dark.scss'), 'utf-8');
+    const themeScss = readFileSync(resolve(stylesDir, `themes/_${theme}.scss`), 'utf-8');
     const variablesScss = readFileSync(resolve(stylesDir, '_variables.scss'), 'utf-8');
 
-    const themeTokens = extractTokens(darkScss);
+    const themeTokens = extractTokens(themeScss);
     const mixinBody = extractMixinBody(variablesScss, 'component-tokens');
     const mixinTokens = extractTokens(mixinBody);
 

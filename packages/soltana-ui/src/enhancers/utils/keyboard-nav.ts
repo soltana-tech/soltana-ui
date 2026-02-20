@@ -5,6 +5,7 @@
 // context menus, tree views).
 // ---------------------------------------------------------------------------
 
+/** @internal */
 export interface KeyboardNavOptions {
   /** Container element holding the navigable items. */
   container: HTMLElement;
@@ -22,6 +23,8 @@ export interface KeyboardNavOptions {
  * Handle a keydown event for arrow-key navigation within a list of items.
  * Manages `aria-activedescendant`-style focus by calling `focus()` on
  * the target item. Returns true if the event was handled.
+ *
+ * @internal
  */
 export function handleKeyboardNav(options: KeyboardNavOptions, event: KeyboardEvent): boolean {
   const { container, itemSelector, orientation, wrap = true, onActivate } = options;

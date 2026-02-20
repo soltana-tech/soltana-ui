@@ -30,6 +30,7 @@
   height: 2.25rem;
   border-radius: var(--radius-md);
   border: 2px solid var(--border-default);
+  background-color: var(--cp-trigger-bg);
   cursor: pointer;
   @include transition-interactive(var(--transition-normal));
 
@@ -79,7 +80,8 @@
   width: 100%;
   aspect-ratio: 1;
   border-radius: var(--radius-md);
-  background:
+  background-color: var(--cp-area-bg);
+  background-image:
     linear-gradient(to top, #000, transparent), linear-gradient(to right, #fff, transparent);
   cursor: crosshair;
   margin-bottom: 0.5rem;
@@ -87,10 +89,13 @@
 
 .color-picker-area-thumb {
   position: absolute;
+  left: var(--cp-thumb-x, 0%);
+  top: var(--cp-thumb-y, 0%);
   width: 0.875rem;
   height: 0.875rem;
   border-radius: var(--radius-full);
   border: 2px solid #fff;
+  background-color: var(--cp-thumb-bg);
   box-shadow: 0 0 2px rgb(0 0 0 / 50%);
   transform: translate(-50%, -50%);
   pointer-events: none;
@@ -140,6 +145,7 @@
 
 .color-picker-slider-thumb {
   position: absolute;
+  left: var(--cp-hue-x, 0%);
   top: 50%;
   width: 0.875rem;
   height: 0.875rem;
@@ -185,6 +191,7 @@
   height: 1.5rem;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-subtle);
+  background-color: var(--cp-swatch-bg);
   cursor: pointer;
   padding: 0;
   @include transition-interactive(var(--transition-normal));

@@ -8,6 +8,8 @@
 /**
  * Register a callback that fires when a click occurs outside `element`.
  * Uses the provided `AbortSignal` for cleanup — no manual teardown needed.
+ *
+ * @internal
  */
 export function onClickAway(element: HTMLElement, callback: () => void, signal: AbortSignal): void {
   document.addEventListener(

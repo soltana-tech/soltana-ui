@@ -11,6 +11,7 @@ import type { Placement } from './utils/position.js';
 
 export const HOVER_CARD_SELECTOR = '[data-sol-hover-card]';
 
+/** Singleton guard — aborted and replaced on each `init*()` call. */
 let _controller: AbortController | null = null;
 
 /**

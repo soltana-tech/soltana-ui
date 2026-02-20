@@ -11,6 +11,7 @@ import { trapFocus } from './utils/focus-trap.js';
 
 export const DATE_PICKER_SELECTOR = '[data-sol-date-picker]';
 
+/** Singleton guard — aborted and replaced on each `init*()` call. */
 let _controller: AbortController | null = null;
 
 const WEEKDAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'] as const;

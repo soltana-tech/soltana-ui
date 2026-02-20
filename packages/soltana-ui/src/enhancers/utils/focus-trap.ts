@@ -12,6 +12,8 @@ const FOCUSABLE =
 /**
  * Trap Tab/Shift+Tab focus within a container element.
  * Call from a `keydown` handler when `e.key === 'Tab'`.
+ *
+ * @internal
  */
 export function trapFocus(container: HTMLElement, event: KeyboardEvent): void {
   const focusables = Array.from(new Set(container.querySelectorAll<HTMLElement>(FOCUSABLE)));

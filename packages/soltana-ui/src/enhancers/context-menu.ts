@@ -12,6 +12,7 @@ import { handleKeyboardNav } from './utils/keyboard-nav.js';
 
 export const CONTEXT_MENU_SELECTOR = '[data-sol-context-menu]';
 
+/** Singleton guard — aborted and replaced on each `init*()` call. */
 let _controller: AbortController | null = null;
 
 /**

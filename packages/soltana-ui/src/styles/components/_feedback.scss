@@ -108,6 +108,8 @@
 // `::after` tooltips above via the [role="tooltip"] attribute selector.
 .tooltip[role='tooltip'] {
   position: fixed;
+  top: var(--tooltip-top, 0);
+  left: var(--tooltip-left, 0);
   z-index: var(--z-tooltip);
   pointer-events: none;
   opacity: 0;

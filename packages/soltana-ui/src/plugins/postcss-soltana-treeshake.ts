@@ -32,6 +32,14 @@ const CLASS_RE = /\.(theme|relief|finish)-([\w-]+)/;
 // Matches [data-tier='value'] that appears inside :not()
 const NEGATED_ATTR_RE = /:not\([^)]*\[data-(theme|relief|finish)='[^']+'\][^)]*\)/g;
 
+function isTierConfig(value: unknown): value is TierConfig {
+  if (typeof value !== 'object' || value === null) return false;
+  const obj = value as Record<string, unknown>;
+  if ('include' in obj && !Array.isArray(obj.include)) return false;
+  if ('exclude' in obj && !Array.isArray(obj.exclude)) return false;
+  return true;
+}
+
 /**
  * Compute the set of tier values to exclude from output.
  */
@@ -42,8 +50,8 @@ function buildExcludeSet(options: SoltanaTreeshakeOptions): Map<string, Set<stri
     const tier = TIER_KEY_MAP[pluralKey];
     if (!tier || !(tier in BUILT_IN)) continue;
 
-    const tierConfig = value as TierConfig | undefined;
-    if (!tierConfig) continue;
+    if (!isTierConfig(value)) continue;
+    const tierConfig = value;
 
     const builtIn = BUILT_IN[tier];
 

@@ -7,6 +7,8 @@
 // ---------------------------------------------------------------------------
 
 // Standard (Firefox, Chrome 121+)
+// Applied to * so every scrollable container inherits themed scrollbars
+// without requiring per-element opt-in.
 * {
   scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
   scrollbar-width: thin;
@@ -27,6 +29,12 @@
   border-radius: 4px;
 
   &:hover {
-    background: color-mix(in srgb, var(--text-primary) 20%, transparent);
+    // Falls back to a computed mix when no --scrollbar-thumb-hover token is
+    // provided by the active theme. Themes can override this token to control
+    // the hover intensity explicitly.
+    background: var(
+      --scrollbar-thumb-hover,
+      color-mix(in srgb, var(--text-primary) 20%, transparent)
+    );
   }
 }

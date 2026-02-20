@@ -386,12 +386,51 @@ export function registerTheme(name: string, options: RegisterThemeOptions): Tier
   };
 }
 
+const REQUIRED_RELIEF_TOKENS = [
+  '--relief-bg',
+  '--relief-shadow-sm',
+  '--relief-shadow',
+  '--relief-shadow-lg',
+  '--relief-shadow-inset-sm',
+  '--relief-shadow-inset',
+  '--relief-shadow-inset-lg',
+  '--relief-border',
+] as const;
+
+const REQUIRED_FINISH_TOKENS = [
+  '--finish-blur',
+  '--finish-saturation',
+  '--finish-opacity',
+  '--finish-overlay',
+  '--finish-sheen',
+] as const;
+
+const REQUIRED_TIER_TOKENS: Record<'relief' | 'finish', readonly string[]> = {
+  relief: REQUIRED_RELIEF_TOKENS,
+  finish: REQUIRED_FINISH_TOKENS,
+};
+
+function validateTierTokens(
+  tier: 'relief' | 'finish',
+  name: string,
+  tokens: Record<string, string>
+): void {
+  const required = REQUIRED_TIER_TOKENS[tier];
+  const missing = required.filter((key) => !(key in tokens));
+  if (missing.length > 0) {
+    throw new Error(
+      `[soltana] register${tier[0].toUpperCase()}${tier.slice(1)}("${name}") missing required tokens: ${missing.join(', ')}`
+    );
+  }
+}
+
 function registerSimpleTier(
   tier: 'relief' | 'finish',
   name: string,
   tokens: Record<string, string>
 ): TierRegistration {
   validateCssIdent(name);
+  validateTierTokens(tier, name, tokens);
   const decls = buildDeclarations(tokens);
   const rules: CSSRule[] = [];
   rules.push(insertRule(`[data-${tier}='${name}'], .${tier}-${name} { ${decls} }`));

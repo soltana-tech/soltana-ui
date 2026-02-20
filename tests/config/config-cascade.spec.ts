@@ -80,3 +80,39 @@ test.describe('multi-tier cascade integration', () => {
     expect(finishAfter).toBe(finishBefore);
   });
 });
+
+test.describe('sampled cross-product combinations', () => {
+  // Representative sampling: each theme x each relief, with a varied finish
+  const finishes = ['matte', 'frosted', 'tinted', 'glossy'];
+  const sampledCombos: Array<{ theme: string; relief: string; finish: string }> = [];
+
+  for (const theme of ['dark', 'light', 'sepia']) {
+    for (const relief of ['flat', 'glassmorphic', 'skeuomorphic', 'neumorphic']) {
+      // Rotate through finishes to get variety without full cartesian
+      const finishIdx = sampledCombos.length % finishes.length;
+      sampledCombos.push({ theme, relief, finish: finishes[finishIdx] });
+    }
+  }
+
+  for (const combo of sampledCombos) {
+    test(`sampled ${combo.theme}/${combo.relief}/${combo.finish} resolves all tier tokens`, async ({
+      page,
+    }) => {
+      await setupSoltanaPage(page);
+      await page.evaluate((cfg) => {
+        const s = window.SoltanaUI.initSoltana();
+        s.setTheme(cfg.theme);
+        s.setRelief(cfg.relief);
+        s.setFinish(cfg.finish);
+      }, combo);
+
+      const surfaceBg = await getComputedCSSProperty(page, '--surface-bg');
+      const reliefShadow = await getComputedCSSProperty(page, '--relief-shadow');
+      const finishBlur = await getComputedCSSProperty(page, '--finish-blur');
+
+      expect(surfaceBg).not.toBe('');
+      expect(reliefShadow).not.toBe('');
+      expect(finishBlur).not.toBe('');
+    });
+  }
+});

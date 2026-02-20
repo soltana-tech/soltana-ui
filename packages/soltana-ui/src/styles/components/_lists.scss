@@ -58,7 +58,7 @@
 }
 
 .accordion-body {
-  max-height: 0;
+  max-height: var(--accordion-height, 0);
   overflow: hidden;
   transition: max-height var(--transition-slow) var(--easing-in-out);
   padding: 0 1.25rem;

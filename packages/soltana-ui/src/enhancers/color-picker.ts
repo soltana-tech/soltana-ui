@@ -10,6 +10,7 @@ import { onClickAway } from './utils/click-away.js';
 
 export const COLOR_PICKER_SELECTOR = '[data-sol-color-picker]';
 
+/** Singleton guard — aborted and replaced on each `init*()` call. */
 let _controller: AbortController | null = null;
 
 // ---- HSV color model ----
@@ -145,19 +146,19 @@ export function initColorPickers(options?: EnhancerOptions): EnhancerCleanup {
         const [r, g, b] = hsvToRgb({ h: hsv.h, s: 1, v: 1 });
         const hueColor = rgbToHex(r, g, b);
 
-        trigger.style.backgroundColor = hex;
+        trigger.style.setProperty('--cp-trigger-bg', hex);
         if (colorInput) colorInput.value = hex;
 
         if (area) {
-          area.style.backgroundColor = hueColor;
+          area.style.setProperty('--cp-area-bg', hueColor);
         }
         if (areaThumb) {
-          areaThumb.style.left = `${String(hsv.s * 100)}%`;
-          areaThumb.style.top = `${String((1 - hsv.v) * 100)}%`;
-          areaThumb.style.backgroundColor = hex;
+          areaThumb.style.setProperty('--cp-thumb-x', `${String(hsv.s * 100)}%`);
+          areaThumb.style.setProperty('--cp-thumb-y', `${String((1 - hsv.v) * 100)}%`);
+          areaThumb.style.setProperty('--cp-thumb-bg', hex);
         }
         if (hueThumb) {
-          hueThumb.style.left = `${String((hsv.h / 360) * 100)}%`;
+          hueThumb.style.setProperty('--cp-hue-x', `${String((hsv.h / 360) * 100)}%`);
         }
       }
 
@@ -265,11 +266,18 @@ export function initColorPickers(options?: EnhancerOptions): EnhancerCleanup {
       const swatchContainer = wrapper.querySelector<HTMLElement>('.color-picker-swatches');
       if (swatchContainer) {
         const raw = swatchContainer.getAttribute('data-swatches');
-        const colors: string[] = raw ? (JSON.parse(raw) as string[]) : [];
+        let colors: string[] = [];
+        if (raw) {
+          try {
+            colors = JSON.parse(raw) as string[];
+          } catch {
+            console.warn('[soltana] Invalid JSON in data-swatches attribute:', raw);
+          }
+        }
         colors.forEach((color) => {
           const swatch = document.createElement('button');
           swatch.className = 'color-picker-swatch';
-          swatch.style.backgroundColor = color;
+          swatch.style.setProperty('--cp-swatch-bg', color);
           swatch.setAttribute('aria-label', color);
           swatch.addEventListener(
             'click',

@@ -5,6 +5,7 @@ import {
   setCssProps,
   clearCssProps,
 } from '@soltana-ui/chart-shared/test-helpers';
+import { describeStaticExports } from '@soltana-ui/chart-shared/test-static-exports';
 
 const CSS_PROPS: Record<string, string> = {
   ...BASE_CSS_PROPS,
@@ -179,19 +180,15 @@ describe('CSS token structure', () => {
   });
 });
 
-describe('static JSON exports', () => {
-  it('exports dark theme with expected structure', () => {
-    expect(dark).toHaveProperty('layout');
-    const layout = (dark as Record<string, Record<string, unknown>>).layout;
+describeStaticExports({
+  themes: { dark, light, sepia },
+  requiredKeys: ['layout'],
+  darkAssertions: (theme) => {
+    const layout = (theme as Record<string, Record<string, unknown>>).layout;
     expect(layout).toHaveProperty('colorway');
     expect(layout).toHaveProperty('paper_bgcolor');
-  });
-
-  it('exports light theme with expected structure', () => {
-    expect(light).toHaveProperty('layout');
-  });
-
-  it('exports sepia theme with expected structure', () => {
-    expect(sepia).toHaveProperty('layout');
-  });
+  },
+  describe,
+  it,
+  expect,
 });

@@ -11,6 +11,7 @@ import { handleKeyboardNav } from './utils/keyboard-nav.js';
 
 export const COMBOBOX_SELECTOR = '[data-sol-combobox]';
 
+/** Singleton guard — aborted and replaced on each `init*()` call. */
 let _controller: AbortController | null = null;
 
 function getOptionText(el: HTMLElement): string {

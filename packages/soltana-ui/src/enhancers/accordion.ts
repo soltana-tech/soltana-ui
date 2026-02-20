@@ -13,6 +13,7 @@ import { handleKeyboardNav } from './utils/keyboard-nav.js';
 
 export const ACCORDION_SELECTOR = '[data-sol-accordion]';
 
+/** Singleton guard — aborted and replaced on each `init*()` call. */
 let _controller: AbortController | null = null;
 
 function toggleItem(item: HTMLElement, open: boolean): void {
@@ -24,11 +25,10 @@ function toggleItem(item: HTMLElement, open: boolean): void {
 
   if (body) {
     if (open) {
-      body.style.maxHeight = `${String(body.scrollHeight)}px`;
+      body.style.setProperty('--accordion-height', `${String(body.scrollHeight)}px`);
       body.hidden = false;
     } else {
-      body.style.maxHeight = '0';
-      // Delay hidden until transition completes
+      body.style.setProperty('--accordion-height', '0');
       body.addEventListener(
         'transitionend',
         () => {
@@ -92,16 +92,11 @@ export function initAccordions(options?: EnhancerOptions): EnhancerCleanup {
         const isOpen = item.classList.contains('active');
         header.setAttribute('aria-expanded', String(isOpen));
         if (!isOpen) {
-          body.style.maxHeight = '0';
+          body.style.setProperty('--accordion-height', '0');
           body.hidden = true;
         } else {
-          body.style.maxHeight = `${String(body.scrollHeight)}px`;
+          body.style.setProperty('--accordion-height', `${String(body.scrollHeight)}px`);
         }
-
-        // Enable transition
-        body.style.overflow = 'hidden';
-        body.style.transition =
-          'max-height var(--transition-slow, 0.3s) var(--easing-in-out, ease-in-out)';
 
         headers.push(header);
 

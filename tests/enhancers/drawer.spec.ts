@@ -107,4 +107,31 @@ test.describe('initDrawers', () => {
     await page.locator('[data-drawer-open="test-drawer"]').click();
     await expect(page.locator('#test-drawer')).not.toHaveClass(/active/);
   });
+
+  test('destroy prevents future interactions', async ({ page }) => {
+    await setupSoltanaPage(page, { bodyHTML: drawerHTML() });
+
+    // Verify drawer works before destroy
+    await page.evaluate(() => window.SoltanaUI.initDrawers());
+    await page.locator('[data-drawer-open="test-drawer"]').click();
+    await expect(page.locator('#test-drawer')).toHaveClass(/active/);
+    await page.locator('[data-drawer-close]').click();
+    await expect(page.locator('#test-drawer')).not.toHaveClass(/active/);
+
+    // Destroy and verify no further interactions work
+    await page.evaluate(() => {
+      const cleanup = window.SoltanaUI.initDrawers();
+      cleanup.destroy();
+    });
+
+    await page.locator('[data-drawer-open="test-drawer"]').click();
+    await expect(page.locator('#test-drawer')).not.toHaveClass(/active/);
+    await expect(page.locator('#test-drawer')).toHaveAttribute('aria-hidden', 'true');
+
+    // Body scroll lock should not be set
+    const hasScrollLock = await page.evaluate(() =>
+      document.body.classList.contains('sol-drawer-open')
+    );
+    expect(hasScrollLock).toBe(false);
+  });
 });

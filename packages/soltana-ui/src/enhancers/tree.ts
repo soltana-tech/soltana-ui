@@ -9,6 +9,7 @@ import type { EnhancerCleanup, EnhancerOptions } from '../config/types.js';
 
 export const TREE_SELECTOR = '[data-sol-tree]';
 
+/** Singleton guard — aborted and replaced on each `init*()` call. */
 let _controller: AbortController | null = null;
 
 function getVisibleNodes(tree: HTMLElement): HTMLElement[] {

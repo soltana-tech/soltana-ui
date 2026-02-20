@@ -14,6 +14,7 @@ import type { EnhancerCleanup, EnhancerOptions } from '../config/types.js';
 
 export const TABS_SELECTOR = '[data-sol-tabs]';
 
+/** Singleton guard — aborted and replaced on each `init*()` call. */
 let _controller: AbortController | null = null;
 
 function activateTab(container: HTMLElement, index: number): void {

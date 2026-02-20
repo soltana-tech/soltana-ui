@@ -9,6 +9,7 @@ import type { EnhancerCleanup, EnhancerOptions } from '../config/types.js';
 
 export const SCROLL_AREA_SELECTOR = '[data-sol-scroll-area]';
 
+/** Singleton guard — aborted and replaced on each `init*()` call. */
 let _controller: AbortController | null = null;
 
 /**

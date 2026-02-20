@@ -44,7 +44,10 @@ ability to compose them.
   element. Enables mixed-tier layouts without custom CSS.
 - **Accessibility foundation** — `prefers-reduced-motion`,
   `prefers-contrast`, `.sr-only`, `.skip-link`, focus rings.
-  Solid base layer.
+  Solid base layer. A `prefers-contrast: more` media query
+  overrides key tokens (`--border-default`, `--text-primary`,
+  etc.) to meet WCAG AAA contrast ratios without requiring
+  a separate high-contrast theme.
 - **Decorative typography** — `--font-display` maps to
   Cinzel Decorative for ornamental headings and branding
   elements, complementing the primary `--font-serif` (Cinzel)
@@ -72,9 +75,11 @@ ability to compose them.
   Tailwind — covers the most common patterns only. Consumers
   using the SCSS source can exclude this module by omitting
   `@use 'utilities'` from their entry point.
-- **Decorative module** — Isolated in its own directory and
-  opt-in. Uses `--font-display` (Cinzel Decorative) for
-  ornamental headings and branding elements.
+- **Decorative module** — Isolated in its own directory. Ships
+  in the default compiled CSS bundle; opt-in only for consumers
+  using the SCSS source (omit `@use 'decorative'`). Uses
+  `--font-display` (Cinzel Decorative) for ornamental headings
+  and branding elements.
 - **Bridge pattern** — Relief and finish tokens compose at
   paint time via shared bridge properties
   (`--channel-sheen-color`, `--channel-tint-color`,

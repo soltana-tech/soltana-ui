@@ -7,6 +7,8 @@
 
 // ---- Reduced Motion ----
 // Disables animations and transitions for users who prefer reduced motion.
+// !important is intentional: accessibility overrides must win over any
+// component-level animation/transition declarations regardless of specificity.
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

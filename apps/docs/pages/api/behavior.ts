@@ -35,7 +35,9 @@ export function renderApiBehavior(): HTMLElement {
       'initAll()',
       `
       <p class="text-secondary mb-4">
-        Initializes all enhancers (modals, tabs, tooltips) in a single call.
+        Initializes all 16 enhancers (modals, tabs, tooltips, accordions, dropdowns,
+        drawers, toasts, collapsibles, comboboxes, hover cards, context menus, carousels,
+        scroll areas, date pickers, color pickers, and trees) in a single call.
         Equivalent to calling each initializer individually.
       </p>
 
@@ -254,6 +256,374 @@ const sidebar = document.getElementById('sidebar');
 const tooltipCleanup = initTooltips({ root: sidebar });`,
         'typescript'
       )}
+
+      <h4 class="text-lg font-semibold mt-6 mb-2">Custom Selectors</h4>
+      <p class="text-secondary mb-4">
+        Override the default selector to target different elements:
+      </p>
+      ${codeExample(
+        `import { initTooltips } from 'soltana-ui';
+
+// Only enhance elements with a custom attribute
+const cleanup = initTooltips({ selector: '[data-help-tip]' });`,
+        'typescript'
+      )}
+    `
+    )}
+
+    ${specimenBlock(
+      'EnhancerCleanup',
+      `
+      <p class="text-secondary mb-4">
+        Every enhancer initializer returns an <code>EnhancerCleanup</code> handle.
+        Call <code>destroy()</code> to remove all event listeners and DOM artifacts
+        created by that enhancer.
+      </p>
+      ${codeExample(
+        `interface EnhancerCleanup {
+  destroy(): void;
+}`,
+        'typescript'
+      )}
+      <p class="text-secondary mt-4">
+        Re-calling an initializer (e.g. <code>initModals()</code>) implicitly
+        destroys the previous instance — only one active instance per enhancer type
+        exists at any time.
+      </p>
+    `
+    )}
+
+    ${specimenBlock(
+      'Selector Constants',
+      `
+      <p class="text-secondary mb-4">
+        Each enhancer exports a constant with its default CSS selector.
+        Use these for custom queries or conditional initialization.
+      </p>
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr><th>Constant</th><th>Value</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>MODAL_SELECTOR</code></td><td><code>'[data-sol-modal]'</code></td></tr>
+            <tr><td><code>MODAL_OPEN_SELECTOR</code></td><td><code>'[data-modal-open]'</code></td></tr>
+            <tr><td><code>TABS_SELECTOR</code></td><td><code>'[data-sol-tabs]'</code></td></tr>
+            <tr><td><code>TOOLTIP_SELECTOR</code></td><td><code>'[data-sol-tooltip]'</code></td></tr>
+            <tr><td><code>ACCORDION_SELECTOR</code></td><td><code>'[data-sol-accordion]'</code></td></tr>
+            <tr><td><code>DROPDOWN_SELECTOR</code></td><td><code>'[data-sol-dropdown]'</code></td></tr>
+            <tr><td><code>DRAWER_SELECTOR</code></td><td><code>'[data-sol-drawer]'</code></td></tr>
+            <tr><td><code>DRAWER_OPEN_SELECTOR</code></td><td><code>'[data-drawer-open]'</code></td></tr>
+            <tr><td><code>TOAST_CONTAINER_SELECTOR</code></td><td><code>'[data-sol-toast-container]'</code></td></tr>
+            <tr><td><code>COLLAPSIBLE_SELECTOR</code></td><td><code>'[data-sol-collapsible]'</code></td></tr>
+            <tr><td><code>COMBOBOX_SELECTOR</code></td><td><code>'[data-sol-combobox]'</code></td></tr>
+            <tr><td><code>HOVER_CARD_SELECTOR</code></td><td><code>'[data-sol-hover-card]'</code></td></tr>
+            <tr><td><code>CONTEXT_MENU_SELECTOR</code></td><td><code>'[data-sol-context-menu]'</code></td></tr>
+            <tr><td><code>CAROUSEL_SELECTOR</code></td><td><code>'[data-sol-carousel]'</code></td></tr>
+            <tr><td><code>SCROLL_AREA_SELECTOR</code></td><td><code>'[data-sol-scroll-area]'</code></td></tr>
+            <tr><td><code>DATE_PICKER_SELECTOR</code></td><td><code>'[data-sol-date-picker]'</code></td></tr>
+            <tr><td><code>COLOR_PICKER_SELECTOR</code></td><td><code>'[data-sol-color-picker]'</code></td></tr>
+            <tr><td><code>TREE_SELECTOR</code></td><td><code>'[data-sol-tree]'</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    `
+    )}
+
+    ${specimenBlock(
+      'initAccordions()',
+      `
+      <p class="text-secondary mb-4">
+        Enhances <code>[data-sol-accordion]</code> elements with expand/collapse,
+        keyboard navigation, and ARIA attributes. Add <code>data-accordion-exclusive</code>
+        for single-open mode.
+      </p>
+      <h4 class="text-lg font-semibold mt-6 mb-2">Signature</h4>
+      ${codeExample(`function initAccordions(options?: EnhancerOptions): EnhancerCleanup`, 'typescript')}
+      <h4 class="text-lg font-semibold mt-6 mb-2">Expected Markup</h4>
+      ${codeExample(`<div data-sol-accordion>
+  <div class="accordion-item active">
+    <div class="accordion-header">Title</div>
+    <div class="accordion-body">Content</div>
+  </div>
+</div>`)}
+    `
+    )}
+
+    ${specimenBlock(
+      'initDropdowns()',
+      `
+      <p class="text-secondary mb-4">
+        Enhances <code>[data-sol-dropdown]</code> elements with toggle, click-away,
+        keyboard navigation, and ARIA behavior.
+      </p>
+      <h4 class="text-lg font-semibold mt-6 mb-2">Signature</h4>
+      ${codeExample(`function initDropdowns(options?: EnhancerOptions): EnhancerCleanup`, 'typescript')}
+      <h4 class="text-lg font-semibold mt-6 mb-2">Expected Markup</h4>
+      ${codeExample(`<div data-sol-dropdown class="dropdown">
+  <button class="dropdown-toggle">Options</button>
+  <div class="dropdown-menu" role="menu">
+    <button class="dropdown-item" role="menuitem">Edit</button>
+  </div>
+</div>`)}
+    `
+    )}
+
+    ${specimenBlock(
+      'initDrawers()',
+      `
+      <p class="text-secondary mb-4">
+        Enhances <code>[data-sol-drawer]</code> elements with open/close, focus trapping,
+        <kbd>Escape</kbd> key, and backdrop click behavior. Open triggers use
+        <code>[data-drawer-open="&lt;drawer-id&gt;"]</code>. Adds
+        <code>.sol-drawer-open</code> to <code>document.body</code> while any drawer is open.
+      </p>
+      <h4 class="text-lg font-semibold mt-6 mb-2">Signature</h4>
+      ${codeExample(`function initDrawers(options?: EnhancerOptions): EnhancerCleanup`, 'typescript')}
+      <h4 class="text-lg font-semibold mt-6 mb-2">Expected Markup</h4>
+      ${codeExample(`<button data-drawer-open="my-drawer">Open Drawer</button>
+
+<div data-sol-drawer id="my-drawer" aria-hidden="true">
+  <div class="drawer-backdrop"></div>
+  <div class="drawer drawer-right">
+    <div class="drawer-header">
+      <h2>Drawer Title</h2>
+      <button class="close" data-drawer-close>&times;</button>
+    </div>
+    <div class="drawer-body">Content</div>
+  </div>
+</div>`)}
+    `
+    )}
+
+    ${specimenBlock(
+      'initToasts()',
+      `
+      <p class="text-secondary mb-4">
+        Enhances <code>[data-sol-toast-container]</code> elements with ARIA attributes
+        and close button behavior. See also <code>showToast()</code> for programmatic usage.
+      </p>
+      <h4 class="text-lg font-semibold mt-6 mb-2">Signature</h4>
+      ${codeExample(`function initToasts(options?: EnhancerOptions): EnhancerCleanup`, 'typescript')}
+    `
+    )}
+
+    ${specimenBlock(
+      'showToast()',
+      `
+      <p class="text-secondary mb-4">
+        Programmatically show a toast notification. Creates DOM, animates in,
+        and auto-dismisses after <code>duration</code> ms (default 5000).
+        Returns the created toast element.
+      </p>
+      <h4 class="text-lg font-semibold mt-6 mb-2">Signature</h4>
+      ${codeExample(`function showToast(opts: ToastOptions): HTMLElement`, 'typescript')}
+      <h4 class="text-lg font-semibold mt-6 mb-2">ToastOptions</h4>
+      ${codeExample(
+        `interface ToastOptions {
+  message: string;
+  type?: ToastType;       // 'success' | 'warning' | 'error' | 'info'
+  duration?: number;      // Auto-dismiss ms (default 5000, 0 = persistent)
+  position?: ToastPosition;
+}
+
+type ToastType = 'success' | 'warning' | 'error' | 'info';
+type ToastPosition = 'top-right' | 'top-left' | 'top-center'
+                   | 'bottom-right' | 'bottom-left' | 'bottom-center';`,
+        'typescript'
+      )}
+      <h4 class="text-lg font-semibold mt-6 mb-2">Example</h4>
+      ${codeExample(
+        `import { showToast } from 'soltana-ui';
+
+showToast({ message: 'Settings saved', type: 'success' });
+showToast({ message: 'Connection lost', type: 'error', position: 'bottom-center' });`,
+        'typescript'
+      )}
+    `
+    )}
+
+    ${specimenBlock(
+      'dismissToast()',
+      `
+      <p class="text-secondary mb-4">
+        Dismiss a specific toast element. Animates out and removes from DOM.
+      </p>
+      <h4 class="text-lg font-semibold mt-6 mb-2">Signature</h4>
+      ${codeExample(`function dismissToast(toast: HTMLElement): void`, 'typescript')}
+    `
+    )}
+
+    ${specimenBlock(
+      'initCollapsibles()',
+      `
+      <p class="text-secondary mb-4">
+        Enhances <code>[data-sol-collapsible]</code> elements with expand/collapse behavior.
+        Simpler single-panel version of accordion.
+      </p>
+      <h4 class="text-lg font-semibold mt-6 mb-2">Signature</h4>
+      ${codeExample(`function initCollapsibles(options?: EnhancerOptions): EnhancerCleanup`, 'typescript')}
+      <h4 class="text-lg font-semibold mt-6 mb-2">Expected Markup</h4>
+      ${codeExample(`<div data-sol-collapsible class="collapsible">
+  <button class="collapsible-trigger">Toggle</button>
+  <div class="collapsible-content">Content</div>
+</div>`)}
+    `
+    )}
+
+    ${specimenBlock(
+      'initComboboxes()',
+      `
+      <p class="text-secondary mb-4">
+        Enhances <code>[data-sol-combobox]</code> elements with typeahead filtering,
+        keyboard navigation, and ARIA combobox pattern.
+      </p>
+      <h4 class="text-lg font-semibold mt-6 mb-2">Signature</h4>
+      ${codeExample(`function initComboboxes(options?: EnhancerOptions): EnhancerCleanup`, 'typescript')}
+      <h4 class="text-lg font-semibold mt-6 mb-2">Expected Markup</h4>
+      ${codeExample(`<div data-sol-combobox class="combobox">
+  <input class="combobox-input input" role="combobox" />
+  <ul class="combobox-listbox" role="listbox">
+    <li class="combobox-option" role="option">Option 1</li>
+  </ul>
+</div>`)}
+    `
+    )}
+
+    ${specimenBlock(
+      'initHoverCards()',
+      `
+      <p class="text-secondary mb-4">
+        Enhances <code>[data-sol-hover-card]</code> elements with positioned hover
+        content shown on mouseenter/focus with a configurable delay.
+      </p>
+      <h4 class="text-lg font-semibold mt-6 mb-2">Signature</h4>
+      ${codeExample(`function initHoverCards(options?: EnhancerOptions): EnhancerCleanup`, 'typescript')}
+      <h4 class="text-lg font-semibold mt-6 mb-2">Expected Markup</h4>
+      ${codeExample(`<div data-sol-hover-card class="hover-card">
+  <span class="hover-card-trigger">Hover me</span>
+  <div class="hover-card-content">Rich content</div>
+</div>`)}
+    `
+    )}
+
+    ${specimenBlock(
+      'initContextMenus()',
+      `
+      <p class="text-secondary mb-4">
+        Enhances <code>[data-sol-context-menu]</code> elements with right-click context
+        menus, keyboard navigation, and click-away dismissal.
+      </p>
+      <h4 class="text-lg font-semibold mt-6 mb-2">Signature</h4>
+      ${codeExample(`function initContextMenus(options?: EnhancerOptions): EnhancerCleanup`, 'typescript')}
+      <h4 class="text-lg font-semibold mt-6 mb-2">Expected Markup</h4>
+      ${codeExample(`<div data-sol-context-menu>
+  <div class="context-menu" role="menu">
+    <button class="context-menu-item" role="menuitem">Cut</button>
+    <button class="context-menu-item" role="menuitem">Copy</button>
+  </div>
+  <p>Right-click here</p>
+</div>`)}
+    `
+    )}
+
+    ${specimenBlock(
+      'initCarousels()',
+      `
+      <p class="text-secondary mb-4">
+        Enhances <code>[data-sol-carousel]</code> elements with slide navigation,
+        keyboard controls, autoplay, and indicator dots.
+      </p>
+      <h4 class="text-lg font-semibold mt-6 mb-2">Signature</h4>
+      ${codeExample(`function initCarousels(options?: EnhancerOptions): EnhancerCleanup`, 'typescript')}
+      <h4 class="text-lg font-semibold mt-6 mb-2">Expected Markup</h4>
+      ${codeExample(`<div data-sol-carousel class="carousel"
+     data-carousel-autoplay data-carousel-interval="5000" data-carousel-loop>
+  <div class="carousel-track">
+    <div class="carousel-slide">Slide 1</div>
+    <div class="carousel-slide">Slide 2</div>
+  </div>
+  <button class="carousel-prev" aria-label="Previous slide">&lsaquo;</button>
+  <button class="carousel-next" aria-label="Next slide">&rsaquo;</button>
+  <div class="carousel-dots"></div>
+</div>`)}
+    `
+    )}
+
+    ${specimenBlock(
+      'initScrollAreas()',
+      `
+      <p class="text-secondary mb-4">
+        Enhances <code>[data-sol-scroll-area]</code> elements with custom scrollbar
+        styling awareness and optional scroll indicators.
+      </p>
+      <h4 class="text-lg font-semibold mt-6 mb-2">Signature</h4>
+      ${codeExample(`function initScrollAreas(options?: EnhancerOptions): EnhancerCleanup`, 'typescript')}
+      <h4 class="text-lg font-semibold mt-6 mb-2">Expected Markup</h4>
+      ${codeExample(`<div data-sol-scroll-area class="scroll-area" style="max-height: 20rem;">
+  <!-- Scrollable content -->
+</div>`)}
+    `
+    )}
+
+    ${specimenBlock(
+      'initDatePickers()',
+      `
+      <p class="text-secondary mb-4">
+        Enhances <code>[data-sol-date-picker]</code> elements with a calendar popup,
+        keyboard navigation, and ARIA attributes. Falls back to native date input
+        when <code>data-sol-date-native</code> is present.
+      </p>
+      <h4 class="text-lg font-semibold mt-6 mb-2">Signature</h4>
+      ${codeExample(`function initDatePickers(options?: EnhancerOptions): EnhancerCleanup`, 'typescript')}
+    `
+    )}
+
+    ${specimenBlock(
+      'initColorPickers()',
+      `
+      <p class="text-secondary mb-4">
+        Enhances <code>[data-sol-color-picker]</code> elements with HSV-based color
+        selection using a 2D area, hue slider, and optional swatches.
+      </p>
+      <h4 class="text-lg font-semibold mt-6 mb-2">Signature</h4>
+      ${codeExample(`function initColorPickers(options?: EnhancerOptions): EnhancerCleanup`, 'typescript')}
+      <h4 class="text-lg font-semibold mt-6 mb-2">Expected Markup</h4>
+      ${codeExample(`<div data-sol-color-picker class="color-picker">
+  <button class="color-picker-trigger"></button>
+  <div class="color-picker-popup">
+    <div class="color-picker-area"></div>
+    <div class="color-picker-hue"></div>
+    <input class="color-picker-input input" value="#d4a843" />
+    <div class="color-picker-swatches" data-swatches='["#d4a843","#a855f7"]'></div>
+  </div>
+</div>`)}
+    `
+    )}
+
+    ${specimenBlock(
+      'initTrees()',
+      `
+      <p class="text-secondary mb-4">
+        Enhances <code>[data-sol-tree]</code> elements with expandable tree nodes,
+        keyboard navigation, and ARIA treeview pattern.
+      </p>
+      <h4 class="text-lg font-semibold mt-6 mb-2">Signature</h4>
+      ${codeExample(`function initTrees(options?: EnhancerOptions): EnhancerCleanup`, 'typescript')}
+      <h4 class="text-lg font-semibold mt-6 mb-2">Expected Markup</h4>
+      ${codeExample(`<div data-sol-tree class="tree" role="tree">
+  <div class="tree-branch tree-node" role="treeitem">
+    <div class="tree-node-content">
+      <button class="tree-toggle"></button>
+      Folder
+    </div>
+    <div class="tree-children">
+      <div class="tree-leaf tree-node" role="treeitem">
+        <div class="tree-node-content">File</div>
+      </div>
+    </div>
+  </div>
+</div>`)}
     `
     )}
   </div>

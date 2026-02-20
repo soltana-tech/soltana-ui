@@ -17,6 +17,7 @@
 
 .carousel-track {
   display: flex;
+  transform: translateX(var(--carousel-offset, 0%));
   transition: transform var(--transition-slow) var(--easing-in-out);
 }
 

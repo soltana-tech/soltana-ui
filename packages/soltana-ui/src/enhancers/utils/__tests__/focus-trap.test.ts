@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+import fc from 'fast-check';
 import { trapFocus, FOCUSABLE } from '../focus-trap.js';
 
 function createContainer(focusableCount: number): HTMLElement {
@@ -79,5 +80,29 @@ describe('trapFocus', () => {
     expect(FOCUSABLE).toContain('button');
     expect(FOCUSABLE).toContain('a[href]');
     expect(FOCUSABLE).toContain('input');
+  });
+});
+
+describe('trapFocus property-based', () => {
+  it('focus never escapes container', () => {
+    fc.assert(
+      fc.property(
+        fc.integer({ min: 1, max: 20 }),
+        fc.boolean(),
+        (count: number, shiftKey: boolean) => {
+          document.body.innerHTML = '';
+          const container = createContainer(count);
+          const buttons = Array.from(container.querySelectorAll('button'));
+
+          // Focus last element for forward Tab, first for backward
+          const focusIdx = shiftKey ? 0 : count - 1;
+          buttons[focusIdx].focus();
+
+          trapFocus(container, makeKeyboardEvent(shiftKey));
+
+          expect(container.contains(document.activeElement)).toBe(true);
+        }
+      )
+    );
   });
 });

@@ -58,28 +58,35 @@ test.describe('runtime registration', () => {
 
   test('destroy() cleans up all registrations and stylesheet', async ({ page }) => {
     await setupSoltanaPage(page);
-    await page.evaluate(
+    const result = await page.evaluate(
       ({ seed, reliefTokens }) => {
         const s = window.SoltanaUI.initSoltana();
         s.registerTheme('brand', { seed });
         s.registerRelief('paper', { tokens: reliefTokens });
+        const adoptedBefore = document.adoptedStyleSheets.length;
         s.destroy();
+        const adoptedAfter = document.adoptedStyleSheets.length;
+        const domEl = document.getElementById('soltana-custom');
+        const hasThemeAttr = document.documentElement.hasAttribute('data-theme');
+        const hasReliefAttr = document.documentElement.hasAttribute('data-relief');
+        const hasFinishAttr = document.documentElement.hasAttribute('data-finish');
+        return {
+          domEl: domEl !== null,
+          adoptedBefore,
+          adoptedAfter,
+          hasThemeAttr,
+          hasReliefAttr,
+          hasFinishAttr,
+        };
       },
       { seed: THEME_SEED, reliefTokens: RELIEF_TOKENS }
     );
 
-    // After destroy, the custom stylesheet should be removed.
-    // Check for adoptedStyleSheets being clean or no soltana-custom style element.
-    const hasCustomSheet = await page.evaluate(() => {
-      // Check both possible locations: adoptedStyleSheets and DOM element
-      const domEl = document.getElementById('soltana-custom');
-      const adopted = document.adoptedStyleSheets.length;
-      return { domEl: domEl !== null, adoptedCount: adopted };
-    });
-
-    // Either the DOM element is gone, or no adopted stylesheets remain beyond baseline
-    // The stylesheet module removes its sheet on teardown
-    expect(hasCustomSheet.domEl).toBe(false);
+    expect(result.domEl).toBe(false);
+    expect(result.adoptedAfter).toBeLessThan(result.adoptedBefore);
+    expect(result.hasThemeAttr).toBe(false);
+    expect(result.hasReliefAttr).toBe(false);
+    expect(result.hasFinishAttr).toBe(false);
   });
 
   test('reset() cleans up registrations and stylesheet', async ({ page }) => {

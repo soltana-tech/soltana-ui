@@ -15,8 +15,17 @@ export type Theme = BuiltInTheme | 'auto' | (string & {});
 export type Relief = BuiltInRelief | (string & {});
 export type Finish = BuiltInFinish | (string & {});
 
+/**
+ * Initialization-only options consumed by `initSoltana()`.
+ *
+ * These are merged with `SoltanaConfig` in the `initSoltana()` parameter via a
+ * flattened union (`Partial<SoltanaConfig & SoltanaInitOptions>`) so callers
+ * pass a single options object rather than nested config + init groups.
+ */
 export interface SoltanaInitOptions {
+  /** Enable progressive-enhancement enhancers for all 16 component types. */
   enhancers?: boolean;
+  /** Throw on invalid values instead of logging warnings. */
   strict?: boolean;
   /** Options forwarded to individual enhancer initializers. */
   enhancerOptions?: EnhancerOptions;
@@ -59,8 +68,8 @@ export interface SoltanaInstance {
   registerFinish(name: string, options: RegisterFinishOptions): TierRegistration;
 
   /**
-   * Destroy and re-create enhancers (modals, tabs, tooltips).
-   * Only effective when `enhancers: true` was passed to `initSoltana()`.
+   * Destroy and re-create all 16 enhancer types.
+   * No-op when `enhancers: false` (the default) was passed to `initSoltana()`.
    */
   reinitEnhancers(): void;
   /** Reset all tiers to defaults and remove overrides and registrations. */
@@ -74,14 +83,32 @@ export interface EnhancerCleanup {
 }
 
 export interface EnhancerOptions {
-  /** Root element to scope queries. Defaults to `document`. */
+  /**
+   * Root element to scope queries. Defaults to `document`.
+   * Use this to limit enhancer initialization to a subtree (e.g. a shadow root
+   * or a dynamically-loaded section).
+   */
   root?: Element | Document;
   /**
    * Override the default CSS selector for target elements.
-   * Behavior varies per enhancer:
-   *   - **modals**: overrides the trigger selector (default: `[data-modal-open]`)
-   *   - **tabs**: overrides the container selector (default: `.tabs`)
-   *   - **tooltips**: overrides the container selector (default: `[data-tooltip]`)
+   *
+   * Each enhancer defines its own default selector:
+   *   - `initModals` → `[data-modal-open]`
+   *   - `initTabs` → `[data-sol-tabs]`
+   *   - `initTooltips` → `[data-sol-tooltip]`
+   *   - `initAccordions` → `[data-sol-accordion]`
+   *   - `initDropdowns` → `[data-sol-dropdown]`
+   *   - `initDrawers` → `[data-drawer-open]`
+   *   - `initToasts` → `[data-sol-toast-container]`
+   *   - `initCollapsibles` → `[data-sol-collapsible]`
+   *   - `initComboboxes` → `[data-sol-combobox]`
+   *   - `initHoverCards` → `[data-sol-hover-card]`
+   *   - `initContextMenus` → `[data-sol-context-menu]`
+   *   - `initCarousels` → `[data-sol-carousel]`
+   *   - `initScrollAreas` → `[data-sol-scroll-area]`
+   *   - `initDatePickers` → `[data-sol-date-picker]`
+   *   - `initColorPickers` → `[data-sol-color-picker]`
+   *   - `initTrees` → `[data-sol-tree]`
    */
   selector?: string;
 }
@@ -102,8 +129,12 @@ export interface SoltanaChangeDetail {
 
 /**
  * Seed colors used to derive a full theme token palette via `registerTheme()`.
- * Only the three required fields are needed; optional fields fall back to
- * curated defaults appropriate for the chosen `colorScheme`.
+ *
+ * Only the three required fields (`surfaceBg`, `textPrimary`, `accentPrimary`)
+ * are needed to generate a complete token set. Optional fields fall back to
+ * curated defaults selected for the chosen `colorScheme` — dark-scheme
+ * defaults use lighter, higher-contrast values while light-scheme defaults
+ * use darker, lower-saturation values.
  */
 export interface ThemeSeed {
   /** Base surface/background color for the theme. */

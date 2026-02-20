@@ -16,6 +16,7 @@ import type { Placement } from './utils/position.js';
 
 export const TOOLTIP_SELECTOR = '[data-sol-tooltip]';
 
+/** Singleton guard — aborted and replaced on each `init*()` call. */
 let _controller: AbortController | null = null;
 let tooltipEl: HTMLElement | null = null;
 let activeTarget: HTMLElement | null = null;
@@ -73,8 +74,8 @@ function positionTooltip(target: HTMLElement, tip: HTMLElement): void {
     placement,
   });
 
-  tip.style.top = `${String(top)}px`;
-  tip.style.left = `${String(left)}px`;
+  tip.style.setProperty('--tooltip-top', `${String(top)}px`);
+  tip.style.setProperty('--tooltip-left', `${String(left)}px`);
 }
 
 /**

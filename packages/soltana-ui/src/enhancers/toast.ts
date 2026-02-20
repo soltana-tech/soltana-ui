@@ -13,6 +13,7 @@ import type { EnhancerCleanup, EnhancerOptions } from '../config/types.js';
 
 export const TOAST_CONTAINER_SELECTOR = '[data-sol-toast-container]';
 
+/** Singleton guard — aborted and replaced on each `init*()` call. */
 let _controller: AbortController | null = null;
 let _defaultContainer: HTMLElement | null = null;
 

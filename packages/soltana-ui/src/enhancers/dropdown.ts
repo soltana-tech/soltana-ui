@@ -14,9 +14,10 @@ import { handleKeyboardNav } from './utils/keyboard-nav.js';
 
 export const DROPDOWN_SELECTOR = '[data-sol-dropdown]';
 
+/** Singleton guard — aborted and replaced on each `init*()` call. */
 let _controller: AbortController | null = null;
 
-function openDropdown(_dropdown: HTMLElement, toggle: HTMLElement, menu: HTMLElement): void {
+function openDropdown(toggle: HTMLElement, menu: HTMLElement): void {
   menu.classList.add('active');
   toggle.setAttribute('aria-expanded', 'true');
 
@@ -84,7 +85,7 @@ export function initDropdowns(options?: EnhancerOptions): EnhancerCleanup {
         if (isOpen) {
           closeDropdown(toggle, menu);
         } else {
-          openDropdown(dropdown, toggle, menu);
+          openDropdown(toggle, menu);
         }
       },
       { signal }
@@ -128,7 +129,7 @@ export function initDropdowns(options?: EnhancerOptions): EnhancerCleanup {
           !isOpen
         ) {
           e.preventDefault();
-          openDropdown(dropdown, toggle, menu);
+          openDropdown(toggle, menu);
           return;
         }
 

@@ -9,6 +9,8 @@
 @use '../variables' as *;
 
 // ---- Base typography ----
+// Global box-sizing reset: border-box ensures padding and border are included
+// in element dimensions, preventing layout surprises across all components.
 *,
 *::before,
 *::after {

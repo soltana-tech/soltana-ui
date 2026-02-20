@@ -108,4 +108,37 @@ test.describe('enhancers integration', () => {
     const tooltipCount = await page.locator('.tooltip').count();
     expect(tooltipCount).toBe(1);
   });
+
+  test('initAll -> destroy -> initAll works without stale listeners', async ({ page }) => {
+    await setupSoltanaPage(page, { bodyHTML: allEnhancersHTML() });
+
+    await page.evaluate(() => {
+      const cleanup = window.SoltanaUI.initAll();
+      cleanup.destroy();
+      // Re-init everything
+      window.SoltanaUI.initAll();
+    });
+
+    // Modal should work after re-init
+    await page.locator('[data-modal-open="test-modal"]').click();
+    await expect(page.locator('#test-modal')).toHaveClass(/active/);
+    await page.locator('[data-modal-close]').click();
+    await expect(page.locator('#test-modal')).not.toHaveClass(/active/);
+
+    // Tabs should work after re-init
+    const tabs = page.locator('[role="tab"]');
+    await tabs.nth(1).click();
+    await expect(tabs.nth(1)).toHaveAttribute('aria-selected', 'true');
+    await expect(tabs.nth(0)).toHaveAttribute('aria-selected', 'false');
+
+    // Tooltip should work after re-init
+    await page.locator('[data-sol-tooltip]').hover();
+    const tooltip = page.locator('.tooltip[role="tooltip"]');
+    await expect(tooltip).toHaveText('Integration tip');
+    await expect(tooltip).toHaveCSS('opacity', '1');
+
+    // Only one tooltip element should exist (no stale duplicates)
+    const tooltipCount = await page.locator('.tooltip').count();
+    expect(tooltipCount).toBe(1);
+  });
 });

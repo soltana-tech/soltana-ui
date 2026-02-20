@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { extractUtilities } from './extract-utilities.js';
 
+// Representative subset of compiled utility CSS — mirrors actual output from
+// src/styles/utilities/. Using a fixture avoids a build dependency at test time.
 const FIXTURE_CSS = `
 /* Spacing */
 .p-0 { padding: 0; }

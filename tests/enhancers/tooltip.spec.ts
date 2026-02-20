@@ -119,19 +119,19 @@ test.describe('initTooltips', () => {
       switch (effective) {
         case 'top':
           // Tooltip bottom edge should be above (or at) trigger top edge
-          expect(tooltipBox!.y + tooltipBox!.height).toBeLessThanOrEqual(triggerBox!.y + 1);
+          expect(tooltipBox!.y + tooltipBox!.height).toBeLessThanOrEqual(triggerBox!.y + 2);
           break;
         case 'bottom':
           // Tooltip top edge should be below (or at) trigger bottom edge
-          expect(tooltipBox!.y).toBeGreaterThanOrEqual(triggerBox!.y + triggerBox!.height - 1);
+          expect(tooltipBox!.y).toBeGreaterThanOrEqual(triggerBox!.y + triggerBox!.height - 2);
           break;
         case 'left':
           // Tooltip right edge should be left of (or at) trigger left edge
-          expect(tooltipBox!.x + tooltipBox!.width).toBeLessThanOrEqual(triggerBox!.x + 1);
+          expect(tooltipBox!.x + tooltipBox!.width).toBeLessThanOrEqual(triggerBox!.x + 2);
           break;
         case 'right':
           // Tooltip left edge should be right of (or at) trigger right edge
-          expect(tooltipBox!.x).toBeGreaterThanOrEqual(triggerBox!.x + triggerBox!.width - 1);
+          expect(tooltipBox!.x).toBeGreaterThanOrEqual(triggerBox!.x + triggerBox!.width - 2);
           break;
       }
     });

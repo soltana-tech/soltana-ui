@@ -50,7 +50,7 @@
 
 .collapsible-content {
   overflow: hidden;
-  max-height: 0;
+  max-height: var(--collapsible-height, 0);
   transition: max-height var(--transition-slow) var(--easing-in-out);
   padding: 0 1rem;
 

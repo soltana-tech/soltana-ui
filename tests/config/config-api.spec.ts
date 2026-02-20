@@ -616,7 +616,7 @@ test.describe('overrides via API', () => {
       });
     });
 
-    expect(errors.some((e) => e.includes('not a CSS custom property'))).toBe(true);
+    expect(errors.some((e) => e.includes('not a valid CSS custom property'))).toBe(true);
   });
 
   test('skips non-custom-property override keys', async ({ page }) => {

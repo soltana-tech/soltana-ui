@@ -5,6 +5,7 @@ import {
   setCssProps,
   clearCssProps,
 } from '@soltana-ui/chart-shared/test-helpers';
+import { describeStaticExports } from '@soltana-ui/chart-shared/test-static-exports';
 
 const CSS_PROPS: Record<string, string> = {
   ...BASE_CSS_PROPS,
@@ -189,23 +190,16 @@ describe('autoSync', () => {
   });
 });
 
-describe('static JSON exports', () => {
-  it('exports dark theme with expected structure', () => {
-    expect(dark).toHaveProperty('theme', 'base');
-    expect(dark).toHaveProperty('themeVariables');
-    const vars = (dark as unknown as Record<string, Record<string, unknown>>).themeVariables;
+describeStaticExports({
+  themes: { dark, light, sepia },
+  requiredKeys: ['theme', 'themeVariables'],
+  darkAssertions: (theme) => {
+    const vars = (theme as Record<string, Record<string, unknown>>).themeVariables;
     expect(vars).toHaveProperty('background');
     expect(vars).toHaveProperty('primaryColor');
     expect(vars).toHaveProperty('fontFamily');
-  });
-
-  it('exports light theme with expected structure', () => {
-    expect(light).toHaveProperty('theme', 'base');
-    expect(light).toHaveProperty('themeVariables');
-  });
-
-  it('exports sepia theme with expected structure', () => {
-    expect(sepia).toHaveProperty('theme', 'base');
-    expect(sepia).toHaveProperty('themeVariables');
-  });
+  },
+  describe,
+  it,
+  expect,
 });

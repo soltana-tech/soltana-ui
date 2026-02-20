@@ -1,87 +1,27 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { describe, it, expect } from 'vitest';
 import { parseComponent, parseHeaderComment } from './extract-components.js';
 
-const BUTTON_SCSS = `
-// ---------------------------------------------------------------------------
-// Button Components
-// ---------------------------------------------------------------------------
-// Base button uses --relief-* variables for automatic relief switching.
-// Semantic variants (primary, danger, success) override as needed.
-// ---------------------------------------------------------------------------
+const BUTTON_SCSS = readFileSync(
+  resolve(__dirname, '../../soltana-ui/src/styles/components/_buttons.scss'),
+  'utf-8'
+);
 
-@use '../mixins' as *;
+const CARD_SCSS = readFileSync(
+  resolve(__dirname, '../../soltana-ui/src/styles/components/_cards.scss'),
+  'utf-8'
+);
 
-.btn {
-  display: inline-flex;
-  @include relief-container;
-  @include finish-surface;
-}
+const PLAIN_SCSS = readFileSync(
+  resolve(__dirname, '../../soltana-ui/src/styles/components/_indicators.scss'),
+  'utf-8'
+);
 
-.btn-primary { background-color: var(--accent-primary); }
-.btn-secondary { background-color: var(--accent-secondary); }
-.btn-ghost { background: transparent; }
-.btn-outline { border: 1px solid var(--border-default); }
-.btn-danger { background-color: var(--color-error); }
-.btn-success { background-color: var(--color-success); }
-.btn-sm { padding: 0.25rem 0.5rem; font-size: var(--text-sm); }
-.btn-lg { padding: 0.75rem 1.5rem; font-size: var(--text-lg); }
-.btn-icon { padding: 0.5rem; }
-.btn-group { display: inline-flex; }
-`;
-
-const CARD_SCSS = `
-// ---------------------------------------------------------------------------
-// Card Components
-// ---------------------------------------------------------------------------
-// Content containers with header/body/footer sections.
-// Uses --relief-* and --finish-* variables for tier integration.
-// ---------------------------------------------------------------------------
-
-@use '../mixins' as *;
-
-.card {
-  @include relief-container;
-  @include finish-surface;
-}
-
-.card-header { padding: 1rem; }
-.card-body { padding: 1rem; }
-.card-footer { padding: 1rem; }
-.card-flat { box-shadow: none; }
-.card-hover { &:hover { transform: translateY(-2px); } }
-.card-beveled { border: 2px solid var(--border-default); }
-`;
-
-const PLAIN_SCSS = `
-.indicator {
-  display: flex;
-}
-
-.indicator-step { margin-right: 1rem; }
-.indicator-label { font-size: var(--text-sm); }
-`;
-
-const CAROUSEL_SCSS = `
-// ---------------------------------------------------------------------------
-// Carousel Component
-// ---------------------------------------------------------------------------
-// Horizontal slide container with navigation buttons and indicator dots.
-// Uses --relief-* and --finish-* variables for tier integration.
-// ---------------------------------------------------------------------------
-
-@use '../base/register' as *;
-
-.carousel {
-  position: relative;
-  overflow: hidden;
-  @include relief-container;
-}
-
-.carousel-track { display: flex; }
-.carousel-slide { flex: 0 0 100%; }
-.carousel-dots { display: flex; }
-.carousel-dot { width: 8px; }
-`;
+const CAROUSEL_SCSS = readFileSync(
+  resolve(__dirname, '../../soltana-ui/src/styles/components/_carousel.scss'),
+  'utf-8'
+);
 
 describe('parseHeaderComment', () => {
   it('extracts name from standard header', () => {
@@ -103,9 +43,10 @@ describe('parseHeaderComment', () => {
     expect(result!.description).toContain('Horizontal slide container');
   });
 
-  it('returns null for SCSS without header comment', () => {
+  it('extracts indicators header', () => {
     const result = parseHeaderComment(PLAIN_SCSS);
-    expect(result).toBeNull();
+    expect(result).not.toBeNull();
+    expect(result!.name).toBe('Indicator Components');
   });
 });
 
@@ -127,9 +68,8 @@ describe('parseComponent', () => {
       expect(result.variants).toContain('.btn-outline');
     });
 
-    it('extracts sizes', () => {
-      expect(result.sizes).toContain('.btn-sm');
-      expect(result.sizes).toContain('.btn-lg');
+    it('extracts group variant', () => {
+      expect(result.variants).toContain('.btn-group');
     });
 
     it('uses header comment for name', () => {
@@ -189,15 +129,15 @@ describe('parseComponent', () => {
     });
   });
 
-  describe('non-tier-aware module', () => {
+  describe('indicators module (with header)', () => {
     const result = parseComponent('indicators', PLAIN_SCSS);
 
-    it('detects lack of tier awareness', () => {
-      expect(result.tierAware).toBe(false);
+    it('detects tier awareness from real source', () => {
+      expect(result.tierAware).toBe(true);
     });
 
-    it('falls back to title-cased module name when no header', () => {
-      expect(result.name).toBe('Indicators');
+    it('uses header comment for name', () => {
+      expect(result.name).toBe('Indicator Components');
     });
   });
 });

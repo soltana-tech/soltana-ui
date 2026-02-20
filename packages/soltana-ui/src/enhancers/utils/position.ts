@@ -98,6 +98,8 @@ function isClipped(
  * Compute absolute position for a floating element relative to an anchor.
  * Supports viewport clamping and optional flip when the preferred placement
  * would be clipped.
+ *
+ * @internal
  */
 export function computePosition(options: PositionOptions): PositionResult {
   const { anchor, floating, placement, gap = 8, viewportPadding = 4, flip = true } = options;
