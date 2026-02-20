@@ -44,9 +44,10 @@ jobs:
 
       - name: Commit updated snapshots
         run: |
+          shopt -s globstar nullglob
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add 'tests/*-snapshots/' 'tests/**/*-snapshots/'
+          git add tests/**/*-snapshots/
           git diff --cached --quiet && echo "No snapshot changes" && exit 0
           git commit -m "Update Playwright snapshot baselines"
           git push
