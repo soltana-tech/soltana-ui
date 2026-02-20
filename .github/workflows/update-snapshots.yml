@@ -11,6 +11,9 @@ concurrency:
   group: update-snapshots-${{ github.event.inputs.branch || github.ref_name }}
   cancel-in-progress: true
 
+permissions:
+  contents: write
+
 jobs:
   update-snapshots:
     runs-on: ubuntu-latest
