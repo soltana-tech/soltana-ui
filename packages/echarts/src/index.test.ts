@@ -2,7 +2,9 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { buildTheme, registerSoltanaTheme, autoSync, dark, light, sepia } from './index.js';
 
 const CSS_PROPS: Record<string, string> = {
+  'color-scheme': 'dark',
   '--surface-bg': '#1a1a2e',
+  '--surface-1': '#1a1a30',
   '--text-primary': '#e0e0e0',
   '--text-secondary': '#a0a0b0',
   '--text-muted': '#707080',
@@ -69,18 +71,88 @@ describe('buildTheme', () => {
     });
   });
 
-  it('maps axis styles', () => {
+  it('sets darkMode from color-scheme', () => {
     const theme = buildTheme();
-    const catAxis = theme.categoryAxis as Record<string, unknown>;
-    expect(catAxis).toEqual({
+    expect(theme.darkMode).toBe(true);
+  });
+
+  it('sets darkMode false for light scheme', () => {
+    document.documentElement.style.setProperty('color-scheme', 'light');
+    const theme = buildTheme();
+    expect(theme.darkMode).toBe(false);
+  });
+
+  it('maps axis styles with splitArea', () => {
+    const theme = buildTheme();
+    const expected = {
       axisLine: { lineStyle: { color: '#333355' } },
       axisTick: { lineStyle: { color: '#333355' } },
       axisLabel: { color: '#707080' },
       splitLine: { lineStyle: { color: '#2a2a44' } },
-    });
+      splitArea: {
+        areaStyle: { color: ['transparent', 'rgba(42, 42, 68, 0.05)'] },
+      },
+    };
 
-    const valAxis = theme.valueAxis as Record<string, unknown>;
-    expect(valAxis).toEqual(catAxis);
+    expect(theme.categoryAxis).toEqual(expected);
+    expect(theme.valueAxis).toEqual(expected);
+    expect(theme.timeAxis).toEqual(expected);
+    expect(theme.logAxis).toEqual(expected);
+  });
+
+  it('maps axisPointer styles', () => {
+    const theme = buildTheme();
+    expect(theme.axisPointer).toEqual({
+      lineStyle: { color: '#333355' },
+      crossStyle: { color: '#333355' },
+      label: {
+        color: '#707080',
+        backgroundColor: '#1a1a30',
+      },
+    });
+  });
+
+  it('maps candlestick styles', () => {
+    const theme = buildTheme();
+    expect(theme.candlestick).toEqual({
+      itemStyle: {
+        color: '#22c55e',
+        color0: '#ef4444',
+        borderColor: '#22c55e',
+        borderColor0: '#ef4444',
+      },
+    });
+  });
+
+  it('maps visualMap styles', () => {
+    const theme = buildTheme();
+    expect(theme.visualMap).toEqual({
+      textStyle: { color: '#707080' },
+    });
+  });
+
+  it('maps dataZoom styles', () => {
+    const theme = buildTheme();
+    const dz = theme.dataZoom as Record<string, unknown>;
+    expect(dz.backgroundColor).toBe('#1a1a30');
+    expect(dz.borderColor).toBe('#333355');
+    expect(dz.fillerColor).toBe('rgba(108, 99, 255, 0.2)');
+    expect(dz.handleColor).toBe('#6c63ff');
+    expect(dz.textStyle).toEqual({ color: '#707080' });
+    const dataBg = dz.dataBackground as Record<string, Record<string, unknown>>;
+    expect(dataBg.lineStyle.color).toBe('#333355');
+    expect(dataBg.areaStyle.color).toBe('#2a2a44');
+    const selBg = dz.selectedDataBackground as Record<string, Record<string, unknown>>;
+    expect(selBg.lineStyle.color).toBe('#6c63ff');
+    expect(selBg.areaStyle.color).toBe('rgba(108, 99, 255, 0.2)');
+  });
+
+  it('maps graph styles', () => {
+    const theme = buildTheme();
+    const graph = theme.graph as Record<string, unknown>;
+    expect(graph.lineStyle).toEqual({ color: '#333355', width: 1 });
+    expect(graph.label).toEqual({ color: '#e0e0e0' });
+    expect(graph.itemStyle).toEqual({ borderColor: '#333355', borderWidth: 1 });
   });
 });
 

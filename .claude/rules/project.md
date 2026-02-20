@@ -70,7 +70,9 @@ packages that extend the core design system:
 These are intentional scope extensions. The charting bridges
 read live CSS custom properties at runtime and map them to
 library-specific theme objects, keeping visualizations in sync
-with the active tier configuration.
+with the active color scheme. Relief and finish tiers do not
+affect chart internals — those CSS-layer effects don't
+penetrate Canvas/SVG rendering contexts.
 
 ## Issue Tracking
 

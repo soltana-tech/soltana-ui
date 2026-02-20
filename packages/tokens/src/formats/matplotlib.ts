@@ -65,6 +65,18 @@ export function buildMplStyle(theme: ThemeTokens, foundation: FoundationTokens):
     ['xtick.labelcolor', theme.textMuted],
     ['ytick.labelcolor', theme.textMuted],
 
+    // Legend
+    ['legend.facecolor', theme.surface1],
+    ['legend.edgecolor', theme.borderDefault],
+    ['legend.labelcolor', theme.textSecondary],
+
+    // Title
+    ['axes.titlecolor', theme.textPrimary],
+
+    // Patches & Lines
+    ['patch.edgecolor', theme.borderDefault],
+    ['lines.color', theme.accentPrimary],
+
     // Text
     ['text.color', theme.textPrimary],
 

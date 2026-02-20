@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------
 // Reads live CSS custom properties from document.documentElement and maps
 // them to a Plotly layout template. Mirrors the static token mapping in
-// @soltana-ui/tokens but resolves at runtime for the active tier config.
+// @soltana-ui/tokens but resolves at runtime for the active color scheme.
 // ---------------------------------------------------------------------------
 
 // Shared palette order — must stay in sync with PALETTE_PROPS in
@@ -38,6 +38,8 @@ export function buildTemplate(): PlotlyTemplate {
   const borderDefault = readProp(style, '--border-default');
   const borderSubtle = readProp(style, '--border-subtle');
   const fontSans = readProp(style, '--font-sans');
+  const tooltipBg = readProp(style, '--tooltip-bg');
+  const tooltipText = readProp(style, '--tooltip-text');
 
   const colorway = PALETTE_PROPS.map((p) => readProp(style, p));
 
@@ -67,8 +69,22 @@ export function buildTemplate(): PlotlyTemplate {
         title: { font: { color: textSecondary } },
         zerolinecolor: borderDefault,
       },
+      hoverlabel: {
+        bgcolor: tooltipBg,
+        font: { color: tooltipText },
+        bordercolor: borderDefault,
+      },
       legend: {
         font: { color: textSecondary },
+        bgcolor: surface1,
+        bordercolor: borderSubtle,
+      },
+      coloraxis: {
+        colorbar: {
+          tickfont: { color: textMuted },
+          title: { font: { color: textSecondary } },
+          outlinecolor: borderDefault,
+        },
       },
     },
   };

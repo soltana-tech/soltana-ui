@@ -31,8 +31,25 @@ describe('buildPlotlyTemplate', () => {
     expect(xaxis.linecolor).toBe('rgb(255 255 255 / 6%)');
   });
 
-  it('sets legend font color', () => {
-    const legend = layout.legend as Record<string, Record<string, unknown>>;
-    expect(legend.font.color).toBe('#c5b99b');
+  it('sets hoverlabel from tooltip tokens', () => {
+    const hoverlabel = layout.hoverlabel as Record<string, unknown>;
+    expect(hoverlabel.bgcolor).toBe('#08091a');
+    expect(hoverlabel.font).toEqual({ color: '#f5f0e6' });
+    expect(hoverlabel.bordercolor).toBe('rgb(255 255 255 / 6%)');
+  });
+
+  it('sets legend with bgcolor and bordercolor', () => {
+    const legend = layout.legend as Record<string, unknown>;
+    expect((legend.font as Record<string, unknown>).color).toBe('#c5b99b');
+    expect(legend.bgcolor).toBe('#0e1028');
+    expect(legend.bordercolor).toBe('rgb(255 255 255 / 3%)');
+  });
+
+  it('sets coloraxis colorbar', () => {
+    const coloraxis = layout.coloraxis as Record<string, unknown>;
+    const colorbar = coloraxis.colorbar as Record<string, unknown>;
+    expect(colorbar.tickfont).toEqual({ color: '#897d69' });
+    expect(colorbar.title).toEqual({ font: { color: '#c5b99b' } });
+    expect(colorbar.outlinecolor).toBe('rgb(255 255 255 / 6%)');
   });
 });

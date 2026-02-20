@@ -2,7 +2,7 @@
 // Plotly Auto-Sync
 // ---------------------------------------------------------------------------
 // Listens for soltana:change events and invokes a callback with a fresh
-// Plotly template whenever the Soltana tier config changes.
+// Plotly template whenever the Soltana color scheme changes.
 // ---------------------------------------------------------------------------
 
 import { buildTemplate, type PlotlyTemplate } from './build-template.js';

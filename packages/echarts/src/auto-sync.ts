@@ -2,7 +2,7 @@
 // ECharts Auto-Sync
 // ---------------------------------------------------------------------------
 // Listens for soltana:change events and re-registers the ECharts theme
-// whenever the Soltana tier config changes.
+// whenever the Soltana color scheme changes.
 // ---------------------------------------------------------------------------
 
 import { buildTheme } from './build-theme.js';

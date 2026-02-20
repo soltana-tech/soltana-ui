@@ -132,5 +132,5 @@ jobs:
         working-directory: python/soltana-matplotlib
 
       - name: Run tests
-        run: pytest tests/ -v
+        run: pytest tests/ -v --mpl --mpl-default-tolerance=2
         working-directory: python/soltana-matplotlib

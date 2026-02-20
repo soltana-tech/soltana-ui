@@ -41,8 +41,22 @@ export function buildPlotlyTemplate(
         title: { font: { color: theme.textSecondary } },
         zerolinecolor: theme.borderDefault,
       },
+      hoverlabel: {
+        bgcolor: theme.tooltipBg,
+        font: { color: theme.tooltipText },
+        bordercolor: theme.borderDefault,
+      },
       legend: {
         font: { color: theme.textSecondary },
+        bgcolor: theme.surface1,
+        bordercolor: theme.borderSubtle,
+      },
+      coloraxis: {
+        colorbar: {
+          tickfont: { color: theme.textMuted },
+          title: { font: { color: theme.textSecondary } },
+          outlinecolor: theme.borderDefault,
+        },
       },
     },
   };

@@ -16,6 +16,8 @@ const CSS_PROPS: Record<string, string> = {
   '--color-warning': '#f59e0b',
   '--accent-secondary': '#ec4899',
   '--color-error': '#ef4444',
+  '--tooltip-bg': '#111133',
+  '--tooltip-text': '#f0f0f0',
 };
 
 function setCssProps(props: Record<string, string>): void {
@@ -75,11 +77,31 @@ describe('buildTemplate', () => {
     expect(yaxis).toEqual(xaxis);
   });
 
-  it('maps legend font', () => {
+  it('maps hoverlabel from tooltip tokens', () => {
+    const tmpl = buildTemplate();
+    expect(tmpl.layout.hoverlabel).toEqual({
+      bgcolor: '#111133',
+      font: { color: '#f0f0f0' },
+      bordercolor: '#333355',
+    });
+  });
+
+  it('maps legend with bgcolor and bordercolor', () => {
     const tmpl = buildTemplate();
     expect(tmpl.layout.legend).toEqual({
       font: { color: '#a0a0b0' },
+      bgcolor: '#222244',
+      bordercolor: '#2a2a44',
     });
+  });
+
+  it('maps coloraxis colorbar', () => {
+    const tmpl = buildTemplate();
+    const coloraxis = tmpl.layout.coloraxis as Record<string, unknown>;
+    const colorbar = coloraxis.colorbar as Record<string, unknown>;
+    expect(colorbar.tickfont).toEqual({ color: '#707080' });
+    expect(colorbar.title).toEqual({ font: { color: '#a0a0b0' } });
+    expect(colorbar.outlinecolor).toBe('#333355');
   });
 });
 

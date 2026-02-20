@@ -11,6 +11,12 @@ xtick.color: 5e3f1b2e
 ytick.color: 5e3f1b2e
 xtick.labelcolor: 6f6045
 ytick.labelcolor: 6f6045
+legend.facecolor: f2e8d2
+legend.edgecolor: 5e3f1b2e
+legend.labelcolor: 3a2c12
+axes.titlecolor: 1c1408
+patch.edgecolor: 5e3f1b2e
+lines.color: 6a4518
 text.color: 1c1408
 font.family: sans-serif
 font.sans-serif: Raleway, ui-sans-serif, system-ui, -apple-system, sans-serif
