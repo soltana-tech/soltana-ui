@@ -5,3 +5,4 @@ pnpm-lock.yaml
 .turbo/
 .mypy_cache/
 .ruff_cache/
+.claude/agents/reference.yaml
