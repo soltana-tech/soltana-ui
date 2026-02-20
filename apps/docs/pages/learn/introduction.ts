@@ -58,7 +58,7 @@ export function renderGettingStarted(): HTMLElement {
   </div>
 
   <p class="text-base text-secondary mt-6">
-    3 themes &times; 4 reliefs &times; 4 finishes = <strong>48 unique combinations</strong> (auto resolves to dark or light), all from one CSS file.
+    4 theme options (3 visual themes + auto resolver) &times; 4 reliefs &times; 4 finishes = <strong>48 unique combinations</strong> (auto resolves to dark or light at runtime), all from one CSS file.
     <a href="#/explore/examples" class="font-medium" style="color: var(--accent-primary);">See them in action &rarr;</a>
   </p>
 
@@ -99,7 +99,7 @@ export function renderGettingStarted(): HTMLElement {
     </div>
     <div class="card p-5 rounded-xl">
       <h4 class="font-semibold text-lg mb-2">Runtime API</h4>
-      <p class="text-sm text-secondary">Switch tiers at runtime with <code>setTheme()</code>, <code>setRelief()</code>, <code>setFinish()</code>, <code>setOverrides()</code>, <code>reset()</code>, and <a href="#/api/core" style="color: var(--accent-primary);">more</a>.</p>
+      <p class="text-sm text-secondary">Switch tiers at runtime with <code>setTheme()</code>, <code>setRelief()</code>, <code>setFinish()</code>, <code>setOverrides()</code>, <code>reset()</code>, <code>destroy()</code>, and <a href="#/api/core" style="color: var(--accent-primary);">more</a>.</p>
     </div>
   </div>
 

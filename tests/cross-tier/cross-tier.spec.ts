@@ -1,3 +1,9 @@
+// Cross-tier tests verify that data attribute state is preserved when changing
+// a single tier (observation layer: DOM attributes). config-cascade.spec.ts
+// covers the same tier-independence guarantee at the CSS token resolution layer
+// (observation layer: computed custom properties). Both files are retained
+// because they exercise different observation layers.
+
 import { test, expect } from '@playwright/test';
 import { setupSoltanaPage } from '../fixtures/soltana-page';
 import { getTierAttributes, getComputedCSSProperty } from '../fixtures/helpers';

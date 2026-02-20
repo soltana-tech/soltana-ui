@@ -13,6 +13,7 @@ import type {
   SoltanaInstance,
   SoltanaChangeType,
   EnhancerCleanup,
+  EnhancerOptions,
   Theme,
   Relief,
   Finish,
@@ -41,6 +42,7 @@ export const DEFAULT_STATE: Readonly<SoltanaConfig> = Object.freeze({
 const DEFAULT_INIT: Required<SoltanaInitOptions> = {
   enhancers: false,
   strict: false,
+  enhancerOptions: {},
 };
 
 // Module-level state for matchMedia listener cleanup
@@ -52,6 +54,10 @@ let _enhancerCleanup: EnhancerCleanup | null = null;
 
 // Generation counter for stale-instance detection
 let _generation = 0;
+
+// Tracks CSS custom properties set via applyOverrides() for targeted removal
+// during reset()/destroy() instead of blanket removeAttribute('style').
+const _managedProps = new Set<string>();
 
 function validateOverrideKey(key: string, strict: boolean): boolean {
   if (key.startsWith('--')) return true;
@@ -71,7 +77,16 @@ function applyOverrides(overrides: Record<string, string>): void {
   const root = document.documentElement;
   for (const [key, value] of Object.entries(overrides)) {
     root.style.setProperty(key, value);
+    _managedProps.add(key);
   }
+}
+
+function removeManagedProps(): void {
+  const root = document.documentElement;
+  for (const key of _managedProps) {
+    root.style.removeProperty(key);
+  }
+  _managedProps.clear();
 }
 
 function applyConfig(state: SoltanaConfig): void {
@@ -120,7 +135,7 @@ function warnInvalid(name: string, value: string, valid: readonly string[], stri
   }
 }
 
-function resetEnhancers(enhancers: boolean): void {
+function resetEnhancers(enhancers: boolean, options?: EnhancerOptions): void {
   if (_enhancerCleanup) {
     try {
       _enhancerCleanup.destroy();
@@ -129,7 +144,7 @@ function resetEnhancers(enhancers: boolean): void {
     }
   }
   if (enhancers) {
-    _enhancerCleanup = initAll();
+    _enhancerCleanup = initAll(options);
   }
 }
 
@@ -149,11 +164,12 @@ export function initSoltana(
   _generation++;
   const myGen = _generation;
 
-  const { enhancers, strict, ...stateOverrides } = userConfig;
+  const { enhancers, strict, enhancerOptions, ...stateOverrides } = userConfig;
   const state: SoltanaConfig = { ...DEFAULT_STATE, ...stateOverrides };
   const initOpts: Required<SoltanaInitOptions> = {
     enhancers: enhancers ?? DEFAULT_INIT.enhancers,
     strict: strict ?? DEFAULT_INIT.strict,
+    enhancerOptions: enhancerOptions ?? {},
   };
 
   // Filter invalid override keys from initial config
@@ -169,7 +185,7 @@ export function initSoltana(
   applyConfig(state);
   setupAutoTheme(state);
 
-  resetEnhancers(initOpts.enhancers);
+  resetEnhancers(initOpts.enhancers, initOpts.enhancerOptions);
 
   // Track runtime registrations for cleanup
   const registrations: TierRegistration[] = [];
@@ -252,7 +268,7 @@ export function initSoltana(
     },
 
     reinitEnhancers(): void {
-      resetEnhancers(initOpts.enhancers);
+      resetEnhancers(initOpts.enhancers, initOpts.enhancerOptions);
     },
 
     reset(): void {
@@ -272,10 +288,10 @@ export function initSoltana(
       state.finish = DEFAULT_STATE.finish;
       state.overrides = {};
       teardownAutoTheme();
-      document.documentElement.removeAttribute('style');
+      removeManagedProps();
       applyConfig(state);
       setupAutoTheme(state);
-      resetEnhancers(initOpts.enhancers);
+      resetEnhancers(initOpts.enhancers, initOpts.enhancerOptions);
       dispatchChange('reset', null);
     },
 
@@ -287,6 +303,7 @@ export function initSoltana(
         console.warn('[soltana] Stale instance — destroy() ignored');
         return;
       }
+      dispatchChange('destroy', null);
       for (const reg of registrations.splice(0)) {
         reg.unregister();
       }
@@ -298,7 +315,7 @@ export function initSoltana(
       root.removeAttribute('data-theme');
       root.removeAttribute('data-relief');
       root.removeAttribute('data-finish');
-      root.removeAttribute('style');
+      removeManagedProps();
     },
   };
 }

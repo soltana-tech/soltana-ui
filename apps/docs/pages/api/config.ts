@@ -70,6 +70,7 @@ export function renderApiConfig(): HTMLElement {
             <tr><td><code>colorWarning</code></td><td><code>string</code></td><td>No</td><td>Semantic warning color.</td></tr>
             <tr><td><code>colorError</code></td><td><code>string</code></td><td>No</td><td>Semantic error color.</td></tr>
             <tr><td><code>colorInfo</code></td><td><code>string</code></td><td>No</td><td>Semantic info color.</td></tr>
+            <tr><td><code>highlightColor</code></td><td><code>string</code></td><td>No</td><td>Highlight channel (R G B space-separated) for relief inset highlights and neumorphic light edges. Defaults to <code>'255 255 255'</code>.</td></tr>
           </tbody>
         </table>
       </div>
@@ -118,6 +119,7 @@ reg.unregister();`,
     '--relief-shadow-inset': string;
     '--relief-shadow-inset-lg': string;
     '--relief-border': string;
+    '--relief-opacity'?: string; // Optional — defaults to 1
   };
 }`,
         'typescript'
@@ -191,9 +193,13 @@ reg.unregister();`,
         <strong>Internal / advanced.</strong> Low-level function to register a
         tier value in the validation registry. Called internally by
         <code>registerTheme()</code> / <code>registerRelief()</code> /
-        <code>registerFinish()</code>. Not exported from the public
+        <code>registerFinish()</code>. Not exported from the top-level
         <code>soltana-ui</code> barrel — use the instance-scoped APIs instead,
         which provide <code>unregister()</code> handles for cleanup.
+      </p>
+      <p class="text-secondary mb-4">
+        Accessible via deep import at <code>soltana-ui/config/validation</code>
+        for advanced use cases, but not considered public API.
       </p>
 
       <h4 class="text-lg font-semibold mt-6 mb-2">Recommended: Instance API</h4>

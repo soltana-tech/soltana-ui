@@ -1,7 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { registerTierValue } from './index.js';
-import { deregisterTierValue } from './validation.js';
-import { VALID_THEMES, VALID_RELIEFS, VALID_FINISHES } from './validation.js';
+import {
+  registerTierValue,
+  deregisterTierValue,
+  VALID_THEMES,
+  VALID_RELIEFS,
+  VALID_FINISHES,
+} from './validation.js';
 
 describe('registerTierValue', () => {
   const tierArrays = {

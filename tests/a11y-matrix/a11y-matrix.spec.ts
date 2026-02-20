@@ -1,3 +1,8 @@
+// Full cartesian audit: permissive (critical/serious only), all tier
+// combinations. Results are written to JSON for offline analysis.
+// The fast CI gate in accessibility.spec.ts uses strict thresholds
+// (zero violations) over single-axis combinations.
+
 import fs from 'node:fs';
 import path from 'node:path';
 import { test, expect } from '@playwright/test';

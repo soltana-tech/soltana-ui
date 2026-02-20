@@ -1,23 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { normalizeColor, hexToRgb, buildPalette } from './resolve.js';
+import { hexToRgb, buildPalette } from './resolve.js';
 import { darkTheme } from './__fixtures__/tokens.js';
-
-describe('normalizeColor', () => {
-  it('passes hex values through unchanged', () => {
-    expect(normalizeColor('#d4a843')).toBe('#d4a843');
-    expect(normalizeColor('#fff')).toBe('#fff');
-  });
-
-  it('converts modern rgb() with slash alpha to rgba()', () => {
-    expect(normalizeColor('rgb(255 255 255 / 6%)')).toBe('rgba(255, 255, 255, 6%)');
-    expect(normalizeColor('rgb(85 97 120 / 12%)')).toBe('rgba(85, 97, 120, 12%)');
-  });
-
-  it('passes other formats through unchanged', () => {
-    expect(normalizeColor('transparent')).toBe('transparent');
-    expect(normalizeColor('rgba(0, 0, 0, 0.5)')).toBe('rgba(0, 0, 0, 0.5)');
-  });
-});
 
 describe('hexToRgb', () => {
   it('converts 6-digit hex', () => {

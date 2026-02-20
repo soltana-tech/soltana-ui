@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint:ts": "eslint ."
+    "lint:ts": "eslint .",
+    "lint:style": "stylelint '**/*.scss'",
+    "lint": "pnpm run lint:ts && pnpm run lint:style"
   },
   "dependencies": {
     "soltana-ui": "workspace:*"

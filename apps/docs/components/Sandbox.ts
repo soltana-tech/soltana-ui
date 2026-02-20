@@ -1,4 +1,4 @@
-import type { TierName } from '@soltana/config';
+import type { TierName } from 'soltana-ui';
 import { PlaygroundControls } from './PlaygroundControls';
 import { type SandboxState, stateToClasses } from '../lib/sandbox-state';
 import { A11yToolbar } from './A11yToolbar';

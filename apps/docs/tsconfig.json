@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "paths": {
-      "@soltana/*": ["../../packages/soltana-ui/src/*"]
+      "@soltana/styles/*": ["../../packages/soltana-ui/src/styles/*"]
     }
   },
   "include": ["."],

@@ -158,6 +158,178 @@ export function renderLayout(): HTMLElement {
     ).join('')}
   </div>
 
+  <h3 class="text-2xl font-semibold mt-12 mb-4">Visual Utilities</h3>
+  <p class="text-sm text-secondary mb-6">Classes from <code>_visual.scss</code> for backgrounds, opacity, animations, cursors, and interaction control.</p>
+
+  <h4 class="text-lg font-semibold mt-6 mb-3">Background Colors</h4>
+  <p class="text-sm text-secondary mb-4">Semantic background utilities mapped to design tokens.</p>
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr><th>Class</th><th>Maps to</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>.bg-surface</code></td><td><code>var(--surface-bg)</code></td></tr>
+        <tr><td><code>.bg-surface-1</code> … <code>.bg-surface-4</code></td><td><code>var(--surface-1)</code> … <code>var(--surface-4)</code></td></tr>
+        <tr><td><code>.bg-accent</code></td><td><code>var(--accent-primary)</code></td></tr>
+        <tr><td><code>.bg-accent-secondary</code></td><td><code>var(--accent-secondary)</code></td></tr>
+        <tr><td><code>.bg-success</code>, <code>.bg-success-subtle</code></td><td><code>var(--color-success)</code>, <code>var(--color-success-subtle)</code></td></tr>
+        <tr><td><code>.bg-warning</code>, <code>.bg-warning-subtle</code></td><td><code>var(--color-warning)</code>, <code>var(--color-warning-subtle)</code></td></tr>
+        <tr><td><code>.bg-error</code>, <code>.bg-error-subtle</code></td><td><code>var(--color-error)</code>, <code>var(--color-error-subtle)</code></td></tr>
+        <tr><td><code>.bg-info</code>, <code>.bg-info-subtle</code></td><td><code>var(--color-info)</code>, <code>var(--color-info-subtle)</code></td></tr>
+        <tr><td><code>.bg-gradient-accent</code></td><td>Diagonal gradient from <code>--accent-primary</code> to <code>--accent-secondary</code></td></tr>
+        <tr><td><code>.bg-mesh</code></td><td>Multi-stop radial gradient mesh background</td></tr>
+        <tr><td><code>.bg-fixed</code></td><td><code>background-attachment: fixed</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4 class="text-lg font-semibold mt-6 mb-3">Opacity</h4>
+  <p class="text-sm text-secondary mb-4">Fine-grained opacity steps from 0 to 100.</p>
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr><th>Class</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>.opacity-0</code></td><td>0</td></tr>
+        <tr><td><code>.opacity-5</code>, <code>.opacity-10</code>, <code>.opacity-20</code>, <code>.opacity-25</code></td><td>0.05 – 0.25</td></tr>
+        <tr><td><code>.opacity-30</code> … <code>.opacity-75</code></td><td>0.30 – 0.75</td></tr>
+        <tr><td><code>.opacity-80</code>, <code>.opacity-90</code>, <code>.opacity-95</code>, <code>.opacity-100</code></td><td>0.80 – 1</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4 class="text-lg font-semibold mt-6 mb-3">Animations</h4>
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr><th>Class</th><th>Effect</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>.animate-spin</code></td><td>Continuous 360&deg; rotation (1s linear)</td></tr>
+        <tr><td><code>.animate-ping</code></td><td>Scale-up fade-out pulse</td></tr>
+        <tr><td><code>.animate-pulse</code></td><td>Opacity pulse (2s ease)</td></tr>
+        <tr><td><code>.animate-bounce</code></td><td>Vertical bounce</td></tr>
+        <tr><td><code>.animate-none</code></td><td>Removes animation</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4 class="text-lg font-semibold mt-6 mb-3">Cursor</h4>
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr><th>Class</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>.cursor-pointer</code></td><td><code>pointer</code></td></tr>
+        <tr><td><code>.cursor-default</code></td><td><code>default</code></td></tr>
+        <tr><td><code>.cursor-not-allowed</code></td><td><code>not-allowed</code></td></tr>
+        <tr><td><code>.cursor-grab</code></td><td><code>grab</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4 class="text-lg font-semibold mt-6 mb-3">Pointer Events, User Select &amp; Visibility</h4>
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr><th>Class</th><th>Effect</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>.pointer-events-none</code> / <code>.pointer-events-auto</code></td><td>Toggle pointer events</td></tr>
+        <tr><td><code>.select-none</code> / <code>.select-text</code> / <code>.select-all</code></td><td>User select behavior</td></tr>
+        <tr><td><code>.visible</code> / <code>.invisible</code> / <code>.hidden</code></td><td>Visibility and display control</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="text-2xl font-semibold mt-12 mb-4">Sizing Utilities</h3>
+  <p class="text-sm text-secondary mb-6">Width and height utilities from <code>_sizing.scss</code>.</p>
+
+  <h4 class="text-lg font-semibold mt-6 mb-3">Fractional &amp; Keyword Widths</h4>
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr><th>Class</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>.w-1\\/2</code></td><td>50%</td></tr>
+        <tr><td><code>.w-1\\/3</code>, <code>.w-2\\/3</code></td><td>33.333%, 66.667%</td></tr>
+        <tr><td><code>.w-1\\/4</code>, <code>.w-3\\/4</code></td><td>25%, 75%</td></tr>
+        <tr><td><code>.w-full</code></td><td>100%</td></tr>
+        <tr><td><code>.w-screen</code></td><td>100vw</td></tr>
+        <tr><td><code>.w-min</code> / <code>.w-max</code> / <code>.w-fit</code></td><td>min-content / max-content / fit-content</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4 class="text-lg font-semibold mt-6 mb-3">Height</h4>
+  <p class="text-sm text-secondary mb-4">Fractional heights mirror widths (<code>.h-1\\/2</code>, <code>.h-full</code>, etc.) plus <code>.h-screen</code> (100vh). Fixed-size heights use the spacing scale: <code>.h-0</code> through <code>.h-64</code>.</p>
+
+  <h4 class="text-lg font-semibold mt-6 mb-3">Min-Height &amp; Max-Width</h4>
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr><th>Class</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>.min-h-0</code> / <code>.min-h-full</code> / <code>.min-h-screen</code></td><td>0 / 100% / 100vh</td></tr>
+        <tr><td><code>.max-w-xs</code> … <code>.max-w-7xl</code></td><td>20rem – 80rem</td></tr>
+        <tr><td><code>.max-w-full</code></td><td>100%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4 class="text-lg font-semibold mt-6 mb-3">Fixed Sizes (Spacing Scale)</h4>
+  <p class="text-sm text-secondary mb-4">Both <code>.w-{step}</code> and <code>.h-{step}</code> are generated for every spacing token (0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 64).</p>
+
+  <h3 class="text-2xl font-semibold mt-12 mb-4">Responsive Utilities</h3>
+  <p class="text-sm text-secondary mb-6">Breakpoint-prefixed layout utilities from <code>_responsive.scss</code>. Prefix any supported class with a breakpoint name to apply it at that width and above.</p>
+
+  <h4 class="text-lg font-semibold mt-6 mb-3">Breakpoints</h4>
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr><th>Prefix</th><th>Min-width</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>sm:</code></td><td>640px</td></tr>
+        <tr><td><code>md:</code></td><td>768px</td></tr>
+        <tr><td><code>lg:</code></td><td>1024px</td></tr>
+        <tr><td><code>xl:</code></td><td>1280px</td></tr>
+        <tr><td><code>2xl:</code></td><td>1536px</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4 class="text-lg font-semibold mt-6 mb-3">Available Responsive Classes</h4>
+  <p class="text-sm text-secondary mb-4">The following utility groups are generated at each breakpoint:</p>
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr><th>Category</th><th>Example</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Display</td><td><code>.md\\:flex</code>, <code>.lg\\:hidden</code>, <code>.sm\\:block</code></td></tr>
+        <tr><td>Flex direction &amp; wrap</td><td><code>.md\\:flex-col</code>, <code>.lg\\:flex-wrap</code></td></tr>
+        <tr><td>Flex sizing</td><td><code>.md\\:flex-1</code>, <code>.lg\\:flex-none</code></td></tr>
+        <tr><td>Alignment</td><td><code>.md\\:items-center</code>, <code>.lg\\:justify-between</code></td></tr>
+        <tr><td>Grid</td><td><code>.md\\:grid-cols-2</code>, <code>.lg\\:grid-cols-4</code></td></tr>
+        <tr><td>Position</td><td><code>.md\\:relative</code>, <code>.lg\\:sticky</code></td></tr>
+        <tr><td>Overflow</td><td><code>.md\\:overflow-hidden</code></td></tr>
+        <tr><td>Gap, padding, margin</td><td><code>.md\\:gap-4</code>, <code>.lg\\:p-6</code>, <code>.xl\\:m-8</code></td></tr>
+        <tr><td>Auto margins</td><td><code>.md\\:mx-auto</code></td></tr>
+        <tr><td>Width fractions &amp; max-widths</td><td><code>.md\\:w-1\\/2</code>, <code>.lg\\:max-w-xl</code></td></tr>
+        <tr><td>Text alignment</td><td><code>.md\\:text-center</code></td></tr>
+        <tr><td>Visibility</td><td><code>.md\\:visible</code>, <code>.lg\\:hidden</code></td></tr>
+        <tr><td>Order</td><td><code>.md\\:order-1</code>, <code>.lg\\:order-last</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="text-sm text-secondary mt-4">Visual and tier classes are intentionally excluded from responsive prefixes — responsive concerns are limited to the layout sphere.</p>
+
 </div>`;
   return page;
 }

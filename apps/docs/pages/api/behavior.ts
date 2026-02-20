@@ -114,7 +114,7 @@ export function renderApiBehavior(): HTMLElement {
       `
       <p class="text-secondary mb-4">
         Enhances <code>[data-sol-tabs]</code> containers with tab switching, keyboard
-        navigation (<kbd>&larr;</kbd> / <kbd>&rarr;</kbd>), and ARIA attribute management.
+        navigation (<kbd>&larr;</kbd> / <kbd>&rarr;</kbd> / <kbd>&uarr;</kbd> / <kbd>&darr;</kbd> / <kbd>Home</kbd> / <kbd>End</kbd>), and ARIA attribute management.
       </p>
 
       <h4 class="text-lg font-semibold mt-6 mb-2">Signature</h4>
@@ -185,6 +185,40 @@ export function renderApiBehavior(): HTMLElement {
           </tbody>
         </table>
       </div>
+    `
+    )}
+
+    ${specimenBlock(
+      'CSS-Only Tooltip Positions',
+      `
+      <p class="text-secondary mb-4">
+        For tooltips that use the CSS-only <code>.tooltip</code> class (no JS enhancer),
+        position variants are available as additional classes. The base <code>.tooltip</code>
+        class positions the tooltip above the element by default.
+      </p>
+
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr><th>Class</th><th>Placement</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>.tooltip</code></td><td>Above the element (default)</td></tr>
+            <tr><td><code>.tooltip-bottom</code></td><td>Below the element</td></tr>
+            <tr><td><code>.tooltip-left</code></td><td>Left of the element</td></tr>
+            <tr><td><code>.tooltip-right</code></td><td>Right of the element</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4 class="text-lg font-semibold mt-6 mb-2">Example</h4>
+      ${codeExample(
+        `<!-- CSS-only tooltip, positioned to the right -->
+<span class="tooltip tooltip-right" data-tooltip="Hint text">
+  Hover me
+</span>`,
+        'html'
+      )}
     `
     )}
 
@@ -303,7 +337,7 @@ loadSoltanaFonts('https://fonts.example.com/custom.css');`,
             </tr>
             <tr>
               <td><strong>Raleway</strong></td>
-              <td>100–900 (+ italic 400, 500)</td>
+              <td>Regular: 100–900; Italic: 400, 500</td>
               <td>Body / UI sans-serif</td>
             </tr>
             <tr>

@@ -6,23 +6,10 @@
 // @soltana-ui/tokens but resolves at runtime for the active color scheme.
 // ---------------------------------------------------------------------------
 
-// Shared palette order — must stay in sync with PALETTE_PROPS in
-// @soltana-ui/plotly (packages/plotly/src/build-template.ts).
-const PALETTE_PROPS = [
-  '--accent-primary',
-  '--color-info',
-  '--color-success',
-  '--color-warning',
-  '--accent-secondary',
-  '--color-error',
-] as const;
+import { PALETTE_PROPS, readProp } from '@soltana-ui/chart-shared';
 
 /** ECharts theme object built from live CSS custom properties. */
 export type EChartsThemeObject = Record<string, unknown>;
-
-function readProp(style: CSSStyleDeclaration, prop: string): string {
-  return style.getPropertyValue(prop).trim();
-}
 
 /** Return an rgba() string by injecting an alpha channel into a hex or rgb() color. */
 function withAlpha(color: string, alpha: number): string {

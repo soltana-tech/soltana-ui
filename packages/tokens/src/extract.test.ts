@@ -175,32 +175,55 @@ describe('end-to-end token pipeline', () => {
   const foundation = extractFoundation(MOCK_CSS);
   const themes = extractThemes(MOCK_CSS);
 
-  it('pipes dark theme through all format builders without errors', () => {
-    const dark = themes.dark;
-
-    const echarts = buildEChartsTheme(dark, foundation);
-    expect(echarts).toHaveProperty('color');
-    expect(echarts).toHaveProperty('backgroundColor');
-    expect(Array.isArray(echarts.color)).toBe(true);
-    expect((echarts.color as string[]).length).toBeGreaterThan(0);
-
-    const plotly = buildPlotlyTemplate(dark, foundation);
-    expect(plotly).toHaveProperty('layout');
-    expect(plotly.layout).toHaveProperty('paper_bgcolor');
-    expect(plotly.layout).toHaveProperty('colorway');
-
-    const mpl = buildMplStyle(dark, foundation);
-    expect(typeof mpl).toBe('string');
-    expect(mpl.length).toBeGreaterThan(0);
-    expect(mpl).toContain('figure.facecolor');
-    expect(mpl).toContain('axes.facecolor');
-
-    const dtcg = buildDtcgTheme(dark);
-    expect(dtcg).toHaveProperty('surface');
-    expect(dtcg).toHaveProperty('text');
-
-    const dtcgFoundation = buildDtcgFoundation(foundation);
-    expect(dtcgFoundation).toHaveProperty('radius');
-    expect(dtcgFoundation).toHaveProperty('shadow');
+  it.each([
+    {
+      name: 'ECharts',
+      run: () => buildEChartsTheme(themes.dark, foundation),
+      assertions: (result: Record<string, unknown>) => {
+        expect(result).toHaveProperty('color');
+        expect(result).toHaveProperty('backgroundColor');
+        expect(Array.isArray(result.color)).toBe(true);
+        expect((result.color as string[]).length).toBeGreaterThan(0);
+      },
+    },
+    {
+      name: 'Plotly',
+      run: () => buildPlotlyTemplate(themes.dark, foundation),
+      assertions: (result: Record<string, unknown>) => {
+        expect(result).toHaveProperty('layout');
+        const layout = result.layout as Record<string, unknown>;
+        expect(layout).toHaveProperty('paper_bgcolor');
+        expect(layout).toHaveProperty('colorway');
+      },
+    },
+    {
+      name: 'matplotlib',
+      run: () => buildMplStyle(themes.dark, foundation),
+      assertions: (result: unknown) => {
+        expect(typeof result).toBe('string');
+        expect((result as string).length).toBeGreaterThan(0);
+        expect(result as string).toContain('figure.facecolor');
+        expect(result as string).toContain('axes.facecolor');
+      },
+    },
+    {
+      name: 'DTCG theme',
+      run: () => buildDtcgTheme(themes.dark),
+      assertions: (result: Record<string, unknown>) => {
+        expect(result).toHaveProperty('surface');
+        expect(result).toHaveProperty('text');
+      },
+    },
+    {
+      name: 'DTCG foundation',
+      run: () => buildDtcgFoundation(foundation),
+      assertions: (result: Record<string, unknown>) => {
+        expect(result).toHaveProperty('radius');
+        expect(result).toHaveProperty('shadow');
+      },
+    },
+  ])('pipes dark theme through $name builder', ({ run, assertions }) => {
+    const result = run();
+    assertions(result as Record<string, unknown>);
   });
 });

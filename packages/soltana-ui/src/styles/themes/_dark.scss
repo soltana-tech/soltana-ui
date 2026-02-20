@@ -78,17 +78,25 @@
 
   --shadow-color: 0 0 0;
   --highlight-color: 255 255 255;
+
+  // --accent-glow is a JS-only bridge token consumed by charting packages and
+  // runtime registration; not referenced in SCSS.
   --accent-glow: color-mix(in srgb, var(--accent-primary) 15%, transparent);
-  --finish-sheen-color: 255 255 255;
-  --finish-tint-color: 212 168 67;
+  --channel-sheen-color: 255 255 255;
+  --channel-tint-color: 212 168 67;
 
   // =========================================================================
   // BRIDGE TOKENS — per-theme overrides
-  // Shared defaults in _relief-system.scss; tokens like --glass-opacity and
-  // --mesh-color-* use var() indirection in :root and resolve correctly for
-  // all themes without per-theme declarations.
+  // Shared defaults in _relief-system.scss; tokens like --mesh-color-* use
+  // var() indirection in :root and resolve correctly for all themes without
+  // per-theme declarations. Explicit declarations here for parity with
+  // light/sepia.
   // =========================================================================
 
+  --glass-opacity: 0.5;
+  --mesh-color-1: var(--accent-primary);
+  --mesh-color-2: var(--accent-secondary);
+  --mesh-color-3: var(--accent-decorative);
   --surface-deep: var(--surface-2);
   --neu-shadow: rgb(var(--shadow-color) / 65%);
   --neu-light: rgb(var(--highlight-color) / 12%);

@@ -23,6 +23,9 @@ test.describe('per-element utility class overrides', () => {
     expect(childBg).not.toBe('');
     expect(parentBg).not.toBe(childBg);
 
+    // The light theme surface-bg should resolve to the known compiled value
+    expect(childBg).toContain('f6f7fa');
+
     // The light theme child's surface-bg should match the built-in light theme value
     const lightThemeBg = await getComputedCSSProperty(page, '--surface-bg', '.theme-light');
     expect(lightThemeBg).toBe(childBg);

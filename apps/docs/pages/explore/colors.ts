@@ -71,6 +71,51 @@ export function renderColors(): HTMLElement {
     ${liveSwatchCard('Info Text', '--color-info-text')}
   </div>
 
+  <h3 class="text-2xl font-semibold mt-8 mb-4">Interactive State Tokens</h3>
+  <p class="text-sm text-secondary mb-4">Background and ring colors for hover, active, focus, and disabled states. Derived from the accent primary color.</p>
+  <div class="swatch-grid">
+    ${liveSwatchCard('Hover', '--state-hover')}
+    ${liveSwatchCard('Active', '--state-active')}
+    ${liveSwatchCard('Focus Ring', '--state-focus-ring')}
+    ${liveSwatchCard('Disabled BG', '--state-disabled-bg')}
+    ${liveSwatchCard('Disabled Text', '--state-disabled-text')}
+  </div>
+
+  <h3 class="text-2xl font-semibold mt-8 mb-4">Channel Tokens</h3>
+  <p class="text-sm text-secondary mb-4">Low-level R G B channel values (space-separated) used in <code>rgb()</code> expressions to build contextual shadows, highlights, and finish overlays. Not usable as standalone colors — combine with alpha via <code>rgb(var(--token) / &lt;alpha&gt;)</code>.</p>
+  <div class="swatch-grid">
+    ${liveSwatchCard('Shadow Color', '--shadow-color')}
+    ${liveSwatchCard('Highlight Color', '--highlight-color')}
+    ${liveSwatchCard('Sheen Color', '--channel-sheen-color')}
+    ${liveSwatchCard('Tint Color', '--channel-tint-color')}
+  </div>
+
+  <h3 class="text-2xl font-semibold mt-8 mb-4">Component Tokens</h3>
+  <p class="text-sm text-secondary mb-4">Scoped tokens consumed by specific components. Derived from the active theme seed and overridable via <code>setOverrides()</code>.</p>
+  <div class="swatch-grid">
+    ${liveSwatchCard('Input BG', '--input-bg')}
+    ${liveSwatchCard('Input Border', '--input-border')}
+    ${liveSwatchCard('Input Border Focus', '--input-border-focus')}
+    ${liveSwatchCard('Input Placeholder', '--input-placeholder')}
+    ${liveSwatchCard('Card BG', '--card-bg')}
+    ${liveSwatchCard('Card Border', '--card-border')}
+    ${liveSwatchCard('Badge BG', '--badge-bg')}
+    ${liveSwatchCard('Tooltip BG', '--tooltip-bg')}
+    ${liveSwatchCard('Tooltip Text', '--tooltip-text')}
+    ${liveSwatchCard('Code BG', '--code-bg')}
+    ${liveSwatchCard('Modal BG', '--modal-bg')}
+    ${liveSwatchCard('Drawer BG', '--drawer-bg')}
+    ${liveSwatchCard('Popover BG', '--popover-bg')}
+    ${liveSwatchCard('Popover Border', '--popover-border')}
+    ${liveSwatchCard('Toast BG', '--toast-bg')}
+    ${liveSwatchCard('Toast Text', '--toast-text')}
+    ${liveSwatchCard('Kbd BG', '--kbd-bg')}
+    ${liveSwatchCard('Kbd Border', '--kbd-border')}
+    ${liveSwatchCard('Scrollbar Thumb', '--scrollbar-thumb')}
+    ${liveSwatchCard('Scrollbar Track', '--scrollbar-track')}
+    ${liveSwatchCard('Overlay Backdrop', '--overlay-backdrop-bg')}
+  </div>
+
 </div>`;
   return page;
 }

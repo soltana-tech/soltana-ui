@@ -48,7 +48,7 @@
 
 // The $bg default bridges the relief and finish tiers: --relief-bg is set by
 // the active relief and falls back to var(--surface-1) when no relief is active.
-@mixin finish-surface($bg: var(--relief-bg), $gradient: null) {
+@mixin finish-surface($bg: var(--relief-bg, var(--surface-1)), $gradient: null) {
   background-color: color-mix(
     in srgb,
     #{$bg} calc(var(--relief-opacity, 1) * var(--finish-opacity, 1) * 100%),

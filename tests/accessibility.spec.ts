@@ -1,3 +1,7 @@
+// Fast CI gate: strict (zero violations), single-axis combinations only.
+// The full cartesian audit lives in a11y-matrix/ which uses permissive
+// thresholds (critical/serious only) across all tier combinations.
+
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { singleAxis } from './fixtures/combinations';

@@ -88,8 +88,9 @@ export function extractThemes(css: string): Record<string, ThemeTokens> {
   });
 
   // Cast is intentional: derived values containing var() are skipped during
-  // extraction, so theme objects may be incomplete. Format builders handle
-  // missing fields with fallback defaults.
+  // extraction, so theme objects will be partial — keys whose values use
+  // var() or color-mix() are absent. Format builders handle missing fields
+  // with fallback defaults, so this is safe at runtime.
   return result as Record<string, ThemeTokens>;
 }
 

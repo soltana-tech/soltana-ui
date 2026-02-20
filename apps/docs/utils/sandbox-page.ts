@@ -1,5 +1,5 @@
 import { Sandbox } from '../components/Sandbox';
-import type { TierName } from '@soltana/config';
+import type { TierName } from 'soltana-ui';
 import type { SandboxState } from '../lib/sandbox-state';
 
 interface SandboxPageOptions {

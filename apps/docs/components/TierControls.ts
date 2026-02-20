@@ -1,5 +1,5 @@
-import { VALID_THEMES, VALID_RELIEFS, VALID_FINISHES } from '@soltana/config/validation';
-import type { TierName } from '@soltana/config';
+import { VALID_THEMES, VALID_RELIEFS, VALID_FINISHES } from 'soltana-ui';
+import type { TierName } from 'soltana-ui';
 import type { SandboxState } from '../lib/sandbox-state';
 
 type StateChangeHandler = (state: SandboxState) => void;

@@ -150,6 +150,10 @@ $z-indices: (
 );
 
 // ---- Shadow scale ----
+// Static, theme-unaware box-shadow tokens. These produce --shadow-* custom
+// properties with fixed rgb(0 0 0 / ...) values. Theme-aware shadow tokens
+// (--relief-shadow-*) are defined by relief selectors and use the per-theme
+// --shadow-color channel for contextual shadow rendering.
 $shadows: (
   sm: '0 1px 2px 0 rgb(0 0 0 / 8%)',
   default: '0 1px 3px 0 rgb(0 0 0 / 12%), 0 1px 2px -1px rgb(0 0 0 / 8%)',

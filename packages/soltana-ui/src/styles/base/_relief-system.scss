@@ -8,8 +8,10 @@
 // Bridge tokens defined here:
 //   --relief-surface-flat, --relief-surface-raised, --relief-surface-deep,
 //   --relief-border-default, --relief-opacity, --glass-opacity, --relief-accent,
-//   --mesh-color-1, --mesh-color-2, --mesh-color-3,
-//   --finish-sheen-color, --finish-tint-color
+//   --relief-bg, --relief-shadow, --relief-shadow-sm, --relief-shadow-lg,
+//   --relief-shadow-inset, --relief-shadow-inset-sm, --relief-shadow-inset-lg,
+//   --relief-border, --mesh-color-1, --mesh-color-2, --mesh-color-3,
+//   --channel-sheen-color, --channel-tint-color
 // ---------------------------------------------------------------------------
 
 :root {
@@ -20,6 +22,16 @@
   --relief-opacity: 1;
   --glass-opacity: 0.5;
 
+  // Relief property defaults — overridden by each relief selector
+  --relief-bg: var(--relief-surface-flat);
+  --relief-shadow: none;
+  --relief-shadow-sm: none;
+  --relief-shadow-lg: none;
+  --relief-shadow-inset: none;
+  --relief-shadow-inset-sm: none;
+  --relief-shadow-inset-lg: none;
+  --relief-border: var(--relief-border-default);
+
   // Mesh gradient colors — overridden per-theme for contrast against surfaces
   --mesh-color-1: var(--accent-primary);
   --mesh-color-2: var(--accent-secondary);
@@ -28,7 +40,8 @@
   // Relief accent — allows relief-scoped components to reference the active accent
   --relief-accent: var(--accent-primary);
 
-  // Finish channel tokens — tuned per-theme for visibility against surface colors
-  --finish-sheen-color: var(--highlight-color);
-  --finish-tint-color: var(--shadow-color);
+  // Channel tokens — tuned per-theme for visibility against surface colors.
+  // Consumed by finishes (tinted overlay, glossy sheen) via rgb() expressions.
+  --channel-sheen-color: var(--highlight-color);
+  --channel-tint-color: var(--shadow-color);
 }

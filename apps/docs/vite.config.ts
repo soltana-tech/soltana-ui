@@ -10,7 +10,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@soltana': resolve(__dirname, '../../packages/soltana-ui/src'),
+      // Restrict alias to SCSS inline imports only; TS imports use 'soltana-ui' barrel
+      '@soltana/styles': resolve(__dirname, '../../packages/soltana-ui/src/styles'),
     },
   },
 });

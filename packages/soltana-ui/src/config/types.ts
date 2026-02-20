@@ -18,6 +18,8 @@ export type Finish = BuiltInFinish | (string & {});
 export interface SoltanaInitOptions {
   enhancers?: boolean;
   strict?: boolean;
+  /** Options forwarded to individual enhancer initializers. */
+  enhancerOptions?: EnhancerOptions;
 }
 
 export interface SoltanaConfig {
@@ -74,13 +76,25 @@ export interface EnhancerCleanup {
 export interface EnhancerOptions {
   /** Root element to scope queries. Defaults to `document`. */
   root?: Element | Document;
-  /** Override the default CSS selector for target elements. */
+  /**
+   * Override the default CSS selector for target elements.
+   * Behavior varies per enhancer:
+   *   - **modals**: overrides the trigger selector (default: `[data-modal-open]`)
+   *   - **tabs**: overrides the container selector (default: `.tabs`)
+   *   - **tooltips**: overrides the container selector (default: `[data-tooltip]`)
+   */
   selector?: string;
 }
 
 export type TierName = 'theme' | 'relief' | 'finish';
 
-export type SoltanaChangeType = 'theme' | 'relief' | 'finish' | 'overrides' | 'reset';
+export type SoltanaChangeType = 'theme' | 'relief' | 'finish' | 'overrides' | 'reset' | 'destroy';
+
+/** Detail payload for `soltana:change` custom events. */
+export interface SoltanaChangeDetail {
+  type: SoltanaChangeType;
+  value: unknown;
+}
 
 // ---------------------------------------------------------------------------
 // Runtime Registration Types

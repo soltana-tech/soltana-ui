@@ -57,3 +57,35 @@ export interface FoundationTokens {
 
 /** 6-color palette for chart color cycles. */
 export type ColorPalette = [string, string, string, string, string, string];
+
+// ---------------------------------------------------------------------------
+// Agent Documentation Types
+// ---------------------------------------------------------------------------
+
+/** A group of related utility classes extracted from compiled CSS. */
+export interface UtilityGroup {
+  category: string;
+  description: string;
+  responsive: boolean;
+  classes: Record<string, unknown>;
+}
+
+/** A component module extracted from SCSS source files. */
+export interface ComponentData {
+  name: string;
+  baseClass: string;
+  description: string;
+  tierAware: boolean;
+  variants: string[];
+  sizes: string[];
+  children: string[];
+  example: string;
+}
+
+/** Input for the agent documentation YAML builder. */
+export interface AgentDocsInput {
+  foundation: FoundationTokens;
+  themes: Record<string, ThemeTokens>;
+  utilities: UtilityGroup[];
+  components: ComponentData[];
+}

@@ -55,8 +55,9 @@ test.describe('multi-tier cascade integration', () => {
   test('switching one tier does not affect tokens from other tiers', async ({ page }) => {
     await setupSoltanaPage(page);
 
+    // Initialize once and store the instance for reuse
     await page.evaluate(() => {
-      window.SoltanaUI.initSoltana({
+      (window as any).__sol = window.SoltanaUI.initSoltana({
         theme: 'dark',
         relief: 'skeuomorphic',
         finish: 'frosted',
@@ -66,14 +67,9 @@ test.describe('multi-tier cascade integration', () => {
     const reliefBefore = await getComputedCSSProperty(page, '--relief-shadow');
     const finishBefore = await getComputedCSSProperty(page, '--finish-blur');
 
-    // Switch only theme
+    // Switch only theme on the existing instance (no re-init)
     await page.evaluate(() => {
-      const s = window.SoltanaUI.initSoltana({
-        theme: 'dark',
-        relief: 'skeuomorphic',
-        finish: 'frosted',
-      });
-      s.setTheme('light');
+      (window as any).__sol.setTheme('light');
     });
 
     const reliefAfter = await getComputedCSSProperty(page, '--relief-shadow');

@@ -2,6 +2,10 @@ import { test, expect } from '@playwright/test';
 import { defaultCombinations, cartesian } from './fixtures/combinations';
 import { renderCombination, combinationLabel } from './fixtures/render';
 
+// FULL_MATRIX env var controls combination coverage:
+//   unset  -> defaultCombinations() (curated subset for fast CI)
+//   truthy -> cartesian() (all theme x relief x finish permutations)
+// The a11y-matrix/ suite always uses cartesian regardless of this flag.
 const combinations = process.env.FULL_MATRIX ? cartesian() : defaultCombinations();
 
 for (const combo of combinations) {

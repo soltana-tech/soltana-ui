@@ -2,9 +2,8 @@ import '@soltana/styles/index.scss';
 import './docs.scss';
 import './components/SolPreview';
 
-import { initAll } from '@soltana/enhancers/index';
-import { initSoltana } from '@soltana/init';
-import type { Theme } from '@soltana/config';
+import { initSoltana, initAll } from 'soltana-ui';
+import type { Theme } from 'soltana-ui';
 import { PlaygroundControls } from './components/PlaygroundControls';
 import { Router } from './components/Router';
 import { Sidebar } from './components/Sidebar';

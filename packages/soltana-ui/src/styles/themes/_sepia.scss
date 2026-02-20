@@ -52,9 +52,9 @@
   --color-success: #1a7854;
   --color-success-subtle: rgb(26 120 84 / 12%);
   --color-success-text: #0e5538;
-  --color-warning: #6a4518;
-  --color-warning-subtle: rgb(160 110 43 / 12%);
-  --color-warning-text: #6b4819;
+  --color-warning: #8b5e14;
+  --color-warning-subtle: rgb(139 94 20 / 12%);
+  --color-warning-text: #7a5212;
   --color-error: #a02020;
   --color-error-subtle: rgb(160 32 32 / 10%);
   --color-error-text: #882020;
@@ -76,8 +76,8 @@
   --shadow-color: 0 0 0;
   --highlight-color: 242 232 210;
   --accent-glow: color-mix(in srgb, var(--accent-primary) 12%, transparent);
-  --finish-sheen-color: 0 0 0;
-  --finish-tint-color: 106 69 24;
+  --channel-sheen-color: 0 0 0;
+  --channel-tint-color: 106 69 24;
 
   // =========================================================================
   // BRIDGE TOKENS — per-theme overrides

@@ -282,12 +282,16 @@ console.log(DEFAULT_STATE);
     </p>
 
     <h4 class="text-lg font-semibold mt-6 mb-2">Event Detail</h4>
+    <p class="text-secondary mb-4">
+      Both <code>SoltanaChangeType</code> and <code>SoltanaChangeDetail</code>
+      are exported as named types from <code>soltana-ui</code>.
+    </p>
     ${codeExample(
-      `type SoltanaChangeType = 'theme' | 'relief' | 'finish' | 'overrides' | 'reset';
+      `type SoltanaChangeType = 'theme' | 'relief' | 'finish' | 'overrides' | 'reset' | 'destroy';
 
 interface SoltanaChangeDetail {
   type: SoltanaChangeType;
-  value: unknown;  // The new value (or null for reset/override removal)
+  value: unknown;  // The new value (or null for reset/destroy/override removal)
 }`,
       'typescript'
     )}

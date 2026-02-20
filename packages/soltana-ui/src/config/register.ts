@@ -82,9 +82,13 @@ export const THEME_TOKEN_NAMES = [
   '--shadow-color',
   '--highlight-color',
   '--accent-glow',
-  '--finish-sheen-color',
-  '--finish-tint-color',
+  '--channel-sheen-color',
+  '--channel-tint-color',
   // Bridge tokens
+  '--glass-opacity',
+  '--mesh-color-1',
+  '--mesh-color-2',
+  '--mesh-color-3',
   '--surface-deep',
   '--neu-shadow',
   '--neu-light',
@@ -271,10 +275,14 @@ export function deriveThemeTokens(seed: ThemeSeed): Record<string, string> {
     '--shadow-color': '0 0 0',
     '--highlight-color': seed.highlightColor ?? '255 255 255',
     '--accent-glow': mixSrgb(accent, isDark ? 15 : 10),
-    '--finish-sheen-color': isDark ? '255 255 255' : '0 0 0',
-    '--finish-tint-color': hexToRgbChannels(accent),
+    '--channel-sheen-color': isDark ? '255 255 255' : '0 0 0',
+    '--channel-tint-color': hexToRgbChannels(accent),
 
     // --- Bridge tokens ---
+    '--glass-opacity': isDark ? '0.5' : '0.35',
+    '--mesh-color-1': 'var(--accent-primary)',
+    '--mesh-color-2': 'var(--accent-secondary)',
+    '--mesh-color-3': 'var(--accent-decorative)',
     '--surface-deep': 'var(--surface-2)',
     '--neu-shadow': isDark ? 'rgb(var(--shadow-color) / 65%)' : 'rgb(var(--shadow-color) / 35%)',
     '--neu-light': isDark
@@ -318,9 +326,15 @@ const HEX_RE = /^#?[0-9a-fA-F]{3}([0-9a-fA-F]{3})?$/;
 
 function hexToRgbChannels(hex: string): string {
   if (!HEX_RE.test(hex)) {
-    throw new Error(
-      `[soltana] Invalid hex color "${hex}". Expected 3- or 6-digit hex (e.g. "#abc" or "#aabbcc").`
+    // Attempt to parse rgb() format before falling back
+    const rgbMatch = /^rgb\(\s*(\d+)[, ]\s*(\d+)[, ]\s*(\d+)\s*\)$/.exec(hex);
+    if (rgbMatch) {
+      return `${rgbMatch[1]} ${rgbMatch[2]} ${rgbMatch[3]}`;
+    }
+    console.warn(
+      `[soltana] Non-hex color "${hex}" passed to hexToRgbChannels. Falling back to neutral gray.`
     );
+    return '128 128 128';
   }
   let h = hex.replace('#', '');
   if (h.length === 3) {

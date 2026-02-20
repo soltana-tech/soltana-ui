@@ -44,8 +44,12 @@ export function deregisterTierValue(tier: TierName, value: string): void {
 }
 
 /**
- * Live registry of valid theme values. Includes built-in themes, 'auto', and
- * any values added at runtime via `registerTierValue()` or `registerTheme()`.
+ * Live registry of valid theme values. Includes built-in themes, `'auto'`
+ * (runtime resolver — not a static token set), and any values added at
+ * runtime via `registerTierValue()` or `registerTheme()`.
+ *
+ * Note: `BUILT_IN_THEMES` (from types.ts) excludes `'auto'` since it has
+ * no corresponding CSS ruleset.
  */
 export const VALID_THEMES: readonly string[] = _themes;
 

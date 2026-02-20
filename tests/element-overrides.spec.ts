@@ -86,6 +86,31 @@ for (const scenario of scenarios) {
       expect(overrideBg).not.toBe(baseBg);
     }
 
+    // Assert tier-specific tokens differ between base and override cards
+    if (scenario.overrideClasses.includes('relief-')) {
+      const [baseShadow, overrideShadow] = await page.evaluate(() => {
+        const cards = document.querySelectorAll('.card');
+        const base = getComputedStyle(cards[0]).getPropertyValue('--relief-shadow').trim();
+        const override = getComputedStyle(cards[1]).getPropertyValue('--relief-shadow').trim();
+        return [base, override];
+      });
+      expect(baseShadow).not.toBe('');
+      expect(overrideShadow).not.toBe('');
+      expect(overrideShadow).not.toBe(baseShadow);
+    }
+
+    if (scenario.overrideClasses.includes('finish-')) {
+      const [baseBlur, overrideBlur] = await page.evaluate(() => {
+        const cards = document.querySelectorAll('.card');
+        const base = getComputedStyle(cards[0]).getPropertyValue('--finish-blur').trim();
+        const override = getComputedStyle(cards[1]).getPropertyValue('--finish-blur').trim();
+        return [base, override];
+      });
+      expect(baseBlur).not.toBe('');
+      expect(overrideBlur).not.toBe('');
+      expect(overrideBlur).not.toBe(baseBlur);
+    }
+
     await expect(page).toHaveScreenshot(`override-${scenario.name}.png`);
   });
 }

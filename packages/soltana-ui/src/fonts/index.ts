@@ -14,6 +14,7 @@ export const DEFAULT_FONT_URL =
   '&display=swap';
 
 let _loaded = false;
+const _injectedLinks: HTMLLinkElement[] = [];
 
 /**
  * Inject a font stylesheet (and optional preconnect hints) into `<head>`.
@@ -39,12 +40,14 @@ export function loadSoltanaFonts(url?: string): void {
     preconnect.rel = 'preconnect';
     preconnect.href = 'https://fonts.googleapis.com';
     head.appendChild(preconnect);
+    _injectedLinks.push(preconnect);
 
     const preconnectStatic = document.createElement('link');
     preconnectStatic.rel = 'preconnect';
     preconnectStatic.href = 'https://fonts.gstatic.com';
     preconnectStatic.crossOrigin = '';
     head.appendChild(preconnectStatic);
+    _injectedLinks.push(preconnectStatic);
   }
 
   const stylesheet = document.createElement('link');
@@ -54,9 +57,14 @@ export function loadSoltanaFonts(url?: string): void {
     console.warn('[soltana] Failed to load fonts from Google Fonts CDN');
   };
   head.appendChild(stylesheet);
+  _injectedLinks.push(stylesheet);
 }
 
-/** Reset internal loaded flag — called by destroy() and used for test isolation. */
+/** Remove injected font elements and reset loaded flag. Called by destroy(). */
 export function _resetFontLoader(): void {
+  for (const el of _injectedLinks) {
+    el.remove();
+  }
+  _injectedLinks.length = 0;
   _loaded = false;
 }

@@ -77,8 +77,8 @@
   --shadow-color: 0 0 0;
   --highlight-color: 255 255 255;
   --accent-glow: color-mix(in srgb, var(--accent-primary) 10%, transparent);
-  --finish-sheen-color: 0 0 0;
-  --finish-tint-color: 87 99 120;
+  --channel-sheen-color: 0 0 0;
+  --channel-tint-color: 87 99 120;
 
   // =========================================================================
   // BRIDGE TOKENS — per-theme overrides

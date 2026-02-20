@@ -54,13 +54,25 @@ function buildExcludeSet(options: SoltanaTreeshakeOptions): Map<string, Set<stri
     }
 
     let excluded: string[];
+    const builtInSet = new Set(builtIn);
     if (tierConfig.include) {
+      // Warn on unrecognized include values
+      for (const v of tierConfig.include) {
+        if (!builtInSet.has(v)) {
+          console.warn(`[soltana] Treeshake: include value "${v}" is not a built-in ${tier}`);
+        }
+      }
       // Exclude everything built-in that isn't in the include list
       const included = new Set(tierConfig.include);
       excluded = builtIn.filter((v) => !included.has(v));
     } else if (tierConfig.exclude) {
+      // Warn on unrecognized exclude values
+      for (const v of tierConfig.exclude) {
+        if (!builtInSet.has(v)) {
+          console.warn(`[soltana] Treeshake: exclude value "${v}" is not a built-in ${tier}`);
+        }
+      }
       // Exclude only explicitly listed values (intersected with built-in)
-      const builtInSet = new Set(builtIn);
       excluded = tierConfig.exclude.filter((v) => builtInSet.has(v));
     } else {
       continue;

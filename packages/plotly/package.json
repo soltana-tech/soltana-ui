@@ -30,17 +30,25 @@
     "lint:ts": "eslint src/",
     "type-check": "tsc --noEmit"
   },
+  "sideEffects": false,
+  "dependencies": {
+    "@soltana-ui/tokens": "workspace:*"
+  },
   "devDependencies": {
-    "@soltana-ui/tokens": "workspace:*",
+    "@soltana-ui/chart-shared": "workspace:*",
     "plotly.js-dist": "^2",
     "vite": "^7.3.1",
     "vite-plugin-dts": "^4.5.4",
     "vitest": "^3.2.4"
   },
   "peerDependencies": {
+    "plotly.js-dist": "^2",
     "soltana-ui": "workspace:^"
   },
   "peerDependenciesMeta": {
+    "plotly.js-dist": {
+      "optional": true
+    },
     "soltana-ui": {
       "optional": true
     }
