@@ -87,14 +87,14 @@ ability to compose them.
 The monorepo includes charting and framework integration
 packages that extend the core design system:
 
-| Package               | Purpose                                                                                   |
-| --------------------- | ----------------------------------------------------------------------------------------- |
-| `@soltana-ui/tokens`  | Token compiler -- outputs ECharts, Plotly, Mermaid, mplstyle, DTCG JSON, agent docs YAML  |
-| `@soltana-ui/echarts` | ECharts theme bridge (runtime + static JSON)                                              |
-| `@soltana-ui/plotly`  | Plotly template bridge (runtime + static JSON)                                            |
-| `@soltana-ui/mermaid` | Mermaid theme bridge (runtime + static JSON)                                              |
-| `@soltana-ui/react`   | React bindings -- `useSoltana()` hook + `SoltanaProvider`                                 |
-| `soltana-matplotlib`  | Python package -- pre-built `.mplstyle` themes                                            |
+| Package               | Purpose                                                                                  |
+| --------------------- | ---------------------------------------------------------------------------------------- |
+| `@soltana-ui/tokens`  | Token compiler -- outputs ECharts, Plotly, Mermaid, mplstyle, DTCG JSON, agent docs YAML |
+| `@soltana-ui/echarts` | ECharts theme bridge (runtime + static JSON)                                             |
+| `@soltana-ui/plotly`  | Plotly template bridge (runtime + static JSON)                                           |
+| `@soltana-ui/mermaid` | Mermaid theme bridge (runtime + static JSON)                                             |
+| `@soltana-ui/react`   | React bindings -- `useSoltana()` hook + `SoltanaProvider`                                |
+| `soltana-matplotlib`  | Python package -- pre-built `.mplstyle` themes                                           |
 
 These are intentional scope extensions. The charting bridges
 read live CSS custom properties at runtime and map them to
