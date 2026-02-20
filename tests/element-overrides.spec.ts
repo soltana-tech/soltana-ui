@@ -100,13 +100,18 @@ for (const scenario of scenarios) {
     }
 
     if (scenario.overrideClasses.includes('finish-')) {
-      const [baseVal, overrideVal] = await page.evaluate(() => {
-        const cards = document.querySelectorAll('.card');
-        const prop = '--finish-sheen';
-        const base = getComputedStyle(cards[0]).getPropertyValue(prop).trim();
-        const override = getComputedStyle(cards[1]).getPropertyValue(prop).trim();
-        return [base, override];
-      });
+      const prop = scenario.overrideClasses.includes('finish-frosted')
+        ? '--finish-blur'
+        : '--finish-sheen';
+      const [baseVal, overrideVal] = await page.evaluate(
+        ([p]) => {
+          const cards = document.querySelectorAll('.card');
+          const base = getComputedStyle(cards[0]).getPropertyValue(p).trim();
+          const override = getComputedStyle(cards[1]).getPropertyValue(p).trim();
+          return [base, override];
+        },
+        [prop]
+      );
       expect(baseVal).not.toBe('');
       expect(overrideVal).not.toBe('');
       expect(overrideVal).not.toBe(baseVal);
