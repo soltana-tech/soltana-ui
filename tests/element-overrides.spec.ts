@@ -100,15 +100,16 @@ for (const scenario of scenarios) {
     }
 
     if (scenario.overrideClasses.includes('finish-')) {
-      const [baseBlur, overrideBlur] = await page.evaluate(() => {
+      const [baseVal, overrideVal] = await page.evaluate(() => {
         const cards = document.querySelectorAll('.card');
-        const base = getComputedStyle(cards[0]).getPropertyValue('--finish-blur').trim();
-        const override = getComputedStyle(cards[1]).getPropertyValue('--finish-blur').trim();
+        const prop = '--finish-sheen';
+        const base = getComputedStyle(cards[0]).getPropertyValue(prop).trim();
+        const override = getComputedStyle(cards[1]).getPropertyValue(prop).trim();
         return [base, override];
       });
-      expect(baseBlur).not.toBe('');
-      expect(overrideBlur).not.toBe('');
-      expect(overrideBlur).not.toBe(baseBlur);
+      expect(baseVal).not.toBe('');
+      expect(overrideVal).not.toBe('');
+      expect(overrideVal).not.toBe(baseVal);
     }
 
     await expect(page).toHaveScreenshot(`override-${scenario.name}.png`);

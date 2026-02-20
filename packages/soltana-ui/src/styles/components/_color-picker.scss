@@ -1,0 +1,204 @@
+// ---------------------------------------------------------------------------
+// Color Picker Component
+// ---------------------------------------------------------------------------
+// HSV color selection with 2D area, hue slider, optional alpha, and swatches.
+// Uses --relief-* and --finish-* variables for tier integration.
+// ---------------------------------------------------------------------------
+
+@use '../base/register' as *;
+@use '../base/accessibility' as *;
+@use '../base/transitions' as *;
+
+// ============================================================================
+// CONTAINER
+// ============================================================================
+
+.color-picker {
+  position: relative;
+  display: inline-block;
+}
+
+// ============================================================================
+// TRIGGER SWATCH
+// ============================================================================
+
+.color-picker-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border-default);
+  cursor: pointer;
+  @include transition-interactive(var(--transition-normal));
+
+  &:hover {
+    border-color: var(--border-strong);
+  }
+
+  &:focus-visible {
+    @include focus-ring-outline;
+  }
+}
+
+// ============================================================================
+// POPUP
+// ============================================================================
+
+.color-picker-popup {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  z-index: var(--z-dropdown);
+  width: 14rem;
+  padding: 0.75rem;
+  border-radius: var(--radius-xl);
+  @include relief-container;
+  @include finish-surface(var(--popover-bg));
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-0.25rem);
+  transition:
+    opacity var(--transition-normal) var(--easing-in-out),
+    transform var(--transition-normal) var(--easing-in-out);
+
+  &.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+}
+
+// ============================================================================
+// 2D SATURATION/BRIGHTNESS AREA
+// ============================================================================
+
+.color-picker-area {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  background:
+    linear-gradient(to top, #000, transparent), linear-gradient(to right, #fff, transparent);
+  cursor: crosshair;
+  margin-bottom: 0.5rem;
+}
+
+.color-picker-area-thumb {
+  position: absolute;
+  width: 0.875rem;
+  height: 0.875rem;
+  border-radius: var(--radius-full);
+  border: 2px solid #fff;
+  box-shadow: 0 0 2px rgb(0 0 0 / 50%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+// ============================================================================
+// SLIDERS (HUE / ALPHA)
+// ============================================================================
+
+.color-picker-hue,
+.color-picker-alpha {
+  position: relative;
+  width: 100%;
+  height: 0.75rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+}
+
+.color-picker-hue {
+  background: linear-gradient(
+    to right,
+    #f00 0%,
+    #ff0 17%,
+    #0f0 33%,
+    #0ff 50%,
+    #00f 67%,
+    #f0f 83%,
+    #f00 100%
+  );
+}
+
+.color-picker-alpha {
+  // Checkerboard under the alpha gradient
+  background-image:
+    linear-gradient(45deg, var(--surface-3) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--surface-3) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--surface-3) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--surface-3) 75%);
+  background-size: 0.5rem 0.5rem;
+  background-position:
+    0 0,
+    0 0.25rem,
+    0.25rem -0.25rem,
+    -0.25rem 0;
+}
+
+.color-picker-slider-thumb {
+  position: absolute;
+  top: 50%;
+  width: 0.875rem;
+  height: 0.875rem;
+  border-radius: var(--radius-full);
+  border: 2px solid #fff;
+  box-shadow: 0 0 2px rgb(0 0 0 / 50%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+// ============================================================================
+// PREVIEW + INPUT
+// ============================================================================
+
+.color-picker-preview {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+  flex-shrink: 0;
+}
+
+.color-picker-input {
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+// ============================================================================
+// PREDEFINED SWATCHES
+// ============================================================================
+
+.color-picker-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 1.5rem);
+  gap: 0.375rem;
+}
+
+.color-picker-swatch {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+  padding: 0;
+  @include transition-interactive(var(--transition-normal));
+
+  &:hover {
+    border-color: var(--border-strong);
+    transform: scale(1.1);
+  }
+
+  &:focus-visible {
+    @include focus-ring-outline;
+  }
+
+  &.selected {
+    box-shadow: 0 0 0 2px var(--accent-primary);
+  }
+}

@@ -1,0 +1,75 @@
+// ---------------------------------------------------------------------------
+// Code Components
+// ---------------------------------------------------------------------------
+// Styled inline code spans and preformatted code blocks.
+// Complements the base `code` and `pre` element styles in _typography.scss.
+// Uses --relief-* and --finish-* variables for tier integration.
+// ---------------------------------------------------------------------------
+
+@use '../base/register' as *;
+
+// ============================================================================
+// INLINE CODE
+// ============================================================================
+
+.code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  padding: 0.125em 0.375em;
+  border-radius: var(--radius-md);
+  background: var(--code-bg);
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+// ============================================================================
+// CODE BLOCK
+// ============================================================================
+
+.code-block {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.65;
+  overflow-x: auto;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-lg);
+  @include relief-container(var(--relief-shadow-inset));
+  @include finish-surface(var(--code-bg));
+  color: var(--text-primary);
+  tab-size: 4;
+
+  code {
+    padding: 0;
+    background: none;
+    border: none;
+    white-space: pre;
+  }
+}
+
+// ============================================================================
+// VARIANTS
+// ============================================================================
+
+.code-block-sm {
+  padding: 0.625rem 0.875rem;
+  font-size: var(--text-xs);
+}
+
+.code-block-numbered {
+  counter-reset: line;
+
+  .code-line {
+    counter-increment: line;
+
+    &::before {
+      content: counter(line);
+      display: inline-block;
+      width: 2.5em;
+      margin-right: 1em;
+      text-align: right;
+      color: var(--text-muted);
+      user-select: none;
+    }
+  }
+}

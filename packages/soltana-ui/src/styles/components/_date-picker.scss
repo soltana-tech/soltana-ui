@@ -1,0 +1,165 @@
+// ---------------------------------------------------------------------------
+// Date Picker Component
+// ---------------------------------------------------------------------------
+// Calendar-based date selection with input and popup.
+// Uses --relief-* and --finish-* variables for tier integration.
+// ---------------------------------------------------------------------------
+
+@use '../base/register' as *;
+@use '../base/accessibility' as *;
+@use '../base/transitions' as *;
+
+// ============================================================================
+// CONTAINER
+// ============================================================================
+
+.date-picker {
+  position: relative;
+  display: inline-block;
+}
+
+.date-picker-input {
+  width: 100%;
+  cursor: pointer;
+}
+
+// ============================================================================
+// POPUP
+// ============================================================================
+
+.date-picker-popup {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  z-index: var(--z-dropdown);
+  width: 18rem;
+  padding: 1rem;
+  border-radius: var(--radius-xl);
+  @include relief-container;
+  @include finish-surface(var(--popover-bg));
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-0.25rem);
+  transition:
+    opacity var(--transition-normal) var(--easing-in-out),
+    transform var(--transition-normal) var(--easing-in-out);
+
+  &.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+}
+
+// ============================================================================
+// HEADER (month/year navigation)
+// ============================================================================
+
+.date-picker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.date-picker-title {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  letter-spacing: var(--tracking-elegant);
+}
+
+.date-picker-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: var(--radius-md);
+  border: none;
+  background: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: var(--text-sm);
+  @include transition-interactive(var(--transition-normal));
+
+  @include hover-state {
+    color: var(--text-primary);
+  }
+
+  &:focus-visible {
+    @include focus-ring-outline;
+  }
+}
+
+// ============================================================================
+// CALENDAR GRID
+// ============================================================================
+
+.date-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.125rem;
+  text-align: center;
+}
+
+.date-picker-weekday {
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--text-muted);
+  padding: 0.25rem 0;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-display);
+}
+
+// ============================================================================
+// DAY CELLS
+// ============================================================================
+
+.date-picker-cell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  margin: auto;
+  border-radius: var(--radius-md);
+  border: none;
+  background: none;
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-family: var(--font-sans);
+  cursor: pointer;
+  @include transition-interactive(var(--transition-normal));
+
+  @include hover-state;
+
+  &:focus-visible {
+    @include focus-ring-outline;
+  }
+
+  &.today {
+    box-shadow: inset 0 0 0 1px var(--border-decorative);
+  }
+
+  &.selected {
+    background-color: var(--accent-primary);
+    color: var(--text-inverse);
+    box-shadow: none;
+  }
+
+  &.in-range {
+    background-color: color-mix(in srgb, var(--accent-primary) 12%, transparent);
+    border-radius: 0;
+  }
+
+  &.disabled {
+    color: var(--state-disabled-text);
+    pointer-events: none;
+  }
+}
+
+.date-picker-cell-other {
+  color: var(--text-muted);
+  opacity: 0.5;
+}

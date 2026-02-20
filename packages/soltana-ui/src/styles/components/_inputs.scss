@@ -263,6 +263,66 @@
 }
 
 // ============================================================================
+// NUMBER INPUT
+// ============================================================================
+
+.input-number {
+  display: inline-flex;
+  align-items: stretch;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--input-border);
+  box-shadow: var(--relief-shadow-inset);
+
+  .input {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    text-align: center;
+    min-width: 3rem;
+
+    // Hide native spinners
+    appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      appearance: none;
+      margin: 0;
+    }
+  }
+}
+
+.input-number-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  padding: 0;
+  border: none;
+  background: var(--surface-2);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: var(--text-lg);
+  font-family: var(--font-sans);
+  user-select: none;
+  transition: background-color var(--transition-normal) var(--easing-in-out);
+
+  &:hover {
+    background: var(--state-hover);
+    color: var(--text-primary);
+  }
+
+  &:active {
+    background: var(--state-active);
+  }
+
+  &:disabled {
+    color: var(--state-disabled-text);
+    cursor: not-allowed;
+  }
+}
+
+// ============================================================================
 // RANGE SLIDER
 // ============================================================================
 

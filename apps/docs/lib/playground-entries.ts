@@ -1121,3 +1121,284 @@ registerComponent({
       <span class="badge badge-primary tooltip" data-tooltip="Badge tooltip">Hover badge</span>
     </div>`,
 });
+
+// =============================================================================
+// Content (continued — new components)
+// =============================================================================
+
+registerComponent({
+  id: 'code',
+  name: 'Code',
+  category: 'Content',
+  description: 'Inline code and preformatted code blocks.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="flex flex-col gap-4" style="width: 100%;">
+      <p class="text-sm">Inline <span class="code">const x = 1</span> code within text.</p>
+      <div class="code-block"><code>function greet(name: string) {
+  return \`Hello, \${name}!\`;
+}</code></div>
+    </div>`,
+});
+
+registerComponent({
+  id: 'images',
+  name: 'Images',
+  category: 'Content',
+  description: 'Responsive images, rounded, circle, and thumbnail variants.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="flex flex-wrap gap-4 items-end">
+      <div class="flex flex-col items-center gap-2">
+        <div class="img-thumbnail" style="width: 100px; height: 72px; background: linear-gradient(135deg, var(--accent-primary), var(--accent-decorative));"></div>
+        <span class="text-xs text-secondary">Thumbnail</span>
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        <div class="img-rounded" style="width: 100px; height: 72px; background: linear-gradient(135deg, var(--accent-decorative), var(--accent-primary));"></div>
+        <span class="text-xs text-secondary">Rounded</span>
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        <div class="img-circle" style="width: 72px; height: 72px; background: linear-gradient(135deg, var(--accent-primary), var(--accent-decorative));"></div>
+        <span class="text-xs text-secondary">Circle</span>
+      </div>
+    </div>`,
+});
+
+registerComponent({
+  id: 'links',
+  name: 'Links',
+  category: 'Content',
+  description: 'Accent, muted, and plain link variants.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="flex flex-wrap gap-6 items-center">
+      <a class="link" href="javascript:void(0)">Accent link</a>
+      <a class="link-muted" href="javascript:void(0)">Muted link</a>
+      <a class="link-plain" href="javascript:void(0)">Plain link</a>
+    </div>`,
+});
+
+registerComponent({
+  id: 'tree-view',
+  name: 'Tree View',
+  category: 'Content',
+  description: 'Hierarchical tree structure with expand/collapse.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="tree" style="width: 100%; max-width: 280px;">
+      <div class="tree-node tree-branch active">
+        <div class="tree-node-content">
+          <span class="tree-toggle"></span>
+          <span>src</span>
+        </div>
+        <div class="tree-children">
+          <div class="tree-node tree-branch">
+            <div class="tree-node-content">
+              <span class="tree-toggle"></span>
+              <span>components</span>
+            </div>
+          </div>
+          <div class="tree-node tree-leaf">
+            <div class="tree-node-content"><span>index.ts</span></div>
+          </div>
+          <div class="tree-node tree-leaf">
+            <div class="tree-node-content"><span>main.ts</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="tree-node tree-leaf">
+        <div class="tree-node-content"><span>package.json</span></div>
+      </div>
+    </div>`,
+});
+
+// =============================================================================
+// Forms (continued — new components)
+// =============================================================================
+
+registerComponent({
+  id: 'combobox',
+  name: 'Combobox',
+  category: 'Forms',
+  description: 'Filterable autocomplete dropdown.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="combobox" style="max-width: 280px; position: relative;">
+      <input class="combobox-input input" placeholder="Search..." />
+      <div class="combobox-listbox" role="listbox" style="position: static; display: block; opacity: 1;">
+        <div class="combobox-option selected" role="option" aria-selected="true">React</div>
+        <div class="combobox-option" role="option">Vue</div>
+        <div class="combobox-option" role="option">Angular</div>
+        <div class="combobox-option" role="option">Svelte</div>
+      </div>
+    </div>`,
+});
+
+registerComponent({
+  id: 'color-picker',
+  name: 'Color Picker',
+  category: 'Forms',
+  description: 'HSV color selection with area, hue slider, and swatches.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="color-picker" style="max-width: 260px;">
+      <button class="color-picker-trigger" style="background: #d4a843;"></button>
+      <div class="color-picker-popup" style="position: static; display: block; opacity: 1;">
+        <div class="color-picker-area" style="background: #d4a843;"></div>
+        <div class="color-picker-hue"></div>
+        <input class="color-picker-input input" value="#d4a843" />
+        <div class="color-picker-swatches" style="display: flex; gap: 4px; margin-top: 8px;">
+          <button class="color-picker-swatch" style="background: #d4a843;" aria-label="#d4a843"></button>
+          <button class="color-picker-swatch" style="background: #a855f7;" aria-label="#a855f7"></button>
+          <button class="color-picker-swatch" style="background: #3b82f6;" aria-label="#3b82f6"></button>
+          <button class="color-picker-swatch" style="background: #22c55e;" aria-label="#22c55e"></button>
+        </div>
+      </div>
+    </div>`,
+});
+
+registerComponent({
+  id: 'date-picker',
+  name: 'Date Picker',
+  category: 'Forms',
+  description: 'Calendar-based date selection with keyboard navigation.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="date-picker" style="max-width: 280px;">
+      <input class="date-picker-input input" placeholder="Pick a date" />
+      <div class="date-picker-popup" style="position: static; display: block; opacity: 1;">
+        <div class="date-picker-header">
+          <button class="date-picker-nav" aria-label="Previous month">&#8249;</button>
+          <span class="date-picker-title">February 2026</span>
+          <button class="date-picker-nav" aria-label="Next month">&#8250;</button>
+        </div>
+        <div class="date-picker-grid" role="grid">
+          <div class="date-picker-weekday">Su</div>
+          <div class="date-picker-weekday">Mo</div>
+          <div class="date-picker-weekday">Tu</div>
+          <div class="date-picker-weekday">We</div>
+          <div class="date-picker-weekday">Th</div>
+          <div class="date-picker-weekday">Fr</div>
+          <div class="date-picker-weekday">Sa</div>
+          <button class="date-picker-cell" role="gridcell">15</button>
+          <button class="date-picker-cell" role="gridcell">16</button>
+          <button class="date-picker-cell" role="gridcell">17</button>
+          <button class="date-picker-cell" role="gridcell">18</button>
+          <button class="date-picker-cell today" role="gridcell">19</button>
+          <button class="date-picker-cell" role="gridcell">20</button>
+          <button class="date-picker-cell" role="gridcell">21</button>
+        </div>
+      </div>
+    </div>`,
+});
+
+// =============================================================================
+// Layout (continued — new components)
+// =============================================================================
+
+registerComponent({
+  id: 'carousel',
+  name: 'Carousel',
+  category: 'Layout',
+  description: 'Sliding content showcase with navigation and dots.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="carousel" style="max-width: 360px; width: 100%;">
+      <div class="carousel-track">
+        <div class="carousel-slide" style="background: linear-gradient(135deg, var(--accent-primary), var(--accent-decorative)); height: 140px; display: flex; align-items: center; justify-content: center;">
+          <span class="text-lg font-semibold" style="color: var(--text-inverse)">Slide 1</span>
+        </div>
+      </div>
+      <div class="carousel-dots">
+        <button class="carousel-dot active"></button>
+        <button class="carousel-dot"></button>
+        <button class="carousel-dot"></button>
+      </div>
+    </div>`,
+});
+
+registerComponent({
+  id: 'scroll-area',
+  name: 'Scroll Area',
+  category: 'Layout',
+  description: 'Custom-styled scrollbar container.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="scroll-area" style="max-height: 160px; width: 100%; max-width: 320px;">
+      <div style="padding: 1rem;">
+        <p class="text-sm text-secondary mb-3">Scroll down to see more content with a custom-styled scrollbar.</p>
+        <p class="text-sm text-secondary mb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p class="text-sm text-secondary mb-3">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <p class="text-sm text-secondary mb-3">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        <p class="text-sm text-secondary">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </div>
+    </div>`,
+});
+
+// =============================================================================
+// Overlays (continued — new components)
+// =============================================================================
+
+registerComponent({
+  id: 'alert-dialog',
+  name: 'Alert Dialog',
+  category: 'Overlays',
+  description: 'Constrained confirmation dialogs with icon and actions.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="alert-dialog" style="position: static; transform: none; opacity: 1; max-width: 360px;">
+      <div class="alert-dialog-icon alert-dialog-icon-warning">!</div>
+      <div class="alert-dialog-title">Delete Item</div>
+      <div class="alert-dialog-body">Are you sure you want to delete this item? This action cannot be undone.</div>
+      <div class="alert-dialog-actions">
+        <button class="btn btn-secondary btn-sm">Cancel</button>
+        <button class="btn btn-danger btn-sm">Delete</button>
+      </div>
+    </div>`,
+});
+
+registerComponent({
+  id: 'collapsible',
+  name: 'Collapsible',
+  category: 'Content',
+  description: 'Single-panel toggle content section.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="flex flex-col gap-4" style="width: 100%; max-width: 400px;">
+      <div class="collapsible collapsible-bordered">
+        <button class="collapsible-trigger">Show Details</button>
+        <div class="collapsible-content" style="max-height: 200px;">
+          <p class="text-sm text-secondary p-3">This content is revealed when the trigger is clicked. Collapsibles are simpler single-panel versions of accordions.</p>
+        </div>
+      </div>
+      <div class="collapsible collapsible-bordered">
+        <button class="collapsible-trigger">More Information</button>
+        <div class="collapsible-content">
+          <p class="text-sm text-secondary p-3">Another collapsible section with different content.</p>
+        </div>
+      </div>
+    </div>`,
+});
+
+registerComponent({
+  id: 'context-menu',
+  name: 'Context Menu',
+  category: 'Overlays',
+  description: 'Right-click triggered menus.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="context-menu" style="position: static; display: block; opacity: 1; max-width: 200px;">
+      <div class="context-menu-header">Edit</div>
+      <button class="context-menu-item">Cut</button>
+      <button class="context-menu-item">Copy</button>
+      <button class="context-menu-item">Paste</button>
+      <div class="context-menu-divider"></div>
+      <button class="context-menu-item">Select All</button>
+    </div>`,
+});
+
+registerComponent({
+  id: 'hover-card',
+  name: 'Hover Card',
+  category: 'Overlays',
+  description: 'Rich tooltip-like cards triggered on hover.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="hover-card-content" style="position: static; display: block; opacity: 1; max-width: 280px;">
+      <div class="flex items-center gap-3 mb-2">
+        <div class="avatar avatar-sm">JD</div>
+        <div>
+          <div class="font-medium text-sm">Jane Doe</div>
+          <div class="text-xs text-secondary">@janedoe</div>
+        </div>
+      </div>
+      <p class="text-sm text-secondary">Senior engineer working on design systems and component libraries.</p>
+    </div>`,
+});

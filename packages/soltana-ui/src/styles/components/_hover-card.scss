@@ -1,0 +1,53 @@
+// ---------------------------------------------------------------------------
+// Hover Card Component
+// ---------------------------------------------------------------------------
+// Rich tooltip-like card triggered by hover. Uses positioned floating
+// surface with tier-aware relief and finish.
+// ---------------------------------------------------------------------------
+
+@use '../base/register' as *;
+
+.hover-card {
+  position: relative;
+  display: inline-block;
+}
+
+.hover-card-trigger {
+  cursor: pointer;
+}
+
+.hover-card-content {
+  position: absolute;
+  z-index: var(--z-popover);
+  width: 20rem;
+  padding: 1rem;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--relief-shadow-lg);
+  @include finish-surface(var(--popover-bg));
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-0.25rem);
+  transition:
+    opacity var(--transition-normal) var(--easing-in-out),
+    transform var(--transition-normal) var(--easing-in-out);
+
+  &.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+}
+
+.hover-card-sm {
+  .hover-card-content {
+    width: 14rem;
+    padding: 0.75rem;
+  }
+}
+
+.hover-card-lg {
+  .hover-card-content {
+    width: 28rem;
+  }
+}

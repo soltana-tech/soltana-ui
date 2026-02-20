@@ -1,0 +1,123 @@
+// ---------------------------------------------------------------------------
+// Tree View Component
+// ---------------------------------------------------------------------------
+// Hierarchical tree structure with expandable branches and selectable nodes.
+// Uses --relief-* and --finish-* variables for tier integration.
+// ---------------------------------------------------------------------------
+
+@use '../base/register' as *;
+@use '../base/accessibility' as *;
+@use '../base/transitions' as *;
+
+// ============================================================================
+// CONTAINER
+// ============================================================================
+
+.tree {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+}
+
+// ============================================================================
+// NODES
+// ============================================================================
+
+.tree-node {
+  display: flex;
+  flex-direction: column;
+}
+
+.tree-node-content {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  user-select: none;
+  @include transition-interactive(var(--transition-normal));
+
+  @include hover-state;
+
+  &:focus-visible {
+    @include focus-ring-outline($inset: true);
+  }
+
+  &.selected {
+    background-color: var(--state-active);
+    color: var(--accent-primary);
+  }
+}
+
+// ============================================================================
+// BRANCHES & LEAVES
+// ============================================================================
+
+.tree-branch > .tree-children {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height var(--transition-slow) var(--easing-in-out);
+  padding-left: 1.25rem;
+}
+
+.tree-branch.active > .tree-children {
+  max-height: 999rem;
+}
+
+.tree-leaf {
+  padding-left: 1.25rem;
+}
+
+// ============================================================================
+// TOGGLE CHEVRON
+// ============================================================================
+
+.tree-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+  transition: transform var(--transition-normal) var(--easing-in-out);
+
+  &::after {
+    content: '';
+    display: inline-block;
+    width: 0.375em;
+    height: 0.375em;
+    border-right: 1.5px solid currentcolor;
+    border-bottom: 1.5px solid currentcolor;
+    transform: rotate(-45deg);
+    transition: transform var(--transition-normal) var(--easing-in-out);
+  }
+
+  .tree-branch.active > .tree-node-content > &::after {
+    transform: rotate(45deg);
+  }
+}
+
+// ============================================================================
+// INDENTATION GUIDES
+// ============================================================================
+
+.tree-indent {
+  position: relative;
+  padding-left: 1.25rem;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0.625rem;
+    width: 1px;
+    background-color: var(--border-subtle);
+  }
+}

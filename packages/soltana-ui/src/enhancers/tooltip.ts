@@ -11,6 +11,8 @@
 // ---------------------------------------------------------------------------
 
 import type { EnhancerCleanup, EnhancerOptions } from '../config/types.js';
+import { computePosition } from './utils/position.js';
+import type { Placement } from './utils/position.js';
 
 export const TOOLTIP_SELECTOR = '[data-sol-tooltip]';
 
@@ -64,37 +66,12 @@ function hideTooltip(): void {
 }
 
 function positionTooltip(target: HTMLElement, tip: HTMLElement): void {
-  const position = target.getAttribute('data-tooltip-position') ?? 'top';
-  const rect = target.getBoundingClientRect();
-  const tipRect = tip.getBoundingClientRect();
-  const gap = 8;
-
-  let top = 0;
-  let left = 0;
-
-  switch (position) {
-    case 'bottom':
-      top = rect.bottom + gap;
-      left = rect.left + rect.width / 2 - tipRect.width / 2;
-      break;
-    case 'left':
-      top = rect.top + rect.height / 2 - tipRect.height / 2;
-      left = rect.left - tipRect.width - gap;
-      break;
-    case 'right':
-      top = rect.top + rect.height / 2 - tipRect.height / 2;
-      left = rect.right + gap;
-      break;
-    case 'top':
-    default:
-      top = rect.top - tipRect.height - gap;
-      left = rect.left + rect.width / 2 - tipRect.width / 2;
-      break;
-  }
-
-  // Clamp to viewport
-  left = Math.max(4, Math.min(left, window.innerWidth - tipRect.width - 4));
-  top = Math.max(4, Math.min(top, window.innerHeight - tipRect.height - 4));
+  const placement = (target.getAttribute('data-tooltip-position') ?? 'top') as Placement;
+  const { top, left } = computePosition({
+    anchor: target,
+    floating: tip,
+    placement,
+  });
 
   tip.style.top = `${String(top)}px`;
   tip.style.left = `${String(left)}px`;

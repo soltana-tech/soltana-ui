@@ -1,0 +1,55 @@
+{
+  "name": "@soltana-ui/mermaid",
+  "version": "1.0.0",
+  "private": false,
+  "description": "Mermaid theme bridge for Soltana UI.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Soltana",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/soltana-tech/soltana-ui.git",
+    "directory": "packages/mermaid"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/soltana-mermaid.js",
+  "module": "./dist/soltana-mermaid.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/soltana-mermaid.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc --noEmit && vite build",
+    "test": "vitest run",
+    "lint": "pnpm run lint:ts",
+    "lint:ts": "eslint src/",
+    "type-check": "tsc --noEmit"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@soltana-ui/tokens": "workspace:*"
+  },
+  "devDependencies": {
+    "@soltana-ui/chart-shared": "workspace:*",
+    "vite": "^7.3.1",
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "^3.2.4"
+  },
+  "peerDependencies": {
+    "mermaid": "^11.0.0",
+    "soltana-ui": "workspace:^"
+  },
+  "peerDependenciesMeta": {
+    "mermaid": {
+      "optional": true
+    },
+    "soltana-ui": {
+      "optional": true
+    }
+  }
+}

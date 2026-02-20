@@ -75,6 +75,58 @@ function componentHTML(): string {
         <button class="toggle disabled" disabled>Disabled</button>
       </section>
 
+      <!-- Code -->
+      <section>
+        <p>Inline <span class="code">const x = 1</span> code.</p>
+        <div class="code-block"><code>function greet() {\n  return "Hello";\n}</code></div>
+      </section>
+
+      <!-- Image -->
+      <section>
+        <div class="img-thumbnail" style="width: 120px; height: 80px; background: var(--surface-3);"></div>
+      </section>
+
+      <!-- Link variants -->
+      <section>
+        <a class="link" href="#">Accent link</a>
+        <a class="link-muted" href="#">Muted link</a>
+        <a class="link-plain" href="#">Plain link</a>
+      </section>
+
+      <!-- Collapsible -->
+      <section>
+        <div class="collapsible collapsible-bordered">
+          <button class="collapsible-trigger">Collapsible</button>
+          <div class="collapsible-content"><p>Content</p></div>
+        </div>
+      </section>
+
+      <!-- Alert Dialog -->
+      <section>
+        <div class="alert-dialog" style="position: static; transform: none; opacity: 1;">
+          <div class="alert-dialog-icon alert-dialog-icon-warning">!</div>
+          <div class="alert-dialog-title">Confirm</div>
+          <div class="alert-dialog-body">Are you sure?</div>
+          <div class="alert-dialog-actions">
+            <button class="btn btn-secondary">Cancel</button>
+            <button class="btn btn-danger">Delete</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Carousel (static) -->
+      <section>
+        <div class="carousel" style="max-width: 320px;">
+          <div class="carousel-track">
+            <div class="carousel-slide" style="background: var(--surface-3); height: 100px;"></div>
+          </div>
+          <div class="carousel-dots">
+            <button class="carousel-dot active" aria-label="Slide 1"></button>
+            <button class="carousel-dot" aria-label="Slide 2"></button>
+          </div>
+        </div>
+      </section>
+
     </main>
   `;
 }

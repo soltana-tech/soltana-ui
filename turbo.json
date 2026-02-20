@@ -14,8 +14,8 @@
       "dependsOn": ["build"],
       "inputs": ["src/**", "tests/**", "vitest.config.*"]
     },
-    "lint": {},
-    "lint:ts": {},
+    "lint": { "dependsOn": ["^build"] },
+    "lint:ts": { "dependsOn": ["^build"] },
     "lint:style": {},
     "type-check": {
       "inputs": ["src/**", "tsconfig.json", "tsconfig.*.json"]

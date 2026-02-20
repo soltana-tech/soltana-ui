@@ -1,0 +1,53 @@
+// ---------------------------------------------------------------------------
+// Scroll Area Component
+// ---------------------------------------------------------------------------
+// Custom scrollbar container with tier-aware thumb colors.
+// Extends the base scrollbar styling for component-level opt-in.
+// ---------------------------------------------------------------------------
+
+@use '../base/register' as *;
+
+.scroll-area {
+  position: relative;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+
+  // Webkit custom scrollbar
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+    border-radius: var(--radius-full);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: var(--radius-full);
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+    background-clip: content-box;
+  }
+}
+
+.scroll-area-sm {
+  &::-webkit-scrollbar {
+    width: 0.375rem;
+    height: 0.375rem;
+  }
+}
+
+.scroll-area-hidden {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

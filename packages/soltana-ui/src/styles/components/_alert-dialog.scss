@@ -1,0 +1,74 @@
+// ---------------------------------------------------------------------------
+// Alert Dialog Component
+// ---------------------------------------------------------------------------
+// Constrained-width modal variant for confirmations and destructive actions.
+// Reuses the existing modal backdrop/overlay patterns.
+// Uses --relief-* and --finish-* variables for tier integration.
+// ---------------------------------------------------------------------------
+
+@use '../base/register' as *;
+
+.alert-dialog {
+  position: relative;
+  @include relief-container((var(--relief-shadow), 0 24px 64px rgb(var(--shadow-color) / 30%)));
+  outline: 1px solid var(--border-subtle);
+  outline-offset: 4px;
+  border-radius: var(--radius-2xl);
+  @include finish-surface(var(--modal-bg));
+  width: 100%;
+  max-width: 24rem;
+  text-align: center;
+  padding: 2rem 1.5rem 1.5rem;
+  transform: scale(0.95) translateY(10px);
+  transition: transform var(--transition-slow) var(--easing-in-out);
+
+  &.active {
+    transform: scale(1) translateY(0);
+  }
+}
+
+.alert-dialog-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  margin: 0 auto 1rem;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xl);
+}
+
+.alert-dialog-icon-danger {
+  background: var(--color-error-subtle);
+  color: var(--color-error-text);
+}
+
+.alert-dialog-icon-warning {
+  background: var(--color-warning-subtle);
+  color: var(--color-warning-text);
+}
+
+.alert-dialog-icon-info {
+  background: var(--color-info-subtle);
+  color: var(--color-info-text);
+}
+
+.alert-dialog-title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.alert-dialog-body {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.alert-dialog-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+}

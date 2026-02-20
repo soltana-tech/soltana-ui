@@ -11,13 +11,10 @@
 // ---------------------------------------------------------------------------
 
 import type { EnhancerCleanup, EnhancerOptions } from '../config/types.js';
+import { trapFocus, FOCUSABLE } from './utils/focus-trap.js';
 
 export const MODAL_SELECTOR = '[data-sol-modal]';
 export const MODAL_OPEN_SELECTOR = '[data-modal-open]';
-
-const FOCUSABLE =
-  'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), ' +
-  'textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 let _controller: AbortController | null = null;
 let _openCount = 0;
@@ -48,29 +45,10 @@ function closeModal(modal: HTMLElement): void {
   }
 }
 
-function trapFocus(modal: HTMLElement, e: KeyboardEvent): void {
+function trapModalFocus(modal: HTMLElement, e: KeyboardEvent): void {
   const content = modal.querySelector<HTMLElement>('.modal__content, .modal');
   if (!content) return;
-
-  const focusables = Array.from(content.querySelectorAll<HTMLElement>(FOCUSABLE));
-  // Include focusable slotted children
-  const allFocusable = [
-    ...focusables,
-    ...Array.from(modal.querySelectorAll<HTMLElement>(FOCUSABLE)),
-  ].filter((el, i, arr) => arr.indexOf(el) === i);
-
-  if (allFocusable.length === 0) return;
-
-  const first = allFocusable[0];
-  const last = allFocusable[allFocusable.length - 1];
-
-  if (e.shiftKey && document.activeElement === first) {
-    e.preventDefault();
-    last.focus();
-  } else if (!e.shiftKey && document.activeElement === last) {
-    e.preventDefault();
-    first.focus();
-  }
+  trapFocus(content, e);
 }
 
 /**
@@ -150,7 +128,7 @@ export function initModals(options?: EnhancerOptions): EnhancerCleanup {
           return;
         }
         if (e.key === 'Tab') {
-          trapFocus(modal, e);
+          trapModalFocus(modal, e);
         }
       },
       { signal }

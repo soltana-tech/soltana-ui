@@ -16,6 +16,7 @@ import { extractComponents } from './extract-components.js';
 import { buildEChartsTheme } from './formats/echarts.js';
 import { buildPlotlyTemplate } from './formats/plotly.js';
 import { buildMplStyle } from './formats/matplotlib.js';
+import { buildMermaidConfig } from './formats/mermaid.js';
 import { buildDtcgTheme, buildDtcgFoundation } from './formats/dtcg.js';
 import { buildAgentDocs } from './formats/agent-docs.js';
 
@@ -61,6 +62,11 @@ function main(): void {
     // matplotlib
     ensureDir(resolve(DIST, 'matplotlib'));
     writeFileSync(resolve(DIST, `matplotlib/${name}.mplstyle`), buildMplStyle(theme, foundation));
+    fileCount++;
+
+    // Mermaid
+    ensureDir(resolve(DIST, 'mermaid'));
+    writeJson(resolve(DIST, `mermaid/${name}.json`), buildMermaidConfig(theme, foundation));
     fileCount++;
 
     // DTCG

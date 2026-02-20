@@ -1,0 +1,107 @@
+// ---------------------------------------------------------------------------
+// Carousel Component
+// ---------------------------------------------------------------------------
+// Horizontal slide container with navigation buttons and indicator dots.
+// Uses --relief-* and --finish-* variables for tier integration.
+// ---------------------------------------------------------------------------
+
+@use '../base/register' as *;
+@use '../base/accessibility' as *;
+@use '../base/transitions' as *;
+
+.carousel {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform var(--transition-slow) var(--easing-in-out);
+}
+
+.carousel-slide {
+  flex: 0 0 100%;
+  min-width: 0;
+
+  > img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+// ---- Navigation buttons ----
+
+.carousel-prev,
+.carousel-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  @include relief-container;
+  @include finish-surface(var(--surface-1));
+  color: var(--text-primary);
+  @include transition-interactive;
+
+  &:hover {
+    background-color: var(--state-hover);
+  }
+
+  &:focus-visible {
+    @include focus-ring-outline;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.carousel-prev {
+  left: 0.75rem;
+}
+
+.carousel-next {
+  right: 0.75rem;
+}
+
+// ---- Indicator dots ----
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0;
+}
+
+.carousel-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--radius-full);
+  border: none;
+  background-color: var(--text-muted);
+  opacity: 0.4;
+  cursor: pointer;
+  padding: 0;
+  transition:
+    opacity var(--transition-normal) var(--easing-in-out),
+    background-color var(--transition-normal) var(--easing-in-out);
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &.active {
+    opacity: 1;
+    background-color: var(--accent-primary);
+  }
+}

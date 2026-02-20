@@ -1,0 +1,60 @@
+// ---------------------------------------------------------------------------
+// Collapsible Component
+// ---------------------------------------------------------------------------
+// Single-panel expand/collapse. Simpler than accordion — no item grouping.
+// Uses --relief-* and --finish-* variables for tier integration.
+// ---------------------------------------------------------------------------
+
+@use '../base/register' as *;
+
+.collapsible {
+  border-radius: var(--radius-lg);
+}
+
+.collapsible-bordered {
+  @include relief-container;
+  border-radius: var(--radius-lg);
+}
+
+.collapsible-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  letter-spacing: var(--tracking-elegant);
+
+  &::after {
+    content: '';
+    display: inline-block;
+    width: 0.5em;
+    height: 0.5em;
+    border-right: 2px solid currentcolor;
+    border-bottom: 2px solid currentcolor;
+    transform: rotate(45deg);
+    transition: transform var(--transition-normal) var(--easing-in-out);
+  }
+
+  &[aria-expanded='true']::after {
+    transform: rotate(-135deg);
+  }
+}
+
+.collapsible-content {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height var(--transition-slow) var(--easing-in-out);
+  padding: 0 1rem;
+
+  &[aria-hidden='false'] {
+    padding-bottom: 0.75rem;
+  }
+}
