@@ -65,7 +65,7 @@ jobs:
 
       - name: Check generated files are up-to-date
         run: |
-          git diff --exit-code .claude/agents/reference.yaml apps/docs/public/llms.txt apps/docs/public/llms-full.txt python/soltana-matplotlib/soltana_matplotlib/*.mplstyle || \
+          git diff --exit-code -I '^\s*generated:' .claude/agents/reference.yaml apps/docs/public/llms.txt apps/docs/public/llms-full.txt python/soltana-matplotlib/soltana_matplotlib/*.mplstyle || \
           (echo "Generated files are out of sync. Run 'pnpm --filter @soltana-ui/tokens build' and 'pnpm run sync:mplstyle' and commit the changes." && exit 1)
 
       - name: Unit tests
