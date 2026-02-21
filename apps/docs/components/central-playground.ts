@@ -3,13 +3,13 @@
  * selector. Manages Sandbox lifecycle on component change.
  */
 
-import { Sandbox } from './Sandbox';
+import { Sandbox } from './sandbox';
 import { getAllComponents, getComponent, getComponentsByCategory } from '../lib/component-registry';
 import { readStateFromUrl } from '../lib/url-state';
 import { createDefaultState } from '../lib/sandbox-state';
 import type { SandboxState } from '../lib/sandbox-state';
-import { CustomSelect } from './CustomSelect';
-import type { SelectGroup } from './CustomSelect';
+import { CustomSelect } from './custom-select';
+import type { SelectGroup } from './custom-select';
 
 export class CentralPlayground {
   private element: HTMLElement;

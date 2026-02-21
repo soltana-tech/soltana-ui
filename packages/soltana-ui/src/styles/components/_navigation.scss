@@ -80,7 +80,7 @@
     right: 0;
     height: 2px;
     background-color: transparent;
-    transition: background-color var(--transition-normal) var(--easing-in-out);
+    @include transition-property(background-color);
   }
 
   @include hover-state {

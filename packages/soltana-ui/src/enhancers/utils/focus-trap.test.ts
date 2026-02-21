@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import fc from 'fast-check';
-import { trapFocus, FOCUSABLE } from '../focus-trap.js';
+import { trapFocus, FOCUSABLE } from './focus-trap.js';
 
 function createContainer(focusableCount: number): HTMLElement {
   const container = document.createElement('div');

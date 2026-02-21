@@ -1,14 +1,14 @@
 import '@soltana/styles/index.scss';
 import './docs.scss';
-import './components/SolPreview';
+import './components/sol-preview';
 
 import { initSoltana, initAll } from 'soltana-ui';
 import type { Theme } from 'soltana-ui';
-import { PlaygroundControls } from './components/PlaygroundControls';
-import { Router } from './components/Router';
-import { Sidebar } from './components/Sidebar';
-import type { SidebarSection } from './components/Sidebar';
-import { Search } from './components/Search';
+import { PlaygroundControls } from './components/playground-controls';
+import { Router } from './components/router';
+import { Sidebar } from './components/sidebar';
+import type { SidebarSection } from './components/sidebar';
+import { Search } from './components/search';
 
 // Side-effect: populate component registry before playground reads it
 import './lib/playground-entries';
@@ -47,7 +47,7 @@ import { renderApiPlugins } from './pages/api/plugins';
 
 // Pages — Playground
 import { renderPlayground } from './pages/playground';
-import type { CentralPlayground } from './components/CentralPlayground';
+import type { CentralPlayground } from './components/central-playground';
 
 const soltana = initSoltana({
   theme: 'dark',

@@ -694,6 +694,8 @@ const sol = initSoltana({ theme: "dark", relief: "glassmorphic", finish: "froste
 
 ### Imperative APIs
 
+- `testSingletonBehavior` — Verifies that re-calling an enhancer init function does not duplicate listeners.
+- `mockBoundingClientRect` — Mocks getBoundingClientRect on an HTML element with default positioning values.
 - `showToast` — Programmatically show a toast notification.
 - `dismissToast` — Dismiss a specific toast element.
 

@@ -587,6 +587,27 @@ test.describe('overrides via API', () => {
     expect(errors.some((e) => e.includes('not a valid CSS custom property'))).toBe(true);
   });
 
+  test('throws on invalid override key in strict mode', async ({ page }) => {
+    await setupSoltanaPage(page);
+    const result = await page.evaluate(() => {
+      const s = window.SoltanaUI.initSoltana({ strict: true });
+      let error: string | null = null;
+      try {
+        s.setOverrides({ invalid: 'value' });
+      } catch (e) {
+        error = (e as Error).message;
+      }
+      return {
+        error,
+        appliedValue: document.documentElement.style.getPropertyValue('invalid'),
+      };
+    });
+
+    expect(result.error).not.toBeNull();
+    expect(result.error).toContain('not a valid CSS custom property');
+    expect(result.appliedValue).toBe('');
+  });
+
   test('skips non-custom-property override keys', async ({ page }) => {
     await setupSoltanaPage(page);
     const result = await page.evaluate(() => {

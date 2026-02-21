@@ -11,7 +11,7 @@
 //   --relief-bg, --relief-shadow, --relief-shadow-sm, --relief-shadow-lg,
 //   --relief-shadow-inset, --relief-shadow-inset-sm, --relief-shadow-inset-lg,
 //   --relief-border, --mesh-color-1, --mesh-color-2, --mesh-color-3,
-//   --channel-sheen-color, --channel-tint-color
+//   --channel-sheen-color, --channel-tint-color, --bridge-backdrop-blur
 // ---------------------------------------------------------------------------
 
 :root {
@@ -47,4 +47,7 @@
   // This indirection enables per-theme channel tuning while maintaining finish reusability.
   --channel-sheen-color: var(--highlight-color);
   --channel-tint-color: var(--shadow-color);
+
+  // Bridge token for backdrop blur — set by finish tier, consumed by relief tier
+  --bridge-backdrop-blur: 0px;
 }

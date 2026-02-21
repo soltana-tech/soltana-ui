@@ -22,7 +22,7 @@
   @include finish-surface(var(--surface-1));
   opacity: 0;
   pointer-events: none;
-  transition: opacity var(--transition-normal) var(--easing-in-out);
+  @include transition-property(opacity);
 
   &.active {
     opacity: 1;

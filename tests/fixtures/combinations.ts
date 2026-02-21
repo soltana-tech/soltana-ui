@@ -1,8 +1,4 @@
-import {
-  VALID_THEMES,
-  VALID_RELIEFS,
-  VALID_FINISHES,
-} from '../../packages/soltana-ui/src/config/validation';
+import { VALID_THEMES, VALID_RELIEFS, VALID_FINISHES } from 'soltana-ui';
 
 export interface TierCombination {
   theme: string;

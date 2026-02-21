@@ -19,6 +19,20 @@ const LIGHT_SEED: ThemeSeed = {
 };
 
 // --- SCSS ↔ TS token sync (merged from register.sync.test.ts) ---
+//
+// These tests parse raw SCSS source files rather than compiled CSS output for the following reasons:
+// 1. Compiled CSS may not be reliably available in the test environment (depends on build order)
+// 2. The test validates the authoring layer contract (SCSS → TS sync) not the compiled output
+// 3. Token names in SCSS are the source of truth that must match the TypeScript registry
+//
+// The tests expect SCSS files to contain CSS custom property declarations in the format:
+//   --token-name: value;
+//
+// This includes both direct declarations in theme files (_dark.scss, _light.scss, _sepia.scss)
+// and declarations within the @mixin component-tokens(...) in _variables.scss.
+//
+// Changes to SCSS formatting that alter the AST structure (e.g., renaming tokens, restructuring
+// mixins) should trigger test failures, as these represent actual contract changes.
 
 function extractTokens(source: string): Set<string> {
   const tokens = new Set<string>();

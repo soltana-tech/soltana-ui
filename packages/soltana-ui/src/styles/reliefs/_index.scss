@@ -32,7 +32,7 @@
   --relief-shadow-inset: inset 0 1px 0 rgb(var(--highlight-color) / 12%);
   --relief-shadow-inset-lg:
     inset 0 1px 0 rgb(var(--highlight-color) / 15%), inset 0 -0.5px 0 rgb(var(--shadow-color) / 4%);
-  --relief-border: var(--border-strong);
+  --relief-border: var(--relief-border-default);
 }
 
 @include register-relief('skeuomorphic') {

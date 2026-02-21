@@ -43,6 +43,18 @@
   }
 }
 
+@mixin accent-gradient(
+  $from: var(--accent-primary),
+  $to: var(--accent-decorative),
+  $angle: 145deg
+) {
+  background: linear-gradient($angle, $from, $to);
+}
+
+@mixin hover-lift($distance: -1px) {
+  transform: translateY($distance);
+}
+
 @mixin edge-radius($radius: var(--radius-lg), $child: null) {
   @if $child {
     &:first-child #{$child} {

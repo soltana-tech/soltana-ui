@@ -14,7 +14,10 @@ export function renderApiConfig(): HTMLElement {
 <div class="page-api-config">
   ${sectionHeading('Configuration', 'api-config', 'Runtime tier registration.')}
 
-  ${quickNav([{ label: 'Tier Registration', href: '#api-registration' }])}
+  ${quickNav([
+    { label: 'Tier Registration', href: '#api-registration' },
+    { label: 'Plugins', href: '#/api/plugins' },
+  ])}
 
   ${sectionDivider()}
 
@@ -311,6 +314,66 @@ reg.unregister();`,
           </tbody>
         </table>
       </div>
+
+      <p class="text-secondary mt-4">
+        For detailed explanations of each built-in tier value, see
+        <a href="#/learn/themes" class="link">Themes</a>,
+        <a href="#/learn/reliefs" class="link">Reliefs</a>, and
+        <a href="#/learn/finishes" class="link">Finishes</a> in the learning section.
+      </p>
+    `
+    )}
+
+    ${specimenBlock(
+      'Validation Constants',
+      `
+      <p class="text-secondary mb-4">
+        Advanced exports for runtime validation, testing, and custom integrations.
+        These constants provide the current set of valid tier values, including
+        both built-in values and any runtime-registered custom tiers.
+      </p>
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr><th>Export</th><th>Type</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>VALID_THEMES</code></td><td><code>ReadonlySet&lt;string&gt;</code></td><td>Set of all valid theme names. Includes built-in themes (<code>'dark'</code>, <code>'light'</code>, <code>'sepia'</code>, <code>'auto'</code>) plus any registered via <code>registerTheme()</code>.</td></tr>
+            <tr><td><code>VALID_RELIEFS</code></td><td><code>ReadonlySet&lt;string&gt;</code></td><td>Set of all valid relief names. Includes built-in reliefs (<code>'flat'</code>, <code>'glassmorphic'</code>, <code>'skeuomorphic'</code>, <code>'neumorphic'</code>) plus any registered via <code>registerRelief()</code>.</td></tr>
+            <tr><td><code>VALID_FINISHES</code></td><td><code>ReadonlySet&lt;string&gt;</code></td><td>Set of all valid finish names. Includes built-in finishes (<code>'matte'</code>, <code>'frosted'</code>, <code>'tinted'</code>, <code>'glossy'</code>) plus any registered via <code>registerFinish()</code>.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4 class="text-lg font-semibold mt-6 mb-2">Use Cases</h4>
+      <p class="text-secondary mb-4">
+        Use these constants for custom validation logic, building tier selector UIs,
+        or testing integrations:
+      </p>
+      ${codeExample(
+        `import { VALID_THEMES, VALID_RELIEFS, VALID_FINISHES } from 'soltana-ui';
+
+// Custom validation
+function isValidTheme(value: string): boolean {
+  return VALID_THEMES.has(value);
+}
+
+// Build a theme selector dropdown
+const themeOptions = Array.from(VALID_THEMES).map(theme => ({
+  value: theme,
+  label: theme.charAt(0).toUpperCase() + theme.slice(1),
+}));
+
+// Check if a custom tier was registered
+const hasCustomRelief = VALID_RELIEFS.has('dramatic');`,
+        'typescript'
+      )}
+
+      <p class="text-secondary mt-4">
+        These sets update automatically when new tiers are registered or unregistered.
+        They are read-only; attempting to modify them has no effect on the validation
+        system.
+      </p>
     `
     )}
 

@@ -1,4 +1,4 @@
-import type { Router } from './Router';
+import type { Router } from './router';
 
 interface SearchEntry {
   label: string;

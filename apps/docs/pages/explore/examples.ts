@@ -1,7 +1,7 @@
 /** Full-page template examples with shared sticky tier controls. */
 
-import type { SolPreview } from '../../components/SolPreview';
-import { TierControls } from '../../components/TierControls';
+import type { SolPreview } from '../../components/sol-preview';
+import { TierControls } from '../../components/tier-controls';
 
 // ---------------------------------------------------------------------------
 // Templates

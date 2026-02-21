@@ -37,6 +37,27 @@ function writeJson(path: string, data: unknown): void {
   writeFileSync(path, JSON.stringify(data, null, 2) + '\n');
 }
 
+/**
+ * Writes monorepo-level outputs to locations outside packages/tokens/dist/.
+ *
+ * These cross-package writes are intentional build artifacts consumed by:
+ * - .claude/reference.yaml: AI agent documentation (consumed by Claude Code)
+ * - apps/docs/public/llms.txt: LLM discovery file (llms.txt standard)
+ * - apps/docs/public/llms-full.txt: Extended agent reference (consumed by AI tools)
+ *
+ * CI validates these files are kept up-to-date via .github/workflows/ci.yml:64
+ */
+function writeCrossPackageOutputs(agentYaml: string, llmsTxt: string, llmsFullTxt: string): void {
+  const MONOREPO_ROOT = resolve(__dirname, '../../..');
+  const docsPublicDir = resolve(MONOREPO_ROOT, 'apps/docs/public');
+
+  ensureDir(docsPublicDir);
+
+  writeFileSync(resolve(MONOREPO_ROOT, '.claude/reference.yaml'), agentYaml);
+  writeFileSync(resolve(docsPublicDir, 'llms.txt'), llmsTxt);
+  writeFileSync(resolve(docsPublicDir, 'llms-full.txt'), llmsFullTxt);
+}
+
 // ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
@@ -86,22 +107,12 @@ function main(): void {
   const agentInput = { foundation, themes, utilities, components, enhancers, integrations };
   const agentYaml = buildAgentDocs(agentInput, { imperatives });
 
-  ensureDir(resolve(DIST, 'agents'));
-  writeFileSync(resolve(DIST, 'agents/reference.yaml'), agentYaml);
-  fileCount++;
-
-  writeFileSync(resolve(MONOREPO_ROOT, '.claude/reference.yaml'), agentYaml);
-  fileCount++;
-
   // llms.txt / llms-full.txt
   const llmsTxt = buildLlmsTxt({ themeNames, integrations });
   const llmsFullTxt = buildLlmsFullTxt(agentInput, { imperatives });
 
-  const docsPublicDir = resolve(MONOREPO_ROOT, 'apps/docs/public');
-  ensureDir(docsPublicDir);
-  writeFileSync(resolve(docsPublicDir, 'llms.txt'), llmsTxt);
-  writeFileSync(resolve(docsPublicDir, 'llms-full.txt'), llmsFullTxt);
-  fileCount += 2;
+  writeCrossPackageOutputs(agentYaml, llmsTxt, llmsFullTxt);
+  fileCount += 3;
 
   console.log(
     `@soltana-ui/tokens: wrote ${String(fileCount)} files for ${String(themeNames.length)} themes (${themeNames.join(', ')})`

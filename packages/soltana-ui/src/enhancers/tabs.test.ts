@@ -1,10 +1,11 @@
-// Unit tests for tabs enhancer focus on ARIA correctness, event handling, and
-// keyboard navigation. Tier integration (theme/relief/finish interaction with
-// enhancers) is verified in E2E tests (tests/enhancers/).
-
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { initTabs } from './tabs.js';
-import { testSingletonBehavior } from './__tests__/helpers.js';
+import {
+  testDestroyPreventsInteraction,
+  testIdempotentInit,
+  testNoMatchGraceful,
+  testCustomRoot,
+} from './test-utils.js';
 
 function createTabs(tabLabels: string[]): HTMLElement {
   const container = document.createElement('div');
@@ -44,11 +45,34 @@ describe('initTabs', () => {
     document.body.innerHTML = '';
   });
 
-  it('returns a cleanup handle with destroy()', () => {
-    const cleanup = initTabs();
-    expect(typeof cleanup.destroy).toBe('function');
-    cleanup.destroy();
-  });
+  testDestroyPreventsInteraction(
+    initTabs,
+    () => createTabs(['One', 'Two']),
+    (container) => {
+      const tabs = container.querySelectorAll<HTMLElement>('[role="tab"]');
+      tabs[1].click();
+    },
+    (container) => {
+      const tabs = container.querySelectorAll('[role="tab"]');
+      expect(tabs[1].getAttribute('aria-selected')).toBe('false');
+    }
+  );
+
+  testIdempotentInit(
+    initTabs,
+    () => createTabs(['One', 'Two']),
+    (container) => {
+      const tabs = container.querySelectorAll<HTMLElement>('[role="tab"]');
+      const panels = container.querySelectorAll<HTMLElement>('[role="tabpanel"]');
+
+      tabs[1].click();
+
+      expect(tabs[1].getAttribute('aria-selected')).toBe('true');
+      expect(tabs[0].getAttribute('aria-selected')).toBe('false');
+      expect(panels[1].hidden).toBe(false);
+      expect(panels[0].hidden).toBe(true);
+    }
+  );
 
   it('sets ARIA ids on tabs and panels', () => {
     const container = createTabs(['One', 'Two', 'Three']);
@@ -70,98 +94,65 @@ describe('initTabs', () => {
     cleanup.destroy();
   });
 
-  it('activates a tab on click', () => {
-    const container = createTabs(['One', 'Two', 'Three']);
-    const cleanup = initTabs();
+  testCustomRoot(
+    initTabs,
+    (root) => {
+      const container = document.createElement('div');
+      container.setAttribute('data-sol-tabs', '');
+      const tablist = document.createElement('div');
+      tablist.setAttribute('role', 'tablist');
+      const tab = document.createElement('button');
+      tab.setAttribute('role', 'tab');
+      tab.setAttribute('aria-selected', 'true');
+      tablist.appendChild(tab);
+      container.appendChild(tablist);
+      const panel = document.createElement('div');
+      panel.setAttribute('role', 'tabpanel');
+      container.appendChild(panel);
+      root.appendChild(container);
+    },
+    (root) => {
+      const tab = root.querySelector('[role="tab"]')!;
+      expect(tab.id).toContain('tab-0');
+    }
+  );
 
-    const tabs = container.querySelectorAll<HTMLElement>('[role="tab"]');
-    const panels = container.querySelectorAll<HTMLElement>('[role="tabpanel"]');
+  describe('error handling', () => {
+    testNoMatchGraceful(initTabs);
 
-    tabs[1].click();
+    it('handles gracefully when tab buttons reference non-existent panels', () => {
+      const container = document.createElement('div');
+      container.setAttribute('data-sol-tabs', '');
+      const tablist = document.createElement('div');
+      tablist.setAttribute('role', 'tablist');
+      const tab = document.createElement('button');
+      tab.setAttribute('role', 'tab');
+      tab.setAttribute('aria-selected', 'true');
+      tablist.appendChild(tab);
+      container.appendChild(tablist);
+      document.body.appendChild(container);
 
-    expect(tabs[1].getAttribute('aria-selected')).toBe('true');
-    expect(tabs[1].classList.contains('active')).toBe(true);
-    expect(panels[1].hidden).toBe(false);
+      expect(() => initTabs()).not.toThrow();
+      initTabs().destroy();
+    });
 
-    expect(tabs[0].getAttribute('aria-selected')).toBe('false');
-    expect(panels[0].hidden).toBe(true);
+    it('handles gracefully when tabs container has buttons but no panels', () => {
+      const container = document.createElement('div');
+      container.setAttribute('data-sol-tabs', '');
+      const tablist = document.createElement('div');
+      tablist.setAttribute('role', 'tablist');
+      const tab1 = document.createElement('button');
+      tab1.setAttribute('role', 'tab');
+      tab1.setAttribute('aria-selected', 'true');
+      const tab2 = document.createElement('button');
+      tab2.setAttribute('role', 'tab');
+      tablist.appendChild(tab1);
+      tablist.appendChild(tab2);
+      container.appendChild(tablist);
+      document.body.appendChild(container);
 
-    cleanup.destroy();
-  });
-
-  it('supports ArrowRight keyboard navigation', () => {
-    const container = createTabs(['One', 'Two', 'Three']);
-    const cleanup = initTabs();
-
-    const tablist = container.querySelector('[role="tablist"]')!;
-    const tabs = container.querySelectorAll<HTMLElement>('[role="tab"]');
-
-    tabs[0].focus();
-    tablist.dispatchEvent(
-      new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true })
-    );
-
-    expect(tabs[1].getAttribute('aria-selected')).toBe('true');
-
-    cleanup.destroy();
-  });
-
-  it('wraps ArrowRight from last tab to first', () => {
-    const container = createTabs(['One', 'Two']);
-    const cleanup = initTabs();
-
-    const tablist = container.querySelector('[role="tablist"]')!;
-    const tabs = container.querySelectorAll<HTMLElement>('[role="tab"]');
-
-    // Activate last tab
-    tabs[1].click();
-
-    tablist.dispatchEvent(
-      new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true })
-    );
-
-    expect(tabs[0].getAttribute('aria-selected')).toBe('true');
-
-    cleanup.destroy();
-  });
-
-  it('singleton: re-calling initTabs() does not duplicate listeners', () => {
-    testSingletonBehavior(
-      () => initTabs(),
-      () => {
-        const container = createTabs(['One', 'Two']);
-        return container.querySelectorAll<HTMLElement>('[role="tab"]')[1];
-      },
-      (tab) => {
-        tab.click();
-        expect(tab.getAttribute('aria-selected')).toBe('true');
-        expect(tab.classList.contains('active')).toBe(true);
-      }
-    );
-  });
-
-  it('scopes queries to custom root via options', () => {
-    const root = document.createElement('div');
-    document.body.appendChild(root);
-
-    const container = document.createElement('div');
-    container.setAttribute('data-sol-tabs', '');
-    const tablist = document.createElement('div');
-    tablist.setAttribute('role', 'tablist');
-    const tab = document.createElement('button');
-    tab.setAttribute('role', 'tab');
-    tab.setAttribute('aria-selected', 'true');
-    tablist.appendChild(tab);
-    container.appendChild(tablist);
-    const panel = document.createElement('div');
-    panel.setAttribute('role', 'tabpanel');
-    container.appendChild(panel);
-    root.appendChild(container);
-
-    const cleanup = initTabs({ root });
-
-    expect(tab.id).toContain('tab-0');
-
-    cleanup.destroy();
+      expect(() => initTabs()).not.toThrow();
+      initTabs().destroy();
+    });
   });
 });

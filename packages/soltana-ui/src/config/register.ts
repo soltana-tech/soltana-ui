@@ -327,20 +327,17 @@ const HEX_RE = /^#?[0-9a-fA-F]{3}([0-9a-fA-F]{3})?$/;
 /**
  * Convert a color to space-separated RGB channels (0-255).
  * Supports hex (#RGB, #RRGGBB) and rgb(r, g, b) formats only.
- * Falls back to neutral gray for invalid input.
+ * Throws an error for invalid input.
  */
 function hexToRgbChannels(hex: string): string {
   if (!HEX_RE.test(hex)) {
-    // Attempt to parse rgb() format before falling back
     const rgbMatch = /^rgb\(\s*(\d+)[, ]\s*(\d+)[, ]\s*(\d+)\s*\)$/.exec(hex);
     if (rgbMatch) {
       return `${rgbMatch[1]} ${rgbMatch[2]} ${rgbMatch[3]}`;
     }
-    console.error(
-      `[soltana] Non-hex color "${hex}" passed to hexToRgbChannels. Falling back to neutral gray.`
+    throw new Error(
+      `[soltana] Invalid color "${hex}". Expected hex format (#RGB or #RRGGBB) or rgb(r, g, b).`
     );
-    // Silent degradation to neutral gray (#808080). See accentPrimary JSDoc in types.ts.
-    return '128 128 128';
   }
   let h = hex.replace('#', '');
   if (h.length === 3) {

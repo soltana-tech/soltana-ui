@@ -7,6 +7,7 @@
 // ---------------------------------------------------------------------------
 
 @use '../base/register' as *;
+@use '../base/transitions' as *;
 
 .alert-dialog {
   position: relative;
@@ -20,7 +21,7 @@
   text-align: center;
   padding: 2rem 1.5rem 1.5rem;
   transform: scale(0.95) translateY(10px);
-  transition: transform var(--transition-slow) var(--easing-in-out);
+  @include transition-property(transform, var(--transition-slow));
 
   &.active {
     transform: scale(1) translateY(0);

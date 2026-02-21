@@ -6,6 +6,7 @@
 // ---------------------------------------------------------------------------
 
 @use '../base/register' as *;
+@use '../base/transitions' as *;
 
 .collapsible {
   border-radius: var(--radius-lg);
@@ -40,7 +41,7 @@
     border-right: 2px solid currentcolor;
     border-bottom: 2px solid currentcolor;
     transform: rotate(45deg);
-    transition: transform var(--transition-normal) var(--easing-in-out);
+    @include transition-property(transform);
   }
 
   &[aria-expanded='true']::after {
@@ -51,7 +52,7 @@
 .collapsible-content {
   overflow: hidden;
   max-height: var(--collapsible-height, 0);
-  transition: max-height var(--transition-slow) var(--easing-in-out);
+  @include transition-property(max-height, var(--transition-slow));
   padding: 0 1rem;
 
   &[aria-hidden='false'] {

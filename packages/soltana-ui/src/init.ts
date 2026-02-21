@@ -13,7 +13,6 @@ import type {
   SoltanaInstance,
   SoltanaChangeType,
   EnhancerCleanup,
-  EnhancerOptions,
   Theme,
   Relief,
   Finish,
@@ -57,7 +56,6 @@ export const DEFAULT_STATE: Readonly<SoltanaConfig> = Object.freeze({
 const DEFAULT_INIT: Required<SoltanaInitOptions> = {
   enhancers: false,
   strict: false,
-  enhancerOptions: {},
 };
 
 // Module-level state for matchMedia listener cleanup
@@ -77,7 +75,6 @@ function validateOverrideKey(key: string, strict: boolean): boolean {
   if (CUSTOM_PROP_RE.test(key)) return true;
   const msg = `[soltana] Override key "${key}" is not a valid CSS custom property (must match --<ident>)`;
   if (strict) throw new Error(msg);
-  console.error(msg);
   return false;
 }
 
@@ -145,11 +142,10 @@ function warnInvalid(name: string, value: string, valid: readonly string[], stri
   if (!valid.includes(value)) {
     const msg = `[soltana] Unknown ${name} "${value}". Built-in options: ${valid.join(', ')}`;
     if (strict) throw new Error(msg);
-    console.warn(msg);
   }
 }
 
-function resetEnhancers(enhancers: boolean, options?: EnhancerOptions): void {
+function resetEnhancers(enhancers: boolean): void {
   if (_enhancerCleanup) {
     try {
       _enhancerCleanup.destroy();
@@ -158,7 +154,7 @@ function resetEnhancers(enhancers: boolean, options?: EnhancerOptions): void {
     }
   }
   if (enhancers) {
-    _enhancerCleanup = initAll(options);
+    _enhancerCleanup = initAll();
   }
 }
 
@@ -175,12 +171,11 @@ function dispatchChange(type: SoltanaChangeType, value: unknown): void {
 export function initSoltana(
   userConfig: Partial<SoltanaConfig & SoltanaInitOptions> = {}
 ): SoltanaInstance {
-  const { enhancers, strict, enhancerOptions, ...stateOverrides } = userConfig;
+  const { enhancers, strict, ...stateOverrides } = userConfig;
   const state: SoltanaConfig = { ...DEFAULT_STATE, ...stateOverrides };
   const initOpts: Required<SoltanaInitOptions> = {
     enhancers: enhancers ?? DEFAULT_INIT.enhancers,
     strict: strict ?? DEFAULT_INIT.strict,
-    enhancerOptions: enhancerOptions ?? {},
   };
 
   // Filter invalid override keys from initial config
@@ -196,7 +191,7 @@ export function initSoltana(
   applyConfig(state);
   setupAutoTheme(state);
 
-  resetEnhancers(initOpts.enhancers, initOpts.enhancerOptions);
+  resetEnhancers(initOpts.enhancers);
 
   // Track runtime registrations for cleanup
   const registrations: TierRegistration[] = [];
@@ -276,7 +271,7 @@ export function initSoltana(
     },
 
     reinitEnhancers(): void {
-      resetEnhancers(initOpts.enhancers, initOpts.enhancerOptions);
+      resetEnhancers(initOpts.enhancers);
     },
 
     reset(): void {
@@ -292,7 +287,7 @@ export function initSoltana(
       removeManagedProps();
       applyConfig(state);
       setupAutoTheme(state);
-      resetEnhancers(initOpts.enhancers, initOpts.enhancerOptions);
+      resetEnhancers(initOpts.enhancers);
       dispatchChange('reset', null);
     },
 

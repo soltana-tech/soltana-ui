@@ -1,9 +1,9 @@
 import type { TierName } from 'soltana-ui';
-import { PlaygroundControls } from './PlaygroundControls';
+import { PlaygroundControls } from './playground-controls';
 import { type SandboxState, stateToClasses } from '../lib/sandbox-state';
-import { A11yToolbar } from './A11yToolbar';
-import { TierControls } from './TierControls';
-import type { SolPreview } from './SolPreview';
+import { A11yToolbar } from './a11y-toolbar';
+import { TierControls } from './tier-controls';
+import type { SolPreview } from './sol-preview';
 
 export interface SandboxConfig {
   id: string;

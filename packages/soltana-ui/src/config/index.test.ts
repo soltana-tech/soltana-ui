@@ -102,14 +102,175 @@ describe('tier independence', () => {
   });
 });
 
+describe('tier interaction', () => {
+  // Note: jsdom does not support getComputedStyle for CSS custom properties set via attribute selectors.
+  // CSS custom property verification is covered by Playwright integration tests in tests/config/config-cascade.spec.ts.
+
+  it('supports multiple tiers active simultaneously', async () => {
+    const { initSoltana } = await import('../init.js');
+
+    const instance = initSoltana({
+      theme: 'dark',
+      relief: 'neumorphic',
+      finish: 'frosted',
+    });
+
+    expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
+    expect(document.documentElement.getAttribute('data-relief')).toBe('neumorphic');
+    expect(document.documentElement.getAttribute('data-finish')).toBe('frosted');
+
+    const state = instance.getState();
+    expect(state.theme).toBe('dark');
+    expect(state.relief).toBe('neumorphic');
+    expect(state.finish).toBe('frosted');
+
+    instance.destroy();
+  });
+
+  it('allows independent tier changes without interference', async () => {
+    const { initSoltana } = await import('../init.js');
+
+    const instance = initSoltana({
+      theme: 'light',
+      relief: 'flat',
+      finish: 'matte',
+    });
+
+    instance.setTheme('sepia');
+
+    expect(document.documentElement.getAttribute('data-theme')).toBe('sepia');
+    expect(document.documentElement.getAttribute('data-relief')).toBe('flat');
+    expect(document.documentElement.getAttribute('data-finish')).toBe('matte');
+
+    let state = instance.getState();
+    expect(state.theme).toBe('sepia');
+    expect(state.relief).toBe('flat');
+    expect(state.finish).toBe('matte');
+
+    instance.setRelief('skeuomorphic');
+
+    expect(document.documentElement.getAttribute('data-theme')).toBe('sepia');
+    expect(document.documentElement.getAttribute('data-relief')).toBe('skeuomorphic');
+    expect(document.documentElement.getAttribute('data-finish')).toBe('matte');
+
+    state = instance.getState();
+    expect(state.theme).toBe('sepia');
+    expect(state.relief).toBe('skeuomorphic');
+    expect(state.finish).toBe('matte');
+
+    instance.destroy();
+  });
+
+  it('supports all tier combinations concurrently', async () => {
+    const { initSoltana } = await import('../init.js');
+
+    const themes = ['light', 'dark', 'sepia'];
+    const reliefs = ['flat', 'glassmorphic', 'skeuomorphic', 'neumorphic'];
+    const finishes = ['matte', 'frosted', 'tinted', 'glossy'];
+
+    themes.forEach((theme) => {
+      reliefs.forEach((relief) => {
+        finishes.forEach((finish) => {
+          const instance = initSoltana({ theme, relief, finish });
+
+          expect(document.documentElement.getAttribute('data-theme')).toBe(theme);
+          expect(document.documentElement.getAttribute('data-relief')).toBe(relief);
+          expect(document.documentElement.getAttribute('data-finish')).toBe(finish);
+
+          const state = instance.getState();
+          expect(state.theme).toBe(theme);
+          expect(state.relief).toBe(relief);
+          expect(state.finish).toBe(finish);
+
+          instance.destroy();
+        });
+      });
+    });
+  });
+});
+
 describe('per-element tier overrides', () => {
-  it.skip('are CSS-only and tested in E2E', () => {
-    /**
-     * Per-element tier overrides (.theme-*, .relief-*, .finish-* utility classes)
-     * are purely CSS-driven and do not interact with the config/validation layer.
-     * The config module handles global tier registration and validation, while
-     * per-element overrides apply tier values to specific DOM elements via CSS
-     * selectors. E2E tests in tests/element-overrides.spec.ts verify this behavior.
-     */
+  it('supports per-element theme override with utility class', () => {
+    document.documentElement.setAttribute('data-theme', 'dark');
+
+    const element = document.createElement('div');
+    element.classList.add('theme-light');
+    document.body.appendChild(element);
+
+    expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
+    expect(element.classList.contains('theme-light')).toBe(true);
+
+    document.body.removeChild(element);
+    document.documentElement.removeAttribute('data-theme');
+  });
+
+  it('supports per-element relief override with utility class', () => {
+    document.documentElement.setAttribute('data-relief', 'flat');
+
+    const element = document.createElement('div');
+    element.classList.add('relief-neumorphic');
+    document.body.appendChild(element);
+
+    expect(document.documentElement.getAttribute('data-relief')).toBe('flat');
+    expect(element.classList.contains('relief-neumorphic')).toBe(true);
+
+    document.body.removeChild(element);
+    document.documentElement.removeAttribute('data-relief');
+  });
+
+  it('supports per-element finish override with utility class', () => {
+    document.documentElement.setAttribute('data-finish', 'matte');
+
+    const element = document.createElement('div');
+    element.classList.add('finish-glossy');
+    document.body.appendChild(element);
+
+    expect(document.documentElement.getAttribute('data-finish')).toBe('matte');
+    expect(element.classList.contains('finish-glossy')).toBe(true);
+
+    document.body.removeChild(element);
+    document.documentElement.removeAttribute('data-finish');
+  });
+
+  it('supports multi-tier per-element overrides', () => {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.setAttribute('data-relief', 'flat');
+    document.documentElement.setAttribute('data-finish', 'matte');
+
+    const element = document.createElement('div');
+    element.classList.add('theme-light', 'relief-neumorphic', 'finish-glossy');
+    document.body.appendChild(element);
+
+    expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
+    expect(document.documentElement.getAttribute('data-relief')).toBe('flat');
+    expect(document.documentElement.getAttribute('data-finish')).toBe('matte');
+
+    expect(element.classList.contains('theme-light')).toBe(true);
+    expect(element.classList.contains('relief-neumorphic')).toBe(true);
+    expect(element.classList.contains('finish-glossy')).toBe(true);
+
+    document.body.removeChild(element);
+    document.documentElement.removeAttribute('data-theme');
+    document.documentElement.removeAttribute('data-relief');
+    document.documentElement.removeAttribute('data-finish');
+  });
+
+  it('allows nested per-element overrides', () => {
+    document.documentElement.setAttribute('data-theme', 'dark');
+
+    const parent = document.createElement('div');
+    parent.classList.add('theme-light');
+    document.body.appendChild(parent);
+
+    const child = document.createElement('div');
+    child.classList.add('theme-sepia');
+    parent.appendChild(child);
+
+    expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
+    expect(parent.classList.contains('theme-light')).toBe(true);
+    expect(child.classList.contains('theme-sepia')).toBe(true);
+
+    document.body.removeChild(parent);
+    document.documentElement.removeAttribute('data-theme');
   });
 });

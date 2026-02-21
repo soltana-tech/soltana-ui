@@ -17,6 +17,7 @@ export function renderApiBehavior(): HTMLElement {
   ${quickNav([
     { label: 'Enhancers', href: '#api-enhancers' },
     { label: 'Font Loading', href: '#api-fonts' },
+    { label: 'Plugins', href: '#/api/plugins' },
   ])}
 
   ${sectionDivider()}
@@ -171,6 +172,10 @@ export function renderApiBehavior(): HTMLElement {
         Enhances <code>[data-sol-tooltip]</code> elements with positioned tooltips
         on hover and focus. Creates a single shared tooltip element appended to
         <code>document.body</code>.
+      </p>
+
+      <p class="text-secondary mb-4">
+        <strong>Note:</strong> Soltana provides two tooltip implementations: CSS-only and JS-enhanced. See comparison table below for guidance on which to use.
       </p>
 
       <h4 class="text-lg font-semibold mt-6 mb-2">Signature</h4>

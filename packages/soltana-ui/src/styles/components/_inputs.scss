@@ -234,7 +234,7 @@
     border: 1px solid var(--border-default);
     border-radius: var(--radius-md);
     cursor: pointer;
-    transition: background-color var(--transition-normal) var(--easing-in-out);
+    @include transition-property(background-color);
   }
 
   &:hover::file-selector-button {
@@ -305,7 +305,7 @@
   font-size: var(--text-lg);
   font-family: var(--font-sans);
   user-select: none;
-  transition: background-color var(--transition-normal) var(--easing-in-out);
+  @include transition-property(background-color);
 
   &:hover {
     background: var(--state-hover);
@@ -345,9 +345,7 @@
     border: 2px solid var(--surface-bg);
     box-shadow: 0 0 0 1px var(--accent-primary);
     cursor: pointer;
-    transition:
-      transform var(--transition-normal) var(--easing-in-out),
-      box-shadow var(--transition-normal) var(--easing-in-out);
+    @include transition-depth(var(--transition-normal));
   }
 
   &::-moz-range-thumb {

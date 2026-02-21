@@ -1,5 +1,5 @@
 dist/
-docs-dist/
+apps/docs/dist/
 node_modules/
 pnpm-lock.yaml
 .turbo/

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import fc from 'fast-check';
-import { onClickAway } from '../click-away.js';
+import { onClickAway } from './click-away.js';
 
 describe('onClickAway', () => {
   let target: HTMLElement;

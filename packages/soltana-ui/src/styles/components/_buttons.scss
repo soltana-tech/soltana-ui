@@ -38,7 +38,7 @@
   white-space: nowrap;
 
   &:hover {
-    transform: translateY(-1px);
+    @include hover-lift;
   }
 
   &:focus-visible {
@@ -254,7 +254,7 @@ $btn-sizes: (
   user-select: none;
 
   &:hover {
-    transform: translateY(-2px);
+    @include hover-lift(-2px);
     box-shadow:
       var(--relief-shadow),
       0 6px 20px color-mix(in srgb, var(--accent-primary) 40%, transparent);

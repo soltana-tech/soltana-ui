@@ -1,8 +1,18 @@
 // ---------------------------------------------------------------------------
 // Neumorphic Table Override
 // ---------------------------------------------------------------------------
-// Separates neumorphic-specific table styling into the reliefs layer where
-// it belongs. Tables under neumorphic relief use gapped inset rows.
+// Cross-layer override: This relief selector modifies component-level table
+// styles to support the neumorphic shadow model.
+// Component styles overridden:
+// - border-collapse: Changed from 'collapse' to 'separate' to enable
+//   per-cell shadow rendering (neumorphic shadows require discrete borders)
+// - border-spacing: Set to '0 0.75rem' to create vertical gaps between rows,
+//   allowing inset shadows to render distinctly on each row
+// - Row styling: Replaces default flat borders with gradient fills and
+//   multi-layer inset shadows to achieve the neumorphic depth effect
+// This is an intentional cross-layer override, not accidental coupling. The
+// neumorphic shadow model fundamentally conflicts with standard table
+// border-collapse behavior, requiring relief-specific component overrides.
 // ---------------------------------------------------------------------------
 
 @use '../base/register' as *;
@@ -31,7 +41,11 @@
       top: 0;
       z-index: 1;
       background-color: var(--relief-surface-deep);
-      backdrop-filter: blur(var(--finish-blur, 0));
+
+      // Bridge token: --bridge-backdrop-blur is set by the finish tier and
+      // consumed here to compose relief + finish visual effects. The fallback
+      // (0) ensures the relief works independently when no finish is active.
+      backdrop-filter: blur(var(--bridge-backdrop-blur, 0));
 
       &:first-child {
         border-radius: var(--radius-lg) 0 0 var(--radius-lg);

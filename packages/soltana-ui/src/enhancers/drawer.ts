@@ -23,9 +23,8 @@ export const DRAWER_OPEN_SELECTOR = '[data-drawer-open]';
  */
 export const initDrawers = createOverlayEnhancer({
   overlaySelector: DRAWER_SELECTOR,
-  openTriggerSelector: DRAWER_OPEN_SELECTOR,
   openTriggerAttr: 'data-drawer-open',
-  closeTriggerSelector: '[data-drawer-close]',
+  closeTriggerAttr: 'data-drawer-close',
   bodyOpenClass: 'sol-drawer-open',
   contentSelector: '.drawer',
   childElementsToActivate: ['.drawer-backdrop', '.drawer'],

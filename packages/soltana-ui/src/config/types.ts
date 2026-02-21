@@ -30,8 +30,6 @@ export interface SoltanaInitOptions {
    * Intended for development and testing environments.
    */
   strict?: boolean;
-  /** Options forwarded to individual enhancer initializers. */
-  enhancerOptions?: EnhancerOptions;
 }
 
 export interface SoltanaConfig {
@@ -94,7 +92,8 @@ export interface EnhancerOptions {
    */
   root?: Element | Document;
   /**
-   * Override the default CSS selector for target elements.
+   * Override the default component selector for this enhancer. Allows targeting custom element
+   * selectors instead of the built-in `[data-sol-*]` attributes.
    */
   selector?: string;
 }
@@ -129,7 +128,6 @@ export interface ThemeSeed {
   textPrimary: string;
   /**
    * Primary accent / brand color.
-   * @remarks Invalid hex colors degrade to neutral gray (#808080) at runtime.
    */
   accentPrimary: string;
   /**

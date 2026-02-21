@@ -1,4 +1,4 @@
 dist/
-docs-dist/
+apps/docs/dist/
 node_modules/
 .turbo/

@@ -18,6 +18,7 @@ export function renderApiCore(): HTMLElement {
     { label: 'Initialization', href: '#api-init' },
     { label: 'State', href: '#api-state' },
     { label: 'Overrides', href: '#api-overrides' },
+    { label: 'Plugins', href: '#/api/plugins' },
   ])}
 
   ${sectionDivider()}
@@ -52,8 +53,7 @@ export function renderApiCore(): HTMLElement {
           <tr><td><code>relief</code></td><td><code>Relief</code></td><td><code>'flat'</code></td><td>Shadow model applied globally.</td></tr>
           <tr><td><code>finish</code></td><td><code>Finish</code></td><td><code>'matte'</code></td><td>Surface treatment.</td></tr>
           <tr><td><code>overrides</code></td><td><code>Record&lt;string, string&gt;</code></td><td><code>{}</code></td><td>CSS custom property overrides applied to <code>:root</code>.</td></tr>
-          <tr><td><code>enhancers</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Auto-initialize modal, tab, and tooltip enhancers. Defaults to <code>false</code> so CSS-only consumers avoid JS enhancer overhead — interactive apps should pass <code>true</code>.</td></tr>
-          <tr><td><code>enhancerOptions</code></td><td><code>EnhancerOptions</code></td><td><code>undefined</code></td><td>Per-enhancer configuration overrides for root element and selector. See behavior API docs for EnhancerOptions type.</td></tr>
+          <tr><td><code>enhancers</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Auto-initialize all enhancers (see <a href="#/api/behavior" class="link">Behavior API</a> for the complete list). Defaults to <code>false</code> so CSS-only consumers avoid JS enhancer overhead — interactive apps should pass <code>true</code>.</td></tr>
           <tr><td><code>strict</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Throw on invalid tier values instead of logging warnings.</td></tr>
         </tbody>
       </table>
@@ -114,7 +114,7 @@ const soltana = initSoltana({
     `
     ${codeExample(
       `interface SoltanaInitOptions {
-  enhancers?: boolean; // Auto-init modals, tabs, tooltips (default: false)
+  enhancers?: boolean; // Auto-init modals, tabs, tooltips. See initSoltana() parameters for details.
   strict?: boolean;    // Throw on invalid values (default: false)
 }`,
       'typescript'
@@ -178,6 +178,12 @@ setFinish(finish: Finish): void`,
         </tbody>
       </table>
     </div>
+
+    <p class="text-secondary mt-4">
+      <strong>Note:</strong> For programmatic access to built-in tier values, see the
+      <code>BUILT_IN_THEMES</code>, <code>BUILT_IN_RELIEFS</code>, and <code>BUILT_IN_FINISHES</code>
+      constant exports in the <a href="#/api/config" class="link">Configuration API</a>.
+    </p>
 
     <h4 class="text-lg font-semibold mt-6 mb-2">Example</h4>
     ${codeExample(

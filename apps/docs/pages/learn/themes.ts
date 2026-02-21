@@ -1,6 +1,6 @@
 /** Design System — Themes page with isolated iframe previews. */
 
-import type { SolPreview } from '../../components/SolPreview';
+import type { SolPreview } from '../../components/sol-preview';
 
 interface ThemeInfo {
   name: string;

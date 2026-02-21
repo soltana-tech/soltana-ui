@@ -44,7 +44,6 @@ export default tseslint.config(
     // (e.g., untyped default exports, __dirname usage).
     ignores: [
       '**/dist/',
-      '**/docs-dist/',
       '**/node_modules/',
       '*.config.js',
       '*.config.ts',

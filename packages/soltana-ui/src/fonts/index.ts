@@ -61,7 +61,10 @@ export function loadSoltanaFonts(url?: string): void {
   _injectedLinks.push(stylesheet);
 }
 
-/** Remove injected font elements and reset loaded flag. Called by destroy(). */
+/**
+ * Remove injected font elements and reset loaded flag. Called by destroy().
+ * @internal
+ */
 export function _resetFontLoader(): void {
   for (const el of _injectedLinks) {
     el.remove();

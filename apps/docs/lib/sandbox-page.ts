@@ -1,4 +1,4 @@
-import { Sandbox } from '../components/Sandbox';
+import { Sandbox } from '../components/sandbox';
 import type { TierName } from 'soltana-ui';
 import type { SandboxState } from '../lib/sandbox-state';
 

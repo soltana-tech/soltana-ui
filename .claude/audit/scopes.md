@@ -33,8 +33,13 @@ checks. Sections with new names define project-specific scopes.
 
 - Verify public API surface is minimal: only `initSoltana`,
   `setTheme`, `setRelief`, `setFinish`, `setOverrides`,
-  `getState`, `reset`, and enhancer initializers should be
-  exported
+  `removeOverrides`, `getState`, `reset`, `reinitEnhancers`,
+  `destroy`, `DEFAULT_STATE`, tier constants (`BUILT_IN_THEMES`,
+  `BUILT_IN_RELIEFS`, `BUILT_IN_FINISHES`, `VALID_THEMES`,
+  `VALID_RELIEFS`, `VALID_FINISHES`), selector constants,
+  toast helpers (`showToast`, `dismissToast`), font loading
+  (`loadSoltanaFonts`), `version`, and enhancer initializers
+  should be exported
 - Verify enhancer pattern consistency: all enhancers follow
   the same initialization, cleanup, and event-binding pattern
 - Verify tier option enums are single-source-of-truth

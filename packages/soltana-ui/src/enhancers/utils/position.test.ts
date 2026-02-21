@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import fc from 'fast-check';
-import { computePosition } from '../position.js';
+import { computePosition } from './position.js';
 
 function mockElement(rect: Partial<DOMRect>): HTMLElement {
   const el = document.createElement('div');

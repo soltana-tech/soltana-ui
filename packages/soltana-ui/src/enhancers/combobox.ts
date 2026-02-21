@@ -97,7 +97,8 @@ export function initComboboxes(options?: EnhancerOptions): EnhancerCleanup {
     }
 
     function selectOption(opt: HTMLElement): void {
-      const value = opt.getAttribute('data-value') ?? opt.textContent.trim();
+      const dataValue = opt.getAttribute('data-value');
+      const value = dataValue ?? (opt.textContent || '').trim();
       input.value = value;
       allOptions.forEach((o) => {
         o.classList.remove('selected');

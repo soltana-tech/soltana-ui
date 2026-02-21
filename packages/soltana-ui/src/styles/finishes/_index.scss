@@ -14,6 +14,7 @@
   --finish-opacity: 1;
   --finish-overlay: none;
   --finish-sheen: none;
+  --bridge-backdrop-blur: 0px;
 }
 
 @include register-finish('frosted') {
@@ -22,6 +23,7 @@
   --finish-opacity: 0.45;
   --finish-overlay: none;
   --finish-sheen: none;
+  --bridge-backdrop-blur: 32px;
 }
 
 @include register-finish('tinted') {
@@ -35,6 +37,7 @@
     rgb(var(--shadow-color) / 14%) 100%
   );
   --finish-sheen: none;
+  --bridge-backdrop-blur: 0px;
 }
 
 @include register-finish('glossy') {
@@ -48,4 +51,5 @@
     rgb(var(--channel-sheen-color) / 6%) 50%,
     rgb(var(--channel-sheen-color) / 18%) 100%
   );
+  --bridge-backdrop-blur: 0px;
 }

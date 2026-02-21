@@ -1,6 +1,6 @@
 /** Playground page — mounts CentralPlayground with full tier controls. */
 
-import { CentralPlayground } from '../components/CentralPlayground';
+import { CentralPlayground } from '../components/central-playground';
 
 export interface PlaygroundPage {
   element: HTMLElement;

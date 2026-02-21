@@ -30,9 +30,8 @@ export const MODAL_OPEN_SELECTOR = '[data-modal-open]';
  */
 export const initModals = createOverlayEnhancer({
   overlaySelector: MODAL_SELECTOR,
-  openTriggerSelector: MODAL_OPEN_SELECTOR,
   openTriggerAttr: 'data-modal-open',
-  closeTriggerSelector: '[data-modal-close]',
+  closeTriggerAttr: 'data-modal-close',
   bodyOpenClass: 'sol-modal-open',
   contentSelector: '.modal__content, .modal',
   childElementsToActivate: ['.modal'],

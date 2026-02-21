@@ -5,7 +5,7 @@ export default defineConfig({
   root: __dirname,
   base: './',
   build: {
-    outDir: resolve(__dirname, '../../docs-dist'),
+    outDir: resolve(__dirname, 'dist'),
     emptyOutDir: true,
   },
   resolve: {

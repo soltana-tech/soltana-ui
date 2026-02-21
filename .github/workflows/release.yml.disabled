@@ -1,5 +1,21 @@
 name: Release
-# Requires NPM_TOKEN and PYPI_TOKEN repository secrets to be configured.
+# Requires NPM_TOKEN repository secret to be configured.
+#
+# WORKFLOW STATUS: DISABLED
+#
+# This workflow is currently disabled (via .disabled file extension) because:
+# - NPM_TOKEN repository secret is not yet configured
+# - Automated NPM publishing requires authentication credentials
+#
+# To re-enable automated releases:
+# 1. Configure NPM_TOKEN repository secret in GitHub Settings
+# 2. Rename this file from release.yml.disabled to release.yml
+# 3. The workflow will automatically run on the next push to main
+#
+# Current release procedure:
+# - Use `pnpm changeset` to create changesets for changes
+# - Changesets are tracked in .changeset/ directory
+# - Manual publishing via `pnpm run release` (requires local NPM authentication)
 
 on:
   push:
@@ -36,6 +52,9 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
+      - name: Lint
+        run: pnpm run lint
+
       - name: Build
         run: pnpm run build
 
@@ -44,6 +63,12 @@ jobs:
 
       - name: Unit tests
         run: pnpm run test
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps
+
+      - name: Run E2E tests
+        run: pnpm run test:e2e
 
       - name: Create release PR or publish
         id: changesets

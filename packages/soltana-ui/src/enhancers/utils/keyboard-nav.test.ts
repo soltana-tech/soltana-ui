@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import fc from 'fast-check';
-import { handleKeyboardNav } from '../keyboard-nav.js';
+import { handleKeyboardNav } from './keyboard-nav.js';
 
 function createList(count: number): HTMLElement {
   const container = document.createElement('div');

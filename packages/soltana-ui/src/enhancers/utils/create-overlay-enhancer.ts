@@ -3,9 +3,8 @@ import { trapFocus, FOCUSABLE } from './focus-trap.js';
 
 interface OverlayConfig {
   overlaySelector: string;
-  openTriggerSelector: string;
   openTriggerAttr: string;
-  closeTriggerSelector: string;
+  closeTriggerAttr: string;
   bodyOpenClass: string;
   contentSelector: string;
   childElementsToActivate: string[];
@@ -59,9 +58,11 @@ export function createOverlayEnhancer(config: OverlayConfig) {
     const { signal } = _controller;
 
     const root = options?.root ?? document;
+    const openTriggerSelector = `[${config.openTriggerAttr}]`;
+    const closeTriggerSelector = `[${config.closeTriggerAttr}]`;
 
     root
-      .querySelectorAll<HTMLElement>(options?.selector ?? config.openTriggerSelector)
+      .querySelectorAll<HTMLElement>(options?.selector ?? openTriggerSelector)
       .forEach((trigger) => {
         trigger.addEventListener(
           'click',
@@ -80,7 +81,7 @@ export function createOverlayEnhancer(config: OverlayConfig) {
     root.querySelectorAll<HTMLElement>(config.overlaySelector).forEach((overlay) => {
       config.setupAria?.(overlay);
 
-      overlay.querySelectorAll<HTMLElement>(config.closeTriggerSelector).forEach((btn) => {
+      overlay.querySelectorAll<HTMLElement>(closeTriggerSelector).forEach((btn) => {
         btn.addEventListener(
           'click',
           () => {

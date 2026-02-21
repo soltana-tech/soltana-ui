@@ -34,24 +34,72 @@ describe('useSoltana', () => {
     expect(typeof value.config.finish).toBe('string');
   });
 
-  it('returns a real instance with all expected methods', () => {
+  it('setTheme updates DOM and React state', () => {
     const onValue = vi.fn();
     render(<TestComponent onValue={onValue} />);
 
     const value = onValue.mock.calls[onValue.mock.calls.length - 1][0] as SoltanaContextValue;
     expect(value.instance).not.toBeNull();
-    expect(typeof value.instance!.getState).toBe('function');
-    expect(typeof value.instance!.setTheme).toBe('function');
-    expect(typeof value.instance!.setRelief).toBe('function');
-    expect(typeof value.instance!.setFinish).toBe('function');
-    expect(typeof value.instance!.setOverrides).toBe('function');
-    expect(typeof value.instance!.removeOverrides).toBe('function');
-    expect(typeof value.instance!.registerTheme).toBe('function');
-    expect(typeof value.instance!.registerRelief).toBe('function');
-    expect(typeof value.instance!.registerFinish).toBe('function');
-    expect(typeof value.instance!.reinitEnhancers).toBe('function');
-    expect(typeof value.instance!.reset).toBe('function');
-    expect(typeof value.instance!.destroy).toBe('function');
+
+    act(() => {
+      value.instance!.setTheme('sepia');
+    });
+
+    expect(root.getAttribute('data-theme')).toBe('sepia');
+    const updatedValue = onValue.mock.calls[
+      onValue.mock.calls.length - 1
+    ][0] as SoltanaContextValue;
+    expect(updatedValue.config.theme).toBe('sepia');
+  });
+
+  it('setRelief updates DOM and React state', () => {
+    const onValue = vi.fn();
+    render(<TestComponent onValue={onValue} />);
+
+    const value = onValue.mock.calls[onValue.mock.calls.length - 1][0] as SoltanaContextValue;
+
+    act(() => {
+      value.instance!.setRelief('neumorphic');
+    });
+
+    expect(root.getAttribute('data-relief')).toBe('neumorphic');
+    const updatedValue = onValue.mock.calls[
+      onValue.mock.calls.length - 1
+    ][0] as SoltanaContextValue;
+    expect(updatedValue.config.relief).toBe('neumorphic');
+  });
+
+  it('setFinish updates DOM and React state', () => {
+    const onValue = vi.fn();
+    render(<TestComponent onValue={onValue} />);
+
+    const value = onValue.mock.calls[onValue.mock.calls.length - 1][0] as SoltanaContextValue;
+
+    act(() => {
+      value.instance!.setFinish('frosted');
+    });
+
+    expect(root.getAttribute('data-finish')).toBe('frosted');
+    const updatedValue = onValue.mock.calls[
+      onValue.mock.calls.length - 1
+    ][0] as SoltanaContextValue;
+    expect(updatedValue.config.finish).toBe('frosted');
+  });
+
+  it('getState returns current configuration', () => {
+    const onValue = vi.fn();
+    render(<TestComponent onValue={onValue} />);
+
+    const value = onValue.mock.calls[onValue.mock.calls.length - 1][0] as SoltanaContextValue;
+
+    act(() => {
+      value.instance!.setTheme('dark');
+      value.instance!.setRelief('skeuomorphic');
+    });
+
+    const state = value.instance!.getState();
+    expect(state.theme).toBe('dark');
+    expect(state.relief).toBe('skeuomorphic');
   });
 
   it('accepts and applies config options', () => {
@@ -80,22 +128,58 @@ describe('useSoltana', () => {
     }
   });
 
-  it('instance methods are callable without throwing', () => {
+  it('tier changes dispatch soltana:change events', () => {
     const onValue = vi.fn();
     render(<TestComponent onValue={onValue} />);
 
     const value = onValue.mock.calls[onValue.mock.calls.length - 1][0] as SoltanaContextValue;
 
-    expect(() => value.instance!.getState()).not.toThrow();
-    expect(() => {
+    const eventListener = vi.fn();
+    root.addEventListener('soltana:change', eventListener);
+
+    act(() => {
       value.instance!.setTheme('dark');
-    }).not.toThrow();
-    expect(() => {
+    });
+
+    expect(eventListener).toHaveBeenCalledWith(
+      expect.objectContaining({
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        detail: expect.objectContaining({
+          type: 'theme',
+          value: 'dark',
+        }),
+      })
+    );
+
+    act(() => {
       value.instance!.setRelief('flat');
-    }).not.toThrow();
-    expect(() => {
+    });
+
+    expect(eventListener).toHaveBeenCalledWith(
+      expect.objectContaining({
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        detail: expect.objectContaining({
+          type: 'relief',
+          value: 'flat',
+        }),
+      })
+    );
+
+    act(() => {
       value.instance!.setFinish('matte');
-    }).not.toThrow();
+    });
+
+    expect(eventListener).toHaveBeenCalledWith(
+      expect.objectContaining({
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        detail: expect.objectContaining({
+          type: 'finish',
+          value: 'matte',
+        }),
+      })
+    );
+
+    root.removeEventListener('soltana:change', eventListener);
   });
 });
 
