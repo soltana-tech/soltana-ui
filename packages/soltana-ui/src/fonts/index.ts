@@ -24,7 +24,8 @@ const _injectedLinks: HTMLLinkElement[] = [];
  * the Soltana instance, allowing re-initialization.
  *
  * @param url - Font CSS URL. Defaults to the bundled Google Fonts URL
- *              containing Cinzel, Raleway, and JetBrains Mono. When the URL
+ *              containing Cinzel, Cinzel Decorative, Raleway, and JetBrains
+ *              Mono. When the URL
  *              points to `fonts.googleapis.com`, preconnect links are also
  *              injected automatically.
  */

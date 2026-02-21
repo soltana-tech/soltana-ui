@@ -159,7 +159,7 @@ function deriveSemanticColor(
 }
 
 /**
- * Derive a full theme token map from a ThemeSeed (3 required + up to 6 optional color fields).
+ * Derive a full theme token map from a ThemeSeed (3 required + up to 7 optional color fields).
  *
  * Pure function with no DOM dependency. Token values use CSS `color-mix()`
  * expressions that the browser evaluates at paint time, keeping derived

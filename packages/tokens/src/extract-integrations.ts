@@ -6,7 +6,7 @@
 // ---------------------------------------------------------------------------
 
 import { readFileSync, existsSync } from 'node:fs';
-import { resolve, basename } from 'node:path';
+import { resolve } from 'node:path';
 import type { IntegrationData, IntegrationExport } from './types.js';
 
 // ---------------------------------------------------------------------------
@@ -15,7 +15,6 @@ import type { IntegrationData, IntegrationExport } from './types.js';
 
 export interface IntegrationExtractionOptions {
   packages: string[];
-  python: string[];
 }
 
 /**
@@ -27,11 +26,6 @@ export function extractIntegrations(opts: IntegrationExtractionOptions): Integra
 
   for (const dir of opts.packages) {
     const data = extractTsPackage(dir);
-    if (data) results.push(data);
-  }
-
-  for (const dir of opts.python) {
-    const data = extractPythonPackage(dir);
     if (data) results.push(data);
   }
 
@@ -180,36 +174,4 @@ function parseStaticThemes(indexSource: string): string[] {
     .split(',')
     .map((n) => n.trim())
     .filter(Boolean);
-}
-
-// ---------------------------------------------------------------------------
-// Python package extraction
-// ---------------------------------------------------------------------------
-
-function extractPythonPackage(dir: string): IntegrationData | null {
-  const pyprojectPath = resolve(dir, 'pyproject.toml');
-  if (!existsSync(pyprojectPath)) return null;
-
-  const toml = readFileSync(pyprojectPath, 'utf-8');
-
-  const nameMatch = /^name\s*=\s*"([^"]+)"/m.exec(toml);
-  const descMatch = /^description\s*=\s*"([^"]+)"/m.exec(toml);
-
-  const pkgName = nameMatch ? nameMatch[1] : basename(dir);
-  const description = descMatch ? descMatch[1] : '';
-
-  return {
-    package: pkgName,
-    description,
-    language: 'python',
-    install: `pip install ${pkgName}`,
-    exports: [
-      {
-        name: 'soltana_matplotlib.styles',
-        kind: 'constant',
-        description: 'Pre-built .mplstyle file paths for use with matplotlib.style.use()',
-      },
-    ],
-    staticThemes: ['dark', 'light', 'sepia'],
-  };
 }

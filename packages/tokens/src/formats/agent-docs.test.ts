@@ -71,21 +71,26 @@ const mockEnhancers: EnhancerData[] = [
 
 const mockIntegrations: IntegrationData[] = [
   {
-    package: '@soltana-ui/echarts',
-    description: 'ECharts theme bridge for Soltana UI.',
+    package: '@soltana-ui/mermaid',
+    description: 'Mermaid theme bridge for Soltana UI.',
     language: 'typescript',
     exports: [
-      { name: 'buildTheme', kind: 'function', description: 'Build ECharts theme from CSS vars' },
+      {
+        name: 'buildMermaidConfig',
+        kind: 'function',
+        description: 'Build Mermaid theme config from CSS vars',
+      },
     ],
     staticThemes: ['dark', 'light', 'sepia'],
   },
   {
-    package: 'soltana-matplotlib',
-    description: 'Matplotlib styles for the Soltana UI design system.',
-    language: 'python',
-    install: 'pip install soltana-matplotlib',
-    exports: [],
-    staticThemes: ['dark', 'light', 'sepia'],
+    package: '@soltana-ui/react',
+    description: 'React bindings for Soltana UI.',
+    language: 'typescript',
+    exports: [
+      { name: 'useSoltana', kind: 'function', description: 'React hook for Soltana tier state' },
+    ],
+    staticThemes: [],
   },
 ];
 
@@ -208,8 +213,8 @@ describe('buildAgentDocs', () => {
     const integrations = doc.integrations as Record<string, unknown>[];
     expect(integrations.length).toBe(2);
     const packages = integrations.map((i) => i.package);
-    expect(packages).toContain('@soltana-ui/echarts');
-    expect(packages).toContain('soltana-matplotlib');
+    expect(packages).toContain('@soltana-ui/mermaid');
+    expect(packages).toContain('@soltana-ui/react');
   });
 
   it('includes patterns section', () => {

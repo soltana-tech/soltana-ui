@@ -77,7 +77,6 @@ function main(): void {
       resolve(MONOREPO_ROOT, 'packages/mermaid'),
       resolve(MONOREPO_ROOT, 'packages/react'),
     ],
-    python: [],
   });
 
   // Agent documentation (YAML)

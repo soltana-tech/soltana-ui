@@ -55,7 +55,7 @@ export interface FoundationTokens {
   letterSpacing: Record<string, string>;
 }
 
-/** 6-color palette for chart color cycles. */
+/** 6-color palette for Mermaid pie chart slices. */
 export type ColorPalette = [string, string, string, string, string, string];
 
 // ---------------------------------------------------------------------------
@@ -105,7 +105,7 @@ export interface IntegrationExport {
 export interface IntegrationData {
   package: string;
   description: string;
-  language: 'typescript' | 'python';
+  language: 'typescript';
   install?: string;
   exports: IntegrationExport[];
   staticThemes: string[];

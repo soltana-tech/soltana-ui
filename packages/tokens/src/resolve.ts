@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------
 // Color Resolution & Palette Construction
 // ---------------------------------------------------------------------------
-// Hex-to-RGB conversion and palette construction for chart color cycles.
+// Hex-to-RGB conversion and palette construction for Mermaid pie charts.
 // ---------------------------------------------------------------------------
 
 import type { ThemeTokens, ColorPalette } from './types.js';
@@ -29,7 +29,7 @@ export function hexToRgb(hex: string): [number, number, number] {
 }
 
 /**
- * Build a 6-color palette from theme tokens for chart color cycles.
+ * Build a 6-color palette from theme tokens for Mermaid pie chart slices.
  *
  * Order maximizes hue separation between adjacent colors:
  * `[accentPrimary, colorInfo, colorSuccess, colorWarning, accentSecondary, colorError]`

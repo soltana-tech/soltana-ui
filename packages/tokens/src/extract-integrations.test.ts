@@ -3,9 +3,9 @@ import { resolve } from 'node:path';
 import { describe, it, expect } from 'vitest';
 import { parseIndexExports } from './extract-integrations.js';
 
-const ECHARTS_INDEX = `
+const SAMPLE_INDEX = `
 export { buildTheme } from './build-theme.js';
-export type { EChartsThemeObject } from './build-theme.js';
+export type { ThemeObject } from './build-theme.js';
 export { registerSoltanaTheme, autoSync } from './auto-sync.js';
 export { dark, light, sepia } from './themes.js';
 `;
@@ -26,9 +26,9 @@ export type { ToastOptions, ToastType, ToastPosition } from 'soltana-ui';
 `;
 
 describe('parseIndexExports', () => {
-  it('extracts value exports from echarts index', () => {
+  it('extracts value exports from index source', () => {
     // Pass a non-existent src dir so JSDoc resolution returns empty strings
-    const exports = parseIndexExports(ECHARTS_INDEX, '/nonexistent');
+    const exports = parseIndexExports(SAMPLE_INDEX, '/nonexistent');
     const names = exports.map((e) => e.name);
     expect(names).toContain('buildTheme');
     expect(names).toContain('registerSoltanaTheme');
@@ -36,13 +36,13 @@ describe('parseIndexExports', () => {
   });
 
   it('extracts type exports', () => {
-    const exports = parseIndexExports(ECHARTS_INDEX, '/nonexistent');
+    const exports = parseIndexExports(SAMPLE_INDEX, '/nonexistent');
     const types = exports.filter((e) => e.kind === 'type');
-    expect(types.map((t) => t.name)).toContain('EChartsThemeObject');
+    expect(types.map((t) => t.name)).toContain('ThemeObject');
   });
 
   it('skips static theme names (dark, light, sepia)', () => {
-    const exports = parseIndexExports(ECHARTS_INDEX, '/nonexistent');
+    const exports = parseIndexExports(SAMPLE_INDEX, '/nonexistent');
     const names = exports.map((e) => e.name);
     expect(names).not.toContain('dark');
     expect(names).not.toContain('light');
