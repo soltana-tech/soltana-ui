@@ -75,6 +75,7 @@ function validateOverrideKey(key: string, strict: boolean): boolean {
   if (CUSTOM_PROP_RE.test(key)) return true;
   const msg = `[soltana] Override key "${key}" is not a valid CSS custom property (must match --<ident>)`;
   if (strict) throw new Error(msg);
+  console.error(msg);
   return false;
 }
 
@@ -142,6 +143,7 @@ function warnInvalid(name: string, value: string, valid: readonly string[], stri
   if (!valid.includes(value)) {
     const msg = `[soltana] Unknown ${name} "${value}". Built-in options: ${valid.join(', ')}`;
     if (strict) throw new Error(msg);
+    console.warn(msg);
   }
 }
 
