@@ -3,19 +3,8 @@
 // ---------------------------------------------------------------------------
 
 import type { ThemeTokens, FoundationTokens } from '../types.js';
-import { buildPalette, hexToRgb } from '../resolve.js';
-
-/** Return an rgba() string by injecting an alpha channel into a hex or rgb() color. */
-function withAlpha(color: string, alpha: number): string {
-  const hex = /^#([0-9a-f]{3,8})$/i.exec(color);
-  if (hex) {
-    const [r, g, b] = hexToRgb(color);
-    return `rgba(${String(r)}, ${String(g)}, ${String(b)}, ${String(alpha)})`;
-  }
-  const rgb = /^rgb\(\s*(\d+)[, ]\s*(\d+)[, ]\s*(\d+)\s*\)$/.exec(color);
-  if (rgb) return `rgba(${rgb[1]}, ${rgb[2]}, ${rgb[3]}, ${String(alpha)})`;
-  return color;
-}
+import { buildPalette } from '../resolve.js';
+import { withAlpha } from '@soltana-ui/chart-shared';
 
 /** Build an ECharts theme JSON object from extracted tokens. */
 export function buildEChartsTheme(

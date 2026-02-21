@@ -30,6 +30,8 @@ const require = createRequire(import.meta.url);
 
 const CSS_PATH = require.resolve('soltana-ui/css');
 const DIST = resolve(__dirname, '../dist');
+const MONOREPO_ROOT = resolve(__dirname, '../../..');
+const MPL_PYTHON_DIR = resolve(MONOREPO_ROOT, 'python/soltana-matplotlib/soltana_matplotlib');
 
 function ensureDir(dir: string): void {
   mkdirSync(dir, { recursive: true });
@@ -66,7 +68,10 @@ function main(): void {
 
     // matplotlib
     ensureDir(resolve(DIST, 'matplotlib'));
-    writeFileSync(resolve(DIST, `matplotlib/${name}.mplstyle`), buildMplStyle(theme, foundation));
+    const mplStyle = buildMplStyle(theme, foundation);
+    writeFileSync(resolve(DIST, `matplotlib/${name}.mplstyle`), mplStyle);
+    ensureDir(MPL_PYTHON_DIR);
+    writeFileSync(resolve(MPL_PYTHON_DIR, `${name}.mplstyle`), mplStyle);
     fileCount++;
 
     // Mermaid
@@ -86,18 +91,17 @@ function main(): void {
   fileCount++;
 
   // Enhancers + integrations (dynamic extraction)
-  const monorepoRoot = resolve(__dirname, '../../..');
   const enhancersDir = resolve(dirname(CSS_PATH), '../src/enhancers');
   const { enhancers, imperatives } = extractEnhancers(enhancersDir);
 
   const integrations = extractIntegrations({
     packages: [
-      resolve(monorepoRoot, 'packages/echarts'),
-      resolve(monorepoRoot, 'packages/plotly'),
-      resolve(monorepoRoot, 'packages/mermaid'),
-      resolve(monorepoRoot, 'packages/react'),
+      resolve(MONOREPO_ROOT, 'packages/echarts'),
+      resolve(MONOREPO_ROOT, 'packages/plotly'),
+      resolve(MONOREPO_ROOT, 'packages/mermaid'),
+      resolve(MONOREPO_ROOT, 'packages/react'),
     ],
-    python: [resolve(monorepoRoot, 'python/soltana-matplotlib')],
+    python: [resolve(MONOREPO_ROOT, 'python/soltana-matplotlib')],
   });
 
   // Agent documentation (YAML)
@@ -111,15 +115,15 @@ function main(): void {
   writeFileSync(resolve(DIST, 'agents/reference.yaml'), agentYaml);
   fileCount++;
 
-  ensureDir(resolve(monorepoRoot, '.claude/agents'));
-  writeFileSync(resolve(monorepoRoot, '.claude/agents/reference.yaml'), agentYaml);
+  ensureDir(resolve(MONOREPO_ROOT, '.claude/agents'));
+  writeFileSync(resolve(MONOREPO_ROOT, '.claude/agents/reference.yaml'), agentYaml);
   fileCount++;
 
   // llms.txt / llms-full.txt
   const llmsTxt = buildLlmsTxt({ themeNames, integrations });
   const llmsFullTxt = buildLlmsFullTxt(agentInput, { imperatives });
 
-  const docsPublicDir = resolve(monorepoRoot, 'apps/docs/public');
+  const docsPublicDir = resolve(MONOREPO_ROOT, 'apps/docs/public');
   ensureDir(docsPublicDir);
   writeFileSync(resolve(docsPublicDir, 'llms.txt'), llmsTxt);
   writeFileSync(resolve(docsPublicDir, 'llms-full.txt'), llmsFullTxt);

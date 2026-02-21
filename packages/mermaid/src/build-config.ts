@@ -6,57 +6,13 @@
 // @soltana-ui/tokens but resolves at runtime for the active color scheme.
 // ---------------------------------------------------------------------------
 
-import { PALETTE_PROPS, readProp } from '@soltana-ui/chart-shared';
+import { PALETTE_PROPS, readProp, toHex } from '@soltana-ui/chart-shared';
 
 /** Mermaid theme config passed to `mermaid.initialize()`. */
 export interface MermaidConfig {
   [key: string]: unknown;
   theme: 'base';
   themeVariables: Record<string, string | boolean>;
-}
-
-/**
- * Alpha-composite a CSS color against a background and return solid `#rrggbb`.
- * Handles `#rrggbb`, `#rgb`, and `rgb(r g b / a%)` inputs.
- */
-function toHex(color: string, background: string): string {
-  const rgbMatch = /^rgb\(\s*(\d+)\s+(\d+)\s+(\d+)\s*\/\s*([\d.]+)(%?)\s*\)$/.exec(color);
-  if (rgbMatch) {
-    const fr = Number(rgbMatch[1]);
-    const fg = Number(rgbMatch[2]);
-    const fb = Number(rgbMatch[3]);
-    const rawAlpha = Number(rgbMatch[4]);
-    const alpha = rgbMatch[5] === '%' ? rawAlpha / 100 : rawAlpha;
-
-    const bgHex = background.replace('#', '');
-    const br = parseInt(bgHex.slice(0, 2), 16);
-    const bg = parseInt(bgHex.slice(2, 4), 16);
-    const bb = parseInt(bgHex.slice(4, 6), 16);
-
-    const r = Math.round(fr * alpha + br * (1 - alpha));
-    const g = Math.round(fg * alpha + bg * (1 - alpha));
-    const b = Math.round(fb * alpha + bb * (1 - alpha));
-
-    return '#' + [r, g, b].map((v) => v.toString(16).padStart(2, '0')).join('');
-  }
-
-  // Already hex — normalize to 6-digit lowercase
-  const hex = /^#([0-9a-f]{3,8})$/i.exec(color);
-  if (hex) {
-    let h = hex[1];
-    if (h.length === 3 || h.length === 4) {
-      h = h
-        .slice(0, 3)
-        .split('')
-        .map((c) => c + c)
-        .join('');
-    } else if (h.length === 8) {
-      h = h.slice(0, 6);
-    }
-    return '#' + h.toLowerCase();
-  }
-
-  return color;
 }
 
 /** Build a Mermaid theme config from the currently active Soltana CSS variables. */

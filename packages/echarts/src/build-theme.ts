@@ -6,31 +6,10 @@
 // @soltana-ui/tokens but resolves at runtime for the active color scheme.
 // ---------------------------------------------------------------------------
 
-import { PALETTE_PROPS, readProp } from '@soltana-ui/chart-shared';
+import { PALETTE_PROPS, readProp, withAlpha } from '@soltana-ui/chart-shared';
 
 /** ECharts theme object built from live CSS custom properties. */
 export type EChartsThemeObject = Record<string, unknown>;
-
-/** Return an rgba() string by injecting an alpha channel into a hex or rgb() color. */
-function withAlpha(color: string, alpha: number): string {
-  const hex = /^#([0-9a-f]{3,8})$/i.exec(color);
-  if (hex) {
-    let h = hex[1];
-    if (h.length === 3)
-      h = h
-        .split('')
-        .map((c) => c + c)
-        .join('');
-    if (h.length === 8) h = h.slice(0, 6);
-    const r = parseInt(h.slice(0, 2), 16);
-    const g = parseInt(h.slice(2, 4), 16);
-    const b = parseInt(h.slice(4, 6), 16);
-    return `rgba(${String(r)}, ${String(g)}, ${String(b)}, ${String(alpha)})`;
-  }
-  const rgb = /^rgb\(\s*(\d+)[, ]\s*(\d+)[, ]\s*(\d+)\s*\)$/.exec(color);
-  if (rgb) return `rgba(${rgb[1]}, ${rgb[2]}, ${rgb[3]}, ${String(alpha)})`;
-  return color;
-}
 
 /** Build an ECharts theme from the currently active Soltana CSS variables. */
 export function buildTheme(): EChartsThemeObject {

@@ -1,0 +1,62 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "case \"$CLAUDE_FILE_PATH\" in */reference.yaml|*/pnpm-lock.yaml|*/dist/*) echo 'BLOCKED: Generated file — do not edit directly.' >&2; exit 2;; esac"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "case \"$CLAUDE_FILE_PATH\" in *-snapshots/*) echo 'BLOCKED: Playwright snapshot — run tests with --update-snapshots instead.' >&2; exit 2;; esac"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pnpm exec prettier --write \"$CLAUDE_FILE_PATH\" 2>/dev/null; exit 0"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "case \"$CLAUDE_FILE_PATH\" in *.scss) pnpm exec stylelint --fix \"$CLAUDE_FILE_PATH\" 2>/dev/null;; esac; exit 0"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "case \"$CLAUDE_FILE_PATH\" in packages/*/src/*.ts|packages/*/src/*.tsx) PKG=$(echo \"$CLAUDE_FILE_PATH\" | grep -o 'packages/[^/]*'); pnpm --filter=\"$PKG\" type-check 2>&1 | grep -E '(error TS|Found [0-9]+ error)' | head -10 || exit 0;; esac"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "case \"$CLAUDE_FILE_PATH\" in packages/*/src/*) PKG=$(echo \"$CLAUDE_FILE_PATH\" | grep -o 'packages/[^/]*'); pnpm --filter=\"$PKG\" test --run 2>&1 | tail -5;; esac; exit 0"
+          }
+        ]
+      }
+    ]
+  }
+}
