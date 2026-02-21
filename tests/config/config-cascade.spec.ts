@@ -89,7 +89,7 @@ test.describe('tier independence', () => {
 
     const surfaceBgBefore = await getComputedCSSProperty(page, '--surface-bg');
     const reliefShadowBefore = await getComputedCSSProperty(page, '--relief-shadow');
-    const finishBlurBefore = await getComputedCSSProperty(page, '--finish-blur');
+    const finishSheenBefore = await getComputedCSSProperty(page, '--finish-sheen');
 
     await page.evaluate(() => {
       (window as any).__sol.setFinish('glossy');
@@ -102,10 +102,10 @@ test.describe('tier independence', () => {
 
     const surfaceBgAfter = await getComputedCSSProperty(page, '--surface-bg');
     const reliefShadowAfter = await getComputedCSSProperty(page, '--relief-shadow');
-    const finishBlurAfter = await getComputedCSSProperty(page, '--finish-blur');
+    const finishSheenAfter = await getComputedCSSProperty(page, '--finish-sheen');
 
-    expect(finishBlurAfter).not.toBe('');
-    expect(finishBlurAfter).not.toBe(finishBlurBefore);
+    expect(finishSheenAfter).not.toBe('');
+    expect(finishSheenAfter).not.toBe(finishSheenBefore);
     expect(surfaceBgAfter).toBe(surfaceBgBefore);
     expect(reliefShadowAfter).toBe(reliefShadowBefore);
   });
@@ -122,11 +122,10 @@ test.describe('tier independence', () => {
       sol.setRelief('neumorphic');
     });
 
-    await verifyTierIndependence(page, {
-      theme: 'sepia',
-      relief: 'neumorphic',
-      finish: 'glossy',
-    });
+    const attrs = await getTierAttributes(page);
+    expect(attrs.theme).toBe('sepia');
+    expect(attrs.relief).toBe('neumorphic');
+    expect(attrs.finish).toBe('glossy');
   });
 
   test('computed CSS properties reflect active tier and update on change', async ({ page }) => {

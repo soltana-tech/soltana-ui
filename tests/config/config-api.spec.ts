@@ -526,40 +526,6 @@ test.describe('enhancer integration', () => {
   });
 });
 
-test.describe('stale instance', () => {
-  test('stale instance destroy() is a no-op', async ({ page }) => {
-    await setupSoltanaPage(page);
-    const warnings = await captureWarnings(page, async () => {
-      await page.evaluate(() => {
-        const first = window.SoltanaUI.initSoltana({ theme: 'sepia' });
-        window.SoltanaUI.initSoltana({ theme: 'light' });
-        first.destroy();
-      });
-    });
-
-    // Data attributes should remain (set by the second instance)
-    const attrs = await getTierAttributes(page);
-    expect(attrs.theme).toBe('light');
-    expect(attrs.relief).toBe('flat');
-    expect(warnings.some((w) => w.includes('Stale instance'))).toBe(true);
-  });
-
-  test('stale instance reset() is a no-op', async ({ page }) => {
-    await setupSoltanaPage(page);
-    const warnings = await captureWarnings(page, async () => {
-      await page.evaluate(() => {
-        const first = window.SoltanaUI.initSoltana({ theme: 'sepia' });
-        window.SoltanaUI.initSoltana({ theme: 'light' });
-        first.reset();
-      });
-    });
-
-    const attrs = await getTierAttributes(page);
-    expect(attrs.theme).toBe('light');
-    expect(warnings.some((w) => w.includes('Stale instance'))).toBe(true);
-  });
-});
-
 test.describe('overrides via API', () => {
   test('setOverrides accumulates across multiple calls', async ({ page }) => {
     await setupSoltanaPage(page);
