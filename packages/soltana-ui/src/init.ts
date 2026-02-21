@@ -175,12 +175,12 @@ function dispatchChange(type: SoltanaChangeType, value: unknown): void {
 export function initSoltana(
   userConfig: Partial<SoltanaConfig & SoltanaInitOptions> = {}
 ): SoltanaInstance {
-  const { enhancers, strict, ...stateOverrides } = userConfig;
+  const { enhancers, strict, enhancerOptions, ...stateOverrides } = userConfig;
   const state: SoltanaConfig = { ...DEFAULT_STATE, ...stateOverrides };
   const initOpts: Required<SoltanaInitOptions> = {
     enhancers: enhancers ?? DEFAULT_INIT.enhancers,
     strict: strict ?? DEFAULT_INIT.strict,
-    enhancerOptions: {},
+    enhancerOptions: enhancerOptions ?? {},
   };
 
   // Filter invalid override keys from initial config
@@ -196,7 +196,7 @@ export function initSoltana(
   applyConfig(state);
   setupAutoTheme(state);
 
-  resetEnhancers(initOpts.enhancers);
+  resetEnhancers(initOpts.enhancers, initOpts.enhancerOptions);
 
   // Track runtime registrations for cleanup
   const registrations: TierRegistration[] = [];
@@ -275,7 +275,7 @@ export function initSoltana(
     },
 
     reinitEnhancers(): void {
-      resetEnhancers(initOpts.enhancers);
+      resetEnhancers(initOpts.enhancers, initOpts.enhancerOptions);
     },
 
     reset(): void {
@@ -291,7 +291,7 @@ export function initSoltana(
       removeManagedProps();
       applyConfig(state);
       setupAutoTheme(state);
-      resetEnhancers(initOpts.enhancers);
+      resetEnhancers(initOpts.enhancers, initOpts.enhancerOptions);
       dispatchChange('reset', null);
     },
 

@@ -30,10 +30,7 @@ export interface SoltanaInitOptions {
    * Intended for development and testing environments.
    */
   strict?: boolean;
-  /**
-   * Options forwarded to individual enhancer initializers.
-   * @deprecated Reserved for future use; currently unused.
-   */
+  /** Options forwarded to individual enhancer initializers. */
   enhancerOptions?: EnhancerOptions;
 }
 
