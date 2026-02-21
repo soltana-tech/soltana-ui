@@ -14,7 +14,7 @@ const CSS_PROPS: Record<string, string> = {
   '--tooltip-text': '#f0f0f0',
 };
 
-describe('buildTemplate', () => {
+describe('buildTemplate - template object construction', () => {
   beforeEach(() => {
     setCssProps(CSS_PROPS);
   });
@@ -22,7 +22,7 @@ describe('buildTemplate', () => {
     clearCssProps();
   });
 
-  it('returns a template with colorway palette', () => {
+  it('builds template object with colorway palette', () => {
     const tmpl = buildTemplate();
     expect(tmpl.layout.colorway).toEqual([
       '#6c63ff',

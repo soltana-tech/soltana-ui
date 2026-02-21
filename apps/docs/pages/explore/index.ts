@@ -1,6 +1,6 @@
 /** Dynamic components gallery — renders all registered components grouped by category. */
 
-import { sectionHeading } from '../../utils/helpers';
+import { sectionHeading } from '../../lib/helpers';
 import { getComponentsByCategory } from '../../lib/component-registry';
 import { createDefaultState } from '../../lib/sandbox-state';
 
@@ -34,6 +34,11 @@ export function renderComponentsIndex(): HTMLElement {
   page.innerHTML = `
 <div class="page-components-index">
   ${sectionHeading('Components', 'components', 'Live component gallery. Click any component to open it in the interactive playground.')}
+  <div class="callout callout-info mb-6">
+    <div class="callout-content text-sm">
+      For a machine-readable reference of all components, utility classes, and design tokens, see <code>.claude/agents/reference.yaml</code> in the repository.
+    </div>
+  </div>
   <div class="gallery-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
     ${galleryItems}
   </div>

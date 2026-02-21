@@ -7,6 +7,7 @@
 
 import type { EnhancerCleanup, EnhancerOptions } from '../config/types.js';
 import { onClickAway } from './utils/click-away.js';
+import { generateId } from './utils/generate-id.js';
 import { handleKeyboardNav } from './utils/keyboard-nav.js';
 
 export const COMBOBOX_SELECTOR = '[data-sol-combobox]';
@@ -54,7 +55,7 @@ export function initComboboxes(options?: EnhancerOptions): EnhancerCleanup {
     input.setAttribute('aria-expanded', 'false');
     input.setAttribute('aria-autocomplete', 'list');
     if (!listbox.id) {
-      listbox.id = `sol-combobox-list-${Math.random().toString(36).slice(2, 7)}`;
+      listbox.id = `sol-combobox-list-${generateId()}`;
     }
     input.setAttribute('aria-controls', listbox.id);
     listbox.setAttribute('role', 'listbox');

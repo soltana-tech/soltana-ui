@@ -156,6 +156,8 @@ describe('handleKeyboardNav', () => {
   });
 });
 
+// Property-based testing approach could extend to higher-level scenarios:
+// tier combinations, enhancer state machines, and config validation.
 describe('handleKeyboardNav property-based', () => {
   it('focus stays within items', () => {
     fc.assert(

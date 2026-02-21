@@ -3,6 +3,10 @@
 // ---------------------------------------------------------------------------
 // Popovers and dropdown menus.
 // Uses --relief-* and --finish-* variables for tier integration.
+// Scope: This file provides styles for dropdown menus (.dropdown) and
+// generic popovers (.popover). Context menus are NOT included here — they
+// are handled by the contextmenu enhancer with its own activation mechanism
+// and positioning logic.
 // ---------------------------------------------------------------------------
 
 @use '../base/register' as *;

@@ -15,7 +15,7 @@ const CSS_PROPS: Record<string, string> = {
   '--tooltip-text': '#ffffff',
 };
 
-describe('buildTheme', () => {
+describe('buildTheme - theme object construction', () => {
   beforeEach(() => {
     setCssProps(CSS_PROPS);
   });
@@ -23,7 +23,7 @@ describe('buildTheme', () => {
     clearCssProps();
   });
 
-  it('returns an object with color palette', () => {
+  it('builds theme object with color palette', () => {
     const theme = buildTheme();
     expect(theme.color).toEqual(['#6c63ff', '#3b82f6', '#22c55e', '#f59e0b', '#ec4899', '#ef4444']);
   });

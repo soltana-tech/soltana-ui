@@ -27,25 +27,27 @@ const enhancerHTML = `
   <button data-sol-tooltip="Tip text" style="margin:100px;">Hover</button>`;
 
 test.describe('initSoltana', () => {
-  test('applies default config (auto/neumorphic/matte)', async ({ page }) => {
+  test('applies default config (auto/flat/matte)', async ({ page }) => {
     await setupSoltanaPage(page);
-    await page.evaluate(() => window.SoltanaUI.initSoltana());
+    await page.evaluate(() => {
+      window.SoltanaUI.initSoltana();
+    });
 
     const attrs = await getTierAttributes(page);
     expect(['dark', 'light']).toContain(attrs.theme);
-    expect(attrs.relief).toBe('neumorphic');
+    expect(attrs.relief).toBe('flat');
     expect(attrs.finish).toBe('matte');
   });
 
   test('applies custom config (light/skeuomorphic/frosted)', async ({ page }) => {
     await setupSoltanaPage(page);
-    await page.evaluate(() =>
+    await page.evaluate(() => {
       window.SoltanaUI.initSoltana({
         theme: 'light',
         relief: 'skeuomorphic',
         finish: 'frosted',
-      })
-    );
+      });
+    });
 
     const attrs = await getTierAttributes(page);
     expect(attrs).toEqual({
@@ -55,38 +57,30 @@ test.describe('initSoltana', () => {
     });
   });
 
-  test('setTheme updates data-theme', async ({ page }) => {
-    await setupSoltanaPage(page);
-    await page.evaluate(() => {
-      const s = window.SoltanaUI.initSoltana();
-      s.setTheme('sepia');
+  for (const { tierType, setterMethod, expectedValue } of [
+    { tierType: 'theme' as const, setterMethod: 'setTheme' as const, expectedValue: 'sepia' },
+    {
+      tierType: 'relief' as const,
+      setterMethod: 'setRelief' as const,
+      expectedValue: 'glassmorphic',
+    },
+    { tierType: 'finish' as const, setterMethod: 'setFinish' as const, expectedValue: 'tinted' },
+  ]) {
+    test(`${setterMethod} updates data-${tierType}`, async ({ page }) => {
+      await setupSoltanaPage(page);
+      await page.evaluate(
+        ({ method, value }: { method: string; value: string }) => {
+          const s = window.SoltanaUI.initSoltana();
+          type MethodKey = 'setTheme' | 'setRelief' | 'setFinish';
+          (s[method as MethodKey] as (v: string) => void)(value);
+        },
+        { method: setterMethod, value: expectedValue }
+      );
+
+      const attrs = await getTierAttributes(page);
+      expect(attrs[tierType]).toBe(expectedValue);
     });
-
-    const attrs = await getTierAttributes(page);
-    expect(attrs.theme).toBe('sepia');
-  });
-
-  test('setRelief updates data-relief', async ({ page }) => {
-    await setupSoltanaPage(page);
-    await page.evaluate(() => {
-      const s = window.SoltanaUI.initSoltana();
-      s.setRelief('glassmorphic');
-    });
-
-    const attrs = await getTierAttributes(page);
-    expect(attrs.relief).toBe('glassmorphic');
-  });
-
-  test('setFinish updates data-finish', async ({ page }) => {
-    await setupSoltanaPage(page);
-    await page.evaluate(() => {
-      const s = window.SoltanaUI.initSoltana();
-      s.setFinish('tinted');
-    });
-
-    const attrs = await getTierAttributes(page);
-    expect(attrs.finish).toBe('tinted');
-  });
+  }
 
   test('setOverrides applies inline CSS variables', async ({ page }) => {
     await setupSoltanaPage(page);
@@ -112,7 +106,7 @@ test.describe('initSoltana', () => {
 
     const attrs = await getTierAttributes(page);
     expect(['dark', 'light']).toContain(attrs.theme);
-    expect(attrs.relief).toBe('neumorphic');
+    expect(attrs.relief).toBe('flat');
     expect(attrs.finish).toBe('matte');
 
     const overrideValue = await getInlineStyleProperty(page, '--custom');
@@ -121,7 +115,7 @@ test.describe('initSoltana', () => {
 
   test('getState returns current config', async ({ page }) => {
     await setupSoltanaPage(page);
-    const state = await page.evaluate(() => {
+    const state = await page.evaluate((): { theme: string; relief: string; finish: string } => {
       const s = window.SoltanaUI.initSoltana({ theme: 'light', relief: 'glassmorphic' });
       return s.getState();
     });
@@ -191,13 +185,13 @@ test.describe('initSoltana', () => {
   test('warns on custom tier values in non-strict mode', async ({ page }) => {
     await setupSoltanaPage(page);
     const warnings = await captureWarnings(page, async () => {
-      await page.evaluate(() =>
+      await page.evaluate(() => {
         window.SoltanaUI.initSoltana({
           theme: 'neon',
           relief: 'paper',
           finish: 'satin',
-        })
-      );
+        });
+      });
     });
 
     expect(warnings.length).toBe(3);
@@ -206,7 +200,7 @@ test.describe('initSoltana', () => {
 
   test('custom tier values set data attributes', async ({ page }) => {
     await setupSoltanaPage(page);
-    const state = await page.evaluate(() => {
+    const state = await page.evaluate((): { theme: string; relief: string; finish: string } => {
       const s = window.SoltanaUI.initSoltana({
         theme: 'neon',
         relief: 'glass',
@@ -242,7 +236,9 @@ test.describe('initSoltana', () => {
 
   test('default config does not inject font links', async ({ page }) => {
     await setupSoltanaPage(page);
-    await page.evaluate(() => window.SoltanaUI.initSoltana());
+    await page.evaluate(() => {
+      window.SoltanaUI.initSoltana();
+    });
 
     const linkCount = await page.evaluate(() => document.head.querySelectorAll('link').length);
     expect(linkCount).toBe(0);
@@ -374,7 +370,9 @@ test.describe('initSoltana', () => {
 test.describe('enhancer integration', () => {
   test('does not initialize enhancers by default', async ({ page }) => {
     await setupSoltanaPage(page, { bodyHTML: enhancerHTML });
-    await page.evaluate(() => window.SoltanaUI.initSoltana());
+    await page.evaluate(() => {
+      window.SoltanaUI.initSoltana();
+    });
 
     // Modal: clicking open button should NOT add .active (enhancers off by default)
     await page.click('[data-modal-open="test-modal"]');
@@ -386,7 +384,9 @@ test.describe('enhancer integration', () => {
 
   test('initializes enhancers when opted in', async ({ page }) => {
     await setupSoltanaPage(page, { bodyHTML: enhancerHTML });
-    await page.evaluate(() => window.SoltanaUI.initSoltana({ enhancers: true }));
+    await page.evaluate(() => {
+      window.SoltanaUI.initSoltana({ enhancers: true });
+    });
 
     // Modal: clicking open button should add .active
     await page.click('[data-modal-open="test-modal"]');
@@ -412,7 +412,9 @@ test.describe('enhancer integration', () => {
 
   test('skips enhancers when enhancers: false', async ({ page }) => {
     await setupSoltanaPage(page, { bodyHTML: enhancerHTML });
-    await page.evaluate(() => window.SoltanaUI.initSoltana({ enhancers: false }));
+    await page.evaluate(() => {
+      window.SoltanaUI.initSoltana({ enhancers: false });
+    });
 
     // Modal: clicking open button should NOT add .active
     await page.click('[data-modal-open="test-modal"]');
@@ -538,7 +540,7 @@ test.describe('stale instance', () => {
     // Data attributes should remain (set by the second instance)
     const attrs = await getTierAttributes(page);
     expect(attrs.theme).toBe('light');
-    expect(attrs.relief).toBe('neumorphic');
+    expect(attrs.relief).toBe('flat');
     expect(warnings.some((w) => w.includes('Stale instance'))).toBe(true);
   });
 
@@ -579,9 +581,9 @@ test.describe('overrides via API', () => {
 
   test('applies overrides from initial config', async ({ page }) => {
     await setupSoltanaPage(page);
-    await page.evaluate(() =>
-      window.SoltanaUI.initSoltana({ overrides: { '--init-var': 'hello' } })
-    );
+    await page.evaluate(() => {
+      window.SoltanaUI.initSoltana({ overrides: { '--init-var': 'hello' } });
+    });
 
     const value = await getInlineStyleProperty(page, '--init-var');
     expect(value).toBe('hello');

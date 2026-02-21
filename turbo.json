@@ -18,6 +18,7 @@
     "lint:ts": { "dependsOn": ["^build"] },
     "lint:style": {},
     "type-check": {
+      "dependsOn": ["^build"],
       "inputs": ["src/**", "tsconfig.json", "tsconfig.*.json"]
     }
   }

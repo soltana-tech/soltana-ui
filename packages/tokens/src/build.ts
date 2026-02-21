@@ -31,7 +31,6 @@ const require = createRequire(import.meta.url);
 const CSS_PATH = require.resolve('soltana-ui/css');
 const DIST = resolve(__dirname, '../dist');
 const MONOREPO_ROOT = resolve(__dirname, '../../..');
-const MPL_PYTHON_DIR = resolve(MONOREPO_ROOT, 'python/soltana-matplotlib/soltana_matplotlib');
 
 function ensureDir(dir: string): void {
   mkdirSync(dir, { recursive: true });
@@ -68,10 +67,7 @@ function main(): void {
 
     // matplotlib
     ensureDir(resolve(DIST, 'matplotlib'));
-    const mplStyle = buildMplStyle(theme, foundation);
-    writeFileSync(resolve(DIST, `matplotlib/${name}.mplstyle`), mplStyle);
-    ensureDir(MPL_PYTHON_DIR);
-    writeFileSync(resolve(MPL_PYTHON_DIR, `${name}.mplstyle`), mplStyle);
+    writeFileSync(resolve(DIST, `matplotlib/${name}.mplstyle`), buildMplStyle(theme, foundation));
     fileCount++;
 
     // Mermaid

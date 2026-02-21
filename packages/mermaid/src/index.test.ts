@@ -17,7 +17,7 @@ const CSS_PROPS: Record<string, string> = {
   '--tooltip-text': '#ffffff',
 };
 
-describe('buildConfig', () => {
+describe('buildConfig - config object construction', () => {
   beforeEach(() => {
     setCssProps(CSS_PROPS);
   });
@@ -25,7 +25,7 @@ describe('buildConfig', () => {
     clearCssProps();
   });
 
-  it('returns theme "base"', () => {
+  it('builds config object with base theme', () => {
     const config = buildConfig();
     expect(config.theme).toBe('base');
   });

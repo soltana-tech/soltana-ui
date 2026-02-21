@@ -6,13 +6,13 @@ import {
   specimenBlock,
   quickNav,
   sectionDivider,
-} from '../../utils/helpers';
+} from '../../lib/helpers';
 
 export function renderApiPlugins(): HTMLElement {
   const page = document.createElement('div');
   page.innerHTML = `
 <div class="page-api-plugins">
-  ${sectionHeading('Plugins', 'api-plugins', 'Build-time plugins for optimizing Soltana output.')}
+  ${sectionHeading('PostCSS Plugin', 'api-plugins', 'Build-time plugin for optimizing Soltana output.')}
 
   ${quickNav([{ label: 'PostCSS Tree-Shake', href: '#postcss-treeshake' }])}
 

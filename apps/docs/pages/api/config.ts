@@ -6,7 +6,7 @@ import {
   specimenBlock,
   quickNav,
   sectionDivider,
-} from '../../utils/helpers';
+} from '../../lib/helpers';
 
 export function renderApiConfig(): HTMLElement {
   const page = document.createElement('div');
@@ -75,7 +75,7 @@ export function renderApiConfig(): HTMLElement {
         </table>
       </div>
 
-      <h4 class="text-lg font-semibold mt-6 mb-2">Example</h4>
+      <h4 class="text-lg font-semibold mt-6 mb-2">Basic Example</h4>
       ${codeExample(
         `const reg = soltana.registerTheme('ocean', {
   seed: {
@@ -90,6 +90,73 @@ soltana.setTheme('ocean');
 
 // Later, to remove:
 reg.unregister();`,
+        'typescript'
+      )}
+
+      <h4 class="text-lg font-semibold mt-6 mb-2">Full-Featured Theme with All Seed Properties</h4>
+      ${codeExample(
+        `const reg = soltana.registerTheme('brand', {
+  seed: {
+    surfaceBg: '#1a1a2e',
+    textPrimary: '#eaeaea',
+    accentPrimary: '#6366f1',
+    accentDecorative: '#8b5cf6',
+    colorScheme: 'dark',
+    colorSuccess: '#22c55e',
+    colorWarning: '#f59e0b',
+    colorError: '#ef4444',
+    colorInfo: '#3b82f6',
+    highlightColor: '200 200 255',
+  },
+});
+
+soltana.setTheme('brand');`,
+        'typescript'
+      )}
+
+      <h4 class="text-lg font-semibold mt-6 mb-2">Token Override Example</h4>
+      <p class="text-secondary mb-4">
+        Use the <code>tokens</code> option to override specific derived tokens after generation:
+      </p>
+      ${codeExample(
+        `const reg = soltana.registerTheme('custom', {
+  seed: {
+    surfaceBg: '#0f0f0f',
+    textPrimary: '#e0e0e0',
+    accentPrimary: '#0ea5e9',
+    colorScheme: 'dark',
+  },
+  tokens: {
+    '--card-bg': 'rgb(20 20 30 / 0.95)',
+    '--border-default': '1px solid rgb(255 255 255 / 0.08)',
+    '--accent-primary-hover': '#0284c7',
+  },
+});
+
+soltana.setTheme('custom');`,
+        'typescript'
+      )}
+
+      <h4 class="text-lg font-semibold mt-6 mb-2">Cleanup Example</h4>
+      <p class="text-secondary mb-4">
+        Call <code>unregister()</code> to remove the theme's CSS rules and deregister it from validation:
+      </p>
+      ${codeExample(
+        `const reg = soltana.registerTheme('temporary', {
+  seed: {
+    surfaceBg: '#ffffff',
+    textPrimary: '#000000',
+    accentPrimary: '#3b82f6',
+    colorScheme: 'light',
+  },
+});
+
+// Use the theme
+soltana.setTheme('temporary');
+
+// Clean up when done
+reg.unregister();
+// Attempting to use 'temporary' now will fail validation`,
         'typescript'
       )}
     `
@@ -127,7 +194,7 @@ reg.unregister();`,
 
       <h4 class="text-lg font-semibold mt-6 mb-2">Example</h4>
       ${codeExample(
-        `soltana.registerRelief('dramatic', {
+        `const reg = soltana.registerRelief('dramatic', {
   tokens: {
     '--relief-bg': 'var(--surface-bg)',
     '--relief-shadow-sm': '0 2px 8px rgb(0 0 0 / 0.4)',
@@ -138,7 +205,12 @@ reg.unregister();`,
     '--relief-shadow-inset-lg': 'inset 0 4px 16px rgb(0 0 0 / 0.5)',
     '--relief-border': '1px solid rgb(255 255 255 / 0.05)',
   },
-});`,
+});
+
+soltana.setRelief('dramatic');
+
+// Clean up when done
+reg.unregister();`,
         'typescript'
       )}
     `
@@ -172,7 +244,7 @@ reg.unregister();`,
 
       <h4 class="text-lg font-semibold mt-6 mb-2">Example</h4>
       ${codeExample(
-        `soltana.registerFinish('neon', {
+        `const reg = soltana.registerFinish('neon', {
   tokens: {
     '--finish-blur': '0px',
     '--finish-saturation': '1.4',
@@ -180,7 +252,12 @@ reg.unregister();`,
     '--finish-overlay': 'linear-gradient(135deg, transparent, rgb(0 255 255 / 0.05))',
     '--finish-sheen': '0 0 20px rgb(0 255 255 / 0.1)',
   },
-});`,
+});
+
+soltana.setFinish('neon');
+
+// Clean up when done
+reg.unregister();`,
         'typescript'
       )}
     `

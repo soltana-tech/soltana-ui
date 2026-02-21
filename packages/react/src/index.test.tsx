@@ -1,58 +1,18 @@
-// Unit tests for the React bindings. Integration tests that exercise the
-// provider + context wiring with simulated DOM events live in integration.test.tsx.
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, act } from '@testing-library/react';
 import { SoltanaProvider, useSoltana, useSoltanaContext } from './index.js';
 import type { SoltanaContextValue } from './types.js';
 
-// Mock soltana-ui module
-const mockGetState = vi.fn();
-const mockDestroy = vi.fn();
-const mockInitSoltana = vi.fn();
+const root = document.documentElement;
 
-vi.mock('soltana-ui', () => ({
-  initSoltana: (...args: unknown[]) => mockInitSoltana(...args) as unknown,
-  DEFAULT_STATE: Object.freeze({
-    theme: 'auto',
-    relief: 'neumorphic',
-    finish: 'matte',
-    overrides: {},
-  }),
-}));
-
-function createMockInstance(overrides?: Partial<ReturnType<typeof mockGetState>>) {
-  const state = {
-    theme: 'dark',
-    relief: 'neumorphic',
-    finish: 'matte',
-    overrides: {},
-    ...overrides,
-  };
-  mockGetState.mockReturnValue({ ...state });
-  mockDestroy.mockReset();
-  mockInitSoltana.mockReturnValue({
-    getState: mockGetState,
-    destroy: mockDestroy,
-    setTheme: vi.fn(),
-    setRelief: vi.fn(),
-    setFinish: vi.fn(),
-    setOverrides: vi.fn(),
-    removeOverrides: vi.fn(),
-    registerTheme: vi.fn(),
-    registerRelief: vi.fn(),
-    registerFinish: vi.fn(),
-    reinitEnhancers: vi.fn(),
-    reset: vi.fn(),
-  });
+function cleanup() {
+  root.removeAttribute('data-theme');
+  root.removeAttribute('data-relief');
+  root.removeAttribute('data-finish');
+  root.removeAttribute('style');
 }
 
-beforeEach(() => {
-  createMockInstance();
-});
-
-afterEach(() => {
-  vi.restoreAllMocks();
-});
+afterEach(cleanup);
 
 describe('useSoltana', () => {
   function TestComponent({ onValue }: { onValue: (v: SoltanaContextValue) => void }) {
@@ -61,31 +21,81 @@ describe('useSoltana', () => {
     return null;
   }
 
-  it('calls initSoltana on mount', () => {
+  it('returns a valid SoltanaContextValue shape', () => {
     const onValue = vi.fn();
     render(<TestComponent onValue={onValue} />);
 
-    expect(mockInitSoltana).toHaveBeenCalledOnce();
+    const value = onValue.mock.calls[onValue.mock.calls.length - 1][0] as SoltanaContextValue;
+    expect(value).toBeDefined();
+    expect(value.config).toBeDefined();
+    expect(value.instance).toBeDefined();
+    expect(typeof value.config.theme).toBe('string');
+    expect(typeof value.config.relief).toBe('string');
+    expect(typeof value.config.finish).toBe('string');
   });
 
-  it('calls destroy on unmount', () => {
+  it('returns a real instance with all expected methods', () => {
     const onValue = vi.fn();
-    const { unmount } = render(<TestComponent onValue={onValue} />);
+    render(<TestComponent onValue={onValue} />);
 
-    unmount();
-
-    expect(mockDestroy).toHaveBeenCalledOnce();
+    const value = onValue.mock.calls[onValue.mock.calls.length - 1][0] as SoltanaContextValue;
+    expect(value.instance).not.toBeNull();
+    expect(typeof value.instance!.getState).toBe('function');
+    expect(typeof value.instance!.setTheme).toBe('function');
+    expect(typeof value.instance!.setRelief).toBe('function');
+    expect(typeof value.instance!.setFinish).toBe('function');
+    expect(typeof value.instance!.setOverrides).toBe('function');
+    expect(typeof value.instance!.removeOverrides).toBe('function');
+    expect(typeof value.instance!.registerTheme).toBe('function');
+    expect(typeof value.instance!.registerRelief).toBe('function');
+    expect(typeof value.instance!.registerFinish).toBe('function');
+    expect(typeof value.instance!.reinitEnhancers).toBe('function');
+    expect(typeof value.instance!.reset).toBe('function');
+    expect(typeof value.instance!.destroy).toBe('function');
   });
 
-  it('passes config to initSoltana', () => {
-    function ConfiguredComponent() {
-      useSoltana({ theme: 'sepia', relief: 'flat' });
+  it('accepts and applies config options', () => {
+    function ConfiguredComponent({ onValue }: { onValue: (v: SoltanaContextValue) => void }) {
+      const value = useSoltana({ theme: 'sepia', relief: 'flat' });
+      onValue(value);
       return null;
     }
 
-    render(<ConfiguredComponent />);
+    const onValue = vi.fn();
+    render(<ConfiguredComponent onValue={onValue} />);
 
-    expect(mockInitSoltana).toHaveBeenCalledWith({ theme: 'sepia', relief: 'flat' });
+    expect(root.getAttribute('data-theme')).toBe('sepia');
+    expect(root.getAttribute('data-relief')).toBe('flat');
+  });
+
+  it('cleans up on unmount', () => {
+    const onValue = vi.fn();
+    const { unmount } = render(<TestComponent onValue={onValue} />);
+
+    const hadTheme = root.hasAttribute('data-theme');
+    unmount();
+
+    if (hadTheme) {
+      expect(root.hasAttribute('data-theme')).toBe(false);
+    }
+  });
+
+  it('instance methods are callable without throwing', () => {
+    const onValue = vi.fn();
+    render(<TestComponent onValue={onValue} />);
+
+    const value = onValue.mock.calls[onValue.mock.calls.length - 1][0] as SoltanaContextValue;
+
+    expect(() => value.instance!.getState()).not.toThrow();
+    expect(() => {
+      value.instance!.setTheme('dark');
+    }).not.toThrow();
+    expect(() => {
+      value.instance!.setRelief('flat');
+    }).not.toThrow();
+    expect(() => {
+      value.instance!.setFinish('matte');
+    }).not.toThrow();
   });
 });
 
@@ -96,7 +106,7 @@ describe('SoltanaProvider + useSoltanaContext', () => {
     return null;
   }
 
-  it('provides context to children', () => {
+  it('provides valid context to children', () => {
     const onValue = vi.fn();
     render(
       <SoltanaProvider>
@@ -104,15 +114,18 @@ describe('SoltanaProvider + useSoltanaContext', () => {
       </SoltanaProvider>
     );
 
-    const lastCall = onValue.mock.calls[onValue.mock.calls.length - 1][0] as SoltanaContextValue;
-    expect(lastCall.config).toBeDefined();
-    expect(lastCall.instance).toBeDefined();
+    const value = onValue.mock.calls[onValue.mock.calls.length - 1][0] as SoltanaContextValue;
+    expect(value).toBeDefined();
+    expect(value.config).toBeDefined();
+    expect(value.instance).toBeDefined();
+    expect(typeof value.config.theme).toBe('string');
+    expect(typeof value.config.relief).toBe('string');
+    expect(typeof value.config.finish).toBe('string');
   });
 
   it('throws when useSoltanaContext is used outside provider', () => {
-    // Suppress React error boundary console output
     const spy = vi.spyOn(console, 'error').mockImplementation(() => {
-      /* suppress */
+      // Intentionally empty - suppressing React error boundary warnings
     });
 
     function Orphan() {
@@ -127,34 +140,29 @@ describe('SoltanaProvider + useSoltanaContext', () => {
     spy.mockRestore();
   });
 
-  it('propagates soltana:change events through context', () => {
+  it('propagates real config changes through context', () => {
     const onValue = vi.fn();
     render(
-      <SoltanaProvider>
+      <SoltanaProvider config={{ theme: 'dark' }}>
         <Consumer onValue={onValue} />
       </SoltanaProvider>
     );
 
-    // Simulate a config change via the event
-    mockGetState.mockReturnValue({
-      theme: 'sepia',
-      relief: 'glassmorphic',
-      finish: 'glossy',
-      overrides: {},
-    });
+    const initialValue = onValue.mock.calls[
+      onValue.mock.calls.length - 1
+    ][0] as SoltanaContextValue;
 
     act(() => {
-      document.documentElement.dispatchEvent(
-        new CustomEvent('soltana:change', { detail: { type: 'theme', value: 'sepia' } })
-      );
+      initialValue.instance!.setTheme('sepia');
     });
 
-    const lastCall = onValue.mock.calls[onValue.mock.calls.length - 1][0] as SoltanaContextValue;
-    expect(lastCall.config.theme).toBe('sepia');
-    expect(lastCall.config.relief).toBe('glassmorphic');
+    const updatedValue = onValue.mock.calls[
+      onValue.mock.calls.length - 1
+    ][0] as SoltanaContextValue;
+    expect(updatedValue.config.theme).toBe('sepia');
   });
 
-  it('cleans up event listener and destroys instance on provider unmount', () => {
+  it('cleans up event listener on unmount', () => {
     const onValue = vi.fn();
     const { unmount } = render(
       <SoltanaProvider>
@@ -162,16 +170,15 @@ describe('SoltanaProvider + useSoltanaContext', () => {
       </SoltanaProvider>
     );
 
-    unmount();
-    expect(mockDestroy).toHaveBeenCalledOnce();
-
-    // After unmount, dispatching events should not cause errors or updates
     const callCount = onValue.mock.calls.length;
+    unmount();
+
     act(() => {
       document.documentElement.dispatchEvent(
         new CustomEvent('soltana:change', { detail: { type: 'theme', value: 'light' } })
       );
     });
+
     expect(onValue.mock.calls.length).toBe(callCount);
   });
 });

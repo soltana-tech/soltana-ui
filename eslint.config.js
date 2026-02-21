@@ -27,6 +27,18 @@ export default tseslint.config(
     },
   },
   {
+    files: ['tests/**/*.ts'],
+    rules: {
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-unsafe-return': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-floating-promises': 'off',
+    },
+  },
+  {
     // Config files are excluded because they use Vite/Playwright/Turbo APIs
     // that conflict with the project's strict TypeScript ESLint rules
     // (e.g., untyped default exports, __dirname usage).
@@ -34,7 +46,6 @@ export default tseslint.config(
       '**/dist/',
       '**/docs-dist/',
       '**/node_modules/',
-      'tests/',
       '*.config.js',
       '*.config.ts',
       'apps/**/*.config.ts',

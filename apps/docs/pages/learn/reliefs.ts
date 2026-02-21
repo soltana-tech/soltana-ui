@@ -1,6 +1,6 @@
 /** Design System — Reliefs page. */
 
-import { sectionHeading, specimenBlock, codeExample } from '../../utils/helpers';
+import { sectionHeading, specimenBlock, codeExample } from '../../lib/helpers';
 
 export function renderReliefs(): HTMLElement {
   const page = document.createElement('div');

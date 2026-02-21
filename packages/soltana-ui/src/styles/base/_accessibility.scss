@@ -24,6 +24,8 @@
 // Token-level overrides for users who need stronger contrast.
 @media (prefers-contrast: more) {
   :root {
+    // Semantic border tokens remapped to decorative accent tokens for WCAG AAA compliance.
+    // Borders shift from neutral UI structure to accent-colored decoration for visibility.
     --border-default: var(--border-decorative-strong);
     --border-subtle: var(--border-decorative);
     --border-strong: var(--accent-decorative);

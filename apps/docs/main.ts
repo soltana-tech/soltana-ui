@@ -28,6 +28,17 @@ import { renderTypography } from './pages/explore/typography';
 import { renderColors } from './pages/explore/colors';
 import { renderExamples } from './pages/explore/examples';
 
+// Pages — Component Reference
+import { renderComponentReference } from './pages/explore/components/index';
+import { renderActionsRef } from './pages/explore/components/actions';
+import { renderContentRef } from './pages/explore/components/content';
+import { renderDataDisplayRef } from './pages/explore/components/data-display';
+import { renderFeedbackRef } from './pages/explore/components/feedback';
+import { renderFormsRef } from './pages/explore/components/forms';
+import { renderLayoutComponentsRef } from './pages/explore/components/layout-components';
+import { renderNavigationRef } from './pages/explore/components/navigation';
+import { renderOverlaysRef } from './pages/explore/components/overlays';
+
 // Pages — API Reference
 import { renderApiCore } from './pages/api/core';
 import { renderApiConfig } from './pages/api/config';
@@ -94,6 +105,20 @@ router.register({ path: '/explore/typography', render: renderTypography });
 router.register({ path: '/explore/colors', render: renderColors });
 router.register({ path: '/explore/examples', render: renderExamples });
 
+// Component Reference
+router.register({ path: '/explore/components', render: renderComponentReference });
+router.register({ path: '/explore/components/actions', render: renderActionsRef });
+router.register({ path: '/explore/components/content', render: renderContentRef });
+router.register({ path: '/explore/components/data-display', render: renderDataDisplayRef });
+router.register({ path: '/explore/components/feedback', render: renderFeedbackRef });
+router.register({ path: '/explore/components/forms', render: renderFormsRef });
+router.register({
+  path: '/explore/components/layout-components',
+  render: renderLayoutComponentsRef,
+});
+router.register({ path: '/explore/components/navigation', render: renderNavigationRef });
+router.register({ path: '/explore/components/overlays', render: renderOverlaysRef });
+
 // API Reference
 router.register({ path: '/api/core', render: renderApiCore });
 router.register({ path: '/api/config', render: renderApiConfig });
@@ -131,6 +156,7 @@ const sections: SidebarSection[] = [
     label: 'Explore',
     items: [
       { label: 'Components', path: '/explore', icon: I['/explore'] },
+      { label: 'Component Ref.', path: '/explore/components', icon: I['/explore/components'] },
       { label: 'Playground', path: '/playground', icon: I['/playground'] },
       { label: 'Layout', path: '/explore/layout', icon: I['/explore/layout'] },
       { label: 'Typography', path: '/explore/typography', icon: I['/explore/typography'] },
@@ -144,7 +170,7 @@ const sections: SidebarSection[] = [
       { label: 'Core API', path: '/api/core', icon: I['/api/core'] },
       { label: 'Configuration', path: '/api/config', icon: I['/api/config'] },
       { label: 'Behavior', path: '/api/behavior', icon: I['/api/behavior'] },
-      { label: 'Plugins', path: '/api/plugins', icon: I['/api/plugins'] },
+      { label: 'PostCSS Plugin', path: '/api/plugins', icon: I['/api/plugins'] },
     ],
   },
 ];

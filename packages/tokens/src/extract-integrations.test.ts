@@ -1,3 +1,5 @@
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { describe, it, expect } from 'vitest';
 import { parseIndexExports } from './extract-integrations.js';
 
@@ -67,4 +69,15 @@ describe('parseIndexExports', () => {
     expect(typeNames).toContain('SoltanaProviderProps');
     expect(typeNames).toContain('ToastOptions');
   });
+});
+
+describe('source file smoke tests', () => {
+  const packagesDir = resolve(__dirname, '../..');
+
+  it.each(['echarts/src/index.ts', 'plotly/src/index.ts', 'react/src/index.ts'])(
+    '%s exists on disk',
+    (relativePath) => {
+      expect(existsSync(resolve(packagesDir, relativePath))).toBe(true);
+    }
+  );
 });

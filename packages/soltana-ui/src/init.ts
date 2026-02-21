@@ -35,18 +35,25 @@ import { _resetFontLoader } from './fonts/index.js';
  * Default tier configuration used when no overrides are provided.
  *
  * - `theme: 'auto'` resolves to `'dark'` or `'light'` via `prefers-color-scheme`.
- * - `relief: 'neumorphic'` provides the most visually distinctive shadow model.
+ * - `relief: 'flat'` is the minimal baseline (no shadow effects).
  * - `finish: 'matte'` is the zero-effect baseline (no blur, sheen, or tint).
  *
  * All 4 × 4 × 4 tier combinations (plus `auto`) are valid configurations.
  */
 export const DEFAULT_STATE: Readonly<SoltanaConfig> = Object.freeze({
   theme: 'auto',
-  relief: 'neumorphic',
+  relief: 'flat',
   finish: 'matte',
   overrides: {},
 });
 
+/**
+ * Default initialization options.
+ *
+ * `strict: true` is recommended for development and testing environments
+ * to catch configuration errors early. In strict mode, invalid tier values
+ * or override keys throw errors instead of logging warnings.
+ */
 const DEFAULT_INIT: Required<SoltanaInitOptions> = {
   enhancers: false,
   strict: false,
@@ -59,9 +66,6 @@ let _mqlHandler: (() => void) | null = null;
 
 // Module-level state for enhancer cleanup
 let _enhancerCleanup: EnhancerCleanup | null = null;
-
-// Generation counter for stale-instance detection
-let _generation = 0;
 
 // Tracks CSS custom properties set via applyOverrides() for targeted removal
 // during reset()/destroy() instead of blanket removeAttribute('style').
@@ -171,15 +175,12 @@ function dispatchChange(type: SoltanaChangeType, value: unknown): void {
 export function initSoltana(
   userConfig: Partial<SoltanaConfig & SoltanaInitOptions> = {}
 ): SoltanaInstance {
-  _generation++;
-  const myGen = _generation;
-
-  const { enhancers, strict, enhancerOptions, ...stateOverrides } = userConfig;
+  const { enhancers, strict, ...stateOverrides } = userConfig;
   const state: SoltanaConfig = { ...DEFAULT_STATE, ...stateOverrides };
   const initOpts: Required<SoltanaInitOptions> = {
     enhancers: enhancers ?? DEFAULT_INIT.enhancers,
     strict: strict ?? DEFAULT_INIT.strict,
-    enhancerOptions: enhancerOptions ?? {},
+    enhancerOptions: {},
   };
 
   // Filter invalid override keys from initial config
@@ -195,7 +196,7 @@ export function initSoltana(
   applyConfig(state);
   setupAutoTheme(state);
 
-  resetEnhancers(initOpts.enhancers, initOpts.enhancerOptions);
+  resetEnhancers(initOpts.enhancers);
 
   // Track runtime registrations for cleanup
   const registrations: TierRegistration[] = [];
@@ -223,10 +224,6 @@ export function initSoltana(
     dispatchChange('finish', finish);
   }
 
-  // Stale-instance detection: only reset() and destroy() check the generation
-  // counter and no-op (or throw in strict mode) when called on a superseded
-  // instance. Mutation methods (setTheme, setRelief, etc.) use last-write-wins
-  // semantics — the most recent call wins regardless of which instance issued it.
   return {
     getState(): SoltanaConfig {
       return { ...state, overrides: { ...state.overrides } };
@@ -278,17 +275,10 @@ export function initSoltana(
     },
 
     reinitEnhancers(): void {
-      resetEnhancers(initOpts.enhancers, initOpts.enhancerOptions);
+      resetEnhancers(initOpts.enhancers);
     },
 
     reset(): void {
-      if (myGen !== _generation) {
-        if (initOpts.strict) {
-          throw new Error('[soltana] Stale instance — reset() called after re-initialization');
-        }
-        console.warn('[soltana] Stale instance — reset() ignored');
-        return;
-      }
       for (const reg of registrations.splice(0)) {
         reg.unregister();
       }
@@ -301,18 +291,11 @@ export function initSoltana(
       removeManagedProps();
       applyConfig(state);
       setupAutoTheme(state);
-      resetEnhancers(initOpts.enhancers, initOpts.enhancerOptions);
+      resetEnhancers(initOpts.enhancers);
       dispatchChange('reset', null);
     },
 
     destroy(): void {
-      if (myGen !== _generation) {
-        if (initOpts.strict) {
-          throw new Error('[soltana] Stale instance — destroy() called after re-initialization');
-        }
-        console.warn('[soltana] Stale instance — destroy() ignored');
-        return;
-      }
       dispatchChange('destroy', null);
       for (const reg of registrations.splice(0)) {
         reg.unregister();

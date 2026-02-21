@@ -390,13 +390,13 @@ Children: `hover-card-content`, `hover-card-trigger`
 
 ### Image Components
 
-Base class: `.aspect-ratio`
+Base class: `.image`
 Description: Responsive images, rounded variants, thumbnail treatment, and aspect-ratio containers.
 Tier-aware: yes
-Variants: `aspect-ratio-photo`, `aspect-ratio-square`, `aspect-ratio-video`, `img`, `img-circle`, `img-rounded`, `img-thumbnail`
+Variants: `aspect-ratio`, `aspect-ratio-photo`, `aspect-ratio-square`, `aspect-ratio-video`, `img`, `img-circle`, `img-rounded`, `img-thumbnail`
 
 ```html
-<div class="aspect-ratio">…</div>
+<div class="image">…</div>
 ```
 
 ### Indicator Components
@@ -458,7 +458,7 @@ Children: `accordion-body`, `accordion-header`, `accordion-item`
 ### Menu Components
 
 Base class: `.popover`
-Description: Popovers and dropdown menus.
+Description: Popovers and dropdown menus. Scope: This file provides styles for dropdown menus (.dropdown) and generic popovers (.popover). Context menus are NOT included here — they are handled by the contextmenu enhancer with its own activation mechanism and positioning logic.
 Tier-aware: yes
 Variants: `dropdown`, `dropdown-divider`, `dropdown-end`, `dropdown-header`, `dropdown-item`, `dropdown-menu`, `dropdown-toggle`, `popover-bottom`, `popover-left`, `popover-right`, `popover-top`
 Sizes: `popover-lg`, `popover-sm`

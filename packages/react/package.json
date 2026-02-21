@@ -3,6 +3,13 @@
   "version": "1.0.0",
   "private": false,
   "description": "React bindings for Soltana UI — useSoltana() hook and SoltanaProvider. ESM-only.",
+  "keywords": [
+    "react",
+    "hooks",
+    "soltana-ui",
+    "design-system",
+    "theme"
+  ],
   "type": "module",
   "license": "MIT",
   "author": "Soltana",
@@ -14,9 +21,6 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/soltana-react.js",
-  "module": "./dist/soltana-react.js",
-  "types": "./dist/index.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {

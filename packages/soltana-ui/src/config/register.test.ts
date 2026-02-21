@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import scss from 'postcss-scss';
 import { THEME_TOKEN_NAMES, deriveThemeTokens } from './register.js';
 import type { ThemeSeed } from './types.js';
 
@@ -21,35 +22,28 @@ const LIGHT_SEED: ThemeSeed = {
 
 function extractTokens(source: string): Set<string> {
   const tokens = new Set<string>();
-  for (const line of source.split('\n')) {
-    const trimmed = line.trim();
-    if (trimmed.startsWith('//')) continue;
-    const match = /^(--[\w-]+)\s*:/.exec(trimmed);
-    if (match) {
-      tokens.add(match[1]);
+  const root = scss.parse(source);
+
+  root.walkDecls((decl) => {
+    if (decl.prop.startsWith('--')) {
+      tokens.add(decl.prop);
     }
-  }
+  });
+
   return tokens;
 }
 
 function extractMixinBody(source: string, mixinName: string): string {
-  const startIdx = source.indexOf(`@mixin ${mixinName}(`);
-  if (startIdx === -1) return '';
+  const root = scss.parse(source);
+  let mixinBody = '';
 
-  let braceDepth = 0;
-  let bodyStart = -1;
-  for (let i = startIdx; i < source.length; i++) {
-    if (source[i] === '{') {
-      if (bodyStart === -1) bodyStart = i + 1;
-      braceDepth++;
-    } else if (source[i] === '}') {
-      braceDepth--;
-      if (braceDepth === 0) {
-        return source.slice(bodyStart, i);
-      }
+  root.walkAtRules('mixin', (rule) => {
+    if (rule.params.startsWith(`${mixinName}(`)) {
+      mixinBody = rule.toString();
     }
-  }
-  return '';
+  });
+
+  return mixinBody;
 }
 
 describe('SCSS ↔ TS token sync', () => {
@@ -88,16 +82,17 @@ describe('deriveThemeTokens', () => {
 
   it('derives surface scale with color-mix expressions', () => {
     const result = deriveThemeTokens(DARK_SEED);
-    expect(result['--surface-1']).toContain('color-mix');
-    expect(result['--surface-2']).toContain('color-mix');
-    expect(result['--surface-3']).toContain('color-mix');
-    expect(result['--surface-4']).toContain('color-mix');
+    expect(result['--surface-1']).toBe('color-mix(in oklch, #08091a, white 5%)');
+    expect(result['--surface-2']).toBe('color-mix(in oklch, #08091a, white 10%)');
+    expect(result['--surface-3']).toBe('color-mix(in oklch, #08091a, white 15%)');
+    expect(result['--surface-4']).toBe('color-mix(in oklch, #08091a, white 20%)');
   });
 
   it('derives text hierarchy fading toward surfaceBg', () => {
     const result = deriveThemeTokens(DARK_SEED);
-    expect(result['--text-secondary']).toContain('color-mix');
-    expect(result['--text-secondary']).toContain('#08091a');
+    expect(result['--text-secondary']).toBe('color-mix(in oklch, #f5f0e6, #08091a 25%)');
+    expect(result['--text-tertiary']).toBe('color-mix(in oklch, #f5f0e6, #08091a 45%)');
+    expect(result['--text-muted']).toBe('color-mix(in oklch, #f5f0e6, #08091a 55%)');
   });
 
   it('sets --text-inverse to surfaceBg', () => {
@@ -113,12 +108,12 @@ describe('deriveThemeTokens', () => {
 
   it('dark scheme hover lightens (mixes with white)', () => {
     const result = deriveThemeTokens(DARK_SEED);
-    expect(result['--accent-primary-hover']).toContain('white');
+    expect(result['--accent-primary-hover']).toBe('color-mix(in oklch, #d4a843, white 15%)');
   });
 
   it('light scheme hover darkens (mixes with black)', () => {
     const result = deriveThemeTokens(LIGHT_SEED);
-    expect(result['--accent-primary-hover']).toContain('black');
+    expect(result['--accent-primary-hover']).toBe('color-mix(in oklch, #576378, black 15%)');
   });
 
   it('defaults accentDecorative to accentPrimary', () => {

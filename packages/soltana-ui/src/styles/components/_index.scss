@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------
 // Aggregates all component partials.
 // Naming: most components use flat class names (e.g. .card, .card-header).
-// _layout.scss and _segmented-control.scss use BEM notation (e.g.
+// _layouts.scss and _segmented-controls.scss use BEM notation (e.g.
 // .page-layout__sidebar, .segmented-control__option) for tightly-coupled
 // parent/child structures where the child has no standalone meaning.
 // ---------------------------------------------------------------------------
@@ -15,27 +15,27 @@
 @forward 'feedback';
 @forward 'navigation';
 @forward 'overlays';
-@forward 'toggle';
-@forward 'close';
-@forward 'toast';
+@forward 'toggles';
+@forward 'closes';
+@forward 'toasts';
 @forward 'menus';
 @forward 'lists';
 @forward 'indicators';
-@forward 'segmented-control';
+@forward 'segmented-controls';
 @forward 'tables';
-@forward 'layout';
-@forward 'callout';
-@forward 'figure';
-@forward 'hero';
+@forward 'layouts';
+@forward 'callouts';
+@forward 'figures';
+@forward 'heros';
 @forward 'code';
-@forward 'image';
-@forward 'collapsible';
-@forward 'alert-dialog';
-@forward 'combobox';
-@forward 'hover-card';
-@forward 'context-menu';
-@forward 'carousel';
-@forward 'scroll-area';
-@forward 'date-picker';
-@forward 'color-picker';
-@forward 'tree';
+@forward 'images';
+@forward 'collapsibles';
+@forward 'alert-dialogs';
+@forward 'comboboxes';
+@forward 'hover-cards';
+@forward 'context-menus';
+@forward 'carousels';
+@forward 'scroll-areas';
+@forward 'date-pickers';
+@forward 'color-pickers';
+@forward 'trees';

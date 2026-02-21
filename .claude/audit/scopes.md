@@ -46,7 +46,7 @@ checks. Sections with new names define project-specific scopes.
 
 ### Docs file scope
 
-- `docs/`
+- `apps/docs/`
 
 ### Docs checks
 
@@ -61,8 +61,8 @@ checks. Sections with new names define project-specific scopes.
   `frosted`, `tinted`, `glossy`
 - Verify all theme options are documented: `dark`, `light`,
   `sepia`, `auto`
-- Verify all enhancers are documented: `initModals`,
-  `initTabs`, `initTooltips`, `initAll`
+- Verify all enhancer initializers exported from
+  src/enhancers/index.ts are documented
 - Verify all CSS component classes are documented: buttons,
   cards, inputs, badges, alerts, avatars, progress, switches,
   tooltips, tables, modals, skeletons

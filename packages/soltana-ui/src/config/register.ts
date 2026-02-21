@@ -324,6 +324,11 @@ export function deriveThemeTokens(seed: ThemeSeed): Record<string, string> {
 
 const HEX_RE = /^#?[0-9a-fA-F]{3}([0-9a-fA-F]{3})?$/;
 
+/**
+ * Convert a color to space-separated RGB channels (0-255).
+ * Supports hex (#RGB, #RRGGBB, #RRGGBBAA) and rgb(r, g, b) formats only.
+ * Falls back to neutral gray for invalid input.
+ */
 function hexToRgbChannels(hex: string): string {
   if (!HEX_RE.test(hex)) {
     // Attempt to parse rgb() format before falling back
@@ -331,9 +336,10 @@ function hexToRgbChannels(hex: string): string {
     if (rgbMatch) {
       return `${rgbMatch[1]} ${rgbMatch[2]} ${rgbMatch[3]}`;
     }
-    console.warn(
+    console.error(
       `[soltana] Non-hex color "${hex}" passed to hexToRgbChannels. Falling back to neutral gray.`
     );
+    // Silent degradation to neutral gray (#808080). See accentPrimary JSDoc in types.ts.
     return '128 128 128';
   }
   let h = hex.replace('#', '');

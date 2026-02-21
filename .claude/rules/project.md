@@ -45,9 +45,9 @@ ability to compose them.
 - **Accessibility foundation** — `prefers-reduced-motion`,
   `prefers-contrast`, `.sr-only`, `.skip-link`, focus rings.
   Solid base layer. A `prefers-contrast: more` media query
-  overrides key tokens (`--border-default`, `--text-primary`,
-  etc.) to meet WCAG AAA contrast ratios without requiring
-  a separate high-contrast theme.
+  overrides key tokens (`--border-default`, `--text-muted`,
+  `--text-tertiary`, etc.) to meet WCAG AAA contrast ratios
+  without requiring a separate high-contrast theme.
 - **Decorative typography** — `--font-display` maps to
   Cinzel Decorative for ornamental headings and branding
   elements, complementing the primary `--font-serif` (Cinzel)
@@ -60,13 +60,20 @@ ability to compose them.
 2. **Runtime tier registration** — `registerTheme()`,
    `registerRelief()`, `registerFinish()` inject CSS rules
    from seed colors or typed token maps.
-3. **Optional JS enhancers** — `initModals()`, `initTabs()`,
-   `initTooltips()` add accessible keyboard-driven behavior
-   to matching DOM elements.
+3. **Optional JS enhancers** — 16 accessible behavior
+   enhancers including modals, tabs, tooltips, accordions,
+   carousels, date pickers, and more. Some enhancers feed
+   runtime-computed values (viewport positions, scroll
+   measurements) to CSS via custom properties; all rendering
+   remains CSS-driven. See src/enhancers/index.ts for the full
+   list.
 4. **Font loading helper** — `loadSoltanaFonts()` injects
    Google Fonts `<link>` and preconnect hints.
 5. **PostCSS treeshake plugin** — Strips unused tier rulesets
    from the compiled CSS for production builds.
+6. **soltana:change event** — Dispatched on
+   `document.documentElement` for every tier change, enabling
+   cross-package synchronization (e.g., chart auto-sync).
 
 - **Utility classes** — General-purpose layout, spacing, and
   visual utilities (`src/styles/utilities/`) shipped as a
@@ -92,14 +99,15 @@ ability to compose them.
 The monorepo includes charting and framework integration
 packages that extend the core design system:
 
-| Package               | Purpose                                                                                  |
-| --------------------- | ---------------------------------------------------------------------------------------- |
-| `@soltana-ui/tokens`  | Token compiler -- outputs ECharts, Plotly, Mermaid, mplstyle, DTCG JSON, agent docs YAML |
-| `@soltana-ui/echarts` | ECharts theme bridge (runtime + static JSON)                                             |
-| `@soltana-ui/plotly`  | Plotly template bridge (runtime + static JSON)                                           |
-| `@soltana-ui/mermaid` | Mermaid theme bridge (runtime + static JSON)                                             |
-| `@soltana-ui/react`   | React bindings -- `useSoltana()` hook + `SoltanaProvider`                                |
-| `soltana-matplotlib`  | Python package -- pre-built `.mplstyle` themes                                           |
+| Package                    | Purpose                                                                                                           |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `@soltana-ui/tokens`       | Token compiler -- outputs ECharts, Plotly, Mermaid, mplstyle, DTCG JSON, agent docs YAML, llms.txt, llms-full.txt |
+| `@soltana-ui/echarts`      | ECharts theme bridge (runtime + static JSON)                                                                      |
+| `@soltana-ui/plotly`       | Plotly template bridge (runtime + static JSON)                                                                    |
+| `@soltana-ui/mermaid`      | Mermaid theme bridge (runtime + static JSON)                                                                      |
+| `@soltana-ui/react`        | React bindings -- `useSoltana()` hook, `SoltanaProvider`, 13 enhancer hooks, toast API re-exports                 |
+| `@soltana-ui/chart-shared` | Internal shared utilities for charting bridges (private, not published)                                           |
+| `soltana-matplotlib`       | Python package -- pre-built `.mplstyle` themes                                                                    |
 
 These are intentional scope extensions. The charting bridges
 read live CSS custom properties at runtime and map them to

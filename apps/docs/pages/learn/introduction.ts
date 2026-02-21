@@ -1,6 +1,6 @@
 /** Getting Started page — hero, 3-tier overview, and installation. */
 
-import { codeExample, sectionDivider, sectionHeading, specimenBlock } from '../../utils/helpers';
+import { codeExample, sectionDivider, sectionHeading, specimenBlock } from '../../lib/helpers';
 
 export function renderGettingStarted(): HTMLElement {
   const page = document.createElement('div');

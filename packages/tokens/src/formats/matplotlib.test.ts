@@ -1,9 +1,8 @@
-import { describe, it, expect } from 'vitest';
+import { describeFormatBuilder, it, expect } from './__test-utils__.js';
 import { buildMplStyle } from './matplotlib.js';
 import { darkTheme, foundationMinimal as foundation } from '../__fixtures__/tokens.js';
 
-describe('buildMplStyle', () => {
-  const result = buildMplStyle(darkTheme, foundation);
+describeFormatBuilder('buildMplStyle', buildMplStyle, darkTheme, foundation, (result) => {
   const lines = result.split('\n').filter(Boolean);
 
   function getLine(key: string): string | undefined {

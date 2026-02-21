@@ -46,8 +46,9 @@
   box-shadow: $shadow;
 }
 
-// The $bg default bridges the relief and finish tiers: --relief-bg is set by
-// the active relief and falls back to var(--surface-1) when no relief is active.
+// Applies background with tier composition: consumes --relief-bg (set by active
+// relief tier) with fallback to --surface-1. Finish properties (opacity, blur,
+// overlay, sheen) are applied additively.
 @mixin finish-surface($bg: var(--relief-bg, var(--surface-1)), $gradient: null) {
   background-color: color-mix(
     in srgb,

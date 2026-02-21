@@ -9,6 +9,7 @@
 // ---------------------------------------------------------------------------
 
 import type { EnhancerCleanup, EnhancerOptions } from '../config/types.js';
+import { generateId } from './utils/generate-id.js';
 import { handleKeyboardNav } from './utils/keyboard-nav.js';
 
 export const ACCORDION_SELECTOR = '[data-sol-accordion]';
@@ -75,7 +76,7 @@ export function initAccordions(options?: EnhancerOptions): EnhancerCleanup {
         if (!header || !body) return;
 
         // Generate ARIA ids
-        const baseId = accordion.id || `sol-accordion-${Math.random().toString(36).slice(2, 7)}`;
+        const baseId = accordion.id || `sol-accordion-${generateId()}`;
         const headerId = `${baseId}-header-${String(index)}`;
         const panelId = `${baseId}-panel-${String(index)}`;
 

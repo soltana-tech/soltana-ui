@@ -11,6 +11,7 @@
 // ---------------------------------------------------------------------------
 
 import type { EnhancerCleanup, EnhancerOptions } from '../config/types.js';
+import { generateId } from './utils/generate-id.js';
 
 export const TABS_SELECTOR = '[data-sol-tabs]';
 
@@ -78,7 +79,7 @@ export function initTabs(options?: EnhancerOptions): EnhancerCleanup {
     if (count === 0) return;
 
     // Initialize ARIA ids and relationships
-    const baseId = container.id || `sol-tabs-${Math.random().toString(36).slice(2, 7)}`;
+    const baseId = container.id || `sol-tabs-${generateId()}`;
     const panels = container.querySelectorAll<HTMLElement>('[role="tabpanel"]');
 
     tabs.forEach((tab, i) => {

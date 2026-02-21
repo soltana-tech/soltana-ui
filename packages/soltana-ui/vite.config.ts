@@ -26,16 +26,6 @@ export default defineConfig({
       },
     },
     cssFileName: 'soltana-ui',
-    rollupOptions: {
-      output: {
-        assetFileNames: (assetInfo) => {
-          if (assetInfo.name?.endsWith('.css')) {
-            return 'soltana-ui.css';
-          }
-          return assetInfo.name ?? 'assets/[name]-[hash][extname]';
-        },
-      },
-    },
     minify: 'esbuild',
     sourcemap: false,
   },

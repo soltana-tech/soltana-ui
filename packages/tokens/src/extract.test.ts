@@ -5,6 +5,10 @@ import { buildPlotlyTemplate } from './formats/plotly.js';
 import { buildMplStyle } from './formats/matplotlib.js';
 import { buildDtcgTheme, buildDtcgFoundation } from './formats/dtcg.js';
 
+// These tests are coupled to CSS string format. The extractFoundation and extractThemes
+// tests validate CSS parsing behavior as much as extraction logic. Future refactoring
+// should consider separating CSS parsing tests from extraction/transformation logic tests.
+
 const MOCK_CSS = `
 :root {
   --radius-sm: .25rem;

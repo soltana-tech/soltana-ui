@@ -1,4 +1,5 @@
 name: Release
+# Requires NPM_TOKEN and PYPI_TOKEN repository secrets to be configured.
 
 on:
   push:
@@ -19,6 +20,8 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+    outputs:
+      publishedPackages: ${{ steps.changesets.outputs.publishedPackages }}
 
     steps:
       - uses: actions/checkout@v4

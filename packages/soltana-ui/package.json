@@ -69,6 +69,7 @@
     "fast-check": "^4.5.3",
     "jsdom": "^26.1.0",
     "postcss": "^8.5.6",
+    "postcss-scss": "^4.0.9",
     "sass": "^1.97.3",
     "vite": "^7.3.1",
     "vite-plugin-dts": "^4.5.4",

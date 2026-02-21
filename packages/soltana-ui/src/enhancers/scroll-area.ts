@@ -45,11 +45,6 @@ export function initScrollAreas(options?: EnhancerOptions): EnhancerCleanup {
       { signal, passive: true }
     );
 
-    // Ensure overflow is set
-    if (!area.style.overflow) {
-      area.style.overflow = 'auto';
-    }
-
     area.setAttribute('tabindex', '0');
     area.setAttribute('role', 'region');
     if (!area.getAttribute('aria-label')) {

@@ -1,6 +1,6 @@
 /** Color palette reference page. */
 
-import { sectionHeading } from '../../utils/helpers';
+import { sectionHeading } from '../../lib/helpers';
 
 function liveSwatchCard(name: string, variable: string): string {
   return `

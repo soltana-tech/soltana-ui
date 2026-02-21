@@ -1,3 +1,5 @@
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { describe, it, expect } from 'vitest';
 import { parseEnhancerFile, parseImperatives } from './extract-enhancers.js';
 
@@ -132,5 +134,68 @@ describe('parseImperatives', () => {
   it('returns empty array for file without imperative exports', () => {
     const imperatives = parseImperatives(ACCORDION_FIXTURE);
     expect(imperatives).toEqual([]);
+  });
+});
+
+describe('source file smoke tests', () => {
+  const enhancersDir = resolve(__dirname, '../../soltana-ui/src/enhancers');
+
+  it.each(['accordion.ts', 'tooltip.ts', 'toast.ts', 'modal.ts', 'tabs.ts'])(
+    '%s exists on disk',
+    (filename) => {
+      expect(existsSync(resolve(enhancersDir, filename))).toBe(true);
+    }
+  );
+});
+
+describe('real file extraction tests', () => {
+  const enhancersDir = resolve(__dirname, '../../soltana-ui/src/enhancers');
+
+  it('extracts accordion.ts correctly', () => {
+    const filePath = resolve(enhancersDir, 'accordion.ts');
+    const content = readFileSync(filePath, 'utf-8');
+    const result = parseEnhancerFile('accordion', content);
+
+    expect(result).not.toBeNull();
+    expect(result!.fileName).toBe('accordion');
+    expect(result!.selector).toBe('[data-sol-accordion]');
+    expect(result!.selectorConst).toBe('ACCORDION_SELECTOR');
+    expect(result!.initFunction).toBe('initAccordions');
+    expect(result!.description).toBeTruthy();
+    expect(typeof result!.description).toBe('string');
+  });
+
+  it('extracts tooltip.ts correctly', () => {
+    const filePath = resolve(enhancersDir, 'tooltip.ts');
+    const content = readFileSync(filePath, 'utf-8');
+    const result = parseEnhancerFile('tooltip', content);
+
+    expect(result).not.toBeNull();
+    expect(result!.fileName).toBe('tooltip');
+    expect(result!.selector).toBe('[data-sol-tooltip]');
+    expect(result!.selectorConst).toBe('TOOLTIP_SELECTOR');
+    expect(result!.initFunction).toBe('initTooltips');
+    expect(result!.description).toBeTruthy();
+  });
+
+  it('extracts toast.ts imperative functions', () => {
+    const filePath = resolve(enhancersDir, 'toast.ts');
+    const content = readFileSync(filePath, 'utf-8');
+    const imperatives = parseImperatives(content);
+
+    expect(imperatives.length).toBeGreaterThan(0);
+    const functionNames = imperatives.map((imp) => imp.name);
+    expect(functionNames).toContain('showToast');
+    expect(functionNames).toContain('dismissToast');
+  });
+
+  it('extracts modal.ts correctly', () => {
+    const filePath = resolve(enhancersDir, 'modal.ts');
+    const content = readFileSync(filePath, 'utf-8');
+    const result = parseEnhancerFile('modal', content);
+
+    expect(result).not.toBeNull();
+    expect(result!.selector).toMatch(/^\[data-sol-/);
+    expect(result!.initFunction).toMatch(/^init[A-Z]/);
   });
 });

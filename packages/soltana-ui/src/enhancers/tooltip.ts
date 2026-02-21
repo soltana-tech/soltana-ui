@@ -11,6 +11,7 @@
 // ---------------------------------------------------------------------------
 
 import type { EnhancerCleanup, EnhancerOptions } from '../config/types.js';
+import { generateId } from './utils/generate-id.js';
 import { computePosition } from './utils/position.js';
 import type { Placement } from './utils/position.js';
 
@@ -46,7 +47,7 @@ function showTooltip(target: HTMLElement): void {
 
   // Generate a stable ID for ARIA
   if (!tip.id) {
-    tip.id = `sol-tooltip-${Math.random().toString(36).slice(2, 7)}`;
+    tip.id = `sol-tooltip-${generateId()}`;
   }
   target.setAttribute('aria-describedby', tip.id);
 

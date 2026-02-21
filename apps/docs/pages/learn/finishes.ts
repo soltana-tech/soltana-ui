@@ -1,6 +1,6 @@
 /** Design System — Finishes page. */
 
-import { sectionHeading, specimenBlock, codeExample } from '../../utils/helpers';
+import { sectionHeading, specimenBlock, codeExample } from '../../lib/helpers';
 
 export function renderFinishes(): HTMLElement {
   const page = document.createElement('div');

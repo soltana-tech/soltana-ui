@@ -25,9 +25,15 @@ export type Finish = BuiltInFinish | (string & {});
 export interface SoltanaInitOptions {
   /** Enable progressive-enhancement enhancers for all 16 component types. */
   enhancers?: boolean;
-  /** Throw on invalid values instead of logging warnings. */
+  /**
+   * Enables strict validation — throws errors instead of logging warnings for invalid tier values.
+   * Intended for development and testing environments.
+   */
   strict?: boolean;
-  /** Options forwarded to individual enhancer initializers. */
+  /**
+   * Options forwarded to individual enhancer initializers.
+   * @deprecated Reserved for future use; currently unused.
+   */
   enhancerOptions?: EnhancerOptions;
 }
 
@@ -82,6 +88,10 @@ export interface EnhancerCleanup {
   destroy(): void;
 }
 
+/**
+ * @remarks For modal and drawer enhancers, selector targets trigger elements.
+ * For all other enhancers, selector targets container elements.
+ */
 export interface EnhancerOptions {
   /**
    * Root element to scope queries. Defaults to `document`.
@@ -91,6 +101,11 @@ export interface EnhancerOptions {
   root?: Element | Document;
   /**
    * Override the default CSS selector for target elements.
+   *
+   * Note: The selector parameter controls different element types depending on the enhancer.
+   * For modal and drawer enhancers, this selects trigger buttons that open the overlay.
+   * For all other enhancers, this selects component container elements.
+   * See per-enhancer documentation for specific selector semantics.
    *
    * Each enhancer defines its own default selector:
    *   - `initModals` → `[data-modal-open]`
@@ -141,21 +156,46 @@ export interface ThemeSeed {
   surfaceBg: string;
   /** Primary text color. */
   textPrimary: string;
-  /** Primary accent / brand color. */
+  /**
+   * Primary accent / brand color.
+   * @remarks Invalid hex colors degrade to neutral gray (#808080) at runtime.
+   */
   accentPrimary: string;
-  /** Decorative accent for borders and highlights. Defaults to `accentPrimary`. */
+  /**
+   * Advanced overrides for semantic color control. For fine-grained per-token
+   * customization, use the `tokens` map in RegisterThemeOptions instead.
+   */
+  /**
+   * Decorative accent for borders and highlights. Defaults to `accentPrimary`.
+   * @remarks Advanced
+   */
   accentDecorative?: string;
   /** Light or dark scheme hint for derived token generation. Defaults to `'dark'`. */
   colorScheme?: 'light' | 'dark';
-  /** Semantic success color. Defaults to green (#10b981 dark / #0d6b4e light). */
+  /**
+   * Semantic success color. Defaults to green (#10b981 dark / #0d6b4e light).
+   * @remarks Advanced
+   */
   colorSuccess?: string;
-  /** Semantic warning color. Defaults to amber (#fcd34d dark / #855c0a light). */
+  /**
+   * Semantic warning color. Defaults to amber (#fcd34d dark / #855c0a light).
+   * @remarks Advanced
+   */
   colorWarning?: string;
-  /** Semantic error color. Defaults to red (#ef4444 dark / #991b1b light). */
+  /**
+   * Semantic error color. Defaults to red (#ef4444 dark / #991b1b light).
+   * @remarks Advanced
+   */
   colorError?: string;
-  /** Semantic info color. Defaults to blue (#3b82f6 dark / #1e40af light). */
+  /**
+   * Semantic info color. Defaults to blue (#3b82f6 dark / #1e40af light).
+   * @remarks Advanced
+   */
   colorInfo?: string;
-  /** Highlight channel (R G B space-separated). Defaults to '255 255 255'. */
+  /**
+   * Highlight channel (R G B space-separated). Defaults to '255 255 255'.
+   * @remarks Advanced
+   */
   highlightColor?: string;
 }
 

@@ -5,6 +5,9 @@
 // Provides both declarative `[data-sol-toast-container]` enhancement and
 // an imperative `showToast()` API for programmatic use.
 //
+// Unlike declarative enhancers that progressively enhance existing markup,
+// this module creates DOM elements imperatively.
+//
 // Singleton lifecycle: module-level AbortController ensures only one enhancer
 // instance is active at a time.
 // ---------------------------------------------------------------------------

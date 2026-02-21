@@ -6,6 +6,7 @@
 // ---------------------------------------------------------------------------
 
 import type { EnhancerCleanup, EnhancerOptions } from '../config/types.js';
+import { generateId } from './utils/generate-id.js';
 
 export const COLLAPSIBLE_SELECTOR = '[data-sol-collapsible]';
 
@@ -49,7 +50,7 @@ export function initCollapsibles(options?: EnhancerOptions): EnhancerCleanup {
 
       // ARIA ids
       if (!content.id) {
-        content.id = `sol-collapsible-${Math.random().toString(36).slice(2, 7)}`;
+        content.id = `sol-collapsible-${generateId()}`;
       }
       trigger.setAttribute('aria-controls', content.id);
 

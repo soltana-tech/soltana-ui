@@ -83,6 +83,9 @@ $golden-ratio: 1.618;
 }
 
 // ---- Pediment — triangular/arched top section ----
+// Note: .pediment and .entablature intentionally use direct styling without tier
+// bridge mixins. These represent structural and layout elements where tier-responsive
+// surface treatment is not applicable. Only .plinth uses tier composition.
 .pediment {
   position: relative;
   padding: math.pow($golden-ratio, 2) * 1rem $golden-ratio * 1rem $golden-ratio * 1rem;

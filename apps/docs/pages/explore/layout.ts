@@ -1,6 +1,6 @@
 /** Layout utilities and spacing system reference page — visual specimens. */
 
-import { sectionHeading } from '../../utils/helpers';
+import { sectionHeading } from '../../lib/helpers';
 
 const SPACING_STEPS: [string, string][] = [
   ['0', '0px'],
@@ -245,6 +245,46 @@ export function renderLayout(): HTMLElement {
     </table>
   </div>
 
+  <h3 class="text-2xl font-semibold mt-12 mb-4">Display Utilities</h3>
+  <p class="text-sm text-secondary mb-6">Control element display mode from <code>_layouts.scss</code>.</p>
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr><th>Class</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>.block</code></td><td>display: block</td></tr>
+        <tr><td><code>.inline-block</code></td><td>display: inline-block</td></tr>
+        <tr><td><code>.inline</code></td><td>display: inline</td></tr>
+        <tr><td><code>.flex</code></td><td>display: flex</td></tr>
+        <tr><td><code>.inline-flex</code></td><td>display: inline-flex</td></tr>
+        <tr><td><code>.grid</code></td><td>display: grid</td></tr>
+        <tr><td><code>.inline-grid</code></td><td>display: inline-grid</td></tr>
+        <tr><td><code>.hidden</code></td><td>display: none</td></tr>
+        <tr><td><code>.contents</code></td><td>display: contents (element replaced by children)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="text-2xl font-semibold mt-12 mb-4">Positioning Utilities</h3>
+  <p class="text-sm text-secondary mb-6">Position mode and placement helpers from <code>_layouts.scss</code>.</p>
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr><th>Class</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>.relative</code></td><td>position: relative</td></tr>
+        <tr><td><code>.absolute</code></td><td>position: absolute</td></tr>
+        <tr><td><code>.fixed</code></td><td>position: fixed</td></tr>
+        <tr><td><code>.sticky</code></td><td>position: sticky</td></tr>
+        <tr><td><code>.static</code></td><td>position: static</td></tr>
+        <tr><td><code>.inset-0</code></td><td>inset: 0 (top, right, bottom, left all 0)</td></tr>
+        <tr><td><code>.top-0</code>, <code>.right-0</code>, <code>.bottom-0</code>, <code>.left-0</code></td><td>Individual edge positioning to 0</td></tr>
+      </tbody>
+    </table>
+  </div>
+
   <h3 class="text-2xl font-semibold mt-12 mb-4">Sizing Utilities</h3>
   <p class="text-sm text-secondary mb-6">Width and height utilities from <code>_sizing.scss</code>.</p>
 
@@ -329,6 +369,16 @@ export function renderLayout(): HTMLElement {
     </table>
   </div>
   <p class="text-sm text-secondary mt-4">Visual and tier classes are intentionally excluded from responsive prefixes — responsive concerns are limited to the layout sphere.</p>
+
+  <h3 class="text-2xl font-semibold mt-12 mb-4">See Also</h3>
+  <p class="text-sm text-secondary mb-4">
+    For tier override utilities (<code>.theme-*</code>, <code>.relief-*</code>, <code>.finish-*</code>), see:
+  </p>
+  <ul class="text-secondary" style="padding-left: 1.5rem; list-style: disc;">
+    <li><a href="/learn/themes" class="link">Themes</a> — <code>.theme-*</code> utility classes for per-element theme overrides</li>
+    <li><a href="/learn/reliefs" class="link">Reliefs</a> — <code>.relief-*</code> utility classes for per-element shadow model overrides</li>
+    <li><a href="/learn/finishes" class="link">Finishes</a> — <code>.finish-*</code> utility classes for per-element surface treatment overrides</li>
+  </ul>
 
 </div>`;
   return page;

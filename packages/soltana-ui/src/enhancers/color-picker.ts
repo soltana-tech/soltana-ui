@@ -3,6 +3,9 @@
 // ---------------------------------------------------------------------------
 // Progressive enhancement for [data-sol-color-picker] elements.
 // HSV-based color selection with 2D area, hue slider, and swatches.
+//
+// Note: This is a reference implementation that extends beyond the typical
+// enhancer pattern, including color model computation and multi-element state.
 // ---------------------------------------------------------------------------
 
 import type { EnhancerCleanup, EnhancerOptions } from '../config/types.js';

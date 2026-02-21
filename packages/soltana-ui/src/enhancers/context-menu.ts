@@ -72,8 +72,8 @@ export function initContextMenus(options?: EnhancerOptions): EnhancerCleanup {
             gap: 0,
           });
 
-          menu.style.top = `${String(pos.top)}px`;
-          menu.style.left = `${String(pos.left)}px`;
+          menu.style.setProperty('--context-menu-top', `${String(pos.top)}px`);
+          menu.style.setProperty('--context-menu-left', `${String(pos.left)}px`);
           menu.classList.add('active');
 
           // Focus first item

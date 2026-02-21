@@ -18,6 +18,8 @@
 
 .hover-card-content {
   position: absolute;
+  top: var(--hover-card-top, 0);
+  left: var(--hover-card-left, 0);
   z-index: var(--z-popover);
   width: 20rem;
   padding: 1rem;

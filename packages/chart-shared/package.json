@@ -12,7 +12,10 @@
     "./test-static-exports": "./src/test-static-exports.ts"
   },
   "scripts": {
-    "test": "vitest run"
+    "test": "vitest run",
+    "lint": "pnpm run lint:ts",
+    "lint:ts": "eslint src/",
+    "type-check": "tsc --noEmit"
   },
   "devDependencies": {
     "vitest": "^3.2.4"

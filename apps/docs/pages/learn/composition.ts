@@ -1,6 +1,6 @@
 /** Design System — Per-Element Composition page. */
 
-import { sectionHeading, specimenBlock, codeExample } from '../../utils/helpers';
+import { sectionHeading, specimenBlock, codeExample } from '../../lib/helpers';
 
 export function renderComposition(): HTMLElement {
   const page = document.createElement('div');
@@ -90,6 +90,13 @@ export function renderComposition(): HTMLElement {
     <p class="text-sm text-secondary mb-4">CSS custom properties set directly on an element always override values inherited from ancestors. The innermost class wins:</p>
     ${codeExample('<!-- Stacking depth: innermost wins -->\n<html data-theme="dark">           <!-- dark tokens -->\n  <div class="theme-light">        <!-- light tokens -->\n    <div class="theme-dark">       <!-- dark tokens again -->\n      Content uses dark theme.\n    </div>\n  </div>\n</html>', 'html')}
     <p class="text-sm text-secondary mt-4">Tier combination count is linear (t + r + f rulesets), not multiplicative. No combination-specific CSS is generated — each tier cascades independently via custom properties.</p>
+  `
+  )}
+
+  ${specimenBlock(
+    'Utility Class Reference',
+    `
+    <p class="text-sm text-secondary mb-4">For a complete listing of all utility classes (layout, spacing, typography, and visual utilities), see the auto-generated reference at <code>.claude/agents/reference.yaml</code> or the SCSS source in <code>src/styles/utilities/</code>.</p>
   `
   )}
 

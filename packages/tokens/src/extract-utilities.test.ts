@@ -1,3 +1,5 @@
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { describe, it, expect } from 'vitest';
 import { extractUtilities } from './extract-utilities.js';
 
@@ -120,4 +122,15 @@ describe('extractUtilities', () => {
       expect(group.description.length).toBeGreaterThan(0);
     }
   });
+});
+
+describe('source file smoke tests', () => {
+  const utilitiesDir = resolve(__dirname, '../../soltana-ui/src/styles/utilities');
+
+  it.each(['_spacing.scss', '_layout.scss', '_sizing.scss', '_visual.scss'])(
+    '%s exists on disk',
+    (filename) => {
+      expect(existsSync(resolve(utilitiesDir, filename))).toBe(true);
+    }
+  );
 });

@@ -2,7 +2,15 @@
   "name": "@soltana-ui/tokens",
   "version": "1.0.0",
   "private": false,
-  "description": "Design token compiler for Soltana UI — outputs ECharts JSON, Plotly JSON, Mermaid JSON, .mplstyle, and DTCG JSON.",
+  "sideEffects": false,
+  "description": "Design token compiler for Soltana UI — outputs chart themes, matplotlib styles, DTCG JSON, and documentation formats.",
+  "keywords": [
+    "design-tokens",
+    "soltana-ui",
+    "design-system",
+    "dtcg",
+    "css-variables"
+  ],
   "type": "module",
   "license": "MIT",
   "author": "Soltana",
@@ -31,10 +39,8 @@
     "lint:ts": "eslint src/",
     "type-check": "tsc --noEmit"
   },
-  "dependencies": {
-    "@soltana-ui/chart-shared": "workspace:*"
-  },
   "devDependencies": {
+    "@soltana-ui/chart-shared": "workspace:*",
     "@types/js-yaml": "^4.0.9",
     "js-yaml": "^4.1.0",
     "postcss": "^8.5.6",

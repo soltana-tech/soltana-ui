@@ -1,6 +1,6 @@
 /** Typography system reference page — visual specimens for weights, scale, and families. */
 
-import { sectionHeading } from '../../utils/helpers';
+import { sectionHeading } from '../../lib/helpers';
 
 const WEIGHTS: [string, number][] = [
   ['Light', 300],

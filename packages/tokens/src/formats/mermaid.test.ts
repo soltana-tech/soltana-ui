@@ -1,9 +1,8 @@
-import { describe, it, expect } from 'vitest';
+import { describeFormatBuilder, it, expect } from './__test-utils__.js';
 import { buildMermaidConfig } from './mermaid.js';
 import { darkTheme, foundationMinimal as foundation } from '../__fixtures__/tokens.js';
 
-describe('buildMermaidConfig', () => {
-  const result = buildMermaidConfig(darkTheme, foundation);
+describeFormatBuilder('buildMermaidConfig', buildMermaidConfig, darkTheme, foundation, (result) => {
   const vars = result.themeVariables;
 
   it('sets theme to "base"', () => {

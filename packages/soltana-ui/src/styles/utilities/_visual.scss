@@ -73,6 +73,12 @@
 // ============================================================================
 
 // Semantic surface and state backgrounds
+// Note: .bg-surface-1 through .bg-surface-4 intentionally bypass tier composition
+// by directly exposing raw theme tokens. These utilities do not respond to relief
+// or finish tier changes. Consumers should prefer component-level styling or
+// tier-aware patterns (such as components that consume --relief-bg bridge tokens)
+// for tier-responsive backgrounds. Tier-aware utility alternatives may be added
+// in future versions.
 $bg-semantic: (
   surface: --surface-bg,
   surface-1: --surface-1,

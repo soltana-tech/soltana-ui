@@ -3,6 +3,9 @@
 // ---------------------------------------------------------------------------
 // Progressive enhancement for [data-sol-date-picker] elements.
 // Calendar-based date selection with full keyboard support and ARIA.
+//
+// Unlike declarative enhancers that progressively enhance existing markup,
+// this module creates DOM elements imperatively.
 // ---------------------------------------------------------------------------
 
 import type { EnhancerCleanup, EnhancerOptions } from '../config/types.js';

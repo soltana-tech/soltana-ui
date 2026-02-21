@@ -6,7 +6,7 @@ import {
   specimenBlock,
   quickNav,
   sectionDivider,
-} from '../../utils/helpers';
+} from '../../lib/helpers';
 
 export function renderApiCore(): HTMLElement {
   const page = document.createElement('div');
@@ -49,10 +49,11 @@ export function renderApiCore(): HTMLElement {
         </thead>
         <tbody>
           <tr><td><code>theme</code></td><td><code>Theme</code></td><td><code>'auto'</code></td><td>Color scheme. <code>'auto'</code> resolves via <code>prefers-color-scheme</code>.</td></tr>
-          <tr><td><code>relief</code></td><td><code>Relief</code></td><td><code>'neumorphic'</code></td><td>Shadow model applied globally.</td></tr>
+          <tr><td><code>relief</code></td><td><code>Relief</code></td><td><code>'flat'</code></td><td>Shadow model applied globally.</td></tr>
           <tr><td><code>finish</code></td><td><code>Finish</code></td><td><code>'matte'</code></td><td>Surface treatment.</td></tr>
           <tr><td><code>overrides</code></td><td><code>Record&lt;string, string&gt;</code></td><td><code>{}</code></td><td>CSS custom property overrides applied to <code>:root</code>.</td></tr>
           <tr><td><code>enhancers</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Auto-initialize modal, tab, and tooltip enhancers. Defaults to <code>false</code> so CSS-only consumers avoid JS enhancer overhead — interactive apps should pass <code>true</code>.</td></tr>
+          <tr><td><code>enhancerOptions</code></td><td><code>EnhancerOptions</code></td><td><code>undefined</code></td><td>Per-enhancer configuration overrides for root element and selector. See behavior API docs for EnhancerOptions type.</td></tr>
           <tr><td><code>strict</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Throw on invalid tier values instead of logging warnings.</td></tr>
         </tbody>
       </table>
@@ -185,6 +186,13 @@ soltana.setRelief('skeuomorphic');
 soltana.setFinish('frosted');`,
       'typescript'
     )}
+
+    <p class="text-secondary mt-4">
+      <strong>Note:</strong> For CSS-only per-element overrides without JavaScript, see
+      <a href="/learn/themes" class="link">Themes</a>,
+      <a href="/learn/reliefs" class="link">Reliefs</a>, and
+      <a href="/learn/finishes" class="link">Finishes</a> for utility class documentation.
+    </p>
   `
   )}
 
@@ -231,11 +239,6 @@ soltana.setFinish('frosted');`,
       <code>&lt;html&gt;</code>, clears overrides, and destroys active enhancers.
       The instance should not be used after calling <code>destroy()</code>.
     </p>
-    <p class="text-secondary mb-4">
-      <strong>Stale instance detection:</strong> if <code>initSoltana()</code> has been
-      called again since this instance was created, <code>destroy()</code> will warn
-      (or throw in strict mode) and no-op to avoid tearing down the newer instance.
-    </p>
     ${codeExample(`soltana.destroy();`, 'typescript')}
   `
   )}
@@ -265,7 +268,7 @@ soltana.setFinish('frosted');`,
       `import { DEFAULT_STATE } from 'soltana-ui';
 
 console.log(DEFAULT_STATE);
-// { theme: 'auto', relief: 'neumorphic', finish: 'matte', overrides: {} }`,
+// { theme: 'auto', relief: 'flat', finish: 'matte', overrides: {} }`,
       'typescript'
     )}
   `

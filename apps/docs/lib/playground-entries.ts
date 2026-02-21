@@ -185,9 +185,26 @@ registerComponent({
         <div class="callout-title">Tip</div>
         <div class="callout-content">Use semantic variants to convey meaning through color.</div>
       </div>
+    </div>`,
+});
+
+registerComponent({
+  id: 'blockquote',
+  name: 'Blockquote',
+  category: 'Content',
+  description: 'Styled quotation blocks with optional footer attribution.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="flex flex-col gap-4" style="width: 100%;">
       <blockquote class="blockquote">
         Good design is as little design as possible.
         <footer class="blockquote-footer">Dieter Rams</footer>
+      </blockquote>
+      <blockquote class="blockquote">
+        Simplicity is the ultimate sophistication.
+        <footer class="blockquote-footer">Leonardo da Vinci</footer>
+      </blockquote>
+      <blockquote class="blockquote">
+        Design is not just what it looks like and feels like. Design is how it works.
       </blockquote>
     </div>`,
 });
@@ -782,6 +799,24 @@ registerComponent({
 });
 
 registerComponent({
+  id: 'input-number',
+  name: 'Number Input',
+  category: 'Forms',
+  description: 'Numeric input with increment and decrement buttons.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="flex flex-col gap-4" style="max-width: 320px;">
+      <div class="input-group">
+        <label class="input-label">Quantity</label>
+        <div class="input-number">
+          <button class="input-number-step" aria-label="Decrease">-</button>
+          <input type="number" class="input" value="1" min="0" max="99" style="text-align: center; border: none; margin: 0;" />
+          <button class="input-number-step" aria-label="Increase">+</button>
+        </div>
+      </div>
+    </div>`,
+});
+
+registerComponent({
   id: 'segmented-controls',
   name: 'Segmented Controls',
   category: 'Forms',
@@ -890,6 +925,23 @@ registerComponent({
         <button class="btn btn-primary">Get Started</button>
         <button class="btn btn-outline">Documentation</button>
       </div>
+    </div>`,
+});
+
+registerComponent({
+  id: 'page-footer',
+  name: 'Page Footer',
+  category: 'Layout',
+  description: 'Page-level footer with links and metadata.',
+  renderPreview: (_state: SandboxState) => `
+    <div class="page-footer rounded-xl" style="width: 100%;">
+      <div class="flex flex-wrap gap-4">
+        <a class="link-muted" href="javascript:void(0)">About</a>
+        <a class="link-muted" href="javascript:void(0)">Privacy</a>
+        <a class="link-muted" href="javascript:void(0)">Terms</a>
+        <a class="link-muted" href="javascript:void(0)">Contact</a>
+      </div>
+      <div class="text-muted">&copy; 2026 Soltana UI. All rights reserved.</div>
     </div>`,
 });
 

@@ -6,7 +6,7 @@ import {
   specimenBlock,
   quickNav,
   sectionDivider,
-} from '../../utils/helpers';
+} from '../../lib/helpers';
 
 export function renderApiBehavior(): HTMLElement {
   const page = document.createElement('div');
@@ -52,6 +52,26 @@ export function renderApiBehavior(): HTMLElement {
 }`,
         'typescript'
       )}
+
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>root</code></td>
+              <td><code>Element | Document</code></td>
+              <td>Scope enhancer queries to a DOM subtree (default: document). Useful for shadow DOM, dynamically loaded content, or per-section initialization.</td>
+            </tr>
+            <tr>
+              <td><code>selector</code></td>
+              <td><code>string</code></td>
+              <td>Override the default data attribute selector. Use when custom attribute naming is needed or to limit enhancer activation to specific elements.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <h4 class="text-lg font-semibold mt-6 mb-2">EnhancerCleanup</h4>
       ${codeExample(
@@ -221,6 +241,35 @@ export function renderApiBehavior(): HTMLElement {
 </span>`,
         'html'
       )}
+    `
+    )}
+
+    ${specimenBlock(
+      'CSS-Only vs. JS-Enhanced Tooltips',
+      `
+      <p class="text-secondary mb-4">
+        Soltana provides two tooltip implementations. Choose based on functionality requirements:
+      </p>
+
+      <h4 class="text-lg font-semibold mt-6 mb-2">CSS-Only Tooltips</h4>
+      <ul class="text-secondary" style="padding-left: 1.5rem; margin-bottom: 1rem;">
+        <li>Lightweight, no JavaScript required</li>
+        <li>Limited to 4 directional positions (top, bottom, left, right)</li>
+        <li>No dynamic content support</li>
+        <li>Uses <code>.tooltip</code> class with <code>data-tooltip</code> attribute</li>
+      </ul>
+
+      <h4 class="text-lg font-semibold mt-6 mb-2">JS-Enhanced Tooltips</h4>
+      <ul class="text-secondary" style="padding-left: 1.5rem; margin-bottom: 1rem;">
+        <li>Viewport-aware positioning with collision detection</li>
+        <li>Dynamic content support</li>
+        <li>Programmatic show/hide control</li>
+        <li>Uses <code>[data-sol-tooltip]</code> attribute with <code>initTooltips()</code> enhancer</li>
+      </ul>
+
+      <div class="alert alert-warning mt-4">
+        <strong>Warning:</strong> Do not combine <code>.tooltip</code> class with <code>[data-sol-tooltip]</code> attribute on the same element — the two systems will conflict.
+      </div>
     `
     )}
 

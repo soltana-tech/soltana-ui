@@ -54,8 +54,14 @@ export function initHoverCards(options?: EnhancerOptions): EnhancerCleanup {
         }
         showTimer = setTimeout(() => {
           const pos = computePosition({ anchor: trigger, floating: content, placement });
-          content.style.top = `${String(pos.top - wrapper.getBoundingClientRect().top)}px`;
-          content.style.left = `${String(pos.left - wrapper.getBoundingClientRect().left)}px`;
+          content.style.setProperty(
+            '--hover-card-top',
+            `${String(pos.top - wrapper.getBoundingClientRect().top)}px`
+          );
+          content.style.setProperty(
+            '--hover-card-left',
+            `${String(pos.left - wrapper.getBoundingClientRect().left)}px`
+          );
           content.classList.add('active');
         }, showDelay);
       }

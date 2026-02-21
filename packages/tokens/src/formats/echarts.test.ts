@@ -1,10 +1,8 @@
-import { describe, it, expect } from 'vitest';
+import { describeFormatBuilder, it, expect } from './__test-utils__.js';
 import { buildEChartsTheme } from './echarts.js';
 import { darkTheme, foundationStandard as foundation } from '../__fixtures__/tokens.js';
 
-describe('buildEChartsTheme', () => {
-  const result = buildEChartsTheme(darkTheme, foundation);
-
+describeFormatBuilder('buildEChartsTheme', buildEChartsTheme, darkTheme, foundation, (result) => {
   it('sets 6-color palette', () => {
     expect(result.color).toHaveLength(6);
     expect((result.color as string[])[0]).toBe('#d4a843');
