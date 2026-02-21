@@ -21,6 +21,9 @@
   "files": [
     "dist"
   ],
+  "main": "./dist/soltana-mermaid.js",
+  "module": "./dist/soltana-mermaid.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

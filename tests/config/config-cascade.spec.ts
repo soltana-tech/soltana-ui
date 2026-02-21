@@ -1,7 +1,3 @@
-// TODO: Visual regression tests for tier combinations are a future improvement,
-// particularly for combinations where tiers interact via bridge tokens
-// (e.g., frosted finish over skeuomorphic relief).
-
 import { test, expect } from '@playwright/test';
 import { setupSoltanaPage } from '../fixtures/soltana-page';
 import { getComputedCSSProperty, getTierAttributes } from '../fixtures/helpers';
@@ -268,4 +264,83 @@ test.describe('sampled cross-product combinations', () => {
       expect(finishBlur).not.toBe('');
     });
   }
+});
+
+test.describe('bridge pattern composition', () => {
+  test('theme and finish composition populates bridge channel tokens', async ({ page }) => {
+    await setupSoltanaPage(page);
+
+    await page.evaluate(() => {
+      (window as any).__sol = window.SoltanaUI.initSoltana({
+        theme: 'dark',
+        relief: 'flat',
+        finish: 'frosted',
+      });
+    });
+
+    const sheenColor = await getComputedCSSProperty(page, '--channel-sheen-color');
+    const tintColor = await getComputedCSSProperty(page, '--channel-tint-color');
+
+    expect(sheenColor).not.toBe('');
+    expect(tintColor).not.toBe('');
+    expect(sheenColor).not.toBe('initial');
+    expect(tintColor).not.toBe('initial');
+
+    await page.evaluate(() => {
+      (window as any).__sol.setFinish('matte');
+    });
+
+    const sheenAfterMatte = await getComputedCSSProperty(page, '--channel-sheen-color');
+    const tintAfterMatte = await getComputedCSSProperty(page, '--channel-tint-color');
+
+    expect(sheenAfterMatte).not.toBe('');
+    expect(tintAfterMatte).not.toBe('');
+  });
+
+  test('non-flat relief with non-matte finish populates bridge properties', async ({ page }) => {
+    await setupSoltanaPage(page);
+
+    await page.evaluate(() => {
+      window.SoltanaUI.initSoltana({
+        theme: 'dark',
+        relief: 'skeuomorphic',
+        finish: 'frosted',
+      });
+    });
+
+    const shadowColor = await getComputedCSSProperty(page, '--shadow-color');
+    const highlightColor = await getComputedCSSProperty(page, '--highlight-color');
+
+    expect(shadowColor).not.toBe('');
+    expect(highlightColor).not.toBe('');
+    expect(shadowColor).not.toBe('initial');
+    expect(highlightColor).not.toBe('initial');
+  });
+
+  test('relief and finish interact via shadow and highlight bridge properties', async ({
+    page,
+  }) => {
+    await setupSoltanaPage(page);
+
+    await page.evaluate(() => {
+      (window as any).__sol = window.SoltanaUI.initSoltana({
+        theme: 'dark',
+        relief: 'flat',
+        finish: 'matte',
+      });
+    });
+
+    const _shadowFlat = await getComputedCSSProperty(page, '--shadow-color');
+    const _highlightFlat = await getComputedCSSProperty(page, '--highlight-color');
+
+    await page.evaluate(() => {
+      (window as any).__sol.setRelief('glassmorphic');
+    });
+
+    const shadowGlass = await getComputedCSSProperty(page, '--shadow-color');
+    const highlightGlass = await getComputedCSSProperty(page, '--highlight-color');
+
+    expect(shadowGlass).not.toBe('');
+    expect(highlightGlass).not.toBe('');
+  });
 });

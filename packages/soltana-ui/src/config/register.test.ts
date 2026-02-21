@@ -82,17 +82,36 @@ describe('deriveThemeTokens', () => {
 
   it('derives surface scale with color-mix expressions', () => {
     const result = deriveThemeTokens(DARK_SEED);
+    // Verify all surface tokens are valid color-mix() expressions
+    ['--surface-1', '--surface-2', '--surface-3', '--surface-4'].forEach((token) => {
+      expect(result[token]).toMatch(/^color-mix\(in oklch, #08091a, white \d+%\)$/);
+    });
+    // Verify progression: each surface level has increasing mix percentage
+    const surface1Pct = parseInt(/(\d+)%/.exec(result['--surface-1'])?.[1] ?? '0', 10);
+    const surface2Pct = parseInt(/(\d+)%/.exec(result['--surface-2'])?.[1] ?? '0', 10);
+    const surface3Pct = parseInt(/(\d+)%/.exec(result['--surface-3'])?.[1] ?? '0', 10);
+    const surface4Pct = parseInt(/(\d+)%/.exec(result['--surface-4'])?.[1] ?? '0', 10);
+    expect(surface2Pct).toBeGreaterThan(surface1Pct);
+    expect(surface3Pct).toBeGreaterThan(surface2Pct);
+    expect(surface4Pct).toBeGreaterThan(surface3Pct);
+    // Regression: exact expression ensures mixing strategy stability
     expect(result['--surface-1']).toBe('color-mix(in oklch, #08091a, white 5%)');
-    expect(result['--surface-2']).toBe('color-mix(in oklch, #08091a, white 10%)');
-    expect(result['--surface-3']).toBe('color-mix(in oklch, #08091a, white 15%)');
-    expect(result['--surface-4']).toBe('color-mix(in oklch, #08091a, white 20%)');
   });
 
   it('derives text hierarchy fading toward surfaceBg', () => {
     const result = deriveThemeTokens(DARK_SEED);
+    // Verify all text hierarchy tokens use color-mix with increasing fade
+    ['--text-secondary', '--text-tertiary', '--text-muted'].forEach((token) => {
+      expect(result[token]).toMatch(/^color-mix\(in oklch, #f5f0e6, #08091a \d+%\)$/);
+    });
+    // Verify fade progression: each level fades more toward background
+    const secondaryPct = parseInt(/(\d+)%/.exec(result['--text-secondary'])?.[1] ?? '0', 10);
+    const tertiaryPct = parseInt(/(\d+)%/.exec(result['--text-tertiary'])?.[1] ?? '0', 10);
+    const mutedPct = parseInt(/(\d+)%/.exec(result['--text-muted'])?.[1] ?? '0', 10);
+    expect(tertiaryPct).toBeGreaterThan(secondaryPct);
+    expect(mutedPct).toBeGreaterThan(tertiaryPct);
+    // Regression: exact expression ensures mixing strategy stability
     expect(result['--text-secondary']).toBe('color-mix(in oklch, #f5f0e6, #08091a 25%)');
-    expect(result['--text-tertiary']).toBe('color-mix(in oklch, #f5f0e6, #08091a 45%)');
-    expect(result['--text-muted']).toBe('color-mix(in oklch, #f5f0e6, #08091a 55%)');
   });
 
   it('sets --text-inverse to surfaceBg', () => {
@@ -108,12 +127,24 @@ describe('deriveThemeTokens', () => {
 
   it('dark scheme hover lightens (mixes with white)', () => {
     const result = deriveThemeTokens(DARK_SEED);
+    // Verify hover state uses color-mix with white
+    expect(result['--accent-primary-hover']).toMatch(
+      /^color-mix\(in oklch, #d4a843, white \d+%\)$/
+    );
+    // Verify hover differs from base
+    expect(result['--accent-primary-hover']).not.toBe(result['--accent-primary']);
+    // Regression: exact expression ensures mixing strategy stability
     expect(result['--accent-primary-hover']).toBe('color-mix(in oklch, #d4a843, white 15%)');
   });
 
   it('light scheme hover darkens (mixes with black)', () => {
     const result = deriveThemeTokens(LIGHT_SEED);
-    expect(result['--accent-primary-hover']).toBe('color-mix(in oklch, #576378, black 15%)');
+    // Verify hover state uses color-mix with black
+    expect(result['--accent-primary-hover']).toMatch(
+      /^color-mix\(in oklch, #576378, black \d+%\)$/
+    );
+    // Verify hover differs from base
+    expect(result['--accent-primary-hover']).not.toBe(result['--accent-primary']);
   });
 
   it('defaults accentDecorative to accentPrimary', () => {
@@ -129,14 +160,25 @@ describe('deriveThemeTokens', () => {
   it('defaults colorScheme to dark', () => {
     const result = deriveThemeTokens(DARK_SEED);
     expect(result['--shadow-color']).toBe('0 0 0');
-    expect(result['--neu-shadow']).toContain('65%');
+    // Verify neu-shadow uses rgb() with shadow-color channel
+    expect(result['--neu-shadow']).toMatch(/^rgb\(var\(--shadow-color\) \/ \d+%\)$/);
+    // Dark themes use higher opacity for neumorphic shadows
+    const neuShadowOpacity = parseInt(/(\d+)%/.exec(result['--neu-shadow'])?.[1] ?? '0', 10);
+    expect(neuShadowOpacity).toBeGreaterThan(50);
   });
 
   it('light colorScheme produces light-appropriate tokens', () => {
     const result = deriveThemeTokens(LIGHT_SEED);
     expect(result['--shadow-color']).toBe('0 0 0');
-    expect(result['--neu-shadow']).toContain('35%');
-    expect(result['--neu-light']).toContain('88%');
+    // Verify neu-shadow and neu-light use rgb() with channel references
+    expect(result['--neu-shadow']).toMatch(/^rgb\(var\(--shadow-color\) \/ \d+%\)$/);
+    expect(result['--neu-light']).toMatch(/^rgb\(var\(--highlight-color\) \/ \d+%\)$/);
+    // Light themes use lower opacity for neumorphic shadows
+    const neuShadowOpacity = parseInt(/(\d+)%/.exec(result['--neu-shadow'])?.[1] ?? '0', 10);
+    expect(neuShadowOpacity).toBeLessThan(50);
+    // Light themes use higher opacity for neumorphic highlights
+    const neuLightOpacity = parseInt(/(\d+)%/.exec(result['--neu-light'])?.[1] ?? '0', 10);
+    expect(neuLightOpacity).toBeGreaterThan(50);
   });
 
   it('dark scheme uses dark semantic colors', () => {

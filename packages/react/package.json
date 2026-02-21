@@ -21,6 +21,9 @@
   "files": [
     "dist"
   ],
+  "main": "./dist/soltana-react.js",
+  "module": "./dist/soltana-react.js",
+  "types": "./dist/index.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {

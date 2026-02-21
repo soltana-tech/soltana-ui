@@ -189,9 +189,9 @@ soltana.setFinish('frosted');`,
 
     <p class="text-secondary mt-4">
       <strong>Note:</strong> For CSS-only per-element overrides without JavaScript, see
-      <a href="/learn/themes" class="link">Themes</a>,
-      <a href="/learn/reliefs" class="link">Reliefs</a>, and
-      <a href="/learn/finishes" class="link">Finishes</a> for utility class documentation.
+      <a href="#/learn/themes" class="link">Themes</a>,
+      <a href="#/learn/reliefs" class="link">Reliefs</a>, and
+      <a href="#/learn/finishes" class="link">Finishes</a> for utility class documentation.
     </p>
   `
   )}

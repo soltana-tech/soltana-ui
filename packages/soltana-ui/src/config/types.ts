@@ -86,41 +86,15 @@ export interface EnhancerCleanup {
 }
 
 /**
- * @remarks For modal and drawer enhancers, selector targets trigger elements.
- * For all other enhancers, selector targets container elements.
+ * Enhancer initialization options.
  */
 export interface EnhancerOptions {
   /**
    * Root element to scope queries. Defaults to `document`.
-   * Use this to limit enhancer initialization to a subtree (e.g. a shadow root
-   * or a dynamically-loaded section).
    */
   root?: Element | Document;
   /**
    * Override the default CSS selector for target elements.
-   *
-   * Note: The selector parameter controls different element types depending on the enhancer.
-   * For modal and drawer enhancers, this selects trigger buttons that open the overlay.
-   * For all other enhancers, this selects component container elements.
-   * See per-enhancer documentation for specific selector semantics.
-   *
-   * Each enhancer defines its own default selector:
-   *   - `initModals` → `[data-modal-open]`
-   *   - `initTabs` → `[data-sol-tabs]`
-   *   - `initTooltips` → `[data-sol-tooltip]`
-   *   - `initAccordions` → `[data-sol-accordion]`
-   *   - `initDropdowns` → `[data-sol-dropdown]`
-   *   - `initDrawers` → `[data-drawer-open]`
-   *   - `initToasts` → `[data-sol-toast-container]`
-   *   - `initCollapsibles` → `[data-sol-collapsible]`
-   *   - `initComboboxes` → `[data-sol-combobox]`
-   *   - `initHoverCards` → `[data-sol-hover-card]`
-   *   - `initContextMenus` → `[data-sol-context-menu]`
-   *   - `initCarousels` → `[data-sol-carousel]`
-   *   - `initScrollAreas` → `[data-sol-scroll-area]`
-   *   - `initDatePickers` → `[data-sol-date-picker]`
-   *   - `initColorPickers` → `[data-sol-color-picker]`
-   *   - `initTrees` → `[data-sol-tree]`
    */
   selector?: string;
 }

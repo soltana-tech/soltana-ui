@@ -56,67 +56,49 @@ describe('registerTierValue', () => {
 });
 
 describe('tier independence', () => {
-  it('setting theme preserves relief and finish values', () => {
-    registerTierValue('theme', 'custom-theme-a');
-    registerTierValue('relief', 'custom-relief-a');
-    registerTierValue('finish', 'custom-finish-a');
+  it.each([
+    {
+      changedTier: 'theme' as const,
+      otherTiers: ['relief', 'finish'] as const,
+      arrays: { theme: VALID_THEMES, relief: VALID_RELIEFS, finish: VALID_FINISHES },
+    },
+    {
+      changedTier: 'relief' as const,
+      otherTiers: ['theme', 'finish'] as const,
+      arrays: { theme: VALID_THEMES, relief: VALID_RELIEFS, finish: VALID_FINISHES },
+    },
+    {
+      changedTier: 'finish' as const,
+      otherTiers: ['theme', 'relief'] as const,
+      arrays: { theme: VALID_THEMES, relief: VALID_RELIEFS, finish: VALID_FINISHES },
+    },
+  ])('setting $changedTier preserves other tier values', ({ changedTier, otherTiers, arrays }) => {
+    const timestamp = String(Date.now());
+    const initialValues = {
+      theme: `custom-theme-${timestamp}`,
+      relief: `custom-relief-${timestamp}`,
+      finish: `custom-finish-${timestamp}`,
+    };
+    const secondValue = `custom-${changedTier}-${timestamp}-2`;
 
-    expect(VALID_THEMES).toContain('custom-theme-a');
-    expect(VALID_RELIEFS).toContain('custom-relief-a');
-    expect(VALID_FINISHES).toContain('custom-finish-a');
+    registerTierValue('theme', initialValues.theme);
+    registerTierValue('relief', initialValues.relief);
+    registerTierValue('finish', initialValues.finish);
 
-    registerTierValue('theme', 'custom-theme-b');
+    expect(arrays.theme).toContain(initialValues.theme);
+    expect(arrays.relief).toContain(initialValues.relief);
+    expect(arrays.finish).toContain(initialValues.finish);
 
-    expect(VALID_THEMES).toContain('custom-theme-b');
-    expect(VALID_RELIEFS).toContain('custom-relief-a');
-    expect(VALID_FINISHES).toContain('custom-finish-a');
+    registerTierValue(changedTier, secondValue);
 
-    deregisterTierValue('theme', 'custom-theme-a');
-    deregisterTierValue('theme', 'custom-theme-b');
-    deregisterTierValue('relief', 'custom-relief-a');
-    deregisterTierValue('finish', 'custom-finish-a');
-  });
+    expect(arrays[changedTier]).toContain(secondValue);
+    expect(arrays[otherTiers[0]]).toContain(initialValues[otherTiers[0]]);
+    expect(arrays[otherTiers[1]]).toContain(initialValues[otherTiers[1]]);
 
-  it('setting relief preserves theme and finish values', () => {
-    registerTierValue('theme', 'custom-theme-c');
-    registerTierValue('relief', 'custom-relief-b');
-    registerTierValue('finish', 'custom-finish-b');
-
-    expect(VALID_THEMES).toContain('custom-theme-c');
-    expect(VALID_RELIEFS).toContain('custom-relief-b');
-    expect(VALID_FINISHES).toContain('custom-finish-b');
-
-    registerTierValue('relief', 'custom-relief-c');
-
-    expect(VALID_THEMES).toContain('custom-theme-c');
-    expect(VALID_RELIEFS).toContain('custom-relief-c');
-    expect(VALID_FINISHES).toContain('custom-finish-b');
-
-    deregisterTierValue('theme', 'custom-theme-c');
-    deregisterTierValue('relief', 'custom-relief-b');
-    deregisterTierValue('relief', 'custom-relief-c');
-    deregisterTierValue('finish', 'custom-finish-b');
-  });
-
-  it('setting finish preserves theme and relief values', () => {
-    registerTierValue('theme', 'custom-theme-d');
-    registerTierValue('relief', 'custom-relief-d');
-    registerTierValue('finish', 'custom-finish-c');
-
-    expect(VALID_THEMES).toContain('custom-theme-d');
-    expect(VALID_RELIEFS).toContain('custom-relief-d');
-    expect(VALID_FINISHES).toContain('custom-finish-c');
-
-    registerTierValue('finish', 'custom-finish-d');
-
-    expect(VALID_THEMES).toContain('custom-theme-d');
-    expect(VALID_RELIEFS).toContain('custom-relief-d');
-    expect(VALID_FINISHES).toContain('custom-finish-d');
-
-    deregisterTierValue('theme', 'custom-theme-d');
-    deregisterTierValue('relief', 'custom-relief-d');
-    deregisterTierValue('finish', 'custom-finish-c');
-    deregisterTierValue('finish', 'custom-finish-d');
+    deregisterTierValue('theme', initialValues.theme);
+    deregisterTierValue('relief', initialValues.relief);
+    deregisterTierValue('finish', initialValues.finish);
+    deregisterTierValue(changedTier, secondValue);
   });
 });
 

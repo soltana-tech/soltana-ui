@@ -73,7 +73,7 @@ ability to compose them.
    from the compiled CSS for production builds.
 6. **soltana:change event** — Dispatched on
    `document.documentElement` for every tier change, enabling
-   cross-package synchronization (e.g., chart auto-sync).
+   cross-package synchronization (e.g., Mermaid diagram auto-sync).
 
 - **Utility classes** — General-purpose layout, spacing, and
   visual utilities (`src/styles/utilities/`) shipped as a

@@ -40,8 +40,11 @@
   // Relief accent — allows relief-scoped components to reference the active accent
   --relief-accent: var(--accent-primary);
 
-  // Channel tokens — tuned per-theme for visibility against surface colors.
-  // Consumed by finishes (tinted overlay, glossy sheen) via rgb() expressions.
+  // Channel tokens — three-layer indirection pattern:
+  // 1. Themes define channel color values (--highlight-color, --shadow-color)
+  // 2. Relief-system provides fallback defaults via var() references
+  // 3. Finishes consume these tokens for visual effects (tinted overlay, glossy sheen)
+  // This indirection enables per-theme channel tuning while maintaining finish reusability.
   --channel-sheen-color: var(--highlight-color);
   --channel-tint-color: var(--shadow-color);
 }

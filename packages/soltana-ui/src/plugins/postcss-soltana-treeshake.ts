@@ -8,7 +8,7 @@
 
 import type { Plugin, Rule } from 'postcss';
 import type { SoltanaTreeshakeOptions, TierConfig } from './types.js';
-import { BUILT_IN_THEMES, BUILT_IN_RELIEFS, BUILT_IN_FINISHES } from '../config/types.js';
+import { BUILT_IN_THEMES, BUILT_IN_RELIEFS, BUILT_IN_FINISHES } from '../config/index.js';
 
 const BUILT_IN: Record<string, readonly string[]> = {
   theme: BUILT_IN_THEMES,

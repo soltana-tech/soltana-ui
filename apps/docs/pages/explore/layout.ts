@@ -375,9 +375,9 @@ export function renderLayout(): HTMLElement {
     For tier override utilities (<code>.theme-*</code>, <code>.relief-*</code>, <code>.finish-*</code>), see:
   </p>
   <ul class="text-secondary" style="padding-left: 1.5rem; list-style: disc;">
-    <li><a href="/learn/themes" class="link">Themes</a> — <code>.theme-*</code> utility classes for per-element theme overrides</li>
-    <li><a href="/learn/reliefs" class="link">Reliefs</a> — <code>.relief-*</code> utility classes for per-element shadow model overrides</li>
-    <li><a href="/learn/finishes" class="link">Finishes</a> — <code>.finish-*</code> utility classes for per-element surface treatment overrides</li>
+    <li><a href="#/learn/themes" class="link">Themes</a> — <code>.theme-*</code> utility classes for per-element theme overrides</li>
+    <li><a href="#/learn/reliefs" class="link">Reliefs</a> — <code>.relief-*</code> utility classes for per-element shadow model overrides</li>
+    <li><a href="#/learn/finishes" class="link">Finishes</a> — <code>.finish-*</code> utility classes for per-element surface treatment overrides</li>
   </ul>
 
 </div>`;

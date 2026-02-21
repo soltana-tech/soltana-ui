@@ -50,9 +50,9 @@ export const DEFAULT_STATE: Readonly<SoltanaConfig> = Object.freeze({
 /**
  * Default initialization options.
  *
- * `strict: true` is recommended for development and testing environments
- * to catch configuration errors early. In strict mode, invalid tier values
- * or override keys throw errors instead of logging warnings.
+ * Enable `strict: true` to throw errors instead of logging warnings for invalid
+ * tier values or override keys. Strict mode is an opt-in diagnostic for catching
+ * configuration errors during development.
  */
 const DEFAULT_INIT: Required<SoltanaInitOptions> = {
   enhancers: false,
@@ -249,6 +249,7 @@ export function initSoltana(
       const root = document.documentElement;
       for (const key of validKeys) {
         root.style.removeProperty(key);
+        _managedProps.delete(key);
       }
       state.overrides = Object.fromEntries(
         Object.entries(state.overrides).filter(([k]) => !validKeys.includes(k))

@@ -64,7 +64,7 @@ checks. Sections with new names define project-specific scopes.
 - Verify all enhancer initializers exported from
   src/enhancers/index.ts are documented
 - Verify all CSS component classes are documented: buttons,
-  cards, inputs, badges, alerts, avatars, progress, switches,
+  cards, inputs, badges, alerts, avatars, progress, toggles,
   tooltips, tables, modals, skeletons
 - Verify all utility classes are documented: relief overrides,
   finish overrides, neumorphic utilities
