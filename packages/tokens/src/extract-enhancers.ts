@@ -57,7 +57,10 @@ export function parseEnhancerFile(fileName: string, source: string): EnhancerDat
   const selectorMatch = /export const (\w+_SELECTOR)\s*=\s*'([^']+)'/.exec(source);
   if (!selectorMatch) return null;
 
-  const initMatch = /export function (init\w+)\(/.exec(source);
+  // Match both patterns:
+  // export function initXxx(
+  // export const initXxx = createOverlayEnhancer({
+  const initMatch = /export (?:function|const) (init\w+)(?:\(|[\s=])/.exec(source);
   if (!initMatch) return null;
 
   const description = extractJsDocDescription(source, initMatch.index);
