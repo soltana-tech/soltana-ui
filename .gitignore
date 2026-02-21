@@ -60,3 +60,6 @@ a11y-matrix-results/
 # Serena (local project config — contains machine-specific paths)
 # =============================================================================
 .serena/
+
+# ralph-audit working directory
+.claude/audit/.ralph-work/
