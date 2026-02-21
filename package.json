@@ -25,7 +25,6 @@
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "changeset publish",
-    "sync:mplstyle": "cp packages/tokens/dist/matplotlib/*.mplstyle python/soltana-matplotlib/soltana_matplotlib/",
     "prepare": "command -v pre-commit >/dev/null 2>&1 && pre-commit install || echo 'pre-commit not installed, skipping hook installation'"
   },
   "devDependencies": {

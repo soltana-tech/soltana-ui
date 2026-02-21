@@ -38,7 +38,7 @@ import { _resetFontLoader } from './fonts/index.js';
  * - `relief: 'flat'` is the minimal baseline (no shadow effects).
  * - `finish: 'matte'` is the zero-effect baseline (no blur, sheen, or tint).
  *
- * All 4 × 4 × 4 tier combinations (plus `auto`) are valid configurations.
+ * All built-in tier combinations (3 themes + auto resolver, 4 reliefs, 4 finishes) are valid.
  */
 export const DEFAULT_STATE: Readonly<SoltanaConfig> = Object.freeze({
   theme: 'auto',

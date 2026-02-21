@@ -74,10 +74,7 @@ describe('parseIndexExports', () => {
 describe('source file smoke tests', () => {
   const packagesDir = resolve(__dirname, '../..');
 
-  it.each(['echarts/src/index.ts', 'plotly/src/index.ts', 'react/src/index.ts'])(
-    '%s exists on disk',
-    (relativePath) => {
-      expect(existsSync(resolve(packagesDir, relativePath))).toBe(true);
-    }
-  );
+  it.each(['mermaid/src/index.ts', 'react/src/index.ts'])('%s exists on disk', (relativePath) => {
+    expect(existsSync(resolve(packagesDir, relativePath))).toBe(true);
+  });
 });

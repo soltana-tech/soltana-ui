@@ -2,8 +2,8 @@
 // Token Compiler — Build Entry Point
 // ---------------------------------------------------------------------------
 // Reads the compiled CSS from soltana-ui, extracts tokens, and writes
-// themed output files for ECharts, Plotly, matplotlib, DTCG, agent docs,
-// and llms.txt references.
+// themed output files for Mermaid, DTCG, agent docs, and llms.txt
+// references.
 // ---------------------------------------------------------------------------
 
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
@@ -16,9 +16,6 @@ import { extractUtilities } from './extract-utilities.js';
 import { extractComponents } from './extract-components.js';
 import { extractEnhancers } from './extract-enhancers.js';
 import { extractIntegrations } from './extract-integrations.js';
-import { buildEChartsTheme } from './formats/echarts.js';
-import { buildPlotlyTemplate } from './formats/plotly.js';
-import { buildMplStyle } from './formats/matplotlib.js';
 import { buildMermaidConfig } from './formats/mermaid.js';
 import { buildDtcgTheme, buildDtcgFoundation } from './formats/dtcg.js';
 import { buildAgentDocs } from './formats/agent-docs.js';
@@ -55,21 +52,6 @@ function main(): void {
   for (const name of themeNames) {
     const theme = themes[name];
 
-    // ECharts
-    ensureDir(resolve(DIST, 'echarts'));
-    writeJson(resolve(DIST, `echarts/${name}.json`), buildEChartsTheme(theme, foundation));
-    fileCount++;
-
-    // Plotly
-    ensureDir(resolve(DIST, 'plotly'));
-    writeJson(resolve(DIST, `plotly/${name}.json`), buildPlotlyTemplate(theme, foundation));
-    fileCount++;
-
-    // matplotlib
-    ensureDir(resolve(DIST, 'matplotlib'));
-    writeFileSync(resolve(DIST, `matplotlib/${name}.mplstyle`), buildMplStyle(theme, foundation));
-    fileCount++;
-
     // Mermaid
     ensureDir(resolve(DIST, 'mermaid'));
     writeJson(resolve(DIST, `mermaid/${name}.json`), buildMermaidConfig(theme, foundation));
@@ -92,12 +74,10 @@ function main(): void {
 
   const integrations = extractIntegrations({
     packages: [
-      resolve(MONOREPO_ROOT, 'packages/echarts'),
-      resolve(MONOREPO_ROOT, 'packages/plotly'),
       resolve(MONOREPO_ROOT, 'packages/mermaid'),
       resolve(MONOREPO_ROOT, 'packages/react'),
     ],
-    python: [resolve(MONOREPO_ROOT, 'python/soltana-matplotlib')],
+    python: [],
   });
 
   // Agent documentation (YAML)
@@ -111,8 +91,7 @@ function main(): void {
   writeFileSync(resolve(DIST, 'agents/reference.yaml'), agentYaml);
   fileCount++;
 
-  ensureDir(resolve(MONOREPO_ROOT, '.claude/agents'));
-  writeFileSync(resolve(MONOREPO_ROOT, '.claude/agents/reference.yaml'), agentYaml);
+  writeFileSync(resolve(MONOREPO_ROOT, '.claude/reference.yaml'), agentYaml);
   fileCount++;
 
   // llms.txt / llms-full.txt

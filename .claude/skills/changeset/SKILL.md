@@ -13,7 +13,7 @@ This monorepo uses [Changesets](https://github.com/changesets/changesets) for
 versioning and release notes. Key config from `.changeset/config.json`:
 
 - **Fixed**: `soltana-ui` and `@soltana-ui/tokens` version together
-- **Linked**: `@soltana-ui/echarts`, `@soltana-ui/plotly`, `@soltana-ui/react`
+- **Linked**: `@soltana-ui/mermaid`, `@soltana-ui/react`
   share version ranges
 - **Ignored**: `@soltana-ui/docs` (not published)
 
@@ -22,15 +22,12 @@ versioning and release notes. Key config from `.changeset/config.json`:
 1. **Identify changed packages.** Run `git diff main --name-only` and map
    file paths to packages:
 
-   | Path prefix              | Package                    |
-   | ------------------------ | -------------------------- |
-   | `packages/soltana-ui/`   | `soltana-ui`               |
-   | `packages/tokens/`       | `@soltana-ui/tokens`       |
-   | `packages/echarts/`      | `@soltana-ui/echarts`      |
-   | `packages/plotly/`       | `@soltana-ui/plotly`       |
-   | `packages/mermaid/`      | `@soltana-ui/mermaid`      |
-   | `packages/react/`        | `@soltana-ui/react`        |
-   | `packages/chart-shared/` | `@soltana-ui/chart-shared` |
+   | Path prefix            | Package               |
+   | ---------------------- | --------------------- |
+   | `packages/soltana-ui/` | `soltana-ui`          |
+   | `packages/tokens/`     | `@soltana-ui/tokens`  |
+   | `packages/mermaid/`    | `@soltana-ui/mermaid` |
+   | `packages/react/`      | `@soltana-ui/react`   |
 
 2. **Determine bump type** based on the nature of changes:
    - `patch`: Bug fixes, internal refactors, dependency updates

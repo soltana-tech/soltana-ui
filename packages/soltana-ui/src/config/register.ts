@@ -23,7 +23,7 @@ import { registerTierValue, deregisterTierValue } from './validation.js';
 /**
  * All CSS custom properties a theme rule block defines. Source of truth for
  * the runtime derivation function and the SCSS ↔ TS sync test.
- * Icon tokens are included in the schema but not derived — they require
+ * Icon tokens are included in the schema but not derived — icon tokens require
  * compile-time SVG template functions and must be provided via `tokens`
  * overrides if needed.
  *
@@ -159,14 +159,14 @@ function deriveSemanticColor(
 }
 
 /**
- * Derive a full theme token map from 3-5 seed colors.
+ * Derive a full theme token map from a ThemeSeed (3 required + up to 6 optional color fields).
  *
  * Pure function with no DOM dependency. Token values use CSS `color-mix()`
  * expressions that the browser evaluates at paint time, keeping derived
  * tokens reactive.
  *
- * Icon tokens (`--icon-*`) are not derived; provide them via the `tokens`
- * override map in `RegisterThemeOptions` if needed.
+ * Icon tokens (`--icon-*`) are not derived; provide icon values via the
+ * `tokens` override map in `RegisterThemeOptions` if needed.
  *
  * @internal Consumed by `registerTheme()` and tests; not re-exported from the public barrel.
  */
@@ -326,7 +326,7 @@ const HEX_RE = /^#?[0-9a-fA-F]{3}([0-9a-fA-F]{3})?$/;
 
 /**
  * Convert a color to space-separated RGB channels (0-255).
- * Supports hex (#RGB, #RRGGBB, #RRGGBBAA) and rgb(r, g, b) formats only.
+ * Supports hex (#RGB, #RRGGBB) and rgb(r, g, b) formats only.
  * Falls back to neutral gray for invalid input.
  */
 function hexToRgbChannels(hex: string): string {

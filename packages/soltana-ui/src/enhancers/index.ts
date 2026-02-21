@@ -22,16 +22,16 @@ import { initDatePickers } from './date-picker.js';
 import { initColorPickers } from './color-picker.js';
 import { initTrees } from './tree.js';
 
-// Phase 0-1 enhancers
+// Overlay and navigation enhancers
 export { initModals, initTabs, initTooltips };
 export { initAccordions, initDropdowns, initDrawers, initToasts };
 export { showToast, dismissToast };
 
-// Phase 2 enhancers
+// Layout and disclosure enhancers
 export { initCollapsibles, initComboboxes, initHoverCards };
 export { initContextMenus, initCarousels, initScrollAreas };
 
-// Phase 3 enhancers
+// Advanced input enhancers
 export { initDatePickers, initColorPickers, initTrees };
 
 // Selectors

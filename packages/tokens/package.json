@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": false,
   "sideEffects": false,
-  "description": "Design token compiler for Soltana UI — outputs chart themes, matplotlib styles, DTCG JSON, and documentation formats.",
+  "description": "Design token compiler for Soltana UI — outputs Mermaid themes, DTCG JSON, and documentation formats.",
   "keywords": [
     "design-tokens",
     "soltana-ui",
@@ -26,9 +26,6 @@
     ".": {
       "types": "./dist/types.d.ts"
     },
-    "./echarts/*": "./dist/echarts/*",
-    "./plotly/*": "./dist/plotly/*",
-    "./matplotlib/*": "./dist/matplotlib/*",
     "./mermaid/*": "./dist/mermaid/*",
     "./dtcg/*": "./dist/dtcg/*"
   },
@@ -40,7 +37,6 @@
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@soltana-ui/chart-shared": "workspace:*",
     "@types/js-yaml": "^4.0.9",
     "js-yaml": "^4.1.0",
     "postcss": "^8.5.6",

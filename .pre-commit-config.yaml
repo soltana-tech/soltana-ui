@@ -30,35 +30,6 @@ repos:
     hooks:
       - id: markdownlint-cli2
 
-  # Python
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.1
-    hooks:
-      - id: ruff-check
-        args: [--fix, --exit-non-zero-on-fix]
-      - id: ruff-format
-        args: [--check]
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.19.1
-    hooks:
-      - id: mypy
-        args: [--config-file=python/soltana-matplotlib/pyproject.toml]
-        files: ^python/soltana-matplotlib/soltana_matplotlib/
-        additional_dependencies: [matplotlib>=3.7]
-  - repo: https://github.com/jendrikseipp/vulture
-    rev: v2.14
-    hooks:
-      - id: vulture
-        args: [python/soltana-matplotlib/soltana_matplotlib, python/soltana-matplotlib/tests]
-        files: ^python/
-  - repo: https://github.com/econchick/interrogate
-    rev: 1.7.0
-    hooks:
-      - id: interrogate
-        args: [-c, python/soltana-matplotlib/pyproject.toml]
-        files: ^python/.*\.py$
-        exclude: /tests/
-
   # JavaScript / TypeScript / SCSS
   - repo: local
     hooks:
@@ -78,14 +49,4 @@ repos:
         entry: pnpm run type-check
         language: system
         files: \.(ts|tsx)$
-        pass_filenames: false
-
-  # Cross-package sync
-  - repo: local
-    hooks:
-      - id: mplstyle-sync
-        name: mplstyle sync check
-        entry: diff -q packages/tokens/dist/matplotlib/ python/soltana-matplotlib/soltana_matplotlib/ --exclude='__*' --exclude='py.typed'
-        language: system
-        files: \.(mplstyle|ts)$
         pass_filenames: false

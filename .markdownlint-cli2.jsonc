@@ -9,4 +9,5 @@
       "tables": false,
     },
   },
+  "ignores": ["docs/plans/**"],
 }

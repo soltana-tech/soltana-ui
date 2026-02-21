@@ -15,9 +15,7 @@ Scaffold a new output format for the `@soltana-ui/tokens` compiler.
 
 1. **Read existing formats for patterns.** Read at least two of these files to
    understand the conventions:
-   - `packages/tokens/src/formats/echarts.ts`
    - `packages/tokens/src/formats/mermaid.ts`
-   - `packages/tokens/src/formats/echarts.test.ts`
    - `packages/tokens/src/formats/mermaid.test.ts`
    - `packages/tokens/src/build.ts` (to see wiring)
    - `packages/tokens/src/types.ts` (for `ThemeTokens`, `FoundationTokens`)
@@ -28,7 +26,6 @@ Scaffold a new output format for the `@soltana-ui/tokens` compiler.
 3. **Create the format file** at `packages/tokens/src/formats/<name>.ts`:
    - Export a `build<Name>Theme(theme, foundation)` function
    - Import `buildPalette` from `../resolve.js` for the 6-color palette
-   - Import `withAlpha` from `@soltana-ui/chart-shared` if opacity is needed
    - Map Soltana tokens to the target library's theme structure
    - Use the same header comment pattern as existing formats
 

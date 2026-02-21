@@ -9,9 +9,9 @@ import { BUILT_IN_THEMES, BUILT_IN_RELIEFS, BUILT_IN_FINISHES } from './types.js
 import type { TierName } from './types.js';
 
 // Backing arrays are mutable so registerTierValue/deregisterTierValue can
-// modify them at runtime. The exported VALID_* constants are live views into
-// these arrays — their contents update automatically when runtime tier
-// registration occurs. They are typed as readonly to discourage direct
+// modify values at runtime. The exported VALID_* constants are live views into
+// these arrays — array contents update automatically when runtime tier
+// registration occurs. The constants are typed as readonly to discourage direct
 // mutation by consumers.
 const _themes: string[] = [...BUILT_IN_THEMES, 'auto'];
 const _reliefs: string[] = [...BUILT_IN_RELIEFS];

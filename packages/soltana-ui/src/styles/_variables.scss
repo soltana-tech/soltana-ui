@@ -228,7 +228,7 @@ $max-widths: (
 
 // ---- Icon data-URI generators ----
 // Each function embeds a single SVG shape with a parameterized fill/stroke color,
-// so theme files can call them with the appropriate contrast color.
+// so theme files can call each function with the appropriate contrast color.
 
 @function icon-chevron($color) {
   $c: '%23' + string.slice('#{$color}', 2);

@@ -96,7 +96,7 @@ export function renderComposition(): HTMLElement {
   ${specimenBlock(
     'Utility Class Reference',
     `
-    <p class="text-sm text-secondary mb-4">For a complete listing of all utility classes (layout, spacing, typography, and visual utilities), see the auto-generated reference at <code>.claude/agents/reference.yaml</code> or the SCSS source in <code>src/styles/utilities/</code>.</p>
+    <p class="text-sm text-secondary mb-4">For a complete listing of all utility classes (layout, spacing, typography, and visual utilities), see the auto-generated reference at <code>.claude/reference.yaml</code> or the SCSS source in <code>src/styles/utilities/</code>.</p>
   `
   )}
 

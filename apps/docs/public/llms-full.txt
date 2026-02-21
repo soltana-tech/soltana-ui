@@ -716,39 +716,14 @@ Detail types: theme, relief, finish, overrides, reset, destroy
 
 ## Integrations
 
-### @soltana-ui/echarts
-
-ECharts theme bridge for Soltana UI.
-
-| Export | Kind | Description |
-|--------|------|-------------|
-| `buildTheme` | function | ECharts theme object built from live CSS custom properties. */ |
-| `EChartsThemeObject` | type | ECharts theme object built from live CSS custom properties. */ |
-| `registerSoltanaTheme` | function | * Register a Soltana theme with ECharts using dependency injection. |
-| `autoSync` | function | * Register a Soltana theme with ECharts using dependency injection. |
-
-Static themes: dark, light, sepia
-
-### @soltana-ui/plotly
-
-Plotly theme bridge for Soltana UI.
-
-| Export | Kind | Description |
-|--------|------|-------------|
-| `buildTemplate` | function | Plotly template object built from live CSS custom properties. */ |
-| `PlotlyTemplate` | type | Plotly template object built from live CSS custom properties. */ |
-| `autoSync` | function | * Auto-sync: calls `callback` with a fresh Plotly template immediately, |
-
-Static themes: dark, light, sepia
-
 ### @soltana-ui/mermaid
 
 Mermaid theme bridge for Soltana UI.
 
 | Export | Kind | Description |
 |--------|------|-------------|
-| `buildConfig` | function | Mermaid theme config passed to `mermaid.initialize()`. */ |
-| `MermaidConfig` | type | Mermaid theme config passed to `mermaid.initialize()`. */ |
+| `buildConfig` | function | Ordered palette props read from the active CSS theme. */ |
+| `MermaidConfig` | type | Ordered palette props read from the active CSS theme. */ |
 | `initSoltanaMermaid` | function | Minimal Mermaid API surface accepted via dependency injection. */ |
 | `autoSync` | function | Minimal Mermaid API surface accepted via dependency injection. */ |
 | `MermaidLike` | type | Minimal Mermaid API surface accepted via dependency injection. */ |
@@ -784,20 +759,6 @@ React bindings for Soltana UI — useSoltana() hook and SoltanaProvider. ESM-onl
 | `ToastOptions` | type |  |
 | `ToastType` | type |  |
 | `ToastPosition` | type |  |
-
-### soltana-matplotlib
-
-Matplotlib styles for the Soltana UI design system.
-
-```
-pip install soltana-matplotlib
-```
-
-| Export | Kind | Description |
-|--------|------|-------------|
-| `soltana_matplotlib.styles` | constant | Pre-built .mplstyle file paths for use with matplotlib.style.use() |
-
-Static themes: dark, light, sepia
 
 ---
 

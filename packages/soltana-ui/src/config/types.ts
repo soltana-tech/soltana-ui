@@ -23,7 +23,7 @@ export type Finish = BuiltInFinish | (string & {});
  * pass a single options object rather than nested config + init groups.
  */
 export interface SoltanaInitOptions {
-  /** Enable progressive-enhancement enhancers for all 16 component types. */
+  /** Enable progressive-enhancement enhancers for all component types. */
   enhancers?: boolean;
   /**
    * Enables strict validation — throws errors instead of logging warnings for invalid tier values.
@@ -71,7 +71,7 @@ export interface SoltanaInstance {
   registerFinish(name: string, options: RegisterFinishOptions): TierRegistration;
 
   /**
-   * Destroy and re-create all 16 enhancer types.
+   * Destroy and re-create all enhancer types.
    * No-op when `enhancers: false` (the default) was passed to `initSoltana()`.
    */
   reinitEnhancers(): void;

@@ -60,13 +60,10 @@ jobs:
       - name: Build
         run: pnpm run build
 
-      - name: Sync matplotlib styles
-        run: pnpm run sync:mplstyle
-
       - name: Check generated files are up-to-date
         run: |
-          git diff --exit-code -I '^\s*generated:' .claude/agents/reference.yaml apps/docs/public/llms.txt apps/docs/public/llms-full.txt python/soltana-matplotlib/soltana_matplotlib/*.mplstyle || \
-          (echo "Generated files are out of sync. Run 'pnpm --filter @soltana-ui/tokens build' and 'pnpm run sync:mplstyle' and commit the changes." && exit 1)
+          git diff --exit-code -I '^\s*generated:' .claude/reference.yaml apps/docs/public/llms.txt apps/docs/public/llms-full.txt || \
+          (echo "Generated files are out of sync. Run 'pnpm --filter @soltana-ui/tokens build' and commit the changes." && exit 1)
 
       - name: Unit tests
         run: pnpm run test
@@ -120,28 +117,3 @@ jobs:
           name: playwright-report-${{ matrix.browser }}
           path: playwright-report/
           retention-days: 7
-
-  python-check:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Install package with test deps
-        run: pip install -e ".[test]"
-        working-directory: python/soltana-matplotlib
-
-      - name: Build wheel
-        run: |
-          pip install build
-          python -m build
-        working-directory: python/soltana-matplotlib
-
-      - name: Run tests
-        run: pytest tests/ -v --mpl --mpl-default-tolerance=2
-        working-directory: python/soltana-matplotlib

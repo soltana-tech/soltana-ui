@@ -1,8 +1,5 @@
 import { describe, it, expect } from 'vitest';
 import { extractFoundation, extractThemes } from './extract.js';
-import { buildEChartsTheme } from './formats/echarts.js';
-import { buildPlotlyTemplate } from './formats/plotly.js';
-import { buildMplStyle } from './formats/matplotlib.js';
 import { buildDtcgTheme, buildDtcgFoundation } from './formats/dtcg.js';
 
 // These tests are coupled to CSS string format. The extractFoundation and extractThemes
@@ -181,36 +178,6 @@ describe('end-to-end token pipeline', () => {
 
   it.each([
     {
-      name: 'ECharts',
-      run: () => buildEChartsTheme(themes.dark, foundation),
-      assertions: (result: Record<string, unknown>) => {
-        expect(result).toHaveProperty('color');
-        expect(result).toHaveProperty('backgroundColor');
-        expect(Array.isArray(result.color)).toBe(true);
-        expect((result.color as string[]).length).toBeGreaterThan(0);
-      },
-    },
-    {
-      name: 'Plotly',
-      run: () => buildPlotlyTemplate(themes.dark, foundation),
-      assertions: (result: Record<string, unknown>) => {
-        expect(result).toHaveProperty('layout');
-        const layout = result.layout as Record<string, unknown>;
-        expect(layout).toHaveProperty('paper_bgcolor');
-        expect(layout).toHaveProperty('colorway');
-      },
-    },
-    {
-      name: 'matplotlib',
-      run: () => buildMplStyle(themes.dark, foundation),
-      assertions: (result: unknown) => {
-        expect(typeof result).toBe('string');
-        expect((result as string).length).toBeGreaterThan(0);
-        expect(result as string).toContain('figure.facecolor');
-        expect(result as string).toContain('axes.facecolor');
-      },
-    },
-    {
       name: 'DTCG theme',
       run: () => buildDtcgTheme(themes.dark),
       assertions: (result: Record<string, unknown>) => {
@@ -228,6 +195,6 @@ describe('end-to-end token pipeline', () => {
     },
   ])('pipes dark theme through $name builder', ({ run, assertions }) => {
     const result = run();
-    assertions(result as Record<string, unknown>);
+    assertions(result);
   });
 });
