@@ -4,8 +4,12 @@
     "MD033": false,
     // First line does not need to be a top-level heading
     "MD041": false,
-    // Line length: disabled
-    "MD013": false,
+    // Line length: disable for tables, code blocks, and links only
+    "MD013": {
+      "tables": false,
+      "code_blocks": false,
+      "line_length": 80,
+    },
     // Allow fenced code blocks without language
     "MD040": false,
   },
