@@ -1,6 +1,6 @@
 {
   "name": "@soltana-ui/mermaid",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "private": false,
   "description": "Mermaid theme bridge for Soltana UI.",
   "keywords": [

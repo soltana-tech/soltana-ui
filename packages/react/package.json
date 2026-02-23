@@ -1,6 +1,6 @@
 {
   "name": "@soltana-ui/react",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "private": false,
   "description": "React bindings for Soltana UI — useSoltana() hook and SoltanaProvider. ESM-only.",
   "keywords": [
