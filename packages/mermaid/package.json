@@ -46,7 +46,7 @@
   },
   "peerDependencies": {
     "mermaid": "^11.0.0",
-    "soltana-ui": "^0.1.0"
+    "soltana-ui": "workspace:^"
   },
   "peerDependenciesMeta": {
     "mermaid": {
