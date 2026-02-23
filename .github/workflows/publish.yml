@@ -29,7 +29,9 @@ jobs:
       - name: Build packages
         run: pnpm run build
 
-      - name: Publish to npm (trusted publishing)
-        run: pnpm -r publish --access public --no-git-checks
+      - name: Publish to npm
+        run: |
+          # pnpm automatically converts workspace:^ to the actual version when publishing
+          pnpm -r publish --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
