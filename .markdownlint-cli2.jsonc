@@ -4,10 +4,10 @@
     "MD033": false,
     // First line does not need to be a top-level heading
     "MD041": false,
-    // Line length: disable for tables, keep default elsewhere
-    "MD013": {
-      "tables": false,
-    },
+    // Line length: disabled
+    "MD013": false,
+    // Allow fenced code blocks without language
+    "MD040": false,
   },
   "ignores": ["docs/plans/**"],
 }

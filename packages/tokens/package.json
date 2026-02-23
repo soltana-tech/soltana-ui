@@ -27,7 +27,8 @@
       "types": "./dist/types.d.ts"
     },
     "./mermaid/*": "./dist/mermaid/*",
-    "./dtcg/*": "./dist/dtcg/*"
+    "./dtcg/*": "./dist/dtcg/*",
+    "./agents/*": "./dist/agents/*"
   },
   "scripts": {
     "build": "tsx src/build.ts && tsc -p tsconfig.build.json",
