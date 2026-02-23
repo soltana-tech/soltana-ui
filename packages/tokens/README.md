@@ -7,9 +7,11 @@
 
 ---
 
-Design token compiler for [Soltana UI](../soltana-ui) — outputs Mermaid themes, DTCG JSON, and AI agent documentation.
+Design token compiler for [Soltana UI](../soltana-ui) — outputs Mermaid
+themes, DTCG JSON, and AI agent documentation.
 
-[Documentation](https://soltana-tech.github.io/soltana-ui/) • [Main Package](../soltana-ui)
+[Documentation](https://soltana-tech.github.io/soltana-ui/) •
+[Main Package](../soltana-ui)
 
 ---
 
@@ -17,13 +19,17 @@ Design token compiler for [Soltana UI](../soltana-ui) — outputs Mermaid themes
 
 ## Overview
 
-Compiles Soltana UI's design tokens into multiple output formats optimized for different use cases:
+Compiles Soltana UI's design tokens into multiple output formats optimized for
+different use cases:
 
-- **Mermaid themes** (JSON) — Runtime theme bridge for diagram synchronization
+- **Mermaid themes** (JSON) — Runtime theme bridge for diagram
+  synchronization
 - **DTCG** (JSON) — Design Tokens Community Group format for interop
-- **Agent docs** (YAML) — AI agent-optimized reference with utility classes, component patterns, and API surface
+- **Agent docs** (YAML) — AI agent-optimized reference with utility classes,
+  component patterns, and API surface
 
-This package is primarily a **build-time tool**. Consumers typically use the compiled outputs, not this package directly.
+This package is primarily a **build-time tool**. Consumers typically use the
+compiled outputs, not this package directly.
 
 ## Installation
 
@@ -68,7 +74,8 @@ import dtcgTokens from '@soltana-ui/tokens/dtcg/tokens.json';
 
 ### AI Agent Reference
 
-The `reference.yaml` file ships with this package and provides a structured reference for AI coding agents:
+The `reference.yaml` file ships with this package and provides a structured
+reference for AI coding agents:
 
 ```yaml
 tier_system:
@@ -135,7 +142,8 @@ Used by [`@soltana-ui/mermaid`](../mermaid) for runtime synchronization.
 
 ### DTCG Tokens
 
-Design Tokens Community Group format for design tool interop (Figma, Style Dictionary, etc.):
+Design Tokens Community Group format for design tool interop (Figma, Style
+Dictionary, etc.):
 
 ```json
 {

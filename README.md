@@ -9,9 +9,13 @@
 
 ---
 
-CSS-first design system with a 3-tier orthogonal configuration model: **Theme** × **Relief** × **Finish**.
+CSS-first design system with a 3-tier orthogonal configuration model:
+**Theme** × **Relief** × **Finish**.
 
-[Documentation](https://soltana-tech.github.io/soltana-ui/) • [Component Gallery](https://soltana-tech.github.io/soltana-ui/#/explore) • [Playground](https://soltana-tech.github.io/soltana-ui/#/playground) • [npm](https://www.npmjs.com/package/soltana-ui)
+[Documentation](https://soltana-tech.github.io/soltana-ui/) •
+[Component Gallery](https://soltana-tech.github.io/soltana-ui/#/explore) •
+[Playground](https://soltana-tech.github.io/soltana-ui/#/playground) •
+[npm](https://www.npmjs.com/package/soltana-ui)
 
 ---
 
@@ -19,12 +23,18 @@ CSS-first design system with a 3-tier orthogonal configuration model: **Theme** 
 
 ## Features
 
-- **3-tier orthogonal architecture** — Compose theme (color), relief (shadow model), and finish (surface treatment) independently
-- **Per-element composition** — Apply tier configurations globally or per-element via utility classes
-- **Runtime registration** — Register custom themes, reliefs, and finishes at runtime
-- **16 accessible enhancers** — Modals, tabs, tooltips, accordions, carousels, color pickers, date pickers, and more
-- **CSS-first philosophy** — All rendering stays in CSS; JS only handles behavior and injects runtime-computed values
-- **Diagramming integration** — Theme bridge for Mermaid with automatic synchronization
+- **3-tier orthogonal architecture** — Compose theme (color), relief
+  (shadow model), and finish (surface treatment) independently
+- **Per-element composition** — Apply tier configurations globally or
+  per-element via utility classes
+- **Runtime registration** — Register custom themes, reliefs, and finishes
+  at runtime
+- **16 accessible enhancers** — Modals, tabs, tooltips, accordions,
+  carousels, color pickers, date pickers, and more
+- **CSS-first philosophy** — All rendering stays in CSS; JS only handles
+  behavior and injects runtime-computed values
+- **Diagramming integration** — Theme bridge for Mermaid with automatic
+  synchronization
 
 ## Installation
 
@@ -32,7 +42,8 @@ CSS-first design system with a 3-tier orthogonal configuration model: **Theme** 
 npm install soltana-ui
 ```
 
-See the [main package README](packages/soltana-ui) for quick start guide and usage examples.
+See the [main package README](packages/soltana-ui) for quick start guide and
+usage examples.
 
 ## Packages
 
@@ -46,10 +57,14 @@ See the [main package README](packages/soltana-ui) for quick start guide and usa
 ## Documentation
 
 - **[Full Documentation](https://soltana-tech.github.io/soltana-ui/)**
-- **[Component Gallery](https://soltana-tech.github.io/soltana-ui/#/explore)** — Live interactive previews of all components
-- **[Playground](https://soltana-tech.github.io/soltana-ui/#/playground)** — Experiment with tier combinations
-- **[Component Reference](https://soltana-tech.github.io/soltana-ui/#/reference/components)** — CSS class reference for all components
-- **[AI Agent Reference](https://soltana-tech.github.io/soltana-ui/llms-full.txt)** — Machine-readable reference for AI agents
+- **[Component Gallery](https://soltana-tech.github.io/soltana-ui/#/explore)**
+  — Live interactive previews of all components
+- **[Playground](https://soltana-tech.github.io/soltana-ui/#/playground)** —
+  Experiment with tier combinations
+- **[Component Reference](https://soltana-tech.github.io/soltana-ui/#/reference/components)**
+  — CSS class reference for all components
+- **[AI Agent Reference](https://soltana-tech.github.io/soltana-ui/llms-full.txt)**
+  — Machine-readable reference for AI agents
 
 ## The 3-Tier Model
 
@@ -87,8 +102,10 @@ pnpm --filter @soltana-ui/docs dev
 
 Machine-readable reference formats are provided for AI agents:
 
-- `.claude/reference.yaml` — YAML format for development with ~1,300 utility classes, component patterns, and API surface
-- `/llms.txt` and `/llms-full.txt` — Served from the docs site for web-based agent access
+- `.claude/reference.yaml` — YAML format for development with ~1,300 utility
+  classes, component patterns, and API surface
+- `/llms.txt` and `/llms-full.txt` — Served from the docs site for web-based
+  agent access
 - `@soltana-ui/tokens` exports `./agents/reference.yaml` for npm consumers
 
 These files are auto-generated on build and stay in sync with the codebase.

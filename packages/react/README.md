@@ -8,9 +8,11 @@
 
 ---
 
-React bindings for [Soltana UI](../soltana-ui) — `useSoltana()` hook, `SoltanaProvider`, and 13 enhancer hooks.
+React bindings for [Soltana UI](../soltana-ui) — `useSoltana()` hook,
+`SoltanaProvider`, and 13 enhancer hooks.
 
-[Documentation](https://soltana-tech.github.io/soltana-ui/) • [Main Package](../soltana-ui)
+[Documentation](https://soltana-tech.github.io/soltana-ui/) •
+[Main Package](../soltana-ui)
 
 ---
 
@@ -19,9 +21,12 @@ React bindings for [Soltana UI](../soltana-ui) — `useSoltana()` hook, `Soltana
 ## Features
 
 - **`useSoltana()` hook** — Access and control active tier configuration
-- **`SoltanaProvider`** — Initialize Soltana UI with tier config and font loading
-- **13 enhancer hooks** — React wrappers for Soltana UI's JS enhancers (modals, tooltips, accordions, etc.)
-- **Toast API re-exports** — `showToast()` and `dismissToast()` for imperative toast notifications
+- **`SoltanaProvider`** — Initialize Soltana UI with tier config and font
+  loading
+- **13 enhancer hooks** — React wrappers for Soltana UI's JS enhancers
+  (modals, tooltips, accordions, etc.)
+- **Toast API re-exports** — `showToast()` and `dismissToast()` for
+  imperative toast notifications
 - **ESM-only** — Modern React ecosystem compatibility
 
 ## Installation
@@ -30,7 +35,8 @@ React bindings for [Soltana UI](../soltana-ui) — `useSoltana()` hook, `Soltana
 npm install @soltana-ui/react soltana-ui
 ```
 
-**Peer dependencies:** `react@^18.0.0 || ^19.0.0`, `react-dom@^18.0.0 || ^19.0.0`, `soltana-ui`
+**Peer dependencies:** `react@^18.0.0 || ^19.0.0`,
+`react-dom@^18.0.0 || ^19.0.0`, `soltana-ui`
 
 ## Quick Start
 
@@ -76,10 +82,14 @@ Root provider that initializes Soltana UI and optionally loads fonts.
 
 **Props:**
 
-- `theme?: 'dark' | 'light' | 'sepia' | 'auto'` — Initial theme (default: current HTML attribute or 'dark')
-- `relief?: 'flat' | 'glassmorphic' | 'skeuomorphic' | 'neumorphic'` — Initial relief (default: current HTML attribute)
-- `finish?: 'matte' | 'frosted' | 'tinted' | 'glossy'` — Initial finish (default: current HTML attribute)
-- `loadFonts?: boolean` — Load Raleway, Cinzel, Cinzel Decorative, and JetBrains Mono from Google Fonts
+- `theme?: 'dark' | 'light' | 'sepia' | 'auto'` — Initial theme
+  (default: current HTML attribute or 'dark')
+- `relief?: 'flat' | 'glassmorphic' | 'skeuomorphic' | 'neumorphic'` —
+  Initial relief (default: current HTML attribute)
+- `finish?: 'matte' | 'frosted' | 'tinted' | 'glossy'` — Initial finish
+  (default: current HTML attribute)
+- `loadFonts?: boolean` — Load Raleway, Cinzel, Cinzel Decorative, and
+  JetBrains Mono from Google Fonts
 
 ### `useSoltana()`
 
@@ -161,11 +171,14 @@ dismissToast(toastEl);
 
 **`showToast()` options:**
 
-- `variant?: 'success' | 'error' | 'warning' | 'info'` — Toast style (default: no variant)
+- `variant?: 'success' | 'error' | 'warning' | 'info'` — Toast style
+  (default: no variant)
 - `title?: string` — Toast header text
 - `body?: string` — Toast body text
 - `duration?: number` — Auto-dismiss delay in milliseconds (optional)
-- `position?: 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center'` — Container position (default: 'top-right')
+- `position?: 'top-right' | 'top-left' | 'top-center' | 'bottom-right' |
+'bottom-left' | 'bottom-center'` — Container position
+  (default: 'top-right')
 
 ## TypeScript
 
