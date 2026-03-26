@@ -39,6 +39,7 @@
   }
 
   tbody tr {
+    position: relative;
     @include transition-feedback(var(--transition-normal));
 
     &:nth-child(even) {
@@ -46,6 +47,10 @@
     }
 
     @include hover-state($guard: false);
+
+    &:hover:not(.active) > td .row-overlay {
+      opacity: 1;
+    }
   }
 
   caption {
@@ -134,4 +139,71 @@
       border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
     }
   }
+}
+
+// ============================================================================
+// TABLE PANEL — glass-card wrapper with relief shadow
+// ============================================================================
+
+.table-panel {
+  padding: 0.875rem;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-default);
+  background: linear-gradient(
+    145deg,
+    rgb(var(--highlight-color) / 5%),
+    rgb(var(--highlight-color) / 2%)
+  );
+  backdrop-filter: blur(var(--bridge-backdrop-blur, 8px));
+  box-shadow: var(--relief-shadow-lg);
+}
+
+// ============================================================================
+// TABLE SCROLL — overflow wrapper inside panel
+// ============================================================================
+
+.table-scroll {
+  overflow: auto;
+  border-radius: var(--radius-lg);
+  -webkit-overflow-scrolling: touch;
+}
+
+// ============================================================================
+// ROW BACKGROUND IMAGE — lazy-loaded art behind table rows
+// ============================================================================
+
+.row-bg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  border-radius: inherit;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.15;
+  mix-blend-mode: soft-light;
+  filter: brightness(0.6) contrast(1.5);
+  pointer-events: none;
+  z-index: -1;
+}
+
+// ============================================================================
+// ROW HOVER OVERLAY — gradient overlay revealed on hover
+// ============================================================================
+
+.row-overlay {
+  position: absolute;
+  inset: 0;
+  display: block;
+  opacity: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent-decorative) 6%, transparent),
+    color-mix(in srgb, var(--accent-secondary) 6%, transparent),
+    color-mix(in srgb, var(--accent-primary) 5%, transparent)
+  );
+  transition: opacity var(--transition-slow) var(--easing-in-out);
+  pointer-events: none;
+  z-index: 0;
 }
