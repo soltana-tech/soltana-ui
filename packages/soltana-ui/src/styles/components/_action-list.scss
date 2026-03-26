@@ -34,11 +34,13 @@
   cursor: pointer;
   text-align: left;
   font: inherit;
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
+  background-color: var(--relief-bg);
   @include relief-container;
   @include transition-interactive;
 
-  &:hover:not(:disabled, .is-empty) {
+  // Exclude .is-active: a persistently toggled item must not visually un-press on hover.
+  &:hover:not(:disabled, .is-empty, .is-active) {
     box-shadow:
       var(--relief-shadow-lg),
       inset 0 1px 0 rgb(var(--highlight-color) / 10%);
@@ -72,7 +74,7 @@
   color: var(--accent-primary);
   letter-spacing: var(--tracking-elegant);
   min-width: 5ch;
-  font-size: var(--text-xs);
+  font-size: var(--text-sm);
   transition: color var(--transition-slow) var(--easing-in-out);
 
   .is-active & {
@@ -86,7 +88,7 @@
 
 .action-item-text {
   color: var(--text-primary);
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
 
   &.is-empty {
     color: var(--text-muted);
