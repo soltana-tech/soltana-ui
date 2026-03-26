@@ -127,6 +127,58 @@ function componentHTML(): string {
         </div>
       </section>
 
+      <!-- Table Panel -->
+      <section>
+        <div class="table-panel" style="max-width: 640px;">
+          <div class="table-scroll">
+            <table class="table">
+              <thead><tr><th>Week</th><th>Topic</th><th>Reading</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><span class="row-overlay"></span>Week 01</td>
+                  <td>Introduction</td>
+                  <td>Genesis 1</td>
+                </tr>
+                <tr class="active">
+                  <td><span class="row-overlay"></span>Week 02</td>
+                  <td>Creation</td>
+                  <td>Genesis 2-3</td>
+                </tr>
+                <tr>
+                  <td><span class="row-overlay"></span>Week 03</td>
+                  <td>Fall</td>
+                  <td>Genesis 4-5</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Action List -->
+      <section style="max-width: 320px;">
+        <div class="action-list">
+          <button class="action-item">
+            <span class="action-item-label">Day 1</span>
+            <span class="action-item-text">Genesis 1</span>
+          </button>
+          <button class="action-item is-active">
+            <span class="action-item-label">Day 2</span>
+            <span class="action-item-text">Genesis 2</span>
+          </button>
+          <button class="action-item is-empty" disabled>
+            <span class="action-item-label">Day 3</span>
+            <span class="action-item-text is-empty">No reading</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- FAB Extended + Controlled -->
+      <div class="fab fab-extended fab-controlled is-visible fab-bottom-right">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        <span class="fab-label">Current</span>
+      </div>
+
     </main>
   `;
 }

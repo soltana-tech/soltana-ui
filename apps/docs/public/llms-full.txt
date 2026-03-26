@@ -133,6 +133,17 @@ Relief and finish tiers compose via shared channel tokens:
 
 ## Components
 
+### Action List Components
+
+Base class: `.action-list`
+Description: Vertical list of toggleable action items with raised/pressed relief states. Useful for checklists, daily readings, task lists, etc.
+Tier-aware: yes
+Variants: `action-item`, `action-item-label`, `action-item-text`, `is-active`
+
+```html
+<div class="action-list">…</div>
+```
+
 ### Alert Dialog Component
 
 Base class: `.alert-dialog`
@@ -165,7 +176,7 @@ Variants: `avatar-`, `avatar-cameo`, `avatar-group`, `badge`, `badge-`, `badge-p
 Base class: `.btn`
 Description: Base button uses --relief-* variables for automatic relief switching. Semantic variants (primary, danger, success) override as needed.
 Tier-aware: yes
-Variants: `btn-`, `btn-danger`, `btn-ghost`, `btn-group`, `btn-outline`, `btn-primary`, `btn-secondary`, `btn-success`, `fab`, `fab-bottom-left`, `fab-bottom-right`, `fab-lg`, `fab-sm`
+Variants: `btn-`, `btn-danger`, `btn-ghost`, `btn-group`, `btn-outline`, `btn-primary`, `btn-secondary`, `btn-success`, `fab`, `fab-bottom-left`, `fab-bottom-right`, `fab-controlled`, `fab-extended`, `fab-label`, `fab-lg`, `fab-sm`
 Children: `btn-icon`
 
 ```html
@@ -531,10 +542,10 @@ Children: `segmented-control-icon`, `segmented-control__option`
 
 ### Table Components
 
-Base class: `.table`
+Base class: `.row-bg`
 Description: Data tables with striping, hover, modifiers, and relief-aware styling.
 Tier-aware: yes
-Variants: `table-bordered`, `table-compact`, `table-fixed`, `table-inlay`, `table-relaxed`, `table-responsive`
+Variants: `row-overlay`, `table`, `table-bordered`, `table-compact`, `table-fixed`, `table-inlay`, `table-panel`, `table-relaxed`, `table-responsive`, `table-scroll`
 
 ```html
 <table class="table">
