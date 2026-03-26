@@ -1,0 +1,95 @@
+// ---------------------------------------------------------------------------
+// Action List Components
+// ---------------------------------------------------------------------------
+// Vertical list of toggleable action items with raised/pressed relief states.
+// Useful for checklists, daily readings, task lists, etc.
+// Uses --relief-* variables for automatic relief switching.
+// ---------------------------------------------------------------------------
+
+@use '../base/register' as *;
+@use '../base/accessibility' as *;
+@use '../base/transitions' as *;
+
+// ============================================================================
+// CONTAINER
+// ============================================================================
+
+.action-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+// ============================================================================
+// ACTION ITEM — toggleable raised/pressed button
+// ============================================================================
+
+.action-item {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  width: 100%;
+  padding: 0.5rem 0.875rem;
+  border-radius: var(--radius-default);
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  font-size: var(--text-sm);
+  @include relief-container;
+  @include transition-interactive;
+
+  &:hover:not(:disabled, .is-empty) {
+    box-shadow:
+      var(--relief-shadow-lg),
+      inset 0 1px 0 rgb(var(--highlight-color) / 10%);
+  }
+
+  &:focus-visible {
+    @include focus-ring-outline;
+  }
+
+  &.is-active {
+    background-color: color-mix(in srgb, var(--color-success) 6%, transparent);
+    border-color: color-mix(in srgb, var(--color-success) 12%, transparent);
+    box-shadow: var(--relief-shadow-inset-lg);
+  }
+
+  &.is-empty,
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+// ============================================================================
+// LABEL SLOT — accent-colored leading label
+// ============================================================================
+
+.action-item-label {
+  flex-shrink: 0;
+  font-weight: var(--font-bold);
+  color: var(--accent-primary);
+  letter-spacing: var(--tracking-elegant);
+  min-width: 5ch;
+  font-size: var(--text-xs);
+  transition: color var(--transition-slow) var(--easing-in-out);
+
+  .is-active & {
+    color: var(--color-success-text);
+  }
+}
+
+// ============================================================================
+// TEXT SLOT — secondary content
+// ============================================================================
+
+.action-item-text {
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+
+  &.is-empty {
+    color: var(--text-muted);
+    font-style: italic;
+  }
+}
