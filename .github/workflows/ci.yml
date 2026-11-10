@@ -128,13 +128,16 @@ jobs:
           name: dist
           path: packages/
 
-      - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps ${{ matrix.browser }}
-        env:
-          PLAYWRIGHT_BROWSERS_PATH: '0'
-
       - name: Run E2E tests
-        run: pnpm run test:e2e --project=${{ matrix.browser }}
+        run: |
+          docker run --rm --ipc=host --user "$(id -u):$(id -g)" \
+            --env CI=true \
+            --env HOME=/tmp \
+            --env PLAYWRIGHT_BROWSERS_PATH=/ms-playwright \
+            --volume "$GITHUB_WORKSPACE:/work" \
+            --workdir /work \
+            mcr.microsoft.com/playwright:v1.65.0-noble@sha256:6e3fb709361521eb27161606e6da6d2674e5e89fa16516cb37d6fdd91372273d \
+            node node_modules/@playwright/test/cli.js test --project=${{ matrix.browser }}
 
       - name: Upload test results
         if: failure()
