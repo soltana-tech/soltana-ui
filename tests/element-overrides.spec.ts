@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { getCSS } from './fixtures/assets';
 
-function cardHTML(extraClasses: string = ''): string {
+function cardHTML(extraClasses = ''): string {
   const cls = extraClasses ? ` ${extraClasses}` : '';
   return `
     <div class="card${cls}" style="width: 280px;">

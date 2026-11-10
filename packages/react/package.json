@@ -1,6 +1,6 @@
 {
   "name": "@soltana-ui/react",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": false,
   "description": "React bindings for Soltana UI — useSoltana() hook and SoltanaProvider. ESM-only.",
   "keywords": [
@@ -39,16 +39,16 @@
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@testing-library/react": "^16.3.0",
-    "@types/react": "^19.1.0",
-    "@types/react-dom": "^19.1.0",
-    "jsdom": "^26.1.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "@testing-library/react": "16.3.3",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "jsdom": "31.0.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
     "soltana-ui": "workspace:*",
-    "vite": "^7.3.1",
-    "vite-plugin-dts": "^4.5.4",
-    "vitest": "^3.2.4"
+    "vite": "8.3.6",
+    "vite-plugin-dts": "5.1.2",
+    "vitest": "5.1.0"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",

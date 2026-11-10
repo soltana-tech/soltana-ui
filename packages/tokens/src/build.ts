@@ -9,7 +9,6 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
 
 import { extractFoundation, extractThemes } from './extract.js';
 import { extractUtilities } from './extract-utilities.js';
@@ -22,12 +21,12 @@ import { buildAgentDocs } from './formats/agent-docs.js';
 import { buildLlmsTxt } from './formats/llms-txt.js';
 import { buildLlmsFullTxt } from './formats/llms-full-txt.js';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const moduleDir = import.meta.dirname;
 const require = createRequire(import.meta.url);
 
 const CSS_PATH = require.resolve('soltana-ui/css');
-const DIST = resolve(__dirname, '../dist');
-const MONOREPO_ROOT = resolve(__dirname, '../../..');
+const DIST = resolve(moduleDir, '../dist');
+const MONOREPO_ROOT = resolve(moduleDir, '../../..');
 
 function ensureDir(dir: string): void {
   mkdirSync(dir, { recursive: true });
@@ -48,7 +47,6 @@ function writeJson(path: string, data: unknown): void {
  * CI validates these files are kept up-to-date via .github/workflows/ci.yml:64
  */
 function writeCrossPackageOutputs(agentYaml: string, llmsTxt: string, llmsFullTxt: string): void {
-  const MONOREPO_ROOT = resolve(__dirname, '../../..');
   const docsPublicDir = resolve(MONOREPO_ROOT, 'apps/docs/public');
 
   ensureDir(docsPublicDir);

@@ -1,7 +1,7 @@
 repos:
   # Baseline checks
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v6.0.0
+    rev: 3e8a8703264a2f4a69428a0aa4dcb512790b2c8c # v6.0.0
     hooks:
       - id: detect-private-key
       - id: check-json
@@ -26,7 +26,7 @@ repos:
 
   # Markdown
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.21.0
+    rev: 5387279b3b4c24822c0f86d4df4f28b37e3e8992 # v0.21.0
     hooks:
       - id: markdownlint-cli2
 

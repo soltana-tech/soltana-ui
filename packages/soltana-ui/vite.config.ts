@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 
-const pkg = JSON.parse(readFileSync(resolve(__dirname, 'package.json'), 'utf-8'));
+const pkg = JSON.parse(readFileSync(resolve(import.meta.dirname, 'package.json'), 'utf-8'));
 
 export default defineConfig({
   define: {
@@ -17,7 +17,7 @@ export default defineConfig({
   ],
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
+      entry: resolve(import.meta.dirname, 'src/index.ts'),
       name: 'SoltanaUI',
       formats: ['es', 'umd'],
       fileName: (format) => {
@@ -26,7 +26,6 @@ export default defineConfig({
       },
     },
     cssFileName: 'soltana-ui',
-    minify: 'esbuild',
     sourcemap: false,
   },
 });

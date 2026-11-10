@@ -8,12 +8,12 @@ let cssCache: string | null = null;
 let jsCache: string | null = null;
 
 export function getCSS(): string {
-  if (!cssCache) cssCache = fs.readFileSync(CSS_PATH, 'utf-8');
+  cssCache ??= fs.readFileSync(CSS_PATH, 'utf-8');
   return cssCache;
 }
 
 export function getJS(): string {
-  if (!jsCache) jsCache = fs.readFileSync(JS_PATH, 'utf-8');
+  jsCache ??= fs.readFileSync(JS_PATH, 'utf-8');
   return jsCache;
 }
 

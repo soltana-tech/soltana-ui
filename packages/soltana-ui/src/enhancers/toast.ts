@@ -22,12 +22,7 @@ let _defaultContainer: HTMLElement | null = null;
 
 export type ToastType = 'success' | 'warning' | 'error' | 'info';
 export type ToastPosition =
-  | 'top-right'
-  | 'top-left'
-  | 'top-center'
-  | 'bottom-right'
-  | 'bottom-left'
-  | 'bottom-center';
+  'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center';
 
 export interface ToastOptions {
   message: string;

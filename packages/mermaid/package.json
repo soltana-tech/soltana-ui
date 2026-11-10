@@ -1,6 +1,6 @@
 {
   "name": "@soltana-ui/mermaid",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": false,
   "description": "Mermaid theme bridge for Soltana UI.",
   "keywords": [
@@ -40,12 +40,13 @@
   "sideEffects": false,
   "devDependencies": {
     "@soltana-ui/tokens": "workspace:*",
-    "vite": "^7.3.1",
-    "vite-plugin-dts": "^4.5.4",
-    "vitest": "^3.2.4"
+    "mermaid": "12.3.0",
+    "vite": "8.3.6",
+    "vite-plugin-dts": "5.1.2",
+    "vitest": "5.1.0"
   },
   "peerDependencies": {
-    "mermaid": "^11.0.0",
+    "mermaid": "^11.0.0 || ^12.0.0",
     "soltana-ui": "workspace:^"
   },
   "peerDependenciesMeta": {

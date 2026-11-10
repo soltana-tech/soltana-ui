@@ -3,6 +3,7 @@ apps/docs/dist/
 node_modules/
 pnpm-lock.yaml
 .turbo/
+.unstale/
 .mypy_cache/
 .ruff_cache/
 .claude/reference.yaml

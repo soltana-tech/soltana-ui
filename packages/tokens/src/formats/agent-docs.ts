@@ -7,7 +7,7 @@
 // comprehensive.
 // ---------------------------------------------------------------------------
 
-import yaml from 'js-yaml';
+import { dump } from 'js-yaml';
 import type {
   AgentDocsInput,
   FoundationTokens,
@@ -49,11 +49,11 @@ export function buildAgentDocs(input: AgentDocsInput, options?: AgentDocsOptions
 
   return (
     header +
-    yaml.dump(doc, {
+    dump(doc, {
       lineWidth: 120,
       noRefs: true,
       sortKeys: false,
-      quotingType: '"',
+      quoteStyle: 'double',
     })
   );
 }

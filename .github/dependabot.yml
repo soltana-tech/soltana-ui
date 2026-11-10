@@ -1,0 +1,13 @@
+version: 2
+
+updates:
+  # Setting this limit to zero disables routine version-update PRs while
+  # preserving Dependabot security-update PRs.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 0
+    versioning-strategy: increase
+    commit-message:
+      prefix: security

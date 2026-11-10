@@ -3,7 +3,6 @@ import './docs.scss';
 import './components/sol-preview';
 
 import { initSoltana, initAll } from 'soltana-ui';
-import type { Theme } from 'soltana-ui';
 import { PlaygroundControls } from './components/playground-controls';
 import { Router } from './components/router';
 import { Sidebar } from './components/sidebar';
@@ -72,7 +71,7 @@ function bindThemeSwitcher(): void {
 
   buttons.forEach((btn) => {
     btn.addEventListener('click', () => {
-      const theme = btn.dataset.themeSet as Theme | undefined;
+      const theme = btn.dataset.themeSet;
       if (theme) {
         soltana.setTheme(theme);
         updateActiveState();

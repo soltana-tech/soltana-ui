@@ -66,8 +66,8 @@ test.describe('font loading', () => {
       await page.evaluate(() => {
         window.SoltanaUI.loadSoltanaFonts();
         // Trigger onerror on the stylesheet link
-        const link = document.querySelector('link[rel="stylesheet"]') as HTMLLinkElement;
-        if (link?.onerror) (link.onerror as Function)();
+        const link = document.querySelector<HTMLLinkElement>('link[rel="stylesheet"]')!;
+        link.onerror?.(new Event('error'));
       });
     });
 
@@ -86,7 +86,7 @@ test.describe('font loading', () => {
     expect(linkCount).toBe(1);
 
     const href = await page.evaluate(
-      () => (document.head.querySelector('link[rel="stylesheet"]') as HTMLLinkElement)?.href
+      () => document.head.querySelector<HTMLLinkElement>('link[rel="stylesheet"]')!.href
     );
     expect(href).toContain('cdn.example.com/fonts.css');
   });

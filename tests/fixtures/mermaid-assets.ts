@@ -9,7 +9,7 @@ let mermaidJsCache: string | null = null;
 const themeJsonCache = new Map<string, string>();
 
 export function getMermaidJS(): string {
-  if (!mermaidJsCache) mermaidJsCache = fs.readFileSync(MERMAID_JS_PATH, 'utf-8');
+  mermaidJsCache ??= fs.readFileSync(MERMAID_JS_PATH, 'utf-8');
   return mermaidJsCache;
 }
 

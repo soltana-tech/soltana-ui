@@ -11,14 +11,13 @@ export default defineConfig({
   ],
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
+      entry: resolve(import.meta.dirname, 'src/index.ts'),
       formats: ['es'],
       fileName: () => 'soltana-react.js',
     },
-    rollupOptions: {
+    rolldownOptions: {
       external: ['react', 'react-dom', 'react/jsx-runtime', 'soltana-ui'],
     },
-    minify: 'esbuild',
     sourcemap: false,
   },
 });

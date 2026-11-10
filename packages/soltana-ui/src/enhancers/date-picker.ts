@@ -310,7 +310,7 @@ export function initDatePickers(options?: EnhancerOptions): EnhancerCleanup {
           );
           const currentIdx = cells.indexOf(document.activeElement as HTMLElement);
 
-          let nextIdx = currentIdx;
+          let nextIdx: number;
           switch (e.key) {
             case 'ArrowRight':
               e.preventDefault();

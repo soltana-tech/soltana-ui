@@ -15,7 +15,7 @@
     "soltana-ui": "workspace:*"
   },
   "devDependencies": {
-    "sass": "^1.97.3",
-    "vite": "^7.3.1"
+    "sass": "1.108.1",
+    "vite": "8.3.6"
   }
 }

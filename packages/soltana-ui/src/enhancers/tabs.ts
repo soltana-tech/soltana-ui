@@ -115,7 +115,7 @@ export function initTabs(options?: EnhancerOptions): EnhancerCleanup {
       'keydown',
       (e: KeyboardEvent) => {
         const current = getActiveIndex(container);
-        let next = current;
+        let next: number;
 
         switch (e.key) {
           case 'ArrowRight':

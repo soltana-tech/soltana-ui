@@ -124,7 +124,8 @@ export function initTrees(options?: EnhancerOptions): EnhancerCleanup {
         const idx = visible.indexOf(focused);
         if (idx === -1) return;
 
-        const branch = focused.closest('.tree-branch');
+        const currentNode = focused.closest<HTMLElement>('.tree-node');
+        const branch = currentNode?.classList.contains('tree-branch') ? currentNode : null;
 
         switch (e.key) {
           case 'ArrowDown':
@@ -138,7 +139,7 @@ export function initTrees(options?: EnhancerOptions): EnhancerCleanup {
           case 'ArrowRight':
             e.preventDefault();
             if (branch && !branch.classList.contains('active')) {
-              toggleBranch(branch as HTMLElement, true);
+              toggleBranch(branch, true);
             } else if (branch?.classList.contains('active')) {
               // Move to first child
               const firstChild = branch.querySelector<HTMLElement>(
@@ -150,7 +151,7 @@ export function initTrees(options?: EnhancerOptions): EnhancerCleanup {
           case 'ArrowLeft':
             e.preventDefault();
             if (branch?.classList.contains('active')) {
-              toggleBranch(branch as HTMLElement, false);
+              toggleBranch(branch, false);
             } else {
               // Move to parent branch
               const parentBranch = focused.closest('.tree-children')?.closest('.tree-branch');

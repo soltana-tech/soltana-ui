@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import yaml from 'js-yaml';
+import { load } from 'js-yaml';
 import { buildAgentDocs } from './agent-docs.js';
 import { darkTheme, foundationStandard as foundation } from '../__fixtures__/tokens.js';
 import type { UtilityGroup, ComponentData, EnhancerData, IntegrationData } from '../types.js';
@@ -112,13 +112,13 @@ describe('buildAgentDocs', () => {
   );
 
   it('returns valid YAML that round-trips', () => {
-    const parsed = yaml.load(yamlStr);
+    const parsed = load(yamlStr);
     expect(parsed).toBeDefined();
     expect(typeof parsed).toBe('object');
   });
 
   it('includes all required top-level keys', () => {
-    const doc = yaml.load(yamlStr) as Record<string, unknown>;
+    const doc = load(yamlStr) as Record<string, unknown>;
     const requiredKeys = [
       '_meta',
       'tier_system',
@@ -137,17 +137,17 @@ describe('buildAgentDocs', () => {
   });
 
   it('includes ISO timestamp in _meta.generated', () => {
-    const doc = yaml.load(yamlStr) as Record<string, Record<string, string>>;
+    const doc = load(yamlStr) as Record<string, Record<string, string>>;
     expect(doc._meta.generated).toMatch(/^\d{4}-\d{2}-\d{2}T/);
   });
 
   it('includes source path in _meta', () => {
-    const doc = yaml.load(yamlStr) as Record<string, Record<string, string>>;
+    const doc = load(yamlStr) as Record<string, Record<string, string>>;
     expect(doc._meta.source).toContain('soltana-ui.css');
   });
 
   it('lists tier system values', () => {
-    const doc = yaml.load(yamlStr) as Record<string, Record<string, unknown>>;
+    const doc = load(yamlStr) as Record<string, Record<string, unknown>>;
     const ts = doc.tier_system;
     expect(ts.themes).toEqual(['dark', 'light', 'sepia', 'auto']);
     expect(ts.reliefs).toEqual(['flat', 'glassmorphic', 'skeuomorphic', 'neumorphic']);
@@ -155,32 +155,32 @@ describe('buildAgentDocs', () => {
   });
 
   it('includes foundation typography', () => {
-    const doc = yaml.load(yamlStr) as Record<string, Record<string, unknown>>;
+    const doc = load(yamlStr) as Record<string, Record<string, unknown>>;
     const f = doc.foundation;
     expect(f).toHaveProperty('typography');
     expect(f).toHaveProperty('radius');
   });
 
   it('includes dark theme tokens', () => {
-    const doc = yaml.load(yamlStr) as Record<string, Record<string, Record<string, string>>>;
+    const doc = load(yamlStr) as Record<string, Record<string, Record<string, string>>>;
     expect(doc.themes.dark.surfaceBg).toBe('#08091a');
     expect(doc.themes.dark.colorScheme).toBe('dark');
   });
 
   it('includes utility categories', () => {
-    const doc = yaml.load(yamlStr) as Record<string, Record<string, unknown>>;
+    const doc = load(yamlStr) as Record<string, Record<string, unknown>>;
     expect(doc.utilities).toHaveProperty('spacing');
     expect(doc.utilities).toHaveProperty('layout');
   });
 
   it('includes component entries', () => {
-    const doc = yaml.load(yamlStr) as Record<string, Record<string, unknown>>;
+    const doc = load(yamlStr) as Record<string, Record<string, unknown>>;
     expect(doc.components).toHaveProperty('buttons');
     expect(doc.components).toHaveProperty('cards');
   });
 
   it('includes javascript_api with init and methods', () => {
-    const doc = yaml.load(yamlStr) as Record<string, Record<string, unknown>>;
+    const doc = load(yamlStr) as Record<string, Record<string, unknown>>;
     const api = doc.javascript_api;
     expect(api).toHaveProperty('init');
     expect(api).toHaveProperty('instance_methods');
@@ -192,7 +192,7 @@ describe('buildAgentDocs', () => {
   });
 
   it('has dynamic enhancers from input', () => {
-    const doc = yaml.load(yamlStr) as Record<string, Record<string, unknown>>;
+    const doc = load(yamlStr) as Record<string, Record<string, unknown>>;
     const enhancers = doc.javascript_api.enhancers as Record<string, string>[];
     expect(enhancers.length).toBe(3);
     const fns = enhancers.map((e) => e.function);
@@ -202,14 +202,14 @@ describe('buildAgentDocs', () => {
   });
 
   it('includes imperative API section', () => {
-    const doc = yaml.load(yamlStr) as Record<string, Record<string, unknown>>;
+    const doc = load(yamlStr) as Record<string, Record<string, unknown>>;
     const imperative = doc.javascript_api.imperative as Record<string, string>[];
     expect(imperative.length).toBe(1);
     expect(imperative[0].function).toBe('showToast');
   });
 
   it('includes integrations section', () => {
-    const doc = yaml.load(yamlStr) as Record<string, unknown>;
+    const doc = load(yamlStr) as Record<string, unknown>;
     const integrations = doc.integrations as Record<string, unknown>[];
     expect(integrations.length).toBe(2);
     const packages = integrations.map((i) => i.package);
@@ -218,14 +218,14 @@ describe('buildAgentDocs', () => {
   });
 
   it('includes patterns section', () => {
-    const doc = yaml.load(yamlStr) as Record<string, Record<string, unknown>>;
+    const doc = load(yamlStr) as Record<string, Record<string, unknown>>;
     expect(doc.patterns).toHaveProperty('tier_composition');
     expect(doc.patterns).toHaveProperty('responsive_layout');
     expect(doc.patterns).toHaveProperty('common_compositions');
   });
 
   it('includes accessibility section', () => {
-    const doc = yaml.load(yamlStr) as Record<string, Record<string, unknown>>;
+    const doc = load(yamlStr) as Record<string, Record<string, unknown>>;
     expect(doc.accessibility).toHaveProperty('classes');
     expect(doc.accessibility).toHaveProperty('features');
   });

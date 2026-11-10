@@ -33,7 +33,7 @@ export function handleKeyboardNav(options: KeyboardNavOptions, event: KeyboardEv
   if (items.length === 0) return false;
 
   const current = items.indexOf(document.activeElement as HTMLElement);
-  let next = current;
+  let next: number;
 
   const isVertical = orientation === 'vertical' || orientation === 'both';
   const isHorizontal = orientation === 'horizontal' || orientation === 'both';

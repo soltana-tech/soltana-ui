@@ -30,7 +30,7 @@ colors with the active theme tier.
 npm install @soltana-ui/mermaid soltana-ui mermaid
 ```
 
-**Peer dependencies:** `soltana-ui`, `mermaid@^11.0.0`
+**Peer dependencies:** `soltana-ui`, `mermaid@^11.0.0 || ^12.0.0`
 
 ## Quick Start
 
